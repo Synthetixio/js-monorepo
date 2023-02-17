@@ -2,72 +2,85 @@ import { useContext } from 'react';
 import { WEEKS_IN_YEAR } from '@snx-v2/Constants';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
-import { useFeePoolData } from '@snx-v2/useFeePoolData';
-import { useTotalIssuedSynthsExcludeOtherCollateral } from '@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral';
 import { StakedSNXResponse, useTotalStakedSNX } from '@snx-v2/useTotalStakedSNX';
-import Wei from '@synthetixio/wei';
-import { useQuery } from '@tanstack/react-query';
+import Wei, { wei } from '@synthetixio/wei';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-import { calculateWeeklyRewardsInUsd } from '@snx-v2/calculateWeeklyRewardsInUsd';
+import { useFeePeriodMultiNetwork } from '@snx-v2/useFeePeriodMultiNetwork';
 
-export const calculateGlobalStakingApr = (
-  isL2: boolean,
-  SNXRate?: Wei,
-  previousWeekRewardsUsd?: Wei,
-  stakedSnxData?: StakedSNXResponse
-) => {
-  if (!SNXRate || !previousWeekRewardsUsd || !stakedSnxData) {
-    return undefined;
-  }
-  const stakedSnxForNetwork = isL2
-    ? stakedSnxData.stakedSnx.optimism
-    : stakedSnxData.stakedSnx.ethereum;
-  const yearlyExtrapolatedRewards = previousWeekRewardsUsd.mul(WEEKS_IN_YEAR);
-
-  return yearlyExtrapolatedRewards.div(SNXRate.mul(stakedSnxForNetwork));
+// exported for tests
+export const calculateGlobalStakingFeeApr = ({
+  SNXRate,
+  totalStakedData,
+  feePeriodData,
+}: {
+  SNXRate: Wei;
+  totalStakedData: StakedSNXResponse;
+  feePeriodData: {
+    mainnetDistributedFees: Wei;
+    optimismDistributedFees: Wei;
+  };
+}) => {
+  const totalFeesDistributed = feePeriodData.mainnetDistributedFees.add(
+    feePeriodData.optimismDistributedFees
+  );
+  const collateralValue = wei(totalStakedData.stakedSnx.ethereum)
+    .add(totalStakedData.stakedSnx.optimism)
+    .mul(SNXRate);
+  const yearlyExtrapolatedRewards = totalFeesDistributed.mul(WEEKS_IN_YEAR);
+  return yearlyExtrapolatedRewards.div(collateralValue);
 };
 
-export const useGlobalStakingApr = (enabled: boolean) => {
-  const { data: totalsUSDDebt } = useTotalIssuedSynthsExcludeOtherCollateral();
-  const { data: previousFeePeriodData } = useFeePoolData(1);
+// exported for tests
+export const calculateGlobalStakingRewardsApr = ({
+  isL2,
+  feePeriodData,
+  totalStakedData,
+}: {
+  totalStakedData: StakedSNXResponse;
+  feePeriodData: {
+    mainnetDistributedRewards: Wei;
+    optimismDistributedRewards: Wei;
+  };
+  isL2: boolean;
+}) => {
+  const distributedRewardsForNetwork = isL2
+    ? feePeriodData.optimismDistributedRewards
+    : feePeriodData.mainnetDistributedRewards;
+  const stakedForNetwork = isL2
+    ? wei(totalStakedData.stakedSnx.optimism)
+    : wei(totalStakedData.stakedSnx.ethereum);
+
+  const yearlyExtrapolatedRewards = distributedRewardsForNetwork.mul(WEEKS_IN_YEAR);
+  return yearlyExtrapolatedRewards.div(stakedForNetwork);
+};
+
+export const useGlobalStakingApr = () => {
+  const { data: feePeriods } = useFeePeriodMultiNetwork(1);
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: totalStakedData } = useTotalStakedSNX();
   const { networkId } = useContext(ContractContext);
   const SNXRate = exchangeRateData?.SNX;
-  const previousWeekRewardsUsd = calculateWeeklyRewardsInUsd(
-    exchangeRateData?.SNX,
-    previousFeePeriodData?.feesToDistribute,
-    previousFeePeriodData?.rewardsToDistribute
-  );
-  const isL2 = networkId === NetworkIdByName['mainnet-ovm'];
-  const queryEnabled = Boolean(SNXRate && totalsUSDDebt && previousWeekRewardsUsd && enabled);
 
-  return useQuery(
-    ['useGlobalStakingApr', isL2, queryEnabled],
-    () => {
-      if (!SNXRate || !previousWeekRewardsUsd || !totalStakedData) {
-        throw Error('Query missing required data');
-      }
-      const combinedApr = calculateGlobalStakingApr(
-        isL2,
-        SNXRate,
-        previousWeekRewardsUsd,
-        totalStakedData
-      );
-      const feesApr = calculateGlobalStakingApr(
-        isL2,
-        SNXRate,
-        previousFeePeriodData?.feesToDistribute,
-        totalStakedData
-      );
-      const snxApr = calculateGlobalStakingApr(
-        isL2,
-        SNXRate,
-        previousFeePeriodData?.rewardsToDistribute.mul(SNXRate),
-        totalStakedData
-      );
-      return { combinedApr, feesApr, snxApr };
-    },
-    { enabled: queryEnabled, staleTime: 10000 }
-  );
+  const isL2 = networkId === NetworkIdByName['mainnet-ovm'];
+  if (!SNXRate || !feePeriods || !totalStakedData) {
+    return { isLoading: true, data: undefined };
+  }
+
+  const mainnetDistributedFees = wei(feePeriods.feePeriodMainnet.feesToDistribute);
+  const mainnetDistributedRewards = wei(feePeriods.feePeriodMainnet.rewardsToDistribute);
+  const optimismDistributedFees = wei(feePeriods.feePeriodOptimism.feesToDistribute);
+  const optimismDistributedRewards = wei(feePeriods.feePeriodOptimism.rewardsToDistribute);
+
+  const feesApr = calculateGlobalStakingFeeApr({
+    totalStakedData,
+    SNXRate,
+    feePeriodData: { mainnetDistributedFees, optimismDistributedFees },
+  });
+
+  const snxApr = calculateGlobalStakingRewardsApr({
+    totalStakedData,
+    isL2,
+    feePeriodData: { mainnetDistributedRewards, optimismDistributedRewards },
+  });
+  return { data: { combinedApr: feesApr.add(snxApr), feesApr, snxApr }, isLoading: false };
 };

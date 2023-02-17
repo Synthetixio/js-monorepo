@@ -6949,7 +6949,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/calculateWeeklyRewardsInUsd@workspace:*, @snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd":
+"@snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd":
   version: 0.0.0-use.local
   resolution: "@snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd"
   dependencies:
@@ -7128,6 +7128,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useDebtShareDataPeriod@workspace:*, @snx-v2/useDebtShareDataPeriod@workspace:v2/lib/useDebtShareDataPeriod":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useDebtShareDataPeriod@workspace:v2/lib/useDebtShareDataPeriod"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+    ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useEscrowBalance@workspace:*, @snx-v2/useEscrowBalance@workspace:v2/lib/useEscrowBalance":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useEscrowBalance@workspace:v2/lib/useEscrowBalance"
@@ -7166,6 +7180,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useFeePeriodMultiNetwork@workspace:*, @snx-v2/useFeePeriodMultiNetwork@workspace:v2/lib/useFeePeriodMultiNetwork":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useFeePeriodMultiNetwork@workspace:v2/lib/useFeePeriodMultiNetwork"
+  dependencies:
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/contracts-interface": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+    ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useFeePoolData@workspace:*, @snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeePoolData@workspace:v2/lib/useFeePoolData"
@@ -7184,11 +7210,9 @@ __metadata:
   resolution: "@snx-v2/useFeesBurnedInPeriod@workspace:v2/lib/useFeesBurnedInPeriod"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/contracts-interface": "workspace:*"
+    "@snx-v2/useDebtShareDataPeriod": "workspace:*"
+    "@snx-v2/useFeePeriodMultiNetwork": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.24.6
-    ethers: ^5.7.2
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7278,14 +7302,11 @@ __metadata:
   dependencies:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/calculateWeeklyRewardsInUsd": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
-    "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useFeePeriodMultiNetwork": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral": "workspace:*"
     "@snx-v2/useTotalStakedSNX": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7395,14 +7416,14 @@ __metadata:
   resolution: "@snx-v2/useStakingApr@workspace:v2/lib/useStakingApr"
   dependencies:
     "@snx-v2/Constants": "workspace:*"
-    "@snx-v2/calculateWeeklyRewardsInUsd": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDebtShareDataPeriod": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
-    "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral": "workspace:*"
+    "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -7435,7 +7456,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:*, @snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral":
+"@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral"
   dependencies:
