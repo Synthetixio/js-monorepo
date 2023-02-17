@@ -1,8 +1,0 @@
-{
-  "optimism": {
-    "PerpsV2MarketProxyable": {
-      "address": "0x2B3bb4c683BFc5239B029131EEf3B1d214478d93",
-      "startBlock": 0
-    }
-  }
-}

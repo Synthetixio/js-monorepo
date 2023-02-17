@@ -95,4 +95,3 @@ dataSources:
             address,(bool,uint256,uint256,uint256,bytes32,address,uint256))
           handler: handleCollateralConfigured
       file: ./src/core.ts
-    network: optimism-goerli
