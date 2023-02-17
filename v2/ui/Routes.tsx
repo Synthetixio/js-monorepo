@@ -73,7 +73,7 @@ export default function AppRoutes() {
       <AppLayout>
         <Routes>
           <Route path="/" element={STAKING_V2_ENABLED ? <V2HomePage /> : <DashboardPage />} />
-
+          <Route path="/terms" element={<V2Terms />} />
           {STAKING_V2_ENABLED ? (
             <>
               <Route path="/staking" element={<Navigate to="/staking/mint" />} />
@@ -84,7 +84,7 @@ export default function AppRoutes() {
               <Route path="/staking/self-liquidation" element={<V2SelfLiquidation />} />
               <Route path="/earn" element={<V2Earn />} />
               <Route path="/wallet" element={<Navigate to="/wallet/balances" replace={true} />} />
-              <Route path="/terms" element={<V2Terms />} />
+              {/* <Route path="/terms" element={<V2Terms />} /> */}
               <Route
                 path="/wallet/balances"
                 element={
