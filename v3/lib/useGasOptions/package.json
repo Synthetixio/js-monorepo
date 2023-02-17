@@ -6,7 +6,7 @@
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/contracts": "^5.7.0",
-    "@snx-v3/Constants": "workspace:*",
+    "@snx-v3/constants": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useEthPrice": "workspace:*",
     "@snx-v3/useGasPrice": "workspace:*",

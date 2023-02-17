@@ -4,6 +4,8 @@
   "main": "index.ts",
   "version": "0.0.2",
   "dependencies": {
-    "wagmi": "^0.9.6"
+    "@snx-v3/icons": "workspace:*",
+    "ethers": "^5.7.2",
+    "react": "^18.2.0"
   }
 }

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getSubgraphUrl } from '@snx-v3/Constants';
+import { getSubgraphUrl } from '@snx-v3/constants';
 import { z } from 'zod';
 import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';

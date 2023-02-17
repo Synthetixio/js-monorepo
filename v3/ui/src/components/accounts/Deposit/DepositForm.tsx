@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
+// import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useIsConnected } from '@snx-v3/useBlockchain';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
@@ -229,7 +229,7 @@ export function DepositFormUi({
 export const DepositForm = (props: { staticCollateral?: boolean }) => {
   const navigate = useNavigate();
   const isConnected = useIsConnected();
-  const { openConnectModal } = useConnectModal();
+  // const { openConnectModal } = useConnectModal();
   const params = useParams();
   const collateralType = useCollateralType(params.collateralSymbol);
   const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
@@ -239,7 +239,7 @@ export const DepositForm = (props: { staticCollateral?: boolean }) => {
     <DepositFormUi
       staticCollateral={props.staticCollateral}
       isConnected={isConnected}
-      openConnectModal={openConnectModal}
+      openConnectModal={() => null}
       collateralType={collateralType}
       tokenBalance={tokenBalance.data}
       ethBalance={ethBalance.data}

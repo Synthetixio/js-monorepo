@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Link, useDisclosure } from '@chakra-ui/react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { NetworkController } from '../../components/NetworkController';
+import { NetworkController } from './NetworkController';
 import { useEffect } from 'react';
 import { AccountsSelector } from '@snx-v3/AccountsSelector';
 import { Logo, LogoIcon } from '@snx-v3/icons';

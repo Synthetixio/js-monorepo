@@ -1,3 +1,5 @@
+export {};
+/*
 import { ArrowDownIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -254,7 +256,7 @@ export const Teleporter = () => {
 
             <Flex alignItems="center">
               <Text fontSize="xs" textAlign="right" ml="auto" color="gray.300">
-                Fee: $0 {/*<InfoOutlineIcon ml="1" transform="translateY(-1px)" />*/}
+                Fee: $0 {/!*<InfoOutlineIcon ml="1" transform="translateY(-1px)" />*!/}
               </Text>
             </Flex>
           </Box>
@@ -294,3 +296,4 @@ export const Teleporter = () => {
     </>
   );
 };
+*/

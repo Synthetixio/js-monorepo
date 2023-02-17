@@ -5,7 +5,7 @@ import { QueryKey, useQuery } from '@tanstack/react-query';
 import { useOptimismLayer1Fee } from '@snx-v3/useOptimismLayer1Fee';
 import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
-import { GWEI_DECIMALS } from '@snx-v3/Constants';
+import { GWEI_DECIMALS } from '@snx-v3/constants';
 import { useEthPrice } from '@snx-v3/useEthPrice';
 import { useGasSpeed } from '@snx-v3/useGasSpeed';
 

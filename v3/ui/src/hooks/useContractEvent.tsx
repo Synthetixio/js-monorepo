@@ -1,3 +1,5 @@
+export {};
+/*
 import { useContractEvent as useWagmiContractEvent } from 'wagmi';
 import { contracts } from '../utils/constants';
 import { useContract } from './useContract';
@@ -40,3 +42,4 @@ export const useContractEvent = (contractName: string, config: ConfigType) => {
     }
   );
 };
+*/

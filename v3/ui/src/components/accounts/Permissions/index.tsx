@@ -1,3 +1,5 @@
+export {};
+/*
 import {
   Box,
   Flex,
@@ -114,8 +116,8 @@ export default function Permissions() {
           Permissions
         </Heading>
         <Box ml="auto">
-          {/* only render below if owner or has modify permissions */}
-          {/* @ts-ignore */}
+          {/!* only render below if owner or has modify permissions *!/}
+          {/!* @ts-ignore *!/}
           <PermissionsEditor />
         </Box>
       </Flex>
@@ -138,8 +140,8 @@ export default function Permissions() {
               <Tr>
                 <Td py="4">
                   <Skeleton isLoaded={!loadingOwner}>
-                    {/* wagmi types return Result which needs to be generic but currently assumes is an object */}
-                    {/* @ts-ignore */}
+                    {/!* wagmi types return Result which needs to be generic but currently assumes is an object *!/}
+                    {/!* @ts-ignore *!/}
                     <Address address={accountOwner} />
                   </Skeleton>
                 </Td>
@@ -167,3 +169,4 @@ export default function Permissions() {
     </Box>
   );
 }
+*/

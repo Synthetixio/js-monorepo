@@ -1,3 +1,5 @@
+export {};
+/*
 import { Box, Button } from '@chakra-ui/react';
 import { useContractWrite } from 'wagmi';
 import { useCallback } from 'react';
@@ -47,3 +49,4 @@ export const AcceptNomination = () => {
     </Box>
   );
 };
+*/

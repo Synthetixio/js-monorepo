@@ -1,4 +1,4 @@
-import { GWEI_DECIMALS } from '@snx-v3/Constants';
+import { GWEI_DECIMALS } from '@snx-v3/constants';
 import { wei } from '@synthetixio/wei';
 
 describe('useGasPrice', () => {

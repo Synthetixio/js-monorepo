@@ -1,3 +1,5 @@
+export {};
+/*
 import { AddIcon, EditIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import {
   AlertDialog,
@@ -182,3 +184,4 @@ export function PermissionsEditor({
     </>
   );
 }
+*/

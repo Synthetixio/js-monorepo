@@ -1,3 +1,5 @@
+export {};
+/*
 import ethers, { Contract, Overrides } from 'ethers';
 import { useCallback, useState } from 'react';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
@@ -21,7 +23,7 @@ export type TxConfig = {
 
 type MulticallStatusType = 'idle' | 'pending' | 'success' | 'error';
 
-/**
+/!**
  * Executes the given list of transactions on a multicall contract as required.
  * If the list is only 1 operation long, it will be executed directly with no multicall
  * If all operations in the list take place on the synthetix proxy contract, the synthetix proxy multicall will be used.
@@ -34,7 +36,7 @@ type MulticallStatusType = 'idle' | 'pending' | 'success' | 'error';
  * @param calls List of calls to execute. The outer array indicates
  * operations to run in multiple steps, and the inner array indicates operations to run in the same transaction.
  * @returns a lot of stuff
- */
+ *!/
 export const useMulticall = (
   calls: MulticallCall[],
   overrides?: Overrides,
@@ -136,3 +138,4 @@ export const useMulticall = (
     isValid: !!calls.length,
   };
 };
+*/

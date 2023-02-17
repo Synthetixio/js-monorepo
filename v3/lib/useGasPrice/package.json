@@ -6,7 +6,7 @@
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
-    "@snx-v3/Constants": "workspace:*",
+    "@snx-v3/constants": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
     "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
