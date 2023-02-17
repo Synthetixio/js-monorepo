@@ -70,6 +70,7 @@ export const PositionsTable: FC = () => {
       deactivateClosedAt: false,
       openedAt: monthAgo(),
       closedAt: new Date(),
+      walletAddress: '',
     },
   });
   const {
@@ -166,6 +167,8 @@ export const PositionsTable: FC = () => {
           >
             Deactivate open option
           </Checkbox>
+          <Text>Search by address</Text>
+          <Input {...register('walletAddress')} placeholder="Address" />
         </Stack>
         <Stack gap="2">
           <Text>Opened At (default: one month ago)</Text>

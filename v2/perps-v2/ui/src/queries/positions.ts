@@ -63,6 +63,7 @@ export interface FilterOptions {
   deactivateOpen: boolean;
   deactivateOpenedAt: boolean;
   deactivateClosedAt: boolean;
+  walletAddress: string;
 }
 
 const body = ({
@@ -88,7 +89,13 @@ const body = ({
   return `query info {
     futuresPositions(skip: ${skip}, first: 1000,
       orderBy: "${sortConfig[0]}", orderDirection: "${!sortConfig[1] ? 'desc' : 'asc'}", where: {
-    ${address ? `account: "${address.toLowerCase()}",` : ''}
+    ${
+      address || filterOptions.walletAddress
+        ? `account: "${
+            address ? address.toLowerCase() : filterOptions.walletAddress.toLowerCase()
+          }",`
+        : ''
+    }
     ${
       filterOptions.asset === 'all'
         ? ''
@@ -258,9 +265,6 @@ function useGetPositions({
         console.error(error);
         return { futuresPositions: [], futuresStats: [] };
       }
-    },
-    {
-      enabled: false,
     }
   );
 }
