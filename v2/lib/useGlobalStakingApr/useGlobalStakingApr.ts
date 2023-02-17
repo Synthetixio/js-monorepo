@@ -4,7 +4,6 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { StakedSNXResponse, useTotalStakedSNX } from '@snx-v2/useTotalStakedSNX';
 import Wei, { wei } from '@synthetixio/wei';
-import { useQuery } from '@tanstack/react-query';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { useFeePeriodMultiNetwork } from '@snx-v2/useFeePeriodMultiNetwork';
 
@@ -55,7 +54,7 @@ export const calculateGlobalStakingRewardsApr = ({
   return yearlyExtrapolatedRewards.div(stakedForNetwork);
 };
 
-export const useGlobalStakingApr = (enabled: boolean) => {
+export const useGlobalStakingApr = () => {
   const { data: feePeriods } = useFeePeriodMultiNetwork(1);
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: totalStakedData } = useTotalStakedSNX();
@@ -63,32 +62,25 @@ export const useGlobalStakingApr = (enabled: boolean) => {
   const SNXRate = exchangeRateData?.SNX;
 
   const isL2 = networkId === NetworkIdByName['mainnet-ovm'];
-  const queryEnabled = Boolean(SNXRate && enabled && feePeriods);
+  if (!SNXRate || !feePeriods || !totalStakedData) {
+    return { isLoading: true, data: undefined };
+  }
 
-  return useQuery(
-    ['useGlobalStakingApr', isL2, queryEnabled],
-    () => {
-      if (!SNXRate || !feePeriods || !totalStakedData) {
-        throw Error('Query missing required data');
-      }
-      const mainnetDistributedFees = wei(feePeriods.feePeriodMainnet.feesToDistribute);
-      const mainnetDistributedRewards = wei(feePeriods.feePeriodMainnet.rewardsToDistribute);
-      const optimismDistributedFees = wei(feePeriods.feePeriodOptimism.feesToDistribute);
-      const optimismDistributedRewards = wei(feePeriods.feePeriodOptimism.rewardsToDistribute);
+  const mainnetDistributedFees = wei(feePeriods.feePeriodMainnet.feesToDistribute);
+  const mainnetDistributedRewards = wei(feePeriods.feePeriodMainnet.rewardsToDistribute);
+  const optimismDistributedFees = wei(feePeriods.feePeriodOptimism.feesToDistribute);
+  const optimismDistributedRewards = wei(feePeriods.feePeriodOptimism.rewardsToDistribute);
 
-      const feesApr = calculateGlobalStakingFeeApr({
-        totalStakedData,
-        SNXRate,
-        feePeriodData: { mainnetDistributedFees, optimismDistributedFees },
-      });
+  const feesApr = calculateGlobalStakingFeeApr({
+    totalStakedData,
+    SNXRate,
+    feePeriodData: { mainnetDistributedFees, optimismDistributedFees },
+  });
 
-      const snxApr = calculateGlobalStakingRewardsApr({
-        totalStakedData,
-        isL2,
-        feePeriodData: { mainnetDistributedRewards, optimismDistributedRewards },
-      });
-      return { combinedApr: feesApr.add(snxApr), feesApr, snxApr };
-    },
-    { enabled: queryEnabled, staleTime: 10000 }
-  );
+  const snxApr = calculateGlobalStakingRewardsApr({
+    totalStakedData,
+    isL2,
+    feePeriodData: { mainnetDistributedRewards, optimismDistributedRewards },
+  });
+  return { data: { combinedApr: feesApr.add(snxApr), feesApr, snxApr }, isLoading: false };
 };

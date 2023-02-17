@@ -7210,7 +7210,6 @@ __metadata:
     "@snx-v2/useDebtShareDataPeriod": "workspace:*"
     "@snx-v2/useFeePeriodMultiNetwork": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7305,7 +7304,6 @@ __metadata:
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useTotalStakedSNX": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7415,7 +7413,6 @@ __metadata:
   resolution: "@snx-v2/useStakingApr@workspace:v2/lib/useStakingApr"
   dependencies:
     "@snx-v2/Constants": "workspace:*"
-    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDebtShareDataPeriod": "workspace:*"
@@ -7423,7 +7420,6 @@ __metadata:
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.3.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft

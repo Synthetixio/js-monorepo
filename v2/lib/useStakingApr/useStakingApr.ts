@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { useQuery } from '@tanstack/react-query';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import Wei, { wei } from '@synthetixio/wei';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
@@ -8,7 +6,6 @@ import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { WEEKS_IN_YEAR } from '@snx-v2/Constants';
 import { useFeesBurnedInPeriod } from '@snx-v2/useFeesBurnedInPeriod';
 import { useDebtShareDataPeriod } from '@snx-v2/useDebtShareDataPeriod';
-import { ContractContext } from '@snx-v2/ContractContext';
 
 // exported for tests
 export const calculateStakingFeeApr = ({
@@ -49,41 +46,29 @@ export const calculateStakingRewardsApr = ({
 };
 
 export const useStakingApr = () => {
-  const { networkId, walletAddress } = useContext(ContractContext);
-
   const { data: debtData } = useDebtData();
   const { data: previousFeePeriodData } = useFeePoolData(1);
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: feesBurned } = useFeesBurnedInPeriod();
   const { data: debtShareData } = useDebtShareDataPeriod();
   const SNXRate = exchangeRateData?.SNX;
-  const { debtBalance, targetCRatio, currentCRatio, collateral } = debtData || {};
+  const { targetCRatio, currentCRatio, collateral } = debtData || {};
 
   const stakedSnx = calculateStakedSnx({ targetCRatio, currentCRatio, collateral });
 
-  const enabled = Boolean(
-    stakedSnx && feesBurned && debtShareData && debtBalance?.gt(0) // This query is only enabled when we have data and user is staking (debt balance > 0)
-  );
-  return useQuery(
-    ['useStakingApr', { enabled, walletAddress, networkId }],
-    () => {
-      if (!stakedSnx || !feesBurned || !previousFeePeriodData || !debtShareData || !SNXRate) {
-        throw Error('Query missing required data');
-      }
+  if (!stakedSnx || !feesBurned || !previousFeePeriodData || !debtShareData || !SNXRate) {
+    return { isLoading: true, data: undefined };
+  }
+  const feesApr = calculateStakingFeeApr({
+    stakedSnx,
+    SNXRate,
+    feesBurned,
+  });
 
-      const feesApr = calculateStakingFeeApr({
-        stakedSnx,
-        SNXRate,
-        feesBurned,
-      });
-
-      const snxApr = calculateStakingRewardsApr({
-        stakedSnx,
-        userDebtSharePercentageCurrentNetwork: debtShareData.userDebtSharePercentageCurrentNetwork,
-        distributedRewards: previousFeePeriodData.rewardsToDistribute,
-      });
-      return { combinedApr: feesApr.add(snxApr), feesApr, snxApr };
-    },
-    { enabled, staleTime: 10000 }
-  );
+  const snxApr = calculateStakingRewardsApr({
+    stakedSnx,
+    userDebtSharePercentageCurrentNetwork: debtShareData.userDebtSharePercentageCurrentNetwork,
+    distributedRewards: previousFeePeriodData.rewardsToDistribute,
+  });
+  return { data: { combinedApr: feesApr.add(snxApr), feesApr, snxApr }, isLoading: false };
 };
