@@ -173,7 +173,7 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
           my={4}
           mx={6}
           onClick={onSubmit}
-          disabled={!enabled}
+          isDisabled={!enabled}
         >
           I agree
         </Button>

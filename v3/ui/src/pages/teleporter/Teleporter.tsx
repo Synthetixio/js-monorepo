@@ -278,7 +278,7 @@ export const Teleporter = () => {
               size="lg"
               px="8"
               type="submit"
-              disabled={network?.id === from && amount.lte(0)}
+              isDisabled={network?.id === from && amount.lte(0)}
             >
               {network?.id !== from ? 'Switch to ' + fromChain?.label : 'Teleport'}
             </Button>

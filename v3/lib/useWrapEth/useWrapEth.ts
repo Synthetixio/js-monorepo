@@ -17,11 +17,13 @@ export const useWrapEth = () => {
     ethCollateral?.tokenAddress
   );
 
-  const { mutateAsync, isLoading } = useMutation(async (amount: Wei) => {
-    if (!ethCollateral || !signer) return;
-    const contract = new Contract(ethCollateral?.tokenAddress, minimalWETHABI, signer);
-    const txn = await contract.deposit({ value: amount.toBN() });
-    await txn.wait();
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: async (amount: Wei) => {
+      if (!ethCollateral || !signer) return;
+      const contract = new Contract(ethCollateral?.tokenAddress, minimalWETHABI, signer);
+      const txn = await contract.deposit({ value: amount.toBN() });
+      await txn.wait();
+    },
   });
   const exec = useCallback(
     async (amount: Wei) => {
@@ -48,11 +50,13 @@ export const useUnWrapEth = () => {
   const { data: wethBalance, refetch: refetchWETHBalance } = useTokenBalance(
     ethCollateral?.tokenAddress
   );
-  const { mutateAsync, isLoading } = useMutation(async (amount: Wei) => {
-    if (!ethCollateral || !signer) return;
-    const contract = new Contract(ethCollateral?.tokenAddress, minimalWETHABI, signer);
-    const txn = await contract.withdraw(amount.toBN());
-    await txn.wait();
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: async (amount: Wei) => {
+      if (!ethCollateral || !signer) return;
+      const contract = new Contract(ethCollateral?.tokenAddress, minimalWETHABI, signer);
+      const txn = await contract.withdraw(amount.toBN());
+      await txn.wait();
+    },
   });
   const exec = useCallback(
     async (amount: Wei) => {

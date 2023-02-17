@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { FlexDivCentered, FlexDivCol, FlexDivRowCentered } from '@snx-v1/styles';
 import { useTranslation } from 'react-i18next';
@@ -57,10 +57,8 @@ const IconContainer = styled(FlexDivRowCentered)`
   width: 35px;
 `;
 
-const TransactionInfo: FC<PropsWithChildren> = styled(FlexDivCol)``;
-const TransactionInfoBody: FC<PropsWithChildren<{ isFailureMessage?: boolean }>> = styled.div<{
-  isFailureMessage?: boolean;
-}>`
+const TransactionInfo = styled(FlexDivCol)``;
+const TransactionInfoBody = styled.div<{ isFailureMessage?: boolean }>`
   ${(props) =>
     props.isFailureMessage &&
     css`

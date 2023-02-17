@@ -4,8 +4,8 @@
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@tanstack/react-query": "^4.3.4",
+    "@tanstack/react-query": "^4.24.6",
     "react": "^18.2.0",
-    "zod": "^3.20.2"
+    "zod": "^3.20.6"
   }
 }

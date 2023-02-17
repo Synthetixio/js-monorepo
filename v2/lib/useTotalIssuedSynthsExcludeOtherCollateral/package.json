@@ -7,6 +7,6 @@
     "@ethersproject/strings": "^5.7.0",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@synthetixio/wei": "workspace:*",
-    "@tanstack/react-query": "^4.3.4"
+    "@tanstack/react-query": "^4.24.6"
   }
 }

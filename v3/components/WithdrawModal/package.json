@@ -4,7 +4,7 @@
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
+    "@chakra-ui/react": "^2.5.0",
     "@snx-v3/Amount": "workspace:*",
     "@snx-v3/ManagePositionContext": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
@@ -14,8 +14,8 @@
     "@snx-v3/useWithdraw": "workspace:*",
     "@snx-v3/useWrapEth": "workspace:*",
     "@synthetixio/wei": "workspace:*",
-    "@xstate/react": "^3.1.2",
+    "@xstate/react": "^3.2.1",
     "react": "^18.2.0",
-    "xstate": "^4.35.4"
+    "xstate": "^4.36.0"
   }
 }

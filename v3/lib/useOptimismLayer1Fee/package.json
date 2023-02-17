@@ -10,7 +10,7 @@
     "@ethersproject/transactions": "^5.7.0",
     "@snx-v3/useBlockchain": "workspace:*",
     "@synthetixio/wei": "workspace:*",
-    "@tanstack/react-query": "^4.3.4",
+    "@tanstack/react-query": "^4.24.6",
     "react": "^18.2.0"
   }
 }

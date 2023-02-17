@@ -4,9 +4,9 @@
   "main": "index.tsx",
   "version": "0.0.0",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
+    "@chakra-ui/react": "^2.5.0",
     "@snx-v2/useInterval": "workspace:*",
-    "date-fns": "^2.19.0",
+    "date-fns": "^2.29.3",
     "react": "^18.2.0"
   }
 }

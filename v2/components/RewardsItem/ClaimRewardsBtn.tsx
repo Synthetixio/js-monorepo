@@ -39,7 +39,7 @@ export const ClaimRewardsBtn: FC<{
       <Button
         data-testid="claim rewards button"
         variant={variant !== 'success' ? variant : 'solid'}
-        disabled={
+        isDisabled={
           variant !== 'success' ? false : Boolean(!canClaim || isGasEnabledAndNotFetched || error)
         }
         w={['100%', '100%', '100%', '80px']}

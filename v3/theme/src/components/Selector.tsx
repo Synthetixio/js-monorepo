@@ -34,7 +34,7 @@ export default function Selector({
       color={active ? 'black' : 'cyan.500'}
       variant="unstyled"
       background={active ? 'cyan.500' : 'whiteAlpha.300'}
-      disabled={disabled}
+      isDisabled={disabled}
       display="flex"
       justifyContent={rightIcon || leftIcon ? 'space-between' : 'center'}
       {...rest}
