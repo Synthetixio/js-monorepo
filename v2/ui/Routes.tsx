@@ -72,11 +72,8 @@ const WalletWrapper: FC<PropsWithChildren> = ({ children }) => {
 
 export default function AppRoutes() {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
-
-  const TERMS_CONDITIONS_ACCEPTED = !!sessionStorage.getItem(
-    SESSION_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED
-  );
-
+  const TERMS_CONDITIONS_ACCEPTED =
+    sessionStorage.getItem(SESSION_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED) === 'true';
   return (
     <BrowserRouter>
       <AppLayout>
