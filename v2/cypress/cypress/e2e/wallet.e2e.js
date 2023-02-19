@@ -1,7 +1,7 @@
 it('walks over wallet sub-pages', () => {
   cy.on('window:before:load', (win) => {
     win.localStorage.STAKING_V2_ENABLED = 'true';
-    win.localStorage.TERMS_CONDITIONS_ACCEPTED = 'true';
+    win.sessionStorage.TERMS_CONDITIONS_ACCEPTED = 'true';
   });
 
   cy.visit('http://localhost:3000');
