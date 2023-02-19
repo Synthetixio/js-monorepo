@@ -11,7 +11,7 @@ export const NetworkNameById = {
   10: 'mainnet-ovm',
   420: 'goerli-ovm',
 } as const;
-export type NetworkId = typeof NetworkIdByName[keyof typeof NetworkIdByName];
+export type NetworkId = (typeof NetworkIdByName)[keyof typeof NetworkIdByName];
 
 export function isSupportedNetworkId(id: number | string | null | undefined): id is NetworkId {
   if (!id) return false;

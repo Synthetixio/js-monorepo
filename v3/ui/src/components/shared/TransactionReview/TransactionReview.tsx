@@ -40,7 +40,7 @@ export function TransactionReview({
               isChecked={!!transaction.checked}
               onChange={(e) => setChecked(e.target.checked)}
               size="sm"
-              disabled={status === 'completed' || status === 'current' || isLoading}
+              isDisabled={status === 'completed' || status === 'current' || isLoading}
             >
               <Box fontSize="xs" opacity="0.66">
                 {transaction.checkboxLabel}

@@ -1,88 +1,74 @@
 import { useDebtData } from '@snx-v2/useDebtData';
-import { useQuery } from '@tanstack/react-query';
-import { useTotalIssuedSynthsExcludeOtherCollateral } from '@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import Wei, { wei } from '@synthetixio/wei';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { WEEKS_IN_YEAR } from '@snx-v2/Constants';
-import { calculateWeeklyRewardsInUsd } from '@snx-v2/calculateWeeklyRewardsInUsd';
+import { useFeesBurnedInPeriod } from '@snx-v2/useFeesBurnedInPeriod';
+import { useDebtShareDataPeriod } from '@snx-v2/useDebtShareDataPeriod';
 
-export const calculateStakingApr = ({
-  stakedValue,
-  debtBalance,
-  previousWeekRewardsUsd,
-  totalsUSDDebt,
+// exported for tests
+export const calculateStakingFeeApr = ({
+  stakedSnx,
+  SNXRate,
+  feesBurned,
 }: {
-  stakedValue?: Wei;
-  debtBalance?: Wei;
-  previousWeekRewardsUsd?: Wei;
-  totalsUSDDebt?: Wei;
+  stakedSnx: Wei;
+  SNXRate: Wei;
+  feesBurned: Wei;
 }) => {
-  if (!stakedValue || !debtBalance || !previousWeekRewardsUsd || !totalsUSDDebt) {
-    return undefined;
-  }
-  if (stakedValue.eq(0) || debtBalance.eq(0) || previousWeekRewardsUsd.eq(0)) {
+  if (stakedSnx.eq(0) || feesBurned.eq(0)) {
     return wei(0);
   }
-  const yearlyExtrapolatedRewards = previousWeekRewardsUsd.mul(WEEKS_IN_YEAR);
+  const stakedValue = stakedSnx.mul(SNXRate);
+  const yearlyExtrapolatedRewards = feesBurned.mul(WEEKS_IN_YEAR);
 
-  return yearlyExtrapolatedRewards.mul(debtBalance.div(totalsUSDDebt)).div(stakedValue);
+  return yearlyExtrapolatedRewards.div(stakedValue);
+};
+
+// exported for tests
+export const calculateStakingRewardsApr = ({
+  stakedSnx,
+  distributedRewards,
+  userDebtSharePercentageCurrentNetwork,
+}: {
+  stakedSnx: Wei;
+  distributedRewards: Wei;
+  userDebtSharePercentageCurrentNetwork: Wei;
+}) => {
+  if (stakedSnx.eq(0) || userDebtSharePercentageCurrentNetwork.eq(0)) {
+    return wei(0);
+  }
+  const userSnxRewards = distributedRewards.mul(userDebtSharePercentageCurrentNetwork);
+  const yearlyExtrapolatedRewards = userSnxRewards.mul(WEEKS_IN_YEAR);
+
+  return yearlyExtrapolatedRewards.div(stakedSnx);
 };
 
 export const useStakingApr = () => {
   const { data: debtData } = useDebtData();
-  const { data: totalsUSDDebt } = useTotalIssuedSynthsExcludeOtherCollateral();
   const { data: previousFeePeriodData } = useFeePoolData(1);
   const { data: exchangeRateData } = useExchangeRatesData();
+  const { data: feesBurned } = useFeesBurnedInPeriod();
+  const { data: debtShareData } = useDebtShareDataPeriod();
   const SNXRate = exchangeRateData?.SNX;
-  const { debtBalance, targetCRatio, currentCRatio, collateral } = debtData || {};
+  const { targetCRatio, currentCRatio, collateral } = debtData || {};
 
   const stakedSnx = calculateStakedSnx({ targetCRatio, currentCRatio, collateral });
-  const stakedValue = SNXRate ? stakedSnx.mul(SNXRate) : undefined;
-  const previousWeekRewardsUsd = calculateWeeklyRewardsInUsd(
-    exchangeRateData?.SNX,
-    previousFeePeriodData?.feesToDistribute,
-    previousFeePeriodData?.rewardsToDistribute
-  );
 
-  const enabled = Boolean(
-    stakedValue && previousWeekRewardsUsd && totalsUSDDebt && debtBalance?.gt(0) // This query is only enabled when we have data and user is staking (debt balance > 0)
-  );
-  return useQuery(
-    ['useStakingApr', enabled],
-    () => {
-      if (
-        !stakedValue ||
-        !debtBalance ||
-        !previousWeekRewardsUsd ||
-        !totalsUSDDebt ||
-        !exchangeRateData?.SNX
-      ) {
-        throw Error('Query missing required data');
-      }
-      const combinedApr = calculateStakingApr({
-        stakedValue,
-        previousWeekRewardsUsd,
-        totalsUSDDebt,
-        debtBalance,
-      });
-      const feesApr = calculateStakingApr({
-        stakedValue,
-        previousWeekRewardsUsd: previousFeePeriodData?.feesToDistribute,
-        totalsUSDDebt,
-        debtBalance,
-      });
-      const snxApr = calculateStakingApr({
-        stakedValue,
-        previousWeekRewardsUsd: previousFeePeriodData?.rewardsToDistribute.mul(
-          exchangeRateData.SNX
-        ),
-        totalsUSDDebt,
-        debtBalance,
-      });
-      return { combinedApr, feesApr, snxApr };
-    },
-    { enabled, staleTime: 10000 }
-  );
+  if (!stakedSnx || !feesBurned || !previousFeePeriodData || !debtShareData || !SNXRate) {
+    return { isLoading: true, data: undefined };
+  }
+  const feesApr = calculateStakingFeeApr({
+    stakedSnx,
+    SNXRate,
+    feesBurned,
+  });
+
+  const snxApr = calculateStakingRewardsApr({
+    stakedSnx,
+    userDebtSharePercentageCurrentNetwork: debtShareData.userDebtSharePercentageCurrentNetwork,
+    distributedRewards: previousFeePeriodData.rewardsToDistribute,
+  });
+  return { data: { combinedApr: feesApr.add(snxApr), feesApr, snxApr }, isLoading: false };
 };

@@ -72,7 +72,7 @@ export const WithdrawUi: FC<{
           </Flex>
         </Flex>
       </BorderBox>
-      <Button data-testid="withdraw submit" type="submit" disabled={!max}>
+      <Button data-testid="withdraw submit" type="submit" isDisabled={!max}>
         Withdraw {displaySymbol}
       </Button>
     </Flex>

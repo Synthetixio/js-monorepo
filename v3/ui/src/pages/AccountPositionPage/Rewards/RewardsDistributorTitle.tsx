@@ -78,7 +78,7 @@ export function RewardsDistributorTitle({ reward }: { reward: Reward }) {
       </Td>
       <Td isNumeric>
         <Button
-          disabled={wei(reward.value).eq(0)}
+          isDisabled={wei(reward.value).eq(0)}
           isLoading={isLoading}
           onClick={() => claim()}
           size="sm"

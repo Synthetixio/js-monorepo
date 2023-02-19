@@ -1,5 +1,5 @@
 {
-  "address": "0xA76a54dfc077E31cEd496695EFe8eF78D1c0295A",
+  "address": "0x7F8C1B72C95f2E1bE464695176EC0F8E03e38bB4",
   "abi": [
     {
       "inputs": [
@@ -26,6 +26,17 @@
     {
       "inputs": [],
       "name": "EmptyDistribution",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
       "type": "error"
     },
     {
@@ -74,6 +85,11 @@
         }
       ],
       "name": "InsufficientDelegation",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidCollateralAmount",
       "type": "error"
     },
     {
@@ -480,5 +496,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xeb21d95d3c7b4aa5955b8bb883cd0a6d5f9db6c98607940fea1f8f4b771843ab"
+  "deployTxnHash": "0x1835f0617ddff224c8f6d023f88c1a30085795d70d2551927512acb00164ffa9"
 }

@@ -50,16 +50,12 @@ const MarketConfigurationSchema = z.object({
 
 export const PoolSchema = z.object({
   id: z.string(),
-  name: z.union([z.string(), z.null()]).transform((name) => {
-    if (!name) return 'Unnamed Pool';
-    // TODO remove once new contract deployed
-    return name.includes('�') ? 'Spartan Pool' : name;
-  }),
-  total_weight: GraphBigIntSchema,
+  name: z.union([z.string(), z.null()]).transform((name) => (name ? name : 'Unnamed Pool')),
+  total_weight: z.union([z.null(), GraphBigIntSchema]),
   configurations: z.array(MarketConfigurationSchema),
 });
 
-export type Pool = z.infer<typeof PoolSchema>;
+export type PoolType = z.infer<typeof PoolSchema>;
 
 const PoolDataResultSchema = z.object({
   data: z.object({
@@ -126,51 +122,8 @@ export const usePoolData = (poolId?: string) => {
       if (!poolData.data.pool) {
         return undefined;
       }
-      return addMockData(poolData.data.pool);
+      return poolData.data.pool;
     },
     enabled: Boolean(network.isSupported && poolId),
   });
 };
-
-function addMockData(pool: Pool): Pool {
-  const usd_withdrawn = wei('1500');
-  const usd_deposited = wei('1000');
-  const net_issuance = usd_withdrawn.sub(usd_deposited);
-  const reported_debt = wei('100');
-  const [configuration] = pool.configurations;
-  if (!configuration) {
-    return pool;
-  }
-  const fakeMarket: z.infer<typeof MarketSchema> = {
-    ...configuration.market,
-    usd_withdrawn,
-    usd_deposited,
-    net_issuance,
-    reported_debt,
-    pnl: calculateMarketPnl(net_issuance, reported_debt),
-    market_snapshots_by_week: [
-      {
-        id: '2',
-        usd_withdrawn,
-        usd_deposited,
-        net_issuance,
-        reported_debt,
-        pnl: calculateMarketPnl(net_issuance, reported_debt),
-        updated_at: configuration.market.updated_at,
-        updates_in_period: 2,
-      },
-      {
-        id: '1',
-        usd_withdrawn: wei('1000'),
-        usd_deposited: wei('1500'),
-        net_issuance: wei('500'),
-        reported_debt: wei('50'),
-        pnl: calculateMarketPnl(wei('500'), wei('400')),
-        updated_at: configuration.market.updated_at,
-        updates_in_period: 2,
-      },
-    ],
-  };
-  pool.configurations[0].market = fakeMarket;
-  return pool;
-}

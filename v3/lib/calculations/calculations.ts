@@ -1,4 +1,4 @@
-import type { MarketSnapshotByWeekSchema, Pool } from '@snx-v3/usePoolData';
+import type { MarketSnapshotByWeekSchema, PoolType } from '@snx-v3/usePoolData';
 import { z } from 'zod';
 import { wei } from '@synthetixio/wei';
 
@@ -11,13 +11,13 @@ export const calculateSevenDaysPnlGrowth = (marketSnapshots?: MarketSnapshotByWe
   return { value: end.sub(start), percentage: start.eq(0) ? undefined : end.sub(start).div(start) };
 };
 
-export const calculatePoolPerformanceLifetime = (poolData?: Pool) => {
+export const calculatePoolPerformanceLifetime = (poolData?: PoolType) => {
   return poolData?.configurations.reduce((acc, { market }) => {
     return acc.add(market.pnl);
   }, wei(0));
 };
 
-export const calculatePoolPerformanceSevenDays = (poolData?: Pool) => {
+export const calculatePoolPerformanceSevenDays = (poolData?: PoolType) => {
   const total = calculatePoolPerformanceLifetime(poolData);
   const totalSevenDaysAgo = poolData?.configurations.reduce((acc, { market }) => {
     return acc.add(market.market_snapshots_by_week[1]?.pnl || wei(0));

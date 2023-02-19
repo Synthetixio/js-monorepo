@@ -9,7 +9,7 @@
     "@snx-v3/useEthBalance": "workspace:*",
     "@snx-v3/useTokenBalance": "workspace:*",
     "@synthetixio/wei": "workspace:*",
-    "@tanstack/react-query": "^4.3.4",
+    "@tanstack/react-query": "^4.24.6",
     "ethers": "^5.7.2",
     "react": "^18.2.0"
   }

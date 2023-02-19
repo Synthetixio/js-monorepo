@@ -6,7 +6,6 @@ export const useApr = () => {
   const { data: debtData } = useDebtData();
   const stakingAprQuery = useStakingApr();
   const notStaking = debtData?.debtBalance.eq(0);
-  const enableGlobalStakingApr = Boolean(notStaking);
-  const globalAprQuery = useGlobalStakingApr(enableGlobalStakingApr);
+  const globalAprQuery = useGlobalStakingApr();
   return notStaking ? globalAprQuery : stakingAprQuery;
 };

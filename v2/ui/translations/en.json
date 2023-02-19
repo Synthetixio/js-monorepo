@@ -71,7 +71,7 @@
       "collect-main-unhealthy-button": "Claim",
       "collect-explanation-link": "Rewards explained",
       "collect-rewards": "Your Rewards",
-      "collect-rewards-tooltip": "Value of SNX and sUSD rewards"
+      "collect-rewards-tooltip": "Value of SNX rewards"
     },
     "cratio-health-card": {
       "heading": "Collateralization Ratio Health",

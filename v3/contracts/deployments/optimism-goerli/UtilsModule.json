@@ -1,5 +1,5 @@
 {
-  "address": "0x76618c89b4ACCf3E0EB855564D79C54458e385fe",
+  "address": "0x1627D5C8779A9e62F00364438D318dF926493894",
   "abi": [
     {
       "inputs": [
@@ -28,6 +28,25 @@
     {
       "inputs": [
         {
+          "internalType": "bytes32",
+          "name": "k",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getConfig",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "v",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "ccipSend",
           "type": "address"
@@ -47,7 +66,25 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "k",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "v",
+          "type": "bytes32"
+        }
+      ],
+      "name": "setConfig",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "deployTxnHash": "0xea857abf70e3dfc9be8c7c54490de49c15436c70b19651fe9ef04f7353fc1807"
+  "deployTxnHash": "0x5f48b1f8f1e54f4cd0d9d5972e5f65780c3e74d8aa8c9b67612ad7bcf67cbe40"
 }

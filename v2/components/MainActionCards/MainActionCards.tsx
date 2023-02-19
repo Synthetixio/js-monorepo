@@ -99,7 +99,7 @@ export const Card = ({
       <Button
         data-testid={testId}
         variant={buttonVariant}
-        disabled={disabled}
+        isDisabled={disabled}
         onClick={disabledOrLoading ? () => {} : buttonAction}
       >
         {buttonText}

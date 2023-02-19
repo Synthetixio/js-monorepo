@@ -2,9 +2,9 @@
   "name": "@snx-v2/MintOrBurnChanges",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
+    "@chakra-ui/react": "^2.5.0",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/stakingCalculations": "workspace:*",
@@ -12,6 +12,6 @@
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
     "react": "^18.2.0",
-    "react-i18next": "^11.18.3"
+    "react-i18next": "^12.1.5"
   }
 }

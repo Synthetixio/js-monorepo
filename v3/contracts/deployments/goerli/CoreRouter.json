@@ -1,5 +1,5 @@
 {
-  "address": "0x6D2f8c20965EbE4c48f7076488EacDdEa1dbFfdF",
+  "address": "0x142a9063Af70734F6474fC9Ac2df51f52Ebb1F73",
   "abi": [
     {
       "inputs": [],
@@ -248,7 +248,7 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "feature",
           "type": "bytes32"
@@ -267,7 +267,7 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "feature",
           "type": "bytes32"
@@ -286,7 +286,7 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "feature",
           "type": "bytes32"
@@ -299,6 +299,44 @@
         }
       ],
       "name": "FeatureFlagAllowlistRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address[]",
+          "name": "deniers",
+          "type": "address[]"
+        }
+      ],
+      "name": "FeatureFlagDeniersReset",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "denyAll",
+          "type": "bool"
+        }
+      ],
+      "name": "FeatureFlagDenyAllSet",
       "type": "event"
     },
     {
@@ -317,6 +355,25 @@
       "name": "addToFeatureFlagAllowlist",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getDeniers",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -352,6 +409,25 @@
           "internalType": "address[]",
           "name": "",
           "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getFeatureFlagDenyAll",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -407,6 +483,24 @@
           "type": "bytes32"
         },
         {
+          "internalType": "address[]",
+          "name": "deniers",
+          "type": "address[]"
+        }
+      ],
+      "name": "setDeniers",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
           "internalType": "bool",
           "name": "allowAll",
           "type": "bool"
@@ -416,6 +510,35 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "feature",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bool",
+          "name": "denyAll",
+          "type": "bool"
+        }
+      ],
+      "name": "setFeatureFlagDenyAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
+      "type": "error"
     },
     {
       "inputs": [
@@ -578,6 +701,25 @@
       "name": "createAccount",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "getAccountLastInteraction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -786,11 +928,6 @@
     {
       "inputs": [],
       "name": "EmptyDistribution",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "FeatureUnavailable",
       "type": "error"
     },
     {
@@ -1107,6 +1244,38 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "requiredTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "AccountActivityTimeoutPending",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "AccountNotFound",
+      "type": "error"
     },
     {
       "inputs": [
@@ -1797,17 +1966,6 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint128",
-          "name": "accountId",
-          "type": "uint128"
-        }
-      ],
-      "name": "AccountNotFound",
-      "type": "error"
     },
     {
       "inputs": [],
@@ -2831,9 +2989,9 @@
       "name": "getPreferredPool",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint128",
           "name": "",
-          "type": "uint256"
+          "type": "uint128"
         }
       ],
       "stateMutability": "view",
@@ -3645,6 +3803,25 @@
     {
       "inputs": [
         {
+          "internalType": "bytes32",
+          "name": "k",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getConfig",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "v",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "ccipSend",
           "type": "address"
@@ -3668,12 +3845,35 @@
     {
       "inputs": [
         {
+          "internalType": "bytes32",
+          "name": "k",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "v",
+          "type": "bytes32"
+        }
+      ],
+      "name": "setConfig",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint256",
           "name": "minDelegation",
           "type": "uint256"
         }
       ],
       "name": "InsufficientDelegation",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidCollateralAmount",
       "type": "error"
     },
     {
@@ -3977,5 +4177,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xc34d3635e84c20bfdc654f94329686d2cae6adfe49610d0be44cc2b02757286a"
+  "deployTxnHash": "0xb98b256c38766e66d13adb0f183c1a98ac82a8a36a6bcad9e97b69b2e39a0a97"
 }

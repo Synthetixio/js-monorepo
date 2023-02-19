@@ -13,7 +13,7 @@
         "defaultValue": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
       },
       "oracle_manager_source": {
-        "defaultValue": "oracle-manager:1.2.2"
+        "defaultValue": "oracle-manager:1.2.6"
       }
     },
     "provision": {
@@ -210,13 +210,58 @@
         "func": "configureOracleManager",
         "args": ["<%= imports.oracle_manager.contracts.Proxy.address %>"],
         "depends": ["invoke.upgrade_core_proxy", "provision.oracle_manager"]
+      },
+      "enable_basic_features": {
+        "target": ["CoreProxy"],
+        "fromCall": {
+          "func": "owner"
+        },
+        "func": "multicall",
+        "args": [
+          [
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('createAccount'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('deposit'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('withdraw'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('mintUsd'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('burnUsd'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('liquidate'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('liquidateVault'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('depositMarketCollateral'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('withdrawMarketCollateral'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('depositMarketUsd'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('withdrawMarketUsd'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('claimRewards'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('delegateCollateral'), true]).slice(2) %>"
+          ]
+        ],
+        "depends": ["invoke.upgrade_core_proxy"]
       }
     }
   },
-  "miscUrl": "ipfs://QmZHsZU6bK979Kq6NKLTUj36PgoyKs6EfmB7FHcUyHYok5",
+  "miscUrl": "ipfs://QmTpX3c7jUDvsVP6KAYnTBcrGNsu4nNSAoMMkpMGkUKc1P",
   "options": {
     "owner": "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9",
-    "salt": "snx"
+    "salt": "alpha"
+  },
+  "meta": {
+    "name": "@synthetixio/main",
+    "version": "3.0.0-alpha.12",
+    "description": "Core Synthetix Protocol Contracts",
+    "private": true,
+    "scripts": {
+      "build": "rm -rf contracts/generated && hardhat storage:verify && hardhat generate-testable",
+      "test": "npm run build -- --quiet && hardhat test",
+      "coverage": "npm run build -- --quiet && hardhat coverage --network hardhat",
+      "compile-contracts": "hardhat compile",
+      "size-contracts": "hardhat compile && hardhat size-contracts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+      "@synthetixio/common-config": "*",
+      "solidity-docgen": "0.6.0-beta.31"
+    }
   },
   "status": "complete"
 }

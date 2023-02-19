@@ -1,6 +1,17 @@
 {
-  "address": "0x8c8471D934e2541eFd181fBffCfFd6BF87d89ef3",
+  "address": "0xc068D7E918a95de3864BcC4Ca17457971F1240bB",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
+      "type": "error"
+    },
     {
       "inputs": [
         {
@@ -177,6 +188,25 @@
       "name": "createAccount",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "getAccountLastInteraction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -383,5 +413,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x3b9438054a3cadfd7a08b6a92cff5c505f382673cb55bab59c0ed15797d75174"
+  "deployTxnHash": "0x780bee47390e0cdad0c6218c60b8e6f6cca51f7f91efeeed76a036579e7c7fcd"
 }

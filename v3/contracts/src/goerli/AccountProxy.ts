@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0x0a3153cA88E109Da1E82D29320ca1d7B881d0130';
+export const address = '0xC832904a89d02DA1950643412fefCa73bFd00149';
 export const abi = [
   'error AlreadyInitialized()',
   'error ImplementationIsSterile(address implementation)',
@@ -33,19 +33,20 @@ export const abi = [
   'error TokenDoesNotExist(uint256 id)',
   'event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)',
   'event ApprovalForAll(address indexed owner, address indexed operator, bool approved)',
-  'event Mint(address indexed owner, uint256 indexed tokenId)',
   'event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)',
   'function approve(address to, uint256 tokenId)',
   'function balanceOf(address holder) view returns (uint256)',
+  'function burn(uint256 tokenId)',
   'function getApproved(uint256 tokenId) view returns (address)',
   'function initialize(string tokenName, string tokenSymbol, string uri)',
   'function isApprovedForAll(address holder, address operator) view returns (bool)',
   'function isInitialized() view returns (bool)',
-  'function mint(address owner, uint256 nftId)',
+  'function mint(address to, uint256 tokenId)',
   'function name() view returns (string)',
   'function ownerOf(uint256 tokenId) view returns (address)',
   'function safeTransferFrom(address from, address to, uint256 tokenId)',
   'function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)',
+  'function setAllowance(uint256 tokenId, address spender)',
   'function setApprovalForAll(address operator, bool approved)',
   'function supportsInterface(bytes4 interfaceId) view returns (bool)',
   'function symbol() view returns (string)',
@@ -94,6 +95,7 @@ export interface AccountProxyInterface extends utils.Interface {
     'upgradeTo(address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
+    'burn(uint256)': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
     'initialize(string,string,string)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
@@ -103,6 +105,7 @@ export interface AccountProxyInterface extends utils.Interface {
     'ownerOf(uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
+    'setAllowance(uint256,address)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
@@ -127,6 +130,7 @@ export interface AccountProxyInterface extends utils.Interface {
       | 'upgradeTo'
       | 'approve'
       | 'balanceOf'
+      | 'burn'
       | 'getApproved'
       | 'initialize'
       | 'isApprovedForAll'
@@ -136,6 +140,7 @@ export interface AccountProxyInterface extends utils.Interface {
       | 'ownerOf'
       | 'safeTransferFrom(address,address,uint256)'
       | 'safeTransferFrom(address,address,uint256,bytes)'
+      | 'setAllowance'
       | 'setApprovalForAll'
       | 'supportsInterface'
       | 'symbol'
@@ -170,6 +175,7 @@ export interface AccountProxyInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'getApproved',
     values: [PromiseOrValue<BigNumberish>]
@@ -201,6 +207,10 @@ export interface AccountProxyInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>
     ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setAllowance',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: 'setApprovalForAll',
@@ -238,6 +248,7 @@ export interface AccountProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getApproved', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isApprovedForAll', data: BytesLike): Result;
@@ -253,6 +264,7 @@ export interface AccountProxyInterface extends utils.Interface {
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: 'setAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setApprovalForAll', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
@@ -268,7 +280,6 @@ export interface AccountProxyInterface extends utils.Interface {
     'Upgraded(address,address)': EventFragment;
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
-    'Mint(address,uint256)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
@@ -277,7 +288,6 @@ export interface AccountProxyInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Upgraded'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Mint'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
@@ -321,14 +331,6 @@ export interface ApprovalForAllEventObject {
 export type ApprovalForAllEvent = TypedEvent<[string, string, boolean], ApprovalForAllEventObject>;
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
-
-export interface MintEventObject {
-  owner: string;
-  tokenId: BigNumber;
-}
-export type MintEvent = TypedEvent<[string, BigNumber], MintEventObject>;
-
-export type MintEventFilter = TypedEventFilter<MintEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -408,6 +410,11 @@ export interface AccountProxy extends BaseContract {
 
     balanceOf(holder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    burn(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -429,8 +436,8 @@ export interface AccountProxy extends BaseContract {
     isInitialized(overrides?: CallOverrides): Promise<[boolean]>;
 
     mint(
-      owner: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -450,6 +457,12 @@ export interface AccountProxy extends BaseContract {
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setAllowance(
+      tokenId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -533,6 +546,11 @@ export interface AccountProxy extends BaseContract {
 
   balanceOf(holder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+  burn(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   initialize(
@@ -551,8 +569,8 @@ export interface AccountProxy extends BaseContract {
   isInitialized(overrides?: CallOverrides): Promise<boolean>;
 
   mint(
-    owner: PromiseOrValue<string>,
-    nftId: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -572,6 +590,12 @@ export interface AccountProxy extends BaseContract {
     to: PromiseOrValue<string>,
     tokenId: PromiseOrValue<BigNumberish>,
     data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setAllowance(
+    tokenId: PromiseOrValue<BigNumberish>,
+    spender: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -645,6 +669,8 @@ export interface AccountProxy extends BaseContract {
 
     balanceOf(holder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    burn(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     initialize(
@@ -663,8 +689,8 @@ export interface AccountProxy extends BaseContract {
     isInitialized(overrides?: CallOverrides): Promise<boolean>;
 
     mint(
-      owner: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -684,6 +710,12 @@ export interface AccountProxy extends BaseContract {
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setAllowance(
+      tokenId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -758,15 +790,6 @@ export interface AccountProxy extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
-    'Mint(address,uint256)'(
-      owner?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
-    ): MintEventFilter;
-    Mint(
-      owner?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
-    ): MintEventFilter;
-
     'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
@@ -822,6 +845,11 @@ export interface AccountProxy extends BaseContract {
 
     balanceOf(holder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    burn(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -843,8 +871,8 @@ export interface AccountProxy extends BaseContract {
     isInitialized(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      owner: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -864,6 +892,12 @@ export interface AccountProxy extends BaseContract {
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setAllowance(
+      tokenId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -951,6 +985,11 @@ export interface AccountProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    burn(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -972,8 +1011,8 @@ export interface AccountProxy extends BaseContract {
     isInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      owner: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -996,6 +1035,12 @@ export interface AccountProxy extends BaseContract {
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setAllowance(
+      tokenId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

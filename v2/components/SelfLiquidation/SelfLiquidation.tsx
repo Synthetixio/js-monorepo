@@ -207,7 +207,7 @@ export const SelfLiquidationUi: FC<{
         )}
         <Button
           data-testid="self liq button"
-          disabled={
+          isDisabled={
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
             Number(currentCRatioPercentage) >= Number(targetCRatioPercentage) ||

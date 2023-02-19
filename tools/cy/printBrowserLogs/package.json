@@ -10,6 +10,6 @@
   "repository": "github:Synthetixio/js-monorepo",
   "license": "MIT",
   "dependencies": {
-    "chrome-remote-interface": "^0.31.3"
+    "chrome-remote-interface": "^0.32.1"
   }
 }

@@ -36,7 +36,7 @@ export const NetworkNameById = {
 
 export type NetworkIdByNameType = typeof NetworkIdByName;
 export type NetworkName = keyof typeof NetworkIdByName;
-export type NetworkId = typeof NetworkIdByName[keyof typeof NetworkIdByName];
+export type NetworkId = (typeof NetworkIdByName)[keyof typeof NetworkIdByName];
 
 export type SynthetixJS = {
   networks: Array<NetworkName>;
@@ -95,4 +95,4 @@ export enum CurrencyCategory {
   'commodity' = 'Commodity',
 }
 
-export type Synth = typeof AllSynths[number];
+export type Synth = (typeof AllSynths)[number];

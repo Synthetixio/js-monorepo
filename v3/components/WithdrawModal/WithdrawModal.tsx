@@ -73,7 +73,7 @@ export const WithdrawModalUi: FC<{
           ) : null}
 
           <Button
-            disabled={isProcessing}
+            isDisabled={isProcessing}
             onClick={onSubmit}
             width="100%"
             my="4"

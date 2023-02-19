@@ -53,28 +53,31 @@ export const useApprove = (
   const { gasOptionsForTransaction } = data || {};
   const sufficientAllowance = Boolean(allowance?.gte(amount));
 
-  const mutation = useMutation(async (infiniteApproval: boolean) => {
-    if (!signer || !populateTransaction) return;
-    if (sufficientAllowance) return;
-    try {
-      dispatch({ type: 'prompting' });
+  const mutation = useMutation({
+    mutationFn: async (infiniteApproval: boolean) => {
+      if (!signer || !populateTransaction) return;
+      if (sufficientAllowance) return;
+      try {
+        dispatch({ type: 'prompting' });
 
-      const populatedTxn = await populateTransaction(
-        infiniteApproval ? ethers.constants.MaxUint256 : amount
-      );
-      const txn = await signer.sendTransaction({
-        ...populatedTxn,
-        ...gasOptionsForTransaction,
-      });
-      dispatch({ type: 'pending', payload: { txnHash: txn.hash } });
+        const populatedTxn = await populateTransaction(
+          infiniteApproval ? ethers.constants.MaxUint256 : amount
+        );
+        const txn = await signer.sendTransaction({
+          ...populatedTxn,
+          ...gasOptionsForTransaction,
+        });
+        dispatch({ type: 'pending', payload: { txnHash: txn.hash } });
 
-      await txn.wait();
-      dispatch({ type: 'success' });
-    } catch (error: any) {
-      dispatch({ type: 'error', payload: { error } });
-      throw error;
-    }
-  }, eventHandlers);
+        await txn.wait();
+        dispatch({ type: 'success' });
+      } catch (error: any) {
+        dispatch({ type: 'error', payload: { error } });
+        throw error;
+      }
+    },
+    ...eventHandlers,
+  });
   return {
     mutation,
     txnState,
