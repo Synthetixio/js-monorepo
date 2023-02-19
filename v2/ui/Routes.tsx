@@ -40,6 +40,10 @@ import V2UnflagPage from './content/V2Unflag';
 import V2SwapLinksPage from './content/V2SwapLinks';
 import V2SelfLiquidation from './content/V2SelfLiquidation';
 import V2Terms from 'content/V2Terms';
+import TermsPage from 'content/TermsPage';
+import { TermsModal } from '@snx-v2/TermsModal';
+import { SESSION_STORAGE_KEYS } from '@snx-v2/Constants';
+import { TermsModalV1 } from 'components/TermsModalV1';
 
 const Wrapper: FC<PropsWithChildren> = ({ children }) => {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
@@ -68,12 +72,22 @@ const WalletWrapper: FC<PropsWithChildren> = ({ children }) => {
 
 export default function AppRoutes() {
   const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
+
+  const TERMS_CONDITIONS_ACCEPTED = !!sessionStorage.getItem(
+    SESSION_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED
+  );
+
   return (
     <BrowserRouter>
       <AppLayout>
+        {STAKING_V2_ENABLED ? (
+          <TermsModal defaultOpen={!TERMS_CONDITIONS_ACCEPTED} />
+        ) : (
+          <TermsModalV1 defaultOpen={!TERMS_CONDITIONS_ACCEPTED} />
+        )}
+
         <Routes>
           <Route path="/" element={STAKING_V2_ENABLED ? <V2HomePage /> : <DashboardPage />} />
-          <Route path="/terms" element={<V2Terms />} />
           {STAKING_V2_ENABLED ? (
             <>
               <Route path="/staking" element={<Navigate to="/staking/mint" />} />
@@ -84,7 +98,7 @@ export default function AppRoutes() {
               <Route path="/staking/self-liquidation" element={<V2SelfLiquidation />} />
               <Route path="/earn" element={<V2Earn />} />
               <Route path="/wallet" element={<Navigate to="/wallet/balances" replace={true} />} />
-              {/* <Route path="/terms" element={<V2Terms />} /> */}
+              <Route path="/terms" element={<V2Terms />} />
               <Route
                 path="/wallet/balances"
                 element={
@@ -127,6 +141,7 @@ export default function AppRoutes() {
               </Route>
               <Route path="/wallet" element={<Navigate to="/synths" replace={true} />} />
               <Route path="/wallet/balances" element={<Navigate to="/synths" replace={true} />} />
+              <Route path="/terms" element={<TermsPage />} />
             </>
           )}
           <Route

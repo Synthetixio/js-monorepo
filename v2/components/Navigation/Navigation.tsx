@@ -28,6 +28,7 @@ import {
   WalletIcon,
   StakingLogo,
   // InfoOutline,
+  InfoOutline,
 } from '@snx-v2/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -313,6 +314,12 @@ export const NavigationUI = ({
               <GuideIcon />
               <Text fontSize="sm" ml={2}>
                 {t('common.wallet.menu.guide')}
+              </Text>
+            </MenuItem>
+            <MenuItem onClick={() => navigate('/terms')}>
+              <InfoOutline width="20px" height="20px" />
+              <Text fontSize="sm" ml={2}>
+                {t('common.wallet.menu.terms')}
               </Text>
             </MenuItem>
           </MenuList>
