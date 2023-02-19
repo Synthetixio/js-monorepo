@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
-import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
+import { SESSION_STORAGE_KEYS } from '@snx-v2/Constants';
 
 interface TermsModalProps {
   defaultOpen: boolean;
@@ -22,14 +22,10 @@ interface TermsModalProps {
 
 export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
   const [isOpen, setOpen] = useState(defaultOpen);
-  const [enabled, setEnabled] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
   const onSubmit = () => {
-    if (enabled) {
-      localStorage.setItem(LOCAL_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED, JSON.stringify(true));
-      setOpen(false);
-    }
+    sessionStorage.setItem(SESSION_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED, JSON.stringify(true));
+    setOpen(false);
   };
 
   return (
@@ -52,20 +48,26 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
             such, you fully understand that:
           </Text>
           <Box
-            onScroll={() => {
-              const condition = (ref.current && ref?.current?.scrollHeight / 2) || 300;
-              if (ref.current && ref.current?.scrollTop > condition + 30) {
-                setEnabled(true);
-              } else {
-                setEnabled(false);
-              }
-            }}
             as="div"
             my={2}
             py={3}
-            ref={ref}
-            height="320px"
-            overflow="scroll"
+            height="350px"
+            overflow="auto"
+            overflowX="scroll"
+            sx={{
+              '::-webkit-scrollbar': {
+                display: 'block',
+              },
+              '::-webkit-scrollbar-track': {
+                backgroundColor: 'transparent',
+              },
+              '::-webkit-scrollbar-track-piece': {
+                backgroundColor: 'transparent',
+              },
+              '::-webkit-scrollbar-corner': {
+                backgroundColor: 'transparent',
+              },
+            }}
           >
             <UnorderedList>
               <Text fontSize="14px">
@@ -173,7 +175,6 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
           my={4}
           mx={6}
           onClick={onSubmit}
-          isDisabled={!enabled}
         >
           I agree
         </Button>

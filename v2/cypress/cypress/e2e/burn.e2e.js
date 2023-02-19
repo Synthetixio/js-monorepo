@@ -1,6 +1,7 @@
 it('should burn sUSD', () => {
   cy.on('window:before:load', async (win) => {
     win.localStorage.STAKING_V2_ENABLED = 'true';
+    win.sessionStorage.TERMS_CONDITIONS_ACCEPTED = 'true';
   });
 
   cy.task('getSnx');

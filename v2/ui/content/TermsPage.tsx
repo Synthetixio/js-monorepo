@@ -1,16 +1,12 @@
-import { Box, Container, Heading, ListItem, UnorderedList, Text } from '@chakra-ui/react';
+import styled from 'styled-components';
 
-const V2Terms = () => {
+const TermsPage = () => {
   return (
-    <Box bg="navy.900" height="100%">
-      <Container pt={12} pb={16} bg="navy.900" maxW="4xl" height="full">
-        <Heading size="md" textAlign="center" textTransform="uppercase">
-          Synthetix Terms of Use
-        </Heading>
-        <Text mt={4} fontFamily="heading" fontSize="16px">
-          Last Modified: January 25, 2022
-        </Text>
-        <Text fontSize="14px" my={2}>
+    <>
+      <Container>
+        <Heading>Synthetix Terms of Use</Heading>
+        <Text style={{ fontSize: '16px', marginTop: '16px' }}>Last Modified: January 25, 2022</Text>
+        <Text>
           SYNTHETIX IS A SUITE OF EXPERIMENTAL BLOCKCHAIN-ORIENTED FUNCTIONALITIES. USING THESE
           FUNCTIONALITIES (INCLUDING VIA THE INTERFACE ON OUR WEBSITE) POSES SIGNIFICANT RISKS TO
           YOU AND YOUR ONLINE ASSETS. THIS DOCUMENT CONTAINS VERY IMPORTANT INFORMATION REGARDING
@@ -24,67 +20,37 @@ const V2Terms = () => {
           USING THIS WEBSITE OR ANY OF THIS WEBSITE’S FUNCTIONALITIES BY THESE TERMS OR BY
           APPLICABLE LAW.
         </Text>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             1.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Acceptance of These Terms of Use.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
-            These terms of use are entered into by and between you (
-            <Text as="span" fontWeight="700">
-              “you”
-            </Text>{' '}
-            or the{' '}
-            <Text as="span" fontWeight="700">
-              “User”
-            </Text>
-            ) and Synthetix. (
-            <Text as="span" fontWeight="700">
-              “SNX,”{' '}
-            </Text>{' '}
-            <Text as="span" fontWeight="700">
-              “SNX DAO,”{' '}
-            </Text>{' '}
-            <Text as="span" fontWeight="700">
-              “we,”{' '}
-            </Text>{' '}
-            <Text as="span" fontWeight="700">
-              our,”{' '}
-            </Text>{' '}
-            <Text as="span" fontWeight="700">
-              us”
-            </Text>
+          <Text style={{ marginTop: '8px' }}>
+            These terms of use are entered into by and between you (<InlineBold>“you”</InlineBold>{' '}
+            or the <InlineBold>“User”</InlineBold>) and Synthetix. (<InlineBold>“SNX,” </InlineBold>{' '}
+            <InlineBold>“SNX DAO,” </InlineBold> <InlineBold>“we,” </InlineBold>{' '}
+            <InlineBold>our,” </InlineBold> <InlineBold>us”</InlineBold>
             ). SNX is a distributed network of individual contributors who are located around the
             world and collaborate primarily through digital means. The following terms and
             conditions, together with any documents they expressly incorporate by reference
-            (collectively, these{' '}
-            <Text fontWeight="700" as="span">
-              “Terms of Use”{' '}
-            </Text>{' '}
-            or this{' '}
-            <Text fontWeight="700" as="span">
-              “Agreement”
-            </Text>
+            (collectively, these <InlineBold>“Terms of Use” </InlineBold> or this{' '}
+            <InlineBold>“Agreement”</InlineBold>
             ), govern the User’s access to and use of https://synthetix.io/,
             https://synthetix.eth.limo/ and its sub-pages, including any content or functionality
             offered on or through the website-hosted user interface accessible via
             https://staking.synthetix.io/ or https://staking.synthetix.eth.limo/ (the{' '}
-            <Text as="span" fontWeight="700">
-              “Interface,”{' '}
-            </Text>{' '}
-            or collectively with other https://synthetix.io/ or https://synthetix.eth.limo/
-            subpages, the{' '}
-            <Text as="span" fontWeight="700">
-              “Website”
-            </Text>
+            <InlineBold>“Interface,” </InlineBold> or collectively with other https://synthetix.io/
+            or https://synthetix.eth.limo/ subpages, the <InlineBold>“Website”</InlineBold>
             ). The User must read these Terms of Use carefully before using the Website (including
             the Interface).{' '}
-            <Text as="span" fontWeight="700">
+            <InlineBold style={{ marginTop: '8px', marginBottom: '8px' }}>
               By using the Website or the Interface, the User accepts and agrees to be bound and
               abide by these Terms of Use and all documents incorporated herein by reference.
-            </Text>{' '}
+            </InlineBold>{' '}
             If the User does not want to agree to these Terms of Use or any documents that are
             incorporated herein by reference, the User must not access the Website or use the
             Interface. The Website is offered and available to users who are eighteen (18) years of
@@ -98,34 +64,25 @@ const V2Terms = () => {
             code, decree, or other directive, requirement or guideline, whether applicable on SNX,
             the Website, the Interface, the Protocol (as defined herein), or on the User (or any
             combination of the foregoing) by an authority with valid and enforceable jurisdiction (
-            <Text as="span" fontWeight="700">
-              “Applicable Laws”
-            </Text>
+            <InlineBold>“Applicable Laws”</InlineBold>
             ). If you do not meet all of these requirements, you must not access or use the Website.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             2.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               The Services and Protocol; Blockchain Fees.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
-            The Website’s services (the{' '}
-            <Text as="span" fontWeight="700">
-              “Services”
-            </Text>
-            ) include without limitation providing methods and information to enable those who
-            access the Website (
-            <Text as="span" fontWeight="700">
-              “Participants”
-            </Text>
-            ) to access to or participate in the Synthetix decentralized, autonomous financial
-            market mechanism powered by blockchain-enforced smart contracts (the{' '}
-            <Text as="span" fontWeight="700">
-              “Protocol”
-            </Text>
+          <Text style={{ marginTop: '8px' }}>
+            The Website’s services (the <InlineBold>“Services”</InlineBold>) include without
+            limitation providing methods and information to enable those who access the Website (
+            <InlineBold>“Participants”</InlineBold>) to access to or participate in the Synthetix
+            decentralized, autonomous financial market mechanism powered by blockchain-enforced
+            smart contracts (the <InlineBold>“Protocol”</InlineBold>
             ). The Protocol is intended to be provided and operate in a decentralized manner,
             meaning that individual SNX contributors and the SNX DAO, have no ability to control,
             modify, prevent, stop, amend, or adjust interactions or transactions after they are
@@ -134,7 +91,7 @@ const V2Terms = () => {
             access, or otherwise affect the Protocol. Thus, the Services (including the Website and
             the Interface) are distinct from the Protocol, and any of the Protocol’s products or
             offerings should not be viewed as products or offerings provided by SNX or the Website.
-            <Text fontWeight="700" as="span">
+            <InlineBold>
               You are expected to be familiar with the Protocol and the risks it represents
               (including without limitation the possibility of your crypto-assets being forfeited
               according to the Protocol’s rules or being lost for any other reason) before accessing
@@ -142,15 +99,13 @@ const V2Terms = () => {
               YOUR USE OR INTERACTION WITH THE PROTOCOL IS AT YOUR OWN RISK AND SNX WAIVES ALL
               LIABILITY OR RESPONSIBILITY, AND MAKES NO WARRANTIES, RELATED TO THE PROTOCOL, WHETHER
               OR NOT THE PROTOCOL IS ACCESSED VIA OUR SERVICES.
-            </Text>{' '}
-            <Text mt={2}>
+            </InlineBold>{' '}
+            <Text style={{ marginTop: '8px' }}>
               Your full use and enjoyment of the Services (whether or not by using the Interface)
               may require you to pay transactional fees required by their underlying blockchain or
               distributed ledger service, or by the Protocol itself, that are designed to encourage
               their intended use among the Protocol’s participants (
-              <Text as="span" fontWeight="700">
-                “Blockchain Fees”
-              </Text>
+              <InlineBold>“Blockchain Fees”</InlineBold>
               ). These Blockchain Fees are not levied directly by SNX, but rather are determined by
               your use of the Services and the rules placed by corresponding Protocol and underlying
               blockchain communities at large. You acknowledge that SNX has no control over
@@ -161,45 +116,51 @@ const V2Terms = () => {
               disbursement, indemnity, or for any other aspect of your use or transmission of
               Blockchain Fees. For further information regarding blockchain technology,
               crypto-assets and the associated risks, see{' '}
-              <Text as="span" fontWeight="700" textDecoration="underline">
-                Nature of Blockchain; Assumption of Risk; Waiver of Claims.
-              </Text>
+              <InlineBold>Nature of Blockchain; Assumption of Risk; Waiver of Claims.</InlineBold>
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             3.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Accessing the Website and User Security.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             We reserve the right to withdraw or amend the Website (including the Interface), and any
             other Services or material we provide on the Website, in our sole discretion without
             notice. We will not be liable if for any reason all or any part of the Website, the
             Interface, the Protocol, or any of the Services are unavailable at any time or for any
             period. From time to time, we may restrict access to some parts of the Website, or the
-            entire Website, to Participants. <Text mt={4}>The User is responsible for both:</Text>
-            <UnorderedList my={4}>
-              <ListItem>
+            entire Website, to Participants.{' '}
+            <Text style={{ marginTop: '16px' }}>The User is responsible for both:</Text>
+            <ul
+              style={{
+                marginTop: '16px',
+                marginBottom: '16px',
+                listStyleType: 'square',
+                listStylePosition: 'inside',
+              }}
+            >
+              <li>
                 Making all arrangements necessary for the User to have access to the Website and the
                 Services.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Ensuring that all persons who access the Website or the Services through the User’s
                 internet connection are aware of these Terms of Use and comply with them.
-              </ListItem>
-            </UnorderedList>
+              </li>
+            </ul>
             <Text>
               To access certain Services or some of the resources offered on the Website, the User
               may be asked to provide certain registration details or other information. Other
               Services or resources offered on the Website (such as the Interface) may require the
               User to utilize certain Web3 capabilities, such a crypto-asset wallet capable of
               interacting with the User’s web browser or relevant blockchain nodes (
-              <Text as="span" fontWeight="700">
-                “Web3 Utilities”
-              </Text>
+              <InlineBold>“Web3 Utilities”</InlineBold>
               ). It is a condition of the User’s use of the Website and the Services that the User
               only operate such Web3 Utilities with a private key(s) that the User created or has
               the direct, explicit permission of the party who created the relevant private key(s).
@@ -210,7 +171,7 @@ const V2Terms = () => {
               consistent with these Terms of Use and all documents referenced or incorporated
               herein.{' '}
             </Text>
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               If the User utilizes a Web3 Utility that relies on a separate username, password,
               private key, or any other piece of information as part of its security procedures, the
               User must treat such information as confidential, and the User must not disclose that
@@ -228,40 +189,49 @@ const V2Terms = () => {
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             4.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Prohibited Uses.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             The User may access or use the Website and the Services only for lawful purposes and in
             accordance with these Terms of Use. The User agrees not to use or access the Website or
             the Services:{' '}
-            <UnorderedList my={4}>
-              <ListItem>
+            <ul
+              style={{
+                marginTop: '16px',
+                marginBottom: '16px',
+                listStyleType: 'square',
+                listStylePosition: 'inside',
+              }}
+            >
+              <li>
                 In any way that violates any applicable federal, state, local, or international law
                 or regulation (including, without limitation, any laws regarding the export of data
                 or software to and from the US or other countries).
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 For the purpose of exploiting, harming, or attempting to exploit or harm minors in
                 any way by exposing them to inappropriate content, asking for personally
                 identifiable information, or otherwise.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 To transmit, or procure the sending of, any advertising or promotional material,
                 including any “junk mail,” “chain letter,” “spam,” or any other similar
                 solicitation.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 To impersonate or attempt to impersonate a specific individual SNX DAO contributor,
                 another user, or any other person or entity (including, without limitation, by using
                 email addresses, screen names, similarly named or commonly misspelled URLs, or
                 associated blockchain identities).
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 To engage in any other conduct that restricts or inhibits anyone’s use or enjoyment
                 of the Website or the Services, or which, as determined by us, may harm SNX or
                 Participants, or expose them to liability. If they are a citizen of or otherwise
@@ -269,143 +239,152 @@ const V2Terms = () => {
                 Balkans, Belarus, Côte d’Ivoire, Democratic Republic of the Congo, Iraq, Lebanon,
                 Liberia, Libya, North Korea, Russia, certain sanctioned areas of Ukraine, Somalia,
                 Venezuela, Yemen, or Zimbabwe (collectively,{' '}
-                <Text as="span" fontWeight="700">
-                  “Prohibited Jurisdictions”
-                </Text>
+                <InlineBold>“Prohibited Jurisdictions”</InlineBold>
                 ), or if the User is otherwise listed as a Specially Designated National by the
-                United States Office of Foreign Asset Control (
-                <Text as="span" fontWeight="700">
-                  “OFAC”
-                </Text>
+                United States Office of Foreign Asset Control (<InlineBold>“OFAC”</InlineBold>
                 ).
-              </ListItem>
-              <ListItem>
-                If doing so is illegal or impermissible according to any Applicable Laws.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>If doing so is illegal or impermissible according to any Applicable Laws.</li>
+              <li>
                 To cause the Services, any of the Services’ underlying blockchain networks or
                 technologies, or any other functionality with which the Services interact to work
                 other than as intended.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 To take any action that may be reasonably construed as fraud, deceit, or
                 manipulation.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 To damage the reputation of SNX or impair any of SNX’s legal rights or interests.
-              </ListItem>
-            </UnorderedList>
-            <Text mt={4}>Additionally, the User agrees not to:</Text>
-            <UnorderedList my={4}>
-              <ListItem>
+              </li>
+            </ul>
+            <Text style={{ marginTop: '16px' }}>Additionally, the User agrees not to:</Text>
+            <ul
+              style={{
+                marginTop: '16px',
+                marginBottom: '16px',
+                listStyleType: 'square',
+                listStylePosition: 'inside',
+              }}
+            >
+              <li>
                 Be likely to deceive or defraud, or attempt to deceive or defraud, any person,
                 including (without limitation) providing any false, inaccurate, or misleading
                 information (whether directly through the Services or through an external means that
                 affects the Protocol) with the intent to unlawfully obtain the property of another
                 or to provide knowingly or recklessly false information, including in any way that
                 causes inaccuracy among the content on the Website or on the Services.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Use the Services to manipulate or defraud any DEX, oracle system, the Protocol, or
                 blockchain network, or the users thereof.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Promote any illegal activity, or advocate, promote, or assist any unlawful act.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Cause needless annoyance, inconvenience, or anxiety, or be likely to unreasonably
                 upset, embarrass, alarm, or annoy any other person.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Impersonate any person, or misrepresent the User’s affiliation with any person or
                 organization in connection with its use of the Website and Services.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Engage in any activity or behavior that violates any applicable law, rule, or
                 regulation concerning, or otherwise damages, the integrity of the Website or the
                 Services, or any other service or software which relies on the Services.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Give the impression that they emanate from or are endorsed by us or any other person
                 or entity if this is not the case.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Use the Website in any manner that could disable, overburden, damage, impair, or
                 interfere with any other party’s use of the Website, including the ability to engage
                 in real time activities through the Website or with the Services.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Use any robot, spider, or other similar automatic device, process, or means to
                 access the Website for any purpose, including monitoring or copying any of the
                 material on the Website.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Use any manual process to copy any of the material on the Website, or for any other
                 purpose not expressly authorized in these Terms of Use, without our prior written
                 consent.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Use any device, software, or routine that interferes with the proper working of the
                 Website or the Services.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Circumnavigate, by any means, any restriction we may have implemented to prohibit
                 impermissible access to citizens and residents of, or Participants physically
                 located in, any Prohibited Jurisdiction.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Introduce any viruses, Trojan horses, worms, logic bombs, or other material that is
                 malicious or technologically harmful to the Website, the Services, the Participants,
                 any underlying blockchain, or any of the Service’s related utilities or
                 functionalities.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts
                 of the Website, the server on which the Website is stored, or any server, computer,
                 or database connected to the Website, including any underlying blockchain.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Violate the legal rights (including the rights of publicity and privacy) of others
                 or contain any material that could give rise to any civil or criminal liability
                 under applicable laws or regulations or that otherwise may be in conflict with these
                 Terms of Use.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Attack the Website, the Services, the Protocol, any of the Services’ underlying
                 blockchain networks or technologies, or any other functionality with which the
                 Services interact via a denial-of-service attack or a distributed denial-of-service
                 attack.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Encourage or induce any third party to engage in any of the activities prohibited
                 under these Terms.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Otherwise interfere with or attempt to interfere with the proper working of the
                 Website or the Services in any way.
-              </ListItem>
-            </UnorderedList>
+              </li>
+            </ul>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             5.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Monitoring and Enforcement; Termination
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             We have the right to:
-            <UnorderedList my={4}>
-              <ListItem>
+            <ul
+              style={{
+                marginTop: '16px',
+                marginBottom: '16px',
+                listStyleType: 'square',
+                listStylePosition: 'inside',
+              }}
+            >
+              <li>
                 Take appropriate legal action, including without limitation, referral to law
                 enforcement, for any illegal or unauthorized use of the Website.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Terminate or suspend your access to all or part of the Website for any or no reason,
                 including without limitation, any violation of these Terms of Use.
-              </ListItem>
-            </UnorderedList>
+              </li>
+            </ul>
             Without limiting the foregoing, SNX contributors have the right to cooperate fully with
             any law enforcement authorities or court order requesting or directing us to disclose
             the identity or other information of anyone posting any materials on or through the
@@ -413,7 +392,7 @@ const V2Terms = () => {
             LICENSEES, AND SERVICE PROVIDERS FROM ANY CLAIMS RESULTING FROM ANY ACTION TAKEN BY ANY
             OF THE FOREGOING PARTIES DURING, OR TAKEN AS A CONSEQUENCE OF, INVESTIGATIONS BY EITHER
             SUCH PARTIES OR LAW ENFORCEMENT AUTHORITIES.{' '}
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               However, we cannot review interactions or activities before they are executed through
               the Website, and, given the nature of blockchain and functionalities like those
               offered via the Services, cannot ensure prompt removal or rectification of
@@ -429,25 +408,34 @@ const V2Terms = () => {
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             5.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Monitoring and Enforcement; Termination
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             We have the right to:
-            <UnorderedList my={4}>
-              <ListItem>
+            <ul
+              style={{
+                marginTop: '16px',
+                marginBottom: '16px',
+                listStyleType: 'square',
+                listStylePosition: 'inside',
+              }}
+            >
+              <li>
                 Take appropriate legal action, including without limitation, referral to law
                 enforcement, for any illegal or unauthorized use of the Website.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Terminate or suspend your access to all or part of the Website for any or no reason,
                 including without limitation, any violation of these Terms of Use.
-              </ListItem>
-            </UnorderedList>
+              </li>
+            </ul>
             Without limiting the foregoing, SNX contributors have the right to cooperate fully with
             any law enforcement authorities or court order requesting or directing us to disclose
             the identity or other information of anyone posting any materials on or through the
@@ -455,7 +443,7 @@ const V2Terms = () => {
             LICENSEES, AND SERVICE PROVIDERS FROM ANY CLAIMS RESULTING FROM ANY ACTION TAKEN BY ANY
             OF THE FOREGOING PARTIES DURING, OR TAKEN AS A CONSEQUENCE OF, INVESTIGATIONS BY EITHER
             SUCH PARTIES OR LAW ENFORCEMENT AUTHORITIES.{' '}
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               However, we cannot review interactions or activities before they are executed through
               the Website, and, given the nature of blockchain and functionalities like those
               offered via the Services, cannot ensure prompt removal or rectification of
@@ -471,42 +459,45 @@ const V2Terms = () => {
             </Text>
           </Text>
         </Box>
-
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             6.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Changes to These Terms of Use.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             We may revise and update these Terms of Use from time to time in our sole discretion.
             All changes are effective immediately when we post them and apply to all access to and
             use of the Website thereafter. However, any changes to the dispute resolution provisions
             set out in the Section entitled{' '}
-            <Text fontWeight="700" textDecoration="underline" as="span">
+            <InlineBold style={{ textDecoration: 'underline' }}>
               Governing Law & Jurisdiction
-            </Text>{' '}
+            </InlineBold>{' '}
             below will not apply to any disputes for which the parties have actual notice before the
             date the change is posted on the Website.
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               The User’s continued use of the Website or the Services following the posting of
               revised Terms of Use means that the User accepts and agrees to the changes.{' '}
-              <Text as="span" fontWeight="700">
+              <InlineBold>
                 The User is expected to check this page each time it accesses this Website or the
                 Interface, so it is aware of any changes as they are binding on the User.
-              </Text>
+              </InlineBold>
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             7.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Intellectual Property Rights.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             Except any open-source software or other material incorporated the Website or the
             Services, the Website and its entire contents, features, and functionality (including
             but not limited to all information, software, text, displays, images, video, and audio,
@@ -516,44 +507,58 @@ const V2Terms = () => {
             laws. The User must not reproduce, distribute, modify, create derivative works of,
             publicly display, publicly perform, republish, download, store, or transmit any of the
             material on our Website, except as follows:
-            <UnorderedList my={4}>
-              <ListItem>
+            <ul
+              style={{
+                marginTop: '16px',
+                marginBottom: '16px',
+                listStyleType: 'square',
+                listStylePosition: 'inside',
+              }}
+            >
+              <li>
                 The User’s computer may temporarily store copies of such materials in RAM incidental
                 to the User’s accessing and viewing those materials.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 The User may store files that are automatically cached by the User’s web browser for
                 display enhancement purposes.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 The User may print or download one copy of a reasonable number of pages of the
                 Website for its own personal, non-commercial use and not for further reproduction,
                 publication, or distribution.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 If we provide desktop, mobile, or other applications for download, the User may
                 download a single copy to its computer or mobile device, provided the User agrees to
                 be bound by any applicable end user license agreement or other similar agreement for
                 such applications.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 For any open-source materials provided on the Website or through the Services, the
                 User may perform any activities only as is consistent with the open-source license
                 applicable to such materials.
-              </ListItem>
-            </UnorderedList>
+              </li>
+            </ul>
             <Text>The User must not:</Text>
-            <UnorderedList my={4}>
-              <ListItem>Modify copies of any materials from this Website.</ListItem>
-              <ListItem>
+            <ul
+              style={{
+                marginTop: '16px',
+                marginBottom: '16px',
+                listStyleType: 'square',
+                listStylePosition: 'inside',
+              }}
+            >
+              <li>Modify copies of any materials from this Website.</li>
+              <li>
                 Use any illustrations, photographs, video or audio sequences, or any graphics
                 separately from the accompanying text.
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Delete or alter any copyright, trademark, or other proprietary rights notices from
                 copies of materials from this Website.
-              </ListItem>
-            </UnorderedList>
+              </li>
+            </ul>
             <Text>
               If the User prints, copies, modifies, downloads, or otherwise uses or provides any
               other person with access to any part of the Website in breach of these Terms of Use,
@@ -562,25 +567,27 @@ const V2Terms = () => {
               title, or interest in or to the Website or any content on the Website is transferred
               to the User, and all rights not expressly granted are reserved by SNX.
             </Text>
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               Notwithstanding anything to the contrary in these Terms of Use, the User may freely
               use any open-sourced materials up to the limits provided, but in accordance with any
               requirements placed, by those materials’ open-source licenses.
             </Text>
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               Any use of the Website not expressly permitted by these Terms of Use is a breach of
               these Terms of Use and may violate copyright, trademark, and other laws.
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             8.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Trademarks.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             Synthetix DAO name, the terms “Synthetix,” “SNX,” and all related names, logos, product
             and service names, designs, and slogans are trademarks of SNX or its affiliates or
             licensors. You must not use such marks without the prior written permission of SNX;
@@ -600,33 +607,35 @@ const V2Terms = () => {
             and Website are the trademarks of their respective owners.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             9.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Reliance on Information Posted.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             The content and information presented on or through the Website (including, without
             limitation, on the Interface) is made available solely for general information and
             education purposes. We do not warrant the accuracy, completeness, or usefulness of this
             information. Any information posted to the Website or through the Services should not be
             construed as an intention to form a contract, and in no case should any information be
             construed as SNX’s offer to buy, sell, or exchange crypto-assets.{' '}
-            <Text as="span" fontWeight="700">
+            <InlineBold>
               Any reliance the User places on such information is strictly at the User’s own risk
-            </Text>
+            </InlineBold>
             , and as is common in the blockchain space, the User is assuming a high amount of risk
             related to others or technical harms when operating via the Website, the Interface, and
             the Services.{' '}
-            <Text fontWeight="700" as="span">
+            <InlineBold>
               We disclaim all liability and responsibility arising from any reliance placed on such
               materials by the User or any other Participant, by anyone who may be informed of any
               of the Website’s or the Services’ contents, or by the actions or omissions of others
               interacting with the Protocol or any underlying blockchain.
-            </Text>{' '}
-            <Text mt={2}>
+            </InlineBold>{' '}
+            <Text style={{ marginTop: '8px' }}>
               This Website or the Services may include content provided by third parties, including
               (without limitation) materials provided by SNX DAO Contributors, bloggers, blockchain
               users, other decentralized applications, aggregators, and/or reporting services. All
@@ -642,14 +651,16 @@ const V2Terms = () => {
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             10.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Changes to the Website.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             We may update the content on, design of, or functionalities available through this
             Website or through the Services from time to time, but the Website and the Services are
             not necessarily complete or up-to-date. Any of the material on the Website or provided
@@ -657,40 +668,36 @@ const V2Terms = () => {
             obligation to update such material.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             11.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               WARRANTY DISCLAIMER.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             SNX DAO is a developer of open-source software and does not unilaterally offer, operate,
             or administer the Protocol or a blockchain network. The Services merely attempt to
             assist Participants in more easily participating in the Protocol, DeFi services, or
             blockchain networks generally.
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               The User is responsible for its use of the Services, the functionalities they enable,
               transactions engaged through the Website or the Interface, and the use of the
               information derived thereof. The User is solely responsible for complying with all
               Applicable Laws related to its transactions and activities that directly or indirectly
               incorporate our provision of the Services, including, but not limited to, the
               Commodity Exchange Act and its regulations as overseen by the U.S. Commodity Futures
-              Trading Commission (
-              <Text fontWeight="700" as="span">
-                “CFTC”
-              </Text>
+              Trading Commission (<InlineBold>“CFTC”</InlineBold>
               ), and the federal securities laws and its regulations overseen by the U.S. Securities
-              and Exchange Commission (
-              <Text as="span" fontWeight="700">
-                “SEC”
-              </Text>
+              and Exchange Commission (<InlineBold>“SEC”</InlineBold>
               ). The User acknowledges its understanding that SNX is not registered nor licensed
               with, nor have our Website, Interface, or Services (or the software contained therein)
               been reviewed or evaluated by, the CFTC, SEC, or any other financial or banking
               regulator of any jurisdiction.
             </Text>
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               The User understands that we cannot and do not guarantee or warrant that files
               available for download from the internet or the Website or through the Services will
               be free of viruses or other destructive code. The User is responsible for implementing
@@ -700,7 +707,7 @@ const V2Terms = () => {
               any of the Services’ underlying blockchain and related technologies; and (4)
               maintaining a means external to our site to reconstruct of any lost data.
             </Text>
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               TO THE FULLEST EXTENT PROVIDED BY LAW, WE WILL NOT BE LIABLE FOR ANY LOSS OR DAMAGE
               CAUSED BY A DISTRIBUTED DENIAL-OF-SERVICE ATTACK, MAN-IN-THE-MIDDLE ATTACK, VIRUSES,
               OR OTHER TECHNOLOGICALLY HARMFUL MATERIAL THAT MAY INFECT THE USER’S COMPUTER
@@ -708,7 +715,7 @@ const V2Terms = () => {
               USE OF THE WEBSITE OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITE OR TO THE
               USER’S DOWNLOADING OF ANY MATERIAL POSTED ON IT, OR ON ANY WEBSITE LINKED TO IT.
             </Text>
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               THE USER’S USE OF THE WEBSITE AND THE INTERFACE, THE PROTOCOL, AND ANY OF THE SERVICES
               (AND ANY OF THEIR CONTENT) IS AT THE USER’S SOLE RISK. THE WEBSITE, THE INTERFACE, AND
               THE SERVICES ARE PROVIDED ON AN “AS IS’’ AND “AS AVAILABLE” BASIS. TO THE FULLEST
@@ -734,20 +741,22 @@ const V2Terms = () => {
               OFFERS, STATEMENTS, OR ACTIONS BY ANY THIRD PARTY EITHER REGARDING THE WEBSITE OR THE
               SERVICES.
             </Text>
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               THE FOREGOING DOES NOT AFFECT ANY WARRANTIES THAT CANNOT BE EXCLUDED OR LIMITED UNDER
               APPLICABLE LAW.
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             12.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               LIMITATION OF LIABILITY.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             TO THE FULLEST EXTENT PROVIDED BY LAW, IN NO EVENT WILL SNX DAO, ITS AFFILIATES, OR
             THEIR LICENSORS, SERVICE PROVIDERS, CONTRIBUTORS, AGENTS, OFFICERS, OR DIRECTORS BE
             LIABLE FOR DAMAGES OF ANY KIND, UNDER ANY LEGAL THEORY, ARISING OUT OF OR IN CONNECTION
@@ -768,20 +777,22 @@ const V2Terms = () => {
             PARTY (REGARDLESS OF THE FORM OF ACTION, WHETHER IN CONTRACT, TORT, OR OTHERWISE) EXCEED
             THE GREATER OF $100 OR THE AMOUNT YOU HAVE PAID DIRECTLY TO SNX FOR THE APPLICABLE
             CONTENT OR SERVICES IN THE LAST SIX MONTHS OUT OF WHICH LIABILITY AROSE.
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               THE FOREGOING DOES NOT AFFECT ANY LIABILITY THAT CANNOT BE EXCLUDED OR LIMITED UNDER
               APPLICABLE LAW.
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             13.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Nature of Blockchain; Assumption of Risk; Waiver of Claims.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             Blockchains, DEXs, DeFi, crypto-assets, the Protocol, and their related technologies and
             functionalities are still emerging innovations that carry a relatively high amount of
             foreseeable and unforeseeable risk from security, financial, technical, political,
@@ -795,7 +806,7 @@ const V2Terms = () => {
             volatile. Moreover, the transparent nature of many blockchains means that any
             interactions the User has with the Protocol and any blockchain may be publicly visible
             and readable in human form.
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               By accessing and using the Website or the Services, the User acknowledges the
               foregoing, and agrees and represents that it understands and assumes such and other
               risks involved with blockchains, DeFi, the Protocol, and related technologies
@@ -813,7 +824,7 @@ const V2Terms = () => {
               Services, and shall not be held liable for any resulting harms, damages, or losses
               incurred by or against the User experiences while accessing or using the Website or
               the Services.
-              <Text as="span" fontWeight="700">
+              <InlineBold>
                 Accordingly, the User acknowledges the foregoing, represents its understanding of
                 the foregoing, and agrees to assume full responsibility for all of the risks of
                 accessing and using the Website and interacting with the Services, whether mentioned
@@ -821,18 +832,20 @@ const V2Terms = () => {
                 any and all liability, claims, causes of action, or damages arising from or in any
                 way relating to the User’s use of the Website and the User’s interaction with the
                 Services.
-              </Text>
+              </InlineBold>
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             14.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               No Professional Advice.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             All information or content provided or displayed by the Website (including, without
             limitation, on the Interface) is for informational purposes only and should not be
             construed as professional advice (including, without limitation, tax, legal, or
@@ -846,14 +859,16 @@ const V2Terms = () => {
             professional advice related to its financial or legal behaviors.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             15.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               No Fiduciary Duties.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             These Terms of Use, and the provision of the Website and the Services, are not intended
             to create any fiduciary duties between us and the User or any third party. Individual
             SNX DAO contributors never take possession, custody, control, ownership, or management
@@ -873,14 +888,16 @@ const V2Terms = () => {
             reporting requirements and deadlines.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             16.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               No Insurance.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             Your crypto accounts are not checking or savings accounts. We do not provide any kind of
             insurance to you against any type of loss, including (without limitation) losses due to
             decrease in value of assets, assets lost due to a cybersecurity failure, or from your or
@@ -891,14 +908,16 @@ const V2Terms = () => {
             Investor Protection Corporation (SIPC), or other similar protections.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             17.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Indemnification.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             The User agrees to defend, indemnify, and hold harmless SNX, its affiliates, licensors,
             and service providers, and its and their respective officers, directors, contributors,
             contractors, agents, licensors, suppliers, successors, and assigns from and against any
@@ -913,14 +932,16 @@ const V2Terms = () => {
             assistance or by using any device or account that the User owns or controls.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             18.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Governing Law and Jurisdiction.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             The User agrees to defend, indemnify, and hold harmless SNX, its affiliates, licensors,
             and service providers, and its and their respective officers, directors, contributors,
             contractors, agents, licensors, suppliers, successors, and assigns from and against any
@@ -935,14 +956,16 @@ const V2Terms = () => {
             assistance or by using any device or account that the User owns or controls.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             19.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Arbitration; Class Arbitration Waiver.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             Any dispute, controversy or claim arising out of, relating to, or in connection with the
             User’s use of the Website or the Services, or in connection with this Agreement,
             including disputes arising from or concerning their interpretation, violation,
@@ -951,43 +974,47 @@ const V2Terms = () => {
             Arbitration. The tribunal shall have the power to rule on any challenge to its own
             jurisdiction or to the validity or enforceability of any portion of the agreement to
             arbitrate.{' '}
-            <Text as="span" fontWeight="700">
+            <InlineBold>
               The parties agree to arbitrate solely on an individual basis, and that these Terms of
               Use do not permit class arbitration or any claims brought as a plaintiff or class
               member in any class or representative arbitration proceeding.
-            </Text>{' '}
+            </InlineBold>{' '}
             The arbitral tribunal may not consolidate more than one person’s claims and may not
             otherwise preside over any form of a representative or class proceeding. In the event
             the prohibition on class arbitration is deemed invalid or unenforceable, then its
             remaining portions will remain in force.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             20.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Limitation on Time to File Claims.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             ANY CAUSE OF ACTION OR CLAIM THE USER MAY HAVE ARISING OUT OF OR RELATING TO THESE TERMS
             OF USE OR ITS USE OF THE WEBSITE MUST BE COMMENCED WITHIN ONE (1) YEAR AFTER THE CAUSE
             OF ACTION ACCRUES; OTHERWISE, SUCH CAUSE OF ACTION OR CLAIM IS PERMANENTLY BARRED.
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             21.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Waiver and Severability.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '8px' }}>
             No waiver by SNX of any term or condition set out in these Terms of Use shall be deemed
             a further or continuing waiver of such term or condition or a waiver of any other term
             or condition, and any failure of SNX to assert a right or provision under these Terms of
             Use shall not constitute a waiver of such right or provision.{' '}
-            <Text mt={2}>
+            <Text style={{ marginTop: '8px' }}>
               If any provision of these Terms of Use is held by a court or other tribunal of
               competent jurisdiction to be invalid, illegal, or unenforceable for any reason, such
               provision shall be eliminated or limited to the minimum extent such that the remaining
@@ -995,14 +1022,16 @@ const V2Terms = () => {
             </Text>
           </Text>
         </Box>
-        <Box my={6}>
-          <Text fontWeight="700" fontSize="14px">
+        <Box>
+          <Text style={{ fontWeight: 700 }}>
             22.
-            <Text ml={3} as="span" textDecoration="underline">
+            <Text
+              style={{ marginLeft: '10px', textDecoration: 'underline', display: 'inline-block' }}
+            >
               Entire Agreement.
             </Text>
           </Text>
-          <Text mt={2} fontSize="14px">
+          <Text style={{ marginTop: '12px' }}>
             These Terms of Use, the Privacy Policy, and any other document incorporated by reference
             herein constitute the sole and entire agreement between the User and SNX regarding the
             Website and supersede all prior and contemporaneous understandings, agreements,
@@ -1010,8 +1039,43 @@ const V2Terms = () => {
           </Text>
         </Box>
       </Container>
-    </Box>
+    </>
   );
 };
 
-export default V2Terms;
+export default TermsPage;
+
+const Container = styled.div`
+  padding-top: 24px;
+  padding-bottom: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
+`;
+
+const Heading = styled.h3`
+  font-family: ${(props) => props.theme.fonts.interSemiBold};
+  font-size: 24px;
+  color: ${(props) => props.theme.colors.white};
+  margin: 24px 2px;
+  text-align: center;
+  text-transform: uppercase;
+`;
+
+const Text = styled.p`
+  font-family: ${(props) => props.theme.fonts.regular};
+  font-size: 14px;
+  line-height: 24px;
+  color: ${(props) => props.theme.colors.white};
+`;
+
+const InlineBold = styled(Text)`
+  font-weight: 700;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display: inline-block;
+`;
+
+const Box = styled.div`
+  margin-top: 24px;
+  margin-bottom: 24px;
+`;

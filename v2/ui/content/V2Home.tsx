@@ -22,23 +22,15 @@ import { Welcome } from '@snx-v2/Welcome';
 import { ContractContext } from '@snx-v2/ContractContext';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 import Connector from 'containers/Connector';
-import { EXTERNAL_LINKS, LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
-import { TermsModal } from '@snx-v2/TermsModal';
-import useLocalStorage from 'hooks/useLocalStorage';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 const V2Home = () => {
   const { t } = useTranslation();
   const { walletAddress } = useContext(ContractContext);
   const { isAppReady, connectWallet } = Connector.useContainer();
 
-  const [TERMS_CONDTIONS_ACCEPTED] = useLocalStorage(
-    LOCAL_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED,
-    false
-  );
-
   return (
     <>
-      <TermsModal defaultOpen={!TERMS_CONDTIONS_ACCEPTED} />
       <Flex minHeight="calc(100vh - 86px)" direction="column">
         <Box sx={{ flex: '1 0 auto' }}>
           <CRatioBanner />
