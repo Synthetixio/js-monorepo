@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Text } from '@chakra-ui/react';
 import { DialogOverlay } from '@reach/dialog';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { SESSION_STORAGE_KEYS } from '@snx-v2/Constants';
@@ -23,10 +22,10 @@ export const TermsModalV1 = ({ defaultOpen = true }: TermsModalProps) => {
     <StyledDialogOverlay isOpen={isOpen} onDismiss={() => {}}>
       <Container>
         <Title>Synthetix Terms of Service</Title>
-        <Text fontSize="sm">
+        <Description>
           By clicking “I Agree” below, you agree to be bound by the terms of this Agreement. As
           such, you fully understand that:
-        </Text>
+        </Description>
         <ul style={{ listStyleType: 'square', listStylePosition: 'inside' }}>
           <Text>
             <li style={{ margin: '16px 0px' }}>
@@ -159,4 +158,15 @@ const InternalLink = styled(ReactRouterLink)`
   &:focus-visible {
     outline: none;
   }
+`;
+
+const Description = styled.h5`
+  color: white;
+  font-family: ${(props) => props.theme.fonts.regular};
+  font-size: 16px;
+`;
+
+const Text = styled.p`
+  color: white;
+  font-family: ${(props) => props.theme.fonts.regular};
 `;
