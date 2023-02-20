@@ -323,7 +323,7 @@ export const Navigation = ({
   const { data: exchangeRateData, isLoading: isExchangeRatesLoading } = useExchangeRatesData();
   const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
   const { walletAddress, ensName } = useContext(ContractContext);
-
+  const { delegateWallet, setDelegateWallet } = useDelegateWallet();
   const isLoading = isSynthsLoading || isDebtLoading;
   const isEpochPriceLoading = isExchangeRatesLoading || isFeePoolDataLoading;
 
@@ -336,6 +336,21 @@ export const Navigation = ({
         epochEnd={feePoolData?.nextFeePeriodStartDate}
         snxPrice={snxPrice}
       />
+      {delegateWallet && (
+        <Flex
+          px={[4, 4, 10]}
+          bg="black"
+          justifyContent="space-between"
+          alignItems="center"
+          height="40px"
+          fontSize="xs"
+        >
+          <Text>You are now in delegate mode</Text>
+          <Button fontSize="xs" p={0} variant="ghost" onClick={() => setDelegateWallet(null)}>
+            Stop Delegate Mode
+          </Button>
+        </Flex>
+      )}
       <NavigationUI
         currentNetwork={currentNetwork}
         switchNetwork={switchNetwork}
