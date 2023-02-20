@@ -1,5 +1,5 @@
-import { Text, Flex, Tooltip, Box, Skeleton } from '@chakra-ui/react';
-import { VaultsDataType, useVaultsData } from '@snx-v3/useVaultsData';
+import { Box, Divider, Flex, Skeleton, Text, Tooltip } from '@chakra-ui/react';
+import { useVaultsData, VaultsDataType } from '@snx-v3/useVaultsData';
 import { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
@@ -21,20 +21,22 @@ export const calculateVaultTotals = (vaultsData: VaultsDataType) => {
     return acc;
   }, zeroValues);
 };
+
 export const CollateralSectionUi: FC<{
   vaultsData: VaultsDataType;
   poolName?: string;
 }> = ({ vaultsData, poolName }) => {
   const { collateral: totalCollateral, debt: totalDebt } = calculateVaultTotals(vaultsData);
+
   return (
-    <BorderBox padding={4} data-testid="pool collateral types">
+    <BorderBox padding={4} flexDirection="column" data-testid="pool collateral types">
       <Text fontWeight={700} fontSize="xl">
         Collateral Types
       </Text>
       <Text color="gray.400" fontSize="sm">
         {poolName}
       </Text>
-      <BorderBox padding={4} mt={4}>
+      <BorderBox padding={4} mt={4} flexDirection="column">
         <Flex
           justifyContent="space-between"
           flexDirection={{ base: 'row', md: 'column', lg: 'row' }}
@@ -47,7 +49,7 @@ export const CollateralSectionUi: FC<{
             gap={1}
             color="white"
           >
-            TOTAL TVL
+            Total TVL
             <Tooltip label="Total TVL for Pool">
               <InfoIcon w="10px" h="10px" />
             </Tooltip>
@@ -72,8 +74,8 @@ export const CollateralSectionUi: FC<{
             gap={1}
             color="white"
           >
-            TOTAL DEBT
-            <Tooltip label="Total TVL for Pool">
+            Total Debt
+            <Tooltip label="Total Debt for Pool">
               <InfoIcon w="10px" h="10px" />
             </Tooltip>
           </Text>
@@ -93,98 +95,107 @@ export const CollateralSectionUi: FC<{
             <Skeleton mt={2} w="full" height={24} />
           </Box>
         ) : (
-          vaultsData.map((vaultCollateral) => {
-            return (
-              <Box
-                key={vaultCollateral.collateralType.tokenAddress}
-                display="flex"
-                paddingX={4}
-                paddingY={2}
-                flexDirection="column"
-                borderBottom="1px"
-                borderColor="gray.900"
-                _last={{ borderBottom: 'none' }}
-                data-testid="pool collateral"
-                data-collateral={vaultCollateral.collateralType.symbol}
-              >
-                <Flex color="white" display="flex" gap={1} alignItems="center">
-                  <CollateralIcon
-                    width="30px"
-                    height="30px"
-                    symbol={vaultCollateral.collateralType.symbol}
-                  />
-                  <Text fontWeight={700} fontSize="xl">
-                    {vaultCollateral.collateralType.displaySymbol}
-                  </Text>
-                  <Text
-                    fontSize="sm"
-                    color="gray.400"
-                    fontWeight="400"
-                    data-testid="collateral price"
+          <>
+            <Divider mt={6} mb={4} />
+            {vaultsData.map((vaultCollateral) => {
+              return (
+                <>
+                  <Box
+                    key={vaultCollateral.collateralType.tokenAddress}
+                    display="flex"
+                    px={4}
+                    flexDirection="column"
+                    borderBottom="1px"
+                    borderColor="gray.900"
+                    _last={{ borderBottom: 'none' }}
+                    data-testid="pool collateral"
+                    data-collateral={vaultCollateral.collateralType.symbol}
                   >
-                    {vaultCollateral.collateralType.price
-                      ? formatNumberToUsd(vaultCollateral.collateralType.price.toNumber())
-                      : '-'}
-                  </Text>
-                </Flex>
-                <Flex justifyContent="space-between">
-                  <Flex flexBasis="50%" flexDirection="column">
-                    <Text mt={2} fontSize="sm" color="gray.500">
-                      Total Value Locked
-                    </Text>
-                    <Text
-                      fontSize="md"
-                      fontWeight={700}
-                      color="white"
-                      data-testid="collateral amount"
-                    >
-                      {formatNumber(vaultCollateral.collateral.amount.toNumber())}{' '}
-                      {vaultCollateral.collateralType.displaySymbol}
-                    </Text>
-                    <Text
-                      fontSize="sm"
-                      color="gray.500"
-                      fontWeight="400"
-                      data-testid="collateral value"
-                    >
-                      {formatNumberToUsd(vaultCollateral.collateral.value.toNumber())}
-                    </Text>
-                  </Flex>
-                  <Flex flexBasis="30%" flexDirection="column">
-                    <Text mt={2} fontSize="sm" color="gray.500">
-                      Vault Debt
-                    </Text>
-                    <Text
-                      fontSize="md"
-                      fontWeight={700}
-                      color="white"
-                      data-testid="collateral debt"
-                    >
-                      {formatNumberToUsd(vaultCollateral.debt.toNumber())}
-                    </Text>
-                  </Flex>
-                  <Flex flexBasis="20%" flexDirection="column">
-                    <Text mt={2} fontSize="sm" color="gray.500">
-                      C-Ratio
-                    </Text>
-                    <Text
-                      fontSize="md"
-                      fontWeight={700}
-                      color="white"
-                      data-testid="collateral cratio"
-                    >
-                      {vaultCollateral.debt.eq(0)
-                        ? '-'
-                        : formatPercent(
-                            vaultCollateral.collateral.value.div(vaultCollateral.debt).toNumber(),
-                            { maximumFractionDigits: 0 }
-                          )}
-                    </Text>
-                  </Flex>
-                </Flex>
-              </Box>
-            );
-          })
+                    <Flex color="white" display="flex" gap={1} alignItems="center">
+                      <CollateralIcon
+                        width="30px"
+                        height="30px"
+                        fill="#0B0B22"
+                        color="#00D1FF"
+                        symbol={vaultCollateral.collateralType.symbol}
+                      />
+                      <Text fontWeight={700} fontSize="xl">
+                        {vaultCollateral.collateralType.displaySymbol}
+                      </Text>
+                      <Text
+                        fontSize="sm"
+                        color="gray.400"
+                        fontWeight="400"
+                        data-testid="collateral price"
+                      >
+                        {vaultCollateral.collateralType.price
+                          ? formatNumberToUsd(vaultCollateral.collateralType.price.toNumber())
+                          : '-'}
+                      </Text>
+                    </Flex>
+                    <Flex justifyContent="space-between">
+                      <Flex flexBasis="50%" flexDirection="column">
+                        <Text mt={2} fontSize="sm" color="gray.500" textTransform="uppercase">
+                          Total Value Locked
+                        </Text>
+                        <Text
+                          fontSize="md"
+                          fontWeight={700}
+                          color="white"
+                          data-testid="collateral amount"
+                        >
+                          {formatNumber(vaultCollateral.collateral.amount.toNumber())}{' '}
+                          {vaultCollateral.collateralType.displaySymbol}
+                        </Text>
+                        <Text
+                          fontSize="sm"
+                          color="gray.500"
+                          fontWeight="400"
+                          data-testid="collateral value"
+                        >
+                          {formatNumberToUsd(vaultCollateral.collateral.value.toNumber())}
+                        </Text>
+                      </Flex>
+                      <Flex flexBasis="30%" flexDirection="column">
+                        <Text mt={2} fontSize="sm" color="gray.500" textTransform="uppercase">
+                          Vault Debt
+                        </Text>
+                        <Text
+                          fontSize="md"
+                          fontWeight={700}
+                          color="white"
+                          data-testid="collateral debt"
+                        >
+                          {formatNumberToUsd(vaultCollateral.debt.toNumber())}
+                        </Text>
+                      </Flex>
+                      <Flex flexBasis="20%" flexDirection="column">
+                        <Text mt={2} fontSize="sm" color="gray.500" textTransform="uppercase">
+                          C-Ratio
+                        </Text>
+                        <Text
+                          fontSize="md"
+                          fontWeight={700}
+                          color="white"
+                          data-testid="collateral cratio"
+                        >
+                          {vaultCollateral.debt.eq(0)
+                            ? '-'
+                            : formatPercent(
+                                vaultCollateral.collateral.value
+                                  .div(vaultCollateral.debt)
+                                  .toNumber(),
+                                { maximumFractionDigits: 0 }
+                              )}
+                        </Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                  <Divider my={4} />
+                </>
+              );
+            })}
+          </>
         )}
       </Flex>
     </BorderBox>

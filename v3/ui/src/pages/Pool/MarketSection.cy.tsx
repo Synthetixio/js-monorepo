@@ -196,7 +196,7 @@ describe('Pool page / Market section', () => {
     cy.get('[data-testid="pool markets"]')
       .and('include.text', 'Markets')
       .and('include.text', 'POOL_NAME')
-      .and('include.text', 'LAST 7 DAYS')
+      .and('include.text', 'Last 7 Days')
       .and('include.text', 'Performance Lifetime');
 
     cy.get('[data-testid="pool market"][data-market="MARKET_1"]')

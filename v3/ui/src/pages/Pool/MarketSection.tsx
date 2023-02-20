@@ -13,6 +13,7 @@ import {
   Tbody,
   Tooltip,
   Skeleton,
+  TextProps,
 } from '@chakra-ui/react';
 import { PoolType, usePoolData } from '@snx-v3/usePoolData';
 import {
@@ -29,6 +30,7 @@ import Wei from '@synthetixio/wei';
 
 const StyledTh: FC<TableCellProps> = (props) => (
   <Th
+    textTransform="none"
     sx={{
       paddingBottom: 1,
       paddingTop: 4,
@@ -70,11 +72,23 @@ const LoadingRow = () => (
   </Tr>
 );
 
-const TotalValue: FC<{ value?: Wei; isLoading: boolean }> = ({ value, isLoading }) => {
+interface TotalValueProps extends TextProps {
+  value?: Wei;
+  isLoading: boolean;
+}
+
+const TotalValue: FC<TotalValueProps> = ({ value, isLoading, ...props }) => {
   if (isLoading) return <Skeleton w={16} h={8} mt={1} />;
   if (!value) return <>-</>;
   return (
-    <TrendText value={value} display="flex" alignItems="center" fontSize="2xl" fontWeight="800">
+    <TrendText
+      value={value}
+      display="flex"
+      alignItems="center"
+      fontSize="2xl"
+      fontWeight="800"
+      {...props}
+    >
       {formatNumberToUsd(value.toNumber())}{' '}
     </TrendText>
   );
@@ -102,7 +116,7 @@ export function MarketSectionUi({
     );
   }
   return (
-    <BorderBox padding={4} data-testid="pool markets">
+    <BorderBox padding={4} flexDirection="column" data-testid="pool markets">
       <Text fontSize="xl" fontWeight={700}>
         Markets
       </Text>
@@ -110,7 +124,7 @@ export function MarketSectionUi({
         {poolData?.name}
       </Text>
       <Flex mt={4} gap={4} flexDirection={{ base: 'column', sm: 'row' }}>
-        <BorderBox paddingY={2} paddingX={4} flexGrow="1">
+        <BorderBox paddingY={2} paddingX={4} flexGrow="1" flexDirection="column">
           <Text
             fontSize="md"
             color="white"
@@ -119,15 +133,19 @@ export function MarketSectionUi({
             alignItems="center"
             fontWeight={700}
           >
-            LAST 7 DAYS{' '}
+            Last 7 Days{' '}
             <Tooltip label="Market's performance in the last seven days">
               <InfoOutlineIcon w="10px" h="10px" />
             </Tooltip>
           </Text>
           <TotalValue value={sevenDaysPerformance?.value} isLoading={!poolDataFetched} />
-          <TotalValue value={sevenDaysPerformance?.growthPercentage} isLoading={!poolDataFetched} />
+          <TotalValue
+            value={sevenDaysPerformance?.growthPercentage}
+            isLoading={!poolDataFetched}
+            fontSize="md"
+          />
         </BorderBox>
-        <BorderBox paddingY={2} paddingX={4} flexGrow="1">
+        <BorderBox paddingY={2} paddingX={4} flexGrow="1" flexDirection="column">
           <Text
             fontWeight={700}
             fontSize="md"
@@ -172,17 +190,22 @@ export function MarketSectionUi({
                   return (
                     <Tr key={id} color="gray.500" data-testid="pool market" data-market={id}>
                       <StyledTd isLastItem={isLastItem}>
-                        <Text fontSize="sm" display="block" data-testid="market name">
+                        <Text
+                          fontSize="sm"
+                          display="block"
+                          color="gray.50"
+                          data-testid="market name"
+                        >
                           {marketNamesById?.[market.id] ? marketNamesById[market.id] : '-'}
                         </Text>
-                        <Text fontSize="xs" display="block" data-testid="market id">
+                        <Text fontSize="xs" display="block" color="gray.50" data-testid="market id">
                           ID: {market.id}
                         </Text>
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem} fontSize="sm" data-testid="pool allocation">
                         {poolData.total_weight ? (
                           <>
-                            <Text display="block">
+                            <Text display="block" color="gray.50">
                               {formatPercent(weight.div(poolData.total_weight).toNumber())}
                             </Text>
                             {/* TODO, figure out max debt. See notion ticket "Pool page market max debt" */}
@@ -204,7 +227,7 @@ export function MarketSectionUi({
                       <StyledTd isLastItem={isLastItem} data-testid="market growth">
                         {growth ? (
                           <>
-                            <Text fontSize="sm" display="block">
+                            <Text fontSize="sm" display="block" color="gray.50">
                               {formatNumberToUsd(growth.value.toNumber())}
                             </Text>
                             {growth.percentage ? (
@@ -222,8 +245,10 @@ export function MarketSectionUi({
                           '-'
                         )}
                       </StyledTd>
-                      <StyledTd isLastItem={isLastItem} data-testid="market pnl">
-                        {formatNumberToUsd(market.pnl.toNumber())}
+                      <StyledTd isLastItem={isLastItem}>
+                        <Text color="gray.50" data-testid="market pnl">
+                          {formatNumberToUsd(market.pnl.toNumber())}
+                        </Text>
                       </StyledTd>
                     </Tr>
                   );

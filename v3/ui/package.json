@@ -30,6 +30,7 @@
     "@snx-v3/CollateralTypeSelector": "workspace:*",
     "@snx-v3/Constants": "workspace:*",
     "@snx-v3/DepositModal": "workspace:*",
+    "@snx-v3/HomeLink": "workspace:*",
     "@snx-v3/ManagePositionContext": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
     "@snx-v3/NumberInput": "workspace:*",

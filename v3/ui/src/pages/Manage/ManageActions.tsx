@@ -46,8 +46,8 @@ const ActionButton: FC<
   <BorderBox
     as={Button}
     fontWeight="700"
-    fontSize="lg"
-    color="white"
+    fontSize="md"
+    color="gray.50"
     _hover={{
       bg: 'whiteAlpha.100',
     }}
