@@ -84,7 +84,7 @@ export const MultipleTransactionReview: FC<Props> = ({ onSuccess }) => {
         />
       ))}
       {transactionState.transactions.length > step && (
-        <Button disabled={isLoading} onClick={submit} width="100%" my="4">
+        <Button isDisabled={isLoading} onClick={submit} width="100%" my="4">
           {error ? 'Retry' : 'Start'}
         </Button>
       )}

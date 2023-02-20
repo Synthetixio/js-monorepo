@@ -8,7 +8,7 @@
     "@snx-v2/useGasOptions": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@snx-v3/txnReducer": "workspace:*",
-    "@tanstack/react-query": "^4.3.4",
+    "@tanstack/react-query": "^4.24.6",
     "react": "^18.2.0"
   }
 }

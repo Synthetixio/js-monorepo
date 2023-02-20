@@ -1,4 +1,7 @@
 it.skip('Can borrow sUSD with ETH collateral', () => {
+  cy.on('window:before:load', (win) => {
+    win.sessionStorage.TERMS_CONDITIONS_ACCEPTED = 'true';
+  });
   cy.viewport(1000, 1200);
 
   cy.task('removeEthCollateralInteractionDelay');

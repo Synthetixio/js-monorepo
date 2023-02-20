@@ -4,7 +4,6 @@ const isProd = process.env.NODE_ENV === 'production';
 // Make depcheck happy
 require.resolve('storybook');
 require.resolve('@chakra-ui/storybook-addon');
-require.resolve('@mdx-js/react');
 require.resolve('@storybook/addon-actions');
 require.resolve('@storybook/addon-docs');
 require.resolve('@storybook/addon-essentials');

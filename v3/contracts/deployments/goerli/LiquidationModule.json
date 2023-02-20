@@ -1,5 +1,5 @@
 {
-  "address": "0x621EdA6cEF623A1ce99b5a6c2E09f9E487B73712",
+  "address": "0xb615e9F26a23e96bDE1CDA45cA3fEBC609418ef2",
   "abi": [
     {
       "inputs": [
@@ -20,6 +20,17 @@
     {
       "inputs": [],
       "name": "EmptyDistribution",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
       "type": "error"
     },
     {
@@ -401,5 +412,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x367e693bf4666a6552b1def28d98ee39e527c72c49fedb466e4f596ccb8a2ee5"
+  "deployTxnHash": "0x082ef14ab7e2af0303e27cbee5c9764752379597e91eff3bed427cb73af15d54"
 }

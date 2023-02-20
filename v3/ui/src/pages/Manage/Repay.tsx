@@ -77,7 +77,7 @@ export const RepayUi: FC<{
       <Button
         data-testid="repay submit"
         type="submit"
-        disabled={!(max && snxUSDBalance && currentDebt)}
+        isDisabled={!(max && snxUSDBalance && currentDebt)}
       >
         Repay snxUSD
       </Button>

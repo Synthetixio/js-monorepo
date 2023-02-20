@@ -1,0 +1,114 @@
+type PositionLiquidated @entity {
+  id: ID!
+  account: Bytes!
+  market: Bytes!
+  liquidator: Bytes!
+  size: BigDecimal!
+  price: BigDecimal!
+  fee: BigDecimal!
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type Trader @entity {
+  id: ID!
+  totalLiquidations: BigInt!
+  totalMarginLiquidated: BigDecimal!
+  feesPaidToSynthetix: BigDecimal!
+  totalVolume: BigDecimal!
+  pnl: BigInt!
+  trades: [FuturesTrade!]!
+}
+
+type FuturesTrade @entity {
+  id: ID!
+  timestamp: BigInt!
+  account: Bytes!
+  margin: BigInt!
+  positionId: String!
+  size: BigInt!
+  market: Bytes!
+  price: BigInt!
+  positionSize: BigInt!
+  positionClosed: Boolean!
+  pnl: BigInt!
+  feesPaidToSynthetix: BigInt!
+  type: FuturesTradeType!
+}
+
+enum FuturesTradeType {
+  PositionOpened
+  PositionClosed
+  PositionModified
+  DelayedOrderRemoved
+  DelayedOrderSubmitted
+  DelayedOffchainSubmitted
+}
+
+enum FuturesOrderStatus {
+  Pending
+  Filled
+  Cancelled
+}
+
+type Synthetix @entity {
+  id: ID!
+  feesByLiquidations: BigDecimal!
+  feesByPositionModifications: BigDecimal!
+  totalLiquidations: BigInt!
+  totalVolume: BigDecimal!
+  totalTraders: BigInt!
+}
+
+type Partner @entity {
+  id: ID!
+  tradeCount: BigInt!
+}
+
+type FuturesPosition @entity {
+  id: ID!
+  account: Bytes!
+  openTimestamp: BigInt!
+  closeTimestamp: BigInt
+  long: Boolean!
+  market: Bytes!
+  isOpen: Boolean!
+  isLiquidated: Boolean!
+  trades: BigInt!
+  feesPaidToSynthetix: BigInt!
+  size: BigInt!
+  initialMargin: BigInt!
+  leverage: BigInt!
+  netFunding: BigInt!
+  margin: BigInt!
+  pnl: BigInt!
+  fundingIndex: BigInt!
+  totalVolume: BigInt!
+  entryPrice: BigInt!
+  lastPrice: BigInt!
+  exitPrice: BigInt
+}
+
+type FuturesOrder @entity {
+  id: ID!
+  size: BigInt!
+  market: Bytes!
+  account: Bytes!
+  orderId: BigInt!
+  targetRoundId: BigInt!
+  targetPrice: BigInt!
+  marginDelta: BigInt!
+  timestamp: BigInt!
+  orderType: FuturesTradeType!
+  status: FuturesOrderStatus!
+  fee: BigInt!
+  keeper: Bytes!
+}
+
+type FundingRateUpdate @entity {
+  id: ID!
+  timestamp: BigInt!
+  market: Bytes!
+  sequenceLength: BigInt!
+  funding: BigInt!
+}

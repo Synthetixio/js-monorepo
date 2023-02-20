@@ -7,8 +7,8 @@
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@synthetixio/wei": "workspace:*",
-    "@tanstack/react-query": "^4.3.4",
-    "date-fns": "^2.19.0",
+    "@tanstack/react-query": "^4.24.6",
+    "date-fns": "^2.29.3",
     "react": "^18.2.0"
   }
 }

@@ -1,6 +1,17 @@
 {
-  "address": "0x0DeAA82c85888fB978d590012A6330b15b58b2A6",
+  "address": "0x9911D68BA18d68a17E018279af9d3E0B65E5A9b6",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
+      "type": "error"
+    },
     {
       "inputs": [
         {
@@ -406,5 +417,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x86b8450c634b1e134cfcb7e1278ec573d993b104263ee3cc3d44e88ad16e7f9b"
+  "deployTxnHash": "0x7e71388a6dec45a1fe9e2ab2fb1350913c830c8bbffa3749987913df6ae533d7"
 }

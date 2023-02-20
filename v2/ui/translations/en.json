@@ -1527,7 +1527,8 @@
         "loans": "Loans",
         "wallet": "Wallet",
         "gov": "Governance",
-        "guide": "Guide"
+        "guide": "Guide",
+        "terms": "Terms of Use"
       }
     },
     "stat-box": {
@@ -1843,6 +1844,7 @@
     "merge-accounts/burn": "burn",
     "pools": "pools",
     "bridge": "bridge",
-    "migrate-escrow": "migrate escrow"
+    "migrate-escrow": "migrate escrow",
+    "terms": "Terms"
   }
 }

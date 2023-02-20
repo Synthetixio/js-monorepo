@@ -165,7 +165,7 @@ export const UnflagOptionsUi: React.FC<{
         </Link>
         <Button
           variant="outline"
-          disabled={!continueLink}
+          isDisabled={!continueLink}
           _disabled={{ color: 'gray.600', borderColor: 'gray.600', cursor: 'not-allowed' }}
           _hover={{ bg: 'none' }}
           onClick={() => {

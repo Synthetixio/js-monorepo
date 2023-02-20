@@ -1,5 +1,5 @@
 {
-  "address": "0xCE96988F3f92f5f93Dc691Df4cc4Bb680694F100",
+  "address": "0x6B82faC132da7abbEc81A6097eA9431DCEB49C15",
   "abi": [
     {
       "inputs": [],
@@ -525,7 +525,7 @@
     }
   ],
   "deployedOn": "router.OracleRouter",
-  "deployTxnHash": "0x27e2b850216035d2637cda8b598787dbafce05f268d7ad0b177b29b5aa3bc47c",
+  "deployTxnHash": "0xef97f92dc8336898e25db813e2cb0271b4f617ab0bbde3c4775f6d6aa64e3b5f",
   "contractName": "OracleRouter",
   "sourceName": "OracleRouter.sol"
 }

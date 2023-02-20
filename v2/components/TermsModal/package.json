@@ -4,11 +4,11 @@
   "main": "index.tsx",
   "version": "0.0.1",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
+    "@chakra-ui/react": "^2.5.0",
     "@snx-v2/Constants": "workspace:*",
-    "@storybook/react": "^6.5.15",
+    "@storybook/react": "^6.5.16",
     "@synthetixio/v3-theme": "workspace:*",
     "react": "^18.2.0",
-    "react-router-dom": "^6.6.2"
+    "react-router-dom": "^6.8.1"
   }
 }

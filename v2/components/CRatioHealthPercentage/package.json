@@ -4,8 +4,8 @@
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
-    "@storybook/react": "^6.5.15",
+    "@chakra-ui/react": "^2.5.0",
+    "@storybook/react": "^6.5.16",
     "react": "^18.2.0"
   }
 }

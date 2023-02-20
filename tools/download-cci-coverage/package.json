@@ -11,6 +11,6 @@
   "repository": "github:Synthetixio/js-monorepo",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.9"
   }
 }

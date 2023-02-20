@@ -8,7 +8,7 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/v2/ui/tests/setup.js'],
   testEnvironment: 'jest-environment-jsdom',
   testMatch: ['<rootDir>/**/*.test.{js,jsx,ts,tsx}'],
-  testPathIgnorePatterns: ['<rootDir>/v3/subgraphs/'],
+  testPathIgnorePatterns: ['<rootDir>/v3/subgraphs/', '<rootDir>/v2/perps-v2/perps-subgraph'],
   collectCoverageFrom: [
     '<rootDir>/packages/**/*.{js,jsx,ts,tsx}',
     '<rootDir>/tools/codegen-graph-ts/**/*.d.{js,jsx,ts,tsx}',

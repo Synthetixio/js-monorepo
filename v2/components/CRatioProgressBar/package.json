@@ -4,11 +4,11 @@
   "main": "index.ts",
   "version": "0.0.4",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
+    "@chakra-ui/react": "^2.5.0",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
-    "@storybook/react": "^6.5.15",
+    "@storybook/react": "^6.5.16",
     "react": "^18.2.0"
   }
 }

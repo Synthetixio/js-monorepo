@@ -68,34 +68,37 @@ export const useRepay = (
   const signer = useSigner();
   const { name: networkName, id: networkId } = useNetwork();
 
-  const mutation = useMutation(async () => {
-    if (!signer || !populateTransaction) return;
-    try {
-      dispatch({ type: 'prompting' });
+  const mutation = useMutation({
+    mutationFn: async () => {
+      if (!signer || !populateTransaction) return;
+      try {
+        dispatch({ type: 'prompting' });
 
-      const [populatedTxn, gasPrices] = await Promise.all([
-        populateTransaction(),
-        getGasPrice({ networkId, networkName }),
-      ]);
-      const gasLimit = populatedTxn.gasLimit || BigNumber.from(0);
-      const gasOptionsForTransaction = formatGasPriceForTransaction({
-        gasLimit,
-        gasPrices,
-        gasSpeed,
-      });
-      const txn = await signer.sendTransaction({
-        ...populatedTxn,
-        ...gasOptionsForTransaction,
-      });
-      dispatch({ type: 'pending', payload: { txnHash: txn.hash } });
+        const [populatedTxn, gasPrices] = await Promise.all([
+          populateTransaction(),
+          getGasPrice({ networkId, networkName }),
+        ]);
+        const gasLimit = populatedTxn.gasLimit || BigNumber.from(0);
+        const gasOptionsForTransaction = formatGasPriceForTransaction({
+          gasLimit,
+          gasPrices,
+          gasSpeed,
+        });
+        const txn = await signer.sendTransaction({
+          ...populatedTxn,
+          ...gasOptionsForTransaction,
+        });
+        dispatch({ type: 'pending', payload: { txnHash: txn.hash } });
 
-      await txn.wait();
-      dispatch({ type: 'success' });
-    } catch (error: any) {
-      dispatch({ type: 'error', payload: { error } });
-      throw error;
-    }
-  }, eventHandlers);
+        await txn.wait();
+        dispatch({ type: 'success' });
+      } catch (error: any) {
+        dispatch({ type: 'error', payload: { error } });
+        throw error;
+      }
+    },
+    ...eventHandlers,
+  });
   return {
     mutation,
     txnState,

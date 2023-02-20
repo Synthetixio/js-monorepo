@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import {
   Box,
   Button,
@@ -196,15 +197,22 @@ export function Home() {
     }
   }, [navigate, accountId, params.accountId]);
 
+  const title = 'Synthetix V3';
   return (
-    <HomeUi
-      liquidityPositions={
-        liquidityPositionsById ? Object.values(liquidityPositionsById) : undefined
-      }
-      collateralTypes={collateralTypes}
-      VaultRow={VaultRow}
-      preferredPool={preferredPool}
-      navigate={navigate}
-    />
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={title} />
+      </Helmet>
+      <HomeUi
+        liquidityPositions={
+          liquidityPositionsById ? Object.values(liquidityPositionsById) : undefined
+        }
+        collateralTypes={collateralTypes}
+        VaultRow={VaultRow}
+        preferredPool={preferredPool}
+        navigate={navigate}
+      />
+    </>
   );
 }

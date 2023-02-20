@@ -1,9 +1,6 @@
 import { Box, Container, Heading, ListItem, UnorderedList, Text } from '@chakra-ui/react';
 
-// import { useTranslation } from 'react-i18next';
-
 const V2Terms = () => {
-  // const { t } = useTranslation();
   return (
     <Box bg="navy.900" height="100%">
       <Container pt={12} pb={16} bg="navy.900" maxW="4xl" height="full">

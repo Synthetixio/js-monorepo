@@ -8,7 +8,7 @@ import { Deposit } from './pages/deposit';
 import { CreateAccount, Settings, Collateral, AcceptNomination } from './pages/accounts';
 import { CreateMarket } from './pages/markets/CreateMarket';
 import { Market } from './pages/markets/Market';
-import { Pool } from './pages/pools/pool';
+import { Pool } from './pages/Pool';
 import { Teleporter } from './pages/teleporter/Teleporter';
 import { NotFoundPage } from './pages/404';
 

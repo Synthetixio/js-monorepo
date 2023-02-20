@@ -198,7 +198,7 @@ export function TeleporterModal({
             }}
           />
 
-          <Button disabled={processing} onClick={onSubmit} width="100%" my="4">
+          <Button isDisabled={processing} onClick={onSubmit} width="100%" my="4">
             {(() => {
               switch (true) {
                 case failed:

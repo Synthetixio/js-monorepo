@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@synthetixio/contracts": "workspace:*",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
-    "node-fetch": "^3.2.10"
+    "node-fetch": "^3.3.0"
   },
   "depcheck": {
     "ignoreMismatched": [

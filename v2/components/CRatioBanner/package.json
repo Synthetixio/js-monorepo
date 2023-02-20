@@ -4,15 +4,15 @@
   "main": "index.ts",
   "version": "0.0.6",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
+    "@chakra-ui/react": "^2.5.0",
     "@snx-v2/CountDown": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useFeePoolData": "workspace:*",
     "@snx-v2/useRewardsAvailable": "workspace:*",
-    "@storybook/react": "^6.5.15",
+    "@storybook/react": "^6.5.16",
     "@synthetixio/v3-theme": "workspace:*",
     "react": "^18.2.0",
-    "react-i18next": "^11.18.3"
+    "react-i18next": "^12.1.5"
   }
 }

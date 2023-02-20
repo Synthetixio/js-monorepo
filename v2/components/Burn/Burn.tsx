@@ -413,7 +413,7 @@ export const BurnUi = ({
           mt={4}
           w="100%"
           onClick={() => onSubmit()}
-          disabled={
+          isDisabled={
             burnAmountSusd === '' ||
             burnAmountSusd === '0.00' ||
             Boolean(gasError) ||
