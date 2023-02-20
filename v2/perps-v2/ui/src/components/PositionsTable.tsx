@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import {
   Box,
-  Button,
   Checkbox,
   Divider,
   Flex,
@@ -57,7 +56,6 @@ export const PositionsTable: FC = () => {
   const params = useParams();
   const toast = useToast();
   const { data } = useGetMarkets();
-  const [isRefetchLoading, setRefetchLoading] = useState(false);
   const [sortConfig, setSortConfig] = useState<SortConfig>(['openTimestamp', false]);
   const { register, getValues, setValue, watch } = useForm({
     defaultValues: {
@@ -190,7 +188,7 @@ export const PositionsTable: FC = () => {
           </Checkbox>
         </Stack>
       </Flex>
-      {isLoading || isRefetchLoading ? (
+      {isLoading ? (
         <Spinner color="cyan.500" />
       ) : (
         <>
