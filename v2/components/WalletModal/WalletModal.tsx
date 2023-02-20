@@ -14,6 +14,7 @@ import {
   Text,
   useClipboard,
   Avatar,
+  Tooltip,
 } from '@chakra-ui/react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { truncateAddress } from '@snx-v2/formatters';
@@ -50,6 +51,9 @@ export const WalletModalUi: FC<{
   const navigate = useNavigate();
   const { hasCopied, onCopy } = useClipboard(walletAddress || '');
   const { delegateWallet, setDelegateWallet } = useDelegateWallet();
+  const { hasCopied: hasCopiedDelegated, onCopy: onCopyDelegated } = useClipboard(
+    delegateWallet?.address || ''
+  );
   const [showDelegateWallets, setShowDelegateWallet] = useState(false);
 
   return (
@@ -95,19 +99,30 @@ export const WalletModalUi: FC<{
             </Flex>
             <Flex alignItems="center" my={1}>
               <Avatar bg="gray.200" height="24px" width="24px" mr={2} />
-              {ensName ? ensName : walletAddress && truncateAddress(walletAddress)}
+              {ensName
+                ? ensName
+                : walletAddress && (
+                    <Tooltip label={walletAddress}>{truncateAddress(walletAddress)}</Tooltip>
+                  )}
             </Flex>
             {delegateWallet && (
               <Flex alignItems="center" my={1}>
-                Authorised for: {truncateAddress(delegateWallet.address)}
+                On behalf of:
+                <Tooltip label={delegateWallet.address}>
+                  {truncateAddress(delegateWallet.address)}
+                </Tooltip>
               </Flex>
             )}
-            <Flex mt={2}>
+            <Flex mt={2} justifyContent="space-between" flexFlow="wrap">
               <Button size="xs" fontWeight={400} variant="ghost" onClick={onCopy}>
                 <CopyIcon mr={1} /> {hasCopied ? 'Copied' : 'Copy Address'}
               </Button>
+              {delegateWallet && (
+                <Button size="xs" fontWeight={400} variant="ghost" onClick={onCopyDelegated}>
+                  <CopyIcon mr={1} /> {hasCopiedDelegated ? 'Copied' : 'Copy On Behalf'}
+                </Button>
+              )}
               <Link
-                ml={3}
                 display="flex"
                 alignItems="center"
                 textColor="cyan.400"
@@ -154,7 +169,7 @@ export const WalletModalUi: FC<{
             {delegateWallet
               ? 'Stop Delegate Mode'
               : showDelegateWallets
-              ? 'Back'
+              ? 'Cancel'
               : t('staking-v2.wallet-modal.delegate-mode')}
           </Button>
         </ModalBody>

@@ -1,17 +1,16 @@
-import { Box, Skeleton, Text, Link } from '@chakra-ui/react';
-import { ArrowTopRight, TickIcon } from '@snx-v2/icons';
+import { Box, Skeleton, Text, Link, Avatar, Button, Tooltip } from '@chakra-ui/react';
 import { useAuthorisedWallets } from '@snx-v2/useAuthorisedWallets';
 import { FC } from 'react';
 import { Link as ReactRouterLink, NavigateFunction, useNavigate } from 'react-router-dom';
 import { useDelegateWallet, DelegateWallet } from '@snx-v2/useDelegateWallet';
+import { truncateAddress } from '@snx-v2/formatters';
 
 const AuthorisedWalletsUi: FC<{
   authorisedWallets?: DelegateWallet[];
-  activeDelegateWallet: DelegateWallet | null;
   setDelegateWallet: (w: DelegateWallet | null) => void;
   isLoading: boolean;
   navigate: NavigateFunction;
-}> = ({ authorisedWallets, isLoading, activeDelegateWallet, setDelegateWallet, navigate }) => {
+}> = ({ authorisedWallets, isLoading, setDelegateWallet, navigate }) => {
   if (isLoading) {
     return <Skeleton h={6} w="full" />;
   }
@@ -31,32 +30,33 @@ const AuthorisedWalletsUi: FC<{
   }
   return (
     <>
-      <Text mb={2}>Authorised wallets</Text>
+      <Text mb={2}>Authorised wallet(s)</Text>
       {authorisedWallets.map((authorisedWallet) => {
-        const active = authorisedWallet.address === activeDelegateWallet?.address;
         return (
           <Text
             key={authorisedWallet.address}
             py={2}
             bg="black"
-            border="1px"
-            borderColor="gray.800"
-            borderLeft="none"
-            borderRight="none"
-            borderTop="none"
-            fontSize="sm"
-            cursor="pointer"
             display="flex"
             alignItems="center"
-            gap={1}
-            onClick={() => {
-              setDelegateWallet(active ? null : authorisedWallet);
-              navigate('/');
-            }}
+            justifyContent="space-between"
           >
-            {active && <TickIcon />}
-            {authorisedWallet.address}
-            {!active && <ArrowTopRight />}
+            <Text fontSize="md" fontWeight={800}>
+              <Avatar bg="gray.200" height="24px" width="24px" mr={2} />
+              <Tooltip label={authorisedWallet.address}>
+                {truncateAddress(authorisedWallet.address, 5, 5)}
+              </Tooltip>
+            </Text>
+            <Button
+              size="xs"
+              onClick={() => {
+                setDelegateWallet(authorisedWallet);
+                navigate('/');
+              }}
+              variant="outline"
+            >
+              Select
+            </Button>
           </Text>
         );
       })}
@@ -66,12 +66,11 @@ const AuthorisedWalletsUi: FC<{
 
 export const AuthorisedWallets = () => {
   const { data, isLoading } = useAuthorisedWallets();
-  const { delegateWallet, setDelegateWallet } = useDelegateWallet();
+  const { setDelegateWallet } = useDelegateWallet();
   const navigate = useNavigate();
   return (
     <Box my={2} px={4} py={3} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
       <AuthorisedWalletsUi
-        activeDelegateWallet={delegateWallet}
         setDelegateWallet={setDelegateWallet}
         isLoading={isLoading}
         authorisedWallets={data}
