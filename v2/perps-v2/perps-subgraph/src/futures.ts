@@ -180,7 +180,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       futuresPosition.size = event.params.size;
       futuresPosition.lastPrice = event.params.lastPrice;
       futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
-      futuresPosition.leverage = event.params.size
+      futuresPosition.leverage = event.params.tradeSize
         .times(event.params.lastPrice)
         .div(event.params.margin)
         .abs();
