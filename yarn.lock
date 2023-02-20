@@ -7243,13 +7243,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed":
+"@snx-v2/useFeesClaimed@workspace:*, @snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed"
   dependencies:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7294,7 +7295,6 @@ __metadata:
   dependencies:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@tanstack/react-query": ^4.24.6
-    date-fns: ^2.29.3
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -10282,6 +10282,7 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
+    "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@socket.tech/plugin": ^1.0.3
     "@storybook/addon-actions": ^6.5.16

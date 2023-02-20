@@ -54,22 +54,25 @@ const Transactions: FC<TransactionsProps> = ({ transactions, isLoaded, noResults
         accessor: 'value',
         Cell: (
           cellProps: CellProps<HistoricalStakingTransaction, HistoricalStakingTransaction['value']>
-        ) => (
-          <div>
-            {formatCurrency(Synths.sUSD, cellProps.value, {
-              currencyKey: Synths.sUSD,
-            })}
-            {cellProps.row.original.type === StakingTransactionType.FeesClaimed &&
-              cellProps.row.original.rewards != null && (
+        ) => {
+          const { value, rewards } = cellProps.row.original;
+          const isClaim = cellProps.row.original.type === StakingTransactionType.FeesClaimed;
+          return (
+            <div>
+              {isClaim && value.eq(0)
+                ? null
+                : formatCurrency(Synths.sUSD, cellProps.value, { currencyKey: Synths.sUSD })}
+              {!!rewards && (
                 <>
-                  {' / '}
-                  {formatCurrency(CryptoCurrency.SNX, cellProps.row.original.rewards, {
+                  {isClaim && value.eq(0) ? '' : ' / '}
+                  {formatCurrency(CryptoCurrency.SNX, rewards, {
                     currencyKey: CryptoCurrency.SNX,
                   })}
                 </>
               )}
-          </div>
-        ),
+            </div>
+          );
+        },
         sortable: true,
         width: 200,
       },

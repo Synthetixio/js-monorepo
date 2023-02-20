@@ -6,7 +6,6 @@
   "dependencies": {
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
-    "date-fns": "^2.29.3",
     "react": "^18.2.0"
   }
 }
