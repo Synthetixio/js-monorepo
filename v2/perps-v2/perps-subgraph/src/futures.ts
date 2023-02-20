@@ -55,7 +55,6 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
       futuresPosition.isOpen = false;
       futuresPosition.size = BigInt.fromI32(0);
       futuresPosition.closeTimestamp = event.block.timestamp;
-      // @TODO MF talk to troy
       futuresPosition.pnl = futuresPosition.feesPaidToSynthetix.minus(futuresPosition.netFunding);
       futuresPosition.exitPrice = event.params.price;
       synthetix.totalVolume = synthetix.totalVolume.plus(
