@@ -34,6 +34,7 @@ export const Actions: FC = () => {
     }
     return [];
   }, [orders, futuresTrades, positionLiquidated]);
+
   return (
     <Flex flexDir="column" p="2" justifyContent="center" alignItems="center">
       <Link to="/" style={{ marginBottom: '20px' }}>
@@ -47,7 +48,7 @@ export const Actions: FC = () => {
       ) : (
         <Flex flexDir="column" gap="2">
           {allEvents?.map((event, i) => {
-            // if (event.entity === 'Position Liquidated') console.log(event);
+            if (i === 0) console.log(event);
             return (
               <Flex
                 key={event.timestamp.concat(i.toString())}
@@ -156,15 +157,11 @@ export const Actions: FC = () => {
                       />
                     </Text>
                   )}
-                  {'pnl' && event && (
+                  {'pnl' in event && (
                     <Text>
                       PNL:&nbsp;
                       {numberWithCommas((Number(event.pnl) / 1e18).toFixed(2)).concat('%')}
                     </Text>
-                  )}
-                  {'orderId' && event && <Text>Order ID:&nbsp;{event.orderId}</Text>}
-                  {'targetRoundId' in event && (
-                    <Text>Target Round ID:&nbsp;{event.targetRoundId}</Text>
                   )}
                 </>
               </Flex>

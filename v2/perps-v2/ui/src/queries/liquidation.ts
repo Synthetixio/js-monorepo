@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { PERPS_V2_DASHBOARD_GRAPH_URL } from '../utils/constants';
 import { useGetMarkets } from './markets';
+import { FuturePosition } from './positions';
 
 interface LiquidationResponse {
   data: {
@@ -20,6 +21,7 @@ export interface PositionLiquidated {
   timestamp: string;
   type: string;
   entity: string;
+  futuresPosition: FuturePosition;
 }
 
 export function useGetLiquidations() {

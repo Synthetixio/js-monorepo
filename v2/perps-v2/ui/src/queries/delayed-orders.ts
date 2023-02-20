@@ -56,7 +56,7 @@ export const useGetDelayedOrder = () => {
     return data.futuresOrders.map((data) => ({
       ...data,
       market: marketData?.find((d) => d.id.toLowerCase() === data.market.toLowerCase())?.marketKey,
-      entity: 'Futures Orders',
+      entity: 'Futures Order',
     }));
   });
 };

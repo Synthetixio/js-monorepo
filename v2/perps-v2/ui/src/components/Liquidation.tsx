@@ -9,6 +9,9 @@ export const Liquidation: FC<{ event: EventType }> = ({ event }) => {
       <Text>
         Price at liquidation: ${numberWithCommas((Number(event.price) / 1e18).toFixed(2))}
       </Text>
+      <Text>
+        Leverage: {(Number(event.futuresPosition.leverage) / 1e18).toFixed(2).concat('%')}
+      </Text>
     </Flex>
   );
 };
