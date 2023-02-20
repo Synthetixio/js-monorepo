@@ -6,6 +6,7 @@ type PositionLiquidated @entity {
   size: BigDecimal!
   price: BigDecimal!
   fee: BigDecimal!
+  futuresPosition: FuturesPosition!
   block: BigInt!
   timestamp: BigInt!
 }

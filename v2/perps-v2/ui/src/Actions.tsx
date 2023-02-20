@@ -3,12 +3,13 @@ import { Flex, Heading, IconButton, Spinner, Text, useToast } from '@chakra-ui/r
 import { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Position } from './components/Position';
+import { Liquidation } from './components/Liquidation';
 import { DelayedOrder, useGetDelayedOrder } from './queries/delayed-orders';
 import { FuturesTrades, useGetFuturesTrades } from './queries/futures-trades';
 import { PositionLiquidated, useGetLiquidations } from './queries/liquidation';
 import { numberWithCommas } from './utils/numbers';
 
-interface EventType extends FuturesTrades, DelayedOrder, PositionLiquidated {}
+export interface EventType extends FuturesTrades, DelayedOrder, PositionLiquidated {}
 
 export const Actions: FC = () => {
   const toast = useToast();
@@ -33,7 +34,6 @@ export const Actions: FC = () => {
     }
     return [];
   }, [orders, futuresTrades, positionLiquidated]);
-
   return (
     <Flex flexDir="column" p="2" justifyContent="center" alignItems="center">
       <Link to="/" style={{ marginBottom: '20px' }}>
@@ -47,6 +47,7 @@ export const Actions: FC = () => {
       ) : (
         <Flex flexDir="column" gap="2">
           {allEvents?.map((event, i) => {
+            // if (event.entity === 'Position Liquidated') console.log(event);
             return (
               <Flex
                 key={event.timestamp.concat(i.toString())}
@@ -110,8 +111,8 @@ export const Actions: FC = () => {
                     </Text>
                     {event.entity === 'Futures Trade' ? (
                       <Position id={event.positionId} trade={event as FuturesTrades} />
-                    ) : event.entity === 'Position Liquidated' ? (
-                      <></>
+                    ) : event.entity === 'Position Liquidated' && !!event.market ? (
+                      <Liquidation event={event} />
                     ) : (
                       <></>
                     )}

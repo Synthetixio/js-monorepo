@@ -30,6 +30,10 @@ export const useGetFuturesTrades = () => {
   return useQuery(['futuresTrades', marketData?.toString()], async () => {
     const response = await fetch(PERPS_V2_DASHBOARD_GRAPH_URL, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
       body: JSON.stringify({
         query: `query FuturesTrades {
                         futuresTrades(first: 100, oderBy: "timestamp", orderDirection: "desc") {
@@ -51,6 +55,8 @@ export const useGetFuturesTrades = () => {
       }),
     });
     const { data }: FuturesTradesResponse = await response.json();
+    // @TODO why is market still undefined?
+
     return data.futuresTrades.map((data) => ({
       ...data,
       market: marketData?.find((d) => d.id.toLowerCase() === data.market.toLowerCase())?.marketKey,

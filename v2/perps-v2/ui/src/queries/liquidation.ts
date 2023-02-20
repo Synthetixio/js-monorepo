@@ -12,6 +12,7 @@ export interface PositionLiquidated {
   id: string;
   liquidator: string;
   market: string;
+  marketAddress: string;
   size: string;
   price: string;
   fee: string;
@@ -26,6 +27,10 @@ export function useGetLiquidations() {
   return useQuery(['liquidations', markets?.toString()], async () => {
     const response = await fetch(PERPS_V2_DASHBOARD_GRAPH_URL, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
       body: JSON.stringify({
         query: `query PositionLiquidated {
                   positionLiquidateds(first: 100, oderBy: "timestamp", orderDirection: "desc") {
@@ -38,15 +43,36 @@ export function useGetLiquidations() {
                         fee
                         block
                         timestamp
+                        futuresPosition {
+                          id
+                          account
+                          isLiquidated
+                          market
+                          isOpen
+                          openTimestamp
+                          closeTimestamp
+                          margin
+                          initialMargin
+                          entryPrice
+                          lastPrice
+                          pnl
+                          exitPrice
+                          leverage
+                          size
+                          long
+                          trades
+                          totalVolume
+                          feesPaidToSynthetix
+                        }
                     }
                 }`,
       }),
     });
     const { data }: LiquidationResponse = await response.json();
-
     return data.positionLiquidateds.map((position) => ({
       ...position,
       market: markets?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())?.marketKey,
+      marketAddress: position.market.toLowerCase(),
       entity: 'Position Liquidated',
     }));
   });

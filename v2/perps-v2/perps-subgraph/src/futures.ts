@@ -24,6 +24,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   positionLiquidatedEntity.size = event.params.size.toBigDecimal();
   positionLiquidatedEntity.price = event.params.price.toBigDecimal();
   positionLiquidatedEntity.fee = event.params.fee.toBigDecimal();
+  positionLiquidatedEntity.futuresPosition = event.address.toHex() + '-' + event.params.id.toHex();
   positionLiquidatedEntity.timestamp = event.block.timestamp;
   positionLiquidatedEntity.block = event.block.number;
   positionLiquidatedEntity.save();
@@ -54,6 +55,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
       futuresPosition.isOpen = false;
       futuresPosition.size = BigInt.fromI32(0);
       futuresPosition.closeTimestamp = event.block.timestamp;
+      // @TODO MF talk to troy
       futuresPosition.pnl = futuresPosition.feesPaidToSynthetix.minus(futuresPosition.netFunding);
       futuresPosition.exitPrice = event.params.price;
       synthetix.totalVolume = synthetix.totalVolume.plus(
@@ -73,8 +75,6 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     trader.save();
   }
 }
-
-// TODO @MF check if long property is correct? seems off
 
 export function handlePositionModified(event: PositionModifiedEvent): void {
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
@@ -227,7 +227,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
       futuresPosition.margin = futuresPosition.margin.plus(event.params.margin);
       futuresPosition.lastPrice = event.params.lastPrice;
-      futuresPosition.long = event.params.tradeSize.gt(BigInt.fromI32(0));
+      futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
       futuresPosition.pnl = newPnl;
       futuresPosition.leverage = event.params.size
         .times(event.params.lastPrice)
@@ -266,7 +266,12 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
       futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
     } else {
-      log.debug('went into nothing', []);
+      // TODO @MF check why we going to nothing?
+      log.debug('went into nothing, {} {} {}', [
+        event.params.tradeSize.toString(),
+        event.params.size.toString(),
+        futuresPosition.id.toString(),
+      ]);
     }
   }
   // if there is an existing position...

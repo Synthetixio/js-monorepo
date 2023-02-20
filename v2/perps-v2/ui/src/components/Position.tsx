@@ -2,15 +2,10 @@ import { Flex, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useGetPosition } from '../queries/position';
 import { FuturesTrades } from '../queries/futures-trades';
+import { FuturePosition } from '../queries/positions';
 
 export const Position: FC<{ id: string; trade: FuturesTrades }> = ({ id, trade }) => {
   const { data } = useGetPosition(id);
-  if (
-    trade.account === '0x16d1663a00d4d1a216e0baa84b0abc69ba35c156' &&
-    trade.market === 'sETHPERP'
-  ) {
-    console.log(data, trade);
-  }
   return (
     <Flex>
       <Text
@@ -18,23 +13,32 @@ export const Position: FC<{ id: string; trade: FuturesTrades }> = ({ id, trade }
         px="2"
         borderRadius="base"
         borderColor={data?.futuresPosition.long ? 'green.500' : 'red.500'}
+        whiteSpace="pre-wrap"
       >
-        {data?.futuresPosition.long ? 'Position is going long' : 'Position is going short'}
-        <br />
-        {trade.size === trade.positionSize
-          ? `Position got opened`
-          : data?.futuresPosition.long &&
-            data?.futuresPosition.size !== '0' &&
-            Number(trade.size) > 0
-          ? 'Increased the position size'
-          : !data?.futuresPosition.long &&
-            data?.futuresPosition.size !== '0' &&
-            Number(trade.size) < 0
-          ? 'Increased position size'
-          : data?.futuresPosition.size === '0'
-          ? 'Position got closed'
-          : '?'}
+        {!!data?.futuresPosition && assembleText(trade, data.futuresPosition)}
       </Text>
     </Flex>
   );
 };
+
+function assembleText(trade: FuturesTrades, position: FuturePosition) {
+  let text = '';
+  if (position.size === trade.size) text = text.concat('Position got opened \n');
+  if (position.size === '0') text = text.concat('Position got closed \n');
+  text = text.concat(
+    `Position ${position.size === '0' ? 'went' : 'is'} ${position.long ? 'long' : 'short'} \n`
+  );
+  if (
+    ((Number(position.size) > 0 && Number(trade.size) > 0) ||
+      (Number(position.size) < 0 && Number(trade.size) < 0)) &&
+    position.size !== trade.size
+  )
+    text = text.concat('Increased position size');
+  if (
+    ((Number(position.size) > 0 && Number(trade.size) < 0) ||
+      (Number(position.size) < 0 && Number(trade.size) > 0)) &&
+    position.size !== trade.size
+  )
+    text = text.concat('Decreased position size');
+  return text;
+}

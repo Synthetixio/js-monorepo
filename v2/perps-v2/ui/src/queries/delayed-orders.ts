@@ -29,6 +29,10 @@ export const useGetDelayedOrder = () => {
   return useQuery(['delayedOrders', marketData?.toString()], async () => {
     const response = await fetch(PERPS_V2_DASHBOARD_GRAPH_URL, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
       body: JSON.stringify({
         query: `query DelayedOrders {
                   futuresOrders(first: 100, oderBy: "timestamp", orderDirection: "desc") {
