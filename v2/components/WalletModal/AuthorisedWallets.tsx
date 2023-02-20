@@ -1,16 +1,15 @@
 import { Box, Skeleton, Text, Link, Avatar, Button, Tooltip } from '@chakra-ui/react';
 import { useAuthorisedWallets } from '@snx-v2/useAuthorisedWallets';
 import { FC } from 'react';
-import { Link as ReactRouterLink, NavigateFunction, useNavigate } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useDelegateWallet, DelegateWallet } from '@snx-v2/useDelegateWallet';
 import { truncateAddress } from '@snx-v2/formatters';
 
 const AuthorisedWalletsUi: FC<{
   authorisedWallets?: DelegateWallet[];
-  setDelegateWallet: (w: DelegateWallet | null) => void;
   isLoading: boolean;
-  navigate: NavigateFunction;
-}> = ({ authorisedWallets, isLoading, setDelegateWallet, navigate }) => {
+  onWalletSelected: (wallet: DelegateWallet) => void;
+}> = ({ onWalletSelected, authorisedWallets, isLoading }) => {
   if (isLoading) {
     return <Skeleton h={6} w="full" />;
   }
@@ -47,14 +46,7 @@ const AuthorisedWalletsUi: FC<{
                 {truncateAddress(authorisedWallet.address, 5, 5)}
               </Tooltip>
             </Text>
-            <Button
-              size="xs"
-              onClick={() => {
-                setDelegateWallet(authorisedWallet);
-                navigate('/');
-              }}
-              variant="outline"
-            >
+            <Button size="xs" onClick={() => onWalletSelected(authorisedWallet)} variant="outline">
               Select
             </Button>
           </Text>
@@ -64,17 +56,23 @@ const AuthorisedWalletsUi: FC<{
   );
 };
 
-export const AuthorisedWallets = () => {
+export type AuthorisedWalletsProps = {
+  onWalletSelected: (wallet: DelegateWallet) => void;
+};
+export const AuthorisedWallets: FC<AuthorisedWalletsProps> = ({ onWalletSelected }) => {
   const { data, isLoading } = useAuthorisedWallets();
   const { setDelegateWallet } = useDelegateWallet();
   const navigate = useNavigate();
   return (
     <Box my={2} px={4} py={3} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
       <AuthorisedWalletsUi
-        setDelegateWallet={setDelegateWallet}
         isLoading={isLoading}
         authorisedWallets={data}
-        navigate={navigate}
+        onWalletSelected={(wallet) => {
+          setDelegateWallet(wallet);
+          navigate('/');
+          onWalletSelected(wallet);
+        }}
       />
     </Box>
   );
