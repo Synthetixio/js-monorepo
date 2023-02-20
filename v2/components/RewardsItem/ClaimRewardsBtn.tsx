@@ -5,16 +5,19 @@ import { RewardsTransactionModal } from './RewardsTransactionModal';
 import { useNavigate } from 'react-router-dom';
 import { useClaimRewardsMutation } from '@snx-v2/useClaimRewardsMutation';
 import { useQueryClient } from '@tanstack/react-query';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 export const ClaimRewardsBtn: FC<{
   amountSNX?: number;
   variant: string;
 }> = ({ amountSNX, variant }) => {
   const queryClient = useQueryClient();
+  const { delegateWallet } = useDelegateWallet();
 
   const navigate = useNavigate();
   const haveSomethingToClaim = Boolean(amountSNX);
-  const canClaim = haveSomethingToClaim && variant === 'success';
+  const delegatePermission = delegateWallet ? delegateWallet.canClaim : true;
+  const canClaim = haveSomethingToClaim && delegatePermission && variant === 'success';
   const {
     mutate,
     modalOpen,
