@@ -266,12 +266,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
       futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
     } else {
-      // TODO @MF check why we going to nothing?
-      log.debug('went into nothing, {} {} {}', [
-        event.params.tradeSize.toString(),
-        event.params.size.toString(),
-        futuresPosition.id.toString(),
-      ]);
+      log.debug('Transferred Margin Event skipped', []);
     }
   }
   // if there is an existing position...
