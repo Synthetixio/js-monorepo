@@ -24,6 +24,7 @@ const Index: FC = () => {
 };
 
 const Container = styled.div`
+  margin-top: 36px;
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-gap: 1rem;

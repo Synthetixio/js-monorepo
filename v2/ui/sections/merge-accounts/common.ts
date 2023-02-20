@@ -179,6 +179,7 @@ export const TxModalItem = styled.div`
 `;
 
 export const Cols = styled.div`
+  margin-top: 36px;
   ${media.greaterThan('mdUp')`
   display: grid;
   grid-template-columns: 3fr 2fr;
