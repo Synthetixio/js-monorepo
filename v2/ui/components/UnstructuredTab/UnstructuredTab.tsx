@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { StyledTabButton } from 'components/Tab/Tab';
-import { Col } from 'sections/gov/components/common';
 import InfoIcon from 'assets/svg/app/info-pink.svg';
+import { FlexDivCol } from '@snx-v1/styles';
 
 export type TabInfo = {
   title: string;
@@ -59,7 +59,7 @@ const Description = styled.h6`
   font-family: ${(props) => props.theme.fonts.extended};
 `;
 
-const Wrapper = styled(Col)`
+const Wrapper = styled(FlexDivCol)`
   background: ${(props) => props.theme.colors.navy};
   padding: 5px;
 `;
@@ -68,18 +68,18 @@ export const UnstructuredTab = ({ tabData }: UnstructuredTabProps) => {
   const { title, tabChildren, key, disabled } = tabData;
   const { t } = useTranslation();
   return (
-    <Col>
+    <FlexDivCol>
       <StyledTabButtonExtended title={title} disabled={disabled} active name={key}>
-        <Col>
+        <FlexDivCol>
           <Title>{tabData.title}</Title>
           <Description>{tabData.description}</Description>
-        </Col>
+        </FlexDivCol>
         <StyledTextWrapper>
           <StyledText>{t('gov.panel.proposals.info')}</StyledText>
           <InfoIcon width="14" />
         </StyledTextWrapper>
       </StyledTabButtonExtended>
       <Wrapper>{tabChildren}</Wrapper>
-    </Col>
+    </FlexDivCol>
   );
 };

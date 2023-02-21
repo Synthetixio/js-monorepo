@@ -35,7 +35,7 @@ export default {
   // ui
   black: '#06061B',
   blackHover: '#070725',
-  navy: isV2 ? chakraTheme.colors.navy['900'] : '#09092F',
+  navy: chakraTheme.colors.navy['900'],
   mediumBlue: '#10104E',
   mediumBlueHover: '#16166A',
   grayBlue: '#161B44',

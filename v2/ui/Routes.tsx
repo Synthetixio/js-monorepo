@@ -4,12 +4,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AppLayout from './sections/shared/Layout/AppLayout';
 import { Box, Container } from '@chakra-ui/react';
 import { HomeButton } from '@snx-v2/HomeButton';
-import V2Earn from 'content/V2Earn';
 import LoansPage from './content/LoansPage';
-
-import EarnPage from './content/EarnPage';
 import DebtPage from './content/DebtPage';
-import PoolPage from './content/PoolsPage';
 
 // wallet pages
 import { WalletLayout } from '@snx-v2/WalletLayout';
@@ -23,6 +19,7 @@ import BridgePage from './content/BridgePage';
 
 import NotFound from './content/404';
 
+import V2Earn from 'content/V2Earn';
 import V2HomePage from './content/V2Home';
 import V2MintPage from './content/V2Mint';
 import V2BurnPage from './content/V2Burn';

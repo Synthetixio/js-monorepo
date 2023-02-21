@@ -1,7 +1,7 @@
 import { WeiSource } from '@synthetixio/wei';
 
 export const QUERY_KEYS = {
-  Swaps: {
+  Swap: {
     quote1Inch: (walletAddress: string, networkId: number, amount: WeiSource) => [
       'quote',
       '1inch',
