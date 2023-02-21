@@ -30,22 +30,24 @@ function VaultRowUi({
 
   return (
     <Tr>
-      <Td as={Flex} flexDir="row" py={4}>
-        <CollateralIcon width="40px" height="40px" symbol={collateralType.symbol} />
-        <Flex flexDirection="column" justifyContent="center" ml={2}>
-          <Text fontSize="sm" color="gray.700" lineHeight="20px" fontWeight="500">
-            {liquidityPosition?.collateralValue.gt(0) ? (
-              <Amount value={liquidityPosition.collateralValue} prefix="$" />
-            ) : (
-              '$200'
-            )}
-          </Text>
-          <Text fontSize="xs" color="gray.500">
-            {liquidityPosition?.collateralValue.gt(0) && (
-              <Amount value={liquidityPosition.collateralAmount} />
-            )}
-            {collateralType.symbol}
-          </Text>
+      <Td>
+        <Flex flexDir="row" py={4}>
+          <CollateralIcon width="40px" height="40px" symbol={collateralType.symbol} />
+          <Flex flexDirection="column" justifyContent="center" ml={2}>
+            <Text fontSize="sm" color="gray.700" lineHeight="20px" fontWeight="500">
+              {liquidityPosition?.collateralValue.gt(0) ? (
+                <Amount value={liquidityPosition.collateralValue} prefix="$" />
+              ) : (
+                '$200'
+              )}
+            </Text>
+            <Text fontSize="xs" color="gray.500">
+              {liquidityPosition?.collateralValue.gt(0) && (
+                <Amount value={liquidityPosition.collateralAmount} />
+              )}
+              {collateralType.symbol}
+            </Text>
+          </Flex>
         </Flex>
       </Td>
       <Td>
