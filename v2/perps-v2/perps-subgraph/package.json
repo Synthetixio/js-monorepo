@@ -3,7 +3,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "yarn build:goerli && yarn build:optimism-goerli && prettier --write subgraph.yaml",
+    "build": "graph build",
     "auth": "graph auth --product hosted-service $V3_GRAPH_KEY",
     "codegen": "graph codegen && prettier --write .",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ fritzschoff/perps-dashboard",

@@ -300,24 +300,45 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
   const futuresOrderEntityId = `${event.params.account.toHexString()}-${event.params.targetRoundId.toString()}`;
   let futuresOrderEntity = FuturesOrder.load(futuresOrderEntityId);
   let trader = Trader.load(event.params.account.toHex());
+  let tradeEntity = FuturesTrade.load(
+    event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
+  );
+
   let synthetix = Synthetix.load('synthetix');
+
+  // Update Synthetix values
   if (synthetix) {
     synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
       event.params.keeperDeposit.toBigDecimal()
     );
     synthetix.save();
   }
+
+  // Update Position fee value
+  if (!!tradeEntity) {
+    let positionEntity = FuturesPosition.load(tradeEntity.positionId);
+    if (positionEntity) {
+      positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
+        event.params.keeperDeposit
+      );
+      positionEntity.save();
+    }
+  }
+
+  // Update Trader fee value
+  if (trader) {
+    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
+      event.params.keeperDeposit.toBigDecimal()
+    );
+    trader.save();
+  }
+
+  // Update FuturesOrderEntity
   if (futuresOrderEntity) {
     futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
-    let tradeEntity = FuturesTrade.load(
-      event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
-    );
 
-    if (trader && tradeEntity) {
-      // if trade exists get the position
-      let positionEntity = FuturesPosition.load(tradeEntity.positionId);
-
+    if (tradeEntity) {
       // update order values
       futuresOrderEntity.status = 'Filled';
       tradeEntity.type = futuresOrderEntity.orderType;
@@ -327,33 +348,11 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
-        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit.toBigDecimal()
-        );
-        if (positionEntity) {
-          positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
-            event.params.keeperDeposit
-          );
-          positionEntity.save();
-        }
-        const oldTrades = trader.trades;
-        oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
-        trader.trades = oldTrades;
-        trader.save();
       }
-
       tradeEntity.save();
-    } else if (trader) {
-      if (futuresOrderEntity.keeper != futuresOrderEntity.account) {
-        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit.toBigDecimal()
-        );
-        trader.save();
-      }
-
+    } else {
       futuresOrderEntity.status = 'Cancelled';
     }
-
     futuresOrderEntity.save();
   }
 }
