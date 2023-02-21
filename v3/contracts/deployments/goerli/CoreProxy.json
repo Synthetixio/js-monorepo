@@ -4298,8 +4298,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "",
-  "sourceName": "",
-  "contractName": "",
-  "deployedOn": "invoke.upgrade_core_proxy"
+  "deployTxnHash": ""
 }

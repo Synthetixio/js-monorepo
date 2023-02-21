@@ -86,9 +86,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xc172b2a5a59feb63b33d1892dccd59d5140c1bc2e9fa4bbd994fe8d36466c3f8",
-  "sourceName": "contracts/modules/core/UtilsModule.sol",
-  "contractName": "UtilsModule",
-  "deployedOn": "contract.UtilsModule"
+  "deployTxnHash": "0xc172b2a5a59feb63b33d1892dccd59d5140c1bc2e9fa4bbd994fe8d36466c3f8"
 }

@@ -204,9 +204,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xac4d054d66fad1e7eef3e6ce788f636f47bea7a866a9b04e56144063d97257b6",
-  "sourceName": "contracts/modules/InitialModuleBundle.sol",
-  "contractName": "InitialModuleBundle",
-  "deployedOn": "contract.InitialModuleBundle"
+  "deployTxnHash": "0xac4d054d66fad1e7eef3e6ce788f636f47bea7a866a9b04e56144063d97257b6"
 }

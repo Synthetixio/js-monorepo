@@ -1,8 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0x5B2863b24143742775F3f90C18686dFB16805CE8';
+export const address = '0x66890372Ce7f316e7c4Cd03CF88022F1F8CCF296';
 export const abi = [
-  'error AlreadyInitialized()',
   'error ImplementationIsSterile(address implementation)',
   'error NoChange()',
   'error NotAContract(address contr)',
@@ -15,8 +14,6 @@ export const abi = [
   'event Upgraded(address indexed self, address implementation)',
   'function acceptOwnership()',
   'function getImplementation() view returns (address)',
-  'function initializeOwnerModule(address initialOwner)',
-  'function isOwnerModuleInitialized() view returns (bool)',
   'function nominateNewOwner(address newNominatedOwner)',
   'function nominatedOwner() view returns (address)',
   'function owner() view returns (address)',
@@ -52,7 +49,7 @@ export const abi = [
   'function createAccount(uint128 requestedAccountId)',
   'function getAccountLastInteraction(uint128 accountId) view returns (uint256)',
   'function getAccountOwner(uint128 accountId) view returns (address)',
-  'function getAccountPermissions(uint128 accountId) view returns (tuple(address user, bytes32[] permissions)[] permissions)',
+  'function getAccountPermissions(uint128 accountId) view returns (tuple(address user, bytes32[] permissions)[] accountPerms)',
   'function getAccountTokenAddress() view returns (address)',
   'function grantPermission(uint128 accountId, bytes32 permission, address user)',
   'function hasPermission(uint128 accountId, bytes32 permission, address user) view returns (bool)',
@@ -60,6 +57,7 @@ export const abi = [
   'function notifyAccountTransfer(address to, uint128 accountId)',
   'function renouncePermission(uint128 accountId, bytes32 permission)',
   'function revokePermission(uint128 accountId, bytes32 permission, address user)',
+  'error AccountNotFound(uint128 accountId)',
   'error EmptyDistribution()',
   'error InsufficientCollateralRatio(uint256 collateralValue, uint256 debt, uint256 ratio, uint256 minRatio)',
   'error MarketNotFound(uint128 marketId)',
@@ -72,35 +70,39 @@ export const abi = [
   'event DebtAssociated(uint128 indexed marketId, uint128 indexed poolId, address indexed collateralType, uint128 accountId, uint256 amount, int256 updatedDebt)',
   'function associateDebt(uint128 marketId, uint128 poolId, address collateralType, uint128 accountId, uint256 amount) returns (int256)',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
+  'error MissingAssociatedSystem(bytes32 id)',
   'event AssociatedSystemSet(bytes32 indexed kind, bytes32 indexed id, address proxy, address impl)',
   'function getAssociatedSystem(bytes32 id) view returns (address addr, bytes32 kind)',
   'function initOrUpgradeNft(bytes32 id, string name, string symbol, string uri, address impl)',
   'function initOrUpgradeToken(bytes32 id, string name, string symbol, uint8 decimals, address impl)',
   'function registerUnmanagedSystem(bytes32 id, address endpoint)',
   'error AccountActivityTimeoutPending(uint128 accountId, uint256 currentTime, uint256 requiredTime)',
-  'error AccountNotFound(uint128 accountId)',
   'error CollateralDepositDisabled(address collateralType)',
   'error CollateralNotFound()',
   'error FailedTransfer(address from, address to, uint256 value)',
   'error InsufficientAccountCollateral(uint256 amount)',
   'error InsufficientAllowance(uint256 required, uint256 existing)',
-  'error OutOfBounds()',
+  'error InvalidParameter(string parameter, string reason)',
   'error OverflowUint256ToUint64()',
+  'error PrecisionLost(uint256 tokenAmount, uint8 decimals)',
+  'event CollateralLockCreated(uint128 indexed accountId, address indexed collateralType, uint256 tokenAmount, uint64 expireTimestamp)',
+  'event CollateralLockExpired(uint128 indexed accountId, address indexed collateralType, uint256 tokenAmount, uint64 expireTimestamp)',
   'event Deposited(uint128 indexed accountId, address indexed collateralType, uint256 tokenAmount, address indexed sender)',
   'event Withdrawn(uint128 indexed accountId, address indexed collateralType, uint256 tokenAmount, address indexed sender)',
-  'function cleanExpiredLocks(uint128 accountId, address collateralType, uint256 offset, uint256 items)',
+  'function cleanExpiredLocks(uint128 accountId, address collateralType, uint256 offset, uint256 count) returns (uint256 cleared)',
   'function createLock(uint128 accountId, address collateralType, uint256 amount, uint64 expireTimestamp)',
   'function deposit(uint128 accountId, address collateralType, uint256 tokenAmount)',
   'function getAccountAvailableCollateral(uint128 accountId, address collateralType) view returns (uint256)',
   'function getAccountCollateral(uint128 accountId, address collateralType) view returns (uint256 totalDeposited, uint256 totalAssigned, uint256 totalLocked)',
+  'function getLocks(uint128 accountId, address collateralType, uint256 offset, uint256 count) view returns (tuple(uint128 amountD18, uint64 lockExpirationTime)[] locks)',
   'function withdraw(uint128 accountId, address collateralType, uint256 tokenAmount)',
-  'error InvalidParameter(string parameter, string reason)',
   'event CollateralConfigured(address indexed collateralType, tuple(bool depositingEnabled, uint256 issuanceRatioD18, uint256 liquidationRatioD18, uint256 liquidationRewardD18, bytes32 oracleNodeId, address tokenAddress, uint256 minDelegationD18) config)',
   'function configureCollateral(tuple(bool depositingEnabled, uint256 issuanceRatioD18, uint256 liquidationRatioD18, uint256 liquidationRewardD18, bytes32 oracleNodeId, address tokenAddress, uint256 minDelegationD18) config)',
   'function getCollateralConfiguration(address collateralType) view returns (tuple(bool depositingEnabled, uint256 issuanceRatioD18, uint256 liquidationRatioD18, uint256 liquidationRewardD18, bytes32 oracleNodeId, address tokenAddress, uint256 minDelegationD18))',
   'function getCollateralConfigurations(bool hideDisabled) view returns (tuple(bool depositingEnabled, uint256 issuanceRatioD18, uint256 liquidationRatioD18, uint256 liquidationRewardD18, bytes32 oracleNodeId, address tokenAddress, uint256 minDelegationD18)[])',
   'function getCollateralPrice(address collateralType) view returns (uint256)',
   'error InsufficientDebt(int256 currentDebt)',
+  'error PoolNotFound(uint128 poolId)',
   'event UsdBurned(uint128 indexed accountId, uint128 indexed poolId, address collateralType, uint256 amount, address indexed sender)',
   'event UsdMinted(uint128 indexed accountId, uint128 indexed poolId, address collateralType, uint256 amount, address indexed sender)',
   'function burnUsd(uint128 accountId, uint128 poolId, address collateralType, uint256 amount)',
@@ -144,7 +146,6 @@ export const abi = [
   'function registerMarket(address market) returns (uint128 marketId)',
   'function withdrawMarketUsd(uint128 marketId, address target, uint256 amount)',
   'function multicall(bytes[] data) payable returns (bytes[] results)',
-  'error PoolNotFound(uint128 poolId)',
   'event PoolApprovedAdded(uint256 poolId)',
   'event PoolApprovedRemoved(uint256 poolId)',
   'event PreferredPoolSet(uint256 poolId)',
@@ -178,6 +179,8 @@ export const abi = [
   'error OverflowUint256ToUint32()',
   'error OverflowUint32ToInt32()',
   'error OverflowUint64ToInt64()',
+  'error RewardDistributorNotFound()',
+  'error RewardUnavailable(address distributor)',
   'event RewardsClaimed(uint128 indexed accountId, uint128 indexed poolId, address indexed collateralType, address distributor, uint256 amount)',
   'event RewardsDistributed(uint128 indexed poolId, address indexed collateralType, address distributor, uint256 amount, uint256 start, uint256 duration)',
   'event RewardsDistributorRegistered(uint128 indexed poolId, address indexed collateralType, address indexed distributor)',
@@ -199,7 +202,7 @@ export const abi = [
   'function delegateCollateral(uint128 accountId, uint128 poolId, address collateralType, uint256 newCollateralAmountD18, uint256 leverage)',
   'function getPosition(uint128 accountId, uint128 poolId, address collateralType) returns (uint256 collateralAmount, uint256 collateralValue, int256 debt, uint256 collateralizationRatio)',
   'function getPositionCollateral(uint128 accountId, uint128 poolId, address collateralType) view returns (uint256 amount, uint256 value)',
-  'function getPositionCollateralizationRatio(uint128 accountId, uint128 poolId, address collateralType) returns (uint256)',
+  'function getPositionCollateralRatio(uint128 accountId, uint128 poolId, address collateralType) returns (uint256)',
   'function getPositionDebt(uint128 accountId, uint128 poolId, address collateralType) returns (int256)',
   'function getVaultCollateral(uint128 poolId, address collateralType) view returns (uint256 amount, uint256 value)',
   'function getVaultCollateralRatio(uint128 poolId, address collateralType) returns (uint256)',
@@ -240,6 +243,18 @@ export declare namespace IAccountModule {
   export type AccountPermissionsStructOutput = [string, string[]] & {
     user: string;
     permissions: string[];
+  };
+}
+
+export declare namespace CollateralLock {
+  export type DataStruct = {
+    amountD18: PromiseOrValue<BigNumberish>;
+    lockExpirationTime: PromiseOrValue<BigNumberish>;
+  };
+
+  export type DataStructOutput = [BigNumber, BigNumber] & {
+    amountD18: BigNumber;
+    lockExpirationTime: BigNumber;
   };
 }
 
@@ -305,8 +320,6 @@ export interface CoreProxyInterface extends utils.Interface {
   functions: {
     'acceptOwnership()': FunctionFragment;
     'getImplementation()': FunctionFragment;
-    'initializeOwnerModule(address)': FunctionFragment;
-    'isOwnerModuleInitialized()': FunctionFragment;
     'nominateNewOwner(address)': FunctionFragment;
     'nominatedOwner()': FunctionFragment;
     'owner()': FunctionFragment;
@@ -344,6 +357,7 @@ export interface CoreProxyInterface extends utils.Interface {
     'deposit(uint128,address,uint256)': FunctionFragment;
     'getAccountAvailableCollateral(uint128,address)': FunctionFragment;
     'getAccountCollateral(uint128,address)': FunctionFragment;
+    'getLocks(uint128,address,uint256,uint256)': FunctionFragment;
     'withdraw(uint128,address,uint256)': FunctionFragment;
     'configureCollateral((bool,uint256,uint256,uint256,bytes32,address,uint256))': FunctionFragment;
     'getCollateralConfiguration(address)': FunctionFragment;
@@ -404,7 +418,7 @@ export interface CoreProxyInterface extends utils.Interface {
     'delegateCollateral(uint128,uint128,address,uint256,uint256)': FunctionFragment;
     'getPosition(uint128,uint128,address)': FunctionFragment;
     'getPositionCollateral(uint128,uint128,address)': FunctionFragment;
-    'getPositionCollateralizationRatio(uint128,uint128,address)': FunctionFragment;
+    'getPositionCollateralRatio(uint128,uint128,address)': FunctionFragment;
     'getPositionDebt(uint128,uint128,address)': FunctionFragment;
     'getVaultCollateral(uint128,address)': FunctionFragment;
     'getVaultCollateralRatio(uint128,address)': FunctionFragment;
@@ -415,8 +429,6 @@ export interface CoreProxyInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'acceptOwnership'
       | 'getImplementation'
-      | 'initializeOwnerModule'
-      | 'isOwnerModuleInitialized'
       | 'nominateNewOwner'
       | 'nominatedOwner'
       | 'owner'
@@ -454,6 +466,7 @@ export interface CoreProxyInterface extends utils.Interface {
       | 'deposit'
       | 'getAccountAvailableCollateral'
       | 'getAccountCollateral'
+      | 'getLocks'
       | 'withdraw'
       | 'configureCollateral'
       | 'getCollateralConfiguration'
@@ -514,7 +527,7 @@ export interface CoreProxyInterface extends utils.Interface {
       | 'delegateCollateral'
       | 'getPosition'
       | 'getPositionCollateral'
-      | 'getPositionCollateralizationRatio'
+      | 'getPositionCollateralRatio'
       | 'getPositionDebt'
       | 'getVaultCollateral'
       | 'getVaultCollateralRatio'
@@ -523,11 +536,6 @@ export interface CoreProxyInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getImplementation', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'initializeOwnerModule',
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: 'isOwnerModuleInitialized', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
@@ -685,6 +693,15 @@ export interface CoreProxyInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'getAccountCollateral',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getLocks',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: 'withdraw',
@@ -946,7 +963,7 @@ export interface CoreProxyInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: 'getPositionCollateralizationRatio',
+    functionFragment: 'getPositionCollateralRatio',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -968,8 +985,6 @@ export interface CoreProxyInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getImplementation', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initializeOwnerModule', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isOwnerModuleInitialized', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
@@ -1007,6 +1022,7 @@ export interface CoreProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getAccountAvailableCollateral', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getAccountCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLocks', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'configureCollateral', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getCollateralConfiguration', data: BytesLike): Result;
@@ -1070,10 +1086,7 @@ export interface CoreProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'delegateCollateral', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getPosition', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getPositionCollateral', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'getPositionCollateralizationRatio',
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'getPositionCollateralRatio', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getPositionDebt', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getVaultCollateral', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getVaultCollateralRatio', data: BytesLike): Result;
@@ -1093,6 +1106,8 @@ export interface CoreProxyInterface extends utils.Interface {
     'PermissionRevoked(uint128,bytes32,address,address)': EventFragment;
     'DebtAssociated(uint128,uint128,address,uint128,uint256,int256)': EventFragment;
     'AssociatedSystemSet(bytes32,bytes32,address,address)': EventFragment;
+    'CollateralLockCreated(uint128,address,uint256,uint64)': EventFragment;
+    'CollateralLockExpired(uint128,address,uint256,uint64)': EventFragment;
     'Deposited(uint128,address,uint256,address)': EventFragment;
     'Withdrawn(uint128,address,uint256,address)': EventFragment;
     'CollateralConfigured(address,tuple)': EventFragment;
@@ -1136,6 +1151,8 @@ export interface CoreProxyInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'PermissionRevoked'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DebtAssociated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'AssociatedSystemSet'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CollateralLockCreated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CollateralLockExpired'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Deposited'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdrawn'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'CollateralConfigured'): EventFragment;
@@ -1306,6 +1323,32 @@ export type AssociatedSystemSetEvent = TypedEvent<
 >;
 
 export type AssociatedSystemSetEventFilter = TypedEventFilter<AssociatedSystemSetEvent>;
+
+export interface CollateralLockCreatedEventObject {
+  accountId: BigNumber;
+  collateralType: string;
+  tokenAmount: BigNumber;
+  expireTimestamp: BigNumber;
+}
+export type CollateralLockCreatedEvent = TypedEvent<
+  [BigNumber, string, BigNumber, BigNumber],
+  CollateralLockCreatedEventObject
+>;
+
+export type CollateralLockCreatedEventFilter = TypedEventFilter<CollateralLockCreatedEvent>;
+
+export interface CollateralLockExpiredEventObject {
+  accountId: BigNumber;
+  collateralType: string;
+  tokenAmount: BigNumber;
+  expireTimestamp: BigNumber;
+}
+export type CollateralLockExpiredEvent = TypedEvent<
+  [BigNumber, string, BigNumber, BigNumber],
+  CollateralLockExpiredEventObject
+>;
+
+export type CollateralLockExpiredEventFilter = TypedEventFilter<CollateralLockExpiredEvent>;
 
 export interface DepositedEventObject {
   accountId: BigNumber;
@@ -1678,13 +1721,6 @@ export interface CoreProxy extends BaseContract {
 
     getImplementation(overrides?: CallOverrides): Promise<[string]>;
 
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<[boolean]>;
-
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1781,7 +1817,7 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [IAccountModule.AccountPermissionsStructOutput[]] & {
-        permissions: IAccountModule.AccountPermissionsStructOutput[];
+        accountPerms: IAccountModule.AccountPermissionsStructOutput[];
       }
     >;
 
@@ -1869,7 +1905,7 @@ export interface CoreProxy extends BaseContract {
       accountId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
-      items: PromiseOrValue<BigNumberish>,
+      count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1905,6 +1941,14 @@ export interface CoreProxy extends BaseContract {
         totalLocked: BigNumber;
       }
     >;
+
+    getLocks(
+      accountId: PromiseOrValue<BigNumberish>,
+      collateralType: PromiseOrValue<string>,
+      offset: PromiseOrValue<BigNumberish>,
+      count: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[CollateralLock.DataStructOutput[]] & { locks: CollateralLock.DataStructOutput[] }>;
 
     withdraw(
       accountId: PromiseOrValue<BigNumberish>,
@@ -2257,7 +2301,7 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; value: BigNumber }>;
 
-    getPositionCollateralizationRatio(
+    getPositionCollateralRatio(
       accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
@@ -2295,13 +2339,6 @@ export interface CoreProxy extends BaseContract {
   ): Promise<ContractTransaction>;
 
   getImplementation(overrides?: CallOverrides): Promise<string>;
-
-  initializeOwnerModule(
-    initialOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  isOwnerModuleInitialized(overrides?: CallOverrides): Promise<boolean>;
 
   nominateNewOwner(
     newNominatedOwner: PromiseOrValue<string>,
@@ -2483,7 +2520,7 @@ export interface CoreProxy extends BaseContract {
     accountId: PromiseOrValue<BigNumberish>,
     collateralType: PromiseOrValue<string>,
     offset: PromiseOrValue<BigNumberish>,
-    items: PromiseOrValue<BigNumberish>,
+    count: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2519,6 +2556,14 @@ export interface CoreProxy extends BaseContract {
       totalLocked: BigNumber;
     }
   >;
+
+  getLocks(
+    accountId: PromiseOrValue<BigNumberish>,
+    collateralType: PromiseOrValue<string>,
+    offset: PromiseOrValue<BigNumberish>,
+    count: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<CollateralLock.DataStructOutput[]>;
 
   withdraw(
     accountId: PromiseOrValue<BigNumberish>,
@@ -2862,7 +2907,7 @@ export interface CoreProxy extends BaseContract {
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; value: BigNumber }>;
 
-  getPositionCollateralizationRatio(
+  getPositionCollateralRatio(
     accountId: PromiseOrValue<BigNumberish>,
     poolId: PromiseOrValue<BigNumberish>,
     collateralType: PromiseOrValue<string>,
@@ -2898,13 +2943,6 @@ export interface CoreProxy extends BaseContract {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
     getImplementation(overrides?: CallOverrides): Promise<string>;
-
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<boolean>;
 
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
@@ -3081,9 +3119,9 @@ export interface CoreProxy extends BaseContract {
       accountId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
-      items: PromiseOrValue<BigNumberish>,
+      count: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
     createLock(
       accountId: PromiseOrValue<BigNumberish>,
@@ -3117,6 +3155,14 @@ export interface CoreProxy extends BaseContract {
         totalLocked: BigNumber;
       }
     >;
+
+    getLocks(
+      accountId: PromiseOrValue<BigNumberish>,
+      collateralType: PromiseOrValue<string>,
+      offset: PromiseOrValue<BigNumberish>,
+      count: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<CollateralLock.DataStructOutput[]>;
 
     withdraw(
       accountId: PromiseOrValue<BigNumberish>,
@@ -3458,7 +3504,7 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; value: BigNumber }>;
 
-    getPositionCollateralizationRatio(
+    getPositionCollateralRatio(
       accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
@@ -3613,6 +3659,32 @@ export interface CoreProxy extends BaseContract {
       proxy?: null,
       impl?: null
     ): AssociatedSystemSetEventFilter;
+
+    'CollateralLockCreated(uint128,address,uint256,uint64)'(
+      accountId?: PromiseOrValue<BigNumberish> | null,
+      collateralType?: PromiseOrValue<string> | null,
+      tokenAmount?: null,
+      expireTimestamp?: null
+    ): CollateralLockCreatedEventFilter;
+    CollateralLockCreated(
+      accountId?: PromiseOrValue<BigNumberish> | null,
+      collateralType?: PromiseOrValue<string> | null,
+      tokenAmount?: null,
+      expireTimestamp?: null
+    ): CollateralLockCreatedEventFilter;
+
+    'CollateralLockExpired(uint128,address,uint256,uint64)'(
+      accountId?: PromiseOrValue<BigNumberish> | null,
+      collateralType?: PromiseOrValue<string> | null,
+      tokenAmount?: null,
+      expireTimestamp?: null
+    ): CollateralLockExpiredEventFilter;
+    CollateralLockExpired(
+      accountId?: PromiseOrValue<BigNumberish> | null,
+      collateralType?: PromiseOrValue<string> | null,
+      tokenAmount?: null,
+      expireTimestamp?: null
+    ): CollateralLockExpiredEventFilter;
 
     'Deposited(uint128,address,uint256,address)'(
       accountId?: PromiseOrValue<BigNumberish> | null,
@@ -3944,13 +4016,6 @@ export interface CoreProxy extends BaseContract {
 
     getImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<BigNumber>;
-
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -4131,7 +4196,7 @@ export interface CoreProxy extends BaseContract {
       accountId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
-      items: PromiseOrValue<BigNumberish>,
+      count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -4159,6 +4224,14 @@ export interface CoreProxy extends BaseContract {
     getAccountCollateral(
       accountId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getLocks(
+      accountId: PromiseOrValue<BigNumberish>,
+      collateralType: PromiseOrValue<string>,
+      offset: PromiseOrValue<BigNumberish>,
+      count: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -4510,7 +4583,7 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getPositionCollateralizationRatio(
+    getPositionCollateralRatio(
       accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
@@ -4549,13 +4622,6 @@ export interface CoreProxy extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
@@ -4740,7 +4806,7 @@ export interface CoreProxy extends BaseContract {
       accountId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
-      items: PromiseOrValue<BigNumberish>,
+      count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -4768,6 +4834,14 @@ export interface CoreProxy extends BaseContract {
     getAccountCollateral(
       accountId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getLocks(
+      accountId: PromiseOrValue<BigNumberish>,
+      collateralType: PromiseOrValue<string>,
+      offset: PromiseOrValue<BigNumberish>,
+      count: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -5122,7 +5196,7 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getPositionCollateralizationRatio(
+    getPositionCollateralRatio(
       accountId: PromiseOrValue<BigNumberish>,
       poolId: PromiseOrValue<BigNumberish>,
       collateralType: PromiseOrValue<string>,

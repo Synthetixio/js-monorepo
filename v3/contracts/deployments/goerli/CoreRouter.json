@@ -4298,8 +4298,5 @@
       "type": "function"
     }
   ],
-  "deployedOn": "router.CoreRouter",
-  "deployTxnHash": "0x30447da67ebfb104fc260f7d47d383a1a15180e51f935d8353905effb6478a1b",
-  "contractName": "CoreRouter",
-  "sourceName": "CoreRouter.sol"
+  "deployTxnHash": "0x30447da67ebfb104fc260f7d47d383a1a15180e51f935d8353905effb6478a1b"
 }

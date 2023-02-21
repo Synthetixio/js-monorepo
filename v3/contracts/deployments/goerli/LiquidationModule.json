@@ -412,9 +412,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x6626b111fad4ab4564dbe0e171df48a127ec45f018dd79a2ea1903a781783740",
-  "sourceName": "contracts/modules/core/LiquidationModule.sol",
-  "contractName": "LiquidationModule",
-  "deployedOn": "contract.LiquidationModule"
+  "deployTxnHash": "0x6626b111fad4ab4564dbe0e171df48a127ec45f018dd79a2ea1903a781783740"
 }

@@ -795,8 +795,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "",
-  "sourceName": "",
-  "contractName": "",
-  "deployedOn": "invoke.init_account"
+  "deployTxnHash": ""
 }

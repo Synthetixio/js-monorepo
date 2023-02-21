@@ -200,9 +200,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xb2c029f498247451e764ac1d615cad0856c9aa0bec6db2504d5c91345dbbe52b",
-  "sourceName": "contracts/modules/core/AssociateDebtModule.sol",
-  "contractName": "AssociateDebtModule",
-  "deployedOn": "contract.AssociateDebtModule"
+  "deployTxnHash": "0xb2c029f498247451e764ac1d615cad0856c9aa0bec6db2504d5c91345dbbe52b"
 }

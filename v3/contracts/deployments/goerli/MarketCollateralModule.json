@@ -347,9 +347,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x8f041a44fb2d665ea1ae75b2130e78ed908bbcc6fada7013d9a3b00915a1a7aa",
-  "sourceName": "contracts/modules/core/MarketCollateralModule.sol",
-  "contractName": "MarketCollateralModule",
-  "deployedOn": "contract.MarketCollateralModule"
+  "deployTxnHash": "0x8f041a44fb2d665ea1ae75b2130e78ed908bbcc6fada7013d9a3b00915a1a7aa"
 }

@@ -179,9 +179,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xdde1d53c81118e65b40b0691d46895e36e89a9ef3dfc68d376f6eaf3c4b212c4",
-  "sourceName": "contracts/modules/associated-systems/AssociatedSystemsModule.sol",
-  "contractName": "AssociatedSystemsModule",
-  "deployedOn": "contract.AssociatedSystemsModule"
+  "deployTxnHash": "0xdde1d53c81118e65b40b0691d46895e36e89a9ef3dfc68d376f6eaf3c4b212c4"
 }

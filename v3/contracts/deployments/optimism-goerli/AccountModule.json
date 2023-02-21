@@ -413,9 +413,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x6f906d1114d21ede46ab0b0f7a48ecdab63203e49a152f546f6dd4300344fac9",
-  "sourceName": "contracts/modules/core/AccountModule.sol",
-  "contractName": "AccountModule",
-  "deployedOn": "contract.AccountModule"
+  "deployTxnHash": "0x6f906d1114d21ede46ab0b0f7a48ecdab63203e49a152f546f6dd4300344fac9"
 }

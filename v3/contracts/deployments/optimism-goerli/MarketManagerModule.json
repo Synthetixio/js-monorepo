@@ -406,9 +406,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x60734244cf26d84c81679f17e523ce1280ddaad6c8f4a0f2d2377e374173a799",
-  "sourceName": "contracts/modules/core/MarketManagerModule.sol",
-  "contractName": "MarketManagerModule",
-  "deployedOn": "contract.MarketManagerModule"
+  "deployTxnHash": "0x60734244cf26d84c81679f17e523ce1280ddaad6c8f4a0f2d2377e374173a799"
 }

@@ -483,9 +483,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xba3ab443c1405d3e892203a88d096eaf7443a6500f9272145cb1ea504a390cd6",
-  "sourceName": "contracts/modules/usd/USDTokenModule.sol",
-  "contractName": "USDTokenModule",
-  "deployedOn": "contract.USDTokenModule"
+  "deployTxnHash": "0xba3ab443c1405d3e892203a88d096eaf7443a6500f9272145cb1ea504a390cd6"
 }

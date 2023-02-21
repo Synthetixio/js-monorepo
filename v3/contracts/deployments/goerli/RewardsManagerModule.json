@@ -444,9 +444,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xe25d620b28e5d82e038b4b2b079e8edb8f5502555adf86b9c9138f8c77e855b4",
-  "sourceName": "contracts/modules/core/RewardsManagerModule.sol",
-  "contractName": "RewardsManagerModule",
-  "deployedOn": "contract.RewardsManagerModule"
+  "deployTxnHash": "0xe25d620b28e5d82e038b4b2b079e8edb8f5502555adf86b9c9138f8c77e855b4"
 }

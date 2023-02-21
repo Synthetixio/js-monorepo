@@ -795,8 +795,5 @@
       "type": "function"
     }
   ],
-  "deployedOn": "router.AccountRouter",
-  "deployTxnHash": "0xde2de962f9d1e42175da12209f8e231e695aee429ef9ba13973751c29b08215c",
-  "contractName": "AccountRouter",
-  "sourceName": "AccountRouter.sol"
+  "deployTxnHash": "0xde2de962f9d1e42175da12209f8e231e695aee429ef9ba13973751c29b08215c"
 }

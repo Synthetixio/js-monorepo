@@ -308,9 +308,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xb1ae385fd56137e8b5398ff783a83d6bd684b7fbd08d1c38efa6627adc578be5",
-  "sourceName": "contracts/modules/core/FeatureFlagModule.sol",
-  "contractName": "FeatureFlagModule",
-  "deployedOn": "contract.FeatureFlagModule"
+  "deployTxnHash": "0xb1ae385fd56137e8b5398ff783a83d6bd684b7fbd08d1c38efa6627adc578be5"
 }

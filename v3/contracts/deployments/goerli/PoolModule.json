@@ -540,9 +540,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xed2e2eb8ed2fae2995d6fe6ba4c91f1f45c989b1426d2f0b93a690cb1abf084d",
-  "sourceName": "contracts/modules/core/PoolModule.sol",
-  "contractName": "PoolModule",
-  "deployedOn": "contract.PoolModule"
+  "deployTxnHash": "0xed2e2eb8ed2fae2995d6fe6ba4c91f1f45c989b1426d2f0b93a690cb1abf084d"
 }

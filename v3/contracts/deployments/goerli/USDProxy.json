@@ -824,8 +824,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "",
-  "sourceName": "",
-  "contractName": "",
-  "deployedOn": "invoke.init_usd"
+  "deployTxnHash": ""
 }

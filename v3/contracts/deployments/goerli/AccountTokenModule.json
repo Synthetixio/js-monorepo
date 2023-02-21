@@ -609,9 +609,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x247732747e3bec10d3c1d45f59d191a7830d4f7dfe7c7d3b5e8b34ef93f0671c",
-  "sourceName": "contracts/modules/account/AccountTokenModule.sol",
-  "contractName": "AccountTokenModule",
-  "deployedOn": "contract.AccountTokenModule"
+  "deployTxnHash": "0x247732747e3bec10d3c1d45f59d191a7830d4f7dfe7c7d3b5e8b34ef93f0671c"
 }

@@ -518,9 +518,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0x49e3365c27adf2b30f6c57120423c3aeb7e424b151c890ca97bd7fb929a1e6ee",
-  "sourceName": "contracts/modules/core/CollateralModule.sol",
-  "contractName": "CollateralModule",
-  "deployedOn": "contract.CollateralModule"
+  "deployTxnHash": "0x49e3365c27adf2b30f6c57120423c3aeb7e424b151c890ca97bd7fb929a1e6ee"
 }

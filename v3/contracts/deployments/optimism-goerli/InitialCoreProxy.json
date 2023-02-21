@@ -204,12 +204,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [
-    "0xD1f82086E313dd574d6913a43f73479Ac5DE6890",
-    "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-  ],
-  "deployTxnHash": "0x0a43e4596595c3a09b09efa73078ccfceffbced56efff227d7e67cc59abe1c86",
-  "sourceName": "contracts/Proxy.sol",
-  "contractName": "Proxy",
-  "deployedOn": "contract.InitialCoreProxy"
+  "deployTxnHash": "0x0a43e4596595c3a09b09efa73078ccfceffbced56efff227d7e67cc59abe1c86"
 }

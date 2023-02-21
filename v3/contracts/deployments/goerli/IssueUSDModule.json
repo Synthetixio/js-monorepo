@@ -296,9 +296,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xd54cfa36091242d14d4ec140dd18cdb5cb26130fc6892b642f202f9f92cd1fea",
-  "sourceName": "contracts/modules/core/IssueUSDModule.sol",
-  "contractName": "IssueUSDModule",
-  "deployedOn": "contract.IssueUSDModule"
+  "deployTxnHash": "0xd54cfa36091242d14d4ec140dd18cdb5cb26130fc6892b642f202f9f92cd1fea"
 }

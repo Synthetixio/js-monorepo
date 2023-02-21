@@ -501,9 +501,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xa064cabc3af99a89e372c93b0c837e3ed71813ef29d3b125aa89903716f9271a",
-  "sourceName": "contracts/modules/core/VaultModule.sol",
-  "contractName": "VaultModule",
-  "deployedOn": "contract.VaultModule"
+  "deployTxnHash": "0xa064cabc3af99a89e372c93b0c837e3ed71813ef29d3b125aa89903716f9271a"
 }

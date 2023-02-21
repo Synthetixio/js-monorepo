@@ -21,9 +21,5 @@
       "type": "function"
     }
   ],
-  "constructorArgs": [],
-  "deployTxnHash": "0xa1e67da1446e3d3eaa3274b992e8ed161f2665a76ad3df8491ed6a40b518d9a5",
-  "sourceName": "contracts/modules/core/MulticallModule.sol",
-  "contractName": "MulticallModule",
-  "deployedOn": "contract.MulticallModule"
+  "deployTxnHash": "0xa1e67da1446e3d3eaa3274b992e8ed161f2665a76ad3df8491ed6a40b518d9a5"
 }
