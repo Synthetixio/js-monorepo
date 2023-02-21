@@ -160,12 +160,9 @@ export function HomeUi({
             </Thead>
             <Tbody sx={{ tr: { borderBottomColor: 'gray.900', borderBottomWidth: '1px' } }}>
               {preferredPool && collateralTypes ? (
-                <>
-                  {collateralTypes.map((c) => (
-                    <VaultRow key={c.tokenAddress} collateralType={c} poolId={preferredPool.id} />
-                  ))}
-                  <Divider />
-                </>
+                collateralTypes.map((c) => (
+                  <VaultRow key={c.tokenAddress} collateralType={c} poolId={preferredPool.id} />
+                ))
               ) : (
                 <>
                   <LoadingRow />

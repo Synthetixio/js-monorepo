@@ -38,7 +38,7 @@ it('creates new account with first deposit of SNX', () => {
   cy.location('pathname').should('include', 'accounts').should('include', 'positions');
 
   cy.get('[data-testid="current account id"]').then((element) => {
-    const accountId = element.attr('data-accountId');
+    const accountId = element.attr('data-account-id');
     cy.wrap(accountId).as('accountId');
   });
 
