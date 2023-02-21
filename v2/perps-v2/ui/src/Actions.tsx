@@ -48,7 +48,6 @@ export const Actions: FC = () => {
       ) : (
         <Flex flexDir="column" gap="2">
           {allEvents?.map((event, i) => {
-            if (i === 0) console.log(event);
             return (
               <Flex
                 key={event.timestamp.concat(i.toString())}

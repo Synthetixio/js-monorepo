@@ -22,10 +22,10 @@ export const Position: FC<{ id: string; trade: FuturesTrades }> = ({ id, trade }
 };
 
 function assembleText(trade: FuturesTrades, position: FuturePosition) {
-  let text = '';
-  if (position.size === trade.size) text = text.concat('Position got opened \n');
-  if (position.size === '0') text = text.concat('Position got closed \n');
-  text = text.concat(
+  const text: string[] = [];
+  if (position.size === trade.size) text.push('Position got opened \n');
+  if (position.size === '0') text.push('Position got closed \n');
+  text.push(
     `Position ${position.size === '0' ? 'went' : 'is'} ${position.long ? 'long' : 'short'} \n`
   );
   if (
@@ -33,12 +33,12 @@ function assembleText(trade: FuturesTrades, position: FuturePosition) {
       (Number(position.size) < 0 && Number(trade.size) < 0)) &&
     position.size !== trade.size
   )
-    text = text.concat('Increased position size');
+    text.push('Increased position size');
   if (
     ((Number(position.size) > 0 && Number(trade.size) < 0) ||
       (Number(position.size) < 0 && Number(trade.size) > 0)) &&
     position.size !== trade.size
   )
-    text = text.concat('Decreased position size');
+    text.push('Decreased position size');
   return text;
 }
