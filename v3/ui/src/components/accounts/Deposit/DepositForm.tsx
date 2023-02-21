@@ -97,11 +97,16 @@ export function DepositFormUi({
 
   if (!isConnected) {
     return (
-      <Box textAlign="center">
-        <Button size="lg" px="8" onClick={() => openConnectModal && openConnectModal()}>
+      <Flex flexGrow={1} alignItems="flex-end">
+        <Button
+          width="100%"
+          size="md"
+          px="8"
+          onClick={() => openConnectModal && openConnectModal()}
+        >
           Connect Wallet
         </Button>
-      </Box>
+      </Flex>
     );
   }
 
@@ -117,7 +122,13 @@ export function DepositFormUi({
             <Flex alignItems="center">
               {staticCollateral ? (
                 <>
-                  <CollateralIcon symbol={collateralType.symbol} width="24px" height="24px" />
+                  <CollateralIcon
+                    fill="#0B0B22"
+                    color="#00D1FF"
+                    symbol={collateralType.symbol}
+                    width="24px"
+                    height="24px"
+                  />
                   <Text fontWeight="600" mx="2">
                     {collateralType.displaySymbol}
                   </Text>
@@ -199,7 +210,7 @@ export function DepositFormUi({
             activeBadge={activeBadge}
           />
         </Box>
-        <Button mt={4} size="sm" px="8" type="submit" w="full" data-testid="deposit collateral">
+        <Button mt={4} size="md" px="8" type="submit" w="full" data-testid="deposit collateral">
           Deposit Collateral
         </Button>
       </Box>
@@ -223,6 +234,7 @@ export const DepositForm = (props: { staticCollateral?: boolean }) => {
   const collateralType = useCollateralType(params.collateralSymbol);
   const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
   const ethBalance = useEthBalance();
+
   return (
     <DepositFormUi
       staticCollateral={props.staticCollateral}

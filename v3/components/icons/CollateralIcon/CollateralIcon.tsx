@@ -7,13 +7,18 @@ interface CollateralIconProps extends IconProps {
   fill?: string;
   color?: string;
 }
-export const CollateralIcon = ({ symbol, ...props }: CollateralIconProps) => {
+export const CollateralIcon = ({
+  symbol,
+  fill = '#00D1FF',
+  color = '#FFFFFF',
+  ...props
+}: CollateralIconProps) => {
   switch (symbol) {
     case 'WETH':
       return <EthereumIcon {...props} />;
     case 'SNX':
-      return <SNXIcon {...props} />;
+      return <SNXIcon fill={fill} color={color} {...props} />;
     default:
-      return <SNXIcon {...props} />;
+      return <SNXIcon fill={fill} color={color} {...props} />;
   }
 };

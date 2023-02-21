@@ -6,7 +6,7 @@ import { calculatePoolPerformanceSevenDays } from '@snx-v3/calculations';
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { Wei } from '@synthetixio/wei';
 import { useParams } from '@snx-v3/useParams';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { InfoIcon } from '@chakra-ui/icons';
 import { TrendText } from '@snx-v3/TrendText';
 import { currency } from '@snx-v3/format';
 
@@ -18,7 +18,7 @@ const PoolBoxUi: FC<{
   sevenDaysPoolPerformanceGrowth?: Wei;
 }> = ({ poolName, poolId, accountId, navigate, sevenDaysPoolPerformanceGrowth }) => {
   return (
-    <BorderBox h="100%" p={4}>
+    <BorderBox h="100%" p={4} flexDirection="column">
       {poolId ? (
         <Flex justifyContent="space-between">
           <Flex flexDirection="column">
@@ -27,18 +27,6 @@ const PoolBoxUi: FC<{
               Pool #{poolId}
             </Text>
           </Flex>
-          <Button
-            size="sm"
-            onClick={() =>
-              navigate({
-                pathname: generatePath('/pools/:poolId', { poolId: poolId }),
-                search: accountId ? createSearchParams({ accountId }).toString() : '',
-              })
-            }
-            variant="outline"
-          >
-            See Pool
-          </Button>
         </Flex>
       ) : (
         <Flex justifyContent="space-between">
@@ -53,19 +41,34 @@ const PoolBoxUi: FC<{
         The Spartan Council Pool is the primary pool of Synthetix. All collateral will be deposited
         in this pool by default.
       </Text>
-      {sevenDaysPoolPerformanceGrowth ? (
-        <BorderBox mt={4} p={4}>
+      {sevenDaysPoolPerformanceGrowth && (
+        <BorderBox mt={4} p={4} flexDirection="column">
           <Heading fontSize="md" alignItems="center" display="flex">
             Performance Last 7 Days{' '}
             <Tooltip label="Average growth of all markets in the pool for the last 7 days">
-              <InfoOutlineIcon ml={1} />
+              <InfoIcon width="12px" height="12px" ml={1} />
             </Tooltip>
           </Heading>
           <TrendText fontSize="2xl" fontWeight="bold" value={sevenDaysPoolPerformanceGrowth}>
             {currency(sevenDaysPoolPerformanceGrowth, { style: 'percent' })}
           </TrendText>
         </BorderBox>
-      ) : null}
+      )}
+      {poolId && (
+        <Button
+          mt={4}
+          size="md"
+          onClick={() =>
+            navigate({
+              pathname: generatePath('/pools/:poolId', { poolId: poolId }),
+              search: accountId ? createSearchParams({ accountId }).toString() : '',
+            })
+          }
+          variant="outline"
+        >
+          See Pool
+        </Button>
+      )}
     </BorderBox>
   );
 };

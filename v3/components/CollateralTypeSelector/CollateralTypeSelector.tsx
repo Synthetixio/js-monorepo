@@ -15,7 +15,13 @@ export const CollateralTypeSelectorUI: FC<{
         <Flex>
           {collateralType ? (
             <>
-              <CollateralIcon symbol={collateralType.symbol} width="24px" height="24px" />
+              <CollateralIcon
+                fill="#0B0B22"
+                color="#00D1FF"
+                symbol={collateralType.symbol}
+                width="24px"
+                height="24px"
+              />
               <Text fontWeight="600" mx="2">
                 {collateralType.displaySymbol}
               </Text>
@@ -38,7 +44,13 @@ export const CollateralTypeSelectorUI: FC<{
             onClick={() => onChange(collateral.symbol)}
           >
             <Flex flexDirection="row">
-              <CollateralIcon symbol={collateral.symbol} width="24px" height="24px" />
+              <CollateralIcon
+                fill="#0B0B22"
+                color="#00D1FF"
+                symbol={collateral.symbol}
+                width="24px"
+                height="24px"
+              />
               <Text ml="2" fontWeight="600">
                 {collateral?.displaySymbol}
               </Text>
@@ -61,6 +73,7 @@ export const CollateralTypeSelector: CollateralTypeSelectorProps = ({
 }) => {
   const { data: collateralTypes = [] } = useCollateralTypes();
   const collateralType = useCollateralType(collateralSymbol);
+
   return (
     <CollateralTypeSelectorUI
       onChange={onChange}

@@ -13,6 +13,7 @@ import sortBy from 'lodash/sortBy';
 
 import useSynthetixQueries from '@synthetixio/queries';
 import Connector from 'containers/Connector';
+import { useFeesClaimed } from '@snx-v2/useFeesClaimed';
 
 const HistoryPage: FC = () => {
   const { t } = useTranslation();
@@ -38,15 +39,7 @@ const HistoryPage: FC = () => {
     },
     { id: true, timestamp: true, value: true }
   );
-  const feeClaims = subgraph.useGetFeesClaimeds(
-    {
-      first: 1000,
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      where: { account: walletAddress?.toLowerCase() },
-    },
-    { id: true, timestamp: true, rewards: true, value: true }
-  );
+  const feeClaims = useFeesClaimed();
 
   const isLoaded = issues.isSuccess && burns.isSuccess && feeClaims.isSuccess;
 

@@ -7217,12 +7217,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed":
+"@snx-v2/useFeesClaimed@workspace:*, @snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeesClaimed@workspace:v2/lib/useFeesClaimed"
   dependencies:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7267,7 +7268,6 @@ __metadata:
   dependencies:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@tanstack/react-query": ^4.24.6
-    date-fns: ^2.29.3
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7590,6 +7590,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/HomeLink@workspace:*, @snx-v3/HomeLink@workspace:v3/components/HomeLink":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/HomeLink@workspace:v3/components/HomeLink"
+  dependencies:
+    "@chakra-ui/icons": ^2.0.17
+    "@chakra-ui/react": ^2.5.0
+    react: ^18.2.0
+    react-router-dom: ^6.8.1
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/ManagePositionContext@workspace:*, @snx-v3/ManagePositionContext@workspace:v3/lib/ManagePositionContext":
   version: 0.0.0-use.local
   resolution: "@snx-v3/ManagePositionContext@workspace:v3/lib/ManagePositionContext"
@@ -7822,6 +7833,7 @@ __metadata:
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/Constants": "workspace:*"
     "@snx-v3/DepositModal": "workspace:*"
+    "@snx-v3/HomeLink": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/NumberInput": "workspace:*"
@@ -10240,6 +10252,7 @@ __metadata:
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@socket.tech/plugin": ^1.0.3
     "@storybook/addon-actions": ^6.5.16

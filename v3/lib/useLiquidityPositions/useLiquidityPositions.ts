@@ -42,6 +42,7 @@ export const useLiquidityPositions = ({ accountId }: { accountId?: string }) => 
       if (!pools || !collateralTypes || !CoreProxy || !accountId) {
         throw Error('Query should not be enabled');
       }
+
       const nestedResult = await Promise.all(
         pools.map(async ({ id: poolId, name: poolName }) =>
           Promise.all(
