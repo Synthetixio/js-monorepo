@@ -1,13 +1,11 @@
 {
-  "name": "@snx-v2/useFeesClaimed",
+  "name": "@snx-v2/useAuthorisedWallets",
   "private": true,
   "main": "index.ts",
   "version": "0.0.0",
   "dependencies": {
     "@snx-v2/Constants": "workspace:*",
     "@snx-v2/ContractContext": "workspace:*",
-    "@snx-v2/useDelegateWallet": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
     "react": "^18.2.0"
   }

@@ -6368,6 +6368,7 @@ __metadata:
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useEscrowBalance": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
@@ -6410,6 +6411,7 @@ __metadata:
     "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/useBurnMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
@@ -6644,6 +6646,7 @@ __metadata:
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useMintMutation": "workspace:*"
@@ -6678,7 +6681,6 @@ __metadata:
   resolution: "@snx-v2/Navigation@workspace:v2/components/Navigation"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/EpochPrice": "workspace:^"
     "@snx-v2/UserBalances": "workspace:*"
@@ -6686,6 +6688,7 @@ __metadata:
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
@@ -6715,6 +6718,7 @@ __metadata:
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useClaimRewardsMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
@@ -6919,14 +6923,15 @@ __metadata:
   resolution: "@snx-v2/WalletModal@workspace:v2/components/WalletModal"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/synthsByName": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/useAuthorisedWallets": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
@@ -7062,6 +7067,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useAuthorisedWallets@workspace:*, @snx-v2/useAuthorisedWallets@workspace:v2/lib/useAuthorisedWallets":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useAuthorisedWallets@workspace:v2/lib/useAuthorisedWallets"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useBurnMutation@workspace:*, @snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
@@ -7092,6 +7108,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation"
   dependencies:
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
@@ -7120,6 +7137,7 @@ __metadata:
   dependencies:
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
@@ -7138,6 +7156,14 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useDelegateWallet@workspace:*, @snx-v2/useDelegateWallet@workspace:v2/lib/useDelegateWallet":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useDelegateWallet@workspace:v2/lib/useDelegateWallet"
+  dependencies:
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7223,6 +7249,7 @@ __metadata:
   dependencies:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
@@ -7277,6 +7304,7 @@ __metadata:
   resolution: "@snx-v2/useGetLiquidationRewards@workspace:v2/lib/useGetLiquidationRewards"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
@@ -7375,6 +7403,7 @@ __metadata:
   resolution: "@snx-v2/useRewardsAvailable@workspace:v2/lib/useRewardsAvailable"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
@@ -10252,6 +10281,7 @@ __metadata:
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@socket.tech/plugin": ^1.0.3

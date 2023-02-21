@@ -6,6 +6,7 @@ import orderBy from 'lodash/orderBy';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useSynthUtil } from '@snx-v2/useSynthetixContracts';
 import Wei, { wei } from '@synthetixio/wei';
+import { useDelegateWallet } from '../useDelegateWallet';
 
 function notNill<Value>(value: Value | null | undefined): value is Value {
   return value !== null && value !== undefined;
@@ -55,20 +56,22 @@ export const processSynthsBalances = (balances: SynthBalancesTuple) => {
 
 export const useSynthsBalances = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
-  const { data: SynthUtil } = useSynthUtil();
+  const { delegateWallet } = useDelegateWallet();
 
+  const { data: SynthUtil } = useSynthUtil();
+  const walletAddressToUse = delegateWallet?.address || walletAddress;
   return useQuery(
-    ['synths', 'v2walletBalances', networkId, walletAddress],
+    ['synths', 'v2walletBalances', { networkId, walletAddressToUse }],
     async () => {
-      if (!SynthUtil || !walletAddress) {
-        throw Error('Query should not be enabled if contracts or walletAddress are missing');
+      if (!SynthUtil || !walletAddressToUse) {
+        throw Error('Query should not be enabled');
       }
 
-      return await SynthUtil.synthsBalances(walletAddress);
+      return await SynthUtil.synthsBalances(walletAddressToUse);
     },
     {
       select: processSynthsBalances,
-      enabled: Boolean(networkId && SynthUtil && walletAddress),
+      enabled: Boolean(networkId && SynthUtil && walletAddressToUse),
       staleTime: 1000,
     }
   );

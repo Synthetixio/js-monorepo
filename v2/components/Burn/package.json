@@ -19,6 +19,7 @@
     "@snx-v2/txnLink": "workspace:*",
     "@snx-v2/useBurnMutation": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
+    "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@snx-v3/txnReducer": "workspace:*",

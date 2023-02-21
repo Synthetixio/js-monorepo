@@ -17,6 +17,7 @@
     "@snx-v2/useApr": "workspace:*",
     "@snx-v2/useClaimRewardsMutation": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
+    "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useFeePoolData": "workspace:*",
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*",

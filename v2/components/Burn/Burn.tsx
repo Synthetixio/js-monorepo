@@ -36,6 +36,7 @@ import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { BurnHeader } from './BurnHeader';
 import { leftColWidth, rightColWidth } from './layout';
 import { BurnLinks } from './BurnLinks';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 type ActivePreset = 'max' | 'toTarget' | 'sUSDBalance' | 'debtBalance';
 
@@ -58,6 +59,7 @@ interface BurnProps {
   isAboveTarget?: boolean;
   burnAmountForCalculations: number;
   activePreset: ActivePreset | null;
+  canBurn: boolean;
 }
 
 const StyledInput: FC<InputProps> = (props) => {
@@ -101,6 +103,7 @@ export const BurnUi = ({
   isAboveTarget,
   burnAmountForCalculations,
   activePreset,
+  canBurn,
 }: BurnProps) => {
   const { t } = useTranslation();
 
@@ -414,6 +417,7 @@ export const BurnUi = ({
           w="100%"
           onClick={() => onSubmit()}
           isDisabled={
+            !canBurn ||
             burnAmountSusd === '' ||
             burnAmountSusd === '0.00' ||
             Boolean(gasError) ||
@@ -446,12 +450,12 @@ const getBurnAmountForCalculations = (
       return burnAmountSusd === '' ? undefined : parseFloatWithCommas(burnAmountSusd);
   }
 };
-export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
+export const Burn: FC = () => {
   const [burnAmountSusd, setBurnAmountSusd] = useState('');
   const [snxUnstakingAmount, setSnxUnstakingAmount] = useState('');
   const [activePreset, setActivePreset] = useState<ActivePreset | null>(null);
   const queryClient = useQueryClient();
-
+  const { delegateWallet } = useDelegateWallet();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
@@ -481,7 +485,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       activePreset === 'max' || activePreset === 'debtBalance'
         ? wei(susdBalance || 0).toBN()
         : wei(burnAmountSusd || 0).toBN(),
-    delegateAddress: delegateWalletAddress,
+    delegateAddress: delegateWallet?.address,
     toTarget: activePreset === 'toTarget',
   });
 
@@ -610,6 +614,7 @@ export const Burn: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       >
         <Box width={{ base: 'full', md: leftColWidth }}>
           <BurnUi
+            canBurn={delegateWallet ? delegateWallet.canBurn : true}
             stakedSnx={stakedSnx.toNumber()}
             debtBalance={debtData?.debtBalance.toNumber()}
             isLoading={isLoading}

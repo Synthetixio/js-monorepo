@@ -23,11 +23,13 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 import Connector from 'containers/Connector';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 const V2Home = () => {
   const { t } = useTranslation();
   const { walletAddress } = useContext(ContractContext);
   const { isAppReady, connectWallet } = Connector.useContainer();
+  const { delegateWallet } = useDelegateWallet();
 
   return (
     <>
@@ -83,22 +85,26 @@ const V2Home = () => {
                 flexDirection="column"
               >
                 {walletAddress && <BalanceBox />}
-                <Box mt={walletAddress ? 4 : 0}>
-                  <BoxLink
-                    to="/bridge"
-                    headline={t('staking-v2.v2-home.box-links.bridge.headline')}
-                    subHeadline={t('staking-v2.v2-home.box-links.bridge.subHeadline')}
-                    icon={<BridgeIcon />}
-                  />
-                </Box>
-                <Box mt={4}>
-                  <BoxLink
-                    to="/debt/manage"
-                    headline={t('staking-v2.v2-home.box-links.hedge-debt.headline')}
-                    subHeadline={t('staking-v2.v2-home.box-links.hedge-debt.subHeadline')}
-                    icon={<DebtPoolIcon />}
-                  />
-                </Box>
+                {delegateWallet ? null : (
+                  <Box mt={walletAddress ? 4 : 0}>
+                    <BoxLink
+                      to="/bridge"
+                      headline={t('staking-v2.v2-home.box-links.bridge.headline')}
+                      subHeadline={t('staking-v2.v2-home.box-links.bridge.subHeadline')}
+                      icon={<BridgeIcon />}
+                    />
+                  </Box>
+                )}
+                {delegateWallet ? null : (
+                  <Box mt={4}>
+                    <BoxLink
+                      to="/debt/manage"
+                      headline={t('staking-v2.v2-home.box-links.hedge-debt.headline')}
+                      subHeadline={t('staking-v2.v2-home.box-links.hedge-debt.subHeadline')}
+                      icon={<DebtPoolIcon />}
+                    />
+                  </Box>
+                )}
                 <Box mt={4}>
                   <BoxLink
                     href={EXTERNAL_LINKS.CMS.Home}

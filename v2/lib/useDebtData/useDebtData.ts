@@ -5,6 +5,7 @@ import { formatBytes32String } from '@ethersproject/strings';
 import { useSynthetix, useLiquidator, useSystemSettings } from '@snx-v2/useSynthetixContracts';
 import { BigNumber } from 'ethers';
 import { ContractContext } from '@snx-v2/ContractContext';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 const processQueryData = (
   result: [
@@ -50,10 +51,12 @@ const processQueryData = (
 };
 
 export const useDebtData = () => {
-  const { networkId, walletAddress } = useContext(ContractContext);
+  const { networkId, walletAddress: connectedWalletAddress } = useContext(ContractContext);
   const { data: Synthetix } = useSynthetix();
   const { data: Liquidator } = useLiquidator();
   const { data: SystemSettings } = useSystemSettings();
+  const { delegateWallet } = useDelegateWallet();
+  const walletAddress = delegateWallet?.address || connectedWalletAddress;
   return useQuery(
     ['v2debt', 'data', networkId, walletAddress],
     async () => {
