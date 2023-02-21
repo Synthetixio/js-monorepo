@@ -7,6 +7,7 @@ import {
   UNSUPPORTED_NETWORK,
   useAccount,
   useNetwork,
+  disconnect,
 } from '@snx-v3/useBlockchain';
 import { prettyString } from '@snx-v3/format';
 
@@ -15,7 +16,6 @@ export function NetworkController() {
   const activeNetwork = useNetwork();
   const selectedNetwork =
     account && activeNetwork ? activeNetwork : !account ? DEFAULT_NETWORK : UNSUPPORTED_NETWORK;
-  console.log(`account`, account);
   return (
     <Flex>
       <Menu>
@@ -23,6 +23,7 @@ export function NetworkController() {
           <>
             <MenuButton
               as={Button}
+              isDisabled={!Boolean(account)}
               variant="outline"
               colorScheme="gray"
               sx={{ '> span': { display: 'flex', alignItems: 'center' } }}
@@ -49,10 +50,7 @@ export function NetworkController() {
                   key={network.name}
                   disabled={!network.isSupported}
                   onClick={async () => {
-                    const success = await onboard.setChain({
-                      chainId: `0x${network.id.toString(16)}`,
-                    });
-                    console.log({ success });
+                    await onboard.setChain({ chainId: `0x${network.id.toString(16)}` });
                   }}
                 >
                   <network.Icon />
@@ -66,27 +64,48 @@ export function NetworkController() {
         )}
       </Menu>
       {account ? (
-        <Button
-          variant="outline"
-          colorScheme="gray"
-          ml={2}
-          height={10}
-          py="6px"
-          px="9.5px"
-          onClick={() => {
-            // if (chain?.unsupported) {
-            //   openChainModal();
-            // } else {
-            //   openAccountModal();
-            // }
-          }}
-        >
-          <WalletIcon />
-          <Text ml={1} color="whiteAlpha.800" fontWeight={700} fontSize="xs" userSelect="none">
-            {account.ens?.name || prettyString(account.address)}
-            {/*{account?.ensName || account.displayName}*/}
-          </Text>
-        </Button>
+        <Menu>
+          <MenuButton
+            as={Button}
+            variant="outline"
+            colorScheme="gray"
+            ml={2}
+            height={10}
+            py="6px"
+            px="9.5px"
+            whiteSpace="nowrap"
+          >
+            <WalletIcon />
+            <Text
+              as="span"
+              ml={1}
+              color="whiteAlpha.800"
+              fontWeight={700}
+              fontSize="xs"
+              userSelect="none"
+            >
+              {account.ens?.name || prettyString(account.address)}
+            </Text>
+          </MenuButton>
+          <MenuList>
+            <MenuItem
+              onClick={() => {
+                try {
+                  navigator.clipboard.writeText(account?.address);
+                } catch (_e) {}
+              }}
+            >
+              <Text variant="nav" ml={2}>
+                Copy address
+              </Text>
+            </MenuItem>
+            <MenuItem onClick={disconnect}>
+              <Text variant="nav" ml={2}>
+                Disconnect
+              </Text>
+            </MenuItem>
+          </MenuList>
+        </Menu>
       ) : (
         <Button
           onClick={() => onboard.connectWallet()}
@@ -101,13 +120,4 @@ export function NetworkController() {
       )}
     </Flex>
   );
-
-  // return (
-  //   <ConnectButton.Custom>
-  //     {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
-  //       const network = getNetworkByName(chain?.name);
-  //       );
-  //     }}
-  //   </ConnectButton.Custom>
-  // );
 }

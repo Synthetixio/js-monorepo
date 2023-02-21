@@ -93,10 +93,6 @@ export const onboard = onboardInit({
   wallets,
   chains,
   appMetadata,
-  connect: {
-    // disableClose: true,
-    // autoConnectLastWallet: true,
-  },
   apiKey: ONBOARD_KEY,
   accountCenter: {
     desktop: {
@@ -204,4 +200,11 @@ export async function autoConnect() {
     // whatever
     return;
   }
+}
+
+export async function disconnect() {
+  window.localStorage.removeItem('connectedWallets');
+  return await Promise.all(
+    onboard.state.get().wallets.map(({ label }) => onboard.disconnectWallet({ label }))
+  );
 }
