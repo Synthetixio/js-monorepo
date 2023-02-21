@@ -1,21 +1,11 @@
 import { FC, PropsWithChildren } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import { safeLazy } from '@synthetixio/safe-import';
 import AppLayout from './sections/shared/Layout/AppLayout';
-import { LOCAL_STORAGE_KEYS } from 'constants/storage';
-import useLocalStorage from 'hooks/useLocalStorage';
 import { Box, Container } from '@chakra-ui/react';
 import { HomeButton } from '@snx-v2/HomeButton';
 import V2Earn from 'content/V2Earn';
-
-import DashboardPage from './content/DashboardPage';
-import SynthsPage from './content/SynthsPage';
-import StakingPage from './content/StakingPage';
 import LoansPage from './content/LoansPage';
-
-// gov is heavy, leave it async
-const GovPage = safeLazy(() => import(/* webpackChunkName: "gov" */ './content/GovPage'));
 
 import EarnPage from './content/EarnPage';
 import DebtPage from './content/DebtPage';
@@ -65,7 +55,6 @@ export default function AppRoutes() {
     <BrowserRouter>
       <AppLayout>
         <TermsModal defaultOpen={!TERMS_CONDITIONS_ACCEPTED} />
-
         <Routes>
           <Route path="/" element={<V2HomePage />} />
           <Route path="/staking" element={<Navigate to="/staking/mint" />} />
@@ -83,14 +72,6 @@ export default function AppRoutes() {
               <WalletWrapper>
                 <WalletBalances />
               </WalletWrapper>
-            }
-          />
-          <Route
-            path="/synths"
-            element={
-              <Wrapper>
-                <SynthsPage />
-              </Wrapper>
             }
           />
 
@@ -118,51 +99,6 @@ export default function AppRoutes() {
                 </Wrapper>
               }
             />
-          </Route>
-
-          <Route
-            path="/gov"
-            element={
-              <Wrapper>
-                <GovPage />
-              </Wrapper>
-            }
-          >
-            <Route
-              path=":spaceKey/:panel"
-              element={
-                <Wrapper>
-                  <GovPage />
-                </Wrapper>
-              }
-            />
-          </Route>
-
-          <Route
-            path="/earn"
-            element={
-              <Wrapper>
-                <EarnPage />
-              </Wrapper>
-            }
-          >
-            <Route
-              path=":pool"
-              element={
-                <Wrapper>
-                  <EarnPage />
-                </Wrapper>
-              }
-            >
-              <Route
-                path=":action"
-                element={
-                  <Wrapper>
-                    <EarnPage />
-                  </Wrapper>
-                }
-              />
-            </Route>
           </Route>
 
           <Route path="/debt" element={<Navigate to="/debt/overview" replace={true} />} />
@@ -253,14 +189,6 @@ export default function AppRoutes() {
               <WalletWrapper>
                 <BridgePage />
               </WalletWrapper>
-            }
-          />
-          <Route
-            path="/pools/weth-snx"
-            element={
-              <Wrapper>
-                <PoolPage />
-              </Wrapper>
             }
           />
 
