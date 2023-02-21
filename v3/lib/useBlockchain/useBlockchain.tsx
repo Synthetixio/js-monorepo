@@ -127,6 +127,16 @@ export const BlockchainProvider: React.FC<React.PropsWithChildren> = ({ children
     const { unsubscribe } = onboard.state.select().subscribe(setState);
     return unsubscribe;
   }, []);
+
+  React.useEffect(() => {
+    const walletsSub = onboard.state.select('wallets');
+    const { unsubscribe } = walletsSub.subscribe((wallets) => {
+      const connectedWallets = wallets.map(({ label }) => label);
+      window.localStorage.setItem('connectedWallets', JSON.stringify(connectedWallets));
+    });
+    return unsubscribe;
+  }, []);
+
   return <BlockchainContext.Provider value={{ state }}>{children}</BlockchainContext.Provider>;
 };
 
@@ -169,4 +179,29 @@ export function useAccount() {
   }
   const [account] = wallet.accounts;
   return account;
+}
+
+export function preserveConnectedWallets() {
+  const walletsSubscription = onboard.state.select('wallets');
+  const { unsubscribe } = walletsSubscription.subscribe((wallets) => {
+    const connectedWallets = wallets.map(({ label }) => label);
+    window.localStorage.setItem('connectedWallets', JSON.stringify(connectedWallets));
+  });
+  return unsubscribe;
+}
+
+export async function autoConnect() {
+  const connectedWalletsRaw = window.localStorage.getItem('connectedWallets');
+  if (!connectedWalletsRaw) {
+    return;
+  }
+  try {
+    const [connectedWallet] = JSON.parse(connectedWalletsRaw);
+    await onboard.connectWallet({
+      autoSelect: { label: connectedWallet, disableModals: true },
+    });
+  } catch (_e) {
+    // whatever
+    return;
+  }
 }
