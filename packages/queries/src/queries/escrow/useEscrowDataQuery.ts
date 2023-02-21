@@ -77,7 +77,7 @@ const useEscrowDataQuery = (
             quantity,
             date: new Date(Number(endTime) * 1000),
           });
-          if (endTime.gt(0)) {
+          if (endTime.gt(0) && quantity.gt(0)) {
             migratableEntryIds.push(wei(entryID, 0));
           }
         }
