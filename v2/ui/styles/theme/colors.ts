@@ -1,8 +1,4 @@
 import { theme as chakraTheme } from '@synthetixio/v3-theme';
-import localStore from 'utils/localStore';
-import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
-
-const isV2 = localStore.get(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED) === true;
 
 export default {
   // primary

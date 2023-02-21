@@ -77,7 +77,7 @@ const UserMenu: FC = () => {
           style={{ marginRight: 10 }}
           variant="solid"
           onClick={() => {
-            window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'true';
+            //TODO  This file will be removed soon
             window.location.reload();
           }}
         >

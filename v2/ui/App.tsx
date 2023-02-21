@@ -23,8 +23,6 @@ import Connector from 'containers/Connector';
 import Routes from './Routes';
 
 import { isSupportedNetworkId } from './utils/network';
-import useLocalStorage from './hooks/useLocalStorage';
-import { LOCAL_STORAGE_KEYS } from './constants/storage';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { SignerContext } from '@snx-v2/SignerContext';
 import { GasSpeedProvider } from '@snx-v2/GasSpeedContext';
@@ -114,7 +112,6 @@ const LazyChakraProvider: FC<PropsWithChildren<{ enabled: boolean }>> = ({ enabl
 
 function App() {
   const { t } = useTranslation();
-  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
   return (
     <>
       <Head>
@@ -137,7 +134,7 @@ function App() {
         <meta name="twitter:url" content="https://staking.synthetix.io" />
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
-      <LazyChakraProvider enabled={STAKING_V2_ENABLED}>
+      <LazyChakraProvider>
         <ThemeProvider theme={theme}>
           <RecoilRoot>
             <QueryClientProvider client={queryClient} contextSharing={true}>
