@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useReducer } from 'react';
 import { AppState } from '@web3-onboard/core';
 import { createContainer } from 'unstated-next';
-import TransactionNotifier from '@synthetixio/transaction-notifier';
 import { loadProvider, SynthetixProvider } from '@synthetixio/providers';
 
 import { getIsOVM, isSupportedNetworkId } from 'utils/network';
@@ -11,8 +10,6 @@ import { ethers } from 'ethers';
 
 import { onboard as Web3Onboard } from './config';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
-import { CurrencyKey, ETH_ADDRESS } from 'constants/currency';
-import { synthToContractName } from 'utils/currencies';
 import { AppEvents, initialState, reducer } from './reducer';
 
 import { getChainIdHex, getNetworkIdFromHex } from 'utils/infura';
@@ -36,8 +33,6 @@ const L2DefaultProvider: SynthetixProvider = loadProvider({
   networkId: NetworkIdByName['mainnet-ovm'],
 });
 
-const transactionNotifier = new TransactionNotifier(L1DefaultProvider);
-
 const useConnector = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -49,7 +44,6 @@ const useConnector = () => {
     synthetixjs,
     walletAddress,
     ensName,
-    ensAvatar,
     onboard,
     walletType,
   } = state;
@@ -89,7 +83,6 @@ const useConnector = () => {
           signer,
           synthetixjs,
           ensName: wallet?.ens?.name || null,
-          ensAvatar: wallet?.ens?.avatar?.url || null,
         },
       });
 
@@ -103,12 +96,6 @@ const useConnector = () => {
   useEffect(() => {
     dispatch({ type: AppEvents.APP_READY, payload: Web3Onboard });
   }, []);
-
-  useEffect(() => {
-    if (provider) {
-      transactionNotifier.setProvider(provider);
-    }
-  }, [provider]);
 
   useEffect(() => {
     if (onboard) {
@@ -128,9 +115,8 @@ const useConnector = () => {
     if (walletAddress && !ensName) {
       (async () => {
         const ensN: string | null = await L1DefaultProvider.lookupAddress(walletAddress);
-        const ensA = ensName ? await L1DefaultProvider.getAvatar(ensName) : null;
         if (ensN) {
-          dispatch({ type: AppEvents.SET_ENS, payload: { ensName: ensN, ensAvatar: ensA } });
+          dispatch({ type: AppEvents.SET_ENS, payload: { ensName: ensN } });
         }
       })();
     }
@@ -164,39 +150,6 @@ const useConnector = () => {
     }
   }, [onboard]);
 
-  const switchAccounts = useCallback(async () => {
-    try {
-      if (onboard) {
-        await onboard.connectWallet({
-          autoSelect: { label: onboard.state.get()?.wallets[0]?.label, disableModals: false },
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [onboard]);
-
-  const isHardwareWallet = useCallback(() => {
-    if (onboard) {
-      const walletLabel = onboard.state.get()?.wallets[0]?.label || null;
-      return walletLabel === 'Trezor' || walletLabel === 'Ledger';
-    }
-    return false;
-  }, [onboard]);
-
-  const getTokenAddress = useCallback(
-    (currencyKey: CurrencyKey) => {
-      if (synthetixjs == null) {
-        return null;
-      }
-
-      return currencyKey === 'ETH'
-        ? ETH_ADDRESS
-        : synthetixjs.contracts[synthToContractName(currencyKey!)].address;
-    },
-    [synthetixjs]
-  );
-
   const switchNetwork = async (id: NetworkId) => {
     return onboard?.setChain({ chainId: getChainIdHex(id) });
   };
@@ -214,14 +167,9 @@ const useConnector = () => {
     isMainnet: !network?.useOvm ?? false,
     connectWallet,
     disconnectWallet,
-    switchAccounts,
-    isHardwareWallet,
-    transactionNotifier,
-    getTokenAddress,
     L1DefaultProvider,
     L2DefaultProvider,
     ensName,
-    ensAvatar,
     switchNetwork,
   };
 };

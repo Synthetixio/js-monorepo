@@ -14,7 +14,6 @@ type ConnectorState = {
   walletAddress: string | null;
   walletType: string | null;
   ensName: string | null;
-  ensAvatar: string | null;
   onboard: OnboardAPI | null;
 };
 
@@ -35,7 +34,6 @@ export const initialState: ConnectorState = {
   walletAddress: null,
   walletType: null,
   ensName: null,
-  ensAvatar: null,
   onboard: onboard,
 };
 
@@ -47,12 +45,10 @@ export type ConnectionUpdate = {
   synthetixjs: { contracts: SynthetixJS['contracts'] } | null;
   provider: SynthetixProvider;
   ensName: string | null;
-  ensAvatar: string | null;
 };
 
 export type EnsUpdate = {
   ensName: string | null;
-  ensAvatar: string | null;
 };
 
 export type ProviderUpdate = {
@@ -82,11 +78,10 @@ export function reducer(state: ConnectorState, action: Actions): ConnectorState 
         provider: action.payload.provider,
         synthetixjs: action.payload.synthetixjs,
         ensName: action.payload.ensName,
-        ensAvatar: action.payload.ensAvatar,
       };
 
     case AppEvents.SET_ENS:
-      return { ...state, ensName: action.payload.ensName, ensAvatar: action.payload.ensAvatar };
+      return { ...state, ensName: action.payload.ensName };
 
     case AppEvents.WALLET_DISCONNECTED:
       return {
@@ -98,7 +93,6 @@ export function reducer(state: ConnectorState, action: Actions): ConnectorState 
         walletAddress: null,
         walletType: null,
         ensName: null,
-        ensAvatar: null,
       };
 
     case AppEvents.UPDATE_PROVIDER:
