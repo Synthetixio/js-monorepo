@@ -16,14 +16,7 @@ import { synthToContractName } from 'utils/currencies';
 import { AppEvents, initialState, reducer } from './reducer';
 
 import { getChainIdHex, getNetworkIdFromHex } from 'utils/infura';
-import { Network } from 'store/wallet';
 import { initializeSynthetix } from '../../utils/contracts';
-
-const defaultNetwork: Network = {
-  id: NetworkIdByName.mainnet,
-  name: NetworkNameById[NetworkIdByName.mainnet],
-  useOvm: getIsOVM(NetworkIdByName.mainnet),
-};
 
 // Ethereum Mainnet
 const L1DefaultProvider: SynthetixProvider = loadProvider({
@@ -55,7 +48,6 @@ const useConnector = () => {
     signer,
     synthetixjs,
     walletAddress,
-    walletWatched,
     ensName,
     ensAvatar,
     onboard,
@@ -91,7 +83,6 @@ const useConnector = () => {
         type: AppEvents.CONFIG_UPDATE,
         payload: {
           address: wallet.address,
-          walletWatched: null,
           walletType: label,
           network,
           provider,
@@ -120,32 +111,6 @@ const useConnector = () => {
   }, [provider]);
 
   useEffect(() => {
-    const previousWalletsSerialised = localStorage.getItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
-
-    const previousWallets: string[] = previousWalletsSerialised
-      ? JSON.parse(previousWalletsSerialised)
-      : [];
-
-    // If running in an iframe, attempt to connect with Gnosis
-    if (window.self !== window.top) {
-      previousWallets.push('Gnosis Safe');
-    }
-
-    if (onboard && previousWallets.length > 0) {
-      (async () => {
-        try {
-          await onboard.connectWallet({
-            autoSelect: {
-              label: previousWallets[0],
-              disableModals: true,
-            },
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }
-
     if (onboard) {
       const state = onboard.state.select();
       const { unsubscribe } = state.subscribe(updateState);
@@ -170,19 +135,6 @@ const useConnector = () => {
       })();
     }
   }, [walletAddress, ensName, network]);
-
-  useEffect(() => {
-    // If we are 'watching a wallet, we update the provider'
-    if (walletWatched) {
-      const provider = loadProvider({ infuraId: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID });
-      if (provider) {
-        dispatch({
-          type: AppEvents.UPDATE_PROVIDER,
-          payload: { provider, network: network || defaultNetwork },
-        });
-      }
-    }
-  }, [walletWatched, network]);
 
   const connectWallet = useCallback(
     async (chainId?: NetworkId) => {
@@ -245,24 +197,6 @@ const useConnector = () => {
     [synthetixjs]
   );
 
-  const setWatchedWallet = useCallback(
-    (address: string | null, walletWatched: string | null, ensName: string | null) => {
-      dispatch({ type: AppEvents.WATCH_WALLET, payload: { address, walletWatched, ensName } });
-    },
-    []
-  );
-
-  const stopWatching = useCallback(async () => {
-    try {
-      if (onboard) {
-        const appState = await onboard.state.get();
-        updateState(appState);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [onboard, updateState]);
-
   const switchNetwork = async (id: NetworkId) => {
     return onboard?.setChain({ chainId: getChainIdHex(id) });
   };
@@ -272,7 +206,6 @@ const useConnector = () => {
     provider,
     signer,
     walletAddress,
-    walletWatched,
     walletType,
     synthetixjs,
     isWalletConnected: Boolean(walletAddress && synthetixjs),
@@ -289,8 +222,6 @@ const useConnector = () => {
     L2DefaultProvider,
     ensName,
     ensAvatar,
-    setWatchedWallet,
-    stopWatching,
     switchNetwork,
   };
 };

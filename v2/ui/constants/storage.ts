@@ -1,6 +1,5 @@
 export const LOCAL_STORAGE_KEYS = {
   SELECTED_WALLET: 'selectedWallet',
-  WATCHED_WALLETS: 'watchedWallets',
   THALES_STAKING_INFO_VISIBLE: 'thalesStakingInfo',
   KWENTA_TOKEN_LIVE: 'KWENTA_TOKEN_LIVE',
   WARNING_URL_BANNER_VISIBLE: 'isWarningUrlBannerVisible',
