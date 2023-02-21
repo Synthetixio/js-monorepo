@@ -13,7 +13,7 @@
         "defaultValue": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
       },
       "oracle_manager_source": {
-        "defaultValue": "oracle-manager:1.2.6"
+        "defaultValue": "oracle-manager:1.2.9"
       }
     },
     "provision": {
@@ -238,14 +238,14 @@
       }
     }
   },
-  "miscUrl": "ipfs://QmTpX3c7jUDvsVP6KAYnTBcrGNsu4nNSAoMMkpMGkUKc1P",
+  "miscUrl": "ipfs://QmZSvfiVMDYhrYpbgM5FDfamE5WTtzEnodbevizjovGd2x",
   "options": {
     "owner": "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9",
     "salt": "alpha"
   },
   "meta": {
     "name": "@synthetixio/main",
-    "version": "3.0.0-alpha.12",
+    "version": "3.0.0-alpha.15",
     "description": "Core Synthetix Protocol Contracts",
     "private": true,
     "scripts": {

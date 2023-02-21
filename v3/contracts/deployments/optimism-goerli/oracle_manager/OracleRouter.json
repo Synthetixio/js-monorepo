@@ -1,11 +1,6 @@
 {
-  "address": "0x17f4b808B8C2d42817D120d0020Cd8374e5633C5",
+  "address": "0x69f8F5A1FB47184171ded6713Da07458B5052bD0",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -131,32 +126,6 @@
           "internalType": "address",
           "name": "",
           "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -525,7 +494,7 @@
     }
   ],
   "deployedOn": "router.OracleRouter",
-  "deployTxnHash": "0x003b3f872eb7ffc9cc939d6416c31085438a61ac1447e21a2b842411e0d1ee44",
+  "deployTxnHash": "0x71cbbf0497be9f3942c479506ea3ea116dffe80636d0d723996a42e4b0d604b4",
   "contractName": "OracleRouter",
   "sourceName": "OracleRouter.sol"
 }
