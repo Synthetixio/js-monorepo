@@ -8,11 +8,12 @@ import { assetToSynth } from 'utils/currencies';
 import useSynthetixQueries from '@synthetixio/queries';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import Wei, { wei } from '@synthetixio/wei';
-import { renBTCToken, wBTCToken, wETHToken } from 'contracts';
+import wETHToken from '../contracts/wETHToken';
+import wBTCToken from '../contracts/wBTCToken';
 import { getETHToken } from 'contracts/ethToken';
 import Connector from 'containers/Connector';
 
-const { ETH, WETH, SNX, BTC, WBTC, RENBTC } = CryptoCurrency;
+const { ETH, WETH, SNX, BTC, WBTC } = CryptoCurrency;
 
 export type CryptoBalance = {
   currencyKey: string;
@@ -48,15 +49,6 @@ const useCryptoBalances = (walletAddress: string | null) => {
           decimals: 18,
           logoURI: '',
           name: 'Wrapped Ethereum',
-          chainId: NetworkIdByName.mainnet,
-          tags: [],
-        },
-        {
-          symbol: 'renBTC',
-          address: renBTCToken.ADDRESSES['mainnet'],
-          decimals: 18,
-          logoURI: '',
-          name: 'renBTC',
           chainId: NetworkIdByName.mainnet,
           tags: [],
         },
@@ -109,12 +101,6 @@ const useCryptoBalances = (walletAddress: string | null) => {
             currencyKey: WBTC,
             balance: wBTCBalance,
             usdBalance: wBTCBalance.mul(exchangeRates[Synths.sBTC]),
-            synth: assetToSynth(BTC),
-          },
-          {
-            currencyKey: RENBTC,
-            balance: renBTCBalance,
-            usdBalance: renBTCBalance.mul(exchangeRates[Synths.sBTC]),
             synth: assetToSynth(BTC),
           },
         ].filter((cryptoBalance) => cryptoBalance.balance.gt(0)),
