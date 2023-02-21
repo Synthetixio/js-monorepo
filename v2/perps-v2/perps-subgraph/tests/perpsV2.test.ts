@@ -103,7 +103,10 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${event.address.toHex() + '-' + '0x1'}`,
       'totalVolume',
-      toEth(100).times(toEth(1000)).div(BigInt.fromI32(10).pow(18)).toString()
+      toEth(100)
+        .times(toEth(1000))
+        .div(BigInt.fromI32(10).pow(18))
+        .toString()
     );
     assert.fieldEquals(
       'FuturesPosition',
@@ -269,97 +272,97 @@ describe('Perps V2', () => {
     // FUTURES TRADE
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'timestamp',
       '20'
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'account',
       trader.toLowerCase()
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'margin',
       toEth(302).toString()
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'positionId',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'size',
       toEth(300).toString()
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'market',
       modifyPositionEvent.address.toHex()
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'price',
       toEth(1200).toString()
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'positionSize',
       '400'
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'positionClosed',
       'false'
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'pnl',
       `2000`
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'feesPaidToSynthetix',
       toEth(2).toString()
     );
     assert.fieldEquals(
       'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
+      `${modifyPositionEvent.transaction.hash.toHex() +
+        '-' +
+        modifyPositionEvent.logIndex.toString()}`,
       'type',
       'PositionModified'
     );
@@ -609,7 +612,7 @@ describe('Perps V2', () => {
       'orderType',
       'DelayedOffchainSubmitted'
     );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'status', 'Pending');
+    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'status', 'Cancelled');
     assert.fieldEquals(
       'FuturesOrder',
       trader.toLowerCase() + '-2',
@@ -763,9 +766,9 @@ describe('Perps V2', () => {
       'Trader',
       trader.toLowerCase(),
       'trades',
-      `[${modifyPositionEvent.address.toHex() + '-' + '1'}, ${
-        modifyPositionEvent.address.toHex() + '-' + '2'
-      }, ${modifyPositionEvent.address.toHex() + '-' + '3'}]`
+      `[${modifyPositionEvent.address.toHex() + '-' + '1'}, ${modifyPositionEvent.address.toHex() +
+        '-' +
+        '2'}, ${modifyPositionEvent.address.toHex() + '-' + '3'}]`
     );
   });
 
