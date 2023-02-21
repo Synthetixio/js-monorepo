@@ -138,9 +138,11 @@ export const WalletModalUi: FC<{
           </Box>
           {showDelegateWallets && !delegateWallet ? (
             <AuthorisedWallets
-              onWalletSelected={() => {
+              onWalletSelected={(wallet) => {
                 setShowDelegateWallet(false);
+                setDelegateWallet(wallet);
                 onClose();
+                navigate('/');
               }}
             />
           ) : (

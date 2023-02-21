@@ -1,8 +1,8 @@
 import { Box, Skeleton, Text, Link, Avatar, Button, Tooltip } from '@chakra-ui/react';
 import { useAuthorisedWallets } from '@snx-v2/useAuthorisedWallets';
 import { FC } from 'react';
-import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
-import { useDelegateWallet, DelegateWallet } from '@snx-v2/useDelegateWallet';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import { DelegateWallet } from '@snx-v2/useDelegateWallet';
 import { truncateAddress } from '@snx-v2/formatters';
 
 const AuthorisedWalletsUi: FC<{
@@ -61,18 +61,12 @@ export type AuthorisedWalletsProps = {
 };
 export const AuthorisedWallets: FC<AuthorisedWalletsProps> = ({ onWalletSelected }) => {
   const { data, isLoading } = useAuthorisedWallets();
-  const { setDelegateWallet } = useDelegateWallet();
-  const navigate = useNavigate();
   return (
     <Box my={2} px={4} py={3} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
       <AuthorisedWalletsUi
         isLoading={isLoading}
         authorisedWallets={data}
-        onWalletSelected={(wallet) => {
-          setDelegateWallet(wallet);
-          navigate('/');
-          onWalletSelected(wallet);
-        }}
+        onWalletSelected={onWalletSelected}
       />
     </Box>
   );
