@@ -1,6 +1,17 @@
 {
-  "address": "0x0Ec577B780c365Ce69F6956f961cD6301C2440DF",
+  "address": "0x4E5Fe2814921eF9AD0D98A523F06dcFf41ff2710",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "CollateralDepositDisabled",
+      "type": "error"
+    },
     {
       "inputs": [],
       "name": "EmptyDistribution",
@@ -52,6 +63,22 @@
         }
       ],
       "name": "InsufficientDebt",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
@@ -125,6 +152,17 @@
         }
       ],
       "name": "PermissionDenied",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
+      "name": "PoolNotFound",
       "type": "error"
     },
     {
@@ -258,5 +296,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xc7f93cf0c4923855605a4fe19c9a18b57f0f8c62222059732ee12a4b2e2fc43c"
+  "deployTxnHash": "0xd54cfa36091242d14d4ec140dd18cdb5cb26130fc6892b642f202f9f92cd1fea"
 }

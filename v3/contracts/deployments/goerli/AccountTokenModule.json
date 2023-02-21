@@ -1,5 +1,5 @@
 {
-  "address": "0x1bF1afA1fAfCaA8a64676dc153e8D8bEd0FDc7fB",
+  "address": "0x5A7028CCbB4A9D573a2Ab731b4278CBA0c01C5a3",
   "abi": [
     {
       "inputs": [],
@@ -372,6 +372,29 @@
       "inputs": [
         {
           "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "safeMint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "from",
           "type": "address"
         },
@@ -586,5 +609,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x8fdd9cf9084f3e0855a30ca45143d1e58e2eda9f1ba9e0573c3bbec122b67264"
+  "deployTxnHash": "0x247732747e3bec10d3c1d45f59d191a7830d4f7dfe7c7d3b5e8b34ef93f0671c"
 }

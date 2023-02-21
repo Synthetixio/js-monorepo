@@ -1,11 +1,6 @@
 {
-  "address": "0xb09e60b1417c5E28a6cE5D442222cc878e37C5ff",
+  "address": "0xc8864C77709228F48C0BC4a6b75c7F9add59180e",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -140,32 +135,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "newNominatedOwner",
           "type": "address"
         }
@@ -236,7 +205,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x7e2ae99c3613788ae5c958b57739f36db93227009566756d1a1c02f7c4bdc17c",
+  "deployTxnHash": "0x285cabf2c8f0362c5a734a22b356b1d0f6925887f6d46100c7d8efc2fa87a1df",
   "sourceName": "contracts/modules/CoreModule.sol",
   "contractName": "CoreModule",
   "deployedOn": "contract.CoreModule"

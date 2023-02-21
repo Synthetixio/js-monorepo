@@ -1,5 +1,5 @@
 {
-  "address": "0x6ae2597A90C94999566031655b7C388cCF8283C5",
+  "address": "0xD6f533DED7045D90954Bb92D6F888bb7d0e1f585",
   "abi": [
     {
       "inputs": [
@@ -198,6 +198,11 @@
     },
     {
       "inputs": [],
+      "name": "RewardDistributorNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [],
       "name": "ValueAlreadyInSet",
       "type": "error"
     },
@@ -378,7 +383,7 @@
           "type": "address"
         }
       ],
-      "name": "getPositionCollateralizationRatio",
+      "name": "getPositionCollateralRatio",
       "outputs": [
         {
           "internalType": "uint256",
@@ -496,5 +501,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xdd421c1a8926595a665664192c957dedf3ac8570205afa3242384014893b4339"
+  "deployTxnHash": "0x992453480cde1f0b9bc311f44e6115c0a0fc21843a3625cf7b5c5310cf159f8e"
 }

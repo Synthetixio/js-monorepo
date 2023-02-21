@@ -1,11 +1,6 @@
 {
-  "address": "0x5B2863b24143742775F3f90C18686dFB16805CE8",
+  "address": "0x66890372Ce7f316e7c4Cd03CF88022F1F8CCF296",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -140,32 +135,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "newNominatedOwner",
           "type": "address"
         }
@@ -235,5 +204,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x32bacede12ee5bf2667a29a651245396833f5574ba5555d5cf2f667a5c36ab2a"
+  "deployTxnHash": "0x0a43e4596595c3a09b09efa73078ccfceffbced56efff227d7e67cc59abe1c86"
 }
