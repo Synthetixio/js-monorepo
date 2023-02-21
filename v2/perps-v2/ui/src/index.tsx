@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Wallet } from './Wallet';
 import { Header } from './components/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Actions } from './Actions';
+import { All } from './All';
 import { createRoot } from 'react-dom/client';
 
 const router = createBrowserRouter([
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     path: ':walletAddress',
     element: <Wallet />,
   },
-  { path: '/actions', element: <Actions /> },
+  { path: '/all', element: <All /> },
 ]);
 
 const container = document.querySelector('#app');

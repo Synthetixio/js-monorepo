@@ -240,8 +240,10 @@ function useGetPositions({
               asset:
                 marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
                   ?.asset || 'not found',
-              market: marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
-                ?.marketKey,
+              market: formatMarketKey(
+                marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
+                  ?.marketKey
+              ),
               openTimestamp: toDateTime(Number(position.openTimestamp)).toLocaleDateString(
                 'en-US',
                 {
@@ -279,4 +281,10 @@ function toDateTime(secs: number) {
   const t = new Date(1970, 0, 1);
   t.setSeconds(secs);
   return t;
+}
+
+function formatMarketKey(market?: string) {
+  if (!market) return 'not found';
+  const indexOfPerp = market.indexOf('PERP');
+  return market.substring(1, indexOfPerp).concat('-').concat(market.substring(indexOfPerp));
 }
