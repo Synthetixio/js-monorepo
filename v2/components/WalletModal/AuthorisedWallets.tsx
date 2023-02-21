@@ -1,9 +1,15 @@
 import { Box, Skeleton, Text, Link, Avatar, Button, Tooltip } from '@chakra-ui/react';
 import { useAuthorisedWallets } from '@snx-v2/useAuthorisedWallets';
-import { FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { DelegateWallet } from '@snx-v2/useDelegateWallet';
 import { truncateAddress } from '@snx-v2/formatters';
+
+const StyledBox: FC<PropsWithChildren> = ({ children }) => (
+  <Box my={2} px={4} py={3} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
+    {children}
+  </Box>
+);
 
 const AuthorisedWalletsUi: FC<{
   authorisedWallets?: DelegateWallet[];
@@ -11,11 +17,15 @@ const AuthorisedWalletsUi: FC<{
   onWalletSelected: (wallet: DelegateWallet) => void;
 }> = ({ onWalletSelected, authorisedWallets, isLoading }) => {
   if (isLoading) {
-    return <Skeleton h={6} w="full" />;
+    return (
+      <StyledBox>
+        <Skeleton h={6} w="full" />
+      </StyledBox>
+    );
   }
   if (!authorisedWallets?.length) {
     return (
-      <>
+      <StyledBox>
         <Text>This wallet have not been authorized to perform action on any other wallet.</Text>
         <Text>
           Connect the wallet you want to perform actions on and Go to{' '}
@@ -24,11 +34,11 @@ const AuthorisedWalletsUi: FC<{
           </Link>{' '}
           to set it up
         </Text>
-      </>
+      </StyledBox>
     );
   }
   return (
-    <>
+    <StyledBox>
       <Text mb={2}>Authorised wallet(s)</Text>
       {authorisedWallets.map((authorisedWallet) => {
         return (
@@ -52,7 +62,7 @@ const AuthorisedWalletsUi: FC<{
           </Text>
         );
       })}
-    </>
+    </StyledBox>
   );
 };
 
@@ -62,12 +72,10 @@ export type AuthorisedWalletsProps = {
 export const AuthorisedWallets: FC<AuthorisedWalletsProps> = ({ onWalletSelected }) => {
   const { data, isLoading } = useAuthorisedWallets();
   return (
-    <Box my={2} px={4} py={3} bg="black" border="1px" borderColor="gray.800" borderRadius="base">
-      <AuthorisedWalletsUi
-        isLoading={isLoading}
-        authorisedWallets={data}
-        onWalletSelected={onWalletSelected}
-      />
-    </Box>
+    <AuthorisedWalletsUi
+      isLoading={isLoading}
+      authorisedWallets={data}
+      onWalletSelected={onWalletSelected}
+    />
   );
 };
