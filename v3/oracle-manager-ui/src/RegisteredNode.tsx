@@ -4,6 +4,7 @@ import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { Chart } from '../components/Chart';
+import { useConnectorContext } from '../containers/Connector';
 import { nodesState } from '../state/nodes';
 import {
   decodeBytesByNodeType,
@@ -19,41 +20,39 @@ export const RegisteredNode: FC = () => {
   const [, setNodes] = useRecoilState(nodesState);
   const param = useParams();
   const nodeID = param?.nodeId;
-  // const { data: signer } = useSigner();
-  // const { chain } = useNetwork();
-
+  const { network, signer } = useConnectorContext();
   const fetchNode = async (id: string) => {
-    // if (signer && chain?.id) {
-    //   const contract = getNodeModuleContract(signer, chain.id);
-    //   const node = await contract.getNode(id);
-    //   const nodeParams = decodeBytesByNodeType(node.nodeType, node.parameters);
-    //   setNodes((state) => {
-    //     const exists = state.find((state) => state.id === id);
-    //     if (!exists) {
-    //       x -= 200;
-    //       y -= 200;
-    //       return [
-    //         ...state,
-    //         {
-    //           data: { label: nodeInformationByNodeIds(node.nodeType).label },
-    //           id: id,
-    //           parameters: nodeParams as any[],
-    //           parents: node.parents,
-    //           source: '',
-    //           target: '',
-    //           type: nodeInformationByNodeIds(node.nodeType).slug as OracleNodeTypes,
-    //           position: { x, y },
-    //           typeId: node.nodeType,
-    //           isRegistered: true,
-    //         },
-    //       ];
-    //     }
-    //     return state;
-    //   });
-    //   if (node.parents.length) {
-    //     node.parents.map((id: string) => fetchNode(id));
-    //   }
-    // }
+    if (signer && network?.id) {
+      const contract = getNodeModuleContract(signer, network.id);
+      const node = await contract.getNode(id);
+      const nodeParams = decodeBytesByNodeType(node.nodeType, node.parameters);
+      setNodes((state) => {
+        const exists = state.find((state) => state.id === id);
+        if (!exists) {
+          x -= 200;
+          y -= 200;
+          return [
+            ...state,
+            {
+              data: { label: nodeInformationByNodeIds(node.nodeType).label },
+              id: id,
+              parameters: nodeParams as any[],
+              parents: node.parents,
+              source: '',
+              target: '',
+              type: nodeInformationByNodeIds(node.nodeType).slug as OracleNodeTypes,
+              position: { x, y },
+              typeId: node.nodeType,
+              isRegistered: true,
+            },
+          ];
+        }
+        return state;
+      });
+      if (node.parents.length) {
+        node.parents.map((id: string) => fetchNode(id));
+      }
+    }
   };
 
   useEffect(() => {

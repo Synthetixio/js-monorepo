@@ -18,6 +18,8 @@ import { convertStateToQueryParam } from '../utils/url';
 import { NodeFormModule } from '../components/NodeFormModule';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useConnectorContext } from '../containers/Connector';
+import { encodeBytesByNodeType, getMultiCallContract, hashId } from '../utils/contracts';
 
 export const App: FC = () => {
   const [nodes] = useRecoilState(nodesState);
@@ -26,6 +28,7 @@ export const App: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, getValues } = useForm({ defaultValues: { search: '' } });
   const navigate = useNavigate();
+  const { signer, network } = useConnectorContext();
 
   useEffect(() => {
     if (colorMode === 'light') {
@@ -81,31 +84,31 @@ export const App: FC = () => {
           <Button
             variant="outline"
             onClick={() => {
-              // if (signer && chain?.id) {
-              //   const contract = getNodeModuleContract(signer, chain.id);
-              //   const data = nodes
-              //     .slice()
-              //     .filter((node) => !node.isRegistered)
-              //     .sort((a, b) => {
-              //       if (a.parents.length > b.parents.length) return 1;
-              //       if (a.parents.length < b.parents.length) return -1;
-              //       return 0;
-              //     })
-              //     .map((node) =>
-              //       contract.interface.encodeFunctionData('registerNode', [
-              //         node.typeId,
-              //         encodeBytesByNodeType(node.typeId, node.parameters),
-              //         node.parents.map((parentId: string) => {
-              //           const parentNode = nodes.find((node) => node.id === parentId);
-              //           if (parentNode) {
-              //             return hashId(parentNode, []);
-              //           }
-              //           return '';
-              //         }),
-              //       ])
-              //     );
-              //   contract.multicall(data);
-              // }
+              if (signer && network?.id) {
+                const contract = getMultiCallContract(signer, network.id);
+                const data = nodes
+                  .slice()
+                  .filter((node) => !node.isRegistered)
+                  .sort((a, b) => {
+                    if (a.parents.length > b.parents.length) return 1;
+                    if (a.parents.length < b.parents.length) return -1;
+                    return 0;
+                  })
+                  .map((node) =>
+                    contract.interface.encodeFunctionData('registerNode', [
+                      node.typeId,
+                      encodeBytesByNodeType(node.typeId, node.parameters),
+                      node.parents.map((parentId: string) => {
+                        const parentNode = nodes.find((node) => node.id === parentId);
+                        if (parentNode) {
+                          return hashId(parentNode, []);
+                        }
+                        return '';
+                      }),
+                    ])
+                  );
+                contract.multicall(data);
+              }
             }}
           >
             Register All Nodes

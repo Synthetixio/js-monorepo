@@ -10012,7 +10012,6 @@ __metadata:
     "@gnosis.pm/safe-apps-provider": ^0.14.0
     "@gnosis.pm/safe-apps-sdk": ^7.8.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
-    "@rainbow-me/rainbowkit": ^0.8.1
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"

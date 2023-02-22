@@ -6,6 +6,7 @@ import { Node } from '../utils/types';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { shortAddress } from '../utils/addresses';
+import { useConnectorContext } from '../containers/Connector';
 
 let interval: any;
 
@@ -16,11 +17,8 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   const [nodeId, setNodeId] = useState('');
   const [price, setPrice] = useState('0');
   const [time, setTime] = useState(new Date());
-  // const { data: signer } = useSigner();
-  // const { chain } = useNetwork();
-  // const { isConnected } = useAccount();
+  const { signer, isWalletConnected, network } = useConnectorContext();
   const toast = useToast();
-
   const findParentNode = useCallback(
     (parentId: string) => {
       const parentNode = nodes.find((node) => node.id === parentId);
@@ -33,11 +31,11 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   );
 
   useEffect(() => {
-    if (isConnected && signer) {
+    if (isWalletConnected && signer) {
       const fetchNodeState = async () => {
-        if (chain?.id) {
+        if (network?.id) {
           try {
-            const contract = getNodeModuleContract(signer, chain.id);
+            const contract = getNodeModuleContract(signer, network.id);
             const hashedId = hashId(node, node.parents.map(findParentNode));
             const nodeFromChain = await contract.getNode(hashedId);
             if (nodeFromChain[0] > 0) {
@@ -112,7 +110,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       fetchNodeState();
     }
     // eslint-disable-next-line
-  }, [isConnected, signer, chain?.id, node.typeId, node.parameters, node.parents]);
+  }, [isWalletConnected, signer, network?.id, node.typeId, node.parameters, node.parents]);
 
   const handleButtonClick = async () => {
     if (nodeState === 'registerNode') {
@@ -141,11 +139,11 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   };
 
   const renderText = useCallback(() => {
-    if (!isConnected) return <Text>Please connect your wallet</Text>;
+    if (!isWalletConnected) return <Text>Please connect your wallet</Text>;
     if (nodeState === 'registerNode') return <Text>Register Node</Text>;
     if (nodeState === 'nodeRegistered') return '';
     return 'Something went wrong';
-  }, [nodeState, isConnected]);
+  }, [nodeState, isWalletConnected]);
 
   return (
     <Flex flexDir="column" alignItems="center">

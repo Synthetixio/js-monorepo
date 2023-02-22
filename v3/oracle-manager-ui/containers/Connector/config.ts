@@ -4,7 +4,6 @@ import injectedModule from '@web3-onboard/injected-wallets';
 import coinbaseWalletModule from '@web3-onboard/coinbase';
 import walletConnectModule from '@web3-onboard/walletconnect';
 import ledgerModule from '@web3-onboard/ledger';
-import trezorModule from '@web3-onboard/trezor';
 import torusModule from '@web3-onboard/torus';
 import { SynthetixIcon, SynthetixLogo } from '../../components/WalletComponents';
 import { getInfuraRpcURL } from '../../utils/infura';
@@ -13,7 +12,6 @@ const injected = injectedModule();
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 const walletConnect = walletConnectModule();
 const ledger = ledgerModule();
-const trezor = trezorModule({ email: 'info@synthetix.io', appUrl: 'https://www.synthetix.io' });
 const torus = torusModule();
 
 export const onboard = Onboard({
@@ -30,7 +28,7 @@ export const onboard = Onboard({
     explore: 'https://blog.synthetix.io/',
   },
   apiKey: process.env.NEXT_PUBLIC_BN_ONBOARD_API_KEY,
-  wallets: [injected, ledger, coinbaseWalletSdk, walletConnect, trezor, torus],
+  wallets: [injected, ledger, coinbaseWalletSdk, walletConnect, torus],
   chains: [
     // {
     //   id: 10,
