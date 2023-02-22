@@ -98,6 +98,31 @@ const useConnector = () => {
   }, []);
 
   useEffect(() => {
+    const previousWalletsSerialised = localStorage.getItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
+
+    const previousWallets: string[] = previousWalletsSerialised
+      ? JSON.parse(previousWalletsSerialised)
+      : [];
+
+    // If running in an iframe, attempt to connect with Gnosis
+    if (window.self !== window.top) {
+      previousWallets.push('Gnosis Safe');
+    }
+
+    if (onboard && previousWallets.length > 0) {
+      (async () => {
+        try {
+          await onboard.connectWallet({
+            autoSelect: {
+              label: previousWallets[0],
+              disableModals: true,
+            },
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
     if (onboard) {
       const state = onboard.state.select();
       const { unsubscribe } = state.subscribe(updateState);
