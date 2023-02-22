@@ -11,7 +11,7 @@ export function useAccounts() {
     queryKey: [network.name, { accountAddress: account?.address }, 'Accounts'],
     queryFn: async function () {
       if (!AccountProxy || !account?.address) throw new Error('Should be disabled');
-      const numberOfAccountTokens = await AccountProxy.balanceOf(account?.address);
+      const numberOfAccountTokens = await AccountProxy.balanceOf(account.address);
       if (numberOfAccountTokens.eq(0)) {
         // No accounts created yet
         return [];
@@ -20,7 +20,7 @@ export function useAccounts() {
       const accounts = await Promise.all(
         accountIndexes.map(async (i) => {
           if (!account?.address) throw new Error('OMG!');
-          return await AccountProxy.tokenOfOwnerByIndex(account?.address, i);
+          return await AccountProxy.tokenOfOwnerByIndex(account.address, i);
         })
       );
       return accounts.map((accountId) => accountId.toString());

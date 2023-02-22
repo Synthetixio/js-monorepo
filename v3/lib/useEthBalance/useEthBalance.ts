@@ -19,7 +19,7 @@ export function useEthBalance(networkId?: number) {
         networkId && networkId !== network.id
           ? new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID)
           : connectedProvider;
-      return BalanceSchema.parse(await provider.getBalance(account?.address));
+      return BalanceSchema.parse(await provider.getBalance(account.address));
     },
     enabled: Boolean((networkId ?? network.id) && account?.address),
   });

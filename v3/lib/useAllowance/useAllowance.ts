@@ -25,9 +25,9 @@ export const useAllowance = ({
       { contractAddress, spender },
     ],
     queryFn: async () => {
-      if (!(contractAddress && spender)) throw new Error('OMG');
+      if (!(contractAddress && spender && account.address)) throw new Error('OMG');
       const contract = new Contract(contractAddress, abi, provider);
-      const allowance = await contract.allowance(account?.address, spender);
+      const allowance = await contract.allowance(account.address, spender);
       return AllowanceSchema.parse(allowance);
     },
     enabled: Boolean(account?.address && contractAddress && spender && provider),
