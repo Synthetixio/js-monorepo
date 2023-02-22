@@ -13,7 +13,7 @@ export const usePreferredPool = () => {
   const { data: CoreProxyContract } = useCoreProxy();
 
   return useQuery({
-    queryKey: [network.name, 'preferred-pool'],
+    queryKey: [network.name, 'PreferredPool'],
     queryFn: async () => {
       if (!CoreProxyContract) throw new Error('CoreProxy');
       const idBn = await CoreProxyContract.getPreferredPool();

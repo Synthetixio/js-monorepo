@@ -31,7 +31,7 @@ export function useNetwork() {
   };
 }
 
-export function useAccount(): { address: string } {
+export function useAccount(): { address?: string } {
   const account = wagmi.useAccount();
   return {
     address: account.address as string,

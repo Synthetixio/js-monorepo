@@ -36,7 +36,7 @@ export const usePools = () => {
   const { data: preferredPool } = usePreferredPool();
 
   return useQuery({
-    queryKey: [network.name, { preferredPool }, 'pools'],
+    queryKey: [network.name, 'Pools', { preferredPool: preferredPool?.id }],
     queryFn: async () => {
       if (!CoreProxyContract || !preferredPool) throw new Error('Query should not be enabled');
       const approvedPoolIds = await CoreProxyContract.getApprovedPools();

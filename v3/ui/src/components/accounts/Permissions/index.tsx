@@ -28,7 +28,7 @@ export default function Permissions() {
   const [accountPermissions, setAccountPermissions] = useState<Record<string, Array<string>>>({});
 
   // Only show edit icon if current account is owner or modify permissions
-  const { address: accountAddress } = useAccount();
+  const account = useAccount();
   const params = useParams();
 
   const { isLoading: loadingAccountPermissions, data: permissionData } = useSynthetixRead({
@@ -148,7 +148,7 @@ export default function Permissions() {
                     Owner
                   </Tag>
                 </Td>
-                <Td>{accountAddress == accountOwner && <TransferOwnership />}</Td>
+                <Td>{account?.address == accountOwner && <TransferOwnership />}</Td>
               </Tr>
 
               {Object.keys(accountPermissions)

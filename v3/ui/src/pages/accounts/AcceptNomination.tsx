@@ -9,7 +9,7 @@ import { useParams } from '@snx-v3/useParams';
 
 export const AcceptNomination = () => {
   const params = useParams();
-  const { address } = useAccount();
+  const account = useAccount();
 
   const { data: nominatedOwner } = useAccountRead({
     functionName: 'getApproved',
@@ -28,7 +28,7 @@ export const AcceptNomination = () => {
     address: accountProxy?.address,
     abi: accountProxy?.abi,
     functionName: 'transferFrom',
-    args: [accountOwner, address, params.accountId],
+    args: [accountOwner, account?.address, params.accountId],
   });
 
   const onClick = useCallback(() => {
@@ -39,7 +39,7 @@ export const AcceptNomination = () => {
 
   return (
     <Box>
-      {address === nominatedOwner && (
+      {account?.address === nominatedOwner && (
         <Button isLoading={isLoading} size="lg" ml="4" px="8" onClick={onClick}>
           Accept Ownership of {params.accountId}
         </Button>

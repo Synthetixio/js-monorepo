@@ -13,7 +13,6 @@
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build"
   },
   "dependencies": {
-    "@chakra-ui/icon": "^3.0.16",
     "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.5.0",
     "@emotion/react": "^11.10.5",
@@ -57,10 +56,8 @@
     "@snx-v3/useMarketNamesById": "workspace:*",
     "@snx-v3/useParams": "workspace:*",
     "@snx-v3/usePoolData": "workspace:*",
-    "@snx-v3/usePools": "workspace:*",
     "@snx-v3/usePreferredPool": "workspace:*",
     "@snx-v3/useTokenBalance": "workspace:*",
-    "@snx-v3/useTransactionState": "workspace:*",
     "@snx-v3/useUSDProxy": "workspace:*",
     "@snx-v3/useVaultsData": "workspace:*",
     "@snx-v3/useWrapEth": "workspace:*",
