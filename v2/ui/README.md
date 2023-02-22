@@ -21,7 +21,6 @@
 - [@synthetixio/contracts-interface](https://github.com/Synthetixio/js-monorepo) - for interactions with the Synthetix protocol.
 - [@synthetixio/providers](https://github.com/Synthetixio/js-monorepo) - for web3 providers on Layer 1 & 2.
 - [@synthetixio/optimism-networks](https://github.com/Synthetixio/js-monorepo) - Utility library for Optimism Layer 2 support.
-- [@synthetixio/transaction-notifier](https://github.com/Synthetixio/js-monorepo) - for transaction status.
 
 ## Development
 

@@ -10,7 +10,6 @@
 | [`@synthetixio/queries`](/packages/queries)                           | [![npm version](https://badge.fury.io/js/@synthetixio%2Fqueries.svg)](https://badge.fury.io/js/@synthetixio%2Fqueries)                           | React library for querying data       |
 | [`@synthetixio/providers`](/packages/providers)                       | [![npm version](https://badge.fury.io/js/@synthetixio%2Fproviders.svg)](https://badge.fury.io/js/@synthetixio%2Fproviders)                       | Synthetix providers for layer 1 and 2 |
 | [`@synthetixio/optimism-networks`](/packages/optimism-networks)       | [![npm version](https://badge.fury.io/js/@synthetixio%2Foptimism-networks.svg)](https://badge.fury.io/js/@synthetixio%2Foptimism-networks)       | Network utility for layer 2           |
-| [`@synthetixio/transaction-notifier`](/packages/transaction-notifier) | [![npm version](https://badge.fury.io/js/@synthetixio%2Ftransaction-notifier.svg)](https://badge.fury.io/js/@synthetixio%2Ftransaction-notifier) | Transaction utility for layer 1 and 2 |
 | [`@synthetixio/codegen-graph-ts`](/tools/codegen-graph-ts)            | [![npm version](https://badge.fury.io/js/@synthetixio%2Fcodegen-graph-ts.svg)](https://badge.fury.io/js/@synthetixio%2Fcodegen-graph-ts)         | Query generator                       |
 | [`@synthetixio/safe-import`](/tools/safe-import)                      | [![npm version](https://badge.fury.io/js/@synthetixio%2Fsafe-import.svg)](https://badge.fury.io/js/@synthetixio%2Fsafe-import)                   | Async imports with retry              |
 
@@ -51,12 +50,11 @@ To publish:
 
 This will upgrade `synthetix` in the monorepo and all affected packages will be published with new `patch` release
 
-For example now only the `@synthetixio/contracts-interface` package depends on `synthetix`, so it will get new `patch` version. But then all the packages that depend on it will get new `patch` version in a cascade (check full list of cascade updates with `yarn deps:version`). So overall these 4 packages will be published:
+For example now only the `@synthetixio/contracts-interface` package depends on `synthetix`, so it will get new `patch` version. But then all the packages that depend on it will get new `patch` version in a cascade (check full list of cascade updates with `yarn deps:version`). So overall these packages will be published:
 
 - `@synthetixio/contracts-interface`
 - `@synthetixio/providers`
 - `@synthetixio/queries`
-- `@synthetixio/transaction-notifier`
 
 ### Publishing new version of a single package
 
