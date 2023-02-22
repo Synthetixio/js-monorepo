@@ -12,8 +12,7 @@ export default function HedgeTapMainnet() {
   const { provider } = Connector.useContainer();
   return (
     <StyledHedgeWrapper>
-      <Headline>{t('debt.actions.manage.l1-deprecation.headline')}</Headline>
-      <SubHeadline>{t('debt.actions.manage.l1-deprecation.sub-headline')}</SubHeadline>
+      <Headline>Hedging with dSNX is only available on Optimism</Headline>
       <StyledLink
         onClick={(e) => {
           e.preventDefault();
@@ -22,29 +21,14 @@ export default function HedgeTapMainnet() {
       >
         {t('debt.actions.manage.l1-deprecation.switch-link')}
       </StyledLink>
-      <SubHeadline>{t('debt.actions.manage.l1-deprecation.second-sub-headline')}</SubHeadline>
-      <StyledOl>
-        <li>
-          {t('debt.actions.manage.l1-deprecation.step-1')}{' '}
-          <StyledExternalLink href={EXTERNAL_LINKS.multichain.app}>
-            {EXTERNAL_LINKS.multichain.app}
-          </StyledExternalLink>
-        </li>
-        <li>{t('debt.actions.manage.l1-deprecation.step-2')}</li>
-        <li>
-          {t('debt.actions.manage.l1-deprecation.step-3')}{' '}
-          <StyledExternalLink href={EXTERNAL_LINKS.dHedge.dSNXPool}>
-            {t('debt.actions.manage.l1-deprecation.link-text')}
-          </StyledExternalLink>
-        </li>
-      </StyledOl>
+      <SubHeadline>
+        Or buy on{' '}
+        <StyledExternalLink href={EXTERNAL_LINKS.Toros.dSNXPool}>Toros</StyledExternalLink>
+      </SubHeadline>
     </StyledHedgeWrapper>
   );
 }
 
-const StyledOl = styled.ol`
-  padding-inline-start: 40px;
-`;
 const SubHeadline = styled.h3`
   font-weight: bold;
   color: white;
