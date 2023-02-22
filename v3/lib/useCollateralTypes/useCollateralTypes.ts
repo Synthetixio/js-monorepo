@@ -1,11 +1,11 @@
 import { utils } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
-import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
+import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { z } from 'zod';
 import { useMemo } from 'react';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
-import { useExternalMulticall, MulticallContractType } from '../useExternalMulticall';
+import { MulticallContractType, useExternalMulticall } from '../useExternalMulticall';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
 const CollateralConfigurationSchema = z.object({
@@ -105,7 +105,7 @@ export function useCollateralTypes() {
   const { data: MulticallContract } = useExternalMulticall();
 
   return useQuery({
-    queryKey: [network.name, 'collateralTypes'],
+    queryKey: [network.name, 'CollateralTypes'],
     queryFn: async () => {
       if (!CoreProxyContract || !MulticallContract)
         throw Error('Query should not be enabled when contracts missing');

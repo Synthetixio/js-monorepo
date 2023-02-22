@@ -609,7 +609,7 @@ describe('Perps V2', () => {
       'orderType',
       'DelayedOffchainSubmitted'
     );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'status', 'Pending');
+    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'status', 'Cancelled');
     assert.fieldEquals(
       'FuturesOrder',
       trader.toLowerCase() + '-2',

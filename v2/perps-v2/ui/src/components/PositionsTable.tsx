@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import {
   Box,
-  Button,
   Checkbox,
   Divider,
   Flex,
@@ -57,7 +56,6 @@ export const PositionsTable: FC = () => {
   const params = useParams();
   const toast = useToast();
   const { data } = useGetMarkets();
-  const [isRefetchLoading, setRefetchLoading] = useState(false);
   const [sortConfig, setSortConfig] = useState<SortConfig>(['openTimestamp', false]);
   const { register, getValues, setValue, watch } = useForm({
     defaultValues: {
@@ -70,13 +68,10 @@ export const PositionsTable: FC = () => {
       deactivateClosedAt: false,
       openedAt: monthAgo(),
       closedAt: new Date(),
+      walletAddress: '',
     },
   });
-  const {
-    data: positions,
-    isLoading,
-    refetch,
-  } = useGetPositions({
+  const { data: positions, isLoading } = useGetPositions({
     address: params.walletAddress,
     filterOptions: {
       ...watch(),
@@ -91,13 +86,6 @@ export const PositionsTable: FC = () => {
   const pageCount = positions?.futuresPositions
     ? Math.ceil(positions?.futuresPositions.length / 50)
     : 1;
-
-  const triggerRefetch = () => {
-    setRefetchLoading(true);
-    setTimeout(() => {
-      refetch().then(() => setRefetchLoading(false));
-    }, 0);
-  };
 
   const handlePageClick = ({ selected }: { selected: number }) => {
     if (positions?.futuresPositions) {
@@ -166,6 +154,8 @@ export const PositionsTable: FC = () => {
           >
             Deactivate open option
           </Checkbox>
+          <Text>Search by address</Text>
+          <Input {...register('walletAddress')} placeholder="Address" />
         </Stack>
         <Stack gap="2">
           <Text>Opened At (default: one month ago)</Text>
@@ -198,10 +188,7 @@ export const PositionsTable: FC = () => {
           </Checkbox>
         </Stack>
       </Flex>
-      <Button onClick={() => triggerRefetch()} disabled={isLoading}>
-        Fetch
-      </Button>
-      {isLoading || isRefetchLoading ? (
+      {isLoading ? (
         <Spinner color="cyan.500" />
       ) : (
         <>
@@ -241,7 +228,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['account', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'account' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'account' ? 'cyan.500' : ''}
@@ -254,7 +240,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['asset', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'asset' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'asset' ? 'cyan.500' : ''}
@@ -267,7 +252,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['market', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'market' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'market' ? 'cyan.500' : ''}
@@ -280,7 +264,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['entryPrice', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'entryPrice' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'entryPrice' ? 'cyan.500' : ''}
@@ -293,7 +276,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['exitPrice', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'exitPrice' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'exitPrice' ? 'cyan.500' : ''}
@@ -306,7 +288,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['leverage', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'leverage' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'leverage' ? 'cyan.500' : ''}
@@ -319,7 +300,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['pnl', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'pnl' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'pnl' ? 'cyan.500' : ''}
@@ -332,7 +312,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['margin', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'margin' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'margin' ? 'cyan.500' : ''}
@@ -345,7 +324,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['size', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'size' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'size' ? 'cyan.500' : ''}
@@ -358,7 +336,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['feesPaidToSynthetix', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'feesPaidToSynthetix' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'feesPaidToSynthetix' ? 'cyan.500' : ''}
@@ -371,7 +348,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['long', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'long' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'long' ? 'cyan.500' : ''}
@@ -384,7 +360,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['isLiquidated', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'isLiquidated' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'isLiquidated' ? 'cyan.500' : ''}
@@ -397,7 +372,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['isOpen', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'isOpen' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'isOpen' ? 'cyan.500' : ''}
@@ -410,7 +384,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['openTimestamp', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'openTimestamp' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'openTimestamp' ? 'cyan.500' : ''}
@@ -423,7 +396,6 @@ export const PositionsTable: FC = () => {
                     cursor="pointer"
                     onClick={() => {
                       setSortConfig((state) => ['closeTimestamp', !state[1]]);
-                      triggerRefetch();
                     }}
                     border={sortConfig[0] === 'closeTimestamp' ? '1px solid' : ''}
                     borderColor={sortConfig[0] === 'closeTimestamp' ? 'cyan.500' : ''}

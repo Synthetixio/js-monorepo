@@ -48,7 +48,7 @@ export function TeleporterModal({
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) {
-  const { address } = useAccount();
+  const account = useAccount();
   const toast = useToast();
 
   const [processing, setProcessing] = useState(false);
@@ -75,7 +75,7 @@ export function TeleporterModal({
     functionName: 'ccipSend',
     args: [
       teleportChains[1].id,
-      [encodeAddress(address), '0x', [snxUsdProxy!.address], [parseUnits(amount)], 100000],
+      [encodeAddress(account?.address), '0x', [snxUsdProxy!.address], [parseUnits(amount)], 100000],
     ],
   });
 

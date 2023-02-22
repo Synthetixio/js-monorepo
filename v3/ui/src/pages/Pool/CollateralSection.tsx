@@ -1,6 +1,6 @@
 import { Box, Divider, Flex, Skeleton, Text, Tooltip } from '@chakra-ui/react';
 import { useVaultsData, VaultsDataType } from '@snx-v3/useVaultsData';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { wei } from '@synthetixio/wei';
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { useParams } from '@snx-v3/useParams';
@@ -99,9 +99,8 @@ export const CollateralSectionUi: FC<{
             <Divider mt={6} mb={4} />
             {vaultsData.map((vaultCollateral) => {
               return (
-                <>
+                <React.Fragment key={vaultCollateral.collateralType.tokenAddress}>
                   <Box
-                    key={vaultCollateral.collateralType.tokenAddress}
                     display="flex"
                     px={4}
                     flexDirection="column"
@@ -192,7 +191,7 @@ export const CollateralSectionUi: FC<{
                     </Flex>
                   </Box>
                   <Divider my={4} />
-                </>
+                </React.Fragment>
               );
             })}
           </>

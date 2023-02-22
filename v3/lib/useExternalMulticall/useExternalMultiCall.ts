@@ -19,16 +19,18 @@ export const useExternalMulticall = () => {
   const network = useNetwork();
   const provider = useProvider();
   const signer = useSigner();
+  const signerOrProvider = signer || provider;
+  const withSigner = Boolean(signer);
 
   return useQuery({
-    queryKey: [network.name, { withSigner: Boolean(signer) }, 'ExternalMulticall'],
-    queryFn: async () => {
+    queryKey: [network.name, 'ExternalMulticall', { withSigner }],
+    queryFn: async function () {
       const Multicall = await importMulticall(network.name);
-      return new ethers.Contract(Multicall.address, Multicall.abi, signer || provider) as
+      return new ethers.Contract(Multicall.address, Multicall.abi, signerOrProvider) as
         | MulticallGoerli
         | MulticallOptimismGoerli;
     },
-    enabled: Boolean(network.isSupported && (signer || provider)),
+    enabled: Boolean(network.isSupported && signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

@@ -7836,7 +7836,6 @@ __metadata:
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
     "@babel/runtime-corejs3": ^7.20.13
-    "@chakra-ui/icon": ^3.0.16
     "@chakra-ui/icons": ^2.0.17
     "@chakra-ui/react": ^2.5.0
     "@chakra-ui/storybook-addon": ^4.0.17
@@ -7882,10 +7881,8 @@ __metadata:
     "@snx-v3/useMarketNamesById": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/usePoolData": "workspace:*"
-    "@snx-v3/usePools": "workspace:*"
     "@snx-v3/usePreferredPool": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
-    "@snx-v3/useTransactionState": "workspace:*"
     "@snx-v3/useUSDProxy": "workspace:*"
     "@snx-v3/useVaultsData": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
@@ -8072,11 +8069,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useEthPrice@workspace:v3/lib/useEthPrice"
   dependencies:
-    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
-    "@snx-v3/useCoreProxy": "workspace:*"
     "@synthetixio/wei": "workspace:*"
-    "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
 
@@ -8135,6 +8129,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useLiquidityPosition@workspace:v3/lib/useLiquidityPosition"
   dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
     "@synthetixio/wei": "workspace:*"
@@ -8147,6 +8142,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useLiquidityPositions@workspace:v3/lib/useLiquidityPositions"
   dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
@@ -8160,6 +8156,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useMarketNamesById@workspace:v3/lib/useMarketNamesById"
   dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useExternalMulticall": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
@@ -8257,16 +8254,6 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
-  languageName: unknown
-  linkType: soft
-
-"@snx-v3/useTransactionState@workspace:*, @snx-v3/useTransactionState@workspace:v3/lib/useTransactionState":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/useTransactionState@workspace:v3/lib/useTransactionState"
-  dependencies:
-    "@tanstack/react-query": ^4.24.6
-    react: ^18.2.0
-    zod: ^3.20.6
   languageName: unknown
   linkType: soft
 
