@@ -1,6 +1,8 @@
 import { Contract, utils } from 'ethers';
-import ProxyAbiOPGoerli from '../deployments/420/Proxy.json';
-import ProxyAbiGoerli from '../deployments/5/Proxy.json';
+import ProxyAbiOPGoerli from '@synthetixio/v3-contracts/deployments/goerli/CoreProxy.json';
+import ProxyAbiGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/CoreProxy.json';
+import MultiCallOPGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/MulticallModule.json';
+import MultiCallGoerli from '@synthetixio/v3-contracts/deployments/goerli/MulticallModule.json';
 import { Node } from './types';
 import { ORACLE_NODE_TYPES } from './constants';
 
@@ -14,6 +16,18 @@ function resolveNetworkIdToProxyAddress(networkId: number) {
       return ProxyAbiGoerli.address;
   }
 }
+
+function resolveNetworkIdToMultiCallAddress(networkId: number) {
+  switch (networkId) {
+    case 5:
+      return MultiCallGoerli.address;
+    case 420:
+      return MultiCallOPGoerli.address;
+    default:
+      return MultiCallGoerli.address;
+  }
+}
+
 export function encodeBytesByNodeType(id: number, parameters: any[]) {
   switch (id) {
     case 1:
@@ -103,6 +117,14 @@ export const getNodeModuleContract = (signerOrProvider: any, networkId: number) 
   return new Contract(
     resolveNetworkIdToProxyAddress(networkId),
     ProxyAbiGoerli.abi,
+    signerOrProvider
+  );
+};
+
+export const getMultiCallContract = (signerOrProvider: any, networkId: number) => {
+  return new Contract(
+    resolveNetworkIdToMultiCallAddress(networkId),
+    MultiCallGoerli.abi,
     signerOrProvider
   );
 };

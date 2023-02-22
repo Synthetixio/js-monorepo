@@ -1,15 +1,3 @@
-import { Chain } from 'wagmi';
-import { optimismGoerli, goerli } from 'wagmi/chains';
-
-export const supportedChains: Chain[] = [
-  // mainnet,
-  // optimism,
-  optimismGoerli,
-  goerli,
-  // hardhat
-  // localhost,
-];
-
 export const contracts = {
   SYNTHETIX_PROXY: 'SYNTHETIX_PROXY',
   MULTICALL: 'MULTICALL',

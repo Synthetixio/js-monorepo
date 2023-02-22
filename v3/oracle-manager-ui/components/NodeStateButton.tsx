@@ -1,7 +1,6 @@
-import { Button, Flex, Text, useToast } from '@chakra-ui/react';
+import { Button, Flex, Spinner, Text, useToast } from '@chakra-ui/react';
 import { providers, utils } from 'ethers';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { useAccount, useNetwork, useSigner } from 'wagmi';
 import { encodeBytesByNodeType, getNodeModuleContract, hashId } from '../utils/contracts';
 import { Node } from '../utils/types';
 import { useRecoilState } from 'recoil';
@@ -11,14 +10,15 @@ import { shortAddress } from '../utils/addresses';
 let interval: any;
 
 export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
-  const [nodes] = useRecoilState(nodesState);
+  const [nodes, setNodes] = useRecoilState(nodesState);
+  const [isLoading, setIsLoading] = useState(false);
   const [nodeState, setNodeState] = useState<'registerNode' | 'nodeRegistered'>('registerNode');
   const [nodeId, setNodeId] = useState('');
   const [price, setPrice] = useState('0');
   const [time, setTime] = useState(new Date());
-  const { data: signer } = useSigner();
-  const { chain } = useNetwork();
-  const { isConnected } = useAccount();
+  // const { data: signer } = useSigner();
+  // const { chain } = useNetwork();
+  // const { isConnected } = useAccount();
   const toast = useToast();
 
   const findParentNode = useCallback(
@@ -48,6 +48,14 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               );
               setNodeId(nodeID);
               setNodeState('nodeRegistered');
+              setNodes((state) => {
+                return state.map((n) => {
+                  if (n.id === nodeID) {
+                    n.isRegistered = true;
+                  }
+                  return n;
+                });
+              });
               const price = await contract.process(nodeID);
               setPrice(utils.formatEther(price[0]));
               setTime(() => {
@@ -74,6 +82,14 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               setTime(new Date());
               setNodeId('');
               clearInterval(interval);
+              setNodes((state) => {
+                return state.map((n) => {
+                  if (n.id === node.id) {
+                    return { ...n, isRegistered: false };
+                  }
+                  return n;
+                });
+              });
             }
           } catch (error) {
             console.error(error);
@@ -82,6 +98,14 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
             setTime(new Date());
             setNodeId('');
             clearInterval(interval);
+            setNodes((state) => {
+              return state.map((n) => {
+                if (n.id === node.id) {
+                  return { ...n, isRegistered: false };
+                }
+                return n;
+              });
+            });
           }
         }
       };
@@ -92,6 +116,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
 
   const handleButtonClick = async () => {
     if (nodeState === 'registerNode') {
+      setIsLoading(true);
       const chainId = await signer?.getChainId();
       if (chainId) {
         const contract = getNodeModuleContract(signer, chainId);
@@ -111,6 +136,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
           setNodeState('nodeRegistered');
         }
       }
+      setIsLoading(false);
     }
   };
 
@@ -123,7 +149,9 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
 
   return (
     <Flex flexDir="column" alignItems="center">
-      {nodeState !== 'nodeRegistered' && (
+      {isLoading ? (
+        <Spinner colorScheme="cyan" />
+      ) : nodeState !== 'nodeRegistered' ? (
         <Button
           size="xs"
           variant="outline"
@@ -134,8 +162,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
         >
           {renderText()}
         </Button>
-      )}
-      {price !== '0' && !!price && (
+      ) : price !== '0' && !!price ? (
         <Flex gap="2" flexDir="column">
           <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
             Price:
@@ -150,6 +177,8 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
             {time.toLocaleTimeString()} - {time.toLocaleDateString()}
           </Text>
         </Flex>
+      ) : (
+        'Something went wrong'
       )}
       <Text
         fontSize="xx-small"
