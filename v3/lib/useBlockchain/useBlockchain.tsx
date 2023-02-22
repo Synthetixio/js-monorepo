@@ -131,7 +131,7 @@ export const BlockchainProvider: React.FC<React.PropsWithChildren> = ({ children
   return <BlockchainContext.Provider value={{ state }}>{children}</BlockchainContext.Provider>;
 };
 
-export function useWallet(): WalletState | undefined {
+export function useOnboardWallet(): WalletState | undefined {
   const { state } = React.useContext(BlockchainContext);
   const { wallets } = state;
   if (wallets.length < 1) {
@@ -142,7 +142,7 @@ export function useWallet(): WalletState | undefined {
 }
 
 export function useNetwork() {
-  const wallet = useWallet();
+  const wallet = useOnboardWallet();
   if (!wallet) {
     return DEFAULT_NETWORK;
   }
@@ -158,12 +158,12 @@ export function useNetwork() {
 }
 
 export function useIsConnected(): boolean {
-  const wallet = useWallet();
+  const wallet = useOnboardWallet();
   return Boolean(wallet);
 }
 
 export function useProvider() {
-  const wallet = useWallet();
+  const wallet = useOnboardWallet();
   if (!wallet) {
     return new ethers.providers.InfuraProvider(NETWORKS.goerli.name, process.env.INFURA_KEY);
   }
@@ -171,7 +171,7 @@ export function useProvider() {
 }
 
 export function useSigner() {
-  const wallet = useWallet();
+  const wallet = useOnboardWallet();
   if (!wallet) {
     return;
   }
@@ -179,8 +179,8 @@ export function useSigner() {
   return provider.getSigner();
 }
 
-export function useAccount() {
-  const wallet = useWallet();
+export function useWallet() {
+  const wallet = useOnboardWallet();
   if (!wallet) {
     return undefined;
   }

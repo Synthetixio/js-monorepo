@@ -1,10 +1,10 @@
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { ChevronDown, ChevronUp, WalletIcon } from '@snx-v3/icons';
-import { disconnect, NETWORKS, onboard, useAccount, useNetwork } from '@snx-v3/useBlockchain';
+import { disconnect, NETWORKS, onboard, useWallet, useNetwork } from '@snx-v3/useBlockchain';
 import { prettyString } from '@snx-v3/format';
 
 export function NetworkController() {
-  const account = useAccount();
+  const wallet = useWallet();
   const activeNetwork = useNetwork();
   return (
     <Flex>
@@ -13,7 +13,7 @@ export function NetworkController() {
           <>
             <MenuButton
               as={Button}
-              isDisabled={!Boolean(account)}
+              isDisabled={!Boolean(wallet)}
               variant="outline"
               colorScheme="gray"
               sx={{ '> span': { display: 'flex', alignItems: 'center' } }}
@@ -55,7 +55,7 @@ export function NetworkController() {
           </>
         )}
       </Menu>
-      {account ? (
+      {wallet ? (
         <Menu>
           <MenuButton
             as={Button}
@@ -76,14 +76,14 @@ export function NetworkController() {
               fontSize="xs"
               userSelect="none"
             >
-              {account.ens?.name || prettyString(account.address)}
+              {wallet.ens?.name || prettyString(wallet.address)}
             </Text>
           </MenuButton>
           <MenuList>
             <MenuItem
               onClick={() => {
                 try {
-                  navigator.clipboard.writeText(account?.address);
+                  navigator.clipboard.writeText(wallet?.address);
                 } catch (_e) {}
               }}
             >
