@@ -25,9 +25,9 @@ export function useAccountProxy() {
   const withSigner = Boolean(signer);
 
   return useQuery({
-    queryKey: [network.name, { withSigner }, 'AccountProxy'],
+    queryKey: [network.name, 'AccountProxy', { withSigner }],
     queryFn: async function () {
-      const { address, abi } = await importAccount(network?.name);
+      const { address, abi } = await importAccount(network.name);
       return new Contract(address, abi, signerOrProvider) as AccountProxy;
     },
     enabled: Boolean(network.isSupported && signerOrProvider),

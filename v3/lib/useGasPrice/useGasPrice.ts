@@ -61,15 +61,14 @@ export const getGasPrice = async ({
 export type GasPrices = Awaited<ReturnType<typeof getGasPrice>>;
 
 export const useGasPrice = () => {
-  const { id: networkId, name: networkName } = useNetwork();
+  const network = useNetwork();
 
   return useQuery({
-    queryKey: ['useGasPrice', networkId],
+    queryKey: [network.name, 'GasPrice'],
     queryFn: async () => {
-      if (!networkId) throw Error('Network id required');
-      return getGasPrice({ networkId, networkName });
+      return getGasPrice({ networkId: network.id, networkName: network.name });
     },
 
-    enabled: Boolean(networkId),
+    enabled: Boolean(network.name && network.id),
   });
 };

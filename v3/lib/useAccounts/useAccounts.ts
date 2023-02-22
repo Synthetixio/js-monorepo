@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAccountProxy } from '@snx-v3/useAccountProxy';
-import { useAccount } from '@snx-v3/useBlockchain';
+import { useAccount, useNetwork } from '@snx-v3/useBlockchain';
 
 export function useAccounts() {
   const account = useAccount();
   const { data: AccountProxy } = useAccountProxy();
+  const network = useNetwork();
+
   return useQuery({
-    queryKey: [{ AccountProxy: AccountProxy?.address }, 'accounts'],
+    queryKey: [network.name, { accountAddress: account?.address }, 'Accounts'],
     queryFn: async function () {
       if (!AccountProxy || !account?.address) throw new Error('Should be disabled');
       const numberOfAccountTokens = await AccountProxy.balanceOf(account?.address);

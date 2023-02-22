@@ -18,8 +18,9 @@ export const useTokenBalance = (address?: string, networkId?: number) => {
 
   return useQuery({
     queryKey: [
+      network.name,
+      { accountAddress: account?.address },
       'TokenBalance',
-      { networkId: networkId ?? network.id, accountAddress: account?.address },
       { tokenAddress },
     ],
     queryFn: async () => {

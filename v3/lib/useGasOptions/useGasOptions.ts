@@ -1,13 +1,13 @@
-import { getGasPrice, GasPrices } from '@snx-v3/useGasPrice';
-import { PopulatedTransaction } from '@ethersproject/contracts';
-import { BigNumber } from '@ethersproject/bignumber';
-import { QueryKey, useQuery } from '@tanstack/react-query';
-import { useOptimismLayer1Fee } from '@snx-v3/useOptimismLayer1Fee';
-import Wei, { wei } from '@synthetixio/wei';
-import { useNetwork } from '@snx-v3/useBlockchain';
-import { GWEI_DECIMALS } from '@snx-v3/Constants';
-import { useEthPrice } from '@snx-v3/useEthPrice';
-import { useGasSpeed } from '@snx-v3/useGasSpeed';
+import {GasPrices, getGasPrice} from '@snx-v3/useGasPrice';
+import {PopulatedTransaction} from '@ethersproject/contracts';
+import {BigNumber} from '@ethersproject/bignumber';
+import {QueryKey, useQuery} from '@tanstack/react-query';
+import {useOptimismLayer1Fee} from '@snx-v3/useOptimismLayer1Fee';
+import Wei, {wei} from '@synthetixio/wei';
+import {useNetwork} from '@snx-v3/useBlockchain';
+import {GWEI_DECIMALS} from '@snx-v3/Constants';
+import {useEthPrice} from '@snx-v3/useEthPrice';
+import {useGasSpeed} from '@snx-v3/useGasSpeed';
 
 // Note it looks like gas limit estimation is coming in higher slightly higher than what gets used according to etherscan
 // Will try without a buffer, if we get user report of out of gas we can increase it again.
@@ -78,7 +78,7 @@ export const useGasOptions = <T>(
       }
     | { populateTransaction?: () => Promise<PopulatedTransaction>; queryKeys: QueryKey }
 ) => {
-  const { id: networkId, name: networkName } = useNetwork();
+  const network = useNetwork();
   const { gasSpeed } = useGasSpeed();
   const optimismLayerOneFeesQuery = useOptimismLayer1Fee(args);
   const { data: ethPrice } = useEthPrice();
@@ -86,12 +86,15 @@ export const useGasOptions = <T>(
 
   return useQuery({
     queryKey: [
-      ...(args.queryKeys || []),
-      optimismLayerOneFeesQuery.data?.toNumber(),
-      networkId,
-      gasSpeed,
-      keyForTransactionArgs,
-      ethPrice?.toNumber(),
+      network.name,
+      'GasOptions',
+      {
+        args: args.queryKeys || [],
+        fees: optimismLayerOneFeesQuery.data?.toNumber(),
+        gasSpeed,
+        key: keyForTransactionArgs,
+        ethPrice: ethPrice?.toNumber(),
+      },
     ],
     queryFn: async () => {
       if (!args.populateTransaction) {
@@ -103,8 +106,8 @@ export const useGasOptions = <T>(
           : await args.populateTransaction();
 
       const gasPrices = await getGasPrice({
-        networkName,
-        networkId,
+        networkName: network.name,
+        networkId: network.id,
       });
       const optimismLayerOneFees = optimismLayerOneFeesQuery.data || undefined;
       const gasOptionsForTransaction = formatGasPriceForTransaction({
@@ -127,6 +130,6 @@ export const useGasOptions = <T>(
         ),
       };
     },
-    enabled: Boolean(args.populateTransaction && networkId),
+    enabled: Boolean(args.populateTransaction && network.name && network.id),
   });
 };
