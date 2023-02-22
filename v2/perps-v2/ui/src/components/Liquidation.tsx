@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
-import { EventType } from '../All';
+import type { EventType } from '../EventType';
 import { numberWithCommas } from '../utils/numbers';
 
 export const Liquidation: FC<{ event: EventType }> = ({ event }) => {

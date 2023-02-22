@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { useGetSynthetix } from './queries/synthetix';
 import { PositionsTable } from './components/PositionsTable';
 import { Divider, Flex, Heading, Text } from '@chakra-ui/react';
@@ -7,7 +5,7 @@ import { numberWithCommas } from './utils/numbers';
 import { Link } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 
-export const All: FC = () => {
+export const All = () => {
   const { data } = useGetSynthetix();
 
   return (

@@ -14,15 +14,14 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { numberWithCommas } from './utils/numbers';
-import { PositionLiquidated, useGetLiquidations } from './queries/liquidation';
-import { DelayedOrder, useGetDelayedOrder } from './queries/delayed-orders';
-import { FuturesTrades, useGetFuturesTrades } from './queries/futures-trades';
+import { useGetLiquidations } from './queries/liquidation';
+import { useGetDelayedOrder } from './queries/delayed-orders';
+import { useGetFuturesTrades } from './queries/futures-trades';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Position } from './components/Position';
 import { Liquidation } from './components/Liquidation';
 import { Order } from './components/Order';
-
-export interface EventType extends FuturesTrades, DelayedOrder, PositionLiquidated {}
+import { EventType } from './EventType';
 
 function App() {
   const navigate = useNavigate();
@@ -37,18 +36,22 @@ function App() {
 
   const allEvents = useMemo(() => {
     if (orders?.length && futuresTrades?.length) {
-      return orders
-        .concat(futuresTrades as any)
-        .concat(positionLiquidated as any)
-        .sort((a, b) => {
-          if (Number(a.timestamp) < Number(b.timestamp)) {
-            return 1;
-          }
-          if (Number(a.timestamp) > Number(b.timestamp)) {
-            return -1;
-          }
-          return 0;
-        }) as EventType[];
+      return (
+        orders
+          // @ts-ignore
+          .concat(futuresTrades)
+          // @ts-ignore
+          .concat(positionLiquidated)
+          .sort((a, b) => {
+            if (Number(a.timestamp) < Number(b.timestamp)) {
+              return 1;
+            }
+            if (Number(a.timestamp) > Number(b.timestamp)) {
+              return -1;
+            }
+            return 0;
+          }) as EventType[]
+      );
     }
     return [];
   }, [orders, futuresTrades, positionLiquidated]);
@@ -137,7 +140,7 @@ function App() {
                         Size:&nbsp; ${numberWithCommas((Number(event.size) / 1e18).toFixed(2))}
                       </Text>
                       {event.entity === 'Futures Trade' ? (
-                        <Position id={event.positionId} trade={event as FuturesTrades} />
+                        <Position id={event.positionId} trade={event} />
                       ) : event.entity === 'Position Liquidated' && !!event.market ? (
                         <Liquidation event={event} />
                       ) : (
