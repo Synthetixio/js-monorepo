@@ -37,7 +37,10 @@ export function encodeBytesByNodeType(id: number, parameters: any[]) {
     case 3:
       return utils.defaultAbiCoder.encode(['address', 'uint', 'uint8'], parameters);
     case 4:
-      return utils.defaultAbiCoder.encode(['address', 'address', 'address', 'uint'], parameters);
+      return utils.defaultAbiCoder.encode(
+        ['address', 'address', 'uint', 'uint', 'address', 'uint'],
+        parameters
+      );
     case 5:
       return utils.defaultAbiCoder.encode(['address', 'bytes32', 'bool'], parameters);
     case 6:

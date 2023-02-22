@@ -120,10 +120,26 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           node={node}
           tokenOne={node?.parameters[0]}
           tokenTwo={node?.parameters[1]}
-          pool={node?.parameters[2]}
-          secondsAgo={node?.parameters[3]}
-          getValuesFromForm={(tokenOne, tokenTwo, pool, secondsAgo) => {
-            setValue('nodeParameters', [tokenOne, tokenTwo, pool, secondsAgo]);
+          decimalToken={node?.parameters[2]}
+          decimalStablecoin={node?.parameters[3]}
+          pool={node?.parameters[4]}
+          secondsAgo={node?.parameters[5]}
+          getValuesFromForm={(
+            tokenOne,
+            tokenTwo,
+            decimalToken,
+            decimalStablecoin,
+            pool,
+            secondsAgo
+          ) => {
+            setValue('nodeParameters', [
+              tokenOne,
+              tokenTwo,
+              decimalToken,
+              decimalStablecoin,
+              pool,
+              secondsAgo,
+            ]);
           }}
         />
       );
@@ -146,7 +162,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
             {!node && (
               <Select {...register('oracleNodeType')}>
                 <option value="" selected disabled hidden>
-                  Choose here
+                  Choose Node Type
                 </option>
                 {ORACLE_NODE_TYPES.map((type) => (
                   <option value={type.value} key={type.value}>

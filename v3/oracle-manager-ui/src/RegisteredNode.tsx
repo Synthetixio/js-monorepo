@@ -13,8 +13,8 @@ import {
 } from '../utils/contracts';
 import { OracleNodeTypes } from '../utils/types';
 
-const x = 0;
-const y = 0;
+let x = 0;
+let y = 0;
 
 export const RegisteredNode: FC = () => {
   const [, setNodes] = useRecoilState(nodesState);
@@ -29,8 +29,8 @@ export const RegisteredNode: FC = () => {
       setNodes((state) => {
         const exists = state.find((state) => state.id === id);
         if (!exists) {
-          x -= 200;
-          y -= 200;
+          x -= 300;
+          y -= 300;
           return [
             ...state,
             {

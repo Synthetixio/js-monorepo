@@ -101,12 +101,23 @@ export const ORACLE_NODE_TYPES: {
     parameters: [
       {
         type: 'string',
-        name: 'First token',
+        name: 'Token',
       },
       {
         type: 'string',
-        name: 'Second token',
+        name: 'Stablecoin',
       },
+
+      {
+        type: 'number',
+        name: 'Decimal token',
+      },
+
+      {
+        type: 'number',
+        name: 'Decimal stablecoin',
+      },
+
       {
         type: 'string',
         name: 'Pool address',
