@@ -2,8 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { PERPS_V2_DASHBOARD_GRAPH_URL } from '../utils/constants';
 import { FuturePosition } from './positions';
 
-const query = (id: string) => `query FuturesPosition{
-  futuresPosition(id: "${id}") {
+const gql = (data: TemplateStringsArray) => data[0];
+const query = gql`
+  query FuturesPosition($id: String) {
+    futuresPosition(id: $id) {
       id
       account
       isLiquidated
@@ -23,8 +25,9 @@ const query = (id: string) => `query FuturesPosition{
       trades
       totalVolume
       feesPaidToSynthetix
+    }
   }
-}`;
+`;
 
 export function useGetPosition(id: string) {
   return useQuery(
@@ -36,7 +39,10 @@ export function useGetPosition(id: string) {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({ query: query(id) }),
+        body: JSON.stringify({
+          query,
+          variables: { id },
+        }),
       });
       const {
         data,

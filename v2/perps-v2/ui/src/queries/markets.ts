@@ -9,6 +9,16 @@ interface FutureMarketsGraphResponse {
   };
 }
 
+const gql = (data: TemplateStringsArray) => data[0];
+const query = gql`
+  query futuresMarkets {
+    futuresMarkets(first: 1000) {
+      marketKey
+      asset
+      id
+    }
+  }
+`;
 export const useGetMarkets = () =>
   useQuery(['markets'], async () => {
     const response = await fetch(OPTIMISM_GRAPH_URL, {
@@ -17,15 +27,7 @@ export const useGetMarkets = () =>
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({
-        query: `query futuresMarkets {
-                    futuresMarkets(first: 1000) {
-                        marketKey 
-                        asset
-                        id
-                    }
-                }`,
-      }),
+      body: JSON.stringify({ query }),
     });
     const { data }: FutureMarketsGraphResponse = await response.json();
 

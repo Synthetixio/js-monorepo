@@ -24,6 +24,26 @@ export interface FuturesTrades {
   price: string;
   entity: string;
 }
+const gql = (data: TemplateStringsArray) => data[0];
+const query = gql`
+  query FuturesTrades {
+    futuresTrades(first: 100, oderBy: "timestamp", orderDirection: "desc") {
+      id
+      timestamp
+      account
+      margin
+      market
+      positionId
+      size
+      feesPaidToSynthetix
+      type
+      pnl
+      positionClosed
+      positionSize
+      price
+    }
+  }
+`;
 
 export const useGetFuturesTrades = () => {
   const { data: marketData } = useGetMarkets();
@@ -35,23 +55,7 @@ export const useGetFuturesTrades = () => {
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        query: `query FuturesTrades {
-                        futuresTrades(first: 100, oderBy: "timestamp", orderDirection: "desc") {
-                          id
-                          timestamp
-                          account
-                          margin
-                          market
-                          positionId
-                          size
-                          feesPaidToSynthetix
-                          type
-                          pnl
-                          positionClosed
-                          positionSize
-                          price
-            }
-          }`,
+        query,
       }),
     });
     const { data }: FuturesTradesResponse = await response.json();
