@@ -28,7 +28,7 @@ const activeIcon = (currentNetwork: number) => {
 };
 
 export function NetworkController() {
-  const { address } = useAccount();
+  const account = useAccount();
   const { switchNetwork } = useSwitchNetwork();
 
   return (
@@ -75,7 +75,7 @@ export function NetworkController() {
                   <MenuList>
                     <MenuItem
                       onClick={() => {
-                        if (address && switchNetwork) {
+                        if (account?.address && switchNetwork) {
                           switchNetwork(1);
                         } else {
                           openConnectModal();
@@ -89,7 +89,7 @@ export function NetworkController() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        if (address && switchNetwork) {
+                        if (account?.address && switchNetwork) {
                           switchNetwork(10);
                         } else {
                           openConnectModal();
@@ -105,7 +105,7 @@ export function NetworkController() {
                 </>
               )}
             </Menu>
-            {address && account && mounted ? (
+            {account?.address && account && mounted ? (
               <Button
                 variant="outline"
                 colorScheme="gray"
