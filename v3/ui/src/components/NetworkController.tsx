@@ -1,14 +1,13 @@
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import {
-  EthereumIcon,
-  OptimismIcon,
-  FailedIcon,
-  ChevronUp,
   ChevronDown,
+  ChevronUp,
+  EthereumIcon,
+  FailedIcon,
+  OptimismIcon,
   WalletIcon,
 } from '@snx-v3/icons';
-import { useAccount } from '@snx-v3/useBlockchain';
 import { useSwitchNetwork } from 'wagmi';
 
 const activeIcon = (currentNetwork: number) => {
@@ -28,7 +27,6 @@ const activeIcon = (currentNetwork: number) => {
 };
 
 export function NetworkController() {
-  const account = useAccount();
   const { switchNetwork } = useSwitchNetwork();
 
   return (
