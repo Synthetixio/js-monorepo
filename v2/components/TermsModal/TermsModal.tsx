@@ -22,10 +22,13 @@ interface TermsModalProps {
 
 export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
   const [isOpen, setOpen] = useState(defaultOpen);
+  const [enabled, setEnabled] = useState(false);
 
   const onSubmit = () => {
-    sessionStorage.setItem(SESSION_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED, JSON.stringify(true));
-    setOpen(false);
+    if (enabled) {
+      sessionStorage.setItem(SESSION_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED, JSON.stringify(true));
+      setOpen(false);
+    }
   };
 
   return (
@@ -48,6 +51,15 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
             such, you fully understand that:
           </Text>
           <Box
+            onScroll={(e) => {
+              const div = e.currentTarget;
+              const scrollTopWithTolerance = div.scrollTop + 10;
+              if (scrollTopWithTolerance >= div.scrollHeight - div.offsetHeight) {
+                setEnabled(true);
+              } else {
+                setEnabled(false);
+              }
+            }}
             as="div"
             my={2}
             py={3}
@@ -175,6 +187,7 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
           my={4}
           mx={6}
           onClick={onSubmit}
+          isDisabled={!enabled}
         >
           I agree
         </Button>
