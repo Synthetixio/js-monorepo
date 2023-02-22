@@ -10,6 +10,7 @@ import SynthetixLogo from './SynthetixLogo.svg';
 
 export type Network = {
   id: number;
+  hexId: string;
   token: string;
   name: string;
   rpcUrl: string;
@@ -18,8 +19,9 @@ export type Network = {
   isSupported: boolean;
 };
 
-export const UNSUPPORTED_NETWORK = {
+export const UNSUPPORTED_NETWORK: Network = {
   id: 0,
+  hexId: `0x${Number(0).toString(16)}`,
   token: 'ETH',
   name: 'unsupported',
   rpcUrl: '',
@@ -28,7 +30,7 @@ export const UNSUPPORTED_NETWORK = {
   isSupported: false,
 };
 
-export const NETWORKS = {
+export const NETWORKS: { [key: string]: Network } = {
   mainnet: {
     id: 1,
     hexId: `0x${Number(1).toString(16)}`,
@@ -70,6 +72,8 @@ export const NETWORKS = {
     isSupported: true,
   },
 };
+
+export const DEFAULT_NETWORK = NETWORKS.goerli;
 
 const injected = injectedModule();
 const walletConnect = walletConnectModule();
@@ -113,11 +117,6 @@ export const onboard = onboardInit({
     enabled: false,
   },
 });
-const DEFAULT_NETWORK = NETWORKS.goerli;
-export const DEFAULT_PROVIDER = new ethers.providers.InfuraProvider(
-  NETWORKS.goerli.name,
-  process.env.INFURA_KEY
-);
 
 export const BlockchainContext = React.createContext<{ state: AppState }>({
   state: onboard.state.get(),
@@ -166,15 +165,18 @@ export function useIsConnected(): boolean {
 export function useProvider() {
   const wallet = useWallet();
   if (!wallet) {
-    return DEFAULT_PROVIDER;
+    return new ethers.providers.InfuraProvider(NETWORKS.goerli.name, process.env.INFURA_KEY);
   }
   return new ethers.providers.Web3Provider(wallet.provider, 'any');
 }
 
 export function useSigner() {
-  const isConnected = useIsConnected();
-  const provider = useProvider();
-  return isConnected ? provider.getSigner() : provider;
+  const wallet = useWallet();
+  if (!wallet) {
+    return;
+  }
+  const provider = new ethers.providers.Web3Provider(wallet.provider, 'any');
+  return provider.getSigner();
 }
 
 export function useAccount() {
