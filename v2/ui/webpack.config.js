@@ -189,7 +189,6 @@ module.exports = {
         'optimism-networks',
         'providers',
         'queries',
-        'transaction-notifier',
         'wei',
         'generate-subgraph-query',
         'v3-theme',
