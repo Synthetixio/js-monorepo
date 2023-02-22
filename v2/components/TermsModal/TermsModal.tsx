@@ -53,7 +53,8 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
           <Box
             onScroll={(e) => {
               const div = e.currentTarget;
-              if (div.scrollTop >= div.scrollHeight - div.offsetHeight) {
+              const scrollTopWithTolerance = div.scrollTop + 10;
+              if (scrollTopWithTolerance >= div.scrollHeight - div.offsetHeight) {
                 setEnabled(true);
               } else {
                 setEnabled(false);
