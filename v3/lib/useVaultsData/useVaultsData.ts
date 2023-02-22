@@ -17,7 +17,14 @@ export const useVaultsData = (poolId?: number) => {
   const { data: CoreProxyContract } = useCoreProxy();
 
   return useQuery({
-    queryKey: [network.name, { poolId, collateralTypes }, 'VaultCollaterals'],
+    queryKey: [
+      network.name,
+      'VaultCollaterals',
+      {
+        pool: poolId,
+        tokens: collateralTypes ? collateralTypes?.map((x) => x.tokenAddress).sort() : [],
+      },
+    ],
     queryFn: async () => {
       if (!CoreProxyContract || !collateralTypes || !poolId) {
         throw Error('Query should not be enabled when missing contract or collateral types');

@@ -7,20 +7,20 @@ import { InfuraProvider } from '@ethersproject/providers';
 const BalanceSchema = ZodBigNumber.transform((x) => wei(x));
 
 export function useEthBalance(networkId?: number) {
-  const { address: accountAddress } = useAccount();
+  const account = useAccount();
   const connectedProvider = useProvider();
   const network = useNetwork();
 
   return useQuery({
-    queryKey: [{ networkId: networkId ?? network.id, accountAddress }, 'ethBalance'],
+    queryKey: [network.name, { accountAddress: account?.address }, 'EthBalance'],
     queryFn: async () => {
-      if (!accountAddress) throw Error('Query should not be enabled');
+      if (!account?.address) throw Error('Query should not be enabled');
       const provider =
         networkId && networkId !== network.id
           ? new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID)
           : connectedProvider;
-      return BalanceSchema.parse(await provider.getBalance(accountAddress));
+      return BalanceSchema.parse(await provider.getBalance(account.address));
     },
-    enabled: Boolean((networkId ?? network.id) && accountAddress),
+    enabled: Boolean((networkId ?? network.id) && account?.address),
   });
 }

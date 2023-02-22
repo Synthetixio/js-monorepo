@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import { Box, Container, Flex } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import { MultipleTransactionModal } from '../../components/shared/TransactionReview/MultipleTransactionModal';
-import { Initializer } from '../../Initializer';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -15,13 +13,10 @@ export const DefaultLayout: FC = () => (
     flexDirection="column"
   >
     <Flex flex="1" flexDirection="column">
-      <Initializer>
-        <Header />
-        <Container display="flex" flexDir="column" maxW="1024px" flex="1">
-          <Outlet />
-        </Container>
-        <MultipleTransactionModal />
-      </Initializer>
+      <Header />
+      <Container display="flex" flexDir="column" maxW="1024px" flex="1">
+        <Outlet />
+      </Container>
     </Flex>
     <Footer />
   </Box>

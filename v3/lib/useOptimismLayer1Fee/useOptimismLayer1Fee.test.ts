@@ -63,7 +63,11 @@ describe('useOptimismLayer1Fee', () => {
     expect(enabled).toEqual(true);
 
     // Assert last query call has correct query key
-    expect(queryKey).toEqual(['optimism', expect.any(Function)]);
+    expect(queryKey).toEqual([
+      'optimism',
+      'OptimismL1Fee',
+      { args: expect.any(Function), key: undefined },
+    ]);
 
     await queryFn();
 

@@ -1,6 +1,6 @@
 import { serialize } from '@ethersproject/transactions';
 import { InfuraProvider } from '@ethersproject/providers';
-import { address, abi } from './OptimismOracleContract';
+import { abi, address } from './OptimismOracleContract';
 import { Contract, PopulatedTransaction } from '@ethersproject/contracts';
 import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
@@ -37,7 +37,14 @@ export const useOptimismLayer1Fee = <T>(
   const keyForTransactionArgs = 'transactionArgs' in args ? args.transactionArgs : undefined;
 
   return useQuery({
-    queryKey: [network.name, args.populateTransaction, keyForTransactionArgs],
+    queryKey: [
+      network.name,
+      'OptimismL1Fee',
+      {
+        args: args.populateTransaction,
+        key: keyForTransactionArgs,
+      },
+    ],
     queryFn: async () => {
       if (!args.populateTransaction) {
         throw Error('populateTransaction missing, query should not be enabled');

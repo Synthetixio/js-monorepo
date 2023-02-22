@@ -4,6 +4,7 @@ import { loadPosition, selectPosition } from '@snx-v3/useLiquidityPosition';
 import { usePools } from '@snx-v3/usePools';
 import Wei from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
+import { useNetwork } from '@snx-v3/useBlockchain';
 
 export type LiquidityPositionType = {
   id: `${string}-${string}`;
@@ -27,15 +28,16 @@ export const useLiquidityPositions = ({ accountId }: { accountId?: string }) => 
   const { data: CoreProxy } = useCoreProxy();
   const { data: pools } = usePools();
   const { data: collateralTypes } = useCollateralTypes();
+  const network = useNetwork();
 
   return useQuery({
     queryKey: [
+      network.name,
+      { accountId },
       'LiquidityPositions',
       {
-        collateralTypes: collateralTypes?.map((x) => x.tokenAddress),
-        pools,
-        accountId,
-        CoreProxy: CoreProxy?.address,
+        pools: pools ? pools.map((pool) => pool.id).sort() : [],
+        tokens: collateralTypes ? collateralTypes.map((x) => x.tokenAddress).sort() : [],
       },
     ],
     queryFn: async () => {
