@@ -63,6 +63,7 @@ export interface FilterOptions {
   deactivateOpen: boolean;
   deactivateOpenedAt: boolean;
   deactivateClosedAt: boolean;
+  walletAddress: string;
 }
 
 const body = ({
@@ -88,7 +89,13 @@ const body = ({
   return `query info {
     futuresPositions(skip: ${skip}, first: 1000,
       orderBy: "${sortConfig[0]}", orderDirection: "${!sortConfig[1] ? 'desc' : 'asc'}", where: {
-    ${address ? `account: "${address.toLowerCase()}",` : ''}
+    ${
+      address || filterOptions.walletAddress
+        ? `account: "${
+            address ? address.toLowerCase() : filterOptions.walletAddress.toLowerCase()
+          }",`
+        : ''
+    }
     ${
       filterOptions.asset === 'all'
         ? ''
@@ -163,6 +170,10 @@ const refetchMore = async ({
 }) => {
   const response = await fetch(PERPS_V2_DASHBOARD_GRAPH_URL, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
     body: JSON.stringify({
       query: body({
         filterOptions,
@@ -229,8 +240,10 @@ function useGetPositions({
               asset:
                 marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
                   ?.asset || 'not found',
-              market: marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
-                ?.marketKey,
+              market: formatMarketKey(
+                marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
+                  ?.marketKey
+              ),
               openTimestamp: toDateTime(Number(position.openTimestamp)).toLocaleDateString(
                 'en-US',
                 {
@@ -258,9 +271,6 @@ function useGetPositions({
         console.error(error);
         return { futuresPositions: [], futuresStats: [] };
       }
-    },
-    {
-      enabled: false,
     }
   );
 }
@@ -271,4 +281,10 @@ function toDateTime(secs: number) {
   const t = new Date(1970, 0, 1);
   t.setSeconds(secs);
   return t;
+}
+
+function formatMarketKey(market?: string) {
+  if (!market) return 'not found';
+  const indexOfPerp = market.indexOf('PERP');
+  return market.substring(1, indexOfPerp).concat('-').concat(market.substring(indexOfPerp));
 }

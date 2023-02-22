@@ -8,8 +8,8 @@ export const Wallet: FC = () => {
   const params = useParams();
   return (
     <Flex flexDir="column" p="2" justifyContent="center" alignItems="center">
-      <Link to="/" style={{ marginBottom: '20px' }}>
-        <Flex gap="2" alignItems="center">
+      <Link to="/">
+        <Flex gap="2" alignItems="center" mb="4">
           <ArrowBackIcon />
           <Heading size="md">Back</Heading>
         </Flex>

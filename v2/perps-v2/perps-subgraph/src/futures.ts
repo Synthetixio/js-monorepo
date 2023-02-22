@@ -24,6 +24,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   positionLiquidatedEntity.size = event.params.size.toBigDecimal();
   positionLiquidatedEntity.price = event.params.price.toBigDecimal();
   positionLiquidatedEntity.fee = event.params.fee.toBigDecimal();
+  positionLiquidatedEntity.futuresPosition = event.address.toHex() + '-' + event.params.id.toHex();
   positionLiquidatedEntity.timestamp = event.block.timestamp;
   positionLiquidatedEntity.block = event.block.number;
   positionLiquidatedEntity.save();
@@ -73,8 +74,6 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     trader.save();
   }
 }
-
-// TODO @MF check if long property is correct? seems off
 
 export function handlePositionModified(event: PositionModifiedEvent): void {
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
@@ -181,7 +180,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       futuresPosition.size = event.params.size;
       futuresPosition.lastPrice = event.params.lastPrice;
       futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
-      futuresPosition.leverage = event.params.size
+      futuresPosition.leverage = event.params.tradeSize
         .times(event.params.lastPrice)
         .div(event.params.margin)
         .abs();
@@ -227,7 +226,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
       futuresPosition.margin = futuresPosition.margin.plus(event.params.margin);
       futuresPosition.lastPrice = event.params.lastPrice;
-      futuresPosition.long = event.params.tradeSize.gt(BigInt.fromI32(0));
+      futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
       futuresPosition.pnl = newPnl;
       futuresPosition.leverage = event.params.size
         .times(event.params.lastPrice)
@@ -266,7 +265,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
       futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
     } else {
-      log.debug('went into nothing', []);
+      log.debug('Transferred Margin Event skipped', []);
     }
   }
   // if there is an existing position...
@@ -300,24 +299,46 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void {
   const futuresOrderEntityId = `${event.params.account.toHexString()}-${event.params.targetRoundId.toString()}`;
   let futuresOrderEntity = FuturesOrder.load(futuresOrderEntityId);
-  let statEntity = Trader.load(event.params.account.toHex());
+  let trader = Trader.load(event.params.account.toHex());
+  let tradeEntity = FuturesTrade.load(
+    event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
+  );
+
   let synthetix = Synthetix.load('synthetix');
+
+  // Update Synthetix values
   if (synthetix) {
     synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
       event.params.keeperDeposit.toBigDecimal()
     );
+    synthetix.save();
   }
+
+  // Update Position fee value
+  if (!!tradeEntity) {
+    let positionEntity = FuturesPosition.load(tradeEntity.positionId);
+    if (positionEntity) {
+      positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
+        event.params.keeperDeposit
+      );
+      positionEntity.save();
+    }
+  }
+
+  // Update Trader fee value
+  if (trader) {
+    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
+      event.params.keeperDeposit.toBigDecimal()
+    );
+    trader.save();
+  }
+
+  // Update FuturesOrderEntity
   if (futuresOrderEntity) {
     futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
-    let tradeEntity = FuturesTrade.load(
-      event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
-    );
 
-    if (statEntity && tradeEntity) {
-      // if trade exists get the position
-      let positionEntity = FuturesPosition.load(tradeEntity.positionId);
-
+    if (tradeEntity) {
       // update order values
       futuresOrderEntity.status = 'Filled';
       tradeEntity.type = futuresOrderEntity.orderType;
@@ -327,38 +348,22 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
-        statEntity.feesPaidToSynthetix = statEntity.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit.toBigDecimal()
-        );
-        if (positionEntity) {
-          positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
-            event.params.keeperDeposit
-          );
-          positionEntity.save();
-        }
-
-        statEntity.save();
       }
-
       tradeEntity.save();
-    } else if (statEntity) {
-      if (futuresOrderEntity.keeper != futuresOrderEntity.account) {
-        statEntity.feesPaidToSynthetix = statEntity.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit.toBigDecimal()
-        );
-        statEntity.save();
-      }
-
+    } else {
       futuresOrderEntity.status = 'Cancelled';
     }
-
     futuresOrderEntity.save();
   }
 }
 
 export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): void {
   const futuresOrderEntityId = `${event.params.account.toHex()}-${event.params.targetRoundId.toString()}`;
-  const futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
+  let futuresOrderEntity = FuturesOrder.load(futuresOrderEntityId);
+  let trader = Trader.load(event.params.account.toHex());
+  if (futuresOrderEntity == null) {
+    futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
+  }
   futuresOrderEntity.size = event.params.sizeDelta;
   futuresOrderEntity.market = event.address;
   futuresOrderEntity.fee = BigInt.fromI32(0);

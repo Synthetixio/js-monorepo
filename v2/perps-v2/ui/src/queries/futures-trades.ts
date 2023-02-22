@@ -24,33 +24,43 @@ export interface FuturesTrades {
   price: string;
   entity: string;
 }
+const gql = (data: TemplateStringsArray) => data[0];
+const query = gql`
+  query FuturesTrades {
+    futuresTrades(first: 100, oderBy: "timestamp", orderDirection: "desc") {
+      id
+      timestamp
+      account
+      margin
+      market
+      positionId
+      size
+      feesPaidToSynthetix
+      type
+      pnl
+      positionClosed
+      positionSize
+      price
+    }
+  }
+`;
 
 export const useGetFuturesTrades = () => {
   const { data: marketData } = useGetMarkets();
   return useQuery(['futuresTrades', marketData?.toString()], async () => {
     const response = await fetch(PERPS_V2_DASHBOARD_GRAPH_URL, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
       body: JSON.stringify({
-        query: `query FuturesTrades {
-                        futuresTrades(first: 100, oderBy: "timestamp", orderDirection: "desc") {
-                          id
-                          timestamp
-                          account
-                          margin
-                          market
-                          positionId
-                          size
-                          feesPaidToSynthetix
-                          type
-                          pnl
-                          positionClosed
-                          positionSize
-                          price
-            }
-          }`,
+        query,
       }),
     });
     const { data }: FuturesTradesResponse = await response.json();
+    // @TODO why is market still undefined?
+
     return data.futuresTrades.map((data) => ({
       ...data,
       market: marketData?.find((d) => d.id.toLowerCase() === data.market.toLowerCase())?.marketKey,

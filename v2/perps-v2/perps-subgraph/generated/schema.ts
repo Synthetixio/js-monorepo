@@ -96,6 +96,15 @@ export class PositionLiquidated extends Entity {
     this.set('fee', Value.fromBigDecimal(value));
   }
 
+  get futuresPosition(): string {
+    let value = this.get('futuresPosition');
+    return value!.toString();
+  }
+
+  set futuresPosition(value: string) {
+    this.set('futuresPosition', Value.fromString(value));
+  }
+
   get block(): BigInt {
     let value = this.get('block');
     return value!.toBigInt();
