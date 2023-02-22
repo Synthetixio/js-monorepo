@@ -1,8 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0xBa546C17262B3A788c1EA236a01a9B5f3d1FCe4a';
+export const address = '0x67721cbB19660caFD65235479775e70486b0eC65';
 export const abi = [
-  'error AlreadyInitialized()',
   'error ImplementationIsSterile(address implementation)',
   'error NoChange()',
   'error NotAContract(address contr)',
@@ -15,8 +14,6 @@ export const abi = [
   'event Upgraded(address indexed self, address implementation)',
   'function acceptOwnership()',
   'function getImplementation() view returns (address)',
-  'function initializeOwnerModule(address initialOwner)',
-  'function isOwnerModuleInitialized() view returns (bool)',
   'function nominateNewOwner(address newNominatedOwner)',
   'function nominatedOwner() view returns (address)',
   'function owner() view returns (address)',
@@ -24,11 +21,13 @@ export const abi = [
   'function simulateUpgradeTo(address newImplementation)',
   'function upgradeTo(address newImplementation)',
   'error MismatchAssociatedSystemKind(bytes32 expected, bytes32 actual)',
+  'error MissingAssociatedSystem(bytes32 id)',
   'event AssociatedSystemSet(bytes32 indexed kind, bytes32 indexed id, address proxy, address impl)',
   'function getAssociatedSystem(bytes32 id) view returns (address addr, bytes32 kind)',
   'function initOrUpgradeNft(bytes32 id, string name, string symbol, string uri, address impl)',
   'function initOrUpgradeToken(bytes32 id, string name, string symbol, uint8 decimals, address impl)',
   'function registerUnmanagedSystem(bytes32 id, address endpoint)',
+  'error AlreadyInitialized()',
   'error InsufficientAllowance(uint256 required, uint256 existing)',
   'error InsufficientBalance(uint256 required, uint256 existing)',
   'event Approval(address indexed owner, address indexed spender, uint256 amount)',
@@ -81,8 +80,6 @@ export interface USDProxyInterface extends utils.Interface {
   functions: {
     'acceptOwnership()': FunctionFragment;
     'getImplementation()': FunctionFragment;
-    'initializeOwnerModule(address)': FunctionFragment;
-    'isOwnerModuleInitialized()': FunctionFragment;
     'nominateNewOwner(address)': FunctionFragment;
     'nominatedOwner()': FunctionFragment;
     'owner()': FunctionFragment;
@@ -117,8 +114,6 @@ export interface USDProxyInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'acceptOwnership'
       | 'getImplementation'
-      | 'initializeOwnerModule'
-      | 'isOwnerModuleInitialized'
       | 'nominateNewOwner'
       | 'nominatedOwner'
       | 'owner'
@@ -151,11 +146,6 @@ export interface USDProxyInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getImplementation', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'initializeOwnerModule',
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: 'isOwnerModuleInitialized', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
@@ -253,8 +243,6 @@ export interface USDProxyInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getImplementation', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initializeOwnerModule', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isOwnerModuleInitialized', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
@@ -385,13 +373,6 @@ export interface USDProxy extends BaseContract {
     ): Promise<ContractTransaction>;
 
     getImplementation(overrides?: CallOverrides): Promise<[string]>;
-
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<[boolean]>;
 
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
@@ -541,13 +522,6 @@ export interface USDProxy extends BaseContract {
 
   getImplementation(overrides?: CallOverrides): Promise<string>;
 
-  initializeOwnerModule(
-    initialOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  isOwnerModuleInitialized(overrides?: CallOverrides): Promise<boolean>;
-
   nominateNewOwner(
     newNominatedOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -693,13 +667,6 @@ export interface USDProxy extends BaseContract {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
     getImplementation(overrides?: CallOverrides): Promise<string>;
-
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<boolean>;
 
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
@@ -892,13 +859,6 @@ export interface USDProxy extends BaseContract {
 
     getImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<BigNumber>;
-
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1047,13 +1007,6 @@ export interface USDProxy extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,

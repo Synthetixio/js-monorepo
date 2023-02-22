@@ -1,5 +1,5 @@
 {
-  "address": "0x626606709E6777e9e364DA1AacF0a529d4C63e0B",
+  "address": "0xd32E0fe601023D92A4Fe9998cC2C92C77AAAd1B7",
   "abi": [
     {
       "inputs": [
@@ -292,7 +292,7 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0x2d580c2a3fda7085606c5d8174297ec2c0f6ed80ad7b922a7671f42b84edf17c",
+  "deployTxnHash": "0x5b6da522ca8da97bc06dab9b7b82593fb420561bacb1c64501fd5ea873a40243",
   "sourceName": "contracts/modules/NodeModule.sol",
   "contractName": "NodeModule",
   "deployedOn": "contract.NodeModule"

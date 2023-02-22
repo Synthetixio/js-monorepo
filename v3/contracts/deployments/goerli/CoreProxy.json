@@ -1,11 +1,6 @@
 {
-  "address": "0x5B2863b24143742775F3f90C18686dFB16805CE8",
+  "address": "0x66890372Ce7f316e7c4Cd03CF88022F1F8CCF296",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -131,32 +126,6 @@
           "internalType": "address",
           "name": "",
           "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -765,7 +734,7 @@
             }
           ],
           "internalType": "struct IAccountModule.AccountPermissions[]",
-          "name": "permissions",
+          "name": "accountPerms",
           "type": "tuple[]"
         }
       ],
@@ -924,6 +893,17 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "AccountNotFound",
+      "type": "error"
     },
     {
       "inputs": [],
@@ -1107,6 +1087,17 @@
       "type": "error"
     },
     {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MissingAssociatedSystem",
+      "type": "error"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -1269,17 +1260,6 @@
     {
       "inputs": [
         {
-          "internalType": "uint128",
-          "name": "accountId",
-          "type": "uint128"
-        }
-      ],
-      "name": "AccountNotFound",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "address",
           "name": "collateralType",
           "type": "address"
@@ -1342,14 +1322,103 @@
       "type": "error"
     },
     {
-      "inputs": [],
-      "name": "OutOfBounds",
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
       "inputs": [],
       "name": "OverflowUint256ToUint64",
       "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "decimals",
+          "type": "uint8"
+        }
+      ],
+      "name": "PrecisionLost",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "expireTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "name": "CollateralLockCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "expireTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "name": "CollateralLockExpired",
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -1432,12 +1501,18 @@
         },
         {
           "internalType": "uint256",
-          "name": "items",
+          "name": "count",
           "type": "uint256"
         }
       ],
       "name": "cleanExpiredLocks",
-      "outputs": [],
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "cleared",
+          "type": "uint256"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -1564,6 +1639,52 @@
         },
         {
           "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "count",
+          "type": "uint256"
+        }
+      ],
+      "name": "getLocks",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint128",
+              "name": "amountD18",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint64",
+              "name": "lockExpirationTime",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct CollateralLock.Data[]",
+          "name": "locks",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
           "name": "tokenAmount",
           "type": "uint256"
         }
@@ -1572,22 +1693,6 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "parameter",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "reason",
-          "type": "string"
-        }
-      ],
-      "name": "InvalidParameter",
-      "type": "error"
     },
     {
       "anonymous": false,
@@ -1835,6 +1940,17 @@
         }
       ],
       "name": "InsufficientDebt",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
+      "name": "PoolNotFound",
       "type": "error"
     },
     {
@@ -2909,17 +3025,6 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint128",
-          "name": "poolId",
-          "type": "uint128"
-        }
-      ],
-      "name": "PoolNotFound",
-      "type": "error"
-    },
-    {
       "anonymous": false,
       "inputs": [
         {
@@ -3479,6 +3584,22 @@
     {
       "inputs": [],
       "name": "OverflowUint64ToInt64",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "RewardDistributorNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        }
+      ],
+      "name": "RewardUnavailable",
       "type": "error"
     },
     {
@@ -4059,7 +4180,7 @@
           "type": "address"
         }
       ],
-      "name": "getPositionCollateralizationRatio",
+      "name": "getPositionCollateralRatio",
       "outputs": [
         {
           "internalType": "uint256",

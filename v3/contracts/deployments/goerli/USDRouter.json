@@ -1,11 +1,6 @@
 {
-  "address": "0x3924FC7aE841c49a9Ad864A81F95C7A9F4B2706f",
+  "address": "0xc5AD2a56F8e139573465a9bc1d6E87CcA8094fDC",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -140,32 +135,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "newNominatedOwner",
           "type": "address"
         }
@@ -248,6 +217,17 @@
         }
       ],
       "name": "MismatchAssociatedSystemKind",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MissingAssociatedSystem",
       "type": "error"
     },
     {
@@ -388,6 +368,11 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "AlreadyInitialized",
+      "type": "error"
     },
     {
       "inputs": [
@@ -839,5 +824,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x4cfc1eb64165d76c11959b2a690a2ba9634a7e25c51843b06558cedecec3193f"
+  "deployTxnHash": "0x8045d0ac33ebcdd6f9743cc6806f824af544b8192a95bdbee067aac6409dd57e"
 }

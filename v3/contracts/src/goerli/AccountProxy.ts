@@ -1,8 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0xC832904a89d02DA1950643412fefCa73bFd00149';
+export const address = '0xb9491cCF9e59A7E15e09f66779ACceA8Da151a73';
 export const abi = [
-  'error AlreadyInitialized()',
   'error ImplementationIsSterile(address implementation)',
   'error NoChange()',
   'error NotAContract(address contr)',
@@ -15,14 +14,13 @@ export const abi = [
   'event Upgraded(address indexed self, address implementation)',
   'function acceptOwnership()',
   'function getImplementation() view returns (address)',
-  'function initializeOwnerModule(address initialOwner)',
-  'function isOwnerModuleInitialized() view returns (bool)',
   'function nominateNewOwner(address newNominatedOwner)',
   'function nominatedOwner() view returns (address)',
   'function owner() view returns (address)',
   'function renounceNomination()',
   'function simulateUpgradeTo(address newImplementation)',
   'function upgradeTo(address newImplementation)',
+  'error AlreadyInitialized()',
   'error CannotSelfApprove(address addr)',
   'error IndexOverrun(uint256 requestedIndex, uint256 length)',
   'error InvalidOwner(address addr)',
@@ -44,6 +42,7 @@ export const abi = [
   'function mint(address to, uint256 tokenId)',
   'function name() view returns (string)',
   'function ownerOf(uint256 tokenId) view returns (address)',
+  'function safeMint(address to, uint256 tokenId, bytes data)',
   'function safeTransferFrom(address from, address to, uint256 tokenId)',
   'function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)',
   'function setAllowance(uint256 tokenId, address spender)',
@@ -85,8 +84,6 @@ export interface AccountProxyInterface extends utils.Interface {
   functions: {
     'acceptOwnership()': FunctionFragment;
     'getImplementation()': FunctionFragment;
-    'initializeOwnerModule(address)': FunctionFragment;
-    'isOwnerModuleInitialized()': FunctionFragment;
     'nominateNewOwner(address)': FunctionFragment;
     'nominatedOwner()': FunctionFragment;
     'owner()': FunctionFragment;
@@ -103,6 +100,7 @@ export interface AccountProxyInterface extends utils.Interface {
     'mint(address,uint256)': FunctionFragment;
     'name()': FunctionFragment;
     'ownerOf(uint256)': FunctionFragment;
+    'safeMint(address,uint256,bytes)': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
     'setAllowance(uint256,address)': FunctionFragment;
@@ -120,8 +118,6 @@ export interface AccountProxyInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'acceptOwnership'
       | 'getImplementation'
-      | 'initializeOwnerModule'
-      | 'isOwnerModuleInitialized'
       | 'nominateNewOwner'
       | 'nominatedOwner'
       | 'owner'
@@ -138,6 +134,7 @@ export interface AccountProxyInterface extends utils.Interface {
       | 'mint'
       | 'name'
       | 'ownerOf'
+      | 'safeMint'
       | 'safeTransferFrom(address,address,uint256)'
       | 'safeTransferFrom(address,address,uint256,bytes)'
       | 'setAllowance'
@@ -153,11 +150,6 @@ export interface AccountProxyInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getImplementation', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'initializeOwnerModule',
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: 'isOwnerModuleInitialized', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
@@ -195,6 +187,10 @@ export interface AccountProxyInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'safeMint',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
@@ -238,8 +234,6 @@ export interface AccountProxyInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getImplementation', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initializeOwnerModule', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isOwnerModuleInitialized', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
@@ -256,6 +250,7 @@ export interface AccountProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'safeMint', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
     data: BytesLike
@@ -372,13 +367,6 @@ export interface AccountProxy extends BaseContract {
 
     getImplementation(overrides?: CallOverrides): Promise<[string]>;
 
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<[boolean]>;
-
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -445,6 +433,13 @@ export interface AccountProxy extends BaseContract {
 
     ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
+    safeMint(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     'safeTransferFrom(address,address,uint256)'(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -507,13 +502,6 @@ export interface AccountProxy extends BaseContract {
   ): Promise<ContractTransaction>;
 
   getImplementation(overrides?: CallOverrides): Promise<string>;
-
-  initializeOwnerModule(
-    initialOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  isOwnerModuleInitialized(overrides?: CallOverrides): Promise<boolean>;
 
   nominateNewOwner(
     newNominatedOwner: PromiseOrValue<string>,
@@ -578,6 +566,13 @@ export interface AccountProxy extends BaseContract {
 
   ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
+  safeMint(
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   'safeTransferFrom(address,address,uint256)'(
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
@@ -636,13 +631,6 @@ export interface AccountProxy extends BaseContract {
 
     getImplementation(overrides?: CallOverrides): Promise<string>;
 
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<boolean>;
-
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -697,6 +685,13 @@ export interface AccountProxy extends BaseContract {
     name(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+
+    safeMint(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: PromiseOrValue<string>,
@@ -807,13 +802,6 @@ export interface AccountProxy extends BaseContract {
 
     getImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<BigNumber>;
-
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -880,6 +868,13 @@ export interface AccountProxy extends BaseContract {
 
     ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    safeMint(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     'safeTransferFrom(address,address,uint256)'(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -943,13 +938,6 @@ export interface AccountProxy extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initializeOwnerModule(
-      initialOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    isOwnerModuleInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
       newNominatedOwner: PromiseOrValue<string>,
@@ -1021,6 +1009,13 @@ export interface AccountProxy extends BaseContract {
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    safeMint(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(

@@ -1,5 +1,5 @@
 {
-  "address": "0x6f01C43aE82d3249766c25a8EF572f12C915f6Fb",
+  "address": "0x9c1f3997918472ba11141e03E1f637D7a5e6533F",
   "abi": [
     {
       "inputs": [
@@ -15,6 +15,17 @@
         }
       ],
       "name": "MismatchAssociatedSystemKind",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MissingAssociatedSystem",
       "type": "error"
     },
     {
@@ -168,5 +179,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xaf346aa40542a22ec15d73ebeec8748a97fd0d7b1f1d82ebc6742d3466f4a2e8"
+  "deployTxnHash": "0xfe2a81f9af702ff2f9356324038fe520387f7c022e565aeeccaefda52db66918"
 }

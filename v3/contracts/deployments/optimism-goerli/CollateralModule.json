@@ -1,5 +1,5 @@
 {
-  "address": "0xb1bC10934839B4b76dd19e662F1A949886d00BD5",
+  "address": "0x62a38f1Bfb3b21a7A6535F374757476E51EE7657",
   "abi": [
     {
       "inputs": [
@@ -109,8 +109,19 @@
       "type": "error"
     },
     {
-      "inputs": [],
-      "name": "OutOfBounds",
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
@@ -153,6 +164,84 @@
       "inputs": [],
       "name": "PositionOutOfBounds",
       "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "decimals",
+          "type": "uint8"
+        }
+      ],
+      "name": "PrecisionLost",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "expireTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "name": "CollateralLockCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "expireTimestamp",
+          "type": "uint64"
+        }
+      ],
+      "name": "CollateralLockExpired",
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -235,12 +324,18 @@
         },
         {
           "internalType": "uint256",
-          "name": "items",
+          "name": "count",
           "type": "uint256"
         }
       ],
       "name": "cleanExpiredLocks",
-      "outputs": [],
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "cleared",
+          "type": "uint256"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -367,6 +462,52 @@
         },
         {
           "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "count",
+          "type": "uint256"
+        }
+      ],
+      "name": "getLocks",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint128",
+              "name": "amountD18",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint64",
+              "name": "lockExpirationTime",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct CollateralLock.Data[]",
+          "name": "locks",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
           "name": "tokenAmount",
           "type": "uint256"
         }
@@ -377,5 +518,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x6d9481e4fc32b5884bddc6745f0cbbac3f9e8d2d923408d4c1a9c9d5e7fdabd9"
+  "deployTxnHash": "0x49e3365c27adf2b30f6c57120423c3aeb7e424b151c890ca97bd7fb929a1e6ee"
 }

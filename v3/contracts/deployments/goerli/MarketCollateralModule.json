@@ -1,5 +1,5 @@
 {
-  "address": "0x2f743C5eCAA0431c0ebF815960B55aa75831d6AC",
+  "address": "0x89CB5446B63f4A7807928Ef504ED501A6b18Ec3d",
   "abi": [
     {
       "inputs": [],
@@ -83,6 +83,27 @@
     {
       "inputs": [],
       "name": "OverflowInt256ToUint256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToInt256",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "decimals",
+          "type": "uint8"
+        }
+      ],
+      "name": "PrecisionLost",
       "type": "error"
     },
     {
@@ -326,5 +347,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x5c137f82e033f09accdc381d4b8ba0ef8414da4fd6c2ed6069dd30cfddf586cc"
+  "deployTxnHash": "0x8f041a44fb2d665ea1ae75b2130e78ed908bbcc6fada7013d9a3b00915a1a7aa"
 }

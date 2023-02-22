@@ -1,5 +1,5 @@
 {
-  "address": "0xDc0AC41d81bC0e0293B4163f3CD3182EBaDF509c",
+  "address": "0xD1CC023b9c546747C197DFF1f1340D84c87d3632",
   "abi": [
     {
       "inputs": [
@@ -252,7 +252,7 @@
             }
           ],
           "internalType": "struct IAccountModule.AccountPermissions[]",
-          "name": "permissions",
+          "name": "accountPerms",
           "type": "tuple[]"
         }
       ],
@@ -413,5 +413,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x2ad6ed1e792a2b0711bbf850b885c04d423772e5ff6b2b823df5a4873c0179b2"
+  "deployTxnHash": "0x6f906d1114d21ede46ab0b0f7a48ecdab63203e49a152f546f6dd4300344fac9"
 }

@@ -1,6 +1,17 @@
 {
-  "address": "0x6EEe34cD51b69cfe120742EE29d3E537E80A3657",
+  "address": "0x4DEfB2c597540A7f02c9d1Cc41c39B647268F30A",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "AccountNotFound",
+      "type": "error"
+    },
     {
       "inputs": [
         {
@@ -87,6 +98,22 @@
     {
       "inputs": [],
       "name": "PositionOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "RewardDistributorNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        }
+      ],
+      "name": "RewardUnavailable",
       "type": "error"
     },
     {
@@ -417,5 +444,5 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x2ac355b569576e92ffca3dcf6f487bacfc9f4c6899c79d78d85e491489358c07"
+  "deployTxnHash": "0xe16ecb97676af2dbd4397ed4bb309b5cbf446578026df8dbfa7e89a3138c6240"
 }

@@ -120,10 +120,10 @@ export const usePoolData = (poolId?: string) => {
       if (!network.name || !poolId) throw Error('OMG!');
       const poolData = await getPoolData(network.name, poolId);
       if (!poolData.data.pool) {
-        return undefined;
+        throw Error(`Pool ${poolId} not found`);
       }
       return poolData.data.pool;
     },
-    enabled: Boolean(network.isSupported && poolId),
+    enabled: Boolean(network.isSupported && poolId && parseInt(poolId) > 0),
   });
 };
