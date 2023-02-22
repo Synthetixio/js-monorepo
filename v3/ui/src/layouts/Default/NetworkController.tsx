@@ -1,21 +1,11 @@
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { ChevronDown, ChevronUp, WalletIcon } from '@snx-v3/icons';
-import {
-  DEFAULT_NETWORK,
-  NETWORKS,
-  onboard,
-  UNSUPPORTED_NETWORK,
-  useAccount,
-  useNetwork,
-  disconnect,
-} from '@snx-v3/useBlockchain';
+import { disconnect, NETWORKS, onboard, useAccount, useNetwork } from '@snx-v3/useBlockchain';
 import { prettyString } from '@snx-v3/format';
 
 export function NetworkController() {
   const account = useAccount();
   const activeNetwork = useNetwork();
-  const selectedNetwork =
-    account && activeNetwork ? activeNetwork : !account ? DEFAULT_NETWORK : UNSUPPORTED_NETWORK;
   return (
     <Flex>
       <Menu>
@@ -29,7 +19,7 @@ export function NetworkController() {
               sx={{ '> span': { display: 'flex', alignItems: 'center' } }}
               mr={1}
             >
-              <selectedNetwork.Icon />
+              <activeNetwork.Icon />
               <Text
                 variant="nav"
                 fontSize="sm"
@@ -38,27 +28,29 @@ export function NetworkController() {
                 mr={2}
                 display={{ base: 'none', md: 'initial' }}
               >
-                {selectedNetwork.displayName}
+                {activeNetwork.label}
               </Text>
               <Flex display={{ base: 'none', md: 'initial' }}>
                 {isOpen ? <ChevronUp color="cyan" /> : <ChevronDown color="cyan.500" />}
               </Flex>
             </MenuButton>
             <MenuList>
-              {Object.values(NETWORKS).map((network) => (
-                <MenuItem
-                  key={network.name}
-                  disabled={!network.isSupported}
-                  onClick={async () => {
-                    await onboard.setChain({ chainId: `0x${network.id.toString(16)}` });
-                  }}
-                >
-                  <network.Icon />
-                  <Text variant="nav" ml={2}>
-                    {network.displayName}
-                  </Text>
-                </MenuItem>
-              ))}
+              {Object.values(NETWORKS)
+                .filter((network) => network.isSupported)
+                .map((network) => (
+                  <MenuItem
+                    key={network.name}
+                    disabled={!network.isSupported}
+                    onClick={async () => {
+                      await onboard.setChain({ chainId: `0x${network.id.toString(16)}` });
+                    }}
+                  >
+                    <network.Icon />
+                    <Text variant="nav" ml={2}>
+                      {network.label}
+                    </Text>
+                  </MenuItem>
+                ))}
             </MenuList>
           </>
         )}
