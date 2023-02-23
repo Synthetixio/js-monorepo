@@ -22,11 +22,6 @@ export const ensNameState = atom<string | null>({
   default: null,
 });
 
-export const walletWatchedState = atom<string | null>({
-  key: getWalletKey('walletWatched'),
-  default: null,
-});
-
 export const gasSpeedState = atom<GasSpeed>({
   key: getWalletKey('gasSpeed'),
   default: 'fast',

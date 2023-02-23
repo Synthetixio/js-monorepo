@@ -1,8 +1,4 @@
 import { theme as chakraTheme } from '@synthetixio/v3-theme';
-import localStore from 'utils/localStore';
-import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
-
-const isV2 = localStore.get(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED) === true;
 
 export default {
   // primary
@@ -39,7 +35,7 @@ export default {
   // ui
   black: '#06061B',
   blackHover: '#070725',
-  navy: isV2 ? chakraTheme.colors.navy['900'] : '#09092F',
+  navy: chakraTheme.colors.navy['900'],
   mediumBlue: '#10104E',
   mediumBlueHover: '#16166A',
   grayBlue: '#161B44',

@@ -1,9 +1,8 @@
-import { FC, useEffect, PropsWithChildren, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import Head from 'react-helmet';
 import { RecoilRoot } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from 'styled-components';
-import { safeLazy } from '@synthetixio/safe-import';
 
 import WithAppContainers from 'containers';
 import theme from 'styles/theme';
@@ -23,12 +22,11 @@ import Connector from 'containers/Connector';
 import Routes from './Routes';
 
 import { isSupportedNetworkId } from './utils/network';
-import useLocalStorage from './hooks/useLocalStorage';
-import { LOCAL_STORAGE_KEYS } from './constants/storage';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { SignerContext } from '@snx-v2/SignerContext';
 import { GasSpeedProvider } from '@snx-v2/GasSpeedContext';
 import { DelegateWalletProvider } from '@snx-v2/useDelegateWallet';
+import ChakraProviderWithTheme from './components/ChakraProviderWithTheme';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -102,19 +100,8 @@ function InnerApp() {
   );
 }
 
-const ChakraProviderWithTheme = safeLazy(
-  () => import(/* webpackChunkName: "app" */ './components/ChakraProviderWithTheme')
-);
-
-const LazyChakraProvider: FC<PropsWithChildren<{ enabled: boolean }>> = ({ enabled, children }) => {
-  if (!enabled) return <>{children}</>;
-
-  return <ChakraProviderWithTheme>{children}</ChakraProviderWithTheme>;
-};
-
 function App() {
   const { t } = useTranslation();
-  const [STAKING_V2_ENABLED] = useLocalStorage(LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED, true);
   return (
     <>
       <Head>
@@ -137,7 +124,7 @@ function App() {
         <meta name="twitter:url" content="https://staking.synthetix.io" />
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
-      <LazyChakraProvider enabled={STAKING_V2_ENABLED}>
+      <ChakraProviderWithTheme>
         <ThemeProvider theme={theme}>
           <RecoilRoot>
             <QueryClientProvider client={queryClient} contextSharing={true}>
@@ -150,7 +137,7 @@ function App() {
             </QueryClientProvider>
           </RecoilRoot>
         </ThemeProvider>
-      </LazyChakraProvider>
+      </ChakraProviderWithTheme>
     </>
   );
 }
