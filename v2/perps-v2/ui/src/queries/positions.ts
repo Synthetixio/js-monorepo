@@ -66,87 +66,123 @@ export interface FilterOptions {
   walletAddress: string;
 }
 
-const body = ({
-  filterOptions,
-  sortConfig,
-  market,
-  address,
+const gql = (data: TemplateStringsArray) => data[0];
+function getBody({
   skip,
+  orderBy,
+  orderDirection,
+  whereAccount,
+  whereMarket,
+  whereIsLiquidated,
+  whereIsOpen,
+  whereOpenedAt,
+  whereClosedAt,
 }: {
-  filterOptions: FilterOptions;
-  sortConfig: SortConfig;
-  market:
-    | {
-        maxLeverage: string;
-        marketKey: string;
-        asset: string;
-        id: string;
-      }[]
-    | undefined;
-  address?: string;
-  skip?: number;
-}) => {
-  return `query info {
-    futuresPositions(skip: ${skip}, first: 1000,
-      orderBy: "${sortConfig[0]}", orderDirection: "${!sortConfig[1] ? 'desc' : 'asc'}", where: {
-    ${
-      address || filterOptions.walletAddress
-        ? `account: "${
-            address ? address.toLowerCase() : filterOptions.walletAddress.toLowerCase()
-          }",`
-        : ''
-    }
-    ${
-      filterOptions.asset === 'all'
-        ? ''
-        : `market: "${market
-            ?.find((m) => m.asset.toLowerCase() === filterOptions.asset.toLowerCase())
-            ?.id.toLowerCase()}"`
-    },
-    ${filterOptions.deactivateLiquidated ? '' : `isLiquidated: ${filterOptions.liquidated},`}
-    ${filterOptions.deactivateOpen ? '' : `isOpen: ${filterOptions.open},`}
-    ${filterOptions.deactivateOpenedAt ? '' : `openTimestamp_gt: "${filterOptions.openedAt}",`}
-    ${
-      filterOptions.deactivateClosedAt
-        ? ''
-        : !filterOptions.deactivateOpen && !filterOptions.open
-        ? `closeTimestamp_lt: "${filterOptions.closedAt}"`
-        : ''
-    }
-  }) {
-      id
-      account
-      isLiquidated
-      market
-      isOpen
-      openTimestamp
-      closeTimestamp
-      margin
-      initialMargin
-      entryPrice
-      lastPrice
-      pnl
-      exitPrice
-      leverage
-      size
-      long
-      trades
-      totalVolume
-      feesPaidToSynthetix
-    }
-    traders(first: 1, where: {${address ? `id: "${address.toLowerCase()}",` : ''}}) {
-      id
-      totalLiquidations
-      totalMarginLiquidated
-      feesPaidToSynthetix
-      trades {
+  skip: number;
+  orderBy: string;
+  orderDirection: 'asc' | 'desc';
+  whereAccount?: string;
+  whereMarket?: string;
+  whereIsLiquidated?: boolean;
+  whereIsOpen?: boolean;
+  whereOpenedAt?: number;
+  whereClosedAt?: number;
+}) {
+  let query = gql`
+    query info(
+      $skip: Int
+      $orderBy: String
+      $orderDirection: String
+      $whereAccount: String
+      $whereMarket: String
+      $whereIsLiquidated: Boolean
+      $whereIsOpen: Boolean
+      $whereOpenedAt: Int
+      $whereClosedAt: Int
+    ) {
+      futuresPositions(
+        skip: $skip
+        first: 1000
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+        where: {
+          account: $whereAccount
+          market: $whereMarket
+          isLiquidated: $whereIsLiquidated
+          isOpen: $whereIsOpen
+          openTimestamp_gt: $whereOpenedAt
+          closeTimestamp_lt: $whereClosedAt
+        }
+      ) {
         id
+        account
+        isLiquidated
+        market
+        isOpen
+        openTimestamp
+        closeTimestamp
+        margin
+        initialMargin
+        entryPrice
+        lastPrice
+        pnl
+        exitPrice
+        leverage
+        size
+        long
+        trades
+        totalVolume
+        feesPaidToSynthetix
       }
-      pnl
+      traders(first: 1, where: { id: $whereAccount }) {
+        id
+        totalLiquidations
+        totalMarginLiquidated
+        feesPaidToSynthetix
+        trades {
+          id
+        }
+        pnl
+      }
     }
+  `;
+
+  // Cleanup optional params
+  if (typeof whereAccount === 'undefined') {
+    query = query.replace('account: $whereAccount', '');
+    query = query.replace('id: $whereAccount', '');
   }
-`;
-};
+  if (typeof whereIsLiquidated === 'undefined') {
+    query = query.replace('isLiquidated: $whereIsLiquidated', '');
+  }
+  if (typeof whereMarket === 'undefined') {
+    query = query.replace('market: $whereMarket', '');
+  }
+  if (typeof whereIsOpen === 'undefined') {
+    query = query.replace('isOpen: $whereIsOpen', '');
+  }
+  if (typeof whereOpenedAt === 'undefined') {
+    query = query.replace('openTimestamp_gt: $whereOpenedAt', '');
+  }
+  if (typeof whereClosedAt === 'undefined') {
+    query = query.replace('closeTimestamp_lt: $whereClosedAt', '');
+  }
+
+  return {
+    query,
+    variables: {
+      skip,
+      orderBy,
+      orderDirection,
+      whereAccount,
+      whereMarket,
+      whereIsLiquidated,
+      whereIsOpen,
+      whereOpenedAt,
+      whereClosedAt,
+    },
+  };
+}
 
 const refetchMore = async ({
   address,
@@ -168,21 +204,40 @@ const refetchMore = async ({
       }[]
     | undefined;
 }) => {
+  const [orderBy, orderDirection] = sortConfig;
   const response = await fetch(PERPS_V2_DASHBOARD_GRAPH_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-    body: JSON.stringify({
-      query: body({
-        filterOptions,
-        sortConfig,
-        market: marketData,
+    body: JSON.stringify(
+      getBody({
         skip,
-        address: address?.toLowerCase(),
-      }),
-    }),
+        orderBy,
+        orderDirection: !orderDirection ? 'desc' : 'asc',
+        whereAccount:
+          address || filterOptions.walletAddress
+            ? (address || filterOptions.walletAddress).toLowerCase()
+            : undefined,
+        whereMarket:
+          filterOptions.asset === 'all'
+            ? undefined
+            : marketData
+                ?.find((m) => m.asset.toLowerCase() === filterOptions.asset.toLowerCase())
+                ?.id.toLowerCase(),
+        whereIsLiquidated: filterOptions.deactivateLiquidated
+          ? undefined
+          : filterOptions.liquidated,
+        whereIsOpen: filterOptions.deactivateOpen ? undefined : filterOptions.open,
+        whereOpenedAt: filterOptions.deactivateOpenedAt ? undefined : filterOptions.openedAt,
+        whereClosedAt: filterOptions.deactivateClosedAt
+          ? undefined
+          : !filterOptions.deactivateOpen && !filterOptions.open
+          ? filterOptions.closedAt
+          : undefined,
+      })
+    ),
   });
 
   const { data }: GraphResponse = await response.json();
@@ -244,8 +299,8 @@ function useGetPositions({
                 marketData?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())
                   ?.marketKey
               ),
-              openTimestamp: toDateTime(Number(position.openTimestamp)).toLocaleDateString(
-                'en-US',
+              openTimestamp: new Date(parseInt(position.openTimestamp) * 1000).toLocaleDateString(
+                navigator.language || 'en-US',
                 {
                   hour: '2-digit',
                   minute: '2-digit',
@@ -254,18 +309,17 @@ function useGetPositions({
               closeTimestamp:
                 position.closeTimestamp === null
                   ? '-'
-                  : toDateTime(Number(position.closeTimestamp)).toLocaleDateString('en-US', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    }),
+                  : new Date(parseInt(position.openTimestamp) * 1000).toLocaleDateString(
+                      navigator.language || 'en-US',
+                      {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      }
+                    ),
             }))
-            .filter((position) => {
-              if (address) {
-                if (address === position.account) return true;
-                return false;
-              }
-              return true;
-            }) as FuturePosition[],
+            .filter((position) =>
+              address ? address === position.account : true
+            ) as FuturePosition[],
         };
       } catch (error) {
         console.error(error);
@@ -277,14 +331,7 @@ function useGetPositions({
 
 export default useGetPositions;
 
-function toDateTime(secs: number) {
-  const t = new Date(1970, 0, 1);
-  t.setSeconds(secs);
-  return t;
-}
-
 function formatMarketKey(market?: string) {
   if (!market) return 'not found';
-  const indexOfPerp = market.indexOf('PERP');
-  return market.substring(1, indexOfPerp).concat('-').concat(market.substring(indexOfPerp));
+  return market.slice(1).split('PERP').filter(Boolean).concat('PERP').join('-');
 }
