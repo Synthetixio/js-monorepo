@@ -1,3 +1,5 @@
+export {};
+/*
 import { Helmet } from 'react-helmet';
 import { Container, Box } from '@chakra-ui/react';
 import Permissions from '../../components/accounts/Permissions';
@@ -17,3 +19,4 @@ export function Settings() {
     </Box>
   );
 }
+*/

@@ -27,7 +27,7 @@ beforeEach(() => {
 
   cy.on('window:before:load', (win) => {
     win.localStorage.setItem('UNSAFE_IMPORT', 'true');
-    win.localStorage.setItem('selectedWallet', '["MetaMask"]');
+    win.localStorage.setItem('connectedWallets', '["MetaMask"]');
   });
 });
 

@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
-import { useIsConnected } from '@snx-v3/useBlockchain';
+import { onboard, useIsConnected } from '@snx-v3/useBlockchain';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { useEthBalance } from '@snx-v3/useEthBalance';
 import {
@@ -95,15 +94,10 @@ export function DepositFormUi({
     [navigate, accountId, collateralType?.symbol, poolId]
   );
 
-  if (!isConnected) {
+  if (!isConnected && openConnectModal) {
     return (
       <Flex flexGrow={1} alignItems="flex-end">
-        <Button
-          width="100%"
-          size="md"
-          px="8"
-          onClick={() => openConnectModal && openConnectModal()}
-        >
+        <Button width="100%" size="md" px="8" onClick={openConnectModal}>
           Connect Wallet
         </Button>
       </Flex>
@@ -229,7 +223,6 @@ export function DepositFormUi({
 export const DepositForm = (props: { staticCollateral?: boolean }) => {
   const navigate = useNavigate();
   const isConnected = useIsConnected();
-  const { openConnectModal } = useConnectModal();
   const params = useParams();
   const collateralType = useCollateralType(params.collateralSymbol);
   const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
@@ -239,7 +232,7 @@ export const DepositForm = (props: { staticCollateral?: boolean }) => {
     <DepositFormUi
       staticCollateral={props.staticCollateral}
       isConnected={isConnected}
-      openConnectModal={openConnectModal}
+      openConnectModal={() => onboard.connectWallet()}
       collateralType={collateralType}
       tokenBalance={tokenBalance.data}
       ethBalance={ethBalance.data}

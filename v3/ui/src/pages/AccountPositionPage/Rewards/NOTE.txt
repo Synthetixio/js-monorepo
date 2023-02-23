@@ -1,1 +1,0 @@
-These components aren't used currently. But leaving for reference since rewards page isn't built yet

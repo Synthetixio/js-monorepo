@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 import { InfuraProvider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
-import { GWEI_DECIMALS } from '@snx-v3/Constants';
+import { GWEI_DECIMALS } from '@snx-v3/constants';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
 const MULTIPLIER = wei(2, GWEI_DECIMALS);

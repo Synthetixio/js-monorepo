@@ -1,3 +1,5 @@
+export {};
+/*
 import { useMemo } from 'react';
 import { contracts } from '../utils/constants';
 import { useContract } from './useContract';
@@ -59,3 +61,4 @@ export const useManagePermissions = ({
 
   return useMulticall(multicalls);
 };
+*/

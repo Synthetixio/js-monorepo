@@ -1,3 +1,5 @@
+export {};
+/*
 import { useContract } from './useContract';
 import { useContractRead } from 'wagmi';
 import { contracts } from '../utils/constants';
@@ -24,3 +26,4 @@ export const useDeploymentRead = (contractName: string, config: ConfigType) => {
     chainId: contract?.chainId,
   });
 };
+*/

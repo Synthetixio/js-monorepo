@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { wei } from '@synthetixio/wei';
-import { GWEI_DECIMALS } from '@snx-v3/Constants';
+import { GWEI_DECIMALS } from '@snx-v3/constants';
 
 const gasPricesMainnetMockData = {
   fastest: {

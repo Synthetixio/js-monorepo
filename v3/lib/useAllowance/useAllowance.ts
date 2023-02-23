@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useAccount, useNetwork, useProvider } from '@snx-v3/useBlockchain';
+import { useWallet, useNetwork, useProvider } from '@snx-v3/useBlockchain';
 import { Contract } from 'ethers';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
@@ -13,23 +13,23 @@ export const useAllowance = ({
   contractAddress?: string;
   spender?: string;
 }) => {
-  const account = useAccount();
+  const wallet = useWallet();
   const provider = useProvider();
   const network = useNetwork();
 
   return useQuery({
     queryKey: [
       network.name,
-      { accountAddress: account?.address },
+      { accountAddress: wallet?.address },
       'Allowance',
       { contractAddress, spender },
     ],
     queryFn: async () => {
-      if (!(contractAddress && spender && account.address)) throw new Error('OMG');
+      if (!(contractAddress && spender && wallet?.address)) throw new Error('OMG');
       const contract = new Contract(contractAddress, abi, provider);
-      const allowance = await contract.allowance(account.address, spender);
+      const allowance = await contract.allowance(wallet.address, spender);
       return AllowanceSchema.parse(allowance);
     },
-    enabled: Boolean(account?.address && contractAddress && spender && provider),
+    enabled: Boolean(wallet?.address && contractAddress && spender && provider),
   });
 };

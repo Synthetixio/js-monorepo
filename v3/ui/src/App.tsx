@@ -1,18 +1,26 @@
-import { FC, Suspense, useEffect } from 'react';
-import { Spinner, useColorMode } from '@chakra-ui/react';
-import { Route, Routes } from 'react-router-dom';
-import { DefaultLayout } from './layouts/Default';
-import { Home } from './pages/Home';
-import { Manage } from './pages/Manage';
-import { Deposit } from './pages/deposit';
-import { CreateAccount, Settings, Collateral, AcceptNomination } from './pages/accounts';
-import { CreateMarket } from './pages/markets/CreateMarket';
-import { Market } from './pages/markets/Market';
-import { Pool } from './pages/Pool';
-import { Teleporter } from './pages/teleporter/Teleporter';
-import { NotFoundPage } from './pages/404';
+import { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { ChakraProvider, useColorMode } from '@chakra-ui/react';
+import { Fonts, theme } from '@synthetixio/v3-theme';
+import { DEFAULT_QUERY_REFRESH_INTERVAL, DEFAULT_QUERY_STALE_TIME } from '@snx-v3/constants';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { GasSpeedProvider } from '@snx-v3/useGasSpeed';
+import { BlockchainProvider } from '@snx-v3/useBlockchain';
+import { Router } from './Router';
+import './i18n';
 
-export const Synthetix: FC = () => {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchInterval: DEFAULT_QUERY_REFRESH_INTERVAL,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+export const App = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
@@ -22,26 +30,18 @@ export const Synthetix: FC = () => {
   }, [colorMode, toggleColorMode]);
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <Routes>
-        <Route element={<DefaultLayout />}>
-          <Route
-            path="/accounts/:accountId/positions/:collateralSymbol/:poolId"
-            element={<Manage />}
-          />
-          <Route path="/deposit/:collateralSymbol/:poolId" element={<Deposit />} />
-          <Route path="/accounts/:accountId/collateral" element={<Collateral />} />
-          <Route path="/accounts/:accountId/accept-nomination" element={<AcceptNomination />} />
-          <Route path="/accounts/:accountId/settings" element={<Settings />} />
-          <Route path="/accounts/create" element={<CreateAccount />} />
-          <Route path="/pools/:poolId" element={<Pool />} />
-          <Route path="/markets/create" element={<CreateMarket />} />
-          <Route path="/markets/:marketId" element={<Market />} />
-          <Route path="/teleporter" element={<Teleporter />} />
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </Suspense>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <Fonts />
+        <BlockchainProvider>
+          <GasSpeedProvider>
+            <BrowserRouter>
+              <Router />
+            </BrowserRouter>
+          </GasSpeedProvider>
+          <ReactQueryDevtools />
+        </BlockchainProvider>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 };

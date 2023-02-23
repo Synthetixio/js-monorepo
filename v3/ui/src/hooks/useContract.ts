@@ -1,3 +1,5 @@
+export {};
+/*
 import { ethers } from 'ethers';
 import { useNetwork, useProvider } from '@snx-v3/useBlockchain';
 import { contracts } from '../utils/constants';
@@ -65,3 +67,4 @@ export function useContract(name: string) {
 }
 
 export const useSnxProxy = () => useContract(contracts.SYNTHETIX_PROXY);
+*/

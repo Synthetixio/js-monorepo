@@ -4,8 +4,7 @@ import { LiquidityPosition, useLiquidityPosition } from '@snx-v3/useLiquidityPos
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { useIsConnected } from '@snx-v3/useBlockchain';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { onboard, useIsConnected } from '@snx-v3/useBlockchain';
 import { useParams } from '@snx-v3/useParams';
 import { CollateralIcon } from '@snx-v3/icons';
 
@@ -120,7 +119,6 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
   });
 
   const navigate = useNavigate();
-  const { openConnectModal } = useConnectModal();
   const isConnected = useIsConnected();
 
   return (
@@ -131,7 +129,7 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
       poolId={poolId}
       navigate={navigate}
       isConnected={isConnected}
-      openConnectModal={openConnectModal}
+      openConnectModal={() => onboard.connectWallet()}
     />
   );
 };
