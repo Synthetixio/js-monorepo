@@ -1,3 +1,5 @@
+export {};
+/*
 import { Container, Flex, Text, Link } from '@chakra-ui/react';
 import { DepositForm } from '../../components/accounts/Deposit';
 
@@ -24,3 +26,4 @@ export function CreateAccount() {
     </Flex>
   );
 }
+*/

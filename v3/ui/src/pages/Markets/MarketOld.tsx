@@ -1,3 +1,5 @@
+export {};
+/*
 import { AddIcon } from '@chakra-ui/icons';
 import {
   Tag,
@@ -208,7 +210,7 @@ export function Market() {
           </GridItem>
         </Grid>
 
-        {/* or do combo price with bar chart on bottom for exchange volume, above */}
+        {/!* or do combo price with bar chart on bottom for exchange volume, above *!/}
 
         <Heading size="md" mb={2}>
           Liquidity
@@ -258,7 +260,7 @@ export function Market() {
           </Table>
         </TableContainer>
 
-        {/*think more about multichain, incorporate into path? source of truth for multichain, etc. */}
+        {/!*think more about multichain, incorporate into path? source of truth for multichain, etc. *!/}
 
         <Box mb="6">
           <Heading
@@ -302,3 +304,4 @@ export function Market() {
     </Box>
   );
 }
+*/

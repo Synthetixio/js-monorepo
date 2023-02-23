@@ -1,3 +1,5 @@
+export {};
+/*
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Link, Text } from '@chakra-ui/react';
 import { etherscanLink } from '@snx-v3/etherscanLink';
@@ -32,3 +34,4 @@ export const Address: FC<Props> = ({ address, displayFullAddress }) => {
     </Text>
   );
 };
+*/

@@ -1,3 +1,5 @@
+export {};
+/*
 import { Heading, Text } from '@chakra-ui/react';
 import { DepositForm } from '../../components/accounts/Deposit';
 import { Helmet } from 'react-helmet';
@@ -20,3 +22,4 @@ export function Collateral() {
     </>
   );
 }
+*/
