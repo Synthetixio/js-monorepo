@@ -63,7 +63,6 @@ const cssRule = {
     },
   ],
 };
-console.log(`process.env.NEXT_PUBLIC_INFURA_PROJECT_ID`, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
 
 const devServer = {
   port: '3000',
