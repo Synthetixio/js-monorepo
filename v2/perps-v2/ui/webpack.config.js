@@ -23,7 +23,12 @@ const htmlPlugin = new HtmlWebpackPlugin({
 
 const babelRule = {
   test: /\.(ts|tsx|js|jsx)$/,
-  include: [/v3\/theme/, /v2\/perps-v2\/ui\/src/],
+  include: [
+    // Folders included in build
+    /v2\/contracts/,
+    /v3\/theme/,
+    /v2\/perps-v2\/ui\/src/,
+  ],
   resolve: {
     fullySpecified: false,
   },
@@ -151,6 +156,9 @@ module.exports = {
     ),
 
   resolve: {
+    alias: {
+      '@synthetixio/contracts/build': '@synthetixio/contracts/src',
+    },
     fallback: {
       buffer: require.resolve('buffer'),
       stream: require.resolve('stream-browserify'),
