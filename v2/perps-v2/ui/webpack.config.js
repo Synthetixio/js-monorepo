@@ -1,4 +1,5 @@
 const path = require('path');
+require('dotenv').config({ path: '.env.local', override: true });
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
@@ -62,6 +63,7 @@ const cssRule = {
     },
   ],
 };
+console.log(`process.env.NEXT_PUBLIC_INFURA_PROJECT_ID`, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
 
 const devServer = {
   port: '3000',
@@ -132,8 +134,15 @@ module.exports = {
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
       ),
     ])
-    .concat([])
-
+    .concat([
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
+        'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
+        'process.env.NEXT_PUBLIC_INFURA_PROJECT_ID': JSON.stringify(
+          process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
+        ),
+      }),
+    ])
     .concat([
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
