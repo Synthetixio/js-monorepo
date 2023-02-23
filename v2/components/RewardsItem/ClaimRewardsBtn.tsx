@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@chakra-ui/react';
+import { Button, ButtonProps, Tooltip } from '@chakra-ui/react';
 import { formatNumber } from '@snx-v2/formatters';
 import { FC } from 'react';
 import { RewardsTransactionModal } from './RewardsTransactionModal';
@@ -17,10 +17,19 @@ const StyledButton = (props: ButtonProps) => (
 );
 
 const ManageButtonUi = (props: ButtonProps) => <StyledButton {...props}>Maintain</StyledButton>;
-const ClaimButtonUi = (props: ButtonProps) => (
-  <StyledButton variant="solid" {...props}>
-    Maintain
-  </StyledButton>
+
+interface ClaimBtnProps extends ButtonProps {
+  delegatedToMint: boolean;
+}
+const ClaimButtonUi = ({ delegatedToMint, ...props }: ClaimBtnProps) => (
+  <Tooltip
+    label={delegatedToMint ? '' : 'You don’t have the authorisation to perform this action'}
+    shouldWrapChildren
+  >
+    <StyledButton variant="solid" {...props}>
+      Claim
+    </StyledButton>
+  </Tooltip>
 );
 export const ClaimRewardsBtn: FC<{
   amountSNX?: number;
@@ -31,8 +40,8 @@ export const ClaimRewardsBtn: FC<{
 
   const navigate = useNavigate();
   const haveSomethingToClaim = Boolean(amountSNX);
-  const delegatePermission = delegateWallet ? delegateWallet.canClaim : true;
-  const canClaim = haveSomethingToClaim && delegatePermission && variant === 'success';
+  const delegatedToMint = delegateWallet ? delegateWallet.canClaim : true;
+  const canClaim = haveSomethingToClaim && delegatedToMint && variant === 'success';
   const {
     mutate,
     modalOpen,
@@ -56,6 +65,7 @@ export const ClaimRewardsBtn: FC<{
     <>
       {displayClaimButton ? (
         <ClaimButtonUi
+          delegatedToMint={delegatedToMint}
           isDisabled={Boolean(!canClaim || isGasEnabledAndNotFetched || error)}
           onClick={() => {
             handleSubmit();
