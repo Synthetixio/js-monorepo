@@ -9947,7 +9947,6 @@ __metadata:
     "@emotion/styled": ^11.10.5
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     "@types/react": ^18.0.28
