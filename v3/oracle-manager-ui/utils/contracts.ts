@@ -1,13 +1,12 @@
-import { Contract, utils } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
 import ProxyAbiOPGoerli from '@synthetixio/v3-contracts/deployments/goerli/oracle_manager/Proxy.json';
 import ProxyAbiGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/oracle_manager/Proxy.json';
-import MultiCallOPGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/MulticallModule.json';
-import MultiCallGoerli from '@synthetixio/v3-contracts/deployments/goerli/MulticallModule.json';
 import { Node } from './types';
 import { ORACLE_NODE_TYPES } from './constants';
 
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
+    // TODO @MF when deployed, add it here
     case 5:
       return ProxyAbiGoerli.address;
     case 420:
@@ -19,12 +18,17 @@ function resolveNetworkIdToProxyAddress(networkId: number) {
 
 function resolveNetworkIdToMultiCallAddress(networkId: number) {
   switch (networkId) {
+    case 1:
+      return '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441';
     case 5:
-      return MultiCallGoerli.address;
+      return '0x77dCa2C955b15e9dE4dbBCf1246B4B85b651e50e';
+    case 10:
+      return '0x2DC0E2aa608532Da689e89e237dF582B783E552C';
     case 420:
-      return MultiCallOPGoerli.address;
+      // TODO @MF when deployed, add it here
+      return ProxyAbiOPGoerli.address;
     default:
-      return MultiCallGoerli.address;
+      return '0x77dCa2C955b15e9dE4dbBCf1246B4B85b651e50e';
   }
 }
 
@@ -116,7 +120,10 @@ export function hashId(node: Node, parents: string[]) {
   );
 }
 
-export const getNodeModuleContract = (signerOrProvider: any, networkId: number) => {
+export const getNodeModuleContract = (
+  signerOrProvider: providers.JsonRpcSigner,
+  networkId: number
+) => {
   return new Contract(
     resolveNetworkIdToProxyAddress(networkId),
     ProxyAbiGoerli.abi,
@@ -124,10 +131,35 @@ export const getNodeModuleContract = (signerOrProvider: any, networkId: number) 
   );
 };
 
-export const getMultiCallContract = (signerOrProvider: any, networkId: number) => {
+export const getMultiCallContract = (
+  signerOrProvider: providers.JsonRpcSigner,
+  networkId: number
+) => {
   return new Contract(
     resolveNetworkIdToMultiCallAddress(networkId),
-    MultiCallGoerli.abi,
+    [
+      {
+        constant: false,
+        inputs: [
+          {
+            components: [
+              { name: 'target', type: 'address' },
+              { name: 'callData', type: 'bytes' },
+            ],
+            name: 'calls',
+            type: 'tuple[]',
+          },
+        ],
+        name: 'aggregate',
+        outputs: [
+          { name: 'blockNumber', type: 'uint256' },
+          { name: 'returnData', type: 'bytes[]' },
+        ],
+        payable: false,
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
     signerOrProvider
   );
 };

@@ -26,10 +26,6 @@ import {
 } from '../utils/contracts';
 import { useIsConnected, useNetwork, useSigner } from '@snx-v3/useBlockchain';
 
-// TODO @MF
-// multicall doenst work
-// when parameters changed in a parent node, the children nodes dont get notified
-
 export const App: FC = () => {
   const [nodes] = useRecoilState(nodesState);
   const { colorMode, toggleColorMode } = useColorMode();
@@ -107,19 +103,22 @@ export const App: FC = () => {
                     return 0;
                   })
                   .map((node) => {
-                    return oracleManagerContract.interface.encodeFunctionData('registerNode', [
-                      node.typeId,
-                      encodeBytesByNodeType(node.typeId, node.parameters),
-                      node.parents.map((parentId: string) => {
-                        const parentNode = nodes.find((node) => node.id === parentId);
-                        if (parentNode) {
-                          return hashId(parentNode, []);
-                        }
-                        return '';
-                      }),
-                    ]);
+                    return [
+                      oracleManagerContract.address,
+                      oracleManagerContract.interface.encodeFunctionData('registerNode', [
+                        node.typeId,
+                        encodeBytesByNodeType(node.typeId, node.parameters),
+                        node.parents.map((parentId: string) => {
+                          const parentNode = nodes.find((node) => node.id === parentId);
+                          if (parentNode) {
+                            return hashId(parentNode, []);
+                          }
+                          return '';
+                        }),
+                      ]),
+                    ];
                   });
-                multicallContract.multicall(data);
+                multicallContract.aggregate(data);
               }
             }}
           >

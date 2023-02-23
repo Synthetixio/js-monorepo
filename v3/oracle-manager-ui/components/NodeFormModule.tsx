@@ -206,8 +206,17 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
             <Button
               onClick={() => {
                 if (node) {
-                  setNodes((state) =>
-                    state
+                  setNodes((state) => {
+                    return state
+                      .map((state) => {
+                        if (state.parents.includes(node.id)) {
+                          return {
+                            ...state,
+                            parents: state.parents.filter((parent) => parent !== node.id),
+                          };
+                        }
+                        return state;
+                      })
                       .filter((s) => s.id !== node.id)
                       .concat({
                         ...node,
@@ -225,8 +234,8 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                           },
                           getValues('nodeParents')
                         ),
-                      })
-                  );
+                      });
+                  });
                   onClose();
                 } else if (!node) {
                   const newNode = {

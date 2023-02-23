@@ -134,6 +134,7 @@ export const Chart: FC<{ cannotRemoveEdges?: boolean }> = ({ cannotRemoveEdges }
           source: '',
           target: '',
           type: oracleTypeFromTypeId(id),
+          isRegistered: false,
         }));
         newState.forEach((node) => {
           if (node.parents.length) {
@@ -169,6 +170,7 @@ export const Chart: FC<{ cannotRemoveEdges?: boolean }> = ({ cannotRemoveEdges }
     }
     // eslint-disable-next-line
   }, [nodes]);
+
   return (
     <Box
       bg="whiteAlpha.50"

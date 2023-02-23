@@ -112,7 +112,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       fetchNodeState();
     }
     // eslint-disable-next-line
-  }, [isWalletConnected, signer, network?.id, nodes]);
+  }, [isWalletConnected, network?.id, node.type, node.parameters, node.parents]);
 
   const handleButtonClick = async () => {
     if (!isWalletConnected) {
@@ -121,7 +121,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       try {
         setIsLoading(true);
         const chainId = await signer?.getChainId();
-        if (chainId) {
+        if (chainId && signer) {
           const contract = getNodeModuleContract(signer, chainId);
           const tx: providers.TransactionResponse = await contract.registerNode(
             node.typeId,
