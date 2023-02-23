@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useClaimRewardsMutation } from '@snx-v2/useClaimRewardsMutation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { useTranslation } from 'react-i18next';
 
 const StyledButton = (props: ButtonProps) => (
   <Button
@@ -16,21 +17,27 @@ const StyledButton = (props: ButtonProps) => (
   />
 );
 
-const ManageButtonUi = (props: ButtonProps) => <StyledButton {...props}>Maintain</StyledButton>;
+const ManageButtonUi = (props: ButtonProps) => {
+  const { t } = useTranslation();
+  return <StyledButton {...props}>{t('staking-v2.earn.maintain')}</StyledButton>;
+};
 
 interface ClaimBtnProps extends ButtonProps {
   delegatedToMint: boolean;
 }
-const ClaimButtonUi = ({ delegatedToMint, ...props }: ClaimBtnProps) => (
-  <Tooltip
-    label={delegatedToMint ? '' : 'You don’t have the authorisation to perform this action'}
-    shouldWrapChildren
-  >
-    <StyledButton variant="solid" {...props}>
-      Claim
-    </StyledButton>
-  </Tooltip>
-);
+const ClaimButtonUi = ({ delegatedToMint, ...props }: ClaimBtnProps) => {
+  const { t } = useTranslation();
+  return (
+    <Tooltip
+      label={delegatedToMint ? '' : t('staking-v2.delegate.missing-permission')}
+      shouldWrapChildren
+    >
+      <StyledButton variant="solid" {...props}>
+        {t('staking-v2.earn.claim')}
+      </StyledButton>
+    </Tooltip>
+  );
+};
 export const ClaimRewardsBtn: FC<{
   amountSNX?: number;
   variant: string;

@@ -208,7 +208,7 @@ export const MintUi = ({
             <FailedIcon width="40px" height="40px" />
             <Text>
               {!delegatedToMint
-                ? 'You don’t have the authorisation to perform this action'
+                ? t('staking-v2.delegate.missing-permission')
                 : belowTargetError
                 ? t('staking-v2.mint.below-target-error')
                 : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}

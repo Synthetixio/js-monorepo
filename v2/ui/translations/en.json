@@ -157,6 +157,8 @@
       "staked": "Staked Balance",
       "remaining": "Time Remaining",
       "does-not-expire": "Does not expire",
+      "claim": "Claim",
+      "maintain": "Maintain",
       "badges": {
         "claimable": "CLAIMABLE",
         "claimed": "CLAIMED",
@@ -306,6 +308,9 @@
         "price": "Price",
         "holdings": "Holdings"
       }
+    },
+    "delegate": {
+      "missing-permission": "You don't have the authorisation to perform this action"
     }
   },
   "meta": {

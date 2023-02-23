@@ -396,7 +396,7 @@ export const BurnUi = ({
             <FailedIcon width="40px" height="40px" />
             <Text>
               {!delegatedToBurn
-                ? 'You don’t have the authorisation to perform this action'
+                ? t('staking-v2.delegate.missing-permission')
                 : notEnoughBalance
                 ? t('staking-v2.burn.balance-error')
                 : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}
