@@ -6,7 +6,7 @@ import { App } from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { RegisteredNode } from './RegisteredNode';
-import { ConnectorContextProvider } from '../containers/Connector';
+import { BlockchainProvider } from '@snx-v3/useBlockchain';
 
 const customTheme = extendTheme({
   ...theme,
@@ -31,12 +31,12 @@ const container = document.querySelector('#app');
 const root = createRoot(container!);
 root.render(
   <RecoilRoot>
-    <ConnectorContextProvider>
+    <BlockchainProvider>
       <ChakraProvider theme={customTheme}>
         <Fonts />
         <Header />
         <RouterProvider router={router} />
       </ChakraProvider>
-    </ConnectorContextProvider>
+    </BlockchainProvider>
   </RecoilRoot>
 );

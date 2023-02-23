@@ -216,6 +216,15 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                         parents: getValues('nodeParents'),
                         parameters: getValues('nodeParameters'),
                         data: { label: getValues('nodeLabel') || '' },
+                        id: hashId(
+                          {
+                            ...node,
+                            type: getValues('oracleNodeType')!,
+                            parents: getValues('nodeParents'),
+                            parameters: getValues('nodeParameters'),
+                          },
+                          getValues('nodeParents')
+                        ),
                       })
                   );
                   onClose();

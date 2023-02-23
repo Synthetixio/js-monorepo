@@ -6,7 +6,7 @@ import { Node } from '../utils/types';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { shortAddress } from '../utils/addresses';
-import { useConnectorContext } from '../containers/Connector';
+import { onboard, useIsConnected, useNetwork, useSigner } from '@snx-v3/useBlockchain';
 
 let interval: any;
 
@@ -17,7 +17,9 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   const [nodeId, setNodeId] = useState('');
   const [price, setPrice] = useState('0');
   const [time, setTime] = useState(new Date());
-  const { signer, isWalletConnected, network, connectWallet } = useConnectorContext();
+  const signer = useSigner();
+  const isWalletConnected = useIsConnected();
+  const network = useNetwork();
   const toast = useToast();
   const findParentNode = useCallback(
     (parentId: string) => {
@@ -110,11 +112,11 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       fetchNodeState();
     }
     // eslint-disable-next-line
-  }, [isWalletConnected, signer, network?.id, node.typeId, node.parameters, node.parents]);
+  }, [isWalletConnected, signer, network?.id, nodes]);
 
   const handleButtonClick = async () => {
     if (!isWalletConnected) {
-      connectWallet();
+      onboard.connectWallet();
     } else if (nodeState === 'registerNode') {
       try {
         setIsLoading(true);

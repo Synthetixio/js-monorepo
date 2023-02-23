@@ -18,13 +18,13 @@ import { convertStateToQueryParam } from '../utils/url';
 import { NodeFormModule } from '../components/NodeFormModule';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useConnectorContext } from '../containers/Connector';
 import {
   encodeBytesByNodeType,
   getMultiCallContract,
   getNodeModuleContract,
   hashId,
 } from '../utils/contracts';
+import { useIsConnected, useNetwork, useSigner } from '@snx-v3/useBlockchain';
 
 // TODO @MF
 // multicall doenst work
@@ -37,7 +37,9 @@ export const App: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, getValues } = useForm({ defaultValues: { search: '' } });
   const navigate = useNavigate();
-  const { signer, network, isWalletConnected } = useConnectorContext();
+  const network = useNetwork();
+  const signer = useSigner();
+  const isWalletConnected = useIsConnected();
 
   useEffect(() => {
     if (colorMode === 'light') {

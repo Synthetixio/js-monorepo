@@ -1,10 +1,10 @@
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Flex, Heading, Link, Text } from '@chakra-ui/react';
+import { useNetwork, useSigner } from '@snx-v3/useBlockchain';
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { Chart } from '../components/Chart';
-import { useConnectorContext } from '../containers/Connector';
 import { nodesState } from '../state/nodes';
 import {
   decodeBytesByNodeType,
@@ -20,7 +20,8 @@ export const RegisteredNode: FC = () => {
   const [, setNodes] = useRecoilState(nodesState);
   const param = useParams();
   const nodeID = param?.nodeId;
-  const { network, signer } = useConnectorContext();
+  const signer = useSigner();
+  const network = useNetwork();
   const fetchNode = async (id: string) => {
     if (signer && network?.id) {
       const contract = getNodeModuleContract(signer, network.id);

@@ -29,6 +29,7 @@ const babelRule = {
     /v3\/theme/,
     /packages\/contracts-interface/,
     /v3\/contracts\/deployments/,
+    /v3\/lib\/useBlockchain/,
   ],
   resolve: {
     fullySpecified: false,
