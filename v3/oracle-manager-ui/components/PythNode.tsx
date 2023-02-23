@@ -106,7 +106,7 @@ export const PythNode: FC<{ data: { label: string }; id: string }> = ({ data, id
         )}
         <Flex gap="2">
           <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
-            Token 1:
+            Contract:
           </Text>
           <Text fontSize="xs" color="whiteAlpha.800">
             {shortAddress(node?.parameters[0])}

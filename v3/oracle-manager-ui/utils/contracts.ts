@@ -1,6 +1,6 @@
 import { Contract, utils } from 'ethers';
-import ProxyAbiOPGoerli from '@synthetixio/v3-contracts/deployments/goerli/CoreProxy.json';
-import ProxyAbiGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/CoreProxy.json';
+import ProxyAbiOPGoerli from '@synthetixio/v3-contracts/deployments/goerli/oracle_manager/Proxy.json';
+import ProxyAbiGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/oracle_manager/Proxy.json';
 import MultiCallOPGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/MulticallModule.json';
 import MultiCallGoerli from '@synthetixio/v3-contracts/deployments/goerli/MulticallModule.json';
 import { Node } from './types';

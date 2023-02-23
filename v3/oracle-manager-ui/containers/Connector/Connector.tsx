@@ -10,7 +10,7 @@ import { ethers } from 'ethers';
 import { onboard as Web3Onboard } from './config';
 import { AppEvents, initialState, Network, reducer } from './reducer';
 import { NetworkId, NetworkIdByName, NetworkNameById } from '@synthetixio/contracts-interface';
-import { getChainIdHex, getNetworkIdFromHex } from '../../utils/infura';
+import { getChainIdHex, getNetworkIdFromHex, isSupported } from '../../utils/infura';
 import { AppState, OnboardAPI } from '@web3-onboard/core';
 
 type ConnectorContextType = {
@@ -53,10 +53,7 @@ export const ConnectorContextProvider: React.FC<{ children: ReactNode }> = ({ ch
         const { id } = update.wallets[0].chains[0];
         const networkId = getNetworkIdFromHex(id);
 
-        const isSupported = (id: number | string): id is NetworkId => id == 5 || id == 420;
-
-        if (!isSupported && !document?.hidden) {
-          // Switch to mainnet ovm by default
+        if (!isSupported(networkId) && !document?.hidden) {
           (async () => {
             await onboard?.setChain({ chainId: getChainIdHex(NetworkIdByName['goerli']) });
           })();

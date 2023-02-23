@@ -14,9 +14,10 @@ const getNetworkName = (networkId?: NetworkId) => {
 export const getInfuraRpcURL = (networkId?: NetworkId) => {
   const networkName = getNetworkName(networkId);
   const optimismPrefix = networkName.includes(SYNTHETIX_OVM_SUFFIX) ? INFURA_OWN_PREFIX : '';
+
   const url = `https://${
     optimismPrefix + networkName.replace(SYNTHETIX_OVM_SUFFIX, '')
-  }.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`;
+  }.infura.io/v3/${process.env.INFURA_PROJECT_ID}`;
   return url;
 };
 
@@ -27,3 +28,5 @@ export const getChainIdHex = (networkId: NetworkId) => {
 export const getNetworkIdFromHex = (chainId: string) => {
   return parseInt(chainId, 16);
 };
+
+export const isSupported = (id: number | string): id is NetworkId => id == 5 || id == 420;

@@ -17,7 +17,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   const [nodeId, setNodeId] = useState('');
   const [price, setPrice] = useState('0');
   const [time, setTime] = useState(new Date());
-  const { signer, isWalletConnected, network } = useConnectorContext();
+  const { signer, isWalletConnected, network, connectWallet } = useConnectorContext();
   const toast = useToast();
   const findParentNode = useCallback(
     (parentId: string) => {
@@ -49,7 +49,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
               setNodes((state) => {
                 return state.map((n) => {
                   if (n.id === nodeID) {
-                    n.isRegistered = true;
+                    return { ...n, isRegistered: true };
                   }
                   return n;
                 });
@@ -113,28 +113,35 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
   }, [isWalletConnected, signer, network?.id, node.typeId, node.parameters, node.parents]);
 
   const handleButtonClick = async () => {
-    if (nodeState === 'registerNode') {
-      setIsLoading(true);
-      const chainId = await signer?.getChainId();
-      if (chainId) {
-        const contract = getNodeModuleContract(signer, chainId);
-        const tx: providers.TransactionResponse = await contract.registerNode(
-          node.typeId,
-          encodeBytesByNodeType(node.typeId, node.parameters),
-          node.parents.map(findParentNode)
-        );
-        await tx.wait(1);
-        const nodeID = await contract.getNodeId(
-          node.typeId,
-          encodeBytesByNodeType(node.typeId, node.parameters),
-          node.parents.map(findParentNode)
-        );
-        if (nodeID) {
-          setNodeId(nodeID);
-          setNodeState('nodeRegistered');
+    if (!isWalletConnected) {
+      connectWallet();
+    } else if (nodeState === 'registerNode') {
+      try {
+        setIsLoading(true);
+        const chainId = await signer?.getChainId();
+        if (chainId) {
+          const contract = getNodeModuleContract(signer, chainId);
+          const tx: providers.TransactionResponse = await contract.registerNode(
+            node.typeId,
+            encodeBytesByNodeType(node.typeId, node.parameters),
+            node.parents.map(findParentNode)
+          );
+          await tx.wait(1);
+          const nodeID = await contract.getNodeId(
+            node.typeId,
+            encodeBytesByNodeType(node.typeId, node.parameters),
+            node.parents.map(findParentNode)
+          );
+          if (nodeID) {
+            setNodeId(nodeID);
+            setNodeState('nodeRegistered');
+          }
         }
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.error(error);
       }
-      setIsLoading(false);
     }
   };
 
