@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, ButtonProps } from '@chakra-ui/react';
 import { formatNumber } from '@snx-v2/formatters';
 import { FC } from 'react';
 import { RewardsTransactionModal } from './RewardsTransactionModal';
@@ -7,6 +7,21 @@ import { useClaimRewardsMutation } from '@snx-v2/useClaimRewardsMutation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
+const StyledButton = (props: ButtonProps) => (
+  <Button
+    data-testid="claim rewards button"
+    w={['100%', '100%', '100%', '80px']}
+    ml={[6, 6, 6, 4]}
+    {...props}
+  />
+);
+
+const ManageButtonUi = (props: ButtonProps) => <StyledButton {...props}>Maintain</StyledButton>;
+const ClaimButtonUi = (props: ButtonProps) => (
+  <StyledButton variant="solid" {...props}>
+    Maintain
+  </StyledButton>
+);
 export const ClaimRewardsBtn: FC<{
   amountSNX?: number;
   variant: string;
@@ -36,27 +51,25 @@ export const ClaimRewardsBtn: FC<{
       },
     });
   };
-
+  const displayClaimButton = variant === 'success';
   return (
     <>
-      <Button
-        data-testid="claim rewards button"
-        variant={variant !== 'success' ? variant : 'solid'}
-        isDisabled={
-          variant !== 'success' ? false : Boolean(!canClaim || isGasEnabledAndNotFetched || error)
-        }
-        w={['100%', '100%', '100%', '80px']}
-        fontFamily="heading"
-        fontSize="14px"
-        fontWeight="700"
-        ml={[6, 6, 6, 4]}
-        onClick={() => {
-          variant === 'success' ? handleSubmit() : navigate('/staking/burn');
-        }}
-        color="black"
-      >
-        {variant === 'success' ? 'Claim' : 'Maintain'}
-      </Button>
+      {displayClaimButton ? (
+        <ClaimButtonUi
+          isDisabled={Boolean(!canClaim || isGasEnabledAndNotFetched || error)}
+          onClick={() => {
+            handleSubmit();
+          }}
+        />
+      ) : (
+        <ManageButtonUi
+          variant={variant}
+          onClick={() => {
+            navigate('/staking/burn');
+          }}
+        />
+      )}
+
       <RewardsTransactionModal
         txnHash={txnHash}
         settle={settle}
