@@ -68,7 +68,6 @@ export interface FilterOptions {
 
 const gql = (data: TemplateStringsArray) => data[0];
 function getBody({
-  address,
   skip,
   orderBy,
   orderDirection,
@@ -79,7 +78,6 @@ function getBody({
   whereOpenedAt,
   whereClosedAt,
 }: {
-  address?: string;
   skip: number;
   orderBy: string;
   orderDirection: 'asc' | 'desc';
@@ -92,7 +90,6 @@ function getBody({
 }) {
   let query = gql`
     query info(
-      $address: String
       $skip: Int
       $orderBy: String
       $orderDirection: String
@@ -137,7 +134,7 @@ function getBody({
         totalVolume
         feesPaidToSynthetix
       }
-      traders(first: 1, where: { id: $address }) {
+      traders(first: 1, where: { id: $whereAccount }) {
         id
         totalLiquidations
         totalMarginLiquidated
@@ -153,6 +150,7 @@ function getBody({
   // Cleanup optional params
   if (typeof whereAccount === 'undefined') {
     query = query.replace('account: $whereAccount', '');
+    query = query.replace('id: $whereAccount', '');
   }
   if (typeof whereIsLiquidated === 'undefined') {
     query = query.replace('isLiquidated: $whereIsLiquidated', '');
@@ -169,14 +167,10 @@ function getBody({
   if (typeof whereClosedAt === 'undefined') {
     query = query.replace('closeTimestamp_lt: $whereClosedAt', '');
   }
-  if (typeof address === 'undefined') {
-    query = query.replace('id: $address', '');
-  }
 
   return {
     query,
     variables: {
-      address,
       skip,
       orderBy,
       orderDirection,
@@ -219,7 +213,6 @@ const refetchMore = async ({
     },
     body: JSON.stringify(
       getBody({
-        address: address?.toLowerCase(),
         skip,
         orderBy,
         orderDirection: !orderDirection ? 'desc' : 'asc',
