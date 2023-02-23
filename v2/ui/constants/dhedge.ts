@@ -1,7 +1,6 @@
 import { Contract } from 'ethers';
 import { abi as erc20ABI } from 'contracts/erc20';
 import { abi as dHedgePoolLogicABI } from 'contracts/dHedgePoolLogic';
-import { wei } from '@synthetixio/wei';
 
 export const dHedgeAPIUrl = 'https://api-v2.dhedge.org/graphql';
 export const dSNXContractMainnet = new Contract(
@@ -18,5 +17,3 @@ export const dSNXWrapperSwapperContractOptimism = new Contract(
     'function withdrawSUSD(address pool, uint256 fundTokenAmount,address intermediateAsset,uint256 expectedAmountSUSD) external',
   ]
 );
-// this slippage is just use for estimation, the actual slippage might differ
-export const SLIPPAGE = wei(0.01);

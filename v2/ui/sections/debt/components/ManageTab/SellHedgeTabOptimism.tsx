@@ -37,7 +37,6 @@ import {
   dSNXPoolAddressOptimism,
   dSNXPoolContractOptimism,
   dSNXWrapperSwapperContractOptimism,
-  SLIPPAGE,
 } from 'constants/dhedge';
 import useGetDSNXPrice from 'hooks/useGetDSNXPrice';
 import GasSelector from 'components/GasSelector';
@@ -73,7 +72,7 @@ export default function SellHedgeTabOptimism() {
 
   const dollarAmountToReceive =
     actualAmountToSendBn.gt(0) && dSNXPrice ? wei(actualAmountToSendBn).mul(dSNXPrice) : wei(0);
-  const sUSDToReceiveWei = dollarAmountToReceive.sub(dollarAmountToReceive.mul(SLIPPAGE));
+  const sUSDToReceiveWei = dollarAmountToReceive.sub(dollarAmountToReceive);
   const sUSDAmountToReceive = sUSDToReceiveWei.gt(0)
     ? formatCryptoCurrency(sUSDToReceiveWei, {
         minDecimals: 3,
