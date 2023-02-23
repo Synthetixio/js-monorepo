@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { ExternalLink } from '@snx-v1/styles';
 import { EXTERNAL_LINKS } from '../../../../constants/links';
 import { handleSwitchChain } from '@synthetixio/providers';
 import Connector from '../../../../containers/Connector';
 import { providers } from 'ethers';
+import { Button } from '@chakra-ui/react';
 
 export default function HedgeTapMainnet() {
   const { t } = useTranslation();
@@ -13,14 +13,16 @@ export default function HedgeTapMainnet() {
   return (
     <StyledHedgeWrapper>
       <Headline>Hedging with dSNX is only available on Optimism</Headline>
-      <StyledLink
+      <Button
+        mt={4}
+        variant="outline"
         onClick={(e) => {
           e.preventDefault();
           handleSwitchChain(provider as providers.Web3Provider, false);
         }}
       >
         {t('debt.actions.manage.l1-deprecation.switch-link')}
-      </StyledLink>
+      </Button>
       <SubHeadline>
         Or buy on{' '}
         <StyledExternalLink href={EXTERNAL_LINKS.Toros.dSNXPool}>Toros</StyledExternalLink>
@@ -37,11 +39,6 @@ const SubHeadline = styled.h3`
   margin-top: 16px;
 `;
 
-const StyledLink = styled(ExternalLink)`
-  color: ${(props) => props.theme.colors.pink};
-  cursor: pointer;
-  margin-top: 16px;
-`;
 const StyledHedgeWrapper = styled.div`
   width: 100%;
   height: 100%;
