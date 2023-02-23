@@ -7913,7 +7913,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/useBlockchain@workspace: *, @snx-v3/useBlockchain@workspace:*, @snx-v3/useBlockchain@workspace:v3/lib/useBlockchain":
+"@snx-v3/useBlockchain@workspace:*, @snx-v3/useBlockchain@workspace:v3/lib/useBlockchain":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useBlockchain@workspace:v3/lib/useBlockchain"
   dependencies:
@@ -9946,7 +9946,7 @@ __metadata:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
-    "@snx-v3/useBlockchain": "workspace: *"
+    "@snx-v3/useBlockchain": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
