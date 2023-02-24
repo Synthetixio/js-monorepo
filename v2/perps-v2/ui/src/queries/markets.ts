@@ -2,6 +2,7 @@ import { utils } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
 import { OPTIMISM_GRAPH_URL } from '../utils/constants';
 import { perpsV2Contract } from '../utils/contracts';
+import { getDefaultProvider } from '@snx-v3/useBlockchain';
 
 interface FutureMarketsGraphResponse {
   data: {
@@ -19,8 +20,9 @@ const query = gql`
     }
   }
 `;
-export const useGetMarkets = () =>
-  useQuery(['markets'], async () => {
+export const useGetMarkets = () => {
+  const provider = getDefaultProvider('optimism');
+  return useQuery(['markets'], async () => {
     const response = await fetch(OPTIMISM_GRAPH_URL, {
       method: 'POST',
       headers: {
@@ -36,7 +38,7 @@ export const useGetMarkets = () =>
         ...market,
         marketKey: utils.parseBytes32String(market.marketKey),
         asset: utils.parseBytes32String(market.asset),
-        maxLeverage: await perpsV2Contract.maxLeverage(market.marketKey),
+        maxLeverage: await perpsV2Contract(provider).maxLeverage(market.marketKey),
       }))
     );
     return dataWithMaxLeverage
@@ -46,3 +48,4 @@ export const useGetMarkets = () =>
       }))
       .filter((market) => market.marketKey.includes('PERP'));
   });
+};
