@@ -8,7 +8,6 @@ import { Header } from './components/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { All } from './All';
 import { createRoot } from 'react-dom/client';
-import { BlockchainProvider } from '@snx-v3/useBlockchain';
 
 const router = createBrowserRouter([
   {
@@ -39,26 +38,24 @@ const customTheme = extendTheme({
 
 root.render(
   <React.StrictMode>
-    <BlockchainProvider>
-      <ChakraProvider theme={customTheme}>
-        <QueryClientProvider
-          client={
-            new QueryClient({
-              defaultOptions: {
-                queries: {
-                  refetchOnWindowFocus: false,
-                  cacheTime: 900000,
-                  staleTime: 900000,
-                },
+    <ChakraProvider theme={customTheme}>
+      <QueryClientProvider
+        client={
+          new QueryClient({
+            defaultOptions: {
+              queries: {
+                refetchOnWindowFocus: false,
+                cacheTime: 900000,
+                staleTime: 900000,
               },
-            })
-          }
-        >
-          <Fonts />
-          <Header />
-          <RouterProvider router={router} />
-        </QueryClientProvider>
-      </ChakraProvider>
-    </BlockchainProvider>
+            },
+          })
+        }
+      >
+        <Fonts />
+        <Header />
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </ChakraProvider>
   </React.StrictMode>
 );

@@ -120,6 +120,9 @@ export const onboard = onboardInit({
   },
 });
 
+export const GetDefaultProvider = (defaultNetwork: keyof typeof NETWORKS) =>
+  new ethers.providers.InfuraProvider(NETWORKS[defaultNetwork].name, process.env.INFURA_KEY);
+
 export const BlockchainContext = React.createContext<{ state: AppState }>({
   state: onboard.state.get(),
 });
@@ -164,14 +167,9 @@ export function useIsConnected(): boolean {
   return Boolean(wallet);
 }
 
-export function useProvider(defaultNetwork?: keyof typeof NETWORKS) {
+export function useProvider() {
   const wallet = useOnboardWallet();
-  if (!wallet) {
-    return new ethers.providers.InfuraProvider(
-      defaultNetwork ? NETWORKS[defaultNetwork].name : NETWORKS.goerli.name,
-      process.env.INFURA_KEY
-    );
-  }
+  if (!wallet) return;
   return new ethers.providers.Web3Provider(wallet.provider, 'any');
 }
 
