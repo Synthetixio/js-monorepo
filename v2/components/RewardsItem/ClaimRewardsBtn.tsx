@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, ButtonProps, Tooltip } from '@chakra-ui/react';
 import { formatNumber } from '@snx-v2/formatters';
 import { FC } from 'react';
 import { RewardsTransactionModal } from './RewardsTransactionModal';
@@ -6,7 +6,38 @@ import { useNavigate } from 'react-router-dom';
 import { useClaimRewardsMutation } from '@snx-v2/useClaimRewardsMutation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { useTranslation } from 'react-i18next';
 
+const StyledButton = (props: ButtonProps) => (
+  <Button
+    data-testid="claim rewards button"
+    w={['100%', '100%', '100%', '80px']}
+    ml={[6, 6, 6, 4]}
+    {...props}
+  />
+);
+
+const ManageButtonUi = (props: ButtonProps) => {
+  const { t } = useTranslation();
+  return <StyledButton {...props}>{t('staking-v2.earn.maintain')}</StyledButton>;
+};
+
+interface ClaimBtnProps extends ButtonProps {
+  delegatedToMint: boolean;
+}
+const ClaimButtonUi = ({ delegatedToMint, ...props }: ClaimBtnProps) => {
+  const { t } = useTranslation();
+  return (
+    <Tooltip
+      label={delegatedToMint ? '' : t('staking-v2.delegate.missing-permission')}
+      shouldWrapChildren
+    >
+      <StyledButton variant="solid" {...props}>
+        {t('staking-v2.earn.claim')}
+      </StyledButton>
+    </Tooltip>
+  );
+};
 export const ClaimRewardsBtn: FC<{
   amountSNX?: number;
   variant: string;
@@ -16,8 +47,8 @@ export const ClaimRewardsBtn: FC<{
 
   const navigate = useNavigate();
   const haveSomethingToClaim = Boolean(amountSNX);
-  const delegatePermission = delegateWallet ? delegateWallet.canClaim : true;
-  const canClaim = haveSomethingToClaim && delegatePermission && variant === 'success';
+  const delegatedToMint = delegateWallet ? delegateWallet.canClaim : true;
+  const canClaim = haveSomethingToClaim && delegatedToMint && variant === 'success';
   const {
     mutate,
     modalOpen,
@@ -36,27 +67,26 @@ export const ClaimRewardsBtn: FC<{
       },
     });
   };
-
+  const displayClaimButton = variant === 'success';
   return (
     <>
-      <Button
-        data-testid="claim rewards button"
-        variant={variant !== 'success' ? variant : 'solid'}
-        isDisabled={
-          variant !== 'success' ? false : Boolean(!canClaim || isGasEnabledAndNotFetched || error)
-        }
-        w={['100%', '100%', '100%', '80px']}
-        fontFamily="heading"
-        fontSize="14px"
-        fontWeight="700"
-        ml={[6, 6, 6, 4]}
-        onClick={() => {
-          variant === 'success' ? handleSubmit() : navigate('/staking/burn');
-        }}
-        color="black"
-      >
-        {variant === 'success' ? 'Claim' : 'Maintain'}
-      </Button>
+      {displayClaimButton ? (
+        <ClaimButtonUi
+          delegatedToMint={delegatedToMint}
+          isDisabled={Boolean(!canClaim || isGasEnabledAndNotFetched || error)}
+          onClick={() => {
+            handleSubmit();
+          }}
+        />
+      ) : (
+        <ManageButtonUi
+          variant={variant}
+          onClick={() => {
+            navigate('/staking/burn');
+          }}
+        />
+      )}
+
       <RewardsTransactionModal
         txnHash={txnHash}
         settle={settle}

@@ -59,7 +59,7 @@ interface BurnProps {
   isAboveTarget?: boolean;
   burnAmountForCalculations: number;
   activePreset: ActivePreset | null;
-  canBurn: boolean;
+  delegatedToBurn: boolean;
 }
 
 const StyledInput: FC<InputProps> = (props) => {
@@ -103,7 +103,7 @@ export const BurnUi = ({
   isAboveTarget,
   burnAmountForCalculations,
   activePreset,
-  canBurn,
+  delegatedToBurn,
 }: BurnProps) => {
   const { t } = useTranslation();
 
@@ -119,7 +119,6 @@ export const BurnUi = ({
     onPresetClick(badgeType);
   };
   const notEnoughBalance = burnAmountForCalculations > susdBalance;
-
   return (
     <>
       <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
@@ -392,11 +391,13 @@ export const BurnUi = ({
           </Flex>
         </Box>
         <MintOrBurnChanges debtChange={burnAmountForCalculations} action="burn" />
-        {gasError || notEnoughBalance ? (
-          <Center>
+        {gasError || notEnoughBalance || !delegatedToBurn ? (
+          <Center mt={2}>
             <FailedIcon width="40px" height="40px" />
             <Text>
-              {notEnoughBalance
+              {!delegatedToBurn
+                ? t('staking-v2.delegate.missing-permission')
+                : notEnoughBalance
                 ? t('staking-v2.burn.balance-error')
                 : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}
             </Text>
@@ -417,7 +418,7 @@ export const BurnUi = ({
           w="100%"
           onClick={() => onSubmit()}
           isDisabled={
-            !canBurn ||
+            !delegatedToBurn ||
             burnAmountSusd === '' ||
             burnAmountSusd === '0.00' ||
             Boolean(gasError) ||
@@ -614,7 +615,7 @@ export const Burn: FC = () => {
       >
         <Box width={{ base: 'full', md: leftColWidth }}>
           <BurnUi
-            canBurn={delegateWallet ? delegateWallet.canBurn : true}
+            delegatedToBurn={delegateWallet ? delegateWallet.canBurn : true}
             stakedSnx={stakedSnx.toNumber()}
             debtBalance={debtData?.debtBalance.toNumber()}
             isLoading={isLoading}

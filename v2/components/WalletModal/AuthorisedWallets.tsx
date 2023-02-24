@@ -14,7 +14,7 @@ const StyledBox: FC<PropsWithChildren> = ({ children }) => (
 const AuthorisedWalletsUi: FC<{
   authorisedWallets?: DelegateWallet[];
   isLoading: boolean;
-  onWalletSelected: (wallet: DelegateWallet) => void;
+  onWalletSelected: (wallet: DelegateWallet | null) => void;
 }> = ({ onWalletSelected, authorisedWallets, isLoading }) => {
   if (isLoading) {
     return (
@@ -26,10 +26,15 @@ const AuthorisedWalletsUi: FC<{
   if (!authorisedWallets?.length) {
     return (
       <StyledBox>
-        <Text>This wallet have not been authorized to perform action on any other wallet.</Text>
+        <Text>This wallet has not been authorized to perform action on any other wallet.</Text>
         <Text>
-          Connect the wallet you want to perform actions on and Go to{' '}
-          <Link color="cyan" as={ReactRouterLink} to="/delegate">
+          Connect the wallet you want to perform actions on and go to{' '}
+          <Link
+            onClick={() => onWalletSelected(null)}
+            color="cyan"
+            as={ReactRouterLink}
+            to="/delegate"
+          >
             Delegate
           </Link>{' '}
           to set it up
@@ -67,7 +72,7 @@ const AuthorisedWalletsUi: FC<{
 };
 
 export type AuthorisedWalletsProps = {
-  onWalletSelected: (wallet: DelegateWallet) => void;
+  onWalletSelected: (wallet: DelegateWallet | null) => void;
 };
 export const AuthorisedWallets: FC<AuthorisedWalletsProps> = ({ onWalletSelected }) => {
   const { data, isLoading } = useAuthorisedWallets();

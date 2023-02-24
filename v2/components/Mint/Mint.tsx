@@ -47,7 +47,7 @@ interface MintProps {
   gasError: Error | null;
   belowTargetError: boolean;
   isGasEnabledAndNotFetched: boolean;
-  canMint: boolean;
+  delegatedToMint: boolean;
 }
 const StyledInput: FC<InputProps> = (props) => {
   return (
@@ -85,7 +85,7 @@ export const MintUi = ({
   gasError,
   belowTargetError,
   isGasEnabledAndNotFetched,
-  canMint,
+  delegatedToMint,
 }: MintProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState(0);
@@ -203,11 +203,13 @@ export const MintUi = ({
           </Flex>
         </Box>
         <MintOrBurnChanges debtChange={parseFloatWithCommas(mintAmountsUSD)} action="mint" />
-        {gasError || belowTargetError ? (
-          <Center>
+        {gasError || belowTargetError || !delegatedToMint ? (
+          <Center mt={2}>
             <FailedIcon width="40px" height="40px" />
             <Text>
-              {belowTargetError
+              {!delegatedToMint
+                ? t('staking-v2.delegate.missing-permission')
+                : belowTargetError
                 ? t('staking-v2.mint.below-target-error')
                 : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}
             </Text>
@@ -231,7 +233,7 @@ export const MintUi = ({
             onSubmit();
           }}
           isDisabled={
-            !canMint ||
+            !delegatedToMint ||
             stakeAmountSNX === '' ||
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
@@ -298,7 +300,7 @@ export const Mint: FC = () => {
       >
         <Box width={{ base: 'full', md: leftColWidth }}>
           <MintUi
-            canMint={delegateWallet ? delegateWallet.canMint : true}
+            delegatedToMint={delegateWallet ? delegateWallet.canMint : true}
             isLoading={isLoading}
             stakeAmountSNX={stakeAmountSNX}
             mintAmountsUSD={mintAmountSUSD}

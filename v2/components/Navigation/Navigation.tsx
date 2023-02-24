@@ -130,6 +130,7 @@ export const NavigationUI = ({
               <>
                 <MenuButton
                   as={Button}
+                  ml={2}
                   variant="outline"
                   colorScheme="gray"
                   sx={{ '> span': { display: 'flex', alignItems: 'center' } }}
