@@ -210,20 +210,17 @@ describe('stakingCalculation', () => {
   describe('calculateChangesFromBurn', () => {
     test('burning 10SNX', () => {
       const burnAmountSusd = 5;
-      const stakedSnx = 20;
       const debtBalance = 10;
-      const transferable = 50;
       const sUSDBalance = 10;
       const collateral = 50;
       const collateralUsdValue = 100;
       const targetCRatio = 0.25;
-
+      const escrowedSnx = 10;
       expect(
         calculateChangesFromBurn({
           burnAmountSusd,
-          stakedSnx,
+          escrowedSnx,
           debtBalance,
-          transferable,
           sUSDBalance,
           collateralUsdValue,
           collateral,
@@ -233,26 +230,24 @@ describe('stakingCalculation', () => {
         newCratio: 0.05,
         newDebtBalance: 5,
         newStakedAmountSnx: 10,
-        newTransferable: 60,
+        newTransferable: 30, // collateral - escrowedSnx - newStakedAmountSnx = 50 - 10 - 10 = 30
         newSUSDBalance: 5,
       });
     });
     test('burning more than debt balance', () => {
       const burnAmountSusd = 500;
-      const stakedSnx = 10;
       const debtBalance = 10;
-      const transferable = 20;
       const sUSDBalance = 10;
       const collateralUsdValue = 100;
       const collateral = 50;
       const targetCRatio = 0.25;
+      const escrowedSnx = 10;
 
       expect(
         calculateChangesFromBurn({
           burnAmountSusd,
-          stakedSnx,
+          escrowedSnx,
           debtBalance,
-          transferable,
           sUSDBalance,
           collateralUsdValue,
           collateral,
@@ -262,7 +257,7 @@ describe('stakingCalculation', () => {
         newCratio: 0,
         newDebtBalance: 0,
         newStakedAmountSnx: 0,
-        newTransferable: 30, // collateral - (collateral - staked - transferable)
+        newTransferable: 40, // collateral - escrowedSnx - newStakedAmountSnx = 50 - 10 - 0 = 40
         newSUSDBalance: 0,
       });
     });
