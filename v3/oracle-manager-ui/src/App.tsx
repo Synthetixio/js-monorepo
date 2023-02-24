@@ -18,6 +18,13 @@ import { convertStateToQueryParam } from '../utils/url';
 import { NodeFormModule } from '../components/NodeFormModule';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import {
+  encodeBytesByNodeType,
+  getMultiCallContract,
+  getNodeModuleContract,
+  hashId,
+} from '../utils/contracts';
+import { useIsConnected, useNetwork, useSigner } from '@snx-v3/useBlockchain';
 
 export const App: FC = () => {
   const [nodes] = useRecoilState(nodesState);
@@ -26,13 +33,15 @@ export const App: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, getValues } = useForm({ defaultValues: { search: '' } });
   const navigate = useNavigate();
+  const network = useNetwork();
+  const signer = useSigner();
+  const isWalletConnected = useIsConnected();
 
   useEffect(() => {
     if (colorMode === 'light') {
       toggleColorMode();
     }
   }, [colorMode, toggleColorMode]);
-
   return (
     <Box px="10" py="5">
       <Flex justifyContent="space-between" mb="5">
@@ -78,6 +87,43 @@ export const App: FC = () => {
           Click on the black connection lines to disconnect a parent node from a child node.
         </Text>
         <Flex justifyContent="center" gap="2">
+          <Button
+            variant="outline"
+            disabled={!isWalletConnected}
+            onClick={() => {
+              if (signer && network?.id) {
+                const multicallContract = getMultiCallContract(signer, network.id);
+                const oracleManagerContract = getNodeModuleContract(signer, network.id);
+                const data = nodes
+                  .slice()
+                  .filter((node) => !node.isRegistered)
+                  .sort((a, b) => {
+                    if (a.parents.length > b.parents.length) return 1;
+                    if (a.parents.length < b.parents.length) return -1;
+                    return 0;
+                  })
+                  .map((node) => {
+                    return [
+                      oracleManagerContract.address,
+                      oracleManagerContract.interface.encodeFunctionData('registerNode', [
+                        node.typeId,
+                        encodeBytesByNodeType(node.typeId, node.parameters),
+                        node.parents.map((parentId: string) => {
+                          const parentNode = nodes.find((node) => node.id === parentId);
+                          if (parentNode) {
+                            return hashId(parentNode, []);
+                          }
+                          return '';
+                        }),
+                      ]),
+                    ];
+                  });
+                multicallContract.aggregate(data);
+              }
+            }}
+          >
+            Register All Nodes
+          </Button>
           <Button
             variant="outline"
             onClick={() => {

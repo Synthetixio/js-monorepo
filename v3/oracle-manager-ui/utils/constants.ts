@@ -1,15 +1,3 @@
-import { Chain } from 'wagmi';
-import { optimismGoerli, goerli } from 'wagmi/chains';
-
-export const supportedChains: Chain[] = [
-  // mainnet,
-  // optimism,
-  optimismGoerli,
-  goerli,
-  // hardhat
-  // localhost,
-];
-
 export const contracts = {
   SYNTHETIX_PROXY: 'SYNTHETIX_PROXY',
   MULTICALL: 'MULTICALL',
@@ -113,12 +101,23 @@ export const ORACLE_NODE_TYPES: {
     parameters: [
       {
         type: 'string',
-        name: 'First token',
+        name: 'Token',
       },
       {
         type: 'string',
-        name: 'Second token',
+        name: 'Stablecoin',
       },
+
+      {
+        type: 'number',
+        name: 'Decimal token',
+      },
+
+      {
+        type: 'number',
+        name: 'Decimal stablecoin',
+      },
+
       {
         type: 'string',
         name: 'Pool address',
