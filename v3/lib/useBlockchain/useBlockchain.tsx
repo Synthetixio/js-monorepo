@@ -30,9 +30,7 @@ export const UNSUPPORTED_NETWORK: Network = {
   isSupported: false,
 };
 
-export type SupportedNetworks = 'mainnet' | 'goerli' | 'optimism' | 'optimism-goerli';
-
-export const NETWORKS: { [network in SupportedNetworks]: Network } = {
+export const NETWORKS: Record<string, Network> = {
   mainnet: {
     id: 1,
     hexId: `0x${Number(1).toString(16)}`,
@@ -120,7 +118,7 @@ export const onboard = onboardInit({
   },
 });
 
-export const GetDefaultProvider = (defaultNetwork: keyof typeof NETWORKS) =>
+export const getDefaultProvider = (defaultNetwork: keyof typeof NETWORKS) =>
   new ethers.providers.InfuraProvider(NETWORKS[defaultNetwork].name, process.env.INFURA_KEY);
 
 export const BlockchainContext = React.createContext<{ state: AppState }>({
@@ -169,7 +167,9 @@ export function useIsConnected(): boolean {
 
 export function useProvider() {
   const wallet = useOnboardWallet();
-  if (!wallet) return;
+  if (!wallet) {
+    return getDefaultProvider('goerli');
+  }
   return new ethers.providers.Web3Provider(wallet.provider, 'any');
 }
 
