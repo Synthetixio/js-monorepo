@@ -4392,13 +4392,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^7.6.0":
-  version: 7.6.0
-  resolution: "@faker-js/faker@npm:7.6.0"
-  checksum: 942af6221774e8c98a0eb6bc75265e05fb81a941170377666c3439aab9495dd321d6beedc5406f07e6ad44262b3e43c20961f666d116ad150b78e7437dd1bb2b
-  languageName: node
-  linkType: hard
-
 "@float-capital/float-subgraph-uncrashable@npm:^0.0.0-alpha.4":
   version: 0.0.0-internal-testing.5
   resolution: "@float-capital/float-subgraph-uncrashable@npm:0.0.0-internal-testing.5"
@@ -7719,7 +7712,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/etherscanLink@workspace:*, @snx-v3/etherscanLink@workspace:v3/lib/etherscanLink":
+"@snx-v3/etherscanLink@workspace:v3/lib/etherscanLink":
   version: 0.0.0-use.local
   resolution: "@snx-v3/etherscanLink@workspace:v3/lib/etherscanLink"
   languageName: unknown
@@ -7776,7 +7769,6 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.17
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@faker-js/faker": ^7.6.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v2/formatters": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
@@ -7787,7 +7779,6 @@ __metadata:
     "@snx-v3/DepositModal": "workspace:*"
     "@snx-v3/HomeLink": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
-    "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/NumberInput": "workspace:*"
     "@snx-v3/PercentBadges": "workspace:*"
     "@snx-v3/PoolBox": "workspace:*"
@@ -7796,15 +7787,11 @@ __metadata:
     "@snx-v3/WithdrawModal": "workspace:*"
     "@snx-v3/calculations": "workspace:*"
     "@snx-v3/constants": "workspace:*"
-    "@snx-v3/etherscanLink": "workspace:*"
     "@snx-v3/format": "workspace:*"
     "@snx-v3/icons": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
-    "@snx-v3/useApprove": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
-    "@snx-v3/useCoreProxy": "workspace:*"
-    "@snx-v3/useDeposit": "workspace:*"
     "@snx-v3/useEthBalance": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
@@ -7816,7 +7803,6 @@ __metadata:
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useUSDProxy": "workspace:*"
     "@snx-v3/useVaultsData": "workspace:*"
-    "@snx-v3/useWrapEth": "workspace:*"
     "@snx-v3/validatePosition": "workspace:*"
     "@storybook/addon-essentials": ^6.5.16
     "@storybook/addon-interactions": ^6.5.16
@@ -7831,13 +7817,11 @@ __metadata:
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@types/react": ^18.0.28
-    "@types/react-chartjs-2": ^2.5.7
     "@types/react-helmet": ^6.1.6
     babel-jest: ^29.4.2
     babel-loader: ^9.1.2
     babel-plugin-istanbul: ^6.1.1
     bn.js: ^5.2.1
-    chart.js: ^3.9.1
     core-js: 3
     crypto-browserify: ^3.12.0
     css-loader: ^6.7.3
@@ -7847,7 +7831,6 @@ __metadata:
     i18next: ^21.10.0
     jest: ^29.4.2
     react: ^18.2.0
-    react-chartjs-2: ^4.3.1
     react-dom: ^18.2.0
     react-helmet: ^6.1.0
     react-i18next: ^12.1.5
@@ -11489,15 +11472,6 @@ __metadata:
   version: 1.2.4
   resolution: "@types/range-parser@npm:1.2.4"
   checksum: b7c0dfd5080a989d6c8bb0b6750fc0933d9acabeb476da6fe71d8bdf1ab65e37c136169d84148034802f48378ab94e3c37bb4ef7656b2bec2cb9c0f8d4146a95
-  languageName: node
-  linkType: hard
-
-"@types/react-chartjs-2@npm:^2.5.7":
-  version: 2.5.7
-  resolution: "@types/react-chartjs-2@npm:2.5.7"
-  dependencies:
-    react-chartjs-2: "*"
-  checksum: 9b479878b3755210b87f1da02fc21d6b369520b9282e3ac0f5fa4439fef056ef70f0ed56caf7d57afa735d2bac00bc88a9a6f55e7dd2e1b5b645e263f5c96f97
   languageName: node
   linkType: hard
 
@@ -15440,13 +15414,6 @@ __metadata:
   version: 0.0.2
   resolution: "charenc@npm:0.0.2"
   checksum: 81dcadbe57e861d527faf6dd3855dc857395a1c4d6781f4847288ab23cffb7b3ee80d57c15bba7252ffe3e5e8019db767757ee7975663ad2ca0939bb8fcaf2e5
-  languageName: node
-  linkType: hard
-
-"chart.js@npm:^3.9.1":
-  version: 3.9.1
-  resolution: "chart.js@npm:3.9.1"
-  checksum: 9ab0c0ac01215af0b3f020f2e313030fd6e347b48ed17d5484ee9c4e8ead45e78ae71bea16c397621c386b409ce0b14bf17f9f6c2492cd15b56c0f433efdfff6
   languageName: node
   linkType: hard
 
@@ -28904,16 +28871,6 @@ __metadata:
     lodash.flow: ^3.3.0
     pure-color: ^1.2.0
   checksum: 00a12dddafc8a9025cca933b0dcb65fca41c81fa176d1fc3a6a9d0242127042e2c0a604f4c724a3254dd2c6aeb5ef55095522ff22f5462e419641c1341a658e4
-  languageName: node
-  linkType: hard
-
-"react-chartjs-2@npm:*, react-chartjs-2@npm:^4.3.1":
-  version: 4.3.1
-  resolution: "react-chartjs-2@npm:4.3.1"
-  peerDependencies:
-    chart.js: ^3.5.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 574d12cc43b9b4a0f1e04cc692982e16ef7083c03da2a8a9fc2180fe9bcadc793008f81d8f4eec5465925eff84c95d7c523cb74376858b363ae75a83bb3c2a5d
   languageName: node
   linkType: hard
 
