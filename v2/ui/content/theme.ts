@@ -392,7 +392,7 @@ export const stakingTheme: Partial<ChakraTheme> = merge(chakraTheme, {
         '--account-select-modal-font-family-normal': 'Inter',
         // Radius
         '--onboard-wallet-button-border-radius': '10px',
-        '--border-color': 'transparent',
+        '--w3o-border-color': 'transparent',
       },
       body: {
         bg: 'navy.900',
