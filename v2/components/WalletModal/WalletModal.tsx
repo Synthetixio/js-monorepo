@@ -23,7 +23,7 @@ import { getEtherscanBaseUrl } from '@snx-v2/txnLink';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
-import { Balances } from './Balances';
+import { Balances, BalancesProps } from './Balances';
 import { AuthorisedWallets, AuthorisedWalletsProps } from './AuthorisedWallets';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
@@ -35,7 +35,7 @@ export const WalletModalUi: FC<{
   ensName: string | null;
   walletAddress: string | null;
   networkId: number | null;
-  Balances: FC;
+  Balances: FC<BalancesProps>;
   AuthorisedWallets: FC<AuthorisedWalletsProps>;
 }> = ({
   isOpen,
@@ -146,7 +146,7 @@ export const WalletModalUi: FC<{
               }}
             />
           ) : (
-            <Balances />
+            <Balances onClose={onClose} />
           )}
 
           <Divider my={4} />
@@ -195,6 +195,7 @@ export const WalletModal: FC<{
   disconnectWallet: () => Promise<void>;
 }> = (props) => {
   const { walletAddress, networkId, walletType, ensName } = useContext(ContractContext);
+
   return (
     <WalletModalUi
       {...props}

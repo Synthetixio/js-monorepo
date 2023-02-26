@@ -18,11 +18,13 @@ type BalanceObject = {
   icon?: ReactElement;
   description?: string;
 };
+
 const BalancesUi: FC<{
   balances?: BalanceObject[];
   navigate: NavigateFunction;
   delegateMode: boolean;
-}> = ({ balances, navigate, delegateMode }) => {
+  onClose: () => void;
+}> = ({ balances, navigate, delegateMode, onClose }) => {
   const { t } = useTranslation();
 
   return (
@@ -62,6 +64,7 @@ const BalancesUi: FC<{
           width="100%"
           variant="ghost"
           onClick={() => {
+            onClose();
             navigate('/wallet');
           }}
           margin="0 auto"
@@ -73,13 +76,19 @@ const BalancesUi: FC<{
   );
 };
 
-export const Balances = () => {
+export interface BalancesProps {
+  onClose: () => void;
+}
+
+export const Balances = ({ onClose }: BalancesProps) => {
   const { data: synthBalancesData } = useSynthsBalances();
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: synthByNameData } = useGetSynthsByName();
   const { delegateWallet } = useDelegateWallet();
+
   const navigate = useNavigate();
+
   const snxBalance: BalanceObject | undefined =
     debtData && exchangeRateData
       ? {
@@ -111,7 +120,13 @@ export const Balances = () => {
   });
 
   const balances = snxBalance && synthBalances ? [snxBalance].concat(synthBalances) : undefined;
+
   return (
-    <BalancesUi delegateMode={Boolean(delegateWallet)} navigate={navigate} balances={balances} />
+    <BalancesUi
+      delegateMode={Boolean(delegateWallet)}
+      navigate={navigate}
+      balances={balances}
+      onClose={onClose}
+    />
   );
 };
