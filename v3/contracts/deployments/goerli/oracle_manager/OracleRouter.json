@@ -1,5 +1,5 @@
 {
-  "address": "0xe72090d32A39921dF01c06c0B13ec0E9d0945CE3",
+  "address": "0x76BBBEd4AB0e3097c6F5CcEa18334D08EED69f69",
   "abi": [
     {
       "inputs": [
@@ -254,7 +254,13 @@
       "type": "error"
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "price",
+          "type": "int256"
+        }
+      ],
       "name": "InvalidPrice",
       "type": "error"
     },
@@ -282,11 +288,6 @@
     {
       "inputs": [],
       "name": "OverflowUint256ToInt256",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "OverflowUint256ToUint128",
       "type": "error"
     },
     {
@@ -494,7 +495,7 @@
     }
   ],
   "deployedOn": "router.OracleRouter",
-  "deployTxnHash": "0x3e841c31d1bcea9bbc8344a7db6c1610312eefb628e2d376de83763e72dd9bfe",
+  "deployTxnHash": "0xaad721db6b6426427fcc73defb781cbc994bf73b668628566742dfb43e8ac748",
   "contractName": "OracleRouter",
   "sourceName": "OracleRouter.sol"
 }

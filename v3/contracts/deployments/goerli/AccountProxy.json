@@ -1,5 +1,5 @@
 {
-  "address": "0xb9491cCF9e59A7E15e09f66779ACceA8Da151a73",
+  "address": "0x1b791d05E437C78039424749243F5A79E747525e",
   "abi": [
     {
       "inputs": [
@@ -795,5 +795,8 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": ""
+  "deployTxnHash": "",
+  "sourceName": "",
+  "contractName": "",
+  "deployedOn": "invoke.init_account"
 }

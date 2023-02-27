@@ -1,5 +1,5 @@
 {
-  "address": "0x66890372Ce7f316e7c4Cd03CF88022F1F8CCF296",
+  "address": "0x76490713314fCEC173f44e99346F54c6e92a8E42",
   "abi": [
     {
       "inputs": [
@@ -4298,5 +4298,8 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": ""
+  "deployTxnHash": "",
+  "sourceName": "",
+  "contractName": "",
+  "deployedOn": "invoke.upgrade_core_proxy"
 }

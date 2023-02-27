@@ -1,5 +1,5 @@
 {
-  "address": "0x9BADE31123Cae31Dd50D7e8B15509fAA0C98A028",
+  "address": "0x12aE0D5CD26f212bFE242DA78139d463019f7a73",
   "abi": [
     {
       "inputs": [
@@ -254,7 +254,13 @@
       "type": "error"
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "price",
+          "type": "int256"
+        }
+      ],
       "name": "InvalidPrice",
       "type": "error"
     },
@@ -282,11 +288,6 @@
     {
       "inputs": [],
       "name": "OverflowUint256ToInt256",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "OverflowUint256ToUint128",
       "type": "error"
     },
     {
