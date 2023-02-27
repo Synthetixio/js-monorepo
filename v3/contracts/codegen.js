@@ -6,20 +6,44 @@ const ethers = require('ethers');
 const prettier = require('prettier');
 const { runTypeChain } = require('typechain');
 
-// We don't want to expose internal modules and should only interact with Proxy contracts
-const CONTRACTS_WHITELIST = ['AccountProxy', 'CoreProxy', 'USDProxy', 'oracle_manager.Proxy'];
+/*
+async function normaliseAbi(source, fileName) {
+  const json = await fs.readFile(path.join(source, `${fileName}.json`), 'utf8');
+  json.abi.forEach((item) => {
+    item.outputs?.forEach((output) => {
+      if (!('name' in output)) {
+        output.name = '';
+      }
+    });
+  });
+  await fs.writeFile(path.join(source, `${fileName}.json`), JSON.stringify(json, null, 2), 'utf8');
+}
+*/
 
-async function readContracts(deploymentsDir) {
-  const files = await fs.readdir(deploymentsDir, { withFileTypes: true });
+function mapFileName(source, fileName) {
+  if (source.includes('oracle_manager')) {
+    if (fileName === 'Proxy') {
+      return 'OracleManagerProxy';
+    }
+  }
+  return fileName;
+}
+
+async function readContracts({ source, target }) {
+  const files = await fs.readdir(source, { withFileTypes: true });
   return await Promise.all(
     files
       .filter((dirent) => dirent.isFile())
       .map((dirent) => path.basename(dirent.name, '.json'))
-      .map(async (fileName) => {
-        const filePath = path.join(deploymentsDir, `${fileName}.json`);
-        const { address, abi, deployTxnHash } = JSON.parse(await fs.readFile(filePath, 'utf8'));
+      .map(async (sourceFileName) => {
+        const { address, abi, deployTxnHash } = JSON.parse(
+          await fs.readFile(path.join(source, `${sourceFileName}.json`), 'utf8')
+        );
+        const fileName = mapFileName(source, sourceFileName);
+        // Looks like outputs[].name exists by default, so no longer necessary
+        // await normaliseAbi(source, fileName);
         return {
-          filePath,
+          filePath: path.join(target, `${fileName}.json`),
           fileName,
           address,
           abi,
@@ -38,25 +62,6 @@ function prepareContract({ filePath, fileName, address, abi }) {
     abi: iface.format(ethers.utils.FormatTypes.full),
     jsonAbi: abi,
   };
-}
-
-async function regenerateJson(jsons) {
-  await Promise.all(
-    jsons.map(async ({ filePath, address, abi, deployTxnHash }) => {
-      abi.forEach((item) => {
-        item.outputs?.forEach((output) => {
-          if (!('name' in output)) {
-            output.name = '';
-          }
-        });
-      });
-      await fs.writeFile(
-        filePath,
-        JSON.stringify({ address, abi, deployTxnHash }, null, 2),
-        'utf8'
-      );
-    })
-  );
 }
 
 async function generateContracts({ network, contracts, prettierOptions }) {
@@ -107,23 +112,52 @@ async function run() {
   const prettierOptions = JSON.parse(await fs.readFile('../../.prettierrc', 'utf8'));
 
   for await (const network of networks) {
-    const jsons = await readContracts(path.join(__dirname, 'deployments', network));
+    await fs.rm(path.join(__dirname, 'cache', network), { recursive: true, force: true });
+    await fs.rm(path.join(__dirname, 'build', network), { recursive: true, force: true });
+    await fs.rm(path.join(__dirname, 'src', network), { recursive: true, force: true });
+
+    await fs.mkdir(path.join(__dirname, 'tmp', network), { recursive: true });
+    const v3Jsons = (
+      await readContracts({
+        source: path.join(__dirname, 'deployments', network),
+        target: path.join(__dirname, 'tmp', network),
+      })
+    ).filter((json) =>
+      [
+        // Exported contracts only
+        'AccountProxy',
+        'CoreProxy',
+        'USDProxy',
+      ].includes(json.fileName)
+    );
+
+    await fs.mkdir(path.join(__dirname, 'tmp', network, 'manual'), { recursive: true });
+    const manualJsons = await readContracts({
+      source: path.join(__dirname, 'manual', network),
+      target: path.join(__dirname, 'tmp', network, 'manual'),
+    });
+
+    await fs.mkdir(path.join(__dirname, 'tmp', network, 'oracle_manager'), { recursive: true });
+    const omJsons = (
+      await readContracts({
+        source: path.join(__dirname, 'deployments', network, 'oracle_manager'),
+        target: path.join(__dirname, 'tmp', network, 'oracle_manager'),
+      })
+    ).filter((json) =>
+      [
+        // Exported contracts only
+        'OracleManagerProxy',
+      ].includes(json.fileName)
+    );
+
+    const jsons = [...v3Jsons, ...manualJsons, ...omJsons];
+    const contracts = jsons.map(prepareContract);
+
     await fs.mkdir(`cache/${network}/types`, { recursive: true });
-    await regenerateJson(jsons);
-    const contractsV3 = jsons
-      .filter((json) => CONTRACTS_WHITELIST.includes(json.fileName))
-      .map(prepareContract);
-
-    const manualJsons = await readContracts(path.join(__dirname, 'manual', network));
-    await fs.mkdir(`cache/${network}/types`, { recursive: true });
-    const contractsCustom = manualJsons.map(prepareContract);
-
-    const contracts = [].concat(contractsV3, contractsCustom);
-
     await generateTypes({ network, contracts, prettierOptions });
+
     await fs.mkdir(`src/${network}`, { recursive: true });
     await generateContracts({ network, contracts, prettierOptions });
-    await fs.rm(`cache/${network}/types`, { recursive: true, force: true });
   }
 }
 
