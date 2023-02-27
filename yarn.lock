@@ -10016,6 +10016,7 @@ __metadata:
     "@graphprotocol/graph-cli": ^0.40.0
     "@graphprotocol/graph-ts": ^0.29.3
     matchstick-as: ^0.5.1
+    prettier: ^2.8.4
   languageName: unknown
   linkType: soft
 

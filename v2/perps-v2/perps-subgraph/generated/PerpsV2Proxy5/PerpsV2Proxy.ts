@@ -7,8 +7,8 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
-} from "@graphprotocol/graph-ts";
+  BigInt,
+} from '@graphprotocol/graph-ts';
 
 export class CacheUpdated extends ethereum.Event {
   get params(): CacheUpdated__Params {
@@ -635,8 +635,8 @@ export class PerpsV2Proxy__accessibleMarginResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -660,8 +660,8 @@ export class PerpsV2Proxy__accruedFundingResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromSignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromSignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -685,8 +685,8 @@ export class PerpsV2Proxy__assetPriceResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -710,8 +710,8 @@ export class PerpsV2Proxy__liquidationPriceResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -735,8 +735,8 @@ export class PerpsV2Proxy__marketDebtResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -760,8 +760,8 @@ export class PerpsV2Proxy__marketSizesResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromUnsignedBigInt(this.value1));
     return map;
   }
 
@@ -781,13 +781,7 @@ export class PerpsV2Proxy__nextPriceOrdersResult {
   value3: BigInt;
   value4: Bytes;
 
-  constructor(
-    value0: BigInt,
-    value1: BigInt,
-    value2: BigInt,
-    value3: BigInt,
-    value4: Bytes
-  ) {
+  constructor(value0: BigInt, value1: BigInt, value2: BigInt, value3: BigInt, value4: Bytes) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
@@ -797,11 +791,11 @@ export class PerpsV2Proxy__nextPriceOrdersResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromSignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
-    map.set("value4", ethereum.Value.fromFixedBytes(this.value4));
+    map.set('value0', ethereum.Value.fromSignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set('value2', ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set('value3', ethereum.Value.fromUnsignedBigInt(this.value3));
+    map.set('value4', ethereum.Value.fromFixedBytes(this.value4));
     return map;
   }
 
@@ -837,8 +831,8 @@ export class PerpsV2Proxy__notionalValueResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromSignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromSignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -862,8 +856,8 @@ export class PerpsV2Proxy__orderFeeResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -883,13 +877,7 @@ export class PerpsV2Proxy__positionsResult {
   value3: BigInt;
   value4: BigInt;
 
-  constructor(
-    value0: BigInt,
-    value1: BigInt,
-    value2: BigInt,
-    value3: BigInt,
-    value4: BigInt
-  ) {
+  constructor(value0: BigInt, value1: BigInt, value2: BigInt, value3: BigInt, value4: BigInt) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
@@ -899,11 +887,11 @@ export class PerpsV2Proxy__positionsResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
-    map.set("value4", ethereum.Value.fromSignedBigInt(this.value4));
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set('value2', ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set('value3', ethereum.Value.fromUnsignedBigInt(this.value3));
+    map.set('value4', ethereum.Value.fromSignedBigInt(this.value4));
     return map;
   }
 
@@ -954,15 +942,12 @@ export class PerpsV2Proxy__postTradeDetailsResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromSignedBigInt(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
-    map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
-    map.set(
-      "value5",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value5))
-    );
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromSignedBigInt(this.value1));
+    map.set('value2', ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set('value3', ethereum.Value.fromUnsignedBigInt(this.value3));
+    map.set('value4', ethereum.Value.fromUnsignedBigInt(this.value4));
+    map.set('value5', ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value5)));
     return map;
   }
 
@@ -1002,8 +987,8 @@ export class PerpsV2Proxy__profitLossResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromSignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromSignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -1027,8 +1012,8 @@ export class PerpsV2Proxy__remainingMarginResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -1052,8 +1037,8 @@ export class PerpsV2Proxy__unrecordedFundingResult {
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromSignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromBoolean(this.value1));
+    map.set('value0', ethereum.Value.fromSignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 
@@ -1106,106 +1091,78 @@ export class PerpsV2Proxy__delayedOrdersResultValue0Struct extends ethereum.Tupl
 
 export class PerpsV2Proxy extends ethereum.SmartContract {
   static bind(address: Address): PerpsV2Proxy {
-    return new PerpsV2Proxy("PerpsV2Proxy", address);
+    return new PerpsV2Proxy('PerpsV2Proxy', address);
   }
 
   accessibleMargin(account: Address): PerpsV2Proxy__accessibleMarginResult {
-    let result = super.call(
-      "accessibleMargin",
-      "accessibleMargin(address):(uint256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.call('accessibleMargin', 'accessibleMargin(address):(uint256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
 
-    return new PerpsV2Proxy__accessibleMarginResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__accessibleMarginResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
   try_accessibleMargin(
     account: Address
   ): ethereum.CallResult<PerpsV2Proxy__accessibleMarginResult> {
-    let result = super.tryCall(
-      "accessibleMargin",
-      "accessibleMargin(address):(uint256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.tryCall('accessibleMargin', 'accessibleMargin(address):(uint256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__accessibleMarginResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__accessibleMarginResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   accruedFunding(account: Address): PerpsV2Proxy__accruedFundingResult {
-    let result = super.call(
-      "accruedFunding",
-      "accruedFunding(address):(int256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.call('accruedFunding', 'accruedFunding(address):(int256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
 
-    return new PerpsV2Proxy__accruedFundingResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__accruedFundingResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
-  try_accruedFunding(
-    account: Address
-  ): ethereum.CallResult<PerpsV2Proxy__accruedFundingResult> {
-    let result = super.tryCall(
-      "accruedFunding",
-      "accruedFunding(address):(int256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+  try_accruedFunding(account: Address): ethereum.CallResult<PerpsV2Proxy__accruedFundingResult> {
+    let result = super.tryCall('accruedFunding', 'accruedFunding(address):(int256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__accruedFundingResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__accruedFundingResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   assetPrice(): PerpsV2Proxy__assetPriceResult {
-    let result = super.call("assetPrice", "assetPrice():(uint256,bool)", []);
+    let result = super.call('assetPrice', 'assetPrice():(uint256,bool)', []);
 
-    return new PerpsV2Proxy__assetPriceResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__assetPriceResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
   try_assetPrice(): ethereum.CallResult<PerpsV2Proxy__assetPriceResult> {
-    let result = super.tryCall("assetPrice", "assetPrice():(uint256,bool)", []);
+    let result = super.tryCall('assetPrice', 'assetPrice():(uint256,bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__assetPriceResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__assetPriceResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   baseAsset(): Bytes {
-    let result = super.call("baseAsset", "baseAsset():(bytes32)", []);
+    let result = super.call('baseAsset', 'baseAsset():(bytes32)', []);
 
     return result[0].toBytes();
   }
 
   try_baseAsset(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall("baseAsset", "baseAsset():(bytes32)", []);
+    let result = super.tryCall('baseAsset', 'baseAsset():(bytes32)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1214,16 +1171,16 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   canLiquidate(account: Address): boolean {
-    let result = super.call("canLiquidate", "canLiquidate(address):(bool)", [
-      ethereum.Value.fromAddress(account)
+    let result = super.call('canLiquidate', 'canLiquidate(address):(bool)', [
+      ethereum.Value.fromAddress(account),
     ]);
 
     return result[0].toBoolean();
   }
 
   try_canLiquidate(account: Address): ethereum.CallResult<boolean> {
-    let result = super.tryCall("canLiquidate", "canLiquidate(address):(bool)", [
-      ethereum.Value.fromAddress(account)
+    let result = super.tryCall('canLiquidate', 'canLiquidate(address):(bool)', [
+      ethereum.Value.fromAddress(account),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1233,21 +1190,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   currentFundingRate(): BigInt {
-    let result = super.call(
-      "currentFundingRate",
-      "currentFundingRate():(int256)",
-      []
-    );
+    let result = super.call('currentFundingRate', 'currentFundingRate():(int256)', []);
 
     return result[0].toBigInt();
   }
 
   try_currentFundingRate(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "currentFundingRate",
-      "currentFundingRate():(int256)",
-      []
-    );
+    let result = super.tryCall('currentFundingRate', 'currentFundingRate():(int256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1256,21 +1205,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   fundingLastRecomputed(): BigInt {
-    let result = super.call(
-      "fundingLastRecomputed",
-      "fundingLastRecomputed():(uint32)",
-      []
-    );
+    let result = super.call('fundingLastRecomputed', 'fundingLastRecomputed():(uint32)', []);
 
     return result[0].toBigInt();
   }
 
   try_fundingLastRecomputed(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "fundingLastRecomputed",
-      "fundingLastRecomputed():(uint32)",
-      []
-    );
+    let result = super.tryCall('fundingLastRecomputed', 'fundingLastRecomputed():(uint32)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1279,21 +1220,17 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   fundingSequence(param0: BigInt): BigInt {
-    let result = super.call(
-      "fundingSequence",
-      "fundingSequence(uint256):(int128)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
+    let result = super.call('fundingSequence', 'fundingSequence(uint256):(int128)', [
+      ethereum.Value.fromUnsignedBigInt(param0),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_fundingSequence(param0: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "fundingSequence",
-      "fundingSequence(uint256):(int128)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
+    let result = super.tryCall('fundingSequence', 'fundingSequence(uint256):(int128)', [
+      ethereum.Value.fromUnsignedBigInt(param0),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1302,21 +1239,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   fundingSequenceLength(): BigInt {
-    let result = super.call(
-      "fundingSequenceLength",
-      "fundingSequenceLength():(uint256)",
-      []
-    );
+    let result = super.call('fundingSequenceLength', 'fundingSequenceLength():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
   try_fundingSequenceLength(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "fundingSequenceLength",
-      "fundingSequenceLength():(uint256)",
-      []
-    );
+    let result = super.tryCall('fundingSequenceLength', 'fundingSequenceLength():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1325,21 +1254,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   isResolverCached(): boolean {
-    let result = super.call(
-      "isResolverCached",
-      "isResolverCached():(bool)",
-      []
-    );
+    let result = super.call('isResolverCached', 'isResolverCached():(bool)', []);
 
     return result[0].toBoolean();
   }
 
   try_isResolverCached(): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "isResolverCached",
-      "isResolverCached():(bool)",
-      []
-    );
+    let result = super.tryCall('isResolverCached', 'isResolverCached():(bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1348,21 +1269,17 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   liquidationFee(account: Address): BigInt {
-    let result = super.call(
-      "liquidationFee",
-      "liquidationFee(address):(uint256)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.call('liquidationFee', 'liquidationFee(address):(uint256)', [
+      ethereum.Value.fromAddress(account),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_liquidationFee(account: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "liquidationFee",
-      "liquidationFee(address):(uint256)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.tryCall('liquidationFee', 'liquidationFee(address):(uint256)', [
+      ethereum.Value.fromAddress(account),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1371,69 +1288,53 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   liquidationPrice(account: Address): PerpsV2Proxy__liquidationPriceResult {
-    let result = super.call(
-      "liquidationPrice",
-      "liquidationPrice(address):(uint256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.call('liquidationPrice', 'liquidationPrice(address):(uint256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
 
-    return new PerpsV2Proxy__liquidationPriceResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__liquidationPriceResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
   try_liquidationPrice(
     account: Address
   ): ethereum.CallResult<PerpsV2Proxy__liquidationPriceResult> {
-    let result = super.tryCall(
-      "liquidationPrice",
-      "liquidationPrice(address):(uint256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.tryCall('liquidationPrice', 'liquidationPrice(address):(uint256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__liquidationPriceResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__liquidationPriceResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   marketDebt(): PerpsV2Proxy__marketDebtResult {
-    let result = super.call("marketDebt", "marketDebt():(uint256,bool)", []);
+    let result = super.call('marketDebt', 'marketDebt():(uint256,bool)', []);
 
-    return new PerpsV2Proxy__marketDebtResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__marketDebtResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
   try_marketDebt(): ethereum.CallResult<PerpsV2Proxy__marketDebtResult> {
-    let result = super.tryCall("marketDebt", "marketDebt():(uint256,bool)", []);
+    let result = super.tryCall('marketDebt', 'marketDebt():(uint256,bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__marketDebtResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__marketDebtResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   marketKey(): Bytes {
-    let result = super.call("marketKey", "marketKey():(bytes32)", []);
+    let result = super.call('marketKey', 'marketKey():(bytes32)', []);
 
     return result[0].toBytes();
   }
 
   try_marketKey(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall("marketKey", "marketKey():(bytes32)", []);
+    let result = super.tryCall('marketKey', 'marketKey():(bytes32)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1442,13 +1343,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   marketSize(): BigInt {
-    let result = super.call("marketSize", "marketSize():(uint128)", []);
+    let result = super.call('marketSize', 'marketSize():(uint128)', []);
 
     return result[0].toBigInt();
   }
 
   try_marketSize(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("marketSize", "marketSize():(uint128)", []);
+    let result = super.tryCall('marketSize', 'marketSize():(uint128)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1457,44 +1358,30 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   marketSizes(): PerpsV2Proxy__marketSizesResult {
-    let result = super.call(
-      "marketSizes",
-      "marketSizes():(uint256,uint256)",
-      []
-    );
+    let result = super.call('marketSizes', 'marketSizes():(uint256,uint256)', []);
 
-    return new PerpsV2Proxy__marketSizesResult(
-      result[0].toBigInt(),
-      result[1].toBigInt()
-    );
+    return new PerpsV2Proxy__marketSizesResult(result[0].toBigInt(), result[1].toBigInt());
   }
 
   try_marketSizes(): ethereum.CallResult<PerpsV2Proxy__marketSizesResult> {
-    let result = super.tryCall(
-      "marketSizes",
-      "marketSizes():(uint256,uint256)",
-      []
-    );
+    let result = super.tryCall('marketSizes', 'marketSizes():(uint256,uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__marketSizesResult(
-        value[0].toBigInt(),
-        value[1].toBigInt()
-      )
+      new PerpsV2Proxy__marketSizesResult(value[0].toBigInt(), value[1].toBigInt())
     );
   }
 
   marketSkew(): BigInt {
-    let result = super.call("marketSkew", "marketSkew():(int128)", []);
+    let result = super.call('marketSkew', 'marketSkew():(int128)', []);
 
     return result[0].toBigInt();
   }
 
   try_marketSkew(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("marketSkew", "marketSkew():(int128)", []);
+    let result = super.tryCall('marketSkew', 'marketSkew():(int128)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1504,8 +1391,8 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
 
   nextPriceOrders(param0: Address): PerpsV2Proxy__nextPriceOrdersResult {
     let result = super.call(
-      "nextPriceOrders",
-      "nextPriceOrders(address):(int128,uint128,uint128,uint128,bytes32)",
+      'nextPriceOrders',
+      'nextPriceOrders(address):(int128,uint128,uint128,uint128,bytes32)',
       [ethereum.Value.fromAddress(param0)]
     );
 
@@ -1518,12 +1405,10 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
     );
   }
 
-  try_nextPriceOrders(
-    param0: Address
-  ): ethereum.CallResult<PerpsV2Proxy__nextPriceOrdersResult> {
+  try_nextPriceOrders(param0: Address): ethereum.CallResult<PerpsV2Proxy__nextPriceOrdersResult> {
     let result = super.tryCall(
-      "nextPriceOrders",
-      "nextPriceOrders(address):(int128,uint128,uint128,uint128,bytes32)",
+      'nextPriceOrders',
+      'nextPriceOrders(address):(int128,uint128,uint128,uint128,bytes32)',
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -1542,71 +1427,51 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   notionalValue(account: Address): PerpsV2Proxy__notionalValueResult {
-    let result = super.call(
-      "notionalValue",
-      "notionalValue(address):(int256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.call('notionalValue', 'notionalValue(address):(int256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
 
-    return new PerpsV2Proxy__notionalValueResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__notionalValueResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
-  try_notionalValue(
-    account: Address
-  ): ethereum.CallResult<PerpsV2Proxy__notionalValueResult> {
-    let result = super.tryCall(
-      "notionalValue",
-      "notionalValue(address):(int256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+  try_notionalValue(account: Address): ethereum.CallResult<PerpsV2Proxy__notionalValueResult> {
+    let result = super.tryCall('notionalValue', 'notionalValue(address):(int256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__notionalValueResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__notionalValueResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   orderFee(sizeDelta: BigInt): PerpsV2Proxy__orderFeeResult {
-    let result = super.call("orderFee", "orderFee(int256):(uint256,bool)", [
-      ethereum.Value.fromSignedBigInt(sizeDelta)
+    let result = super.call('orderFee', 'orderFee(int256):(uint256,bool)', [
+      ethereum.Value.fromSignedBigInt(sizeDelta),
     ]);
 
-    return new PerpsV2Proxy__orderFeeResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__orderFeeResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
-  try_orderFee(
-    sizeDelta: BigInt
-  ): ethereum.CallResult<PerpsV2Proxy__orderFeeResult> {
-    let result = super.tryCall("orderFee", "orderFee(int256):(uint256,bool)", [
-      ethereum.Value.fromSignedBigInt(sizeDelta)
+  try_orderFee(sizeDelta: BigInt): ethereum.CallResult<PerpsV2Proxy__orderFeeResult> {
+    let result = super.tryCall('orderFee', 'orderFee(int256):(uint256,bool)', [
+      ethereum.Value.fromSignedBigInt(sizeDelta),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__orderFeeResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__orderFeeResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   positions(param0: Address): PerpsV2Proxy__positionsResult {
     let result = super.call(
-      "positions",
-      "positions(address):(uint64,uint64,uint128,uint128,int128)",
+      'positions',
+      'positions(address):(uint64,uint64,uint128,uint128,int128)',
       [ethereum.Value.fromAddress(param0)]
     );
 
@@ -1619,12 +1484,10 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
     );
   }
 
-  try_positions(
-    param0: Address
-  ): ethereum.CallResult<PerpsV2Proxy__positionsResult> {
+  try_positions(param0: Address): ethereum.CallResult<PerpsV2Proxy__positionsResult> {
     let result = super.tryCall(
-      "positions",
-      "positions(address):(uint64,uint64,uint128,uint128,int128)",
+      'positions',
+      'positions(address):(uint64,uint64,uint128,uint128,int128)',
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -1642,17 +1505,11 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
     );
   }
 
-  postTradeDetails(
-    sizeDelta: BigInt,
-    sender: Address
-  ): PerpsV2Proxy__postTradeDetailsResult {
+  postTradeDetails(sizeDelta: BigInt, sender: Address): PerpsV2Proxy__postTradeDetailsResult {
     let result = super.call(
-      "postTradeDetails",
-      "postTradeDetails(int256,address):(uint256,int256,uint256,uint256,uint256,uint8)",
-      [
-        ethereum.Value.fromSignedBigInt(sizeDelta),
-        ethereum.Value.fromAddress(sender)
-      ]
+      'postTradeDetails',
+      'postTradeDetails(int256,address):(uint256,int256,uint256,uint256,uint256,uint8)',
+      [ethereum.Value.fromSignedBigInt(sizeDelta), ethereum.Value.fromAddress(sender)]
     );
 
     return new PerpsV2Proxy__postTradeDetailsResult(
@@ -1670,12 +1527,9 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
     sender: Address
   ): ethereum.CallResult<PerpsV2Proxy__postTradeDetailsResult> {
     let result = super.tryCall(
-      "postTradeDetails",
-      "postTradeDetails(int256,address):(uint256,int256,uint256,uint256,uint256,uint8)",
-      [
-        ethereum.Value.fromSignedBigInt(sizeDelta),
-        ethereum.Value.fromAddress(sender)
-      ]
+      'postTradeDetails',
+      'postTradeDetails(int256,address):(uint256,int256,uint256,uint256,uint256,uint8)',
+      [ethereum.Value.fromSignedBigInt(sizeDelta), ethereum.Value.fromAddress(sender)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1694,52 +1548,34 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   profitLoss(account: Address): PerpsV2Proxy__profitLossResult {
-    let result = super.call("profitLoss", "profitLoss(address):(int256,bool)", [
-      ethereum.Value.fromAddress(account)
+    let result = super.call('profitLoss', 'profitLoss(address):(int256,bool)', [
+      ethereum.Value.fromAddress(account),
     ]);
 
-    return new PerpsV2Proxy__profitLossResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__profitLossResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
-  try_profitLoss(
-    account: Address
-  ): ethereum.CallResult<PerpsV2Proxy__profitLossResult> {
-    let result = super.tryCall(
-      "profitLoss",
-      "profitLoss(address):(int256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+  try_profitLoss(account: Address): ethereum.CallResult<PerpsV2Proxy__profitLossResult> {
+    let result = super.tryCall('profitLoss', 'profitLoss(address):(int256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__profitLossResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__profitLossResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   recomputeFunding(): BigInt {
-    let result = super.call(
-      "recomputeFunding",
-      "recomputeFunding():(uint256)",
-      []
-    );
+    let result = super.call('recomputeFunding', 'recomputeFunding():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
   try_recomputeFunding(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "recomputeFunding",
-      "recomputeFunding():(uint256)",
-      []
-    );
+    let result = super.tryCall('recomputeFunding', 'recomputeFunding():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1748,46 +1584,34 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   remainingMargin(account: Address): PerpsV2Proxy__remainingMarginResult {
-    let result = super.call(
-      "remainingMargin",
-      "remainingMargin(address):(uint256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+    let result = super.call('remainingMargin', 'remainingMargin(address):(uint256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
 
-    return new PerpsV2Proxy__remainingMarginResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__remainingMarginResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
-  try_remainingMargin(
-    account: Address
-  ): ethereum.CallResult<PerpsV2Proxy__remainingMarginResult> {
-    let result = super.tryCall(
-      "remainingMargin",
-      "remainingMargin(address):(uint256,bool)",
-      [ethereum.Value.fromAddress(account)]
-    );
+  try_remainingMargin(account: Address): ethereum.CallResult<PerpsV2Proxy__remainingMarginResult> {
+    let result = super.tryCall('remainingMargin', 'remainingMargin(address):(uint256,bool)', [
+      ethereum.Value.fromAddress(account),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__remainingMarginResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__remainingMarginResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
   resolver(): Address {
-    let result = super.call("resolver", "resolver():(address)", []);
+    let result = super.call('resolver', 'resolver():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_resolver(): ethereum.CallResult<Address> {
-    let result = super.tryCall("resolver", "resolver():(address)", []);
+    let result = super.tryCall('resolver', 'resolver():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1797,8 +1621,8 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
 
   resolverAddressesRequired(): Array<Bytes> {
     let result = super.call(
-      "resolverAddressesRequired",
-      "resolverAddressesRequired():(bytes32[])",
+      'resolverAddressesRequired',
+      'resolverAddressesRequired():(bytes32[])',
       []
     );
 
@@ -1807,8 +1631,8 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
 
   try_resolverAddressesRequired(): ethereum.CallResult<Array<Bytes>> {
     let result = super.tryCall(
-      "resolverAddressesRequired",
-      "resolverAddressesRequired():(bytes32[])",
+      'resolverAddressesRequired',
+      'resolverAddressesRequired():(bytes32[])',
       []
     );
     if (result.reverted) {
@@ -1819,58 +1643,38 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   unrecordedFunding(): PerpsV2Proxy__unrecordedFundingResult {
-    let result = super.call(
-      "unrecordedFunding",
-      "unrecordedFunding():(int256,bool)",
-      []
-    );
+    let result = super.call('unrecordedFunding', 'unrecordedFunding():(int256,bool)', []);
 
-    return new PerpsV2Proxy__unrecordedFundingResult(
-      result[0].toBigInt(),
-      result[1].toBoolean()
-    );
+    return new PerpsV2Proxy__unrecordedFundingResult(result[0].toBigInt(), result[1].toBoolean());
   }
 
-  try_unrecordedFunding(): ethereum.CallResult<
-    PerpsV2Proxy__unrecordedFundingResult
-  > {
-    let result = super.tryCall(
-      "unrecordedFunding",
-      "unrecordedFunding():(int256,bool)",
-      []
-    );
+  try_unrecordedFunding(): ethereum.CallResult<PerpsV2Proxy__unrecordedFundingResult> {
+    let result = super.tryCall('unrecordedFunding', 'unrecordedFunding():(int256,bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PerpsV2Proxy__unrecordedFundingResult(
-        value[0].toBigInt(),
-        value[1].toBoolean()
-      )
+      new PerpsV2Proxy__unrecordedFundingResult(value[0].toBigInt(), value[1].toBoolean())
     );
   }
 
-  delayedOrders(
-    account: Address
-  ): PerpsV2Proxy__delayedOrdersResultValue0Struct {
+  delayedOrders(account: Address): PerpsV2Proxy__delayedOrdersResultValue0Struct {
     let result = super.call(
-      "delayedOrders",
-      "delayedOrders(address):((bool,int128,uint128,uint128,uint128,uint128,uint256,uint256,bytes32))",
+      'delayedOrders',
+      'delayedOrders(address):((bool,int128,uint128,uint128,uint128,uint128,uint256,uint256,bytes32))',
       [ethereum.Value.fromAddress(account)]
     );
 
-    return changetype<PerpsV2Proxy__delayedOrdersResultValue0Struct>(
-      result[0].toTuple()
-    );
+    return changetype<PerpsV2Proxy__delayedOrdersResultValue0Struct>(result[0].toTuple());
   }
 
   try_delayedOrders(
     account: Address
   ): ethereum.CallResult<PerpsV2Proxy__delayedOrdersResultValue0Struct> {
     let result = super.tryCall(
-      "delayedOrders",
-      "delayedOrders(address):((bool,int128,uint128,uint128,uint128,uint128,uint256,uint256,bytes32))",
+      'delayedOrders',
+      'delayedOrders(address):((bool,int128,uint128,uint128,uint128,uint128,uint256,uint256,bytes32))',
       [ethereum.Value.fromAddress(account)]
     );
     if (result.reverted) {
@@ -1878,28 +1682,18 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<PerpsV2Proxy__delayedOrdersResultValue0Struct>(
-        value[0].toTuple()
-      )
+      changetype<PerpsV2Proxy__delayedOrdersResultValue0Struct>(value[0].toTuple())
     );
   }
 
   isResolverCached1(): boolean {
-    let result = super.call(
-      "isResolverCached",
-      "isResolverCached():(bool)",
-      []
-    );
+    let result = super.call('isResolverCached', 'isResolverCached():(bool)', []);
 
     return result[0].toBoolean();
   }
 
   try_isResolverCached1(): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "isResolverCached",
-      "isResolverCached():(bool)",
-      []
-    );
+    let result = super.tryCall('isResolverCached', 'isResolverCached():(bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1908,13 +1702,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   marketState(): Address {
-    let result = super.call("marketState", "marketState():(address)", []);
+    let result = super.call('marketState', 'marketState():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_marketState(): ethereum.CallResult<Address> {
-    let result = super.tryCall("marketState", "marketState():(address)", []);
+    let result = super.tryCall('marketState', 'marketState():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1923,17 +1717,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   messageSender(): Address {
-    let result = super.call("messageSender", "messageSender():(address)", []);
+    let result = super.call('messageSender', 'messageSender():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_messageSender(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "messageSender",
-      "messageSender():(address)",
-      []
-    );
+    let result = super.tryCall('messageSender', 'messageSender():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1942,17 +1732,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   nominatedOwner(): Address {
-    let result = super.call("nominatedOwner", "nominatedOwner():(address)", []);
+    let result = super.call('nominatedOwner', 'nominatedOwner():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_nominatedOwner(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "nominatedOwner",
-      "nominatedOwner():(address)",
-      []
-    );
+    let result = super.tryCall('nominatedOwner', 'nominatedOwner():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1961,13 +1747,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   owner(): Address {
-    let result = super.call("owner", "owner():(address)", []);
+    let result = super.call('owner', 'owner():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_owner(): ethereum.CallResult<Address> {
-    let result = super.tryCall("owner", "owner():(address)", []);
+    let result = super.tryCall('owner', 'owner():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1976,13 +1762,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   proxy(): Address {
-    let result = super.call("proxy", "proxy():(address)", []);
+    let result = super.call('proxy', 'proxy():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_proxy(): ethereum.CallResult<Address> {
-    let result = super.tryCall("proxy", "proxy():(address)", []);
+    let result = super.tryCall('proxy', 'proxy():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1991,13 +1777,13 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
   }
 
   resolver1(): Address {
-    let result = super.call("resolver", "resolver():(address)", []);
+    let result = super.call('resolver', 'resolver():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_resolver1(): ethereum.CallResult<Address> {
-    let result = super.tryCall("resolver", "resolver():(address)", []);
+    let result = super.tryCall('resolver', 'resolver():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -2007,8 +1793,8 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
 
   resolverAddressesRequired1(): Array<Bytes> {
     let result = super.call(
-      "resolverAddressesRequired",
-      "resolverAddressesRequired():(bytes32[])",
+      'resolverAddressesRequired',
+      'resolverAddressesRequired():(bytes32[])',
       []
     );
 
@@ -2017,8 +1803,8 @@ export class PerpsV2Proxy extends ethereum.SmartContract {
 
   try_resolverAddressesRequired1(): ethereum.CallResult<Array<Bytes>> {
     let result = super.tryCall(
-      "resolverAddressesRequired",
-      "resolverAddressesRequired():(bytes32[])",
+      'resolverAddressesRequired',
+      'resolverAddressesRequired():(bytes32[])',
       []
     );
     if (result.reverted) {
