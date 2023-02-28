@@ -182,6 +182,8 @@ module.exports = {
         changetype: true,
         i32: true,
         i64: true,
+        u32: true,
+        u64: true,
         assert: true,
       },
       rules: {

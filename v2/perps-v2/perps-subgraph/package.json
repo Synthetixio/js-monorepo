@@ -5,7 +5,7 @@
   "scripts": {
     "build": "graph build",
     "auth": "graph auth --product hosted-service $V3_GRAPH_KEY",
-    "codegen": "graph codegen && prettier --write .",
+    "codegen": "node prepare-codegen.js && graph codegen && prettier --write .",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ fritzschoff/perps-dashboard",
     "create-local": "graph create --node http://localhost:8020/ fritzschoff/perps-dashboard",
     "remove-local": "graph remove --node http://localhost:8020/ fritzschoff/perps-dashboard",
@@ -15,7 +15,8 @@
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.40.0",
     "@graphprotocol/graph-ts": "^0.29.3",
-    "matchstick-as": "^0.5.1"
+    "matchstick-as": "^0.5.1",
+    "prettier": "^2.8.4"
   },
   "depcheck": {
     "ignorePatterns": [

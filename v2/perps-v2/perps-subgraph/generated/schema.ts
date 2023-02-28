@@ -155,6 +155,15 @@ export class Trader extends Entity {
     this.set('id', Value.fromString(value));
   }
 
+  get margin(): BigDecimal {
+    let value = this.get('margin');
+    return value!.toBigDecimal();
+  }
+
+  set margin(value: BigDecimal) {
+    this.set('margin', Value.fromBigDecimal(value));
+  }
+
   get totalLiquidations(): BigInt {
     let value = this.get('totalLiquidations');
     return value!.toBigInt();
@@ -427,47 +436,6 @@ export class Synthetix extends Entity {
   }
 }
 
-export class Partner extends Entity {
-  constructor(id: string) {
-    super();
-    this.set('id', Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get('id');
-    assert(id != null, 'Cannot save Partner entity without an ID');
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Partner must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set('Partner', id.toString(), this);
-    }
-  }
-
-  static load(id: string): Partner | null {
-    return changetype<Partner | null>(store.get('Partner', id));
-  }
-
-  get id(): string {
-    let value = this.get('id');
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set('id', Value.fromString(value));
-  }
-
-  get tradeCount(): BigInt {
-    let value = this.get('tradeCount');
-    return value!.toBigInt();
-  }
-
-  set tradeCount(value: BigInt) {
-    this.set('tradeCount', Value.fromBigInt(value));
-  }
-}
-
 export class FuturesPosition extends Entity {
   constructor(id: string) {
     super();
@@ -669,6 +637,15 @@ export class FuturesPosition extends Entity {
     this.set('entryPrice', Value.fromBigInt(value));
   }
 
+  get netTransfers(): BigInt {
+    let value = this.get('netTransfers');
+    return value!.toBigInt();
+  }
+
+  set netTransfers(value: BigInt) {
+    this.set('netTransfers', Value.fromBigInt(value));
+  }
+
   get lastPrice(): BigInt {
     let value = this.get('lastPrice');
     return value!.toBigInt();
@@ -676,6 +653,15 @@ export class FuturesPosition extends Entity {
 
   set lastPrice(value: BigInt) {
     this.set('lastPrice', Value.fromBigInt(value));
+  }
+
+  get avgEntryPrice(): BigInt {
+    let value = this.get('avgEntryPrice');
+    return value!.toBigInt();
+  }
+
+  set avgEntryPrice(value: BigInt) {
+    this.set('avgEntryPrice', Value.fromBigInt(value));
   }
 
   get exitPrice(): BigInt | null {
@@ -901,5 +887,82 @@ export class FundingRateUpdate extends Entity {
 
   set funding(value: BigInt) {
     this.set('funding', Value.fromBigInt(value));
+  }
+}
+
+export class FuturesMarginTransfer extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save FuturesMarginTransfer entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type FuturesMarginTransfer must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('FuturesMarginTransfer', id.toString(), this);
+    }
+  }
+
+  static load(id: string): FuturesMarginTransfer | null {
+    return changetype<FuturesMarginTransfer | null>(store.get('FuturesMarginTransfer', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get account(): Bytes {
+    let value = this.get('account');
+    return value!.toBytes();
+  }
+
+  set account(value: Bytes) {
+    this.set('account', Value.fromBytes(value));
+  }
+
+  get market(): Bytes {
+    let value = this.get('market');
+    return value!.toBytes();
+  }
+
+  set market(value: Bytes) {
+    this.set('market', Value.fromBytes(value));
+  }
+
+  get size(): BigInt {
+    let value = this.get('size');
+    return value!.toBigInt();
+  }
+
+  set size(value: BigInt) {
+    this.set('size', Value.fromBigInt(value));
+  }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
   }
 }
