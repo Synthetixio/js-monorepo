@@ -1,17 +1,7 @@
-import { Address, BigInt, Bytes, log, store } from '@graphprotocol/graph-ts';
+import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
 import { assert, describe, test, clearStore, afterEach } from 'matchstick-as/assembly/index';
-import {
-  createDelayedOrderRemovedEvent,
-  createDelayedOrderSubmittedEvent,
-  createPositionLiquidatedEvent,
-  createPositionModifiedEvent,
-} from './perpsV2-utils';
-import {
-  handleDelayedOrderRemoved,
-  handleDelayedOrderSubmitted,
-  handlePositionLiquidated,
-  handlePositionModified,
-} from '../src/futures';
+import { createPositionLiquidatedEvent, createPositionModifiedEvent } from './perpsV2-utils';
+import { handlePositionLiquidated, handlePositionModified } from '../src/futures';
 
 const trader = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
 function toEth(n: u64): BigInt {
