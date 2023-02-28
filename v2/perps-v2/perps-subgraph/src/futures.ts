@@ -139,6 +139,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     trader.totalVolume = event.params.tradeSize.toBigDecimal();
     trader.pnl = event.params.fee.times(BigInt.fromI32(-1));
     trader.trades = [event.transaction.hash.toHex() + '-' + event.logIndex.toString()];
+    trader.margin = event.params.margin.toBigDecimal();
     synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(1));
   } else {
     trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
@@ -382,6 +383,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     tradeEntity.positionClosed = true;
     tradeEntity.pnl = newTradePnl;
     tradeEntity.feesPaidToSynthetix = event.params.fee;
+    tradeEntity.type = 'Liquidated';
     tradeEntity.save();
 
     futuresPosition.pnl = newPositionPnl;

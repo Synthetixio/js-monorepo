@@ -42,6 +42,7 @@ enum FuturesTradeType {
   PositionOpened
   PositionClosed
   PositionModified
+  Liquidated
   DelayedOrderRemoved
   DelayedOrderSubmitted
   DelayedOffchainSubmitted

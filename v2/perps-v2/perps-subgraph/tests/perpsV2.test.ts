@@ -18,10 +18,6 @@ function toEth(n: i32): BigInt {
   return BigInt.fromI32(n).times(BigInt.fromI32(10).pow(18));
 }
 
-/**
- * - check pnl calc
- */
-
 describe('Perps V2', () => {
   afterEach(() => {
     clearStore();
@@ -117,6 +113,7 @@ describe('Perps V2', () => {
       'openTimestamp',
       '10'
     );
+
     assert.entityCount('FuturesPosition', 1);
 
     // FUTURES TRADE
@@ -345,7 +342,7 @@ describe('Perps V2', () => {
         modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
       }`,
       'pnl',
-      `2000`
+      '60000000000000000000000'
     );
     assert.fieldEquals(
       'FuturesTrade',
@@ -436,7 +433,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'pnl',
-      '2000'
+      '59998000000000000000000'
     );
     assert.fieldEquals(
       'FuturesPosition',
@@ -730,7 +727,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'pnl',
-      '100000000000000000000'
+      '300000000000000000000'
     );
     assert.fieldEquals(
       'FuturesPosition',
