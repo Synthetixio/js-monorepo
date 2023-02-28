@@ -136,14 +136,17 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     trader.totalLiquidations = BigInt.fromI32(0);
     trader.totalMarginLiquidated = BigDecimal.fromString('0');
     trader.feesPaidToSynthetix = event.params.fee.toBigDecimal();
-    trader.totalVolume = event.params.tradeSize.toBigDecimal();
+    trader.totalVolume = event.params.tradeSize
+      .times(event.params.lastPrice)
+      .div(BigInt.fromI32(10).pow(18))
+      .abs()
+      .toBigDecimal();
     trader.pnl = event.params.fee.times(BigInt.fromI32(-1));
     trader.trades = [event.transaction.hash.toHex() + '-' + event.logIndex.toString()];
     trader.margin = event.params.margin.toBigDecimal();
     synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(1));
   } else {
     trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
-    trader.pnl = trader.pnl.plus(event.params.fee.times(BigInt.fromI32(-1)));
     const oldTrades = trader.trades;
     oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
     trader.trades = oldTrades;
@@ -171,7 +174,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     futuresPosition.long = event.params.tradeSize.gt(BigInt.fromI32(0));
     futuresPosition.market = event.address;
     futuresPosition.fundingIndex = event.params.fundingIndex;
-    // We update the leverage only when the user interacted with with the position
     futuresPosition.leverage = event.params.size
       .times(event.params.lastPrice)
       .div(event.params.margin)
@@ -265,7 +267,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
       futuresPosition.leverage = event.params.size
         .times(event.params.lastPrice)
-        .div(event.params.margin)
+        .div(futuresPosition.margin.plus(event.params.margin))
         .abs();
 
       let tradeEntity = new FuturesTrade(
@@ -281,9 +283,9 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       tradeEntity.positionSize = event.params.size;
       tradeEntity.feesPaidToSynthetix = event.params.fee;
       tradeEntity.positionClosed = false;
-
       tradeEntity.type = 'PositionModified';
 
+      // if position changes sides, reset the entry price
       if (
         (futuresPosition.size.lt(BigInt.fromI32(0)) && event.params.size.gt(BigInt.fromI32(0))) ||
         (futuresPosition.size.gt(BigInt.fromI32(0)) && event.params.size.lt(BigInt.fromI32(0)))
@@ -332,7 +334,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(BigInt.fromI32(10).pow(18))
         .abs();
 
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
+      trader.totalVolume = trader.totalVolume.plus(volume.toBigDecimal());
       synthetix.totalVolume = synthetix.totalVolume.plus(volume.toBigDecimal());
       synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
         event.params.fee.toBigDecimal()
