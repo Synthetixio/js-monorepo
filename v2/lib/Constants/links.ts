@@ -1,4 +1,4 @@
-export const PROD_HOSTNAME = 'staking.synthetix.io';
+export const PROD_HOSTNAME = 'staking.synthetix.eth.limo/io';
 
 export const EXTERNAL_LINKS = {
   Trading: {
