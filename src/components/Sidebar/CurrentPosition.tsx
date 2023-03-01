@@ -12,7 +12,7 @@ export function CurrentPosition() {
       {/* before and after */}
       <Box mb="1">Size: 1 ETH ($X)</Box>
       <Box mb="1">Leverage: 1&times;</Box>
-      <Box mb="1">PnL</Box>
+      <Box mb="1">Profit/Loss: 0</Box>
     </Box>
   );
 }

@@ -1,14 +1,16 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { PriceChart, Stats, Switcher } from "./Market/index";
+import { PriceChart, Stats, MarketSwitcher } from "./Market/index";
 
 export function Market() {
   return (
-    <Box width="100%" height="100%" pb="32px">
-      <Flex>
-        <Switcher />
-        <Stats />
+    <Flex direction="column" height="100%" width="100%">
+      <Flex flexDirection="column" height="100%">
+        <Flex>
+          <MarketSwitcher />
+          <Stats />
+        </Flex>
+        <PriceChart />
       </Flex>
-      <PriceChart />
-    </Box>
+    </Flex>
   );
 }

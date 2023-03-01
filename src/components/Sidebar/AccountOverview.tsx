@@ -22,7 +22,7 @@ export function AccountOverview() {
     <Box p="4" borderBottom="1px solid rgba(255,255,255,0.2)">
       <Flex align="center" mb="2">
         <Heading size="sm">Account Overview</Heading>
-        <Button onClick={onOpen} ml="auto" size="xs" colorScheme="purple">
+        <Button onClick={onOpen} ml="auto" size="xs" colorScheme="blue">
           Deposit / Withdraw
         </Button>
 
@@ -42,11 +42,11 @@ export function AccountOverview() {
       <Box mb="1">Buying Power: $10,000</Box>
       <Box mb="1">Free Collateral: $1,000</Box>
       <Box mb="1">Margin Usage: 15%</Box>
-      <Box mb="1">PnL</Box>
-      <Alert status="warning" fontSize="sm">
+      <Box mb="1">Profit/Loss: 0</Box>
+      <Alert status="warning" fontSize="sm" mt="3" fontWeight="medium">
         <AlertIcon />
-        If margin usage exceeds 100% or free collateral goes below $0, you will
-        be liquidated and lose everything you deposited.
+        If Margin Usage exceeds 100%, you will be liquidated and lose everything
+        you deposited.
       </Alert>
     </Box>
   );
