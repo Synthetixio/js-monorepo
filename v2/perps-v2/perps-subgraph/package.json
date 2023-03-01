@@ -4,6 +4,8 @@
   "license": "MIT",
   "scripts": {
     "build": "graph build",
+    "build:optimism": "graph build --network optimism",
+    "build:optimism-goerli": "graph build --network optimism-goerli",
     "auth": "graph auth --product hosted-service $V3_GRAPH_KEY",
     "codegen": "node prepare-codegen.js && graph codegen && prettier --write .",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ fritzschoff/perps-dashboard",
