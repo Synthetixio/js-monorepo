@@ -1,6 +1,6 @@
 import { useAccount } from "wagmi";
 
-import { Header, Attestooooooor, PriceChart, Account } from "./components";
+import { Header, Attestooooooor, Market, Sidebar } from "./components";
 
 import theme from "./theme";
 import { ChakraProvider, ColorModeScript, Flex, Box } from "@chakra-ui/react";
@@ -20,10 +20,10 @@ export function App() {
         <Header />
         <Flex flex="1" height="100%">
           <Box flex="5">
-            <PriceChart />
+            <Market />
           </Box>
           <Box flex="2">
-            <Account />
+            <Sidebar />
           </Box>
         </Flex>
       </Flex>
