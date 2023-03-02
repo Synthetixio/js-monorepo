@@ -5,7 +5,9 @@ import { AccountSwitcher } from "./Header/index";
 export function Header() {
   return (
     <Flex p="3" borderBottom="1px solid rgba(255,255,255,0.2)" align="center">
-      <Heading size="lg">Synthetix Perps V3 Prototype</Heading>
+      <Heading size="lg" fontWeight="300" fontFamily="mono">
+        Synthetix Perps V3 Prototype
+      </Heading>
       <Box ml="auto">
         <Flex>
           <AccountSwitcher />

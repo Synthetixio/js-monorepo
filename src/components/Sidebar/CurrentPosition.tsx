@@ -12,30 +12,36 @@ export function CurrentPosition() {
       </Flex>
       {/* before and after */}
       <Box mb="1">
-        Size:{" "}
-        <Text display="inline" fontFamily="mono">
-          1 ETH ($X)
-        </Text>{" "}
-        <ArrowForwardIcon />{" "}
-        <Text display="inline" fontFamily="mono">
-          1 ETH ($X)
-        </Text>
+        Size
+        <Box display="inline" float="right">
+          <Text display="inline" fontFamily="mono">
+            1 ETH ($X)
+          </Text>{" "}
+          <ArrowForwardIcon mt="-1" />{" "}
+          <Text display="inline" fontFamily="mono">
+            1 ETH ($X)
+          </Text>
+        </Box>
       </Box>
       <Box mb="1">
-        Leverage:{" "}
-        <Text display="inline" fontFamily="mono">
-          1&times;
-        </Text>{" "}
-        <ArrowForwardIcon />{" "}
-        <Text display="inline" fontFamily="mono">
-          2&times;
-        </Text>
+        Leverage
+        <Box display="inline" float="right">
+          <Text display="inline" fontFamily="mono">
+            1&times;
+          </Text>{" "}
+          <ArrowForwardIcon mt="-1" />{" "}
+          <Text display="inline" fontFamily="mono">
+            2&times;
+          </Text>
+        </Box>
       </Box>
-      <Box mb="1">
-        Profit/Loss:{" "}
-        <Text display="inline" fontFamily="mono">
-          $0
-        </Text>
+      <Box>
+        Profit/Loss
+        <Box display="inline" float="right">
+          <Text display="inline" fontFamily="mono">
+            $0
+          </Text>
+        </Box>
       </Box>
     </Box>
   );

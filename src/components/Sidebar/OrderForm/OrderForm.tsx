@@ -123,7 +123,6 @@ export function OrderForm() {
                   </FormControl>
                   <Button
                     type="submit"
-                    size="lg"
                     colorScheme={buy ? "green" : "red"}
                     width="full"
                   >

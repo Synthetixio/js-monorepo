@@ -1,5 +1,6 @@
 import {
   Flex,
+  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,6 +8,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  Button,
 } from "@chakra-ui/react";
 import { ArrowUpDownIcon } from "@chakra-ui/icons";
 
@@ -15,10 +17,18 @@ export function MarketSwitcher() {
 
   return (
     <>
-      <Flex onClick={onOpen} width="180px" p="4" align="center">
-        Market Selector
+      <Button
+        onClick={onOpen}
+        width="180px"
+        p="4"
+        align="center"
+        height="100%"
+        bg="whiteAlpha.100"
+        borderRadius="0"
+      >
+        <Heading size="md">ETH</Heading>
         <ArrowUpDownIcon ml="auto" />
-      </Flex>
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

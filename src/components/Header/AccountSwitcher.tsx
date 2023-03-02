@@ -3,11 +3,7 @@ import { TriangleDownIcon } from "@chakra-ui/icons";
 
 export function AccountSwitcher() {
   return (
-    <Button
-      rightIcon={<TriangleDownIcon />}
-      colorScheme="blue"
-      variant="outline"
-    >
+    <Button rightIcon={<TriangleDownIcon />} colorScheme="gray">
       Account Switcher
     </Button>
   );

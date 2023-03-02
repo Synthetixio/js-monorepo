@@ -22,9 +22,9 @@ export function AccountOverview() {
 
   return (
     <Box p="4" borderBottom="1px solid rgba(255,255,255,0.2)">
-      <Flex align="center" mb="2">
+      <Flex align="center" mb="3">
         <Heading size="sm">Account Overview</Heading>
-        <Button onClick={onOpen} ml="auto" size="xs" colorScheme="blue">
+        <Button onClick={onOpen} ml="auto" size="xs" colorScheme="cyan">
           Deposit / Withdraw
         </Button>
 
@@ -42,42 +42,42 @@ export function AccountOverview() {
 
       {/* Need the before/after component */}
       <Box mb="1">
-        Buying Power:{" "}
-        <Text display="inline" fontFamily="mono">
-          $10,000
-        </Text>{" "}
-        <ArrowForwardIcon />{" "}
-        <Text display="inline" fontFamily="mono">
-          $10,000
-        </Text>
+        Buying Power{" "}
+        <Box display="inline" float="right">
+          <Text display="inline" fontFamily="mono">
+            $10,000
+          </Text>{" "}
+          <ArrowForwardIcon mt="-1" />{" "}
+          <Text display="inline" fontFamily="mono">
+            $10,000
+          </Text>
+        </Box>
       </Box>
       <Box mb="1">
-        Free Collateral:{" "}
-        <Text display="inline" fontFamily="mono">
-          $1,000
-        </Text>{" "}
-        <ArrowForwardIcon />{" "}
-        <Text display="inline" fontFamily="mono">
-          $1,000
-        </Text>
+        Free Collateral{" "}
+        <Box display="inline" float="right">
+          <Text display="inline" fontFamily="mono">
+            $1,000
+          </Text>{" "}
+          <ArrowForwardIcon mt="-1" />{" "}
+          <Text display="inline" fontFamily="mono">
+            $1,000
+          </Text>
+        </Box>
       </Box>
       <Box mb="1">
-        Margin Usage:{" "}
-        <Text display="inline" fontFamily="mono">
-          15%
-        </Text>{" "}
-        <ArrowForwardIcon />{" "}
-        <Text display="inline" fontFamily="mono">
-          15%
-        </Text>
+        Margin Usage{" "}
+        <Box display="inline" float="right">
+          <Text display="inline" fontFamily="mono">
+            15%
+          </Text>{" "}
+          <ArrowForwardIcon mt="-1" />{" "}
+          <Text display="inline" fontFamily="mono">
+            15%
+          </Text>
+        </Box>
       </Box>
-      <Box mb="1">
-        Profit/Loss:{" "}
-        <Text display="inline" fontFamily="mono">
-          $0
-        </Text>
-      </Box>
-      <Alert status="warning" fontSize="sm" mt="3" fontWeight="medium">
+      <Alert status="warning" fontSize="sm" mt="3">
         <AlertIcon />
         If Margin Usage exceeds 100%, you will be liquidated and lose everything
         you deposited.

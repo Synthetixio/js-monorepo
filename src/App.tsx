@@ -44,8 +44,8 @@ export function App() {
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider
           theme={darkTheme({
-            accentColor: "#90cdf4",
-            accentColorForeground: "#000000",
+            accentColor: "#00a4c4",
+            accentColorForeground: "#ffffff",
             borderRadius: "small",
           })}
           chains={chains}
