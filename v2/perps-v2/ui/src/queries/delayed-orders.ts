@@ -1,16 +1,31 @@
 import { useQuery } from '@tanstack/react-query';
+import { BigNumber, utils } from 'ethers';
 import { PERPS_V2_DASHBOARD_GRAPH_URL } from '../utils/constants';
 import { useGetMarkets } from './markets';
 
 interface DelayedOrderResponse {
   data: {
-    futuresOrders: DelayedOrder[];
+    futuresOrders: {
+      id: string;
+      size: string;
+      market: string;
+      account: string;
+      orderId: string;
+      targetRoundId: string;
+      targetPrice: string;
+      marginDelta: string;
+      timestamp: string;
+      fee: string;
+      keeper: string;
+      status: string;
+      entity: string;
+    }[];
   };
 }
 
 export interface DelayedOrder {
   id: string;
-  size: string;
+  size: BigNumber;
   market: string;
   account: string;
   orderId: string;
@@ -56,10 +71,12 @@ export const useGetDelayedOrder = () => {
       body: JSON.stringify({ query }),
     });
     const { data }: DelayedOrderResponse = await response.json();
+
     return data.futuresOrders.map((data) => ({
       ...data,
+      size: utils.parseEther(data.size),
       market: marketData?.find((d) => d.id.toLowerCase() === data.market.toLowerCase())?.marketKey,
       entity: 'Futures Order',
-    }));
+    })) as DelayedOrder[];
   });
 };

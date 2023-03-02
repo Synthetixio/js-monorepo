@@ -27,6 +27,7 @@ const babelRule = {
   include: [
     // Folders included in build
     /v2\/contracts/,
+    /v3\/components/,
     /v3\/theme/,
     /v3\/lib/,
     /v3\/components/,

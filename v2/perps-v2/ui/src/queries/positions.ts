@@ -27,6 +27,7 @@ export interface FuturePosition {
   leverage: string;
   totalVolume: string;
   exitPrice: string;
+  trades: string;
   pnl: string;
   size: string;
   feesPaidToSynthetix: string;

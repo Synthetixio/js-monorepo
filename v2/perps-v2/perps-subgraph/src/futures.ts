@@ -8,7 +8,7 @@ import {
   MarginTransferred as MarginTransferredEvent,
   NextPriceOrderSubmitted as NextPriceOrderSubmittedEvent,
   NextPriceOrderRemoved as NextPriceOrderRemovedEvent,
-} from '../generated/PerpsV2Proxy/PerpsV2Proxy';
+} from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
 import {
   PositionLiquidated,
   Trader,
