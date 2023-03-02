@@ -26,7 +26,7 @@ function readDirectory(directoryPath) {
       result.push({
         abi: json.abi,
         address: json.address,
-        name: filePath,
+        name: filePath.split(".json")[0],
       });
     }
   });
