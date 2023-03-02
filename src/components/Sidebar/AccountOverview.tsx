@@ -1,3 +1,4 @@
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -39,10 +40,16 @@ export function AccountOverview() {
       </Flex>
 
       {/* Need the before/after component */}
-      <Box mb="1">Buying Power: $10,000</Box>
-      <Box mb="1">Free Collateral: $1,000</Box>
-      <Box mb="1">Margin Usage: 15%</Box>
-      <Box mb="1">Profit/Loss: 0</Box>
+      <Box mb="1">
+        Buying Power: $10,000 <ArrowForwardIcon /> $10,000
+      </Box>
+      <Box mb="1">
+        Free Collateral: $1,000 <ArrowForwardIcon /> $1,000
+      </Box>
+      <Box mb="1">
+        Margin Usage: 15% <ArrowForwardIcon /> 15%
+      </Box>
+      <Box mb="1">Profit/Loss: $0</Box>
       <Alert status="warning" fontSize="sm" mt="3" fontWeight="medium">
         <AlertIcon />
         If Margin Usage exceeds 100%, you will be liquidated and lose everything

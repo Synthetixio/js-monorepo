@@ -15,7 +15,7 @@ export function MarketSwitcher() {
 
   return (
     <>
-      <Flex onClick={onOpen} width="220px" p="4" align="center">
+      <Flex onClick={onOpen} width="180px" p="4" align="center">
         Market Selector
         <ArrowUpDownIcon ml="auto" />
       </Flex>

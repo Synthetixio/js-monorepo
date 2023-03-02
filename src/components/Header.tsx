@@ -11,7 +11,7 @@ export function Header() {
           <AccountSwitcher />
           <Box ml="4">
             {/** @see https://www.rainbowkit.com/docs/connect-button */}
-            <ConnectButton />
+            <ConnectButton accountStatus="address" />
           </Box>
         </Flex>
       </Box>

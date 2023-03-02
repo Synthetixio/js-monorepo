@@ -11,37 +11,50 @@ import {
 export function Stats() {
   return (
     <StatGroup display="flex" flex="1">
-      <Stat flex="1" p="4" borderLeft="1px solid rgba(255,255,255,0.2)">
+      <Stat
+        flex="1"
+        p="2"
+        borderLeft="1px solid rgba(255,255,255,0.2)"
+        height="100%"
+      >
         <StatLabel>Market Price</StatLabel>
-        <StatNumber>$123,123</StatNumber>
-        <StatHelpText display="inline">
-          <StatArrow type="decrease" />
-          9.05% (24 hr.)
-        </StatHelpText>
+        <StatNumber fontSize="xl">$123,123</StatNumber>
       </Stat>
-      <Stat flex="1" p="4" borderLeft="1px solid rgba(255,255,255,0.2)">
+      <Stat
+        flex="1"
+        p="2"
+        borderLeft="1px solid rgba(255,255,255,0.2)"
+        height="100%"
+      >
         <StatLabel>Index Price</StatLabel>
-        <StatNumber>$123,123</StatNumber>
+        <StatNumber fontSize="xl">$123,123</StatNumber>
       </Stat>
-      <Stat flex="1" p="4" borderLeft="1px solid rgba(255,255,255,0.2)">
-        <StatLabel>Funding Rate</StatLabel>
-        <StatNumber>-34%</StatNumber>
-        <StatHelpText display="inline">
-          <StatArrow type="decrease" />
-          9.05% (24 hr.)
-        </StatHelpText>
+      <Stat
+        flex="1"
+        p="2"
+        borderLeft="1px solid rgba(255,255,255,0.2)"
+        height="100%"
+      >
+        <StatLabel>1H Funding Rate</StatLabel>
+        <StatNumber fontSize="xl">-34%</StatNumber>
       </Stat>
-
-      <Stat flex="1" p="4" borderLeft="1px solid rgba(255,255,255,0.2)">
+      <Stat
+        flex="1"
+        p="2"
+        borderLeft="1px solid rgba(255,255,255,0.2)"
+        height="100%"
+      >
         <StatLabel>Open Interest (Long)</StatLabel>
-        <StatNumber>$100,000</StatNumber>
-        <StatHelpText>9.05% ($1,000,000 total)</StatHelpText>
+        <StatNumber fontSize="xl">$1.3M / $8.7M</StatNumber>
       </Stat>
-
-      <Stat flex="1" p="4" borderLeft="1px solid rgba(255,255,255,0.2)">
+      <Stat
+        flex="1"
+        p="2"
+        borderLeft="1px solid rgba(255,255,255,0.2)"
+        height="100%"
+      >
         <StatLabel>Open Interest (Short)</StatLabel>
-        <StatNumber>$100,000</StatNumber>
-        <StatHelpText>9.05% ($1,000,000 total)</StatHelpText>
+        <StatNumber fontSize="xl">$3.3M / $8.7M</StatNumber>
       </Stat>
     </StatGroup>
   );
