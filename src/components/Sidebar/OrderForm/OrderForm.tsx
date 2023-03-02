@@ -9,16 +9,23 @@ import {
   VStack,
   Box,
   Divider,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
   InputGroup,
-  InputRightAddon,
   InputRightElement,
   Heading,
+  InputRightAddon,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { LeverageSlider } from "../Leverage";
+
+export interface formValues {
+  amount: number;
+  leverage: number;
+}
+
+const initialValues: formValues = {
+  amount: 0,
+  leverage: 1,
+};
 
 export function OrderForm() {
   const [useNativeUnit, setUseNativeUnit] = useState(true);
@@ -29,15 +36,12 @@ export function OrderForm() {
   return (
     <Box flex="1" overflowY="scroll" p="4">
       <Formik
-        initialValues={{
-          amount: 0,
-          leverage: 0,
-        }}
+        initialValues={initialValues}
         onSubmit={(values) => {
-          // alert(JSON.stringify(values, null, 2));
+          alert(JSON.stringify(values, null, 2));
         }}
       >
-        {({ handleSubmit, errors, touched }) => {
+        {({ handleSubmit, setFieldValue }) => {
           return (
             <>
               <Heading size="sm" mb="3">
@@ -96,16 +100,7 @@ export function OrderForm() {
                   <FormControl>
                     <FormLabel htmlFor="leverage">Leverage</FormLabel>
                     <Flex align="center">
-                      <Box flex="3">
-                        <Slider aria-label="slider" defaultValue={30}>
-                          <SliderTrack bg={buy ? "green.900" : "red.900"}>
-                            <SliderFilledTrack
-                              bg={buy ? "green.400" : "red.400"}
-                            />
-                          </SliderTrack>
-                          <SliderThumb boxSize={6}></SliderThumb>
-                        </Slider>
-                      </Box>
+                      <LeverageSlider buy={buy} name="leverage" />
                       <Box flex="1" ml="4">
                         <InputGroup width="120px">
                           <Field
@@ -115,7 +110,13 @@ export function OrderForm() {
                             type="number"
                             variant="filled"
                           />
-                          <InputRightAddon children="×" />
+                          <InputRightAddon
+                            _hover={{ cursor: "pointer" }}
+                            children="×"
+                            onClick={() =>
+                              setFieldValue("leverage", "1", false)
+                            }
+                          />
                         </InputGroup>
                       </Box>
                     </Flex>
