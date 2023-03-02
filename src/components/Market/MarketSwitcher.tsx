@@ -35,7 +35,11 @@ export function MarketSwitcher() {
         <ModalContent>
           <ModalHeader>Markets</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>List here</ModalBody>
+          <ModalBody>
+            <Button mb="4" bg="whiteAlpha.100" width="100%">
+              ETH
+            </Button>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>

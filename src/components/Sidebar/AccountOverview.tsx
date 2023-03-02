@@ -28,7 +28,7 @@ export function AccountOverview() {
           Deposit / Withdraw
         </Button>
 
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} size="lg">
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Deposit / Withdraw Collateral</ModalHeader>
