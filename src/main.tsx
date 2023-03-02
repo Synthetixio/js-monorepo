@@ -1,11 +1,14 @@
 import "@rainbow-me/rainbowkit/styles.css";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { WagmiConfig } from "wagmi";
 
 import { App } from "./App";
 import { chains, client } from "./wagmi";
+
+import theme from "./theme";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 
 /**
  * Root providers and initialization of app
@@ -15,10 +18,20 @@ import { chains, client } from "./wagmi";
  */
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <WagmiConfig client={client}>
-      <RainbowKitProvider chains={chains}>
-        <App />
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <WagmiConfig client={client}>
+        <RainbowKitProvider
+          chains={chains}
+          theme={darkTheme({
+            accentColor: "#00a4c4",
+            accentColorForeground: "#ffffff",
+            borderRadius: "small",
+          })}
+        >
+          <App />
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </ChakraProvider>
   </React.StrictMode>,
 );

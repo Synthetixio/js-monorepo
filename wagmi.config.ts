@@ -1,39 +1,46 @@
 import { defineConfig } from "@wagmi/cli";
-import { foundry, react } from "@wagmi/cli/plugins";
-import * as chains from "wagmi/chains";
-import { ATTESTATION_STATION_ADDRESS } from "@eth-optimism/atst";
+import { react } from "@wagmi/cli/plugins";
+import fs from "fs";
+import path from "path";
 
-/**
- * Wagmi cli will automatically generate react hooks from your forge contracts
- * @see https://wagmi.sh/cli/getting-started
- * You can also generate hooks from etherscan
- * @see https://wagmi.sh/cli/plugins/etherscan
- * Or for erc20 erc721 tokens
- * @see https://wagmi.sh/cli/plugins/erc
- * Or from hardhat
- * @see https://wagmi.sh/cli/plugins/hardhat
- * Or from an arbitrary fetch request
- * @see https://wagmi.sh/cli/plugins/fetch
- *
- * You can also generate vanilla actions for @wagmi/core
- * @see https://wagmi.sh/cli/plugins/actions
- */
+const directoryPath = "./deployments";
+
+// Recursively read all files in the directory and its subdirectories
+function readDirectory(directoryPath) {
+  const files = fs.readdirSync(directoryPath);
+  let result = [];
+
+  files.forEach((file) => {
+    const filePath = path.join(directoryPath, file);
+    const stats = fs.statSync(filePath);
+
+    if (stats.isDirectory()) {
+      // Recurse into subdirectories
+      result.push(...readDirectory(filePath));
+    } else if (stats.isFile()) {
+      // Read contents of file
+      const fileContents = fs.readFileSync(filePath);
+      const json = JSON.parse(fileContents);
+
+      // Add to result array
+      result.push({
+        abi: json.abi,
+        address: json.address,
+        name: filePath,
+      });
+    }
+  });
+
+  return result;
+}
+
+// Call the function and log the result
+const contracts = readDirectory(directoryPath);
+
 export default defineConfig({
   out: "src/generated.ts",
+  contracts,
   plugins: [
-    /**
-     * Generates react hooks from your forge contracts
-     * @see https://wagmi.sh/cli/plugins/foundry
-     */
-    foundry({
-      deployments: {
-        AttestationStation: {
-          [chains.optimism.id]: ATTESTATION_STATION_ADDRESS,
-          [chains.optimismGoerli.id]: ATTESTATION_STATION_ADDRESS,
-          [chains.foundry.id]: ATTESTATION_STATION_ADDRESS,
-        },
-      },
-    }),
     /**
      * Generates react hooks from your abis
      * @see https://wagmi.sh/cli/plugins/react
