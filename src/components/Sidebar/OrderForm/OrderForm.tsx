@@ -97,7 +97,7 @@ export function OrderForm() {
                     <Divider flex="1" />
                   </Flex>
 
-                  <FormControl>
+                  <FormControl sx={{ marginTop: "0 !important" }}>
                     <FormLabel htmlFor="leverage">Leverage</FormLabel>
                     <Flex align="center">
                       <LeverageSlider buy={buy} name="leverage" />
