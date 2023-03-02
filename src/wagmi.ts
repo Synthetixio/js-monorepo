@@ -1,8 +1,27 @@
 import { configureChains, createClient } from "wagmi";
-import { foundry, optimism, optimismGoerli } from "wagmi/chains";
+import { optimism, optimismGoerli } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { infuraProvider } from "wagmi/providers/infura";
 import { getDefaultWallets } from "@rainbow-me/rainbowkit";
+
+const cannon = {
+  id: 13370,
+  name: "Cannon",
+  network: "cannon",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: {
+      http: ["http://0.0.0.0:8545"],
+    },
+    public: {
+      http: ["http://0.0.0.0:8545"],
+    },
+  },
+};
 
 /**
  * Tell wagmi which chains you want to support
@@ -10,7 +29,7 @@ import { getDefaultWallets } from "@rainbow-me/rainbowkit";
  * @see https://wagmi.sh/react/providers/configuring-chains
  */
 const { chains, provider, webSocketProvider } = configureChains(
-  [foundry],
+  [cannon],
   [
     infuraProvider({ apiKey: import.meta.env.VITE_INFURA_API_KEY! }),
     /**
@@ -19,8 +38,8 @@ const { chains, provider, webSocketProvider } = configureChains(
      */
     jsonRpcProvider({
       rpc: (chain) => {
-        if (chain.id === foundry.id) {
-          return { http: "http://localhost:8545" };
+        if (chain.id === cannon.id) {
+          return { http: "http://0.0.0.0:8545" };
         }
         return { http: chain.rpcUrls.default.http[0] };
       },
@@ -40,8 +59,7 @@ export { chains };
  * @see https://wagmi.sh/react/connectors
  */
 const { connectors } = getDefaultWallets({
-  appName:
-    "Optimism attestation station + Forge + Wagmi + RainbowKit + Vite App",
+  appName: "Synthetix Perps V3 Prototype",
   chains,
 });
 

@@ -2,29 +2,48 @@ import { useAccount } from "wagmi";
 import { Button } from "@chakra-ui/react";
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import {
-  useDeploymentsPerpsMarketAccountProxyBalanceOf,
-  useDeploymentsPerpsMarketAccountProxyTokenOfOwnerByIndex,
+  usePerpsMarketAccountProxyBalanceOf,
+  usePerpsMarketAccountProxyTokenOfOwnerByIndex,
+  usePerpsMarketPerpsMarketProxyCreateAccount,
 } from "../../generated";
+import { ethers } from "ethers";
 
 export function AccountSwitcher() {
   const { isConnected, address } = useAccount();
 
-  let accountTokens;
+  let firstAccountId;
+  /*
   if (isConnected && address) {
     const {
       isSuccess: isSuccessAccountTokensBalanceOf,
       data: accountTokensBalanceOfData,
-    } = useDeploymentsPerpsMarketAccountProxyBalanceOf({ args: [address] });
+    } = usePerpsMarketAccountProxyBalanceOf({ args: [address] });
 
-    if (isSuccessAccountTokensBalanceOf) {
+    if (isSuccessAccountTokensBalanceOf && accountTokensBalanceOfData?.gt(0)) {
       console.log(accountTokensBalanceOfData);
+      firstAccountId = usePerpsMarketAccountProxyTokenOfOwnerByIndex(
+        accountTokensBalanceOfData,
+      );
     }
-    //useDeploymentsPerpsMarketAccountProxyTokenOfOwnerByIndex
   }
+  */
+
+  const randomNumber = Math.floor(Math.random() * 10000) + 1;
+  const newId = ethers.BigNumber.from(randomNumber.toString());
+  const { write } = usePerpsMarketPerpsMarketProxyCreateAccount({
+    args: [newId],
+    mode: "recklesslyUnprepared",
+  });
 
   return isConnected ? (
-    <Button rightIcon={<TriangleDownIcon />} colorScheme="gray">
-      Account Switcher
-    </Button>
+    firstAccountId ? (
+      <Button isDisabled rightIcon={<TriangleDownIcon />} colorScheme="gray">
+        {firstAccountId.toString()}
+      </Button>
+    ) : (
+      <Button colorScheme="cyan" disabled={!write} onClick={() => write?.()}>
+        Create Account
+      </Button>
+    )
   ) : null;
 }

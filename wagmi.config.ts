@@ -22,11 +22,19 @@ function readDirectory(directoryPath) {
       const fileContents = fs.readFileSync(filePath);
       const json = JSON.parse(fileContents);
 
+      let name = filePath;
+      if (name.startsWith("deployments")) {
+        name = name.replace("deployments", "");
+      }
+      if (name.endsWith("json")) {
+        name = name.split("json")[0];
+      }
+
       // Add to result array
       result.push({
         abi: json.abi,
         address: json.address,
-        name: filePath.split(".json")[0],
+        name,
       });
     }
   });
