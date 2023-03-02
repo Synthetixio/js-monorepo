@@ -17,7 +17,6 @@ interface LeverageSliderProps {
 export const LeverageSlider = ({ buy, name }: LeverageSliderProps) => {
   const {
     values: { leverage },
-    touched,
     setFieldValue,
   } = useFormikContext<formValues>();
 

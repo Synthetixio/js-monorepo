@@ -12,9 +12,10 @@ import {
   InputGroup,
   InputRightElement,
   Heading,
+  InputRightAddon,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { LeverageInput, LeverageSlider } from "../Leverage";
+import { LeverageSlider } from "../Leverage";
 
 export interface formValues {
   amount: number;
@@ -23,7 +24,7 @@ export interface formValues {
 
 const initialValues: formValues = {
   amount: 0,
-  leverage: 0,
+  leverage: 1,
 };
 
 export function OrderForm() {
@@ -40,7 +41,7 @@ export function OrderForm() {
           alert(JSON.stringify(values, null, 2));
         }}
       >
-        {({ handleSubmit, errors, touched }) => {
+        {({ handleSubmit, setFieldValue }) => {
           return (
             <>
               <Heading size="sm" mb="3">
@@ -100,7 +101,24 @@ export function OrderForm() {
                     <FormLabel htmlFor="leverage">Leverage</FormLabel>
                     <Flex align="center">
                       <LeverageSlider buy={buy} name="leverage" />
-                      <LeverageInput name="leverage" />
+                      <Box flex="1" ml="4">
+                        <InputGroup width="120px">
+                          <Field
+                            as={Input}
+                            id="leverage"
+                            name="leverage"
+                            type="number"
+                            variant="filled"
+                          />
+                          <InputRightAddon
+                            _hover={{ cursor: "pointer" }}
+                            children="×"
+                            onClick={() =>
+                              setFieldValue("leverage", "1", false)
+                            }
+                          />
+                        </InputGroup>
+                      </Box>
                     </Flex>
                   </FormControl>
                   <Button
