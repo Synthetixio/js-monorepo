@@ -1,12 +1,4 @@
-import {
-  Box,
-  Stat,
-  StatArrow,
-  StatGroup,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
-} from "@chakra-ui/react";
+import { Stat, StatGroup, StatLabel, StatNumber } from "@chakra-ui/react";
 
 export function Stats() {
   return (

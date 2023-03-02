@@ -19,7 +19,7 @@ export function MarketSwitcher() {
     <>
       <Button
         onClick={onOpen}
-        width="180px"
+        width="140px"
         p="4"
         align="center"
         height="100%"
