@@ -18,7 +18,9 @@ export function Stats() {
         height="100%"
       >
         <StatLabel>Market Price</StatLabel>
-        <StatNumber fontSize="xl">$123,123</StatNumber>
+        <StatNumber fontSize="lg" fontFamily="mono" fontWeight="thin">
+          $123,123
+        </StatNumber>
       </Stat>
       <Stat
         flex="1"
@@ -27,7 +29,9 @@ export function Stats() {
         height="100%"
       >
         <StatLabel>Index Price</StatLabel>
-        <StatNumber fontSize="xl">$123,123</StatNumber>
+        <StatNumber fontSize="lg" fontFamily="mono" fontWeight="thin">
+          $123,123
+        </StatNumber>
       </Stat>
       <Stat
         flex="1"
@@ -36,7 +40,9 @@ export function Stats() {
         height="100%"
       >
         <StatLabel>1H Funding Rate</StatLabel>
-        <StatNumber fontSize="xl">-34%</StatNumber>
+        <StatNumber fontSize="lg" fontFamily="mono" fontWeight="thin">
+          -34%
+        </StatNumber>
       </Stat>
       <Stat
         flex="1"
@@ -45,7 +51,9 @@ export function Stats() {
         height="100%"
       >
         <StatLabel>Open Interest (Long)</StatLabel>
-        <StatNumber fontSize="xl">$1.3M / $8.7M</StatNumber>
+        <StatNumber fontSize="lg" fontFamily="mono" fontWeight="thin">
+          $1.3M/$8.7M
+        </StatNumber>
       </Stat>
       <Stat
         flex="1"
@@ -54,7 +62,9 @@ export function Stats() {
         height="100%"
       >
         <StatLabel>Open Interest (Short)</StatLabel>
-        <StatNumber fontSize="xl">$3.3M / $8.7M</StatNumber>
+        <StatNumber fontSize="lg" fontFamily="mono" fontWeight="thin">
+          $3.3M/$8.7M
+        </StatNumber>
       </Stat>
     </StatGroup>
   );

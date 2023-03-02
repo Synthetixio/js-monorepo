@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  Text,
 } from "@chakra-ui/react";
 import { Collateral } from "./Collateral";
 
@@ -41,15 +42,41 @@ export function AccountOverview() {
 
       {/* Need the before/after component */}
       <Box mb="1">
-        Buying Power: $10,000 <ArrowForwardIcon /> $10,000
+        Buying Power:{" "}
+        <Text display="inline" fontFamily="mono">
+          $10,000
+        </Text>{" "}
+        <ArrowForwardIcon />{" "}
+        <Text display="inline" fontFamily="mono">
+          $10,000
+        </Text>
       </Box>
       <Box mb="1">
-        Free Collateral: $1,000 <ArrowForwardIcon /> $1,000
+        Free Collateral:{" "}
+        <Text display="inline" fontFamily="mono">
+          $1,000
+        </Text>{" "}
+        <ArrowForwardIcon />{" "}
+        <Text display="inline" fontFamily="mono">
+          $1,000
+        </Text>
       </Box>
       <Box mb="1">
-        Margin Usage: 15% <ArrowForwardIcon /> 15%
+        Margin Usage:{" "}
+        <Text display="inline" fontFamily="mono">
+          15%
+        </Text>{" "}
+        <ArrowForwardIcon />{" "}
+        <Text display="inline" fontFamily="mono">
+          15%
+        </Text>
       </Box>
-      <Box mb="1">Profit/Loss: $0</Box>
+      <Box mb="1">
+        Profit/Loss:{" "}
+        <Text display="inline" fontFamily="mono">
+          $0
+        </Text>
+      </Box>
       <Alert status="warning" fontSize="sm" mt="3" fontWeight="medium">
         <AlertIcon />
         If Margin Usage exceeds 100%, you will be liquidated and lose everything

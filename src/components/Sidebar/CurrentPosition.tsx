@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Flex, Heading, Box, Badge } from "@chakra-ui/react";
+import { Flex, Heading, Box, Badge, Text } from "@chakra-ui/react";
 
 export function CurrentPosition() {
   return (
@@ -12,12 +12,31 @@ export function CurrentPosition() {
       </Flex>
       {/* before and after */}
       <Box mb="1">
-        Size: 1 ETH ($X) <ArrowForwardIcon /> 1 ETH ($X)
+        Size:{" "}
+        <Text display="inline" fontFamily="mono">
+          1 ETH ($X)
+        </Text>{" "}
+        <ArrowForwardIcon />{" "}
+        <Text display="inline" fontFamily="mono">
+          1 ETH ($X)
+        </Text>
       </Box>
       <Box mb="1">
-        Leverage: 1&times; <ArrowForwardIcon /> 2&times;
+        Leverage:{" "}
+        <Text display="inline" fontFamily="mono">
+          1&times;
+        </Text>{" "}
+        <ArrowForwardIcon />{" "}
+        <Text display="inline" fontFamily="mono">
+          2&times;
+        </Text>
       </Box>
-      <Box mb="1">Profit/Loss: $0</Box>
+      <Box mb="1">
+        Profit/Loss:{" "}
+        <Text display="inline" fontFamily="mono">
+          $0
+        </Text>
+      </Box>
     </Box>
   );
 }

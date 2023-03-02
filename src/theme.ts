@@ -13,6 +13,9 @@ const theme = extendTheme({
         backgroundColor: "#161a25",
       },
     },
+    fonts: {
+      mono: "Roboto Mono, monospace",
+    },
   },
 });
 
