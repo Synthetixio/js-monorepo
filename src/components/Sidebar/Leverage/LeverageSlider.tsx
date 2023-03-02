@@ -17,6 +17,7 @@ interface LeverageSliderProps {
 export const LeverageSlider = ({ buy, name }: LeverageSliderProps) => {
   const {
     values: { leverage },
+    touched,
     setFieldValue,
   } = useFormikContext<formValues>();
 
@@ -25,7 +26,9 @@ export const LeverageSlider = ({ buy, name }: LeverageSliderProps) => {
       <Slider
         aria-label="slider"
         value={leverage}
-        onChange={(val) => setFieldValue(name, val)}
+        onChange={(val) => {
+          setFieldValue(name, val, false);
+        }}
       >
         <SliderTrack bg={buy ? "green.900" : "red.900"}>
           <SliderFilledTrack bg={buy ? "green.400" : "red.400"} />

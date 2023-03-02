@@ -9,6 +9,7 @@ interface LeverageInputProps {
 export const LeverageInput = ({ name }: LeverageInputProps) => {
   const {
     values: { leverage },
+    touched,
     setFieldValue,
   } = useFormikContext<formValues>();
 
@@ -25,7 +26,7 @@ export const LeverageInput = ({ name }: LeverageInputProps) => {
         <InputRightAddon
           _hover={{ cursor: "pointer" }}
           children="×"
-          onClick={() => setFieldValue(name, "1")}
+          onClick={() => setFieldValue(name, "1", false)}
         />
       </InputGroup>
     </Box>
