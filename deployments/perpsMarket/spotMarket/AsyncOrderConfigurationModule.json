@@ -1,0 +1,236 @@
+{
+  "address": "0xe2c91D7F445eBb40EF1fb9410597D10224039c6c",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "marketOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "OnlyMarketOwner",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "SettlementStrategyAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
+      "name": "SettlementStrategyUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "components": [
+            {
+              "internalType": "enum SettlementStrategy.Type",
+              "name": "strategyType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementDelay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementWindowDuration",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "priceVerificationContract",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "feedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementReward",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "priceDeviationTolerance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "disabled",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct SettlementStrategy.Data",
+          "name": "strategy",
+          "type": "tuple"
+        }
+      ],
+      "name": "addSettlementStrategy",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSettlementStrategy",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "enum SettlementStrategy.Type",
+              "name": "strategyType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementDelay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementWindowDuration",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "priceVerificationContract",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "feedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementReward",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "priceDeviationTolerance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "disabled",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct SettlementStrategy.Data",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
+      "name": "setSettlementStrategyEnabled",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x71f3801097f0e459458c21b79cae64a9454846e7ffbff020cd4fe043c12a7cf9",
+  "sourceName": "contracts/modules/AsyncOrderConfigurationModule.sol",
+  "contractName": "AsyncOrderConfigurationModule",
+  "deployedOn": "contract.AsyncOrderConfigurationModule"
+}

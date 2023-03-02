@@ -1,5 +1,5 @@
 {
-  "address": "0xF018Eea75874094A3a7Fb431AE3876A203046b50",
+  "address": "0xA293974B4811fa891d6d9853c647A5C54408aE34",
   "abi": [
     {
       "inputs": [
@@ -42,6 +42,19 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getOracleManager",
+      "outputs": [
+        {
+          "internalType": "contract IOracleManager",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -88,7 +101,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x61dbf18ccd426721200664688f65f536e6cb7515efaa27bed480fe9bed38769f",
+  "deployTxnHash": "0x6421e1eb0b6d456985ced6cb42aceaa4cc2cb9a3a554ac18fcb0646570e231be",
   "sourceName": "contracts/modules/core/UtilsModule.sol",
   "contractName": "UtilsModule",
   "deployedOn": "contract.UtilsModule"

@@ -5,6 +5,10 @@ import { TriangleDownIcon } from "@chakra-ui/icons";
 export function AccountSwitcher() {
   const { isConnected } = useAccount();
 
+  if (isConnected) {
+    // get accounts
+  }
+
   return (
     isConnected && (
       <Button rightIcon={<TriangleDownIcon />} colorScheme="gray">

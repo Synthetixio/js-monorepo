@@ -3941,6 +3941,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "getOracleManager",
+      "outputs": [
+        {
+          "internalType": "contract IOracleManager",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",

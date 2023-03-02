@@ -1,5 +1,5 @@
 {
-  "address": "0xE88ff9BD5c3904b049978557EEa0e6cf339E7470",
+  "address": "0xD6C19E1593BAc5B0C9A5c917ced8927C5ca54bA9",
   "abi": [
     {
       "inputs": [
@@ -3941,6 +3941,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "getOracleManager",
+      "outputs": [
+        {
+          "internalType": "contract IOracleManager",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -4299,7 +4312,7 @@
     }
   ],
   "deployedOn": "router.CoreRouter",
-  "deployTxnHash": "0x31846974d64816c254f1c445c54ed4289a6f32bb9c6e2bbae8e77481b584196b",
+  "deployTxnHash": "0xe323fa79f9820a8b7db52ad44309acae95fea7ccd15ed69a9fd658ff0ecde193",
   "contractName": "CoreRouter",
   "sourceName": "CoreRouter.sol"
 }

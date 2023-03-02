@@ -446,7 +446,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xc2639ea985852df1f18e38a93fea60a8f5c52a0ab70b862672e04eafeca3a2a2",
+  "deployTxnHash": "0xaeddc6d710e4d79274967702f615de6e7c15fae3b963f4d6913c21a9cb9aca11",
   "sourceName": "contracts/modules/core/RewardsManagerModule.sol",
   "contractName": "RewardsManagerModule",
   "deployedOn": "contract.RewardsManagerModule"

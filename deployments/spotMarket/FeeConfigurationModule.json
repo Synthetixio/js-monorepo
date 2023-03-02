@@ -312,7 +312,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x6a81d62b50a85ce06a2b324e5b542e4328ebce454d5fb72807900ac7afb37aaa",
+  "deployTxnHash": "0xbe7f873d140e26b1cf966a9199a08dbedb964b7fc80102a6e5c8764059896785",
   "sourceName": "contracts/modules/FeeConfigurationModule.sol",
   "contractName": "FeeConfigurationModule",
   "deployedOn": "contract.FeeConfigurationModule"

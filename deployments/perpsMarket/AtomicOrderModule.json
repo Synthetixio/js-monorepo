@@ -1,0 +1,10 @@
+{
+  "address": "0xd9c6E345b7e8381b7327c8dB8C84ABafc6CbF119",
+  "abi": [],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x4809a67d7bf8331d4ed1e51500401b222ef7ad5594515575653b203dbd84257d",
+  "sourceName": "contracts/modules/AtomicOrderModule.sol",
+  "contractName": "AtomicOrderModule",
+  "deployedOn": "contract.AtomicOrderModule"
+}

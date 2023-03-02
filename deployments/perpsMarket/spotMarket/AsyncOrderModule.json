@@ -1,0 +1,424 @@
+{
+  "address": "0x6cF107A8B46df420bB8E67EE8e2443f9F496f92D",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expirationTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "IneligibleForCancellation",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "enum Transaction.Type",
+          "name": "transactionType",
+          "type": "uint8"
+        }
+      ],
+      "name": "InvalidAsyncTransactionType",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "asyncOrderId",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidClaim",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "settlementReward",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidCommitmentAmount",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "InvalidMarket",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "settlementStrategyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidSettlementStrategy",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MismatchAssociatedSystemKind",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "asyncOrderId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "settledAt",
+          "type": "uint256"
+        }
+      ],
+      "name": "OrderAlreadySettled",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToUint256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToInt256",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "asyncOrderId",
+          "type": "uint128"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint128",
+              "name": "id",
+              "type": "uint128"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "enum Transaction.Type",
+              "name": "orderType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountEscrowed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementStrategyId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "committedAmountUsd",
+              "type": "int256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minimumSettlementAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settledAt",
+              "type": "uint256"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct AsyncOrderClaim.Data",
+          "name": "asyncOrderClaim",
+          "type": "tuple"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "OrderCancelled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "enum Transaction.Type",
+          "name": "orderType",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amountProvided",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint128",
+          "name": "asyncOrderId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "OrderCommitted",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "asyncOrderId",
+          "type": "uint128"
+        }
+      ],
+      "name": "cancelOrder",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "enum Transaction.Type",
+          "name": "orderType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountProvided",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "settlementStrategyId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minimumSettlementAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "commitOrder",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "asyncOrderId",
+          "type": "uint128"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint128",
+              "name": "id",
+              "type": "uint128"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "enum Transaction.Type",
+              "name": "orderType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountEscrowed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementStrategyId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "committedAmountUsd",
+              "type": "int256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minimumSettlementAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settledAt",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct AsyncOrderClaim.Data",
+          "name": "asyncOrderClaim",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "asyncOrderId",
+          "type": "uint128"
+        }
+      ],
+      "name": "getAsyncOrderClaim",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint128",
+              "name": "id",
+              "type": "uint128"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "enum Transaction.Type",
+              "name": "orderType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountEscrowed",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementStrategyId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "committedAmountUsd",
+              "type": "int256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minimumSettlementAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settledAt",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct AsyncOrderClaim.Data",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x59b938690d61dbb447eaad1c8cc9a3b00b5d8992e07434da7139be4875a841e9",
+  "sourceName": "contracts/modules/AsyncOrderModule.sol",
+  "contractName": "AsyncOrderModule",
+  "deployedOn": "contract.AsyncOrderModule"
+}

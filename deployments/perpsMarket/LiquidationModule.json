@@ -1,0 +1,82 @@
+{
+  "address": "0x73FA003340c4E208Ba7Dd51F70C1Eb88a41E910C",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "availableCollateralUsd",
+          "type": "uint256"
+        }
+      ],
+      "name": "IneligibleForLiquidation",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToUint256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint128ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToInt256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToUint128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PositionOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ValueAlreadyInSet",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ValueNotInSet",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "liquidate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "liquidateFlagged",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xd35f72d113ec2f5eaaffd649f832fba7228a3ae1871e39f7bbe58949e6aa1fef",
+  "sourceName": "contracts/modules/LiquidationModule.sol",
+  "contractName": "LiquidationModule",
+  "deployedOn": "contract.LiquidationModule"
+}

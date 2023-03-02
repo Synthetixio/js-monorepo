@@ -198,7 +198,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x5907974528a869afc08c669815fa4842d6c22f7f0752a1479bf64ebfd1670dc2",
+  "deployTxnHash": "0xadfdc8755c710534b6f00f4eb2294f1b9d3b28fac386112efc5b7179ed0a2792",
   "sourceName": "contracts/modules/AtomicOrderModule.sol",
   "contractName": "AtomicOrderModule",
   "deployedOn": "contract.AtomicOrderModule"

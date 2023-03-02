@@ -1,5 +1,5 @@
 {
-  "address": "0xc2b36298B9e2260F6C335B835f2127907aC1228A",
+  "address": "0xF64A1E2230402b8FD3Bc65FFa8409f9FfFa981C6",
   "abi": [
     {
       "inputs": [
@@ -796,7 +796,7 @@
     }
   ],
   "deployedOn": "router.AccountRouter",
-  "deployTxnHash": "0x16f148352ea9a566b1b08245ecb436d23d704a9b0363d8a4b94cccd080da8249",
+  "deployTxnHash": "0x69d26a03ce3de6a880514c953655175331baea33688b271081bdfc0392b61e42",
   "contractName": "AccountRouter",
   "sourceName": "AccountRouter.sol"
 }

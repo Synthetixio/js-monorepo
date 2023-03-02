@@ -503,7 +503,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x6bba28969fbd3589f5789d4c690ee49244f8a6686eafd474f0c4af491ba5c5e3",
+  "deployTxnHash": "0xb8a1e65e1a82b172c9d9ce6f4f5c6ad83678794197124ccbcef9482f73998c7c",
   "sourceName": "contracts/modules/core/VaultModule.sol",
   "contractName": "VaultModule",
   "deployedOn": "contract.VaultModule"

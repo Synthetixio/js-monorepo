@@ -597,7 +597,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x7fdc909494cbca41d24b74fbcc337e23d3dd481e19990e313381e5767fc658cc",
+  "deployTxnHash": "0x59b6cccc7ae171533150e59517240b5660842e7f4f4f0024d2f7b53745dc4ed6",
   "sourceName": "contracts/modules/SpotMarketFactoryModule.sol",
   "contractName": "SpotMarketFactoryModule",
   "deployedOn": "contract.SpotMarketFactoryModule"

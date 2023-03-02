@@ -2539,7 +2539,7 @@
     }
   ],
   "deployedOn": "router.SpotMarketRouter",
-  "deployTxnHash": "0x472f6e1860880e8c33cf6cb8409dccd265f8c1638b338c1275e50e6b29a0cd6e",
+  "deployTxnHash": "0x09c19f8614feb0555cabef6c971da4db01522baeb62813864dc162bbf734ea94",
   "contractName": "SpotMarketRouter",
   "sourceName": "SpotMarketRouter.sol"
 }

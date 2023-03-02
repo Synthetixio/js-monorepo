@@ -1,0 +1,113 @@
+{
+  "address": "0x2973233296a6960740F035DB6bc58B890B2A2e94",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "AccountNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "FlaggedForLiquidation",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "available",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "required",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientCollateralAvailableForWithdraw",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "MaxCollateralExceeded",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToUint256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint128ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToInt256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToUint128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PositionOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "int256",
+          "name": "amountDelta",
+          "type": "int256"
+        }
+      ],
+      "name": "modifyCollateral",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x438ccaceee55e7eb3b5035bd3dc4e9bf281f904066c21704cd2c12ec2ad028fd",
+  "sourceName": "contracts/modules/CollateralModule.sol",
+  "contractName": "CollateralModule",
+  "deployedOn": "contract.CollateralModule"
+}

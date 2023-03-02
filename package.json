@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "synthetix": "cannon inspect synthetix-sandbox --write-deployments ./deployments && npm run wagmi && cannon synthetix-sandbox",
+    "synthetix": "cannon inspect synthetix-sandbox:3.1.0 --write-deployments ./deployments && npm run wagmi && cannon synthetix-sandbox",
     "build": "vite build",
     "build:production": "vite build",
     "preview": "vite preview",
