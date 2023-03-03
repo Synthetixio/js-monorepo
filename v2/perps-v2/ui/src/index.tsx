@@ -12,13 +12,31 @@ import { createRoot } from 'react-dom/client';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <>
+        <Header />
+        <App />
+      </>
+    ),
   },
   {
     path: ':walletAddress',
-    element: <Wallet />,
+    element: (
+      <>
+        <Header />
+        <Wallet />
+      </>
+    ),
   },
-  { path: '/actions', element: <Actions /> },
+  {
+    path: '/actions',
+    element: (
+      <>
+        <Header />
+        <Actions />
+      </>
+    ),
+  },
 ]);
 
 const container = document.querySelector('#app');
@@ -53,7 +71,6 @@ root.render(
         }
       >
         <Fonts />
-        <Header />
         <RouterProvider router={router} />
       </QueryClientProvider>
     </ChakraProvider>

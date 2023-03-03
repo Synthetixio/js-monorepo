@@ -6,7 +6,7 @@ dataSources:
     name: PerpsV2ProxyAAVEPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x3410215D8A0BD57dAc5911785F2A832402D5c828'
+      address: "0x3410215D8A0BD57dAc5911785F2A832402D5c828"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -50,7 +50,7 @@ dataSources:
     name: PerpsV2ProxyAPEPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xeff373efBD352531F680575796AE14764bE0391B'
+      address: "0xeff373efBD352531F680575796AE14764bE0391B"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -94,7 +94,7 @@ dataSources:
     name: PerpsV2ProxyATOMPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xcCdc541a12CA359216913c1893C080d951874346'
+      address: "0xcCdc541a12CA359216913c1893C080d951874346"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -138,7 +138,7 @@ dataSources:
     name: PerpsV2ProxyAUDPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x95b78e2E07090587754f3088Ef8a8232f1Ab7E47'
+      address: "0x95b78e2E07090587754f3088Ef8a8232f1Ab7E47"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -182,7 +182,7 @@ dataSources:
     name: PerpsV2ProxyAVAXPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xe140356AB1F0558e020610C9C6BccdAA4FDDE2f4'
+      address: "0xe140356AB1F0558e020610C9C6BccdAA4FDDE2f4"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -226,7 +226,7 @@ dataSources:
     name: PerpsV2ProxyAXSPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x9CE0556a563f18AeA0E89F407B0b1710F095956f'
+      address: "0x9CE0556a563f18AeA0E89F407B0b1710F095956f"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -270,7 +270,7 @@ dataSources:
     name: PerpsV2ProxyBNBPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x307072038D47bAE97CaE56C0eA87F2a5f0CD8389'
+      address: "0x307072038D47bAE97CaE56C0eA87F2a5f0CD8389"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -314,7 +314,7 @@ dataSources:
     name: PerpsV2ProxyBTCPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xd5844EA3701a4507C27ebc5EBA733E1Aa2915B31'
+      address: "0xd5844EA3701a4507C27ebc5EBA733E1Aa2915B31"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -358,7 +358,7 @@ dataSources:
     name: PerpsV2ProxyDOGEPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x3A4D5262b10C670a06550FCf7346cd408343B3FB'
+      address: "0x3A4D5262b10C670a06550FCf7346cd408343B3FB"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -402,7 +402,7 @@ dataSources:
     name: PerpsV2ProxyDYDXPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xb97e868a340BA00C10557c234C9F17cC41B0f667'
+      address: "0xb97e868a340BA00C10557c234C9F17cC41B0f667"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -446,7 +446,7 @@ dataSources:
     name: PerpsV2ProxyETHPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x111BAbcdd66b1B60A20152a2D3D06d36F8B5703c'
+      address: "0x111BAbcdd66b1B60A20152a2D3D06d36F8B5703c"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -490,7 +490,7 @@ dataSources:
     name: PerpsV2ProxyEURPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x9C54994933205E33628A8870c05AFF0878b1A56b'
+      address: "0x9C54994933205E33628A8870c05AFF0878b1A56b"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -534,7 +534,7 @@ dataSources:
     name: PerpsV2ProxyFLOWPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xcFA34059b55E1a1c820e4D62A6CA4f8e00522eBB'
+      address: "0xcFA34059b55E1a1c820e4D62A6CA4f8e00522eBB"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -578,7 +578,7 @@ dataSources:
     name: PerpsV2ProxyFTMPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x70362529cCfF83f586EB48e978eF3b60384cE050'
+      address: "0x70362529cCfF83f586EB48e978eF3b60384cE050"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -622,7 +622,7 @@ dataSources:
     name: PerpsV2ProxyGBPPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x534181B37bdaFdD1E28104Bc5117184F40e1056F'
+      address: "0x534181B37bdaFdD1E28104Bc5117184F40e1056F"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -666,7 +666,7 @@ dataSources:
     name: PerpsV2ProxyLINKPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x6141dcfF3494921e1C4Cdb115daD20C6656f6EFA'
+      address: "0x6141dcfF3494921e1C4Cdb115daD20C6656f6EFA"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -710,7 +710,7 @@ dataSources:
     name: PerpsV2ProxyMATICPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x7bBEa20899d358ed6d877f32af1BCb525a5fCF31'
+      address: "0x7bBEa20899d358ed6d877f32af1BCb525a5fCF31"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -754,7 +754,7 @@ dataSources:
     name: PerpsV2ProxyNEARPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xf503e527854b510C1952425d4b61c6bba40028CE'
+      address: "0xf503e527854b510C1952425d4b61c6bba40028CE"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -798,7 +798,7 @@ dataSources:
     name: PerpsV2ProxyOPPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x4926222EDDa82965Aa08080f281928f8cba5922A'
+      address: "0x4926222EDDa82965Aa08080f281928f8cba5922A"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -842,7 +842,7 @@ dataSources:
     name: PerpsV2ProxySOLPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x62068eBDCEbcB0eB984aBfEa4c7f9A244050e0Ca'
+      address: "0x62068eBDCEbcB0eB984aBfEa4c7f9A244050e0Ca"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -886,7 +886,7 @@ dataSources:
     name: PerpsV2ProxyUNIPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xaF11B4281259D7Ae31F945a2911Ba75347C2799d'
+      address: "0xaF11B4281259D7Ae31F945a2911Ba75347C2799d"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -930,7 +930,7 @@ dataSources:
     name: PerpsV2ProxyXAGPERP
     source:
       abi: PerpsV2Proxy
-      address: '0x78D1232449387571D652E2a893DC0feaC6E92436'
+      address: "0x78D1232449387571D652E2a893DC0feaC6E92436"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -974,7 +974,7 @@ dataSources:
     name: PerpsV2ProxyXAUPERP
     source:
       abi: PerpsV2Proxy
-      address: '0xcC312F5Bac1C36CC70AbcbE76De913633Af88FFB'
+      address: "0xcC312F5Bac1C36CC70AbcbE76De913633Af88FFB"
       startBlock: 0
     mapping:
       kind: ethereum/events

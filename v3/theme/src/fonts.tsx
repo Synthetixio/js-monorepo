@@ -64,11 +64,9 @@ export const Fonts = () => (
         font-family: 'Lustra Text';
         font-style: normal;
         font-display: swap;
-        font-weight: 700;
+        font-weight: 400;
         src: local('Lustra Text'),
-          url('https://fonts.synthetix.io/Lustra%Text.woff2') format('woff2'),
-          url('https://fonts.synthetix.io/Lustra%Text.woff') format('woff'),
-          url('https://fonts.synthetix.io/Lustra%20Text.otf') format('opentype');
+          url('https://fonts.synthetix.io/Lustra%20Text%20Thin.otf') format('opentype');
       }
     `}
   />
