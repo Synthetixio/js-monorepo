@@ -5,6 +5,7 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 interface LeverageSliderProps {
   buy: boolean;
@@ -19,7 +20,13 @@ export const LeverageSlider = ({
 }: LeverageSliderProps) => {
   return (
     <Box flex="3">
-      <Slider aria-label="slider" value={leverage} onChange={onChange}>
+      <Slider
+        aria-label="slider"
+        value={leverage}
+        onChange={onChange}
+        min={1}
+        max={100}
+      >
         <SliderTrack bg={buy ? "green.900" : "red.900"}>
           <SliderFilledTrack bg={buy ? "green.400" : "red.400"} />
         </SliderTrack>

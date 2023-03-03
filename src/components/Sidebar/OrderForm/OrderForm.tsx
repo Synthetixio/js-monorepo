@@ -11,10 +11,9 @@ import {
   InputGroup,
   InputRightElement,
   Heading,
-  InputRightAddon,
 } from "@chakra-ui/react";
 import { useReducer } from "react";
-import { LeverageSlider } from "../Leverage";
+import { LeverageInput, LeverageSlider } from "../Leverage";
 import { initialOrderFormState, reducer } from "./reducer";
 
 export function OrderForm() {
@@ -98,29 +97,11 @@ export function OrderForm() {
                     });
                   }}
                 />
-                <Box flex="1" ml="4">
-                  <InputGroup width="120px">
-                    <Input
-                      id="leverage"
-                      type="number"
-                      min={1}
-                      max={100}
-                      variant="filled"
-                      value={leverage}
-                      onChange={(val) =>
-                        dispatch({
-                          type: "set_leverage",
-                          payload: { leverage: parseInt(val.target.value) },
-                        })
-                      }
-                    />
-                    <InputRightAddon
-                      _hover={{ cursor: "pointer" }}
-                      children="×"
-                      onClick={() => dispatch({ type: "reset_leverage" })}
-                    />
-                  </InputGroup>
-                </Box>
+                <LeverageInput
+                  key="leverage"
+                  dispatch={dispatch}
+                  leverage={leverage}
+                />
               </Flex>
             </FormControl>
             <Button
