@@ -17,6 +17,7 @@ export const LeverageSlider = () => {
   return (
     <Box flex="3">
       <Slider
+        key="leverageSlider"
         aria-label="slider"
         value={leverage}
         onChange={(val) =>

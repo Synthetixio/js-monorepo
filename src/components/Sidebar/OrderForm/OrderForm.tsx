@@ -11,27 +11,14 @@ import {
   InputGroup,
   InputRightElement,
   Heading,
-  InputRightAddon,
 } from "@chakra-ui/react";
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+import { useContext } from "react";
 import { LeverageInput, LeverageSlider } from "../Leverage";
 import { OrderFormContext } from "./context";
-import { initialOrderFormState, reducer } from "./reducer";
 
 export function OrderForm() {
-  // const inputRef = useRef<HTMLInputElement | null>(null);
-  // const [inputLeverage, setInputLeverage] = useState(1);
-
   const {
-    state: { nativeUnit, buy },
+    state: { nativeUnit, buy, amount },
     dispatch,
   } = useContext(OrderFormContext);
 
@@ -45,31 +32,13 @@ export function OrderForm() {
     console.log("Submit");
   };
 
-  // const { nativeUnit, buy, leverage, amount } = state;
-
-  // useEffect(() => {
-  //   if (document.activeElement !== inputRef.current && inputRef.current) {
-  //     inputRef.current.value = `${leverage}`;
-  //   }
-  // }, [leverage]);
-
-  // const callBack = useCallback(
-  //   (val: ChangeEvent<HTMLInputElement>) => {
-  //     const newLeverage = isNaN(parseInt(val.target.value))
-  //       ? 1
-  //       : parseInt(val.target.value);
-  //     setInputLeverage(newLeverage);
-  //   },
-  //   [setInputLeverage],
-  // );
-
   return (
     <Box flex="1" overflowY="scroll" p="4">
       <>
         <Heading size="sm" mb="3">
           Market Order
         </Heading>
-        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+        <div key="form" style={{ width: "100%" }}>
           <VStack spacing={4} align="flex-start" w="100%">
             <Flex direction="row" width="100%" gap="4">
               <Button
@@ -101,6 +70,16 @@ export function OrderForm() {
                   name="amount"
                   type="number"
                   variant="filled"
+                  value={amount || ""}
+                  onChange={(val) => {
+                    const newAmount = isNaN(parseInt(val.target.value))
+                      ? null
+                      : parseInt(val.target.value);
+                    dispatch({
+                      type: "set_amount",
+                      payload: { amount: newAmount },
+                    });
+                  }}
                 />
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={toggleNativeUnit}>
@@ -132,7 +111,7 @@ export function OrderForm() {
               Submit {buy ? "Buy" : "Sell"} Order
             </Button>
           </VStack>
-        </form>
+        </div>
       </>
     </Box>
   );

@@ -1,7 +1,5 @@
-type Unit = "eth" | "usd";
-
 export interface OrderForm {
-  amount: number;
+  amount: number | null;
   leverage: number;
   buy: boolean;
   nativeUnit: boolean;
@@ -17,7 +15,7 @@ export const initialOrderFormState: OrderForm = {
 export type Actions =
   | { type: "set_leverage"; payload: { leverage: number } }
   | { type: "reset_leverage" }
-  | { type: "set_amount"; payload: { amount: number } }
+  | { type: "set_amount"; payload: { amount: number | null } }
   | { type: "reset_amount" }
   | { type: "set_buy"; payload: { buy: boolean } }
   | { type: "set_native_unit"; payload: { nativeUnit: boolean } };
