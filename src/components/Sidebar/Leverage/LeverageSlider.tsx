@@ -5,25 +5,23 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { OrderFormContext } from "../OrderForm";
 
-interface LeverageSliderProps {
-  buy: boolean;
-  leverage: number;
-  onChange: (newLeverage: number) => void;
-}
+export const LeverageSlider = () => {
+  const {
+    state: { leverage, buy },
+    dispatch,
+  } = useContext(OrderFormContext);
 
-export const LeverageSlider = ({
-  buy,
-  leverage,
-  onChange,
-}: LeverageSliderProps) => {
   return (
     <Box flex="3">
       <Slider
         aria-label="slider"
         value={leverage}
-        onChange={onChange}
+        onChange={(val) =>
+          dispatch({ type: "set_leverage", payload: { leverage: val } })
+        }
         min={1}
         max={100}
       >

@@ -11,25 +11,57 @@ import {
   InputGroup,
   InputRightElement,
   Heading,
+  InputRightAddon,
 } from "@chakra-ui/react";
-import { useReducer } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { LeverageInput, LeverageSlider } from "../Leverage";
+import { OrderFormContext } from "./context";
 import { initialOrderFormState, reducer } from "./reducer";
 
 export function OrderForm() {
-  const [state, dispatch] = useReducer(reducer, initialOrderFormState);
+  // const inputRef = useRef<HTMLInputElement | null>(null);
+  // const [inputLeverage, setInputLeverage] = useState(1);
+
+  const {
+    state: { nativeUnit, buy },
+    dispatch,
+  } = useContext(OrderFormContext);
 
   const toggleNativeUnit = () =>
     dispatch({
       type: "set_native_unit",
-      payload: { nativeUnit: !state.nativeUnit },
+      payload: { nativeUnit: !nativeUnit },
     });
 
   const handleSubmit = () => {
     console.log("Submit");
   };
 
-  const { nativeUnit, buy, leverage, amount } = state;
+  // const { nativeUnit, buy, leverage, amount } = state;
+
+  // useEffect(() => {
+  //   if (document.activeElement !== inputRef.current && inputRef.current) {
+  //     inputRef.current.value = `${leverage}`;
+  //   }
+  // }, [leverage]);
+
+  // const callBack = useCallback(
+  //   (val: ChangeEvent<HTMLInputElement>) => {
+  //     const newLeverage = isNaN(parseInt(val.target.value))
+  //       ? 1
+  //       : parseInt(val.target.value);
+  //     setInputLeverage(newLeverage);
+  //   },
+  //   [setInputLeverage],
+  // );
 
   return (
     <Box flex="1" overflowY="scroll" p="4">
@@ -87,21 +119,8 @@ export function OrderForm() {
             <FormControl>
               <FormLabel htmlFor="leverage">Leverage</FormLabel>
               <Flex align="center">
-                <LeverageSlider
-                  buy={buy}
-                  leverage={leverage}
-                  onChange={(newLeverage: number) => {
-                    dispatch({
-                      type: "set_leverage",
-                      payload: { leverage: newLeverage },
-                    });
-                  }}
-                />
-                <LeverageInput
-                  key="leverage"
-                  dispatch={dispatch}
-                  leverage={leverage}
-                />
+                <LeverageSlider />
+                <LeverageInput />
               </Flex>
             </FormControl>
             <Button
