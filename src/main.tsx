@@ -2,6 +2,8 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import { WagmiConfig } from "wagmi";
 
 import { App } from "./App";
@@ -9,6 +11,17 @@ import { chains, client } from "./wagmi";
 
 import theme from "./theme";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+
+const router = createBrowserRouter([
+  {
+    path: "/markets/:marketId",
+    element: <App />,
+  },
+  {
+    path: "/markets/:marketId/:accountId",
+    element: <App />,
+  },
+]);
 
 /**
  * Root providers and initialization of app
@@ -29,7 +42,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             borderRadius: "small",
           })}
         >
-          <App />
+          <RouterProvider router={router} />
         </RainbowKitProvider>
       </WagmiConfig>
     </ChakraProvider>
