@@ -1,5 +1,4 @@
 import {
-  Flex,
   Heading,
   Modal,
   ModalBody,
@@ -11,9 +10,20 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { ArrowUpDownIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+
+import markets from "../../markets";
 
 export function MarketSwitcher() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const marketIds = Object.keys(markets);
+
+  const navigate = useNavigate();
+
+  const handleMarketClick = (marketId: string) => {
+    onClose();
+    navigate(`/markets/${marketId}`);
+  };
 
   return (
     <>
@@ -36,9 +46,17 @@ export function MarketSwitcher() {
           <ModalHeader>Markets</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Button mb="4" bg="whiteAlpha.100" width="100%">
-              ETH
-            </Button>
+            {marketIds?.map((marketId) => (
+              <Button
+                key={marketId}
+                mb="4"
+                bg="whiteAlpha.100"
+                width="100%"
+                onClick={() => handleMarketClick(marketId)}
+              >
+                {marketId}
+              </Button>
+            ))}
           </ModalBody>
         </ModalContent>
       </Modal>
