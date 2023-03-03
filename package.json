@@ -28,7 +28,6 @@
     "@wagmi/cli": "^0.1.10",
     "buffer": "^6.0.3",
     "ethers": "^5.7.2",
-    "formik": "^2.2.9",
     "framer-motion": "^10.0.1",
     "process": "^0.11.10",
     "react": "^18.2.0",

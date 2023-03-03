@@ -5,29 +5,24 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@chakra-ui/react";
-import { Field, FormikProps, useFormikContext } from "formik";
-import { useEffect } from "react";
-import { formValues } from "../OrderForm";
 
 interface LeverageSliderProps {
   buy: boolean;
-  name: string;
+  leverage: number;
+  onChange: (newLeverage: number) => void;
 }
 
-export const LeverageSlider = ({ buy, name }: LeverageSliderProps) => {
-  const {
-    values: { leverage },
-    setFieldValue,
-  } = useFormikContext<formValues>();
-
+export const LeverageSlider = ({
+  buy,
+  leverage,
+  onChange,
+}: LeverageSliderProps) => {
   return (
     <Box flex="3">
       <Slider
         aria-label="slider"
-        value={leverage}
-        onChange={(val) => {
-          setFieldValue(name, val, false);
-        }}
+        // value={leverage}
+        // onChange={(val) => console.log(val)}
       >
         <SliderTrack bg={buy ? "green.900" : "red.900"}>
           <SliderFilledTrack bg={buy ? "green.400" : "red.400"} />

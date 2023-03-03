@@ -317,7 +317,7 @@
     "0"
   ],
   "linkedLibraries": {},
-  "deployTxnHash": "0x9ea25a01816e8b4f04ba1cdc7858cf5e76c068ab070b37de9b7e6c456e659955",
+  "deployTxnHash": "0xec7d245e4d0af4f433bedb6b1972728065f322aeaeee01c848e882dc4cbd76df",
   "sourceName": "src/MintableToken.sol",
   "contractName": "MintableToken",
   "deployedOn": "contract.MintableToken"
