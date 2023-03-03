@@ -9,14 +9,14 @@ import {
 } from "../../generated";
 import { ethers } from "ethers";
 import { useContractReads } from "wagmi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
 
 export function AccountSwitcher() {
   const { isConnected, address } = useAccount();
 
-  const { accountId: selectedAccountId, marketId } = useParams();
-  const navigate = useNavigate();
+  const [searchParams, setSelectedAccountId] = useSearchParams();
+  const selectedAccountId = searchParams.get("accountId");
 
   const { isLoading: acccountCountisLoading, data: acccountCountData } =
     usePerpsMarketAccountProxyBalanceOf({
@@ -30,8 +30,8 @@ export function AccountSwitcher() {
         if (!accountIdsData || accountIdsData.length == 0) {
           return;
         }
-        if (!selectedAccountId && accountIdsData[0]) {
-          navigate(`/markets/${marketId}/${accountIdsData[0]}`);
+        if (!selectedAccountId && accountIdsData.length) {
+          setSelectedAccountId({ accountId: accountIdsData[0].toString() });
         }
       },
       enabled: Boolean(!acccountCountisLoading && acccountCountData),
@@ -41,7 +41,7 @@ export function AccountSwitcher() {
             address: perpsMarketAccountProxyAddress,
             abi: perpsMarketAccountProxyABI,
             functionName: "tokenOfOwnerByIndex",
-            args: [ind],
+            args: [address, ind],
           };
         },
       ),
@@ -65,21 +65,23 @@ export function AccountSwitcher() {
   const createAccount = async () => {
     const transactionResponse = await writeCreateAccount();
     await transactionResponse.wait();
-    navigate(`/markets/${marketId}/${newId}`);
+    setSelectedAccountId({ accountId: newId.toString() });
   };
 
-  return selectedAccountId ? (
+  return accountIdsData?.length || selectedAccountId ? (
     <Menu>
       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-        Account #{selectedAccountId}
+        <>Account #{selectedAccountId}</>
       </MenuButton>
       <MenuList>
         {accountIdsData?.map((accountId) => (
           <MenuItem
             key={accountId as string}
-            onClick={() => navigate(`/markets/${marketId}/${accountId}`)}
+            onClick={() =>
+              setSelectedAccountId({ accountId: accountId as string })
+            }
           >
-            <>Account #{accountId}</>
+            <>Account #{accountId.toString()}</>
           </MenuItem>
         ))}
         <MenuItem key={accountIdsData?.length} onClick={createAccount}>
