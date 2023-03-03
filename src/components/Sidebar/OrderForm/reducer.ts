@@ -25,7 +25,8 @@ export type Actions =
 export function reducer(state: OrderForm, action: Actions): OrderForm {
   switch (action.type) {
     case "set_leverage":
-      return { ...state };
+      return { ...state, leverage: action.payload.leverage };
+
     case "reset_leverage":
       return {
         ...state,

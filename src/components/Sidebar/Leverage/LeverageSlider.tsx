@@ -19,11 +19,7 @@ export const LeverageSlider = ({
 }: LeverageSliderProps) => {
   return (
     <Box flex="3">
-      <Slider
-        aria-label="slider"
-        // value={leverage}
-        // onChange={(val) => console.log(val)}
-      >
+      <Slider aria-label="slider" value={leverage} onChange={onChange}>
         <SliderTrack bg={buy ? "green.900" : "red.900"}>
           <SliderFilledTrack bg={buy ? "green.400" : "red.400"} />
         </SliderTrack>

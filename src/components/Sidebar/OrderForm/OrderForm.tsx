@@ -13,7 +13,7 @@ import {
   Heading,
   InputRightAddon,
 } from "@chakra-ui/react";
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import { LeverageSlider } from "../Leverage";
 import { initialOrderFormState, reducer } from "./reducer";
 
@@ -31,8 +31,6 @@ export function OrderForm() {
   };
 
   const { nativeUnit, buy, leverage, amount } = state;
-
-  console.log(leverage);
 
   return (
     <Box flex="1" overflowY="scroll" p="4">
@@ -93,25 +91,33 @@ export function OrderForm() {
                 <LeverageSlider
                   buy={buy}
                   leverage={leverage}
-                  onChange={(newLeverage: number) =>
+                  onChange={(newLeverage: number) => {
                     dispatch({
                       type: "set_leverage",
                       payload: { leverage: newLeverage },
-                    })
-                  }
+                    });
+                  }}
                 />
                 <Box flex="1" ml="4">
                   <InputGroup width="120px">
                     <Input
                       id="leverage"
-                      name="leverage"
                       type="number"
+                      min={1}
+                      max={100}
                       variant="filled"
+                      value={leverage}
+                      onChange={(val) =>
+                        dispatch({
+                          type: "set_leverage",
+                          payload: { leverage: parseInt(val.target.value) },
+                        })
+                      }
                     />
                     <InputRightAddon
                       _hover={{ cursor: "pointer" }}
                       children="×"
-                      onClick={() => console.log("Reset leverage")}
+                      onClick={() => dispatch({ type: "reset_leverage" })}
                     />
                   </InputGroup>
                 </Box>
