@@ -1,6 +1,5 @@
 import { Flex, Box } from "@chakra-ui/react";
 import { AccountOverview, CurrentPosition, OrderForm } from "./Sidebar/index";
-import { OrderFormProvider } from "./Sidebar/OrderForm";
 
 export function Sidebar() {
   return (
@@ -14,9 +13,7 @@ export function Sidebar() {
           <AccountOverview />
           <CurrentPosition />
         </Box>
-        <OrderFormProvider>
-          <OrderForm />
-        </OrderFormProvider>
+        <OrderForm />
       </Flex>
     </Flex>
   );

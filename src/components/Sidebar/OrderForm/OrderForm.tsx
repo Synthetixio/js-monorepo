@@ -12,15 +12,19 @@ import {
   InputRightElement,
   Heading,
 } from "@chakra-ui/react";
-import { useContext } from "react";
-import { LeverageInput, LeverageSlider } from "../Leverage";
-import { OrderFormContext } from "./context";
+import { useReducer, useRef } from "react";
+import { LeverageInput, LeverageSlider, RefHandler } from "../Leverage";
+import { initialOrderFormState, reducer } from "./reducer";
+
+export const maxLeverage = 100;
 
 export function OrderForm() {
-  const {
-    state: { nativeUnit, buy, amount },
-    dispatch,
-  } = useContext(OrderFormContext);
+  const [state, dispatch] = useReducer(reducer, initialOrderFormState);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const sliderRef = useRef<RefHandler>(null);
+
+  const { amount, buy, nativeUnit, leverage } = state;
 
   const toggleNativeUnit = () =>
     dispatch({
@@ -29,7 +33,41 @@ export function OrderForm() {
     });
 
   const handleSubmit = () => {
-    console.log("Submit");
+    alert(JSON.stringify({ leverage, amount, nativeUnit, buy }));
+  };
+
+  const reset = () => {
+    dispatch({ type: "reset_leverage" });
+    if (inputRef.current && sliderRef?.current) {
+      const { thumbRef, trackRef } = sliderRef.current;
+      if (thumbRef.current && trackRef.current) {
+        thumbRef.current.style.left = "calc(0% - 12px)";
+        trackRef.current.style.width = "0%";
+      }
+      inputRef.current.value = "1";
+    }
+  };
+
+  const onChange = (
+    val: number | null,
+    controllingComponent: "input" | "slider",
+  ) => {
+    dispatch({ type: "set_leverage", payload: { leverage: val } });
+    if (controllingComponent === "input" && sliderRef?.current) {
+      const { thumbRef, trackRef } = sliderRef.current;
+      if (thumbRef.current && trackRef.current && val) {
+        thumbRef.current.style.left = `calc(${
+          val >= maxLeverage ? maxLeverage : val
+        }% - 12px)`;
+        trackRef.current.style.width = `${
+          val >= maxLeverage ? maxLeverage : val
+        }%`;
+      }
+    }
+
+    if (controllingComponent === "slider" && inputRef?.current) {
+      inputRef.current.value = val ? String(val) : "1";
+    }
   };
 
   return (
@@ -62,7 +100,7 @@ export function OrderForm() {
                 Sell
               </Button>
             </Flex>
-            <FormControl>
+            <FormControl key="amount">
               <FormLabel htmlFor="amount">Amount</FormLabel>
               <InputGroup>
                 <Input
@@ -95,18 +133,24 @@ export function OrderForm() {
               </Text>
               <Divider flex="1" />
             </Flex>
-            <FormControl>
+            <FormControl key="leverage">
               <FormLabel htmlFor="leverage">Leverage</FormLabel>
               <Flex align="center">
-                <LeverageSlider />
-                <LeverageInput />
+                <LeverageSlider onChange={onChange} buy={buy} ref={sliderRef} />
+                <LeverageInput
+                  onChange={onChange}
+                  reset={reset}
+                  ref={inputRef}
+                />
               </Flex>
             </FormControl>
             <Button
+              key="button"
               type="submit"
               size="lg"
               colorScheme={buy ? "green" : "red"}
               width="full"
+              onClick={handleSubmit}
             >
               Submit {buy ? "Buy" : "Sell"} Order
             </Button>

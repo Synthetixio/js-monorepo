@@ -1,6 +1,6 @@
 export interface OrderForm {
   amount: number | null;
-  leverage: number;
+  leverage: number | null;
   buy: boolean;
   nativeUnit: boolean;
 }
@@ -13,7 +13,10 @@ export const initialOrderFormState: OrderForm = {
 };
 
 export type Actions =
-  | { type: "set_leverage"; payload: { leverage: number } }
+  | {
+      type: "set_leverage";
+      payload: { leverage: number | null };
+    }
   | { type: "reset_leverage" }
   | { type: "set_amount"; payload: { amount: number | null } }
   | { type: "reset_amount" }
@@ -23,7 +26,10 @@ export type Actions =
 export function reducer(state: OrderForm, action: Actions): OrderForm {
   switch (action.type) {
     case "set_leverage":
-      return { ...state, leverage: action.payload.leverage };
+      return {
+        ...state,
+        leverage: action.payload.leverage,
+      };
 
     case "reset_leverage":
       return {
