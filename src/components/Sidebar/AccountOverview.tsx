@@ -31,7 +31,7 @@ export function AccountOverview() {
         <Modal isOpen={isOpen} onClose={onClose} size="lg">
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Deposit / Withdraw Collateral</ModalHeader>
+            <ModalHeader>Manage Collateral</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Collateral />
@@ -62,6 +62,18 @@ export function AccountOverview() {
           <ArrowForwardIcon mt="-1" />{" "}
           <Text display="inline" fontFamily="mono">
             $1,000
+          </Text>
+        </Box>
+      </Box>
+      <Box mb="1">
+        Leverage
+        <Box display="inline" float="right">
+          <Text display="inline" fontFamily="mono">
+            1&times;
+          </Text>{" "}
+          <ArrowForwardIcon mt="-1" />{" "}
+          <Text display="inline" fontFamily="mono">
+            2&times;
           </Text>
         </Box>
       </Box>

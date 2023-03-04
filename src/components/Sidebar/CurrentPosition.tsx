@@ -23,18 +23,6 @@ export function CurrentPosition() {
           </Text>
         </Box>
       </Box>
-      <Box mb="1">
-        Leverage
-        <Box display="inline" float="right">
-          <Text display="inline" fontFamily="mono">
-            1&times;
-          </Text>{" "}
-          <ArrowForwardIcon mt="-1" />{" "}
-          <Text display="inline" fontFamily="mono">
-            2&times;
-          </Text>
-        </Box>
-      </Box>
       <Box>
         Profit/Loss
         <Box display="inline" float="right">
