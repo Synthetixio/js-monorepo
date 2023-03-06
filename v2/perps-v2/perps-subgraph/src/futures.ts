@@ -451,6 +451,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
   // Update Position fee value
   if (!!tradeEntity) {
     tradeEntity.txHash = event.transaction.hash.toHex();
+    tradeEntity.offChainType = 'DelayedOrderRemoved';
     let positionEntity = FuturesPosition.load(tradeEntity.positionId);
     if (positionEntity) {
       positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
@@ -549,7 +550,7 @@ export function handleNextPriceOrderSubmitted(event: NextPriceOrderSubmittedEven
   futuresOrderEntity.targetPrice = BigInt.fromI32(0);
   futuresOrderEntity.marginDelta = BigInt.fromI32(0);
   futuresOrderEntity.timestamp = event.block.timestamp;
-  futuresOrderEntity.orderType = 'NextPrice';
+  futuresOrderEntity.orderType = 'NextPriceOrderSubmitted';
   futuresOrderEntity.status = 'Pending';
   futuresOrderEntity.keeper = Address.fromHexString('0x0000000000000000000000000000000000000000');
   futuresOrderEntity.txHash = event.transaction.hash.toHex();
@@ -607,7 +608,7 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
     if (tradeEntity) {
       // update order values
       futuresOrderEntity.status = 'Filled';
-      futuresOrderEntity.orderType = 'Next Price';
+      futuresOrderEntity.orderType = 'NextPriceOrderRemoved';
 
       // add fee if not self-executed
       if (futuresOrderEntity.keeper != futuresOrderEntity.account) {

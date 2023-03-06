@@ -29,6 +29,7 @@ type FuturesTrade @entity {
   account: Bytes!
   margin: BigInt!
   positionId: String!
+  futuresOrder: FuturesOrder
   size: BigInt!
   market: Bytes!
   price: BigInt!
@@ -45,9 +46,13 @@ enum FuturesTradeType {
   PositionClosed
   PositionModified
   Liquidated
-  DelayedOrderRemoved
-  DelayedOrderSubmitted
+}
+
+enum FuturesOrderType {
   DelayedOffchainSubmitted
+  DelayedOrderSubmitted
+  NextPriceOrderRemoved
+  NextPriceOrderSubmitted
 }
 
 enum FuturesOrderStatus {
@@ -102,7 +107,7 @@ type FuturesOrder @entity {
   targetPrice: BigInt!
   marginDelta: BigInt!
   timestamp: BigInt!
-  orderType: FuturesTradeType!
+  orderType: FuturesOrderType!
   status: FuturesOrderStatus!
   fee: BigInt!
   keeper: Bytes!

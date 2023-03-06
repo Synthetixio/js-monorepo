@@ -295,6 +295,23 @@ export class FuturesTrade extends Entity {
     this.set('positionId', Value.fromString(value));
   }
 
+  get futuresOrder(): string | null {
+    let value = this.get('futuresOrder');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set futuresOrder(value: string | null) {
+    if (!value) {
+      this.unset('futuresOrder');
+    } else {
+      this.set('futuresOrder', Value.fromString(<string>value));
+    }
+  }
+
   get size(): BigInt {
     let value = this.get('size');
     return value!.toBigInt();
