@@ -487,12 +487,10 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
   if (futuresOrderEntity) {
     futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
-    if (!!tradeEntity) {
-      futuresOrderEntity.positionId = tradeEntity.positionId;
-    }
 
     if (tradeEntity) {
       // update order values
+      futuresOrderEntity.positionId = tradeEntity.positionId;
       futuresOrderEntity.status = 'Filled';
       tradeEntity.type = 'PositionOpened';
 
@@ -612,15 +610,13 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
   }
 
   if (futuresOrderEntity) {
-    if (!!tradeEntity) {
-      futuresOrderEntity.positionId = tradeEntity.positionId;
-    }
     futuresOrderEntity.keeper = event.transaction.from;
     let tradeEntity = FuturesTrade.load(
       event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
     );
 
     if (tradeEntity) {
+      futuresOrderEntity.positionId = tradeEntity.positionId;
       // update order values
       futuresOrderEntity.status = 'Filled';
       futuresOrderEntity.orderType = 'NextPriceOrderRemoved';
