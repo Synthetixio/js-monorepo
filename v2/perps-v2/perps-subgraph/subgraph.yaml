@@ -6,8 +6,8 @@ dataSources:
     name: PerpsV2ProxyAAVEPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x3410215D8A0BD57dAc5911785F2A832402D5c828"
-      startBlock: 0
+      address: "0x5374761526175B59f1E583246E20639909E189cE"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -45,13 +45,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyAPEPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xeff373efBD352531F680575796AE14764bE0391B"
-      startBlock: 0
+      address: "0x5B6BeB79E959Aac2659bEE60fE0D0885468BF886"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -89,13 +89,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyATOMPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xcCdc541a12CA359216913c1893C080d951874346"
-      startBlock: 0
+      address: "0xbB16C7B3244DFA1a6BF83Fcce3EE4560837763CD"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -133,13 +133,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyAUDPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x95b78e2E07090587754f3088Ef8a8232f1Ab7E47"
-      startBlock: 0
+      address: "0x9De146b5663b82F44E5052dEDe2aA3Fd4CBcDC99"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -177,13 +177,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyAVAXPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xe140356AB1F0558e020610C9C6BccdAA4FDDE2f4"
-      startBlock: 0
+      address: "0xc203A12F298CE73E44F7d45A4f59a43DBfFe204D"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -221,13 +221,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyAXSPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x9CE0556a563f18AeA0E89F407B0b1710F095956f"
-      startBlock: 0
+      address: "0x3a52b21816168dfe35bE99b7C5fc209f17a0aDb1"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -265,13 +265,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyBNBPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x307072038D47bAE97CaE56C0eA87F2a5f0CD8389"
-      startBlock: 0
+      address: "0x0940B0A96C5e1ba33AEE331a9f950Bb2a6F2Fb25"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -309,13 +309,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyBTCPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xd5844EA3701a4507C27ebc5EBA733E1Aa2915B31"
-      startBlock: 0
+      address: "0x59b007E9ea8F89b069c43F8f45834d30853e3699"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -353,13 +353,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyDOGEPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x3A4D5262b10C670a06550FCf7346cd408343B3FB"
-      startBlock: 0
+      address: "0x98cCbC721cc05E28a125943D69039B39BE6A21e9"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -397,13 +397,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyDYDXPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xb97e868a340BA00C10557c234C9F17cC41B0f667"
-      startBlock: 0
+      address: "0x139F94E4f0e1101c1464a321CBA815c34d58B5D9"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -441,13 +441,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyETHPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x111BAbcdd66b1B60A20152a2D3D06d36F8B5703c"
-      startBlock: 0
+      address: "0x2B3bb4c683BFc5239B029131EEf3B1d214478d93"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -485,13 +485,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyEURPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x9C54994933205E33628A8870c05AFF0878b1A56b"
-      startBlock: 0
+      address: "0x87AE62c5720DAB812BDacba66cc24839440048d1"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -529,13 +529,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyFLOWPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xcFA34059b55E1a1c820e4D62A6CA4f8e00522eBB"
-      startBlock: 0
+      address: "0x27665271210aCff4Fab08AD9Bb657E91866471F0"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -573,13 +573,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyFTMPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x70362529cCfF83f586EB48e978eF3b60384cE050"
-      startBlock: 0
+      address: "0xC18f85A6DD3Bcd0516a1CA08d3B1f0A4E191A2C4"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -617,13 +617,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyGBPPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x534181B37bdaFdD1E28104Bc5117184F40e1056F"
-      startBlock: 0
+      address: "0x1dAd8808D8aC58a0df912aDC4b215ca3B93D6C49"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -661,13 +661,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyLINKPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x6141dcfF3494921e1C4Cdb115daD20C6656f6EFA"
-      startBlock: 0
+      address: "0x31A1659Ca00F617E86Dc765B6494Afe70a5A9c1A"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -705,13 +705,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyMATICPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x7bBEa20899d358ed6d877f32af1BCb525a5fCF31"
-      startBlock: 0
+      address: "0x074B8F19fc91d6B2eb51143E1f186Ca0DDB88042"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -749,13 +749,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyNEARPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xf503e527854b510C1952425d4b61c6bba40028CE"
-      startBlock: 0
+      address: "0xC8fCd6fB4D15dD7C455373297dEF375a08942eCe"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -793,13 +793,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyOPPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x4926222EDDa82965Aa08080f281928f8cba5922A"
-      startBlock: 0
+      address: "0x442b69937a0daf9D46439a71567fABE6Cb69FBaf"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -837,13 +837,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxySOLPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x62068eBDCEbcB0eB984aBfEa4c7f9A244050e0Ca"
-      startBlock: 0
+      address: "0x0EA09D97b4084d859328ec4bF8eBCF9ecCA26F1D"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -881,13 +881,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyUNIPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xaF11B4281259D7Ae31F945a2911Ba75347C2799d"
-      startBlock: 0
+      address: "0x4308427C463CAEAaB50FFf98a9deC569C31E4E87"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -925,13 +925,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyXAGPERP
     source:
       abi: PerpsV2Proxy
-      address: "0x78D1232449387571D652E2a893DC0feaC6E92436"
-      startBlock: 0
+      address: "0xdcB8438c979fA030581314e5A5Df42bbFEd744a0"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -969,13 +969,13 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyXAUPERP
     source:
       abi: PerpsV2Proxy
-      address: "0xcC312F5Bac1C36CC70AbcbE76De913633Af88FFB"
-      startBlock: 0
+      address: "0x549dbDFfbd47bD5639f9348eBE82E63e2f9F777A"
+      startBlock: 52456701
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -1013,4 +1013,4 @@ dataSources:
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
       file: ./src/futures.ts
-    network: optimism-goerli
+    network: optimism

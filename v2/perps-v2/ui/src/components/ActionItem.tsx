@@ -41,15 +41,20 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
             .concat(' sUSD');
         }
       }
-      return 'not found'.concat(event.entity);
 
-      // switch (event.entity) {
-      //   case 'Position Liquidated':
-      //     return 'Liquidation';
-      //   case 'Futures Order':
-      //     return 'Submit Order';
-      //   case 'Futures Trade':
-      //     return 'Futures Trade';
+      if (event.entity === 'Futures Order') {
+        if (event.status === 'Filled') {
+          return 'Submit: Open ' + (event.size.gt(0) ? 'Long' : 'Short') + ` ${event.status}`;
+        } else {
+          console.warn('event didnt got handled', event);
+        }
+      }
+
+      if (event.entity === 'Position Liquidated') {
+        return 'Liquidation';
+      }
+
+      return 'not found'.concat(event.entity);
     };
 
     const parsePrice = () => {
@@ -62,6 +67,9 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
     const parseFees = () => {
       if ('feesPaidToSynthetix' in event) {
         return '$' + numberWithCommas((Number(event.feesPaidToSynthetix) / 1e18).toFixed(2));
+      }
+      if ('fee' in event) {
+        return '$' + numberWithCommas((Number((event as EventType).fee) / 1e18).toFixed(2));
       }
       return '-';
     };
@@ -96,7 +104,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
       </Td>
       <Td>
         <Flex gap="2" alignItems="center">
-          <MarketIcon icon={event.market.split('-')[0].substring(1)} />
+          <MarketIcon icon={event.market?.split('-')[0].substring(1)} />
           <Flex flexDir="column">
             {event.market}
             <Flex gap="2">

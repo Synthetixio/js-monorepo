@@ -103,6 +103,7 @@ type FuturesOrder @entity {
   status: FuturesOrderStatus!
   fee: BigInt!
   keeper: Bytes!
+  positionId: String
 }
 
 type FundingRateUpdate @entity {

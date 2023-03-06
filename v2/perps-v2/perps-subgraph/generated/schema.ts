@@ -820,6 +820,23 @@ export class FuturesOrder extends Entity {
   set keeper(value: Bytes) {
     this.set('keeper', Value.fromBytes(value));
   }
+
+  get positionId(): string | null {
+    let value = this.get('positionId');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set positionId(value: string | null) {
+    if (!value) {
+      this.unset('positionId');
+    } else {
+      this.set('positionId', Value.fromString(<string>value));
+    }
+  }
 }
 
 export class FundingRateUpdate extends Entity {

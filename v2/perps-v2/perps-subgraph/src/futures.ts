@@ -460,6 +460,9 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
   if (futuresOrderEntity) {
     futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
+    if (!!tradeEntity) {
+      futuresOrderEntity.positionId = tradeEntity.positionId;
+    }
 
     if (tradeEntity) {
       // update order values
@@ -575,6 +578,9 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
   }
 
   if (futuresOrderEntity) {
+    if (!!tradeEntity) {
+      futuresOrderEntity.positionId = tradeEntity.positionId;
+    }
     futuresOrderEntity.keeper = event.transaction.from;
     let tradeEntity = FuturesTrade.load(
       event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
