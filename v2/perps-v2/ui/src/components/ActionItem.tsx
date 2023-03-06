@@ -55,6 +55,10 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
         return 'Liquidation';
       }
 
+      if (event.entity === 'Margin Transferred') {
+        return (event.size.gt(0) ? 'Deposit' : 'Withdraw') + ' Margin';
+      }
+
       return 'not found'.concat(event.entity);
     };
 
@@ -87,7 +91,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
     <Tr>
       <Td>
         <Flex flexDir="column">
-          <Text>
+          <Text fontSize="sm" fontWeight="500">
             {parsedEvent.action}{' '}
             <ExternalLink to={`https://optimistic.etherscan.io/tx/${event.txHash}`} />
           </Text>

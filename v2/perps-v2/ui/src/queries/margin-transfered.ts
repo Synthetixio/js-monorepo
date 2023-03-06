@@ -5,7 +5,7 @@ import { useGetMarkets } from './markets';
 
 interface FuturesMarginTransferGraphResponse {
   data: {
-    futuresMarginTransfer: {
+    futuresMarginTransfers: {
       id: string;
       timestamp: string;
       account: string;
@@ -28,7 +28,7 @@ export interface FuturesMarginTransfer {
 const gql = (data: TemplateStringsArray) => data[0];
 const query = gql`
   query FuturesMarginTransfer {
-    futuresMarginTransfer(first: 100) {
+    futuresMarginTransfers(first: 100) {
       id
       timestamp
       account
@@ -40,7 +40,7 @@ const query = gql`
 `;
 export const useGetFuturesMarginTransfer = () => {
   const { data: marketData } = useGetMarkets();
-  return useQuery(['markets'], async () => {
+  return useQuery(['marginTransferred'], async () => {
     const response = await fetch(OPTIMISM_GRAPH_URL, {
       method: 'POST',
       headers: {
@@ -51,10 +51,11 @@ export const useGetFuturesMarginTransfer = () => {
     });
     const { data }: FuturesMarginTransferGraphResponse = await response.json();
 
-    return data.futuresMarginTransfer.map((data) => ({
+    return data.futuresMarginTransfers.map((data) => ({
       ...data,
       size: utils.parseEther(data.size),
       market: marketData?.find((d) => d.id.toLowerCase() === data.market.toLowerCase())?.marketKey,
+      entity: 'Margin Transferred',
     })) as FuturesMarginTransfer[];
   });
 };
