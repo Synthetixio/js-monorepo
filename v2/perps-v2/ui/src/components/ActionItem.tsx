@@ -113,10 +113,11 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
           <Flex flexDir="column">
             {event.market}
             <Flex gap="2">
-              <Text color="gray.500">
-                {data?.futuresPosition.leverage &&
-                  (Number(data.futuresPosition.leverage) / 1e18).toFixed(2).concat('x')}
-              </Text>
+              {data?.futuresPosition.leverage && (
+                <Text color="gray.500">
+                  {(Number(data.futuresPosition.leverage) / 1e18).toFixed(2).concat('x')}
+                </Text>
+              )}
               {(event.entity === 'Futures Order' || event.entity === 'Futures Trade') && (
                 <Text
                   color={data?.futuresPosition.long || parsedEvent.isLong ? 'green.500' : 'red.500'}
