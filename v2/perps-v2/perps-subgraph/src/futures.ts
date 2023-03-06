@@ -372,8 +372,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         event.transaction.hash.toHex() + '-' + event.logIndex.toString()
       );
     }
-    tradeEntity.timestamp = event.block.timestamp;
-    tradeEntity.account = event.params.account;
 
     // recalculate pnl to ensure a 100% position loss
     // this calculation is required since the liquidation price could result in pnl slightly above/below 100%
@@ -388,6 +386,8 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     // temporarily set the pnl to the difference in the position pnl
     // we will add liquidation fees during the PositionLiquidated handler
     tradeEntity.margin = BigInt.fromI32(0);
+    tradeEntity.timestamp = event.block.timestamp;
+    tradeEntity.account = event.params.account;
     tradeEntity.market = event.address;
     tradeEntity.size = BigInt.fromI32(0);
     tradeEntity.price = event.params.lastPrice;
@@ -397,7 +397,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     tradeEntity.pnl = newTradePnl;
     tradeEntity.feesPaidToSynthetix = event.params.fee;
     tradeEntity.type = 'Liquidated';
-    tradeEntity.txHash = event.transaction.hash.toHex();
     tradeEntity.save();
 
     futuresPosition.pnl = newPositionPnl;
