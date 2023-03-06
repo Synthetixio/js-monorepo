@@ -482,7 +482,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
     if (tradeEntity) {
       // update order values
       futuresOrderEntity.status = 'Filled';
-      tradeEntity.type = futuresOrderEntity.orderType;
+      tradeEntity.type = 'PositionOpened';
 
       // add fee if not self-executed
       if (futuresOrderEntity.keeper != futuresOrderEntity.account) {
@@ -612,6 +612,7 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
       // update order values
       futuresOrderEntity.status = 'Filled';
       futuresOrderEntity.orderType = 'NextPriceOrderRemoved';
+      tradeEntity.type = 'PositionOpened';
 
       // add fee if not self-executed
       if (futuresOrderEntity.keeper != futuresOrderEntity.account) {
