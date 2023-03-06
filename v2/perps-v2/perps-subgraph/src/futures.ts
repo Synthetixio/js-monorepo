@@ -41,7 +41,6 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     tradeEntity.positionSize = BigInt.fromI32(0);
     tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(event.params.fee);
     tradeEntity.pnl = tradeEntity.pnl.plus(event.params.fee);
-    tradeEntity.txHash = event.transaction.hash.toHex();
     tradeEntity.save();
   }
 
@@ -397,6 +396,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     tradeEntity.pnl = newTradePnl;
     tradeEntity.feesPaidToSynthetix = event.params.fee;
     tradeEntity.type = 'Liquidated';
+    tradeEntity.txHash = event.transaction.hash.toHex();
     tradeEntity.save();
 
     futuresPosition.pnl = newPositionPnl;
