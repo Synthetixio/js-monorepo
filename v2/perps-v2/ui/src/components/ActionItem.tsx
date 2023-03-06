@@ -124,6 +124,11 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
                   {data?.futuresPosition.long || parsedEvent.isLong ? 'Long' : 'Short'}
                 </Text>
               )}
+              {event.entity === 'Position Liquidated' && (
+                <Text color={event.futuresPosition.long ? 'green.500' : 'red.500'}>
+                  {event.futuresPosition.long ? 'Long' : 'Short'}
+                </Text>
+              )}
             </Flex>
           </Flex>
         </Flex>
