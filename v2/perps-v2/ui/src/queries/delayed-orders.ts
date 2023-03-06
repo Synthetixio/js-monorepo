@@ -20,6 +20,7 @@ interface DelayedOrderResponse {
       keeper: string;
       status: string;
       entity: string;
+      txHash: string;
     }[];
   };
 }
@@ -39,6 +40,7 @@ export interface DelayedOrder {
   keeper: string;
   status: string;
   entity: string;
+  txHash: string;
 }
 
 const gql = (data: TemplateStringsArray) => data[0];
@@ -58,6 +60,7 @@ const query = gql`
       positionId
       keeper
       status
+      txHash
     }
   }
 `;

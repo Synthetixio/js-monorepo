@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { MarketIcon } from './MarketIcon';
 import { utils } from 'ethers';
 import formatDistance from 'date-fns/formatDistance';
+import { ExternalLink } from './ExternalLink';
 
 export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
   const { data } = useGetPosition(
@@ -86,7 +87,10 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
     <Tr>
       <Td>
         <Flex flexDir="column">
-          <Text>{parsedEvent.action}</Text>
+          <Text>
+            {parsedEvent.action}{' '}
+            <ExternalLink to={`https://optimistic.etherscan.io/tx/${event.txHash}`} />
+          </Text>
           <Text color="gray.500">{parsedEvent.timestamp}</Text>
         </Flex>
       </Td>
@@ -124,7 +128,13 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
           </Flex>
         </Flex>
       </Td>
-      <Td>{event.price ? '$' + event.price : '-'}</Td>
+      <Td>
+        {event.price
+          ? '$' + event.price
+          : data?.futuresPosition.lastPrice
+          ? '$' + numberWithCommas((Number(data.futuresPosition.lastPrice) / 1e18).toFixed(2))
+          : '-'}
+      </Td>
       <Td>${numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2))}</Td>
       <Td>{parsedEvent.fees}</Td>
     </Tr>

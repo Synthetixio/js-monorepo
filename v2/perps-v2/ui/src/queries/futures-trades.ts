@@ -21,6 +21,7 @@ interface FuturesTradesResponse {
       positionSize: string;
       price: string;
       entity: string;
+      txHash: string;
     }[];
   };
 }
@@ -40,6 +41,7 @@ export interface FuturesTrades {
   positionSize: BigNumber;
   price: string;
   entity: string;
+  txHash: string;
 }
 const gql = (data: TemplateStringsArray) => data[0];
 const query = gql`
@@ -58,6 +60,7 @@ const query = gql`
       positionClosed
       positionSize
       price
+      txHash
     }
   }
 `;

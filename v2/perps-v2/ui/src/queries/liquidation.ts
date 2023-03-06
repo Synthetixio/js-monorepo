@@ -20,6 +20,7 @@ interface LiquidationResponse {
       type: string;
       entity: string;
       futuresPosition: FuturePosition;
+      txHash: string;
     }[];
   };
 }
@@ -37,6 +38,7 @@ export interface PositionLiquidated {
   type: string;
   entity: string;
   futuresPosition: FuturePosition;
+  txHash: string;
 }
 
 const gql = (data: TemplateStringsArray) => data[0];
@@ -51,6 +53,7 @@ const query = gql`
       price
       fee
       block
+      txHash
       timestamp
       futuresPosition {
         id
@@ -72,6 +75,7 @@ const query = gql`
         trades
         totalVolume
         feesPaidToSynthetix
+        txHash
       }
     }
   }
