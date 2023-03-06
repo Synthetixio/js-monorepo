@@ -6,13 +6,13 @@ import { useGetPosition } from '../queries/position';
 import { Link } from 'react-router-dom';
 import { MarketIcon } from './MarketIcon';
 import { utils } from 'ethers';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-
-dayjs.extend(relativeTime);
+import formatDistance from 'date-fns/formatDistance';
 
 export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
-  const { data } = useGetPosition((event.entity === 'Futures Trade' && event.positionId) || '');
+  const { data } = useGetPosition(
+    ((event.entity === 'Futures Trade' || event.entity === 'Futures Order') && event.positionId) ||
+      ''
+  );
   const parsedEvent = useMemo(() => {
     const determineText = () => {
       if (event.entity === 'Futures Trade' && data?.futuresPosition.trades === '1') {
@@ -77,8 +77,9 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
     return {
       action: determineText(),
       price: parsePrice(),
-      timestamp: dayjs(Number(event.timestamp) * 1000).fromNow(),
+      timestamp: formatDistance(new Date(Number(event.timestamp) * 1000), new Date()),
       fees: parseFees(),
+      isLong: event.size.gt(0),
     };
   }, [data?.futuresPosition.trades, data?.futuresPosition.long, event]);
   return (
@@ -112,9 +113,11 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
                 {data?.futuresPosition.leverage &&
                   (Number(data.futuresPosition.leverage) / 1e18).toFixed(2).concat('x')}
               </Text>
-              {data?.futuresPosition.long && (
-                <Text color={data.futuresPosition.long ? 'green.500' : 'red.500'}>
-                  {data.futuresPosition.long ? 'Long' : 'Short'}
+              {(event.entity === 'Futures Order' || event.entity === 'Futures Trade') && (
+                <Text
+                  color={data?.futuresPosition.long || parsedEvent.isLong ? 'green.500' : 'red.500'}
+                >
+                  {data?.futuresPosition.long || parsedEvent.isLong ? 'Long' : 'Short'}
                 </Text>
               )}
             </Flex>

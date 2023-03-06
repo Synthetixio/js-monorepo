@@ -16,6 +16,7 @@ interface DelayedOrderResponse {
       marginDelta: string;
       timestamp: string;
       fee: string;
+      positionsId: string;
       keeper: string;
       status: string;
       entity: string;
@@ -34,6 +35,7 @@ export interface DelayedOrder {
   marginDelta: string;
   timestamp: string;
   fee: string;
+  positionsId: string;
   keeper: string;
   status: string;
   entity: string;
@@ -53,6 +55,7 @@ const query = gql`
       targetPrice
       marginDelta
       timestamp
+      positionId
       keeper
       status
     }

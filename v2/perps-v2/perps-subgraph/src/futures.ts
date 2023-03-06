@@ -31,6 +31,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   positionLiquidatedEntity.futuresPosition = event.address.toHex() + '-' + event.params.id.toHex();
   positionLiquidatedEntity.timestamp = event.block.timestamp;
   positionLiquidatedEntity.block = event.block.number;
+  positionLiquidatedEntity.txHash = event.transaction.hash.toHex();
 
   const tradeEntity = FuturesTrade.load(
     event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
@@ -40,6 +41,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     tradeEntity.positionSize = BigInt.fromI32(0);
     tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(event.params.fee);
     tradeEntity.pnl = tradeEntity.pnl.plus(event.params.fee);
+    tradeEntity.txHash = event.transaction.hash.toHex();
     tradeEntity.save();
   }
 
@@ -179,6 +181,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       .div(event.params.margin)
       .abs();
     futuresPosition.netFunding = BigInt.fromI32(0);
+    futuresPosition.txHash = event.transaction.hash.toHex();
     futuresPosition.totalVolume = event.params.tradeSize
       .times(event.params.lastPrice)
       .div(BigInt.fromI32(10).pow(18))
@@ -200,6 +203,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     tradeEntity.feesPaidToSynthetix = event.params.fee;
     tradeEntity.positionClosed = false;
     tradeEntity.type = 'PositionOpened';
+    tradeEntity.txHash = event.transaction.hash.toHex();
     tradeEntity.save();
   } else {
     // Position closed & not liquidated
@@ -243,6 +247,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       tradeEntity.feesPaidToSynthetix = event.params.fee;
       tradeEntity.positionClosed = true;
       tradeEntity.type = 'PositionClosed';
+      tradeEntity.txHash = event.transaction.hash.toHex();
       tradeEntity.save();
 
       trader.pnl = trader.pnl.plus(newPnl);
@@ -284,6 +289,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       tradeEntity.feesPaidToSynthetix = event.params.fee;
       tradeEntity.positionClosed = false;
       tradeEntity.type = 'PositionModified';
+      tradeEntity.txHash = event.transaction.hash.toHex();
 
       // if position changes sides, reset the entry price
       if (
@@ -358,9 +364,14 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
   // will trigger a trade entity liquidation to be created. guarding against this event for now.
   if (marginTransferEntity == null && event.params.size.isZero() && event.params.margin.isZero()) {
     // if its not a withdrawal (or deposit), it's a liquidation
-    let tradeEntity = new FuturesTrade(
+    let tradeEntity = FuturesTrade.load(
       event.transaction.hash.toHex() + '-' + event.logIndex.toString()
     );
+    if (!tradeEntity) {
+      tradeEntity = new FuturesTrade(
+        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+      );
+    }
     tradeEntity.timestamp = event.block.timestamp;
     tradeEntity.account = event.params.account;
 
@@ -386,6 +397,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     tradeEntity.pnl = newTradePnl;
     tradeEntity.feesPaidToSynthetix = event.params.fee;
     tradeEntity.type = 'Liquidated';
+    tradeEntity.txHash = event.transaction.hash.toHex();
     tradeEntity.save();
 
     futuresPosition.pnl = newPositionPnl;
@@ -439,6 +451,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
 
   // Update Position fee value
   if (!!tradeEntity) {
+    tradeEntity.txHash = event.transaction.hash.toHex();
     let positionEntity = FuturesPosition.load(tradeEntity.positionId);
     if (positionEntity) {
       positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
@@ -446,6 +459,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
       );
       positionEntity.save();
     }
+    tradeEntity.save();
   }
 
   // Update Trader fee value
@@ -479,6 +493,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
     } else {
       futuresOrderEntity.status = 'Cancelled';
     }
+    futuresOrderEntity.txHash = event.transaction.hash.toHex();
     futuresOrderEntity.save();
   }
 }
@@ -504,6 +519,7 @@ export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): 
     : 'DelayedOrderSubmitted';
   futuresOrderEntity.status = 'Pending';
   futuresOrderEntity.keeper = Address.fromHexString('0x0000000000000000000000000000000000000000');
+  futuresOrderEntity.txHash = event.transaction.hash.toHex();
   futuresOrderEntity.save();
 }
 
@@ -537,6 +553,7 @@ export function handleNextPriceOrderSubmitted(event: NextPriceOrderSubmittedEven
   futuresOrderEntity.orderType = 'NextPrice';
   futuresOrderEntity.status = 'Pending';
   futuresOrderEntity.keeper = Address.fromHexString('0x0000000000000000000000000000000000000000');
+  futuresOrderEntity.txHash = event.transaction.hash.toHex();
 
   futuresOrderEntity.save();
 }
@@ -568,6 +585,7 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
 
   // Update Position fee value
   if (!!tradeEntity) {
+    tradeEntity.txHash = event.transaction.hash.toHex();
     let positionEntity = FuturesPosition.load(tradeEntity.positionId);
     if (positionEntity) {
       positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
@@ -575,6 +593,7 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
       );
       positionEntity.save();
     }
+    tradeEntity.save();
   }
 
   if (futuresOrderEntity) {
@@ -601,6 +620,7 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
     } else {
       futuresOrderEntity.status = 'Cancelled';
     }
+    futuresOrderEntity.txHash = event.transaction.hash.toHex();
     futuresOrderEntity.save();
   }
 }

@@ -9,6 +9,7 @@ type PositionLiquidated @entity {
   futuresPosition: FuturesPosition!
   block: BigInt!
   timestamp: BigInt!
+  txHash: String!
 }
 
 type Trader @entity {
@@ -36,6 +37,7 @@ type FuturesTrade @entity {
   pnl: BigInt!
   feesPaidToSynthetix: BigInt!
   type: FuturesTradeType!
+  txHash: String!
 }
 
 enum FuturesTradeType {
@@ -86,6 +88,7 @@ type FuturesPosition @entity {
   netTransfers: BigInt!
   lastPrice: BigInt!
   avgEntryPrice: BigInt!
+  txHash: String!
   exitPrice: BigInt
 }
 
@@ -104,6 +107,7 @@ type FuturesOrder @entity {
   fee: BigInt!
   keeper: Bytes!
   positionId: String
+  txHash: String!
 }
 
 type FundingRateUpdate @entity {
