@@ -451,7 +451,8 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
   // Update Position fee value
   if (!!tradeEntity) {
     tradeEntity.txHash = event.transaction.hash.toHex();
-    tradeEntity.offChainType = 'DelayedOrderRemoved';
+    tradeEntity.futuresOrder =
+      event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString();
     let positionEntity = FuturesPosition.load(tradeEntity.positionId);
     if (positionEntity) {
       positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
@@ -586,6 +587,8 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
   // Update Position fee value
   if (!!tradeEntity) {
     tradeEntity.txHash = event.transaction.hash.toHex();
+    tradeEntity.futuresOrder =
+      event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString();
     let positionEntity = FuturesPosition.load(tradeEntity.positionId);
     if (positionEntity) {
       positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
