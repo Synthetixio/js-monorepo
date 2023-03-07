@@ -56,8 +56,8 @@ const query = gql`
       first: 1000
       oderBy: "timestamp"
       orderDirection: "desc"
-      where: { timestamp_gt: $oneHourAgo }
-    ) {
+    ) # where: { timestamp_gt: $oneHourAgo }
+    {
       id
       timestamp
       account
@@ -100,7 +100,6 @@ export const useGetFuturesTrades = () => {
         }),
       });
       const { data }: FuturesTradesResponse = await response.json();
-
       return data.futuresTrades.map((data) => ({
         ...data,
         size: utils.parseEther(data.size),

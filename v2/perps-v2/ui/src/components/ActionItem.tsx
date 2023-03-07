@@ -5,31 +5,40 @@ import { EventType } from '../EventType';
 import { useGetPosition } from '../queries/position';
 import { Link } from 'react-router-dom';
 import { MarketIcon } from './MarketIcon';
-import { utils } from 'ethers';
+import { BigNumber, utils } from 'ethers';
 import formatDistance from 'date-fns/formatDistance';
 import { ExternalLink } from './ExternalLink';
 
 export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
-  if (event.futuresOrder) {
+  if (event.txHash === '0x1ef3c6e3c8949471aae09c43f347e8fe713332ea01ef54a903bdd3a47a45116b') {
     console.log(event);
   }
   const { data } = useGetPosition(event.entity === 'Futures Trade' ? event.positionId : '');
   const parsedEvent = useMemo(() => {
     const determineText = () => {
-      if (event.entity === 'Futures Trade' && data?.futuresPosition) {
+      if (event.entity === 'Futures Trade') {
+        if (event.positionSize.eq(BigNumber.from('0'))) {
+          // TODO @MF refactor for better readability
+          if (!event.futuresOrder?.status) {
+            // how can it be filled and position size 0??
+            console.log(event);
+          }
+          return event.futuresOrder?.status === 'Filled'
+            ? 'Pending: Trade '.concat(event.size.gt(0) ? 'Long' : 'Short')
+            : 'Cancelled: Trade'.concat(event.size.gt(0) ? 'Long' : 'Short');
+        }
         switch (event.type) {
           case 'PositionOpened':
             if (event.futuresOrder) {
               return (
                 event.futuresOrder.status +
-                ': Open '.concat(data.futuresPosition.long ? 'Long' : 'Short')
+                ': Open '.concat(event.positionSize.gt(0) ? 'Long' : 'Short')
               );
             }
-            return 'Open '.concat(data.futuresPosition.long ? 'Long' : 'Short');
+            return 'Open '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
           case 'PositionClosed':
-            return 'Close '.concat(data.futuresPosition.long ? 'Long' : 'Short');
+            return 'Close '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
           case 'PositionModified':
-            console.log(event);
             return event.positionSize.gt(0)
               ? event.size.gt(0)
                 ? 'Increase Long, +' +
@@ -56,7 +65,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
         return (event.size.gt(0) ? 'Deposit' : 'Withdraw') + ' Margin';
       }
 
-      return 'not found'.concat(event.entity);
+      return 'Not Found '.concat(event.entity);
     };
 
     const parsePrice = () => {
@@ -79,7 +88,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
       timestamp: formatDistance(new Date(Number(event.timestamp) * 1000), new Date()),
       fees: parseFees(),
     };
-  }, [data?.futuresPosition, event]);
+  }, [event]);
   return (
     <Tr>
       <Td>
@@ -116,8 +125,8 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
                 </Text>
               )}
               {event.entity === 'Futures Trade' && (
-                <Text color={data?.futuresPosition.long ? 'green.500' : 'red.500'}>
-                  {data?.futuresPosition.long ? 'Long' : 'Short'}
+                <Text color={event.positionSize.gt(0) ? 'green.500' : 'red.500'}>
+                  {event.positionSize.gt(0) ? 'Long' : 'Short'}
                 </Text>
               )}
             </Flex>
