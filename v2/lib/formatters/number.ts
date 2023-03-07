@@ -1,7 +1,8 @@
-export function numberWithCommas(value: string) {
+export function numberWithCommas(value: string, decimals?: number) {
   const parts = value.split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return parts.join('.');
+  const joinedParts = parts.join('.');
+  return decimals ? joinedParts.substring(0, joinedParts.indexOf('.') + decimals + 1) : joinedParts;
 }
 
 interface Options extends Intl.NumberFormatOptions {

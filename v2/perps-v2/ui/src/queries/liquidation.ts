@@ -1,11 +1,27 @@
 import { useQuery } from '@tanstack/react-query';
+import { BigNumber, utils } from 'ethers';
 import { PERPS_V2_DASHBOARD_GRAPH_URL } from '../utils/constants';
+import { numberWithCommas } from '../utils/numbers';
 import { useGetMarkets } from './markets';
 import { FuturePosition } from './positions';
 
 interface LiquidationResponse {
   data: {
-    positionLiquidateds: PositionLiquidated[];
+    positionLiquidateds: {
+      id: string;
+      liquidator: string;
+      market: string;
+      marketAddress: string;
+      size: string;
+      price: string;
+      fee: string;
+      block: string;
+      timestamp: string;
+      type: string;
+      entity: string;
+      futuresPosition: FuturePosition;
+      txHash: string;
+    }[];
   };
 }
 
@@ -14,7 +30,7 @@ export interface PositionLiquidated {
   liquidator: string;
   market: string;
   marketAddress: string;
-  size: string;
+  size: BigNumber;
   price: string;
   fee: string;
   block: string;
@@ -22,6 +38,7 @@ export interface PositionLiquidated {
   type: string;
   entity: string;
   futuresPosition: FuturePosition;
+  txHash: string;
 }
 
 const gql = (data: TemplateStringsArray) => data[0];
@@ -36,6 +53,7 @@ const query = gql`
       price
       fee
       block
+      txHash
       timestamp
       futuresPosition {
         id
@@ -57,6 +75,7 @@ const query = gql`
         trades
         totalVolume
         feesPaidToSynthetix
+        txHash
       }
     }
   }
@@ -76,9 +95,11 @@ export function useGetLiquidations() {
     const { data }: LiquidationResponse = await response.json();
     return data.positionLiquidateds.map((position) => ({
       ...position,
+      size: utils.parseEther(position.size),
       market: markets?.find((d) => d.id.toLowerCase() === position.market.toLowerCase())?.marketKey,
       marketAddress: position.market.toLowerCase(),
+      price: numberWithCommas((Number(position.price) / 1e18).toString(), 2),
       entity: 'Position Liquidated',
-    }));
+    })) as PositionLiquidated[];
   });
 }

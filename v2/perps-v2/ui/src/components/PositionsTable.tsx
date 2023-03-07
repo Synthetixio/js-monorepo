@@ -80,6 +80,7 @@ export const PositionsTable: FC = () => {
     },
     sortConfig,
   });
+  // TODO @MF GET RID OF THAT AND USE the pagination in the v2 components
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + 50;
   const currentItems = positions?.futuresPositions?.slice(itemOffset, endOffset) || [];

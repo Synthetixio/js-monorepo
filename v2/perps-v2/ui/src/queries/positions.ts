@@ -27,10 +27,12 @@ export interface FuturePosition {
   leverage: string;
   totalVolume: string;
   exitPrice: string;
+  trades: string;
   pnl: string;
   size: string;
   feesPaidToSynthetix: string;
   maxLeverage: string;
+  txHash: string;
 }
 
 export interface Trader {
@@ -133,6 +135,7 @@ function getBody({
         trades
         totalVolume
         feesPaidToSynthetix
+        txHash
       }
       traders(first: 1, where: { id: $whereAccount }) {
         id
