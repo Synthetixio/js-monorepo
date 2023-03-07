@@ -55,8 +55,12 @@ export type SortConfig = [
 export const PositionsTable: FC = () => {
   const params = useParams();
   const toast = useToast();
+
   const { data } = useGetMarkets();
+
+  const [itemOffset, setItemOffset] = useState(0);
   const [sortConfig, setSortConfig] = useState<SortConfig>(['openTimestamp', false]);
+
   const { register, getValues, setValue, watch } = useForm({
     defaultValues: {
       asset: 'all',
@@ -71,6 +75,7 @@ export const PositionsTable: FC = () => {
       walletAddress: '',
     },
   });
+
   const { data: positions, isLoading } = useGetPositions({
     address: params.walletAddress,
     filterOptions: {
@@ -80,7 +85,7 @@ export const PositionsTable: FC = () => {
     },
     sortConfig,
   });
-  const [itemOffset, setItemOffset] = useState(0);
+
   const endOffset = itemOffset + 50;
   const currentItems = positions?.futuresPositions?.slice(itemOffset, endOffset) || [];
   const pageCount = positions?.futuresPositions

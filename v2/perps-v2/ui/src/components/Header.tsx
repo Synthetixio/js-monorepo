@@ -1,13 +1,39 @@
-import { Divider, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
+import { Flex, Button, Link } from '@chakra-ui/react';
+import { SNXIcon } from './Icons/';
+import { PerpsStats } from './PerpsStats';
+import { RightUpIcon } from './Icons/RightUpIcon';
 
 export const Header: FC = () => {
   return (
-    <>
-      <Flex as="header" p="2">
-        <Heading>Perps V2 Dashboard</Heading>
+    <Flex
+      as="header"
+      px="40px"
+      py={2}
+      bg="navy.900"
+      height="65px"
+      alignItems="center"
+      justifyContent="space-between"
+      borderBottomWidth="1px"
+      borderBottomColor="gray.900"
+    >
+      <Flex alignItems="center">
+        <SNXIcon />
+        <PerpsStats mt="3px" ml={3} />
       </Flex>
-      <Divider color="cyan.500" mb="2" />
-    </>
+      <Button
+        as={Link}
+        variant="outline"
+        href="https://synthetix.io/perps"
+        target="_blank"
+        rel="noopener"
+        _hover={{ textDecoration: 'none' }}
+        rightIcon={<RightUpIcon />}
+        fontFamily="inter"
+        fontWeight="700"
+      >
+        Trade
+      </Button>
+    </Flex>
   );
 };
