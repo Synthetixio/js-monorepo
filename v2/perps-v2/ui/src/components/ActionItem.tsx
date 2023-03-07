@@ -10,6 +10,9 @@ import formatDistance from 'date-fns/formatDistance';
 import { ExternalLink } from './ExternalLink';
 
 export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
+  if (event.futuresOrder) {
+    console.log(event);
+  }
   const { data } = useGetPosition(event.entity === 'Futures Trade' ? event.positionId : '');
   const parsedEvent = useMemo(() => {
     const determineText = () => {
