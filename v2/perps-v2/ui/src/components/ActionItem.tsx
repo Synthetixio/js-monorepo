@@ -5,7 +5,7 @@ import { EventType } from '../EventType';
 import { useGetPosition } from '../queries/position';
 import { Link } from 'react-router-dom';
 import { MarketIcon } from './MarketIcon';
-import { BigNumber, utils } from 'ethers';
+import { utils } from 'ethers';
 import formatDistance from 'date-fns/formatDistance';
 import { ExternalLink } from './ExternalLink';
 
@@ -17,18 +17,8 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
   const parsedEvent = useMemo(() => {
     const determineText = () => {
       if (event.entity === 'Futures Trade') {
-        if (event.positionSize.eq(BigNumber.from('0'))) {
-          // TODO @MF refactor for better readability
-          if (!event.futuresOrder?.status) {
-            // how can it be filled and position size 0??
-            console.log(event);
-          }
-          if (event.futuresOrder?.status === 'Cancelled') {
-            console.log('CANCELLED: ', event);
-          }
-          return event.futuresOrder?.status === 'Filled'
-            ? 'Pending: Trade '.concat(event.size.gt(0) ? 'Long' : 'Short')
-            : 'Cancelled: Trade'.concat(event.size.gt(0) ? 'Long' : 'Short');
+        if (event.positionClosed) {
+          return 'Close '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
         }
         switch (event.type) {
           case 'PositionOpened':
