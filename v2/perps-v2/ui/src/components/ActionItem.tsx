@@ -18,7 +18,8 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
     const determineText = () => {
       if (event.entity === 'Futures Trade') {
         if (event.positionClosed) {
-          return 'Close '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
+          console.log(event);
+          return 'Close '.concat(event.size.gt(0) ? 'Long' : 'Short');
         }
         switch (event.type) {
           case 'PositionOpened':
