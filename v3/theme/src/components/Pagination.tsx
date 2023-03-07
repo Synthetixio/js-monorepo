@@ -40,7 +40,7 @@ const getCurrentPage = ({
   }
 };
 
-export default function Pagination({
+export function Pagination({
   text = 'Show rows per page',
   dropdownOptions = [8, 16, 24],
   maxLength,

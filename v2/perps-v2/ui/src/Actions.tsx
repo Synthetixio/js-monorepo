@@ -1,5 +1,5 @@
 import { Box, Flex, Spinner, Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
-import Pagination from '@synthetixio/v3-theme/build/components/Pagination';
+import { Pagination } from '@synthetixio/v3-theme';
 import { FC, useMemo, useState } from 'react';
 import { ActionItem } from './components/ActionItem';
 import { EventType } from './EventType';
