@@ -1,5 +1,5 @@
 {
-  "address": "0xD1f82086E313dd574d6913a43f73479Ac5DE6890",
+  "address": "0x828EED723cAF0A8F822249231266E38dF614923C",
   "abi": [
     {
       "inputs": [
@@ -204,5 +204,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xac4d054d66fad1e7eef3e6ce788f636f47bea7a866a9b04e56144063d97257b6"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x8dfd79d48d268798be5a113221f6ce14222dc3f5ab184d597e67a8e0bc971d60",
+  "sourceName": "contracts/modules/InitialModuleBundle.sol",
+  "contractName": "InitialModuleBundle",
+  "deployedOn": "contract.InitialModuleBundle"
 }

@@ -1,5 +1,5 @@
 {
-  "address": "0x89CB5446B63f4A7807928Ef504ED501A6b18Ec3d",
+  "address": "0xCEc84BB584D392617e021535490376A68Cc10f35",
   "abi": [
     {
       "inputs": [],
@@ -347,5 +347,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x8f041a44fb2d665ea1ae75b2130e78ed908bbcc6fada7013d9a3b00915a1a7aa"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xc29a15f1ba8e7d8644f0d14819944df1460b186b290aef03ddf3cee61d0b9698",
+  "sourceName": "contracts/modules/core/MarketCollateralModule.sol",
+  "contractName": "MarketCollateralModule",
+  "deployedOn": "contract.MarketCollateralModule"
 }

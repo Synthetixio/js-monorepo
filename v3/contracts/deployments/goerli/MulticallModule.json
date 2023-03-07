@@ -1,5 +1,5 @@
 {
-  "address": "0x92aF1f0D609BC51483Caea1eD3B65Fe96b6Ba513",
+  "address": "0x631634Eecd434092117141c270763c0ac7651c77",
   "abi": [
     {
       "inputs": [
@@ -21,5 +21,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xa1e67da1446e3d3eaa3274b992e8ed161f2665a76ad3df8491ed6a40b518d9a5"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x07480909deee08a2b978c420e80bd2507fec9033d80c43776043331cc0dc63f0",
+  "sourceName": "contracts/modules/core/MulticallModule.sol",
+  "contractName": "MulticallModule",
+  "deployedOn": "contract.MulticallModule"
 }
