@@ -468,10 +468,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
     if (tradeEntity) {
       futuresOrderEntity.positionId = tradeEntity.positionId;
       futuresOrderEntity.status = 'Filled';
-      tradeEntity.type = 'PositionOpened';
-      tradeEntity.txHash = event.transaction.hash.toHex();
-      tradeEntity.futuresOrder = futuresOrderEntityId;
-      tradeEntity.save();
+
       let positionEntity = FuturesPosition.load(tradeEntity.positionId);
       if (positionEntity) {
         positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
@@ -485,11 +482,19 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
           event.params.keeperDeposit
         );
       }
+      tradeEntity.save();
     } else {
       futuresOrderEntity.status = 'Cancelled';
     }
     futuresOrderEntity.txHash = event.transaction.hash.toHex();
     futuresOrderEntity.save();
+    // Refactor @MF
+    if (tradeEntity) {
+      tradeEntity.type = 'PositionOpened';
+      tradeEntity.txHash = event.transaction.hash.toHex();
+      tradeEntity.futuresOrder = futuresOrderEntityId;
+      tradeEntity.save();
+    }
   }
 }
 
@@ -585,13 +590,9 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
     );
 
     if (tradeEntity) {
-      tradeEntity.txHash = event.transaction.hash.toHex();
-      tradeEntity.futuresOrder = futuresOrderEntityId;
-      tradeEntity.type = 'PositionOpened';
       futuresOrderEntity.positionId = tradeEntity.positionId;
       futuresOrderEntity.status = 'Filled';
       futuresOrderEntity.orderType = 'NextPriceOrderRemoved';
-      tradeEntity.save();
       let positionEntity = FuturesPosition.load(tradeEntity.positionId);
       if (positionEntity) {
         positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
@@ -605,10 +606,18 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
           event.params.keeperDeposit
         );
       }
+      tradeEntity.save();
     } else {
       futuresOrderEntity.status = 'Cancelled';
     }
     futuresOrderEntity.txHash = event.transaction.hash.toHex();
     futuresOrderEntity.save();
+    // Refactor @MF
+    if (tradeEntity) {
+      tradeEntity.txHash = event.transaction.hash.toHex();
+      tradeEntity.futuresOrder = futuresOrderEntityId;
+      tradeEntity.type = 'PositionOpened';
+      tradeEntity.save();
+    }
   }
 }
