@@ -1,6 +1,6 @@
 import { BigNumber, utils } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
-import { OPTIMISM_GRAPH_URL } from '../utils/constants';
+import { PERPS_V2_DASHBOARD_GRAPH_URL } from '../utils/constants';
 import { useGetMarkets } from './markets';
 
 interface FuturesMarginTransferGraphResponse {
@@ -27,8 +27,13 @@ export interface FuturesMarginTransfer {
 
 const gql = (data: TemplateStringsArray) => data[0];
 const query = gql`
-  query FuturesMarginTransfer {
-    futuresMarginTransfers(first: 100) {
+  query FuturesMarginTransfer($oneHourAgo: Int) {
+    futuresMarginTransfers(
+      first: 1000
+      oderBy: "timestamp"
+      orderDirection: "desc"
+      where: { timestamp_gt: $oneHourAgo }
+    ) {
       id
       timestamp
       account
@@ -38,24 +43,32 @@ const query = gql`
     }
   }
 `;
+
+const oneHourAgo = Math.floor(new Date().getTime() / 1000 - 3600);
+
 export const useGetFuturesMarginTransfer = () => {
   const { data: marketData } = useGetMarkets();
-  return useQuery(['marginTransferred'], async () => {
-    const response = await fetch(OPTIMISM_GRAPH_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({ query }),
-    });
-    const { data }: FuturesMarginTransferGraphResponse = await response.json();
+  return useQuery(
+    ['marginTransferred', JSON.stringify(marketData)],
+    async () => {
+      const response = await fetch(PERPS_V2_DASHBOARD_GRAPH_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({ query, variables: { oneHourAgo } }),
+      });
+      const { data }: FuturesMarginTransferGraphResponse = await response.json();
 
-    return data.futuresMarginTransfers.map((data) => ({
-      ...data,
-      size: utils.parseEther(data.size),
-      market: marketData?.find((d) => d.id.toLowerCase() === data.market.toLowerCase())?.marketKey,
-      entity: 'Margin Transferred',
-    })) as FuturesMarginTransfer[];
-  });
+      return data.futuresMarginTransfers.map((data) => ({
+        ...data,
+        size: utils.parseEther(data.size),
+        market: marketData?.find((d) => d.id.toLowerCase() === data.market.toLowerCase())
+          ?.marketKey,
+        entity: 'Margin Transferred',
+      })) as FuturesMarginTransfer[];
+    },
+    { refetchInterval: 30000 }
+  );
 };

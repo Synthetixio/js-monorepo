@@ -8,6 +8,7 @@ import { Header } from './components/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Actions } from './Actions';
 import { createRoot } from 'react-dom/client';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,7 @@ root.render(
           })
         }
       >
+        <ReactQueryDevtools />
         <Fonts />
         <RouterProvider router={router} />
       </QueryClientProvider>

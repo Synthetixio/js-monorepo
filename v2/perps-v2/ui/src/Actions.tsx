@@ -1,4 +1,15 @@
-import { Box, Flex, Spinner, Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Spinner,
+  Table,
+  TableContainer,
+  Tbody,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 import { Pagination } from '@synthetixio/v3-theme';
 import { FC, useMemo, useState } from 'react';
 import { ActionItem } from './components/ActionItem';
@@ -28,9 +39,9 @@ export const Actions: FC = () => {
     }
     return [];
   }, [futuresTrades, marginTransfer]);
-
   return (
     <Flex flexDir="column" justifyContent="center" alignItems="center" w="100%">
+      <Text>Refetching every 30 seconds</Text>
       <TableContainer m="4" w="100%">
         <Table>
           <Thead>
@@ -59,7 +70,7 @@ export const Actions: FC = () => {
       <Box m="4">
         <Pagination
           dropdownOptions={[25, 50, 100]}
-          maxLength={400}
+          maxLength={allEvents.length}
           onChange={setPage}
           text="Show rows per pages"
         />

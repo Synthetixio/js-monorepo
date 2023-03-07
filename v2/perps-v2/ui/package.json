@@ -36,7 +36,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime-corejs3": "^7.20.13",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
-    "@tanstack/react-query": "^4.24.6",
+    "@tanstack/react-query-devtools": "^4.24.6",
     "@types/react": "^18.0.28",
     "babel-loader": "^9.1.2",
     "babel-plugin-istanbul": "^6.1.1",
