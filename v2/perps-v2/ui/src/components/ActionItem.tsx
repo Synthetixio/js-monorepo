@@ -23,6 +23,9 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
             // how can it be filled and position size 0??
             console.log(event);
           }
+          if (event.futuresOrder?.status === 'Cancelled') {
+            console.log('CANCELLED: ', event);
+          }
           return event.futuresOrder?.status === 'Filled'
             ? 'Pending: Trade '.concat(event.size.gt(0) ? 'Long' : 'Short')
             : 'Cancelled: Trade'.concat(event.size.gt(0) ? 'Long' : 'Short');

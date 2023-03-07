@@ -43,6 +43,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     tradeEntity.positionSize = BigInt.fromI32(0);
     tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(event.params.fee);
     tradeEntity.pnl = tradeEntity.pnl.plus(event.params.fee);
+    tradeEntity.type = 'Liquidated';
     tradeEntity.save();
   }
 
