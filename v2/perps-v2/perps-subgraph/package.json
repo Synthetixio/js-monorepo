@@ -11,7 +11,7 @@
     "deploy:optimism": "yarn prepare && graph deploy --output-dir ./build/optimism --network optimism --product hosted-service fritzschoff/perps-dashboard",
     "build:optimism-goerli": "yarn codegen && graph build --output-dir ./build/optimism-goerli --network optimism-goerli",
     "deploy:optimism-goerli": "yarn prepare && graph deploy --output-dir ./build/optimism-goerli --network optimism-goerli --product hosted-service fritzschoff/perps-dashboard-op-goerli",
-    "test": "graph test"
+    "test": "yarn prepare && graph test"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.40.0",
