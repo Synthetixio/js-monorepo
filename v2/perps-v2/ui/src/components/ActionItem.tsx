@@ -14,7 +14,6 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
   const parsedEvent = useMemo(() => {
     const determineText = () => {
       if (event.entity === 'Futures Trade' && data?.futuresPosition) {
-        console.log(event.futuresOrder);
         switch (event.type) {
           case 'PositionOpened':
             if (event.futuresOrder) {
