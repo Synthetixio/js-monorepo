@@ -17,6 +17,12 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
         console.log(event.futuresOrder);
         switch (event.type) {
           case 'PositionOpened':
+            if (event.futuresOrder) {
+              return (
+                event.futuresOrder.status +
+                ': Open '.concat(data.futuresPosition.long ? 'Long' : 'Short')
+              );
+            }
             return 'Open '.concat(data.futuresPosition.long ? 'Long' : 'Short');
           case 'PositionClosed':
             return 'Close '.concat(data.futuresPosition.long ? 'Long' : 'Short');
