@@ -15,6 +15,8 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
   }
   const { data } = useGetPosition(event.entity === 'Futures Trade' ? event.positionId : '');
   const parsedEvent = useMemo(() => {
+    // parse everything here, what do we want to show for the size column? when we close a position, the size of the position for the size of the amount payed back?
+    // we defo want to show always the event.size => position information is just for leverage
     const determineText = () => {
       if (event.entity === 'Futures Trade') {
         if (event.positionClosed) {
