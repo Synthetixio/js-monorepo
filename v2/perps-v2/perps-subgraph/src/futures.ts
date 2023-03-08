@@ -364,7 +364,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         }
       }
     } else {
-      log.debug('Transferred Margin Event skipped', []);
+      log.debug('Transferred Margin Event skipped', [positionId]);
     }
   }
 
