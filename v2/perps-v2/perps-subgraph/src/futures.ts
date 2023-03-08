@@ -131,14 +131,10 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
 }
 
 export function handlePositionModified(event: PositionModifiedEvent): void {
-  if (event.params.lastPrice.isZero()) return;
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
   let trader = Trader.load(event.params.account.toHex());
   let synthetix = Synthetix.load('synthetix');
-  let tradeEntity = new FuturesTrade(
-    event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-  );
 
   if (!synthetix) {
     synthetix = new Synthetix('synthetix');
@@ -197,6 +193,9 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       .div(BigInt.fromI32(10).pow(18))
       .abs();
 
+    const tradeEntity = new FuturesTrade(
+      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+    );
     tradeEntity.timestamp = event.block.timestamp;
     tradeEntity.account = event.params.account;
     tradeEntity.positionId = positionId;
@@ -226,10 +225,15 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
     trader.margin = trader.margin.plus(event.params.margin.toBigDecimal());
     trader.pnl = trader.pnl.plus(event.params.fee.times(BigInt.fromI32(-1)));
+    tradeEntity.save();
     // else position is not new
   } else {
     // Position closed & not liquidated
-    if (event.params.size.isZero() && !event.params.tradeSize.isZero()) {
+    if (
+      event.params.size.isZero() &&
+      !event.params.tradeSize.isZero() &&
+      !event.params.fee.isZero()
+    ) {
       log.info('position closed', [positionId]);
 
       const newPnl = event.params.lastPrice
@@ -254,6 +258,10 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(event.params.margin)
         .abs();
 
+      const tradeEntity = new FuturesTrade(
+        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+      );
+
       tradeEntity.timestamp = event.block.timestamp;
       tradeEntity.account = event.params.account;
       tradeEntity.positionId = positionId;
@@ -274,6 +282,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
         event.params.fee.toBigDecimal()
       );
+      tradeEntity.save();
     }
     // If tradeSize and size are not zero, position got modified
     else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {
@@ -292,6 +301,10 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .times(event.params.lastPrice)
         .div(futuresPosition.margin.plus(event.params.margin))
         .abs();
+
+      const tradeEntity = new FuturesTrade(
+        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+      );
 
       tradeEntity.timestamp = event.block.timestamp;
       tradeEntity.account = event.params.account;
@@ -364,6 +377,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
           futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
         }
       }
+      tradeEntity.save();
     } else {
       log.debug('Transferred Margin Event skipped', [positionId]);
     }
@@ -392,6 +406,9 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
     // temporarily set the pnl to the difference in the position pnl
     // we will add liquidation fees during the PositionLiquidated handler
+    const tradeEntity = new FuturesTrade(
+      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+    );
     tradeEntity.margin = BigInt.fromI32(0);
     tradeEntity.timestamp = event.block.timestamp;
     tradeEntity.account = event.params.account;
@@ -408,6 +425,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
     futuresPosition.pnl = newPositionPnl;
     trader.pnl = tradeEntity.pnl.plus(newTradePnl);
+    tradeEntity.save();
   }
 
   // if there is an existing position...
@@ -434,26 +452,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     futuresPosition.save();
   }
 
-  if (!tradeEntity.timestamp) {
-    tradeEntity = new FuturesTrade(
-      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-    );
-    tradeEntity.timestamp = event.block.timestamp;
-    tradeEntity.account = event.params.account;
-    tradeEntity.margin = event.params.margin;
-    tradeEntity.positionId = positionId;
-    tradeEntity.size = event.params.size;
-    tradeEntity.market = event.address;
-    tradeEntity.price = event.params.lastPrice;
-    tradeEntity.positionSize = event.params.tradeSize;
-    tradeEntity.positionClosed = false;
-    tradeEntity.pnl = BigInt.fromI32(0);
-    tradeEntity.feesPaidToSynthetix = event.params.fee;
-    tradeEntity.type = 'Unknown';
-    tradeEntity.txHash = event.transaction.hash.toHex();
-  }
-
-  tradeEntity.save();
   futuresPosition.save();
   trader.save();
   synthetix.save();

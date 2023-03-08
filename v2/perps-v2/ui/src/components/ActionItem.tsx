@@ -22,7 +22,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
             if (!!event.futuresOrder?.status) {
               return event.futuresOrder.status
                 .toString()
-                .concat(' : Open ')
+                .concat(': Open ')
                 .concat(event.positionSize.gt(0) ? 'Long' : 'Short');
             }
             return 'Open '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
@@ -66,8 +66,14 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
       if (event.entity === 'Margin Transferred') {
         return (event.size.gt(0) ? 'Deposit' : 'Withdraw') + ' Margin';
       }
-      // console.info(event, data?.futuresPosition);
-      return 'Not Found '.concat(event.entity);
+
+      // DelayedOffChainOrder
+      if (event.futuresOrder?.status && event.type === 'PositionOpened') {
+        return event.futuresOrder.status
+          .toString()
+          .concat(': Open ')
+          .concat(event.positionSize.gt(0) ? 'Long' : 'Short');
+      }
     };
 
     const parseFees = () => {
@@ -95,6 +101,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
       size: parseSize(),
     };
   }, [event, data?.futuresPosition]);
+
   return (
     <Tr>
       <Td>
