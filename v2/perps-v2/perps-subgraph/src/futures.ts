@@ -292,9 +292,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(futuresPosition.margin.plus(event.params.margin))
         .abs();
 
-      let tradeEntity = new FuturesTrade(
-        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-      );
       tradeEntity.timestamp = event.block.timestamp;
       tradeEntity.account = event.params.account;
       tradeEntity.positionId = positionId;
