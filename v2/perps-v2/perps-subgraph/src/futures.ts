@@ -135,7 +135,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
   let futuresPosition = FuturesPosition.load(positionId);
   let trader = Trader.load(event.params.account.toHex());
   let synthetix = Synthetix.load('synthetix');
-  const tradeEntity = new FuturesTrade(
+  let tradeEntity = new FuturesTrade(
     event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
 
@@ -431,6 +431,25 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.minus(fundingAccrued.toBigDecimal());
     }
     futuresPosition.save();
+  }
+
+  if (!tradeEntity) {
+    tradeEntity = new FuturesTrade(
+      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+    );
+    tradeEntity.timestamp = event.block.timestamp;
+    tradeEntity.account = event.params.account;
+    tradeEntity.margin = event.params.margin;
+    tradeEntity.positionId = positionId;
+    tradeEntity.size = event.params.size;
+    tradeEntity.market = event.address;
+    tradeEntity.price = event.params.lastPrice;
+    tradeEntity.positionSize = event.params.tradeSize;
+    tradeEntity.positionClosed = false;
+    tradeEntity.pnl = BigInt.fromI32(0);
+    tradeEntity.feesPaidToSynthetix = event.params.fee;
+    tradeEntity.type = 'Unknown';
+    tradeEntity.txHash = event.transaction.hash.toHex();
   }
 
   tradeEntity.save();
