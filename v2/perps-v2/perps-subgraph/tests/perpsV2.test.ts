@@ -619,6 +619,7 @@ describe('Perps V2', () => {
       'FuturesTrade',
       `${positionUpdatedByTransferredMargin.address.toHex()}-${BigInt.fromI32(2).toString()}`
     );
+    assert.entityCount('FuturesTrade', 1);
   });
 
   test('funding recomputed', () => {
