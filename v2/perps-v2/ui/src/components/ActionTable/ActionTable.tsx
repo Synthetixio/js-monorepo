@@ -16,6 +16,7 @@ export const ActionTable = ({ isLoading }: ActionTableProps) => {
         backgroundColor="#0B0B22"
         borderRadius="5px"
         display="inline-block"
+        bg="navy.700"
       >
         <Thead border="none">
           <Tr border="none">
