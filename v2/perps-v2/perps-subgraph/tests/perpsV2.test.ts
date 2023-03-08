@@ -450,4 +450,88 @@ describe('Perps V2', () => {
     // SYNTHETIX
     assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', toEth(1).toString());
   });
+
+  test('open a short and close it', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const closePositionEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(0),
+      toEth(2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      2
+    );
+    handlePositionModified(closePositionEvent);
+
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'positionClosed',
+      'false'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'positionClosed',
+      'true'
+    );
+  });
+
+  test('open a short and modify it', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-4),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      2
+    );
+    handlePositionModified(positionModifiedEvent);
+
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'type',
+      'PositionModified'
+    );
+  });
 });

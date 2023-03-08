@@ -10,65 +10,64 @@ import formatDistance from 'date-fns/formatDistance';
 import { ExternalLink } from './ExternalLink';
 
 export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
-  if (event.txHash === '0x1ef3c6e3c8949471aae09c43f347e8fe713332ea01ef54a903bdd3a47a45116b') {
-    console.log(event);
-  }
   const { data } = useGetPosition(event.entity === 'Futures Trade' ? event.positionId : '');
   const parsedEvent = useMemo(() => {
-    // parse everything here, what do we want to show for the size column? when we close a position, the size of the position for the size of the amount payed back?
-    // we defo want to show always the event.size => position information is just for leverage
     const determineText = () => {
       if (event.entity === 'Futures Trade') {
-        if (event.positionClosed) {
-          console.log(event);
-          return 'Close '.concat(event.size.gt(0) ? 'Long' : 'Short');
-        }
-        switch (event.type) {
-          case 'PositionOpened':
-            if (event.futuresOrder) {
-              return (
-                event.futuresOrder.status +
-                ': Open '.concat(event.positionSize.gt(0) ? 'Long' : 'Short')
-              );
+        if (data?.futuresPosition) {
+          if (event.positionClosed) {
+            return 'Close '.concat(!event.size.gt(0) ? 'Long' : 'Short');
+          }
+          if (event.type === 'PositionOpened' && data.futuresPosition.trades === '1') {
+            if (!!event.futuresOrder?.status) {
+              return event.futuresOrder.status
+                .toString()
+                .concat(' : Open ')
+                .concat(event.positionSize.gt(0) ? 'Long' : 'Short');
             }
             return 'Open '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
-          case 'PositionClosed':
-            return 'Close '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
-          case 'PositionModified':
+          }
+          // Should never be triggered because of the `event.positionClosed` if statement, but just to make sure
+          if (event.type === 'PositionClosed' && event.size.eq(0)) {
+            return 'Close '.concat(!event.size.gt(0) ? 'Long' : 'Short');
+          }
+
+          if (event.type === 'PositionModified') {
             return event.positionSize.gt(0)
               ? event.size.gt(0)
-                ? 'Increase Long, +' +
-                  numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)) +
-                  ' sUSD'
-                : 'Decrease Long, ' +
-                  numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)) +
-                  ' sUSD'
+                ? 'Increase Long, +'.concat(
+                    numberWithCommas(
+                      (Number(utils.formatEther(event.size)) / 1e18).toFixed(2)
+                    ).concat(' sUSD')
+                  )
+                : 'Decrease Long, '.concat(
+                    numberWithCommas(
+                      (Number(utils.formatEther(event.size)) / 1e18).toFixed(2)
+                    ).concat(' sUSD')
+                  )
               : event.size.gt(0)
-              ? 'Decrease Short, ' +
-                numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)) +
-                ' sUSD'
-              : 'Increase Short, ' +
-                numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)) +
-                ' sUSD';
-          case 'Liquidated':
-            return 'Liquidation';
-          default:
-            return '?';
+              ? 'Decrease Short, '.concat(
+                  numberWithCommas(
+                    (Number(utils.formatEther(event.size)) / 1e18).toFixed(2)
+                  ).concat(' sUSD')
+                )
+              : 'Increase Short, '.concat(
+                  numberWithCommas(
+                    (Number(utils.formatEther(event.size)) / 1e18).toFixed(2)
+                  ).concat(' sUSD')
+                );
+          }
         }
+      }
+      if (event.type === 'Liquidated') {
+        return 'Liquidation';
       }
 
       if (event.entity === 'Margin Transferred') {
         return (event.size.gt(0) ? 'Deposit' : 'Withdraw') + ' Margin';
       }
-
+      // console.info(event, data?.futuresPosition);
       return 'Not Found '.concat(event.entity);
-    };
-
-    const parsePrice = () => {
-      if (event.entity === 'Futures Trade') {
-        return event.price;
-      }
-      return '?';
     };
 
     const parseFees = () => {
@@ -78,13 +77,24 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
       return '-';
     };
 
+    const isLong = () => {
+      if (event.entity === 'Futures Trade') {
+        return event.positionClosed ? !event.size.gt(0) : event.size.gt(0);
+      }
+      return null;
+    };
+
+    const parseSize = () =>
+      '$ '.concat(numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)));
+
     return {
       action: determineText(),
-      price: parsePrice(),
       timestamp: formatDistance(new Date(Number(event.timestamp) * 1000), new Date()),
       fees: parseFees(),
+      isLong: isLong(),
+      size: parseSize(),
     };
-  }, [event]);
+  }, [event, data?.futuresPosition]);
   return (
     <Tr>
       <Td>
@@ -120,9 +130,9 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
                   {(Number(data.futuresPosition.leverage) / 1e18).toFixed(2).concat('x')}
                 </Text>
               )}
-              {event.entity === 'Futures Trade' && (
-                <Text color={event.positionSize.gt(0) ? 'green.500' : 'red.500'}>
-                  {event.positionSize.gt(0) ? 'Long' : 'Short'}
+              {parsedEvent.isLong !== null && (
+                <Text color={parsedEvent.isLong ? 'green.500' : 'red.500'}>
+                  {parsedEvent.isLong ? 'Long' : 'Short'}
                 </Text>
               )}
             </Flex>
@@ -130,7 +140,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
         </Flex>
       </Td>
       <Td>{event.price ? '$' + event.price : '-'}</Td>
-      <Td>${numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2))}</Td>
+      <Td>{parsedEvent.size}</Td>
       <Td>{parsedEvent.fees}</Td>
     </Tr>
   );
