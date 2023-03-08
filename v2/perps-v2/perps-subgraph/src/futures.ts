@@ -131,6 +131,7 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
 }
 
 export function handlePositionModified(event: PositionModifiedEvent): void {
+  if (event.params.lastPrice.isZero()) return;
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
   let trader = Trader.load(event.params.account.toHex());
@@ -433,7 +434,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     futuresPosition.save();
   }
 
-  if (!tradeEntity) {
+  if (!tradeEntity.timestamp) {
     tradeEntity = new FuturesTrade(
       event.transaction.hash.toHex() + '-' + event.logIndex.toString()
     );
