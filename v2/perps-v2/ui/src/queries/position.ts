@@ -25,6 +25,7 @@ const query = gql`
       trades
       totalVolume
       feesPaidToSynthetix
+      txHash
     }
   }
 `;

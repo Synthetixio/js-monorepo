@@ -6,19 +6,38 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Wallet } from './pages/Wallet';
 import { Header } from './components/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { All } from './All';
+import { Actions } from './Actions';
 import { createRoot } from 'react-dom/client';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <>
+        <Header />
+        <App />
+      </>
+    ),
   },
   {
     path: ':walletAddress',
-    element: <Wallet />,
+    element: (
+      <>
+        <Header />
+        <Wallet />
+      </>
+    ),
   },
-  { path: '/all', element: <All /> },
+  {
+    path: '/actions',
+    element: (
+      <>
+        <Header />
+        <Actions />
+      </>
+    ),
+  },
 ]);
 
 const container = document.querySelector('#app');
@@ -52,8 +71,8 @@ root.render(
           })
         }
       >
+        <ReactQueryDevtools />
         <Fonts />
-        <Header />
         <RouterProvider router={router} />
       </QueryClientProvider>
     </ChakraProvider>

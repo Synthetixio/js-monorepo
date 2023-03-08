@@ -3,14 +3,15 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "graph build",
+    "build": "yarn build:optimism && yarn build:optimism-goerli",
     "auth": "graph auth --product hosted-service $V3_GRAPH_KEY",
-    "codegen": "node prepare-codegen.js && graph codegen && prettier --write .",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ fritzschoff/perps-dashboard",
-    "create-local": "graph create --node http://localhost:8020/ fritzschoff/perps-dashboard",
-    "remove-local": "graph remove --node http://localhost:8020/ fritzschoff/perps-dashboard",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 fritzschoff/perps-dashboard",
-    "test": "graph test"
+    "prepare": "cp ./subgraph.base.yaml ./subgraph.yaml",
+    "codegen": "yarn prepare && graph codegen && prettier --write .",
+    "build:optimism": "yarn codegen  && graph build --output-dir ./build/optimism --network optimism",
+    "deploy:optimism": "yarn prepare && graph deploy --output-dir ./build/optimism --network optimism --product hosted-service fritzschoff/perps-dashboard",
+    "build:optimism-goerli": "yarn codegen && graph build --output-dir ./build/optimism-goerli --network optimism-goerli",
+    "deploy:optimism-goerli": "yarn prepare && graph deploy --output-dir ./build/optimism-goerli --network optimism-goerli --product hosted-service fritzschoff/perps-dashboard-op-goerli",
+    "test": "yarn prepare && graph test"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.40.0",

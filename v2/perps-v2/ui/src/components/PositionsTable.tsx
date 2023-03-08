@@ -58,6 +58,7 @@ export const PositionsTable: FC = () => {
 
   const { data } = useGetMarkets();
 
+  // TODO @MF GET RID OF THAT AND USE the pagination in the v2 components
   const [itemOffset, setItemOffset] = useState(0);
   const [sortConfig, setSortConfig] = useState<SortConfig>(['openTimestamp', false]);
 

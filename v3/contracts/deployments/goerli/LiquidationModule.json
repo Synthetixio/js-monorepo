@@ -1,5 +1,5 @@
 {
-  "address": "0x841c1C6C453e9D1F5f439DD8E60E33ee96164b2A",
+  "address": "0x0eA2F7dA4771cA8Ed6d0425DBF7E18264a5E6E39",
   "abi": [
     {
       "inputs": [
@@ -412,5 +412,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x6626b111fad4ab4564dbe0e171df48a127ec45f018dd79a2ea1903a781783740"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xac9ece0f7ee6b0cedb19d548152919f381deaf350acec826515a79a0516c06d3",
+  "sourceName": "contracts/modules/core/LiquidationModule.sol",
+  "contractName": "LiquidationModule",
+  "deployedOn": "contract.LiquidationModule"
 }

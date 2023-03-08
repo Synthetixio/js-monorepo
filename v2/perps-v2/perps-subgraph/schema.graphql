@@ -9,6 +9,7 @@ type PositionLiquidated @entity {
   futuresPosition: FuturesPosition!
   block: BigInt!
   timestamp: BigInt!
+  txHash: String!
 }
 
 type Trader @entity {
@@ -28,6 +29,7 @@ type FuturesTrade @entity {
   account: Bytes!
   margin: BigInt!
   positionId: String!
+  futuresOrder: FuturesOrder
   size: BigInt!
   market: Bytes!
   price: BigInt!
@@ -36,22 +38,7 @@ type FuturesTrade @entity {
   pnl: BigInt!
   feesPaidToSynthetix: BigInt!
   type: FuturesTradeType!
-}
-
-enum FuturesTradeType {
-  PositionOpened
-  PositionClosed
-  PositionModified
-  Liquidated
-  DelayedOrderRemoved
-  DelayedOrderSubmitted
-  DelayedOffchainSubmitted
-}
-
-enum FuturesOrderStatus {
-  Pending
-  Filled
-  Cancelled
+  txHash: String!
 }
 
 type Synthetix @entity {
@@ -86,6 +73,7 @@ type FuturesPosition @entity {
   netTransfers: BigInt!
   lastPrice: BigInt!
   avgEntryPrice: BigInt!
+  txHash: String!
   exitPrice: BigInt
 }
 
@@ -99,10 +87,12 @@ type FuturesOrder @entity {
   targetPrice: BigInt!
   marginDelta: BigInt!
   timestamp: BigInt!
-  orderType: FuturesTradeType!
+  orderType: FuturesOrderType!
   status: FuturesOrderStatus!
   fee: BigInt!
   keeper: Bytes!
+  positionId: String
+  txHash: String!
 }
 
 type FundingRateUpdate @entity {
@@ -120,4 +110,24 @@ type FuturesMarginTransfer @entity {
   market: Bytes!
   size: BigInt!
   txHash: String!
+}
+
+enum FuturesOrderType {
+  DelayedOrderSubmitted
+  DelayedOffchainSubmitted
+  NextPriceOrderRemoved
+  NextPriceOrderSubmitted
+}
+
+enum FuturesTradeType {
+  PositionOpened
+  PositionClosed
+  PositionModified
+  Liquidated
+}
+
+enum FuturesOrderStatus {
+  Pending
+  Filled
+  Cancelled
 }

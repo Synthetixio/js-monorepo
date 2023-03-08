@@ -46,6 +46,10 @@ export const useGetMarkets = () => {
         ...data,
         maxLeverage: utils.formatEther(data.maxLeverage),
       }))
-      .filter((market) => market.marketKey.includes('PERP'));
+      .filter((market) => market.marketKey.includes('PERP'))
+      .map((market) => {
+        const splitMarket = market.marketKey.split('PERP');
+        return { ...market, marketKey: splitMarket[0] + '-' + 'PERP' };
+      });
   });
 };

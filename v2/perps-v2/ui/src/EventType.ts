@@ -1,4 +1,4 @@
-import type { FuturesTrades } from './queries/futures-trades';
-import type { PositionLiquidated } from './queries/liquidation';
-import type { DelayedOrder } from './queries/delayed-orders';
-export interface EventType extends FuturesTrades, DelayedOrder, PositionLiquidated {}
+import { FuturesTrades } from './queries/futures-trades';
+import { FuturesMarginTransfer } from './queries/margin-transfered';
+
+export interface EventType extends FuturesTrades, FuturesMarginTransfer {}

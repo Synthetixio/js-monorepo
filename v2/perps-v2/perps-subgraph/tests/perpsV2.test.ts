@@ -430,7 +430,7 @@ describe('Perps V2', () => {
       toEth(1),
       toEth(1000),
       BigInt.fromI32(1),
-      toEth(1),
+      toGwei(2),
       10,
       1
     );

@@ -122,6 +122,15 @@ export class PositionLiquidated extends Entity {
   set timestamp(value: BigInt) {
     this.set('timestamp', Value.fromBigInt(value));
   }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
+  }
 }
 
 export class Trader extends Entity {
@@ -286,6 +295,23 @@ export class FuturesTrade extends Entity {
     this.set('positionId', Value.fromString(value));
   }
 
+  get futuresOrder(): string | null {
+    let value = this.get('futuresOrder');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set futuresOrder(value: string | null) {
+    if (!value) {
+      this.unset('futuresOrder');
+    } else {
+      this.set('futuresOrder', Value.fromString(<string>value));
+    }
+  }
+
   get size(): BigInt {
     let value = this.get('size');
     return value!.toBigInt();
@@ -356,6 +382,15 @@ export class FuturesTrade extends Entity {
 
   set type(value: string) {
     this.set('type', Value.fromString(value));
+  }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
   }
 }
 
@@ -664,6 +699,15 @@ export class FuturesPosition extends Entity {
     this.set('avgEntryPrice', Value.fromBigInt(value));
   }
 
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
+  }
+
   get exitPrice(): BigInt | null {
     let value = this.get('exitPrice');
     if (!value || value.kind == ValueKind.NULL) {
@@ -819,6 +863,32 @@ export class FuturesOrder extends Entity {
 
   set keeper(value: Bytes) {
     this.set('keeper', Value.fromBytes(value));
+  }
+
+  get positionId(): string | null {
+    let value = this.get('positionId');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set positionId(value: string | null) {
+    if (!value) {
+      this.unset('positionId');
+    } else {
+      this.set('positionId', Value.fromString(<string>value));
+    }
+  }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
   }
 }
 
