@@ -19,3 +19,4 @@ v3/contracts/deployments
 tools/tenderly/fork.json
 v3/subgraphs/tests/.latest.json
 v2/perps-v2/perps-subgraph/tests/.latest.json
+.yarnrc.yml
