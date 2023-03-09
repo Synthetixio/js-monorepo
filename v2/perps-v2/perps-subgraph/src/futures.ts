@@ -4,7 +4,7 @@ import {
   PositionModified as PositionModifiedEvent,
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
   DelayedOrderSubmitted as DelayedOrderSubmittedEvent,
-  FundingRecomputed as FundingRecomputedEvent,
+  FundingRecomputed1 as FundingRecomputedEvent,
   MarginTransferred as MarginTransferredEvent,
   NextPriceOrderSubmitted as NextPriceOrderSubmittedEvent,
   NextPriceOrderRemoved as NextPriceOrderRemovedEvent,
@@ -18,6 +18,7 @@ import {
   FuturesTrade,
   FundingRateUpdate,
   FuturesMarginTransfer,
+  Volume,
 } from '../generated/schema';
 
 export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
@@ -110,6 +111,7 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
 
   if (!trader) {
     trader = new Trader(event.params.account.toHex());
+    trader.timestamp = event.block.timestamp;
     trader.feesPaidToSynthetix = BigDecimal.fromString('0');
     trader.trades = [];
     trader.totalVolume = event.params.marginDelta.toBigDecimal();
@@ -147,6 +149,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
   if (!trader) {
     trader = new Trader(event.params.account.toHex());
+    trader.timestamp = event.block.timestamp;
     trader.totalLiquidations = BigInt.fromI32(0);
     trader.totalMarginLiquidated = BigDecimal.fromString('0');
     trader.feesPaidToSynthetix = BigDecimal.fromString('0');
@@ -220,6 +223,17 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       .abs()
       .toBigDecimal();
 
+    let volumeEntity = Volume.load(
+      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+    );
+    if (!volumeEntity) {
+      volumeEntity = new Volume(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
+      volumeEntity.timestamp = event.block.timestamp;
+      volumeEntity.volume = volume;
+    } else {
+      volumeEntity.volume = volumeEntity.volume.plus(volume);
+    }
+    volumeEntity.save();
     synthetix.totalVolume = synthetix.totalVolume.plus(volume);
     trader.totalVolume = trader.totalVolume.plus(volume);
     trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
@@ -329,6 +343,17 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(BigInt.fromI32(10).pow(18))
         .abs();
 
+      let volumeEntity = Volume.load(
+        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+      );
+      if (!volumeEntity) {
+        volumeEntity = new Volume(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
+        volumeEntity.timestamp = event.block.timestamp;
+        volumeEntity.volume = volume.toBigDecimal();
+      } else {
+        volumeEntity.volume = volumeEntity.volume.plus(volume.toBigDecimal());
+      }
+      volumeEntity.save();
       trader.totalVolume = trader.totalVolume.plus(volume.toBigDecimal());
       synthetix.totalVolume = synthetix.totalVolume.plus(volume.toBigDecimal());
       futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
@@ -466,22 +491,6 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
   );
   const synthetix = Synthetix.load('synthetix');
 
-  // Update Synthetix values
-  if (synthetix) {
-    synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
-      event.params.keeperDeposit.toBigDecimal()
-    );
-    synthetix.save();
-  }
-
-  // Update Trader fee value
-  if (trader) {
-    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-      event.params.keeperDeposit.toBigDecimal()
-    );
-    trader.save();
-  }
-
   // Update FuturesOrderEntity
   if (futuresOrderEntity) {
     futuresOrderEntity.fee = event.params.keeperDeposit;
@@ -504,18 +513,32 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
           event.params.keeperDeposit
         );
       }
+
+      // Update Synthetix values
+      if (synthetix) {
+        synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
+          event.params.keeperDeposit.toBigDecimal()
+        );
+        synthetix.save();
+      }
+
+      // Update Trader fee value
+      if (trader) {
+        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
+          event.params.keeperDeposit.toBigDecimal()
+        );
+        trader.save();
+      }
+      futuresOrderEntity.txHash = event.transaction.hash.toHex();
+      futuresOrderEntity.save();
+      tradeEntity.txHash = event.transaction.hash.toHex();
+      tradeEntity.futuresOrder = futuresOrderEntityId;
+      tradeEntity.type = 'PositionOpened';
       tradeEntity.save();
     } else {
       futuresOrderEntity.status = 'Cancelled';
-    }
-    futuresOrderEntity.txHash = event.transaction.hash.toHex();
-    futuresOrderEntity.save();
-    // Refactor @MF
-    if (tradeEntity) {
-      tradeEntity.type = 'PositionOpened';
-      tradeEntity.txHash = event.transaction.hash.toHex();
-      tradeEntity.futuresOrder = futuresOrderEntityId;
-      tradeEntity.save();
+      futuresOrderEntity.txHash = event.transaction.hash.toHex();
+      futuresOrderEntity.save();
     }
   }
 }
@@ -552,8 +575,9 @@ export function handleFundingRecomputed(event: FundingRecomputedEvent): void {
   );
   fundingRateUpdateEntity.timestamp = event.params.timestamp;
   fundingRateUpdateEntity.market = futuresMarketAddress;
-  fundingRateUpdateEntity.sequenceLength = event.params.index;
+  fundingRateUpdateEntity.fundingRate = event.params.fundingRate;
   fundingRateUpdateEntity.funding = event.params.funding;
+  fundingRateUpdateEntity.index = event.params.index;
   fundingRateUpdateEntity.save();
 }
 
@@ -589,22 +613,6 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
   );
   const synthetix = Synthetix.load('synthetix');
 
-  // Update Synthetix values
-  if (synthetix) {
-    synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
-      event.params.keeperDeposit.toBigDecimal()
-    );
-    synthetix.save();
-  }
-
-  // Update Trader fee value
-  if (trader) {
-    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-      event.params.keeperDeposit.toBigDecimal()
-    );
-    trader.save();
-  }
-
   if (futuresOrderEntity) {
     futuresOrderEntity.keeper = event.transaction.from;
     let tradeEntity = FuturesTrade.load(
@@ -628,18 +636,30 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
           event.params.keeperDeposit
         );
       }
-      tradeEntity.save();
-    } else {
-      futuresOrderEntity.status = 'Cancelled';
-    }
-    futuresOrderEntity.txHash = event.transaction.hash.toHex();
-    futuresOrderEntity.save();
-    // Refactor @MF
-    if (tradeEntity) {
+      // Update Synthetix values
+      if (synthetix) {
+        synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
+          event.params.keeperDeposit.toBigDecimal()
+        );
+        synthetix.save();
+      }
+      // Update Trader fee value
+      if (trader) {
+        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
+          event.params.keeperDeposit.toBigDecimal()
+        );
+        trader.save();
+      }
+      futuresOrderEntity.txHash = event.transaction.hash.toHex();
+      futuresOrderEntity.save();
       tradeEntity.txHash = event.transaction.hash.toHex();
       tradeEntity.futuresOrder = futuresOrderEntityId;
       tradeEntity.type = 'PositionOpened';
       tradeEntity.save();
+    } else {
+      futuresOrderEntity.status = 'Cancelled';
+      futuresOrderEntity.txHash = event.transaction.hash.toHex();
+      futuresOrderEntity.save();
     }
   }
 }

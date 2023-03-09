@@ -42,6 +42,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -84,6 +86,9 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
+
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -126,6 +131,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -168,6 +175,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -210,6 +219,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -252,6 +263,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -294,6 +307,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -336,6 +351,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -378,6 +395,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -420,6 +439,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -462,6 +483,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -504,6 +527,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -546,6 +571,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -588,6 +615,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -630,6 +659,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -672,6 +703,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -714,6 +747,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -756,6 +791,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -798,6 +835,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -840,6 +879,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -882,6 +923,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -924,6 +967,8 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism
   - kind: ethereum
@@ -966,5 +1011,7 @@ dataSources:
         - event: NextPriceOrderRemoved(indexed
             address,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
     network: optimism

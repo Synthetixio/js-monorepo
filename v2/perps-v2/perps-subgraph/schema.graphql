@@ -14,6 +14,7 @@ type PositionLiquidated @entity {
 
 type Trader @entity {
   id: ID!
+  timestamp: BigInt!
   margin: BigDecimal!
   totalLiquidations: BigInt!
   totalMarginLiquidated: BigDecimal!
@@ -48,6 +49,12 @@ type Synthetix @entity {
   totalLiquidations: BigInt!
   totalVolume: BigDecimal!
   totalTraders: BigInt!
+}
+
+type Volume @entity {
+  id: ID!
+  volume: BigDecimal!
+  timestamp: BigInt!
 }
 
 type FuturesPosition @entity {
@@ -99,8 +106,9 @@ type FundingRateUpdate @entity {
   id: ID!
   timestamp: BigInt!
   market: Bytes!
-  sequenceLength: BigInt!
+  fundingRate: BigInt!
   funding: BigInt!
+  index: BigInt!
 }
 
 type FuturesMarginTransfer @entity {
