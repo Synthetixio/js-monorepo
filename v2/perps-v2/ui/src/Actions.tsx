@@ -39,6 +39,7 @@ export const Actions: FC = () => {
     }
     return [];
   }, [futuresTrades, marginTransfer]);
+
   return (
     <Flex flexDir="column" justifyContent="center" alignItems="center" w="100%">
       <Text>Refetching every 30 seconds</Text>

@@ -1,7 +1,17 @@
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
 import { assert, describe, test, clearStore, afterEach } from 'matchstick-as/assembly/index';
-import { createPositionLiquidatedEvent, createPositionModifiedEvent } from './perpsV2-utils';
-import { handlePositionLiquidated, handlePositionModified } from '../src/futures';
+import {
+  createFunctionRecomputedEvent,
+  createMarginTransferredEvent,
+  createPositionLiquidatedEvent,
+  createPositionModifiedEvent,
+} from './perpsV2-utils';
+import {
+  handleFundingRecomputed,
+  handleMarginTransferred,
+  handlePositionLiquidated,
+  handlePositionModified,
+} from '../src/futures';
 
 const trader = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
 function toEth(n: u64): BigInt {
@@ -18,7 +28,7 @@ describe('Perps V2', () => {
     clearStore();
   });
 
-  test('open a position that goes short, PNL should be negative but after price change and increase of position size, the PNL should be positive', () => {
+  test('calculate PNL', () => {
     const positionOpenedEvent = createPositionModifiedEvent(
       BigInt.fromI32(1),
       Address.fromString(trader),
@@ -267,7 +277,7 @@ describe('Perps V2', () => {
       }]`
     );
 
-    log.info('FuturesTrade', []);
+    log.info('Futures Trade', []);
     // FUTURES TRADE
     assert.fieldEquals(
       'FuturesTrade',
@@ -436,6 +446,19 @@ describe('Perps V2', () => {
     );
     handlePositionModified(positionOpenedEvent);
 
+    const positionModifiedByLiquidationEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(0),
+      toEth(0),
+      toEth(0),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(0),
+      10,
+      1
+    );
+    handlePositionModified(positionModifiedByLiquidationEvent);
     const positionLiquidatedEvent = createPositionLiquidatedEvent(
       BigInt.fromI32(1),
       Address.fromString(trader),
@@ -446,8 +469,192 @@ describe('Perps V2', () => {
       20
     );
     handlePositionLiquidated(positionLiquidatedEvent);
-
+    log.warning('STARTING ASSERTION', []);
     // SYNTHETIX
+    log.info('Synthetix', []);
     assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', toEth(1).toString());
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionLiquidatedEvent.transaction.hash.toHex()}-${1}`,
+      'type',
+      'Liquidated'
+    );
+  });
+
+  test('open a short and close it', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const closePositionEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(0),
+      toEth(2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      2
+    );
+    handlePositionModified(closePositionEvent);
+    log.warning('STARTING ASSERTION', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'positionClosed',
+      'false'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'positionClosed',
+      'true'
+    );
+  });
+
+  test('open a short and modify it', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-4),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      2
+    );
+    handlePositionModified(positionModifiedEvent);
+    log.warning('STARTING ASSERTION', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'type',
+      'PositionModified'
+    );
+  });
+
+  test('Margin Transferred should updated the position and produce an unknown tradeEntity', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const marginTransferredEvent = createMarginTransferredEvent(
+      Address.fromString(trader),
+      toEth(2),
+      10,
+      1
+    );
+    handleMarginTransferred(marginTransferredEvent);
+    const positionUpdatedByTransferredMargin = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(0),
+      toEth(1000),
+      BigInt.fromI32(2),
+      toGwei(0),
+      10,
+      2
+    );
+    handlePositionModified(positionUpdatedByTransferredMargin);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionUpdatedByTransferredMargin.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.notInStore(
+      'FuturesTrade',
+      `${positionUpdatedByTransferredMargin.address.toHex()}-${BigInt.fromI32(2).toString()}`
+    );
+    assert.entityCount('FuturesTrade', 1);
+  });
+
+  test('funding recomputed', () => {
+    const fundingRecomputedEvent = createFunctionRecomputedEvent(
+      BigInt.fromI32(20),
+      BigInt.fromI32(10),
+      BigInt.fromI32(5),
+      BigInt.fromI32(15),
+      10
+    );
+    handleFundingRecomputed(fundingRecomputedEvent);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Funding Rate Update', []);
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'fundingRate',
+      '10'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'funding',
+      '20'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'index',
+      '5'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'timestamp',
+      '15'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'market',
+      fundingRecomputedEvent.address.toHex()
+    );
   });
 });

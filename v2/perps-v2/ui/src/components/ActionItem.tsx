@@ -14,54 +14,67 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
 
   const parsedEvent = useMemo(() => {
     const determineText = () => {
-      if (event.entity === 'Futures Trade' && data?.futuresPosition) {
-        switch (event.type) {
-          case 'PositionOpened':
-            if (event.futuresOrder) {
-              return (
-                event.futuresOrder.status +
-                ': Open '.concat(data.futuresPosition.long ? 'Long' : 'Short')
-              );
+      if (event.entity === 'Futures Trade') {
+        if (data?.futuresPosition) {
+          if (event.positionClosed) {
+            return 'Close '.concat(!event.size.gt(0) ? 'Long' : 'Short');
+          }
+          if (event.type === 'PositionOpened' && data.futuresPosition.trades === '1') {
+            if (!!event.futuresOrder?.status) {
+              return event.futuresOrder.status
+                .toString()
+                .concat(': Open ')
+                .concat(event.positionSize.gt(0) ? 'Long' : 'Short');
             }
-            return 'Open '.concat(data.futuresPosition.long ? 'Long' : 'Short');
-          case 'PositionClosed':
-            return 'Close '.concat(data.futuresPosition.long ? 'Long' : 'Short');
-          case 'PositionModified':
-            console.log(event);
+            return 'Open '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
+          }
+          // Should never be triggered because of the `event.positionClosed` if statement, but just to make sure
+          if (event.type === 'PositionClosed' && event.size.eq(0)) {
+            return 'Close '.concat(!event.size.gt(0) ? 'Long' : 'Short');
+          }
+
+          if (event.type === 'PositionModified') {
             return event.positionSize.gt(0)
               ? event.size.gt(0)
-                ? 'Increase Long, +' +
-                  numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)) +
-                  ' sUSD'
-                : 'Decrease Long, ' +
-                  numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)) +
-                  ' sUSD'
+                ? 'Increase Long, +'.concat(
+                    numberWithCommas(
+                      (Number(utils.formatEther(event.size)) / 1e18).toFixed(2)
+                    ).concat(' sUSD')
+                  )
+                : 'Decrease Long, '.concat(
+                    numberWithCommas(
+                      (Number(utils.formatEther(event.size)) / 1e18).toFixed(2)
+                    ).concat(' sUSD')
+                  )
               : event.size.gt(0)
-              ? 'Decrease Short, ' +
-                numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)) +
-                ' sUSD'
-              : 'Increase Short, ' +
-                numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)) +
-                ' sUSD';
-          case 'Liquidated':
-            return 'Liquidation';
-          default:
-            return '?';
+              ? 'Decrease Short, '.concat(
+                  numberWithCommas(
+                    (Number(utils.formatEther(event.size)) / 1e18).toFixed(2)
+                  ).concat(' sUSD')
+                )
+              : 'Increase Short, '.concat(
+                  numberWithCommas(
+                    (Number(utils.formatEther(event.size)) / 1e18).toFixed(2)
+                  ).concat(' sUSD')
+                );
+          }
         }
+      }
+      if (event.type === 'Liquidated') {
+        return 'Liquidation';
       }
 
       if (event.entity === 'Margin Transferred') {
         return (event.size.gt(0) ? 'Deposit' : 'Withdraw') + ' Margin';
       }
 
-      return 'not found'.concat(event.entity);
-    };
-
-    const parsePrice = () => {
-      if (event.entity === 'Futures Trade') {
-        return event.price;
+      // DelayedOffChainOrder
+      if (event.futuresOrder?.status && event.type === 'PositionOpened') {
+        return event.futuresOrder.status
+          .toString()
+          .concat(': Open ')
+          .concat(event.positionSize.gt(0) ? 'Long' : 'Short');
       }
-      return '?';
     };
 
     const parseFees = () => {
@@ -71,13 +84,24 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
       return '-';
     };
 
+    const isLong = () => {
+      if (event.entity === 'Futures Trade') {
+        return event.positionClosed ? !event.size.gt(0) : event.size.gt(0);
+      }
+      return null;
+    };
+
+    const parseSize = () =>
+      '$ '.concat(numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)));
+
     return {
       action: determineText(),
-      price: parsePrice(),
       timestamp: formatDistance(new Date(Number(event.timestamp) * 1000), new Date()),
       fees: parseFees(),
+      isLong: isLong(),
+      size: parseSize(),
     };
-  }, [data?.futuresPosition, event]);
+  }, [event, data?.futuresPosition]);
 
   return (
     <Tr>
@@ -114,9 +138,9 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
                   {(Number(data.futuresPosition.leverage) / 1e18).toFixed(2).concat('x')}
                 </Text>
               )}
-              {event.entity === 'Futures Trade' && (
-                <Text color={data?.futuresPosition.long ? 'green.500' : 'red.500'}>
-                  {data?.futuresPosition.long ? 'Long' : 'Short'}
+              {parsedEvent.isLong !== null && (
+                <Text color={parsedEvent.isLong ? 'green.500' : 'red.500'}>
+                  {parsedEvent.isLong ? 'Long' : 'Short'}
                 </Text>
               )}
             </Flex>
@@ -124,7 +148,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
         </Flex>
       </Td>
       <Td>{event.price ? '$' + event.price : '-'}</Td>
-      <Td>${numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2))}</Td>
+      <Td>{parsedEvent.size}</Td>
       <Td>{parsedEvent.fees}</Td>
     </Tr>
   );
