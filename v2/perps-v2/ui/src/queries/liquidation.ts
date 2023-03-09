@@ -44,7 +44,7 @@ export interface PositionLiquidated {
 const gql = (data: TemplateStringsArray) => data[0];
 const query = gql`
   query PositionLiquidated {
-    positionLiquidateds(first: 100, oderBy: "timestamp", orderDirection: "desc") {
+    positionLiquidateds(first: 100, orderBy: "timestamp", orderDirection: "desc") {
       id
       account
       liquidator

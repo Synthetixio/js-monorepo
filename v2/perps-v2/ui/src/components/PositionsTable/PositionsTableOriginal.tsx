@@ -22,12 +22,12 @@ import {
   Tr,
   useToast,
 } from '@chakra-ui/react';
-import useGetPositions from '../queries/positions';
+import useGetPositions from '../../queries/positions';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { useGetMarkets } from '../queries/markets';
+import { useGetMarkets } from '../../queries/markets';
 import { ChevronDownIcon, ChevronUpIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-import { numberWithCommas } from '../utils/numbers';
+import { numberWithCommas } from '../../utils/numbers';
 import ReactPaginate from 'react-paginate';
 import './PositionTable.css';
 
@@ -102,6 +102,7 @@ export const PositionsTable: FC = () => {
 
   return (
     <>
+      {/* Form here */}
       <Flex py="2" gap="2" justifyContent="space-around" w="100%">
         <RadioGroup
           onChange={(e) => {

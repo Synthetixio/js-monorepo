@@ -69,6 +69,7 @@ export interface FilterOptions {
 }
 
 const gql = (data: TemplateStringsArray) => data[0];
+
 function getBody({
   skip,
   orderBy,

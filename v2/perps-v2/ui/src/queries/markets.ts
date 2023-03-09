@@ -11,6 +11,7 @@ interface FutureMarketsGraphResponse {
 }
 
 const gql = (data: TemplateStringsArray) => data[0];
+
 const query = gql`
   query futuresMarkets {
     futuresMarkets(first: 1000) {
@@ -20,6 +21,7 @@ const query = gql`
     }
   }
 `;
+
 export const useGetMarkets = () => {
   const provider = getDefaultProvider('optimism');
   return useQuery(['markets'], async () => {

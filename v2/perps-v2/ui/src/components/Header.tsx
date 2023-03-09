@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Flex, Button, Link } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import { SNXIcon } from './Icons/';
 import { PerpsStats } from './PerpsStats';
 import { RightUpIcon } from './Icons/RightUpIcon';
@@ -18,8 +19,10 @@ export const Header: FC = () => {
       borderBottomColor="gray.900"
     >
       <Flex alignItems="center">
-        <SNXIcon />
-        <PerpsStats mt="3px" ml={3} />
+        <RouterLink to="/">
+          <SNXIcon />
+          <PerpsStats mt="3px" ml={3} />
+        </RouterLink>
       </Flex>
       <Button
         as={Link}

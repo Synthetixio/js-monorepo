@@ -11,6 +11,7 @@ import { ExternalLink } from './ExternalLink';
 
 export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
   const { data } = useGetPosition(event.entity === 'Futures Trade' ? event.positionId : '');
+
   const parsedEvent = useMemo(() => {
     const determineText = () => {
       if (event.entity === 'Futures Trade' && data?.futuresPosition) {
@@ -77,6 +78,7 @@ export const ActionItem: FC<{ event: EventType }> = ({ event }) => {
       fees: parseFees(),
     };
   }, [data?.futuresPosition, event]);
+
   return (
     <Tr>
       <Td>
