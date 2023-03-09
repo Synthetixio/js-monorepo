@@ -6,7 +6,7 @@ import {
   PositionModified,
   PositionLiquidated,
   MarginTransferred,
-  FundingRecomputed,
+  FundingRecomputed1,
 } from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
 
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
@@ -212,31 +212,28 @@ export function createMarginTransferredEvent(
 
 export function createFunctionRecomputedEvent(
   funding: BigInt,
-  sequenceLengthBefore: BigInt,
-  fundingLastRecomputed: BigInt,
-  timestamp: i64,
+  fundingRate: BigInt,
+  index: BigInt,
+  timestamp: BigInt,
+  blockTimestamp: i64,
   logIndex: i64 = 0
-): FundingRecomputed {
-  let marginTransferredEvent = changetype<FundingRecomputed>(newMockEvent());
-  marginTransferredEvent.parameters = new Array();
-  const block = createBlock(timestamp, 5);
-  marginTransferredEvent.parameters.push(
+): FundingRecomputed1 {
+  let fundingRecomputedEvent = changetype<FundingRecomputed1>(newMockEvent());
+  fundingRecomputedEvent.parameters = new Array();
+  const block = createBlock(blockTimestamp, 5);
+  fundingRecomputedEvent.parameters.push(
     new ethereum.EventParam('funding', ethereum.Value.fromSignedBigInt(funding))
   );
-
-  marginTransferredEvent.parameters.push(
-    new ethereum.EventParam(
-      'sequenceLengthBefore',
-      ethereum.Value.fromSignedBigInt(sequenceLengthBefore)
-    )
+  fundingRecomputedEvent.parameters.push(
+    new ethereum.EventParam('fundingRate', ethereum.Value.fromSignedBigInt(fundingRate))
   );
-  marginTransferredEvent.parameters.push(
-    new ethereum.EventParam(
-      'fundingLastRecomputed',
-      ethereum.Value.fromSignedBigInt(fundingLastRecomputed)
-    )
+  fundingRecomputedEvent.parameters.push(
+    new ethereum.EventParam('index', ethereum.Value.fromSignedBigInt(index))
   );
-  marginTransferredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
-  if (logIndex) marginTransferredEvent.logIndex = BigInt.fromI64(logIndex);
-  return marginTransferredEvent;
+  fundingRecomputedEvent.parameters.push(
+    new ethereum.EventParam('timestamp', ethereum.Value.fromSignedBigInt(timestamp))
+  );
+  fundingRecomputedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  if (logIndex) fundingRecomputedEvent.logIndex = BigInt.fromI64(logIndex);
+  return fundingRecomputedEvent;
 }

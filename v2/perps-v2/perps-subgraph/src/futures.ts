@@ -4,6 +4,9 @@ import {
   PositionModified as PositionModifiedEvent,
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
   DelayedOrderSubmitted as DelayedOrderSubmittedEvent,
+  /**
+   * @dev We need to listen to the event from v2 and not v1, be careful
+   */
   FundingRecomputed1 as FundingRecomputedEvent,
   MarginTransferred as MarginTransferredEvent,
   NextPriceOrderSubmitted as NextPriceOrderSubmittedEvent,
