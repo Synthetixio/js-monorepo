@@ -45,7 +45,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyAPEPERP
     source:
@@ -90,7 +89,6 @@ dataSources:
           handler: 'handleFundingRecomputed'
 
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyATOMPERP
     source:
@@ -134,7 +132,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyAUDPERP
     source:
@@ -178,7 +175,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyAVAXPERP
     source:
@@ -222,7 +218,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyAXSPERP
     source:
@@ -266,7 +261,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyBNBPERP
     source:
@@ -310,7 +304,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyBTCPERP
     source:
@@ -354,7 +347,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyDOGEPERP
     source:
@@ -398,7 +390,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyDYDXPERP
     source:
@@ -442,7 +433,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyETHPERP
     source:
@@ -486,7 +476,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyEURPERP
     source:
@@ -530,7 +519,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyFLOWPERP
     source:
@@ -574,7 +562,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyFTMPERP
     source:
@@ -618,7 +605,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyGBPPERP
     source:
@@ -662,7 +648,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyLINKPERP
     source:
@@ -706,7 +691,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyMATICPERP
     source:
@@ -750,7 +734,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyNEARPERP
     source:
@@ -794,7 +777,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyOPPERP
     source:
@@ -838,7 +820,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxySOLPERP
     source:
@@ -882,7 +863,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyUNIPERP
     source:
@@ -926,7 +906,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyXAGPERP
     source:
@@ -970,7 +949,6 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
   - kind: ethereum
     name: PerpsV2ProxyXAUPERP
     source:
@@ -1014,4 +992,22 @@ dataSources:
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
       file: ./src/futures.ts
-    network: optimism
+  - kind: ethereum
+    name: FuturesMarketManager
+    source:
+      abi: PerpsV2Proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - FuturesMarket
+      abis:
+        - name: PerpsV2Proxy
+          file: ./abis/PerpsV2Proxy.json
+      eventHandlers:
+        - event: MarketAdded(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketAdded
+        - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketRemoved
+      file: ./src/futures.ts

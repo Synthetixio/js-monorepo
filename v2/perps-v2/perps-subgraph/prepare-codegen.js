@@ -11,15 +11,26 @@ const perpsV2DelayedOrderETHPERP = JSON.parse(
     'utf-8'
   )
 );
+const futuresMarket = JSON.parse(
+  fs.readFileSync(
+    '../../contracts/src/mainnet-ovm/deployment/json/FuturesMarketManager.json',
+    'utf-8'
+  )
+);
 
 if (!fs.existsSync('./abis')) {
   fs.mkdirSync('./abis');
 }
 fs.writeFileSync(
   './abis/PerpsV2Proxy.json',
-  prettier.format(JSON.stringify(futuresMarketJSON.concat(...perpsV2DelayedOrderETHPERP)), {
-    parser: 'json',
-    ...prettierOptions,
-  }),
+  prettier.format(
+    JSON.stringify(
+      futuresMarketJSON.concat(...perpsV2DelayedOrderETHPERP).concat(...futuresMarket)
+    ),
+    {
+      parser: 'json',
+      ...prettierOptions,
+    }
+  ),
   'utf-8'
 );

@@ -1,5 +1,9 @@
 {
   "optimism": {
+    "FuturesMarketManager": {
+      "address": "0xdb89f3fc45A707Dd49781495f77f8ae69bF5cA6e",
+      "startBlock": 51456701
+    },
     "PerpsV2ProxyAAVEPERP": {
       "address": "0x5374761526175B59f1E583246E20639909E189cE",
       "startBlock": 52456701
@@ -94,6 +98,10 @@
     }
   },
   "optimism-goerli": {
+    "FuturesMarketManager": {
+      "address": "0xc429dd84c9a9a7c786764c7dcaF31e30bd35BcdF",
+      "startBlock": 3495320
+    },
     "PerpsV2ProxyAAVEPERP": {
       "address": "0x3410215D8A0BD57dAc5911785F2A832402D5c828",
       "startBlock": 0

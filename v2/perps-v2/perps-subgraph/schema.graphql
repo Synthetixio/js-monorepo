@@ -1,7 +1,7 @@
 type PositionLiquidated @entity {
   id: ID!
   account: Bytes!
-  market: Bytes!
+  market: FuturesMarket!
   liquidator: Bytes!
   size: BigDecimal!
   price: BigDecimal!
@@ -32,7 +32,7 @@ type FuturesTrade @entity {
   positionId: String!
   futuresOrder: FuturesOrder
   size: BigInt!
-  market: Bytes!
+  market: FuturesMarket!
   price: BigInt!
   positionSize: BigInt!
   positionClosed: Boolean!
@@ -55,6 +55,7 @@ type Volume @entity {
   id: ID!
   volume: BigDecimal!
   timestamp: BigInt!
+  market: FuturesMarket!
 }
 
 type FuturesPosition @entity {
@@ -63,7 +64,7 @@ type FuturesPosition @entity {
   openTimestamp: BigInt!
   closeTimestamp: BigInt
   long: Boolean!
-  market: Bytes!
+  market: FuturesMarket!
   isOpen: Boolean!
   isLiquidated: Boolean!
   trades: BigInt!
@@ -87,7 +88,7 @@ type FuturesPosition @entity {
 type FuturesOrder @entity {
   id: ID!
   size: BigInt!
-  market: Bytes!
+  market: FuturesMarket!
   account: Bytes!
   orderId: BigInt!
   targetRoundId: BigInt!
@@ -105,7 +106,7 @@ type FuturesOrder @entity {
 type FundingRateUpdate @entity {
   id: ID!
   timestamp: BigInt!
-  market: Bytes!
+  market: FuturesMarket!
   fundingRate: BigInt!
   funding: BigInt!
   index: BigInt!
@@ -115,9 +116,15 @@ type FuturesMarginTransfer @entity {
   id: ID!
   timestamp: BigInt!
   account: Bytes!
-  market: Bytes!
+  market: FuturesMarket!
   size: BigInt!
   txHash: String!
+}
+
+type FuturesMarket @entity {
+  id: ID!
+  asset: Bytes!
+  marketKey: Bytes!
 }
 
 enum FuturesOrderType {
