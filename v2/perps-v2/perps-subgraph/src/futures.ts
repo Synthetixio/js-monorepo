@@ -1,4 +1,4 @@
-import { Address, BigDecimal, BigInt, log } from '@graphprotocol/graph-ts';
+import { Address, BigDecimal, BigInt, log, store } from '@graphprotocol/graph-ts';
 import {
   PositionLiquidated as PositionLiquidatedEvent,
   PositionModified as PositionModifiedEvent,
@@ -11,6 +11,8 @@ import {
   MarginTransferred as MarginTransferredEvent,
   NextPriceOrderSubmitted as NextPriceOrderSubmittedEvent,
   NextPriceOrderRemoved as NextPriceOrderRemovedEvent,
+  MarketAdded as MarketAddedEvent,
+  MarketRemoved as MarketRemovedEvent,
 } from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
 import {
   PositionLiquidated,
@@ -22,13 +24,14 @@ import {
   FundingRateUpdate,
   FuturesMarginTransfer,
   Volume,
+  FuturesMarket,
 } from '../generated/schema';
 
 export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   const futuresPositionId = event.address.toHex() + '-' + event.params.id.toHex();
   const positionLiquidatedEntity = new PositionLiquidated(event.params.id.toString());
   positionLiquidatedEntity.account = event.params.account;
-  positionLiquidatedEntity.market = event.address;
+  positionLiquidatedEntity.market = event.address.toHex();
   positionLiquidatedEntity.liquidator = event.params.liquidator;
   positionLiquidatedEntity.size = event.params.size.toBigDecimal();
   positionLiquidatedEntity.price = event.params.price.toBigDecimal();
@@ -97,10 +100,11 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
   const marginTransferEntity = new FuturesMarginTransfer(
     event.address.toHex() + '-' + event.transaction.hash.toHex() + '-' + event.logIndex.toString()
   );
-  marginTransferEntity.timestamp = event.block.timestamp;
-  marginTransferEntity.account = event.params.account;
-  marginTransferEntity.market = event.address;
+
+  marginTransferEntity.market = event.address.toHex();
   marginTransferEntity.size = event.params.marginDelta;
+  marginTransferEntity.account = event.params.account;
+  marginTransferEntity.timestamp = event.block.timestamp;
   marginTransferEntity.txHash = event.transaction.hash.toHex();
 
   if (!synthetix) {
@@ -186,7 +190,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     futuresPosition.lastPrice = event.params.lastPrice;
     futuresPosition.trades = BigInt.fromI32(1);
     futuresPosition.long = event.params.tradeSize.gt(BigInt.fromI32(0));
-    futuresPosition.market = event.address;
+    futuresPosition.market = event.address.toHex();
     futuresPosition.fundingIndex = event.params.fundingIndex;
     futuresPosition.leverage = event.params.size
       .times(event.params.lastPrice)
@@ -208,7 +212,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     tradeEntity.margin = event.params.margin.plus(event.params.fee);
     tradeEntity.size = event.params.tradeSize;
     tradeEntity.positionSize = event.params.size;
-    tradeEntity.market = event.address;
+    tradeEntity.market = event.address.toHex();
     tradeEntity.price = event.params.lastPrice;
     tradeEntity.pnl = event.params.fee.times(BigInt.fromI32(-1));
     tradeEntity.feesPaidToSynthetix = event.params.fee;
@@ -233,6 +237,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       volumeEntity = new Volume(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
       volumeEntity.timestamp = event.block.timestamp;
       volumeEntity.volume = volume;
+      volumeEntity.market = event.address.toHex();
     } else {
       volumeEntity.volume = volumeEntity.volume.plus(volume);
     }
@@ -284,7 +289,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       tradeEntity.positionId = positionId;
       tradeEntity.margin = event.params.margin.plus(event.params.fee);
       tradeEntity.size = event.params.tradeSize;
-      tradeEntity.market = event.address;
+      tradeEntity.market = event.address.toHex();
       tradeEntity.price = event.params.lastPrice;
       tradeEntity.positionSize = event.params.size;
       tradeEntity.pnl = newPnl;
@@ -328,7 +333,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       tradeEntity.positionId = positionId;
       tradeEntity.margin = event.params.margin.plus(event.params.fee);
       tradeEntity.size = event.params.tradeSize;
-      tradeEntity.market = event.address;
+      tradeEntity.market = event.address.toHex();
       tradeEntity.price = event.params.lastPrice;
       tradeEntity.positionSize = event.params.size;
       tradeEntity.feesPaidToSynthetix = event.params.fee;
@@ -353,6 +358,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         volumeEntity = new Volume(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
         volumeEntity.timestamp = event.block.timestamp;
         volumeEntity.volume = volume.toBigDecimal();
+        volumeEntity.market = event.address.toHex();
       } else {
         volumeEntity.volume = volumeEntity.volume.plus(volume.toBigDecimal());
       }
@@ -440,7 +446,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     tradeEntity.margin = BigInt.fromI32(0);
     tradeEntity.timestamp = event.block.timestamp;
     tradeEntity.account = event.params.account;
-    tradeEntity.market = event.address;
+    tradeEntity.market = event.address.toHex();
     tradeEntity.size = BigInt.fromI32(0);
     tradeEntity.price = event.params.lastPrice;
     tradeEntity.positionId = positionId;
@@ -554,7 +560,7 @@ export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): 
     futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
   }
   futuresOrderEntity.size = event.params.sizeDelta;
-  futuresOrderEntity.market = event.address;
+  futuresOrderEntity.market = event.address.toHex();
   futuresOrderEntity.fee = BigInt.fromI32(0);
   futuresOrderEntity.account = event.params.account;
   futuresOrderEntity.orderId = event.params.targetRoundId;
@@ -577,7 +583,7 @@ export function handleFundingRecomputed(event: FundingRecomputedEvent): void {
     futuresMarketAddress.toHex() + '-' + event.params.index.toString()
   );
   fundingRateUpdateEntity.timestamp = event.params.timestamp;
-  fundingRateUpdateEntity.market = futuresMarketAddress;
+  fundingRateUpdateEntity.market = futuresMarketAddress.toHex();
   fundingRateUpdateEntity.fundingRate = event.params.fundingRate;
   fundingRateUpdateEntity.funding = event.params.funding;
   fundingRateUpdateEntity.index = event.params.index;
@@ -592,7 +598,7 @@ export function handleNextPriceOrderSubmitted(event: NextPriceOrderSubmittedEven
   }
 
   futuresOrderEntity.size = event.params.sizeDelta;
-  futuresOrderEntity.market = event.address;
+  futuresOrderEntity.market = event.address.toHex();
   futuresOrderEntity.account = event.params.account;
   futuresOrderEntity.orderId = event.params.targetRoundId;
   futuresOrderEntity.targetRoundId = event.params.targetRoundId;
@@ -665,4 +671,16 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
       futuresOrderEntity.save();
     }
   }
+}
+
+export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
+  let marketEntity = new FuturesMarket(event.params.market.toHex());
+  marketEntity.asset = event.params.asset;
+  marketEntity.marketKey = event.params.marketKey;
+  marketEntity.timestamp = event.block.timestamp;
+  marketEntity.save();
+}
+
+export function handleMarketRemoved(event: MarketRemovedEvent): void {
+  store.remove('FuturesMarket', event.params.market.toHex());
 }
