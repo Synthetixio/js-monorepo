@@ -1,12 +1,5 @@
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
-import {
-  assert,
-  describe,
-  test,
-  clearStore,
-  afterEach,
-  logStore,
-} from 'matchstick-as/assembly/index';
+import { assert, describe, test, clearStore, afterEach } from 'matchstick-as/assembly/index';
 import {
   createFunctionRecomputedEvent,
   createMarginTransferredEvent,
@@ -627,6 +620,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(20),
       BigInt.fromI32(10),
       BigInt.fromI32(5),
+      BigInt.fromI32(15),
       10
     );
     handleFundingRecomputed(fundingRecomputedEvent);
@@ -634,25 +628,31 @@ describe('Perps V2', () => {
     log.info('Funding Rate Update', []);
     assert.fieldEquals(
       'FundingRateUpdate',
-      `${fundingRecomputedEvent.address.toHex()}-${10}`,
-      'sequenceLength',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'fundingRate',
       '10'
     );
     assert.fieldEquals(
       'FundingRateUpdate',
-      `${fundingRecomputedEvent.address.toHex()}-${10}`,
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
       'funding',
       '20'
     );
     assert.fieldEquals(
       'FundingRateUpdate',
-      `${fundingRecomputedEvent.address.toHex()}-${10}`,
-      'timestamp',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'index',
       '5'
     );
     assert.fieldEquals(
       'FundingRateUpdate',
-      `${fundingRecomputedEvent.address.toHex()}-${10}`,
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'timestamp',
+      '15'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
       'market',
       fundingRecomputedEvent.address.toHex()
     );
