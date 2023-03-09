@@ -358,6 +358,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         volumeEntity = new Volume(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
         volumeEntity.timestamp = event.block.timestamp;
         volumeEntity.volume = volume.toBigDecimal();
+        volumeEntity.market = event.address.toHex();
       } else {
         volumeEntity.volume = volumeEntity.volume.plus(volume.toBigDecimal());
       }
@@ -676,6 +677,7 @@ export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
   let marketEntity = new FuturesMarket(event.params.market.toHex());
   marketEntity.asset = event.params.asset;
   marketEntity.marketKey = event.params.marketKey;
+  marketEntity.timestamp = event.block.timestamp;
   marketEntity.save();
 }
 

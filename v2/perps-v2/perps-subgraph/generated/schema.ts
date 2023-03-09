@@ -1162,4 +1162,13 @@ export class FuturesMarket extends Entity {
   set marketKey(value: Bytes) {
     this.set('marketKey', Value.fromBytes(value));
   }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
 }
