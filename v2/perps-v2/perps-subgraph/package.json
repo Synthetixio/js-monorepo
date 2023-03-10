@@ -8,9 +8,9 @@
     "prepare": "node prepare-codegen.js && cp ./subgraph.base.yaml ./subgraph.yaml",
     "codegen": "yarn prepare && graph codegen && prettier --write .",
     "build:optimism": "yarn codegen  && graph build --output-dir ./build/optimism --network optimism",
-    "deploy:optimism": "yarn prepare && graph deploy --output-dir ./build/optimism --network optimism --product hosted-service fritzschoff/perps-dashboard",
+    "deploy:optimism": "yarn prepare && graph deploy --output-dir ./build/optimism --network optimism --product hosted-service synthetix-perps/perps",
     "build:optimism-goerli": "yarn codegen && graph build --output-dir ./build/optimism-goerli --network optimism-goerli",
-    "deploy:optimism-goerli": "yarn prepare && graph deploy --output-dir ./build/optimism-goerli --network optimism-goerli --product hosted-service fritzschoff/perps-dashboard-op-goerli",
+    "deploy:optimism-goerli": "yarn prepare && graph deploy --output-dir ./build/optimism-goerli --network optimism-goerli --product hosted-service synthetix-perps/perps-op-goerli",
     "test": "yarn prepare && graph test"
   },
   "devDependencies": {

@@ -230,18 +230,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       .abs()
       .toBigDecimal();
 
-    let volumeEntity = Volume.load(
-      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-    );
-    if (!volumeEntity) {
-      volumeEntity = new Volume(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
-      volumeEntity.timestamp = event.block.timestamp;
-      volumeEntity.volume = volume;
-      volumeEntity.market = event.address.toHex();
-    } else {
-      volumeEntity.volume = volumeEntity.volume.plus(volume);
-    }
-    volumeEntity.save();
     synthetix.totalVolume = synthetix.totalVolume.plus(volume);
     trader.totalVolume = trader.totalVolume.plus(volume);
     trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
@@ -351,18 +339,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(BigInt.fromI32(10).pow(18))
         .abs();
 
-      let volumeEntity = Volume.load(
-        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-      );
-      if (!volumeEntity) {
-        volumeEntity = new Volume(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
-        volumeEntity.timestamp = event.block.timestamp;
-        volumeEntity.volume = volume.toBigDecimal();
-        volumeEntity.market = event.address.toHex();
-      } else {
-        volumeEntity.volume = volumeEntity.volume.plus(volume.toBigDecimal());
-      }
-      volumeEntity.save();
       trader.totalVolume = trader.totalVolume.plus(volume.toBigDecimal());
       synthetix.totalVolume = synthetix.totalVolume.plus(volume.toBigDecimal());
       futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
