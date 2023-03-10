@@ -1,27 +1,33 @@
-import { ArrowBackIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-import { Flex, Heading, IconButton, Spinner, Text, useToast } from '@chakra-ui/react';
-import { FC, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { Position } from './components/Position';
-import { DelayedOrder, useGetDelayedOrder } from './queries/delayed-orders';
-import { FuturesTrades, useGetFuturesTrades } from './queries/futures-trades';
-import { PositionLiquidated, useGetLiquidations } from './queries/liquidation';
-import { numberWithCommas } from './utils/numbers';
-
-interface EventType extends FuturesTrades, DelayedOrder, PositionLiquidated {}
+import {
+  Box,
+  Flex,
+  Spinner,
+  Table,
+  TableContainer,
+  Tbody,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
+import { Pagination } from '@synthetixio/v3-theme';
+import { FC, useMemo, useState } from 'react';
+import { ActionItem } from './components/ActionItem';
+import { EventType } from './EventType';
+import { useGetFuturesTrades } from './queries/futures-trades';
+import { useGetFuturesMarginTransfer } from './queries/margin-transfered';
 
 export const Actions: FC = () => {
-  const toast = useToast();
-  const { data: orders, isLoading: ordersIsLoading } = useGetDelayedOrder();
+  const [page, setPage] = useState([0, 50]);
   const { data: futuresTrades, isLoading: futuresTradesIsLoading } = useGetFuturesTrades();
-  const { data: positionLiquidated, isLoading: positionLiquidatedIsLoading } = useGetLiquidations();
+  const { data: marginTransfer, isLoading: marginTransferIsLoading } =
+    useGetFuturesMarginTransfer();
 
   const allEvents = useMemo(() => {
-    if (orders?.length && futuresTrades?.length) {
-      return orders
+    if (marginTransfer?.length && futuresTrades?.length) {
+      return (marginTransfer as any)
         .concat(futuresTrades as any)
-        .concat(positionLiquidated as any)
-        .sort((a, b) => {
+        .sort((a: { timestamp: string }, b: { timestamp: string }) => {
           if (Number(a.timestamp) < Number(b.timestamp)) {
             return 1;
           }
@@ -32,145 +38,44 @@ export const Actions: FC = () => {
         }) as EventType[];
     }
     return [];
-  }, [orders, futuresTrades, positionLiquidated]);
+  }, [futuresTrades, marginTransfer]);
 
   return (
-    <Flex flexDir="column" p="2" justifyContent="center" alignItems="center">
-      <Link to="/" style={{ marginBottom: '20px' }}>
-        <Flex gap="2" alignItems="center">
-          <ArrowBackIcon />
-          <Heading size="md">Back</Heading>
-        </Flex>
-      </Link>
-      {ordersIsLoading || futuresTradesIsLoading || positionLiquidatedIsLoading ? (
-        <Spinner color="cyan.500"></Spinner>
-      ) : (
-        <Flex flexDir="column" gap="2">
-          {allEvents?.map((event, i) => {
-            return (
-              <Flex
-                key={event.timestamp.concat(i.toString())}
-                borderColor={
-                  event.entity === 'Position Liquidated'
-                    ? 'red.500'
-                    : event.entity === 'Futures Orders'
-                    ? 'cyan.500'
-                    : 'green.500'
-                }
-                borderWidth="2px"
-                borderStyle="solid"
-                borderRadius="base"
-                p="4"
-                flexDir="column"
-                gap="2"
-              >
-                <>
-                  <Flex justifyContent="space-between" alignItems="center" gap="2">
-                    <Heading size="sm">{event.entity}</Heading>
-                    <Text>
-                      Time:&nbsp;
-                      {new Date(Number(event.timestamp) * 1000).toLocaleDateString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </Text>
-                    <Text
-                      cursor="pointer"
-                      onClick={() => {
-                        toast({
-                          title: 'Copy to clipboard',
-                          status: 'success',
-                          isClosable: true,
-                          duration: 5000,
-                        });
-                        navigator.clipboard.writeText(event.account);
-                      }}
-                      textDecorationLine="underline"
-                    >
-                      Account:&nbsp;
-                      {event.account
-                        .substring(0, 5)
-                        .concat('...')
-                        .concat(event.account.substring(event.account.length - 5))}
-                      <IconButton
-                        marginLeft="2"
-                        variant="ghost"
-                        aria-label="link to optimisim etherscan"
-                        icon={<ExternalLinkIcon />}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.open('https://optimistic.etherscan.io/address/' + event.account);
-                        }}
-                      />
-                    </Text>
-                  </Flex>
-                  <Flex justifyContent="space-between" alignItems="center" gap="2">
-                    <Text>
-                      Size:&nbsp; ${numberWithCommas((Number(event.size) / 1e18).toFixed(2))}
-                    </Text>
-                    {event.entity === 'Futures Trade' ? (
-                      <Position id={event.positionId} trade={event as FuturesTrades} />
-                    ) : event.entity === 'Position Liquidated' ? (
-                      <></>
-                    ) : (
-                      <></>
-                    )}
-                    <Text>Market:&nbsp;{event.market}</Text>
-                  </Flex>
-                  <Flex>
-                    <Text>
-                      Fee: $
-                      {numberWithCommas(
-                        (Number(event['feesPaidToSynthetix'] || event['fee']) / 1e18).toFixed(2)
-                      )}
-                    </Text>
-                  </Flex>
-                  {'keeper' in event && (
-                    <Text
-                      cursor="pointer"
-                      onClick={() => {
-                        toast({
-                          title: 'Copy to clipboard',
-                          status: 'success',
-                          isClosable: true,
-                          duration: 5000,
-                        });
-                        navigator.clipboard.writeText(event.account);
-                      }}
-                    >
-                      Keeper:&nbsp;
-                      {event.keeper
-                        .substring(0, 5)
-                        .concat('...')
-                        .concat(event.keeper.substring(event.keeper.length - 5))}
-                      <IconButton
-                        marginLeft="2"
-                        variant="ghost"
-                        aria-label="link to optimisim etherscan"
-                        icon={<ExternalLinkIcon />}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.open('https://optimistic.etherscan.io/address/' + event.keeper);
-                        }}
-                      />
-                    </Text>
-                  )}
-                  {'pnl' && event && (
-                    <Text>
-                      PNL:&nbsp;
-                      {numberWithCommas((Number(event.pnl) / 1e18).toFixed(2)).concat('%')}
-                    </Text>
-                  )}
-                  {'orderId' && event && <Text>Order ID:&nbsp;{event.orderId}</Text>}
-                  {'targetRoundId' in event && (
-                    <Text>Target Round ID:&nbsp;{event.targetRoundId}</Text>
-                  )}
-                </>
-              </Flex>
-            );
-          })}
-        </Flex>
-      )}
+    <Flex flexDir="column" justifyContent="center" alignItems="center" w="100%">
+      <Text>Refetching every 30 seconds</Text>
+      <TableContainer m="4" w="100%">
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Action</Th>
+              <Th>Wallet Address</Th>
+              <Th>Market</Th>
+              <Th>Price</Th>
+              <Th>Size</Th>
+              <Th>Fee</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {futuresTradesIsLoading || marginTransferIsLoading ? (
+              <Spinner colorScheme="cyan" />
+            ) : (
+              allEvents
+                .slice(page[0], page[1])
+                .map((event, index) => (
+                  <ActionItem event={event} key={event.id.concat(index.toString())} />
+                ))
+            )}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      <Box m="4">
+        <Pagination
+          dropdownOptions={[25, 50, 100]}
+          maxLength={allEvents.length}
+          onChange={setPage}
+          text="Show rows per pages"
+        />
+      </Box>
     </Flex>
   );
 };

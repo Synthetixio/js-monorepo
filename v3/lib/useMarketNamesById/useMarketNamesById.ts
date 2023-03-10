@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { utils } from 'ethers';
 import { useExternalMulticall } from '@snx-v3/useExternalMulticall';
 import { z } from 'zod';
+import { useNetwork } from '@snx-v3/useBlockchain';
 
 const MarketNamesSchema = z.array(z.string());
 
@@ -12,8 +13,17 @@ export const useMarketNamesById = (
   marketIdsAndAddresses?: { marketId: string; address: string }[]
 ) => {
   const { data: MultiCall } = useExternalMulticall();
+  const network = useNetwork();
   return useQuery({
-    queryKey: [{ marketIdsAndAddresses }, 'MarketNamesById'],
+    queryKey: [
+      network.name,
+      'MarketNamesById',
+      {
+        markets: marketIdsAndAddresses
+          ? marketIdsAndAddresses.map((market) => market.marketId).sort()
+          : [],
+      },
+    ],
     queryFn: async () => {
       if (!marketIdsAndAddresses || !MultiCall) {
         throw Error('Query should not be enable when contract or marketIdsAndAddresses missing');

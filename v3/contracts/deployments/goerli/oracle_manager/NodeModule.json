@@ -1,5 +1,5 @@
 {
-  "address": "0xCE7760d0D9Ea15C7CCC06d2D76f34817e0d6bC1A",
+  "address": "0xfEDB3BeEc7283c93d12C3b56f70C39AbAD776831",
   "abi": [
     {
       "inputs": [
@@ -52,7 +52,13 @@
       "type": "error"
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "price",
+          "type": "int256"
+        }
+      ],
       "name": "InvalidPrice",
       "type": "error"
     },
@@ -80,11 +86,6 @@
     {
       "inputs": [],
       "name": "OverflowUint256ToInt256",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "OverflowUint256ToUint128",
       "type": "error"
     },
     {
@@ -292,7 +293,8 @@
     }
   ],
   "constructorArgs": [],
-  "deployTxnHash": "0xd92d60823798c29bfe185f61ef5427b39cdbc0b75ae4f549d51550fe68be2e47",
+  "linkedLibraries": {},
+  "deployTxnHash": "0x8fcfa8c117cdca1d684cac9d234339728e3aa505962c246849213590a2b4acdf",
   "sourceName": "contracts/modules/NodeModule.sol",
   "contractName": "NodeModule",
   "deployedOn": "contract.NodeModule"

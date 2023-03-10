@@ -60,6 +60,14 @@ export const Fonts = () => (
           url('https://fonts.synthetix.io/GT%20America%20Mono%20Bold.woff') format('woff'),
           url('https://fonts.synthetix.io/GT%20America%20Mono%20Bold.otf') format('opentype');
       }
+      @font-face {
+        font-family: 'Lustra Text';
+        font-style: normal;
+        font-display: swap;
+        font-weight: 400;
+        src: local('Lustra Text'),
+          url('https://fonts.synthetix.io/Lustra%20Text%20Thin.otf') format('opentype');
+      }
     `}
   />
 );

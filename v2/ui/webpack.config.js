@@ -189,7 +189,6 @@ module.exports = {
         'optimism-networks',
         'providers',
         'queries',
-        'transaction-notifier',
         'wei',
         'generate-subgraph-query',
         'v3-theme',
@@ -257,7 +256,6 @@ module.exports = {
       '@synthetixio/optimism-networks/build': '@synthetixio/optimism-networks/src',
       '@synthetixio/providers/build': '@synthetixio/providers/src',
       '@synthetixio/queries/build': '@synthetixio/queries/src',
-      '@synthetixio/transaction-notifier/build': '@synthetixio/transaction-notifier/src',
       '@synthetixio/wei/build': '@synthetixio/wei/src',
     },
     fallback: {

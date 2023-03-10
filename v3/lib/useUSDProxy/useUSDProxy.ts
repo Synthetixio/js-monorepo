@@ -20,9 +20,10 @@ export const useUSDProxy = () => {
   const provider = useProvider();
   const signer = useSigner();
   const signerOrProvider = signer || provider;
+  const withSigner = Boolean(signer);
 
   return useQuery({
-    queryKey: [network.name, { withSigner: Boolean(signer) }, 'USDProxy'],
+    queryKey: [network.name, 'USDProxy', { withSigner }],
     queryFn: async function () {
       const USDProxy = await importUSDProxy(network.name);
       return new Contract(USDProxy.address, USDProxy.abi, signerOrProvider) as
@@ -34,4 +35,3 @@ export const useUSDProxy = () => {
     cacheTime: Infinity,
   });
 };
-export type USDProxyContractType = USDProxyGoerli | USDProxyOptimismGoerli;

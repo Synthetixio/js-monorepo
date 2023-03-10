@@ -5,10 +5,15 @@ export function metamask({ pk, address }) {
   return new Proxy(provider, {
     get(target, prop) {
       switch (prop) {
+        case 'chainId':
+          return '0x5';
         case 'isMetaMask':
           return true;
         case 'getSigner':
-          return () => new ethers.Wallet(pk);
+          return () => {
+            const wallet = new ethers.Wallet(pk);
+            return wallet.connect(provider);
+          };
         case 'request':
           return async ({ method, params }) => {
             switch (method) {

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { wei } from '@synthetixio/wei';
 import { InfuraProvider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
-import { GWEI_DECIMALS } from '@snx-v3/Constants';
+import { GWEI_DECIMALS } from '@snx-v3/constants';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
 const MULTIPLIER = wei(2, GWEI_DECIMALS);
@@ -61,15 +61,14 @@ export const getGasPrice = async ({
 export type GasPrices = Awaited<ReturnType<typeof getGasPrice>>;
 
 export const useGasPrice = () => {
-  const { id: networkId, name: networkName } = useNetwork();
+  const network = useNetwork();
 
   return useQuery({
-    queryKey: ['useGasPrice', networkId],
+    queryKey: [network.name, 'GasPrice'],
     queryFn: async () => {
-      if (!networkId) throw Error('Network id required');
-      return getGasPrice({ networkId, networkName });
+      return getGasPrice({ networkId: network.id, networkName: network.name });
     },
 
-    enabled: Boolean(networkId),
+    enabled: Boolean(network.name && network.id),
   });
 };

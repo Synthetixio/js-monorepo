@@ -1,4 +1,5 @@
 const path = require('path');
+require('dotenv').config({ path: '.env.local', override: true });
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
@@ -23,7 +24,14 @@ const htmlPlugin = new HtmlWebpackPlugin({
 
 const babelRule = {
   test: /\.(ts|tsx|js|jsx)$/,
-  include: [/v3\/theme/, /v2\/perps-v2\/ui\/src/],
+  include: [
+    // Folders included in build
+    /v2\/contracts/,
+    /v3\/theme/,
+    /v3\/lib/,
+    /v3\/components/,
+    /v2\/perps-v2\/ui\/src/,
+  ],
   resolve: {
     fullySpecified: false,
   },
@@ -127,8 +135,15 @@ module.exports = {
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
       ),
     ])
-    .concat([])
-
+    .concat([
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
+        'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
+        'process.env.NEXT_PUBLIC_INFURA_PROJECT_ID': JSON.stringify(
+          process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
+        ),
+      }),
+    ])
     .concat([
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
@@ -151,6 +166,9 @@ module.exports = {
     ),
 
   resolve: {
+    alias: {
+      '@synthetixio/contracts/build': '@synthetixio/contracts/src',
+    },
     fallback: {
       buffer: require.resolve('buffer'),
       stream: require.resolve('stream-browserify'),

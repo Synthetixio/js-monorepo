@@ -1,17 +1,21 @@
 type PositionLiquidated @entity {
   id: ID!
   account: Bytes!
-  market: Bytes!
+  market: FuturesMarket!
   liquidator: Bytes!
   size: BigDecimal!
   price: BigDecimal!
   fee: BigDecimal!
+  futuresPosition: FuturesPosition!
   block: BigInt!
   timestamp: BigInt!
+  txHash: String!
 }
 
 type Trader @entity {
   id: ID!
+  timestamp: BigInt!
+  margin: BigDecimal!
   totalLiquidations: BigInt!
   totalMarginLiquidated: BigDecimal!
   feesPaidToSynthetix: BigDecimal!
@@ -26,29 +30,16 @@ type FuturesTrade @entity {
   account: Bytes!
   margin: BigInt!
   positionId: String!
+  futuresOrder: FuturesOrder
   size: BigInt!
-  market: Bytes!
+  market: FuturesMarket!
   price: BigInt!
   positionSize: BigInt!
   positionClosed: Boolean!
   pnl: BigInt!
   feesPaidToSynthetix: BigInt!
   type: FuturesTradeType!
-}
-
-enum FuturesTradeType {
-  PositionOpened
-  PositionClosed
-  PositionModified
-  DelayedOrderRemoved
-  DelayedOrderSubmitted
-  DelayedOffchainSubmitted
-}
-
-enum FuturesOrderStatus {
-  Pending
-  Filled
-  Cancelled
+  txHash: String!
 }
 
 type Synthetix @entity {
@@ -60,9 +51,11 @@ type Synthetix @entity {
   totalTraders: BigInt!
 }
 
-type Partner @entity {
+type Volume @entity {
   id: ID!
-  tradeCount: BigInt!
+  volume: BigDecimal!
+  timestamp: BigInt!
+  market: FuturesMarket!
 }
 
 type FuturesPosition @entity {
@@ -71,7 +64,7 @@ type FuturesPosition @entity {
   openTimestamp: BigInt!
   closeTimestamp: BigInt
   long: Boolean!
-  market: Bytes!
+  market: FuturesMarket!
   isOpen: Boolean!
   isLiquidated: Boolean!
   trades: BigInt!
@@ -85,30 +78,73 @@ type FuturesPosition @entity {
   fundingIndex: BigInt!
   totalVolume: BigInt!
   entryPrice: BigInt!
+  netTransfers: BigInt!
   lastPrice: BigInt!
+  avgEntryPrice: BigInt!
+  txHash: String!
   exitPrice: BigInt
 }
 
 type FuturesOrder @entity {
   id: ID!
   size: BigInt!
-  market: Bytes!
+  market: FuturesMarket!
   account: Bytes!
   orderId: BigInt!
   targetRoundId: BigInt!
   targetPrice: BigInt!
   marginDelta: BigInt!
   timestamp: BigInt!
-  orderType: FuturesTradeType!
+  orderType: FuturesOrderType!
   status: FuturesOrderStatus!
   fee: BigInt!
   keeper: Bytes!
+  positionId: String
+  txHash: String!
 }
 
 type FundingRateUpdate @entity {
   id: ID!
   timestamp: BigInt!
-  market: Bytes!
-  sequenceLength: BigInt!
+  market: FuturesMarket!
+  fundingRate: BigInt!
   funding: BigInt!
+  index: BigInt!
+}
+
+type FuturesMarginTransfer @entity {
+  id: ID!
+  timestamp: BigInt!
+  account: Bytes!
+  market: FuturesMarket!
+  size: BigInt!
+  txHash: String!
+}
+
+type FuturesMarket @entity {
+  id: ID!
+  asset: Bytes!
+  marketKey: Bytes!
+  timestamp: BigInt!
+}
+
+enum FuturesOrderType {
+  DelayedOrderSubmitted
+  DelayedOffchainSubmitted
+  NextPriceOrderRemoved
+  NextPriceOrderSubmitted
+}
+
+enum FuturesTradeType {
+  PositionOpened
+  PositionClosed
+  PositionModified
+  Liquidated
+  Unknown
+}
+
+enum FuturesOrderStatus {
+  Pending
+  Filled
+  Cancelled
 }

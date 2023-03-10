@@ -1,5 +1,5 @@
 {
-  "address": "0xc068D7E918a95de3864BcC4Ca17457971F1240bB",
+  "address": "0x356699733B01EeA5C08c68F88Db566FEA9Cb6a83",
   "abi": [
     {
       "inputs": [
@@ -252,7 +252,7 @@
             }
           ],
           "internalType": "struct IAccountModule.AccountPermissions[]",
-          "name": "permissions",
+          "name": "accountPerms",
           "type": "tuple[]"
         }
       ],
@@ -413,5 +413,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x780bee47390e0cdad0c6218c60b8e6f6cca51f7f91efeeed76a036579e7c7fcd"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x901b6bf6ac1c0b73e5854ee61a8b55ff90acad447be616c8760a40f8abf64568",
+  "sourceName": "contracts/modules/core/AccountModule.sol",
+  "contractName": "AccountModule",
+  "deployedOn": "contract.AccountModule"
 }

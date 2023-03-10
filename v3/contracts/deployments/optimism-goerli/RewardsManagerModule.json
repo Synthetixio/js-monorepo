@@ -1,6 +1,17 @@
 {
-  "address": "0x6EEe34cD51b69cfe120742EE29d3E537E80A3657",
+  "address": "0xFf1AA6A6B8a8CDD82a7B275A65D9EF7fa5EcE2e6",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "AccountNotFound",
+      "type": "error"
+    },
     {
       "inputs": [
         {
@@ -87,6 +98,22 @@
     {
       "inputs": [],
       "name": "PositionOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "RewardDistributorNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "distributor",
+          "type": "address"
+        }
+      ],
+      "name": "RewardUnavailable",
       "type": "error"
     },
     {
@@ -417,5 +444,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x2ac355b569576e92ffca3dcf6f487bacfc9f4c6899c79d78d85e491489358c07"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xdf985f4f47385d437d4d88de31bf2ee2e4369c736a504077458c85c37688d281",
+  "sourceName": "contracts/modules/core/RewardsManagerModule.sol",
+  "contractName": "RewardsManagerModule",
+  "deployedOn": "contract.RewardsManagerModule"
 }

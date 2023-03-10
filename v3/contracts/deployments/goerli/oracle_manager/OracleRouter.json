@@ -1,11 +1,6 @@
 {
-  "address": "0x6B82faC132da7abbEc81A6097eA9431DCEB49C15",
+  "address": "0x76BBBEd4AB0e3097c6F5CcEa18334D08EED69f69",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -140,32 +135,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "newNominatedOwner",
           "type": "address"
         }
@@ -285,7 +254,13 @@
       "type": "error"
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "price",
+          "type": "int256"
+        }
+      ],
       "name": "InvalidPrice",
       "type": "error"
     },
@@ -313,11 +288,6 @@
     {
       "inputs": [],
       "name": "OverflowUint256ToInt256",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "OverflowUint256ToUint128",
       "type": "error"
     },
     {
@@ -525,7 +495,7 @@
     }
   ],
   "deployedOn": "router.OracleRouter",
-  "deployTxnHash": "0xef97f92dc8336898e25db813e2cb0271b4f617ab0bbde3c4775f6d6aa64e3b5f",
+  "deployTxnHash": "0xaad721db6b6426427fcc73defb781cbc994bf73b668628566742dfb43e8ac748",
   "contractName": "OracleRouter",
   "sourceName": "OracleRouter.sol"
 }

@@ -4,8 +4,7 @@ import { LiquidityPosition, useLiquidityPosition } from '@snx-v3/useLiquidityPos
 import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 import { CollateralType } from '@snx-v3/useCollateralTypes';
-import { useIsConnected } from '@snx-v3/useBlockchain';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { onboard, useIsConnected } from '@snx-v3/useBlockchain';
 import { useParams } from '@snx-v3/useParams';
 import { CollateralIcon } from '@snx-v3/icons';
 
@@ -30,22 +29,24 @@ function VaultRowUi({
 
   return (
     <Tr>
-      <Td as={Flex} flexDir="row" py={4}>
-        <CollateralIcon width="40px" height="40px" symbol={collateralType.symbol} />
-        <Flex flexDirection="column" justifyContent="center" ml={2}>
-          <Text fontSize="sm" color="gray.700" lineHeight="20px" fontWeight="500">
-            {liquidityPosition?.collateralValue.gt(0) ? (
-              <Amount value={liquidityPosition.collateralValue} prefix="$" />
-            ) : (
-              '$200'
-            )}
-          </Text>
-          <Text fontSize="xs" color="gray.500">
-            {liquidityPosition?.collateralValue.gt(0) && (
-              <Amount value={liquidityPosition.collateralAmount} />
-            )}
-            {collateralType.symbol}
-          </Text>
+      <Td>
+        <Flex flexDir="row" py={4}>
+          <CollateralIcon width="40px" height="40px" symbol={collateralType.symbol} />
+          <Flex flexDirection="column" justifyContent="center" ml={2}>
+            <Text fontSize="sm" color="gray.700" lineHeight="20px" fontWeight="500">
+              {liquidityPosition?.collateralValue.gt(0) ? (
+                <Amount value={liquidityPosition.collateralValue} prefix="$" />
+              ) : (
+                '$200'
+              )}
+            </Text>
+            <Text fontSize="xs" color="gray.500">
+              {liquidityPosition?.collateralValue.gt(0) && (
+                <Amount value={liquidityPosition.collateralAmount} />
+              )}
+              {collateralType.symbol}
+            </Text>
+          </Flex>
         </Flex>
       </Td>
       <Td>
@@ -118,7 +119,6 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
   });
 
   const navigate = useNavigate();
-  const { openConnectModal } = useConnectModal();
   const isConnected = useIsConnected();
 
   return (
@@ -129,7 +129,7 @@ export const VaultRow: FC<{ collateralType: CollateralType; poolId: string }> = 
       poolId={poolId}
       navigate={navigate}
       isConnected={isConnected}
-      openConnectModal={openConnectModal}
+      openConnectModal={() => onboard.connectWallet()}
     />
   );
 };

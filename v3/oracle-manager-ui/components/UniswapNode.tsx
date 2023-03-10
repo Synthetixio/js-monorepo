@@ -124,7 +124,7 @@ export const UniswapNode: FC<{ data: { label: string }; id: string }> = ({ data,
         )}
         <Flex gap="2">
           <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
-            Token 1:
+            Token:
           </Text>
           <Text fontSize="xs" color="whiteAlpha.800">
             {shortAddress(node?.parameters[0])}
@@ -132,18 +132,37 @@ export const UniswapNode: FC<{ data: { label: string }; id: string }> = ({ data,
         </Flex>
         <Flex gap="2">
           <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
-            Token 2:
+            Stablecoin:
           </Text>
           <Text fontSize="xs" color="whiteAlpha.800">
             {shortAddress(node?.parameters[1])}
           </Text>
         </Flex>
+
+        <Flex gap="2">
+          <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
+            Decimal Token:
+          </Text>
+          <Text fontSize="xs" color="whiteAlpha.800">
+            {node?.parameters[2]}
+          </Text>
+        </Flex>
+
+        <Flex gap="2">
+          <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
+            Decimal Stablecoin:
+          </Text>
+          <Text fontSize="xs" color="whiteAlpha.800">
+            {node?.parameters[3]}
+          </Text>
+        </Flex>
+
         <Flex gap="2">
           <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
             Pool:
           </Text>
           <Text fontSize="xs" color="whiteAlpha.800">
-            {shortAddress(node?.parameters[2])}
+            {shortAddress(node?.parameters[4])}
           </Text>
         </Flex>
         <Flex gap="2">
@@ -151,7 +170,7 @@ export const UniswapNode: FC<{ data: { label: string }; id: string }> = ({ data,
             Seconds Ago:
           </Text>
           <Text fontSize="xs" color="whiteAlpha.800">
-            {node?.parameters[3]} Seconds
+            {node?.parameters[5]} Seconds
           </Text>
         </Flex>
       </Flex>

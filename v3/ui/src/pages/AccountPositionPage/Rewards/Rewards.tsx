@@ -1,3 +1,5 @@
+export {};
+/*
 import { Box, Spinner, Table, Tbody, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { useRewards } from './useRewards';
 import { RewardsDistributorTitle } from './RewardsDistributorTitle';
@@ -44,3 +46,4 @@ export function Rewards() {
     </Box>
   );
 }
+*/

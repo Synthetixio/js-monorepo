@@ -1,11 +1,6 @@
 {
-  "address": "0x4bD7854c0aa9A48c2D53BA80ECb446EB87AC4cA1",
+  "address": "0x2cd4aA2a3b97546B3FC1Bd630f5208a3934bDA10",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -140,32 +135,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "newNominatedOwner",
           "type": "address"
         }
@@ -233,6 +202,11 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "AlreadyInitialized",
+      "type": "error"
     },
     {
       "inputs": [
@@ -584,6 +558,29 @@
       "inputs": [
         {
           "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "safeMint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "from",
           "type": "address"
         },
@@ -798,5 +795,8 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xc859e74ecbd71f163fe61945bd2a385b9bb851408481e3c3ed1e0d2904a1c36e"
+  "deployedOn": "router.AccountRouter",
+  "deployTxnHash": "0x53c09ceb7ff6d5b4efc2bf0260d36179f41ab50e5713355f01e5520c26c98324",
+  "contractName": "AccountRouter",
+  "sourceName": "AccountRouter.sol"
 }

@@ -1,0 +1,421 @@
+{
+  "address": "0x7675e7078729B3C0deE6a8c612766BaC4392DC02",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "AccountNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "CannotScaleEmptyMapping",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "EmptyDistribution",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "which",
+          "type": "bytes32"
+        }
+      ],
+      "name": "FeatureUnavailable",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "collateralValue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "debt",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentCRatio",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "cratio",
+          "type": "uint256"
+        }
+      ],
+      "name": "IneligibleForLiquidation",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InsufficientMappedAmount",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "MarketNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "expected",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "actual",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MismatchAssociatedSystemKind",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "MustBeVaultLiquidated",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt128ToUint128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToUint256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint128ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToInt256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToUint128",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "debtLiquidated",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "collateralLiquidated",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRewarded",
+              "type": "uint256"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct ILiquidationModule.LiquidationData",
+          "name": "liquidationData",
+          "type": "tuple"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint128",
+          "name": "liquidateAsAccountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "Liquidation",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "debtLiquidated",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "collateralLiquidated",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRewarded",
+              "type": "uint256"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct ILiquidationModule.LiquidationData",
+          "name": "liquidationData",
+          "type": "tuple"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint128",
+          "name": "liquidateAsAccountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "VaultLiquidation",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "isPositionLiquidatable",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "isVaultLiquidatable",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint128",
+          "name": "liquidateAsAccountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "liquidate",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "debtLiquidated",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "collateralLiquidated",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRewarded",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ILiquidationModule.LiquidationData",
+          "name": "liquidationData",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "internalType": "uint128",
+          "name": "liquidateAsAccountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxUsd",
+          "type": "uint256"
+        }
+      ],
+      "name": "liquidateVault",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "debtLiquidated",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "collateralLiquidated",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRewarded",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ILiquidationModule.LiquidationData",
+          "name": "liquidationData",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x552eaae60a2e1d9917096f71267efd0d157fcde181baaffefe2f5365472ea67b",
+  "sourceName": "contracts/modules/core/LiquidationModule.sol",
+  "contractName": "LiquidationModule",
+  "deployedOn": "contract.LiquidationModule"
+}

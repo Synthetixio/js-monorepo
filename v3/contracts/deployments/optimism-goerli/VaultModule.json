@@ -1,5 +1,5 @@
 {
-  "address": "0x7F8C1B72C95f2E1bE464695176EC0F8E03e38bB4",
+  "address": "0xa72b3cF9e3e51dE49F0FaC8402C70AB5c163b42F",
   "abi": [
     {
       "inputs": [
@@ -198,6 +198,11 @@
     },
     {
       "inputs": [],
+      "name": "RewardDistributorNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [],
       "name": "ValueAlreadyInSet",
       "type": "error"
     },
@@ -378,7 +383,7 @@
           "type": "address"
         }
       ],
-      "name": "getPositionCollateralizationRatio",
+      "name": "getPositionCollateralRatio",
       "outputs": [
         {
           "internalType": "uint256",
@@ -496,5 +501,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x1835f0617ddff224c8f6d023f88c1a30085795d70d2551927512acb00164ffa9"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xac5388c28517405d9abd17d8c7076d30fe8866d1549a9347960c1ab39a9fe2a7",
+  "sourceName": "contracts/modules/core/VaultModule.sol",
+  "contractName": "VaultModule",
+  "deployedOn": "contract.VaultModule"
 }

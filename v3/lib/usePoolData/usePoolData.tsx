@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getSubgraphUrl } from '@snx-v3/Constants';
+import { getSubgraphUrl } from '@snx-v3/constants';
 import { z } from 'zod';
 import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
@@ -115,15 +115,15 @@ export const usePoolData = (poolId?: string) => {
   const network = useNetwork();
 
   return useQuery({
-    queryKey: [network.name, 'pool', { poolId }],
+    queryKey: [network.name, 'Pool', { pool: poolId }],
     queryFn: async () => {
-      if (!network.name || !poolId) throw Error('OMG!');
+      if (!poolId) throw Error('OMG!');
       const poolData = await getPoolData(network.name, poolId);
       if (!poolData.data.pool) {
-        return undefined;
+        throw Error(`Pool ${poolId} not found`);
       }
       return poolData.data.pool;
     },
-    enabled: Boolean(network.isSupported && poolId),
+    enabled: Boolean(network.isSupported && poolId && parseInt(poolId) > 0),
   });
 };

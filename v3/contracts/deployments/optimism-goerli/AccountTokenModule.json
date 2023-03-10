@@ -1,5 +1,5 @@
 {
-  "address": "0x52a35CaED46a6c20B5c43a0D6BEDc4990800E492",
+  "address": "0x9430d7D57Fef65cdE8D71fAe8dC8b1F4C01858e0",
   "abi": [
     {
       "inputs": [],
@@ -372,6 +372,29 @@
       "inputs": [
         {
           "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "safeMint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "from",
           "type": "address"
         },
@@ -586,5 +609,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x9bdb562cf902aecdcc4e9acc75296552fde2abb9d44917fff2c8848cf4e5100a"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x14ecac05f2497f4c8788cb72d28f029c994871e2fc3a1124819d47664c539db2",
+  "sourceName": "contracts/modules/account/AccountTokenModule.sol",
+  "contractName": "AccountTokenModule",
+  "deployedOn": "contract.AccountTokenModule"
 }

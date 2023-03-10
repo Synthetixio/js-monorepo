@@ -1,11 +1,12 @@
-import { Contract, utils } from 'ethers';
-import ProxyAbiOPGoerli from '../deployments/420/Proxy.json';
-import ProxyAbiGoerli from '../deployments/5/Proxy.json';
+import { Contract, providers, utils } from 'ethers';
+import ProxyAbiOPGoerli from '@synthetixio/v3-contracts/deployments/goerli/oracle_manager/Proxy.json';
+import ProxyAbiGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/oracle_manager/Proxy.json';
 import { Node } from './types';
 import { ORACLE_NODE_TYPES } from './constants';
 
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
+    // TODO @MF when deployed, add it here
     case 5:
       return ProxyAbiGoerli.address;
     case 420:
@@ -14,6 +15,23 @@ function resolveNetworkIdToProxyAddress(networkId: number) {
       return ProxyAbiGoerli.address;
   }
 }
+
+function resolveNetworkIdToMultiCallAddress(networkId: number) {
+  switch (networkId) {
+    case 1:
+      return '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441';
+    case 5:
+      return '0x77dCa2C955b15e9dE4dbBCf1246B4B85b651e50e';
+    case 10:
+      return '0x2DC0E2aa608532Da689e89e237dF582B783E552C';
+    case 420:
+      // TODO @MF when deployed, add it here
+      return ProxyAbiOPGoerli.address;
+    default:
+      return '0x77dCa2C955b15e9dE4dbBCf1246B4B85b651e50e';
+  }
+}
+
 export function encodeBytesByNodeType(id: number, parameters: any[]) {
   switch (id) {
     case 1:
@@ -23,7 +41,10 @@ export function encodeBytesByNodeType(id: number, parameters: any[]) {
     case 3:
       return utils.defaultAbiCoder.encode(['address', 'uint', 'uint8'], parameters);
     case 4:
-      return utils.defaultAbiCoder.encode(['address', 'address', 'address', 'uint'], parameters);
+      return utils.defaultAbiCoder.encode(
+        ['address', 'address', 'uint', 'uint', 'address', 'uint'],
+        parameters
+      );
     case 5:
       return utils.defaultAbiCoder.encode(['address', 'bytes32', 'bool'], parameters);
     case 6:
@@ -99,10 +120,46 @@ export function hashId(node: Node, parents: string[]) {
   );
 }
 
-export const getNodeModuleContract = (signerOrProvider: any, networkId: number) => {
+export const getNodeModuleContract = (
+  signerOrProvider: providers.JsonRpcSigner,
+  networkId: number
+) => {
   return new Contract(
     resolveNetworkIdToProxyAddress(networkId),
     ProxyAbiGoerli.abi,
+    signerOrProvider
+  );
+};
+
+export const getMultiCallContract = (
+  signerOrProvider: providers.JsonRpcSigner,
+  networkId: number
+) => {
+  return new Contract(
+    resolveNetworkIdToMultiCallAddress(networkId),
+    [
+      {
+        constant: false,
+        inputs: [
+          {
+            components: [
+              { name: 'target', type: 'address' },
+              { name: 'callData', type: 'bytes' },
+            ],
+            name: 'calls',
+            type: 'tuple[]',
+          },
+        ],
+        name: 'aggregate',
+        outputs: [
+          { name: 'blockNumber', type: 'uint256' },
+          { name: 'returnData', type: 'bytes[]' },
+        ],
+        payable: false,
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
     signerOrProvider
   );
 };

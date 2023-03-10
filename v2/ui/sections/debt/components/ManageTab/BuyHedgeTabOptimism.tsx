@@ -1,4 +1,4 @@
-import { dSNXPoolContractOptimism, SLIPPAGE } from 'constants/dhedge';
+import { dSNXPoolContractOptimism } from 'constants/dhedge';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { constants, utils } from 'ethers';
@@ -96,12 +96,9 @@ const BuyHedgeTabOptimism = () => {
   );
   const dSnxAmount =
     actualAmountToSendBn.gt(0) && dSNXPrice
-      ? formatCryptoCurrency(
-          wei(actualAmountToSendBn).sub(actualAmountToSendBn.mul(SLIPPAGE)).div(dSNXPrice),
-          {
-            minDecimals: 3,
-          }
-        )
+      ? formatCryptoCurrency(wei(actualAmountToSendBn).sub(actualAmountToSendBn).div(dSNXPrice), {
+          minDecimals: 3,
+        })
       : '';
 
   return (

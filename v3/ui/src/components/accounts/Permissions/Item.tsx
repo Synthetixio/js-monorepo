@@ -1,3 +1,5 @@
+export {};
+/*
 import { Tag, Td, Tr } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Address } from '../../shared/Address';
@@ -34,9 +36,10 @@ export const Item: FC<Props> = ({ address, permissions }) => {
         ))}
       </Td>
       <Td>
-        {/* only render below if owner or has modify permissions */}
+        {/!* only render below if owner or has modify permissions *!/}
         <PermissionsEditor address={address} permissions={permissions} />
       </Td>
     </Tr>
   );
 };
+*/

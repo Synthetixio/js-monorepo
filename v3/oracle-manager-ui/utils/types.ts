@@ -9,6 +9,7 @@ interface CustomNode {
   parameters: any[];
   position: { x: number; y: number };
   data: { label: string };
+  isRegistered: boolean;
 }
 
 export type OracleNodeTypes =

@@ -20,9 +20,10 @@ export const useCoreProxy = () => {
   const provider = useProvider();
   const signer = useSigner();
   const signerOrProvider = signer || provider;
+  const withSigner = Boolean(signer);
 
   return useQuery({
-    queryKey: [network.name, { withSigner: Boolean(signer) }, 'CoreProxy'],
+    queryKey: [network.name, 'CoreProxy', { withSigner }],
     queryFn: async function () {
       const CoreProxy = await importCoreProxy(network.name);
       return new Contract(CoreProxy.address, CoreProxy.abi, signerOrProvider) as

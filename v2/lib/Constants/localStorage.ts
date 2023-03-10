@@ -4,7 +4,6 @@ export const LOCAL_STORAGE_KEYS = {
   THALES_STAKING_INFO_VISIBLE: 'thalesStakingInfo',
   WARNING_URL_BANNER_VISIBLE: 'isWarningUrlBannerVisible',
   RE_ELECTION_NEW_START_TIME: 'reElectionNewStartTimeVisible',
-  STAKING_V2_ENABLED: 'STAKING_V2_ENABLED',
 };
 
 export const SESSION_STORAGE_KEYS = {

@@ -7,7 +7,7 @@ import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 import Success from 'assets/svg/app/success.svg';
 import { DEFAULT_FIAT_DECIMALS } from 'constants/defaults';
 import { CryptoCurrency, Synths } from 'constants/currency';
-import TxState from 'sections/earn/TxState';
+import TxState from 'sections/merge-accounts/TxState';
 
 import {
   GreyHeader,

@@ -1,6 +1,17 @@
 {
-  "address": "0x21502f47D4c172CF68e62241970C6Ec1FBDc25d5",
+  "address": "0x43ac3c3A8a2aC1108Be0DdFB21c83FD88b0f666a",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "CollateralDepositDisabled",
+      "type": "error"
+    },
     {
       "inputs": [],
       "name": "EmptyDistribution",
@@ -52,6 +63,22 @@
         }
       ],
       "name": "InsufficientDebt",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
@@ -125,6 +152,17 @@
         }
       ],
       "name": "PermissionDenied",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
+      "name": "PoolNotFound",
       "type": "error"
     },
     {
@@ -258,5 +296,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x0cd3c14f19de8d8f5618caaa4c45bdb8a9a7a556d8f63994cc2d5dfaaeb2b662"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xbb64a063e5913d6125f7152afbb5cd439ea5c0e2f147bd4cc1940fae541983b1",
+  "sourceName": "contracts/modules/core/IssueUSDModule.sol",
+  "contractName": "IssueUSDModule",
+  "deployedOn": "contract.IssueUSDModule"
 }

@@ -1,5 +1,5 @@
 {
-  "address": "0xF29BEB7DbdEf9095f47A787Cf8DD838361412F7E",
+  "address": "0x374DB7Ac9A4F3791262f625C668b13964cDDAF1b",
   "abi": [
     {
       "inputs": [
@@ -281,5 +281,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xf9a6efc7a226ba8d93dc2295f5ac1077a85e1a813dfb2bf90468854d8d8e7cc6"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x1aa947ab46ee2d528c492fef6613c3d08e8fe5d98ec4468fe3a4c3863bfd3eb9",
+  "sourceName": "contracts/modules/core/CollateralConfigurationModule.sol",
+  "contractName": "CollateralConfigurationModule",
+  "deployedOn": "contract.CollateralConfigurationModule"
 }

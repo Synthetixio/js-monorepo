@@ -125,21 +125,19 @@ export const calculateChangesFromMint = ({
 export const calculateChangesFromBurn = ({
   burnAmountSusd,
   debtBalance,
-  stakedSnx,
-  transferable,
   sUSDBalance,
   collateralUsdValue,
   collateral,
   targetCRatio,
+  escrowedSnx,
 }: {
   burnAmountSusd: number;
   debtBalance: number;
-  stakedSnx: number;
-  transferable: number;
   sUSDBalance: number;
   collateralUsdValue: number;
   collateral: number;
   targetCRatio: number;
+  escrowedSnx: number;
 }) => {
   const newDebtBalance = Math.max(debtBalance - burnAmountSusd, 0);
   const newCratio = newDebtBalance / collateralUsdValue || 0;
@@ -149,8 +147,7 @@ export const calculateChangesFromBurn = ({
     collateral: wei(collateral),
   }).toNumber();
 
-  const escrowedSnx = collateral - stakedSnx - transferable;
-  const newTransferable = collateral - escrowedSnx - newStakedAmountSnx;
+  const newTransferable = Math.max(collateral - escrowedSnx - newStakedAmountSnx, 0);
 
   const newSUSDBalance = Math.max(sUSDBalance - burnAmountSusd, 0);
   return { newDebtBalance, newStakedAmountSnx, newCratio, newTransferable, newSUSDBalance };
