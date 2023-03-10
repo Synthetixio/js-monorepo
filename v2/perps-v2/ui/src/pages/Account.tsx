@@ -2,11 +2,12 @@ import { Flex, Heading, Button, Box, Link } from '@chakra-ui/react';
 import { ArrowBackIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ActionTable } from '../components/ActionTable';
+// import { ActionTable } from '../components/ActionTable';
 import { optimisticEthercanLink } from '../utils/constants';
-import { PositionsTable } from '../components/PositionsTable';
+import { PositionsList } from '../components/Positions';
+// import { PositionsList } from '../components/Positions';
 
-export const Wallet: FC = () => {
+export const Account: FC = () => {
   const params = useParams();
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ export const Wallet: FC = () => {
     <Flex flexDir="column" px="40px" py={2}>
       <Box mt={12}>
         <Button
-          variant="outline"
+          variant="ghost"
           fontWeight="700"
           onClick={() => navigate('/')}
           leftIcon={<ArrowBackIcon />}
@@ -24,7 +25,7 @@ export const Wallet: FC = () => {
       </Box>
       <Link
         alignItems="center"
-        mt={4}
+        mt={8}
         href={optimisticEthercanLink(params?.walletAddress || '')}
         target="_blank"
         display="flex"
@@ -38,14 +39,16 @@ export const Wallet: FC = () => {
         <Heading fontSize="18px" lineHeight="28px">
           Positions:
         </Heading>
-        <PositionsTable />
+        <PositionsList />
       </Box>
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
           Actions:
         </Heading>
-        <ActionTable isLoading={false} />
+        {/* <ActionTable isLoading={false} /> */}
       </Box>
     </Flex>
   );
 };
+
+export default Account;
