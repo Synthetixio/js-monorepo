@@ -17,7 +17,7 @@ export const PnL = ({ amount }: PnLProps) => {
         lineHeight="20px"
         color={pnl >= 0 ? 'green.500' : 'red.500'}
       >
-        ${numberWithCommas(stringToDecimal(amount).toFixed(2))}
+        {`${pnl >= 0 ? '+' : '-'}${numberWithCommas(stringToDecimal(amount).toFixed(2))}`}
       </Text>
       <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
         +23%

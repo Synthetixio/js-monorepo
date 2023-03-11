@@ -2,11 +2,13 @@ import { gql } from '../__generated__';
 
 export const LIQUIDATION_QUERY = gql(`
   query PositionLiquidated {
-    positionLiquidateds(id: "synthetix") {
+    positionLiquidateds {
       id
       account
       liquidator
-      market
+      market {
+        asset
+      }
       size
       price
       fee
@@ -17,7 +19,9 @@ export const LIQUIDATION_QUERY = gql(`
         id
         account
         isLiquidated
-        market
+        market {
+          asset
+        }
         isOpen
         openTimestamp
         closeTimestamp

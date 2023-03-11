@@ -6,7 +6,9 @@ export const POSITIONS_QUERY = gql(`
       id
       account
       isLiquidated
-      market
+      market {
+        asset
+      }
       isOpen
       openTimestamp
       closeTimestamp

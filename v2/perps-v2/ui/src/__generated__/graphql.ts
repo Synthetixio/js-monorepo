@@ -30,9 +30,10 @@ export type Block_Height = {
 export type FundingRateUpdate = {
   __typename?: 'FundingRateUpdate';
   funding: Scalars['BigInt'];
+  fundingRate: Scalars['BigInt'];
   id: Scalars['ID'];
-  market: Scalars['Bytes'];
-  sequenceLength: Scalars['BigInt'];
+  index: Scalars['BigInt'];
+  market: FuturesMarket;
   timestamp: Scalars['BigInt'];
 };
 
@@ -41,6 +42,14 @@ export type FundingRateUpdate_Filter = {
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<FundingRateUpdate_Filter>>>;
   funding?: InputMaybe<Scalars['BigInt']>;
+  fundingRate?: InputMaybe<Scalars['BigInt']>;
+  fundingRate_gt?: InputMaybe<Scalars['BigInt']>;
+  fundingRate_gte?: InputMaybe<Scalars['BigInt']>;
+  fundingRate_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  fundingRate_lt?: InputMaybe<Scalars['BigInt']>;
+  fundingRate_lte?: InputMaybe<Scalars['BigInt']>;
+  fundingRate_not?: InputMaybe<Scalars['BigInt']>;
+  fundingRate_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   funding_gt?: InputMaybe<Scalars['BigInt']>;
   funding_gte?: InputMaybe<Scalars['BigInt']>;
   funding_in?: InputMaybe<Array<Scalars['BigInt']>>;
@@ -56,25 +65,36 @@ export type FundingRateUpdate_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  market?: InputMaybe<Scalars['Bytes']>;
-  market_contains?: InputMaybe<Scalars['Bytes']>;
-  market_gt?: InputMaybe<Scalars['Bytes']>;
-  market_gte?: InputMaybe<Scalars['Bytes']>;
-  market_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  market_lt?: InputMaybe<Scalars['Bytes']>;
-  market_lte?: InputMaybe<Scalars['Bytes']>;
-  market_not?: InputMaybe<Scalars['Bytes']>;
-  market_not_contains?: InputMaybe<Scalars['Bytes']>;
-  market_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  index?: InputMaybe<Scalars['BigInt']>;
+  index_gt?: InputMaybe<Scalars['BigInt']>;
+  index_gte?: InputMaybe<Scalars['BigInt']>;
+  index_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  index_lt?: InputMaybe<Scalars['BigInt']>;
+  index_lte?: InputMaybe<Scalars['BigInt']>;
+  index_not?: InputMaybe<Scalars['BigInt']>;
+  index_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  market?: InputMaybe<Scalars['String']>;
+  market_?: InputMaybe<FuturesMarket_Filter>;
+  market_contains?: InputMaybe<Scalars['String']>;
+  market_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_ends_with?: InputMaybe<Scalars['String']>;
+  market_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_gt?: InputMaybe<Scalars['String']>;
+  market_gte?: InputMaybe<Scalars['String']>;
+  market_in?: InputMaybe<Array<Scalars['String']>>;
+  market_lt?: InputMaybe<Scalars['String']>;
+  market_lte?: InputMaybe<Scalars['String']>;
+  market_not?: InputMaybe<Scalars['String']>;
+  market_not_contains?: InputMaybe<Scalars['String']>;
+  market_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_not_ends_with?: InputMaybe<Scalars['String']>;
+  market_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_not_in?: InputMaybe<Array<Scalars['String']>>;
+  market_not_starts_with?: InputMaybe<Scalars['String']>;
+  market_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  market_starts_with?: InputMaybe<Scalars['String']>;
+  market_starts_with_nocase?: InputMaybe<Scalars['String']>;
   or?: InputMaybe<Array<InputMaybe<FundingRateUpdate_Filter>>>;
-  sequenceLength?: InputMaybe<Scalars['BigInt']>;
-  sequenceLength_gt?: InputMaybe<Scalars['BigInt']>;
-  sequenceLength_gte?: InputMaybe<Scalars['BigInt']>;
-  sequenceLength_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  sequenceLength_lt?: InputMaybe<Scalars['BigInt']>;
-  sequenceLength_lte?: InputMaybe<Scalars['BigInt']>;
-  sequenceLength_not?: InputMaybe<Scalars['BigInt']>;
-  sequenceLength_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   timestamp?: InputMaybe<Scalars['BigInt']>;
   timestamp_gt?: InputMaybe<Scalars['BigInt']>;
   timestamp_gte?: InputMaybe<Scalars['BigInt']>;
@@ -87,9 +107,14 @@ export type FundingRateUpdate_Filter = {
 
 export enum FundingRateUpdate_OrderBy {
   Funding = 'funding',
+  FundingRate = 'fundingRate',
   Id = 'id',
+  Index = 'index',
   Market = 'market',
-  SequenceLength = 'sequenceLength',
+  MarketAsset = 'market__asset',
+  MarketId = 'market__id',
+  MarketMarketKey = 'market__marketKey',
+  MarketTimestamp = 'market__timestamp',
   Timestamp = 'timestamp'
 }
 
@@ -97,7 +122,7 @@ export type FuturesMarginTransfer = {
   __typename?: 'FuturesMarginTransfer';
   account: Scalars['Bytes'];
   id: Scalars['ID'];
-  market: Scalars['Bytes'];
+  market: FuturesMarket;
   size: Scalars['BigInt'];
   timestamp: Scalars['BigInt'];
   txHash: Scalars['String'];
@@ -125,16 +150,27 @@ export type FuturesMarginTransfer_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  market?: InputMaybe<Scalars['Bytes']>;
-  market_contains?: InputMaybe<Scalars['Bytes']>;
-  market_gt?: InputMaybe<Scalars['Bytes']>;
-  market_gte?: InputMaybe<Scalars['Bytes']>;
-  market_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  market_lt?: InputMaybe<Scalars['Bytes']>;
-  market_lte?: InputMaybe<Scalars['Bytes']>;
-  market_not?: InputMaybe<Scalars['Bytes']>;
-  market_not_contains?: InputMaybe<Scalars['Bytes']>;
-  market_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  market?: InputMaybe<Scalars['String']>;
+  market_?: InputMaybe<FuturesMarket_Filter>;
+  market_contains?: InputMaybe<Scalars['String']>;
+  market_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_ends_with?: InputMaybe<Scalars['String']>;
+  market_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_gt?: InputMaybe<Scalars['String']>;
+  market_gte?: InputMaybe<Scalars['String']>;
+  market_in?: InputMaybe<Array<Scalars['String']>>;
+  market_lt?: InputMaybe<Scalars['String']>;
+  market_lte?: InputMaybe<Scalars['String']>;
+  market_not?: InputMaybe<Scalars['String']>;
+  market_not_contains?: InputMaybe<Scalars['String']>;
+  market_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_not_ends_with?: InputMaybe<Scalars['String']>;
+  market_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_not_in?: InputMaybe<Array<Scalars['String']>>;
+  market_not_starts_with?: InputMaybe<Scalars['String']>;
+  market_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  market_starts_with?: InputMaybe<Scalars['String']>;
+  market_starts_with_nocase?: InputMaybe<Scalars['String']>;
   or?: InputMaybe<Array<InputMaybe<FuturesMarginTransfer_Filter>>>;
   size?: InputMaybe<Scalars['BigInt']>;
   size_gt?: InputMaybe<Scalars['BigInt']>;
@@ -178,9 +214,71 @@ export enum FuturesMarginTransfer_OrderBy {
   Account = 'account',
   Id = 'id',
   Market = 'market',
+  MarketAsset = 'market__asset',
+  MarketId = 'market__id',
+  MarketMarketKey = 'market__marketKey',
+  MarketTimestamp = 'market__timestamp',
   Size = 'size',
   Timestamp = 'timestamp',
   TxHash = 'txHash'
+}
+
+export type FuturesMarket = {
+  __typename?: 'FuturesMarket';
+  asset: Scalars['Bytes'];
+  id: Scalars['ID'];
+  marketKey: Scalars['Bytes'];
+  timestamp: Scalars['BigInt'];
+};
+
+export type FuturesMarket_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<FuturesMarket_Filter>>>;
+  asset?: InputMaybe<Scalars['Bytes']>;
+  asset_contains?: InputMaybe<Scalars['Bytes']>;
+  asset_gt?: InputMaybe<Scalars['Bytes']>;
+  asset_gte?: InputMaybe<Scalars['Bytes']>;
+  asset_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  asset_lt?: InputMaybe<Scalars['Bytes']>;
+  asset_lte?: InputMaybe<Scalars['Bytes']>;
+  asset_not?: InputMaybe<Scalars['Bytes']>;
+  asset_not_contains?: InputMaybe<Scalars['Bytes']>;
+  asset_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  marketKey?: InputMaybe<Scalars['Bytes']>;
+  marketKey_contains?: InputMaybe<Scalars['Bytes']>;
+  marketKey_gt?: InputMaybe<Scalars['Bytes']>;
+  marketKey_gte?: InputMaybe<Scalars['Bytes']>;
+  marketKey_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  marketKey_lt?: InputMaybe<Scalars['Bytes']>;
+  marketKey_lte?: InputMaybe<Scalars['Bytes']>;
+  marketKey_not?: InputMaybe<Scalars['Bytes']>;
+  marketKey_not_contains?: InputMaybe<Scalars['Bytes']>;
+  marketKey_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  or?: InputMaybe<Array<InputMaybe<FuturesMarket_Filter>>>;
+  timestamp?: InputMaybe<Scalars['BigInt']>;
+  timestamp_gt?: InputMaybe<Scalars['BigInt']>;
+  timestamp_gte?: InputMaybe<Scalars['BigInt']>;
+  timestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timestamp_lt?: InputMaybe<Scalars['BigInt']>;
+  timestamp_lte?: InputMaybe<Scalars['BigInt']>;
+  timestamp_not?: InputMaybe<Scalars['BigInt']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+};
+
+export enum FuturesMarket_OrderBy {
+  Asset = 'asset',
+  Id = 'id',
+  MarketKey = 'marketKey',
+  Timestamp = 'timestamp'
 }
 
 export type FuturesOrder = {
@@ -190,7 +288,7 @@ export type FuturesOrder = {
   id: Scalars['ID'];
   keeper: Scalars['Bytes'];
   marginDelta: Scalars['BigInt'];
-  market: Scalars['Bytes'];
+  market: FuturesMarket;
   orderId: Scalars['BigInt'];
   orderType: FuturesOrderType;
   positionId?: Maybe<Scalars['String']>;
@@ -263,16 +361,27 @@ export type FuturesOrder_Filter = {
   marginDelta_lte?: InputMaybe<Scalars['BigInt']>;
   marginDelta_not?: InputMaybe<Scalars['BigInt']>;
   marginDelta_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  market?: InputMaybe<Scalars['Bytes']>;
-  market_contains?: InputMaybe<Scalars['Bytes']>;
-  market_gt?: InputMaybe<Scalars['Bytes']>;
-  market_gte?: InputMaybe<Scalars['Bytes']>;
-  market_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  market_lt?: InputMaybe<Scalars['Bytes']>;
-  market_lte?: InputMaybe<Scalars['Bytes']>;
-  market_not?: InputMaybe<Scalars['Bytes']>;
-  market_not_contains?: InputMaybe<Scalars['Bytes']>;
-  market_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  market?: InputMaybe<Scalars['String']>;
+  market_?: InputMaybe<FuturesMarket_Filter>;
+  market_contains?: InputMaybe<Scalars['String']>;
+  market_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_ends_with?: InputMaybe<Scalars['String']>;
+  market_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_gt?: InputMaybe<Scalars['String']>;
+  market_gte?: InputMaybe<Scalars['String']>;
+  market_in?: InputMaybe<Array<Scalars['String']>>;
+  market_lt?: InputMaybe<Scalars['String']>;
+  market_lte?: InputMaybe<Scalars['String']>;
+  market_not?: InputMaybe<Scalars['String']>;
+  market_not_contains?: InputMaybe<Scalars['String']>;
+  market_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_not_ends_with?: InputMaybe<Scalars['String']>;
+  market_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_not_in?: InputMaybe<Array<Scalars['String']>>;
+  market_not_starts_with?: InputMaybe<Scalars['String']>;
+  market_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  market_starts_with?: InputMaybe<Scalars['String']>;
+  market_starts_with_nocase?: InputMaybe<Scalars['String']>;
   or?: InputMaybe<Array<InputMaybe<FuturesOrder_Filter>>>;
   orderId?: InputMaybe<Scalars['BigInt']>;
   orderId_gt?: InputMaybe<Scalars['BigInt']>;
@@ -371,6 +480,10 @@ export enum FuturesOrder_OrderBy {
   Keeper = 'keeper',
   MarginDelta = 'marginDelta',
   Market = 'market',
+  MarketAsset = 'market__asset',
+  MarketId = 'market__id',
+  MarketMarketKey = 'market__marketKey',
+  MarketTimestamp = 'market__timestamp',
   OrderId = 'orderId',
   OrderType = 'orderType',
   PositionId = 'positionId',
@@ -399,7 +512,7 @@ export type FuturesPosition = {
   leverage: Scalars['BigInt'];
   long: Scalars['Boolean'];
   margin: Scalars['BigInt'];
-  market: Scalars['Bytes'];
+  market: FuturesMarket;
   netFunding: Scalars['BigInt'];
   netTransfers: Scalars['BigInt'];
   openTimestamp: Scalars['BigInt'];
@@ -524,16 +637,27 @@ export type FuturesPosition_Filter = {
   margin_lte?: InputMaybe<Scalars['BigInt']>;
   margin_not?: InputMaybe<Scalars['BigInt']>;
   margin_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  market?: InputMaybe<Scalars['Bytes']>;
-  market_contains?: InputMaybe<Scalars['Bytes']>;
-  market_gt?: InputMaybe<Scalars['Bytes']>;
-  market_gte?: InputMaybe<Scalars['Bytes']>;
-  market_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  market_lt?: InputMaybe<Scalars['Bytes']>;
-  market_lte?: InputMaybe<Scalars['Bytes']>;
-  market_not?: InputMaybe<Scalars['Bytes']>;
-  market_not_contains?: InputMaybe<Scalars['Bytes']>;
-  market_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  market?: InputMaybe<Scalars['String']>;
+  market_?: InputMaybe<FuturesMarket_Filter>;
+  market_contains?: InputMaybe<Scalars['String']>;
+  market_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_ends_with?: InputMaybe<Scalars['String']>;
+  market_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_gt?: InputMaybe<Scalars['String']>;
+  market_gte?: InputMaybe<Scalars['String']>;
+  market_in?: InputMaybe<Array<Scalars['String']>>;
+  market_lt?: InputMaybe<Scalars['String']>;
+  market_lte?: InputMaybe<Scalars['String']>;
+  market_not?: InputMaybe<Scalars['String']>;
+  market_not_contains?: InputMaybe<Scalars['String']>;
+  market_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_not_ends_with?: InputMaybe<Scalars['String']>;
+  market_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_not_in?: InputMaybe<Array<Scalars['String']>>;
+  market_not_starts_with?: InputMaybe<Scalars['String']>;
+  market_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  market_starts_with?: InputMaybe<Scalars['String']>;
+  market_starts_with_nocase?: InputMaybe<Scalars['String']>;
   netFunding?: InputMaybe<Scalars['BigInt']>;
   netFunding_gt?: InputMaybe<Scalars['BigInt']>;
   netFunding_gte?: InputMaybe<Scalars['BigInt']>;
@@ -630,6 +754,10 @@ export enum FuturesPosition_OrderBy {
   Long = 'long',
   Margin = 'margin',
   Market = 'market',
+  MarketAsset = 'market__asset',
+  MarketId = 'market__id',
+  MarketMarketKey = 'market__marketKey',
+  MarketTimestamp = 'market__timestamp',
   NetFunding = 'netFunding',
   NetTransfers = 'netTransfers',
   OpenTimestamp = 'openTimestamp',
@@ -647,7 +775,7 @@ export type FuturesTrade = {
   futuresOrder?: Maybe<FuturesOrder>;
   id: Scalars['ID'];
   margin: Scalars['BigInt'];
-  market: Scalars['Bytes'];
+  market: FuturesMarket;
   pnl: Scalars['BigInt'];
   positionClosed: Scalars['Boolean'];
   positionId: Scalars['String'];
@@ -726,16 +854,27 @@ export type FuturesTrade_Filter = {
   margin_lte?: InputMaybe<Scalars['BigInt']>;
   margin_not?: InputMaybe<Scalars['BigInt']>;
   margin_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  market?: InputMaybe<Scalars['Bytes']>;
-  market_contains?: InputMaybe<Scalars['Bytes']>;
-  market_gt?: InputMaybe<Scalars['Bytes']>;
-  market_gte?: InputMaybe<Scalars['Bytes']>;
-  market_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  market_lt?: InputMaybe<Scalars['Bytes']>;
-  market_lte?: InputMaybe<Scalars['Bytes']>;
-  market_not?: InputMaybe<Scalars['Bytes']>;
-  market_not_contains?: InputMaybe<Scalars['Bytes']>;
-  market_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  market?: InputMaybe<Scalars['String']>;
+  market_?: InputMaybe<FuturesMarket_Filter>;
+  market_contains?: InputMaybe<Scalars['String']>;
+  market_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_ends_with?: InputMaybe<Scalars['String']>;
+  market_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_gt?: InputMaybe<Scalars['String']>;
+  market_gte?: InputMaybe<Scalars['String']>;
+  market_in?: InputMaybe<Array<Scalars['String']>>;
+  market_lt?: InputMaybe<Scalars['String']>;
+  market_lte?: InputMaybe<Scalars['String']>;
+  market_not?: InputMaybe<Scalars['String']>;
+  market_not_contains?: InputMaybe<Scalars['String']>;
+  market_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_not_ends_with?: InputMaybe<Scalars['String']>;
+  market_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_not_in?: InputMaybe<Array<Scalars['String']>>;
+  market_not_starts_with?: InputMaybe<Scalars['String']>;
+  market_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  market_starts_with?: InputMaybe<Scalars['String']>;
+  market_starts_with_nocase?: InputMaybe<Scalars['String']>;
   or?: InputMaybe<Array<InputMaybe<FuturesTrade_Filter>>>;
   pnl?: InputMaybe<Scalars['BigInt']>;
   pnl_gt?: InputMaybe<Scalars['BigInt']>;
@@ -836,7 +975,6 @@ export enum FuturesTrade_OrderBy {
   FuturesOrderId = 'futuresOrder__id',
   FuturesOrderKeeper = 'futuresOrder__keeper',
   FuturesOrderMarginDelta = 'futuresOrder__marginDelta',
-  FuturesOrderMarket = 'futuresOrder__market',
   FuturesOrderOrderId = 'futuresOrder__orderId',
   FuturesOrderOrderType = 'futuresOrder__orderType',
   FuturesOrderPositionId = 'futuresOrder__positionId',
@@ -849,6 +987,10 @@ export enum FuturesTrade_OrderBy {
   Id = 'id',
   Margin = 'margin',
   Market = 'market',
+  MarketAsset = 'market__asset',
+  MarketId = 'market__id',
+  MarketMarketKey = 'market__marketKey',
+  MarketTimestamp = 'market__timestamp',
   Pnl = 'pnl',
   PositionClosed = 'positionClosed',
   PositionId = 'positionId',
@@ -874,7 +1016,7 @@ export type PositionLiquidated = {
   futuresPosition: FuturesPosition;
   id: Scalars['ID'];
   liquidator: Scalars['Bytes'];
-  market: Scalars['Bytes'];
+  market: FuturesMarket;
   price: Scalars['BigDecimal'];
   size: Scalars['BigDecimal'];
   timestamp: Scalars['BigInt'];
@@ -950,16 +1092,27 @@ export type PositionLiquidated_Filter = {
   liquidator_not?: InputMaybe<Scalars['Bytes']>;
   liquidator_not_contains?: InputMaybe<Scalars['Bytes']>;
   liquidator_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  market?: InputMaybe<Scalars['Bytes']>;
-  market_contains?: InputMaybe<Scalars['Bytes']>;
-  market_gt?: InputMaybe<Scalars['Bytes']>;
-  market_gte?: InputMaybe<Scalars['Bytes']>;
-  market_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  market_lt?: InputMaybe<Scalars['Bytes']>;
-  market_lte?: InputMaybe<Scalars['Bytes']>;
-  market_not?: InputMaybe<Scalars['Bytes']>;
-  market_not_contains?: InputMaybe<Scalars['Bytes']>;
-  market_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  market?: InputMaybe<Scalars['String']>;
+  market_?: InputMaybe<FuturesMarket_Filter>;
+  market_contains?: InputMaybe<Scalars['String']>;
+  market_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_ends_with?: InputMaybe<Scalars['String']>;
+  market_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_gt?: InputMaybe<Scalars['String']>;
+  market_gte?: InputMaybe<Scalars['String']>;
+  market_in?: InputMaybe<Array<Scalars['String']>>;
+  market_lt?: InputMaybe<Scalars['String']>;
+  market_lte?: InputMaybe<Scalars['String']>;
+  market_not?: InputMaybe<Scalars['String']>;
+  market_not_contains?: InputMaybe<Scalars['String']>;
+  market_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  market_not_ends_with?: InputMaybe<Scalars['String']>;
+  market_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  market_not_in?: InputMaybe<Array<Scalars['String']>>;
+  market_not_starts_with?: InputMaybe<Scalars['String']>;
+  market_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  market_starts_with?: InputMaybe<Scalars['String']>;
+  market_starts_with_nocase?: InputMaybe<Scalars['String']>;
   or?: InputMaybe<Array<InputMaybe<PositionLiquidated_Filter>>>;
   price?: InputMaybe<Scalars['BigDecimal']>;
   price_gt?: InputMaybe<Scalars['BigDecimal']>;
@@ -1027,7 +1180,6 @@ export enum PositionLiquidated_OrderBy {
   FuturesPositionLeverage = 'futuresPosition__leverage',
   FuturesPositionLong = 'futuresPosition__long',
   FuturesPositionMargin = 'futuresPosition__margin',
-  FuturesPositionMarket = 'futuresPosition__market',
   FuturesPositionNetFunding = 'futuresPosition__netFunding',
   FuturesPositionNetTransfers = 'futuresPosition__netTransfers',
   FuturesPositionOpenTimestamp = 'futuresPosition__openTimestamp',
@@ -1039,6 +1191,10 @@ export enum PositionLiquidated_OrderBy {
   Id = 'id',
   Liquidator = 'liquidator',
   Market = 'market',
+  MarketAsset = 'market__asset',
+  MarketId = 'market__id',
+  MarketMarketKey = 'market__marketKey',
+  MarketTimestamp = 'market__timestamp',
   Price = 'price',
   Size = 'size',
   Timestamp = 'timestamp',
@@ -1053,6 +1209,8 @@ export type Query = {
   fundingRateUpdates: Array<FundingRateUpdate>;
   futuresMarginTransfer?: Maybe<FuturesMarginTransfer>;
   futuresMarginTransfers: Array<FuturesMarginTransfer>;
+  futuresMarket?: Maybe<FuturesMarket>;
+  futuresMarkets: Array<FuturesMarket>;
   futuresOrder?: Maybe<FuturesOrder>;
   futuresOrders: Array<FuturesOrder>;
   futuresPosition?: Maybe<FuturesPosition>;
@@ -1106,6 +1264,24 @@ export type QueryFuturesMarginTransfersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<FuturesMarginTransfer_Filter>;
+};
+
+
+export type QueryFuturesMarketArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryFuturesMarketsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FuturesMarket_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<FuturesMarket_Filter>;
 };
 
 
@@ -1224,6 +1400,8 @@ export type Subscription = {
   fundingRateUpdates: Array<FundingRateUpdate>;
   futuresMarginTransfer?: Maybe<FuturesMarginTransfer>;
   futuresMarginTransfers: Array<FuturesMarginTransfer>;
+  futuresMarket?: Maybe<FuturesMarket>;
+  futuresMarkets: Array<FuturesMarket>;
   futuresOrder?: Maybe<FuturesOrder>;
   futuresOrders: Array<FuturesOrder>;
   futuresPosition?: Maybe<FuturesPosition>;
@@ -1277,6 +1455,24 @@ export type SubscriptionFuturesMarginTransfersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<FuturesMarginTransfer_Filter>;
+};
+
+
+export type SubscriptionFuturesMarketArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionFuturesMarketsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FuturesMarket_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<FuturesMarket_Filter>;
 };
 
 
@@ -1607,12 +1803,46 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
+export type DelayedOrdersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DelayedOrdersQuery = { __typename?: 'Query', futuresOrders: Array<{ __typename?: 'FuturesOrder', id: string, size: any, account: any, fee: any, orderId: any, targetRoundId: any, targetPrice: any, marginDelta: any, timestamp: any, positionId?: string | null, keeper: any, status: FuturesOrderStatus, txHash: string, market: { __typename?: 'FuturesMarket', asset: any } }> };
+
+export type FuturesTradeQueryVariables = Exact<{
+  oneHourAgo?: InputMaybe<Scalars['BigInt']>;
+}>;
+
+
+export type FuturesTradeQuery = { __typename?: 'Query', futuresTrades: Array<{ __typename?: 'FuturesTrade', id: string, timestamp: any, account: any, margin: any, positionId: string, size: any, feesPaidToSynthetix: any, type: FuturesTradeType, pnl: any, positionClosed: boolean, positionSize: any, price: any, txHash: string, market: { __typename?: 'FuturesMarket', asset: any }, futuresOrder?: { __typename?: 'FuturesOrder', status: FuturesOrderStatus } | null }> };
+
+export type PositionLiquidatedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PositionLiquidatedQuery = { __typename?: 'Query', positionLiquidateds: Array<{ __typename?: 'PositionLiquidated', id: string, account: any, liquidator: any, size: any, price: any, fee: any, block: any, txHash: string, timestamp: any, market: { __typename?: 'FuturesMarket', asset: any }, futuresPosition: { __typename?: 'FuturesPosition', id: string, account: any, isLiquidated: boolean, isOpen: boolean, openTimestamp: any, closeTimestamp?: any | null, margin: any, initialMargin: any, entryPrice: any, lastPrice: any, pnl: any, exitPrice?: any | null, leverage: any, size: any, long: boolean, trades: any, totalVolume: any, feesPaidToSynthetix: any, txHash: string, market: { __typename?: 'FuturesMarket', asset: any } } }> };
+
+export type FuturesMarginTransferQueryVariables = Exact<{
+  oneHourAgo?: InputMaybe<Scalars['BigInt']>;
+}>;
+
+
+export type FuturesMarginTransferQuery = { __typename?: 'Query', futuresMarginTransfers: Array<{ __typename?: 'FuturesMarginTransfer', id: string, timestamp: any, account: any, size: any, txHash: string, market: { __typename?: 'FuturesMarket', asset: any } }> };
+
 export type PositionsQueryVariables = Exact<{
   where?: InputMaybe<FuturesPosition_Filter>;
 }>;
 
 
-export type PositionsQuery = { __typename?: 'Query', futuresPositions: Array<{ __typename?: 'FuturesPosition', id: string, account: any, isLiquidated: boolean, market: any, isOpen: boolean, openTimestamp: any, closeTimestamp?: any | null, margin: any, initialMargin: any, entryPrice: any, lastPrice: any, pnl: any, exitPrice?: any | null, leverage: any, size: any, long: boolean, trades: any, totalVolume: any, feesPaidToSynthetix: any, txHash: string }> };
+export type PositionsQuery = { __typename?: 'Query', futuresPositions: Array<{ __typename?: 'FuturesPosition', id: string, account: any, isLiquidated: boolean, isOpen: boolean, openTimestamp: any, closeTimestamp?: any | null, margin: any, initialMargin: any, entryPrice: any, lastPrice: any, pnl: any, exitPrice?: any | null, leverage: any, size: any, long: boolean, trades: any, totalVolume: any, feesPaidToSynthetix: any, txHash: string, market: { __typename?: 'FuturesMarket', asset: any } }> };
+
+export type SynthetixQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const PositionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Positions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesPosition_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresPositions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"account"}},{"kind":"Field","name":{"kind":"Name","value":"isLiquidated"}},{"kind":"Field","name":{"kind":"Name","value":"market"}},{"kind":"Field","name":{"kind":"Name","value":"isOpen"}},{"kind":"Field","name":{"kind":"Name","value":"openTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"closeTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"margin"}},{"kind":"Field","name":{"kind":"Name","value":"initialMargin"}},{"kind":"Field","name":{"kind":"Name","value":"entryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"lastPrice"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}},{"kind":"Field","name":{"kind":"Name","value":"exitPrice"}},{"kind":"Field","name":{"kind":"Name","value":"leverage"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"long"}},{"kind":"Field","name":{"kind":"Name","value":"trades"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaidToSynthetix"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}}]}}]}}]} as unknown as DocumentNode<PositionsQuery, PositionsQueryVariables>;
+export type SynthetixQuery = { __typename?: 'Query', synthetix?: { __typename?: 'Synthetix', feesByLiquidations: any, feesByPositionModifications: any, totalVolume: any, totalLiquidations: any, totalTraders: any } | null };
+
+
+export const DelayedOrdersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DelayedOrders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresOrders"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"100"}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"EnumValue","value":"timestamp"}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"EnumValue","value":"desc"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"account"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"orderId"}},{"kind":"Field","name":{"kind":"Name","value":"targetRoundId"}},{"kind":"Field","name":{"kind":"Name","value":"targetPrice"}},{"kind":"Field","name":{"kind":"Name","value":"marginDelta"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"positionId"}},{"kind":"Field","name":{"kind":"Name","value":"keeper"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}}]}}]}}]} as unknown as DocumentNode<DelayedOrdersQuery, DelayedOrdersQueryVariables>;
+export const FuturesTradeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FuturesTrade"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"oneHourAgo"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"BigInt"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresTrades"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1000"}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"EnumValue","value":"timestamp"}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"EnumValue","value":"desc"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp_gt"},"value":{"kind":"Variable","name":{"kind":"Name","value":"oneHourAgo"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"type_not"},"value":{"kind":"EnumValue","value":"Unknown"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"account"}},{"kind":"Field","name":{"kind":"Name","value":"margin"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"positionId"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaidToSynthetix"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}},{"kind":"Field","name":{"kind":"Name","value":"positionClosed"}},{"kind":"Field","name":{"kind":"Name","value":"positionSize"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}},{"kind":"Field","name":{"kind":"Name","value":"futuresOrder"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<FuturesTradeQuery, FuturesTradeQueryVariables>;
+export const PositionLiquidatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PositionLiquidated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"positionLiquidateds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"account"}},{"kind":"Field","name":{"kind":"Name","value":"liquidator"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"block"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"futuresPosition"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"account"}},{"kind":"Field","name":{"kind":"Name","value":"isLiquidated"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isOpen"}},{"kind":"Field","name":{"kind":"Name","value":"openTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"closeTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"margin"}},{"kind":"Field","name":{"kind":"Name","value":"initialMargin"}},{"kind":"Field","name":{"kind":"Name","value":"entryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"lastPrice"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}},{"kind":"Field","name":{"kind":"Name","value":"exitPrice"}},{"kind":"Field","name":{"kind":"Name","value":"leverage"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"long"}},{"kind":"Field","name":{"kind":"Name","value":"trades"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaidToSynthetix"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}}]}}]}}]}}]} as unknown as DocumentNode<PositionLiquidatedQuery, PositionLiquidatedQueryVariables>;
+export const FuturesMarginTransferDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FuturesMarginTransfer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"oneHourAgo"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"BigInt"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresMarginTransfers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1000"}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"EnumValue","value":"timestamp"}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"EnumValue","value":"desc"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp_gt"},"value":{"kind":"Variable","name":{"kind":"Name","value":"oneHourAgo"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"account"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}}]}}]}}]} as unknown as DocumentNode<FuturesMarginTransferQuery, FuturesMarginTransferQueryVariables>;
+export const PositionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Positions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesPosition_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresPositions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"account"}},{"kind":"Field","name":{"kind":"Name","value":"isLiquidated"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isOpen"}},{"kind":"Field","name":{"kind":"Name","value":"openTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"closeTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"margin"}},{"kind":"Field","name":{"kind":"Name","value":"initialMargin"}},{"kind":"Field","name":{"kind":"Name","value":"entryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"lastPrice"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}},{"kind":"Field","name":{"kind":"Name","value":"exitPrice"}},{"kind":"Field","name":{"kind":"Name","value":"leverage"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"long"}},{"kind":"Field","name":{"kind":"Name","value":"trades"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaidToSynthetix"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}}]}}]}}]} as unknown as DocumentNode<PositionsQuery, PositionsQueryVariables>;
+export const SynthetixDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Synthetix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"synthetix"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"StringValue","value":"synthetix","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"feesByLiquidations"}},{"kind":"Field","name":{"kind":"Name","value":"feesByPositionModifications"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"totalLiquidations"}},{"kind":"Field","name":{"kind":"Name","value":"totalTraders"}}]}}]}}]} as unknown as DocumentNode<SynthetixQuery, SynthetixQueryVariables>;

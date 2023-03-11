@@ -1,12 +1,19 @@
 import { useQuery } from '@apollo/client';
 import { TableContainer, Table, Thead, Tr, Tbody, Td } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
 // import ReactPaginate from 'react-paginate';
 import { POSITIONS_QUERY } from '../../queries/positions';
 import { numberWithCommas } from '../../utils/numbers';
-import { Currency, TableHeaderCell, PnL } from '../Shared';
+import { Currency, TableHeaderCell, PnL, Market } from '../Shared';
+import { utils } from 'ethers';
 
 export const PositionsList = () => {
-  const { loading, data } = useQuery(POSITIONS_QUERY, { pollInterval: 5000 });
+  const { walletAddress } = useParams();
+
+  const { loading, data } = useQuery(POSITIONS_QUERY, {
+    pollInterval: 5000,
+    variables: { where: { size_gt: '0', isOpen: true, account: walletAddress } },
+  });
 
   console.log(loading);
 
@@ -42,7 +49,7 @@ export const PositionsList = () => {
               (
                 {
                   account,
-                  market,
+                  market: { asset },
                   entryPrice,
                   exitPrice,
                   isOpen,
@@ -58,16 +65,16 @@ export const PositionsList = () => {
                 },
                 index
               ) => {
-                console.log(size);
+                console.log(size, utils.parseBytes32String(asset));
                 return (
                   <Tr key={account.concat(index.toString())} borderTopWidth="1px">
+                    <Market asset={asset} leverage={leverage} long={long} />
                     <Td cursor="pointer" border="none">
                       {account
                         .substring(0, 5)
                         .concat('...')
                         .concat(account.substring(account.length - 5))}
                     </Td>
-                    <Td border="none">TODO</Td>
                     <PnL amount={pnl} />
                     <Currency amount={entryPrice} />
                     <Td border="none">

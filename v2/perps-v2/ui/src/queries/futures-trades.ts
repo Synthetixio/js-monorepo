@@ -1,18 +1,20 @@
 import { gql } from '../__generated__';
 
 export const FUTURES_TRADE_QUERY = gql(`
-  query FuturesTrade($oneHourAgo: Int) {
+  query FuturesTrade($oneHourAgo: BigInt) {
     futuresTrades(
       first: 1000
-      oderBy: "timestamp"
-      orderDirection: "desc"
-      where: { timestamp_gt: $oneHourAgo, type_not: "Unknown" }
+      orderBy: timestamp
+      orderDirection: desc
+      where: { timestamp_gt: $oneHourAgo, type_not: Unknown }
     ) {
       id
       timestamp
       account
       margin
-      market
+      market {
+        asset
+      }
       positionId
       size
       feesPaidToSynthetix
