@@ -6,16 +6,20 @@ import { POSITIONS_QUERY } from '../../queries/positions';
 import { numberWithCommas } from '../../utils/numbers';
 import { Currency, TableHeaderCell, PnL, Market } from '../Shared';
 import { utils } from 'ethers';
+import { FuturesPosition_OrderBy, OrderDirection } from '../../__generated__/graphql';
 
 export const PositionsList = () => {
   const { walletAddress } = useParams();
 
   const { loading, data } = useQuery(POSITIONS_QUERY, {
     pollInterval: 5000,
-    variables: { where: { size_gt: '0', isOpen: true, account: walletAddress } },
+    variables: {
+      where: { size_gt: '0', isOpen: true },
+      orderBy: FuturesPosition_OrderBy.OpenTimestamp,
+      orderDirection: OrderDirection.Desc,
+      first: 10,
+    },
   });
-
-  console.log(loading);
 
   return (
     <>
