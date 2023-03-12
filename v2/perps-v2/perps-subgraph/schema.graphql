@@ -51,13 +51,6 @@ type Synthetix @entity {
   totalTraders: BigInt!
 }
 
-type Volume @entity {
-  id: ID!
-  volume: BigDecimal!
-  timestamp: BigInt!
-  market: FuturesMarket!
-}
-
 type FuturesPosition @entity {
   id: ID!
   account: Bytes!
