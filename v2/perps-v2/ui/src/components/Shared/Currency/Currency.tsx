@@ -6,5 +6,9 @@ interface CurrencyProps {
 }
 
 export const Currency = ({ amount }: CurrencyProps) => {
-  return <Td border="none">${numberWithCommas(stringToDecimal(amount).toFixed(2))}</Td>;
+  return (
+    <Td border="none" fontSize="14px" lineHeight="20px" fontFamily="heading" fontWeight={500}>
+      ${numberWithCommas(stringToDecimal(amount).toFixed(2))}
+    </Td>
+  );
 };

@@ -25,56 +25,81 @@ import {
   Gbp,
 } from '../Icons';
 
+type CurrencyKey =
+  | 'AAVE'
+  | 'sETH'
+  | 'APE'
+  | 'ATOM'
+  | 'AUD'
+  | 'AVAX'
+  | 'AXS'
+  | 'BNB'
+  | 'DOGE'
+  | 'DYDX'
+  | 'EUR'
+  | 'FLOW'
+  | 'FTM'
+  | 'GBP'
+  | 'LINK'
+  | 'MATIC'
+  | 'NEAR'
+  | 'OP'
+  | 'SOL'
+  | 'UNI'
+  | 'XAG'
+  | 'XAU'
+  | 'sBTC'
+  | string; //TODO Fix
+
 const PerpIcon = (currencyKey: CurrencyKey, props: IconProps) => {
   switch (currencyKey) {
-    case CurrencyKey.AAVE:
+    case 'AAVE':
       return <Aave {...props} />;
-    case CurrencyKey.APE:
+    case 'APE':
       return <Ape {...props} />;
-    case CurrencyKey.ATOM:
+    case 'ATOM':
       return <Atom {...props} />;
-    case CurrencyKey.AUD:
+    case 'AUD':
       return <Aud {...props} />;
-    case CurrencyKey.AVAX:
+    case 'AVAX':
       return <Avax {...props} />;
-    case CurrencyKey.AXS:
+    case 'AXS':
       return <Axie {...props} />;
-    case CurrencyKey.BNB:
+    case 'BNB':
       return <BnB {...props} />;
-    case CurrencyKey.DOGE:
+    case 'DOGE':
       return <Doge {...props} />;
-    case CurrencyKey.DYDX:
+    case 'DYDX':
       return <Dydx {...props} />;
-    case CurrencyKey.EUR:
+    case 'EUR':
       return <Euro {...props} />;
-    case CurrencyKey.FLOW:
+    case 'FLOW':
       return <Flow {...props} />;
-    case CurrencyKey.FTM:
+    case 'FTM':
       return <Fantom {...props} />;
-    case CurrencyKey.GBP:
+    case 'GBP':
       return <Gbp {...props} />;
-    case CurrencyKey.LINK:
+    case 'LINK':
       return <Chainlink {...props} />;
-    case CurrencyKey.MATIC:
+    case 'MATIC':
       return <Matic {...props} />;
-    case CurrencyKey.NEAR:
+    case 'NEAR':
       return <Near {...props} />;
-    case CurrencyKey.OP:
+    case 'OP':
       return <Optimism {...props} />;
-    case CurrencyKey.SOL:
+    case 'SOL':
       return <Solana {...props} />;
-    case CurrencyKey.UNI:
+    case 'UNI':
       return <Uniswap {...props} />;
-    case CurrencyKey.XAG:
+    case 'XAG':
       return <Silver {...props} />;
-    case CurrencyKey.XAU:
+    case 'XAU':
       return <Gold {...props} />;
-    case CurrencyKey.sBTC:
+    case 'sBTC':
       return <Bitcoin {...props} />;
-    case CurrencyKey.sETH:
+    case 'sETH':
       return <Ethereum {...props} />;
-    case CurrencyKey.sLINK:
-      return <Chainlink {...props} />;
+
     default:
       return null;
   }
@@ -82,34 +107,6 @@ const PerpIcon = (currencyKey: CurrencyKey, props: IconProps) => {
 
 interface CurrencyIconProps extends IconProps {
   currencyKey: CurrencyKey;
-}
-
-enum CurrencyKey {
-  BNB,
-  sETH,
-  sBTC,
-  MATIC,
-  SOL,
-  DYDX,
-  GBP,
-  FLOW,
-  AAVE,
-  sLINK,
-  LINK,
-  AXS,
-  XMR,
-  UNI,
-  OP,
-  AVAX,
-  XAU,
-  APE,
-  EUR,
-  DOGE,
-  AUD,
-  XAG,
-  ATOM,
-  FTM,
-  NEAR,
 }
 
 export const CurrencyIcon = ({ currencyKey, ...props }: CurrencyIconProps) => {
