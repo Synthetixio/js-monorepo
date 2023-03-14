@@ -24,7 +24,7 @@ export const Welcome = ({ ...props }: BoxProps) => {
         <Button
           variant="outline"
           minW="120px"
-          onClick={() => window.open(EXTERNAL_LINKS.CMS.Home, '_blank')?.focus()}
+          onClick={() => window.open(EXTERNAL_LINKS.Synthetix.Docs, '_blank')?.focus()}
           mt={[3, 3, 3, 0]}
         >
           {t('staking-v2.home.action')}
