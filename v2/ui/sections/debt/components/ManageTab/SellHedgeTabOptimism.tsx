@@ -13,7 +13,6 @@ import {
   ModalItem,
   ModalItemText,
   ModalItemTitle,
-  Tooltip,
 } from '@snx-v1/styles';
 import { formatCryptoCurrency } from 'utils/formatters/number';
 import Dhedge from 'assets/svg/app/dhedge.svg';
@@ -72,7 +71,7 @@ export default function SellHedgeTabOptimism() {
 
   const dollarAmountToReceive =
     actualAmountToSendBn.gt(0) && dSNXPrice ? wei(actualAmountToSendBn).mul(dSNXPrice) : wei(0);
-  const sUSDToReceiveWei = dollarAmountToReceive.sub(dollarAmountToReceive);
+  const sUSDToReceiveWei = dollarAmountToReceive;
   const sUSDAmountToReceive = sUSDToReceiveWei.gt(0)
     ? formatCryptoCurrency(sUSDToReceiveWei, {
         minDecimals: 3,
@@ -175,17 +174,15 @@ export default function SellHedgeTabOptimism() {
             sUSD
           </StyledCryptoCurrencyBox>
         </StyledInputLabel>
-        <Tooltip content={"This assumes a slippage of 1%, usually it's less than that"}>
-          <InputWrapper>
-            <StyledHedgeInput
-              style={{ margin: 0 }}
-              type="text"
-              onChange={() => {}}
-              disabled
-              value={sUSDAmountToReceive ? `~${sUSDAmountToReceive}` : '0'}
-            />
-          </InputWrapper>
-        </Tooltip>
+        <InputWrapper>
+          <StyledHedgeInput
+            style={{ margin: 0 }}
+            type="text"
+            onChange={() => {}}
+            disabled
+            value={sUSDAmountToReceive ? `~${sUSDAmountToReceive}` : '0'}
+          />
+        </InputWrapper>
         <StyledBalance>
           {t('debt.actions.manage.balance')}
           {formatCryptoCurrency(sUSDBalance, {
