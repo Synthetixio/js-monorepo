@@ -107,7 +107,7 @@ const V2Home = () => {
                 )}
                 <Box mt={4}>
                   <BoxLink
-                    href={EXTERNAL_LINKS.CMS.Home}
+                    href={EXTERNAL_LINKS.Synthetix.Docs}
                     headline={t('staking-v2.v2-home.box-links.help.headline')}
                     subHeadline={t('staking-v2.v2-home.box-links.help.subHeadline')}
                     isExternal

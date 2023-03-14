@@ -6532,6 +6532,7 @@ __metadata:
   resolution: "@snx-v2/MainActionCards@workspace:v2/components/MainActionCards"
   dependencies:
     "@chakra-ui/react": ^2.5.0
+    "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
@@ -6604,6 +6605,7 @@ __metadata:
   resolution: "@snx-v2/Navigation@workspace:v2/components/Navigation"
   dependencies:
     "@chakra-ui/react": ^2.5.0
+    "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/EpochPrice": "workspace:^"
     "@snx-v2/UserBalances": "workspace:*"

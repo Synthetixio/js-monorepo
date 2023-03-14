@@ -18,6 +18,7 @@ import { CountDown } from '@snx-v2/CountDown';
 import { useNavigate } from 'react-router-dom';
 import { formatNumberToUsd } from '@snx-v2/formatters';
 import { NetworkId } from '@snx-v2/useSynthetixContracts';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 interface CardProps {
   step: number;
@@ -267,7 +268,7 @@ const MaintainActionCard: React.FC<{
           ? isFlagged
             ? () => navigate('/staking/unflag')
             : () => navigate('/staking/burn')
-          : () => window.open('https://synthetix.io/guides/collateralization-ratio', '_newtab')
+          : () => window.open(EXTERNAL_LINKS.Synthetix.CRatioGuide, '_newtab')
       }
       testId="maintain button"
     />
@@ -388,7 +389,7 @@ const CollectActionCard: React.FC<{
       buttonAction={
         isStaking
           ? () => navigate('/earn')
-          : () => window.open('https://synthetix.io/guides/staking-rewards-epochs', '_newtab')
+          : () => window.open(EXTERNAL_LINKS.Synthetix.RewardsGuide, '_newtab')
       }
       testId="collect button"
     />

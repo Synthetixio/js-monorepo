@@ -43,6 +43,7 @@ import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -265,7 +266,7 @@ export const NavigationUI = ({
                 </Center>
               </MenuItem>
             )}
-            <MenuItem onClick={() => window.open('https://governance.synthetix.io/', '_newtab')}>
+            <MenuItem onClick={() => window.open(EXTERNAL_LINKS.Synthetix.Governance, '_newtab')}>
               <Center>
                 <GovIcon />
                 <Text fontSize="sm" ml={2}>
@@ -289,10 +290,10 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
               </Center>
             </MenuItem> */}
-            <MenuItem onClick={() => window.open('https://synthetix.io/guides', '_newtab')}>
+            <MenuItem onClick={() => window.open(EXTERNAL_LINKS.Synthetix.Docs, '_newtab')}>
               <GuideIcon />
               <Text fontSize="sm" ml={2}>
-                {t('common.wallet.menu.guide')}
+                {t('common.wallet.menu.docs')}
               </Text>
             </MenuItem>
             <MenuItem onClick={() => navigate('/terms')}>
