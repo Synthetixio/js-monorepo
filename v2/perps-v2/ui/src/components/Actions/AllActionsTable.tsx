@@ -1,20 +1,11 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import { useQuery } from '@apollo/client';
-import { FuturesPosition_OrderBy, OrderDirection } from '../../__generated__/graphql';
-import { Currency, TableHeaderCell, Market, Size, WalletAddress } from '../Shared';
-import { ALL_ACTIONS_QUERY } from '../../queries/actions';
+import { Currency, TableHeaderCell, Market, Size, WalletAddress, MarginTransfer } from '../Shared';
 import { AllActionsLoading } from './AllActionsLoading';
+import { useActions } from '../../hooks';
+import { Action } from '../Shared/Action';
 
 export const AllActionsTable = () => {
-  const { loading, data } = useQuery(ALL_ACTIONS_QUERY, {
-    variables: {
-      where: { isOpen: true },
-      orderBy: FuturesPosition_OrderBy.OpenTimestamp,
-      orderDirection: OrderDirection.Desc,
-      first: 50,
-    },
-    pollInterval: 5000,
-  });
+  const { loading, data } = useActions();
 
   return (
     <>
@@ -51,40 +42,42 @@ export const AllActionsTable = () => {
                 <AllActionsLoading />
               </>
             )}
-            {data?.futuresPositions.map(
+            {data?.actionData.map(
               (
-                {
-                  openTimestamp,
-                  account,
-                  market: { asset },
-                  lastPrice,
-                  leverage,
-                  size,
-                  long,
-                  feesPaidToSynthetix,
-                },
+                { label, address, asset, price, fees, size, txHash, timestamp, leverage },
                 index
               ) => {
-                console.log(openTimestamp);
+                const isLong = !size.includes('-');
+                const isPosition = label !== 'Deposit Margin' && label !== 'Withdraw Margin';
+
                 return (
-                  <Tr key={account.concat(index.toString())} borderTopWidth="1px">
-                    {/* TODO Action */}
-                    <Currency amount={lastPrice} />
-                    <WalletAddress account={account} />
-                    <Market asset={asset} leverage={leverage} long={long} />
-                    <Currency amount={lastPrice} />
-                    <Size size={size} lastPrice={lastPrice} />
-                    <Currency amount={feesPaidToSynthetix} />
+                  <Tr key={address.concat(index.toString())} borderTopWidth="1px">
+                    <Action label={label} txHash={txHash} timestamp={timestamp} />
+                    <WalletAddress account={address} />
+                    <Market
+                      asset={asset}
+                      leverage={leverage}
+                      long={isLong}
+                      isPosition={isPosition}
+                    />
+                    <Currency amount={price} />
+                    {isPosition ? (
+                      <Size size={size} lastPrice={price} />
+                    ) : (
+                      <MarginTransfer size={size} />
+                    )}
+
+                    <Currency amount={fees} />
                   </Tr>
                 );
               }
             )}
           </Tbody>
         </Table>
-        {!loading && data?.futuresPositions.length === 0 && (
+        {!loading && data?.actionData.length === 0 && (
           <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
             <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-              No open positions
+              No positions
             </Text>
           </Flex>
         )}

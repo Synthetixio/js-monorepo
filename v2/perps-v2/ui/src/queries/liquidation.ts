@@ -1,8 +1,8 @@
 import { gql } from '../__generated__';
 
 export const LIQUIDATION_QUERY = gql(`
-  query PositionLiquidated {
-    positionLiquidateds {
+  query PositionLiquidated($where: PositionLiquidated_filter) {
+    positionLiquidateds(first: 100, where: $where) {
       id
       account
       liquidator

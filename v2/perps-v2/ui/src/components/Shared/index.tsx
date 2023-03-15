@@ -6,3 +6,4 @@ export * from './Size';
 export * from './Market';
 export * from './MarkPrice';
 export * from './WalletAddress';
+export * from './MarginTransfer';

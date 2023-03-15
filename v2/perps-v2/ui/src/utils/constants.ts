@@ -5,6 +5,9 @@ export const PERPS_V2_DASHBOARD_GRAPH_URL =
 export const optimisticEthercanLink = (address: string) =>
   `https://optimistic.etherscan.io/address/${address}`;
 
+export const optimisticEthercanTx = (txHash: string) =>
+  `https://optimistic.etherscan.io/tx/${txHash}`;
+
 export const infuraId = '8c6bfe963db94518b16b17114e29e628';
 
 export enum FuturesMarketAsset {

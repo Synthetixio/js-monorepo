@@ -3,7 +3,7 @@ import { gql } from '../__generated__';
 export const MARGIN_TRANSFERED_QUERY = gql(`
   query FuturesMarginTransfer($where: FuturesMarginTransfer_filter) {
     futuresMarginTransfers(
-      first: 1000
+      first: 100
       orderBy: timestamp
       orderDirection: desc
       where: $where
@@ -23,7 +23,7 @@ export const MARGIN_TRANSFERED_QUERY = gql(`
 export const FUTURES_TRADE_QUERY = gql(`
   query FuturesTrades($where: FuturesTrade_filter) {
     futuresTrades(
-      first: 1000
+      first: 100
       orderBy: timestamp
       orderDirection: desc
       where: $where

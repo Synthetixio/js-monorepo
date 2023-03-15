@@ -38,3 +38,32 @@ export const POSITIONS_QUERY = gql(`
     }
   }
 `);
+
+export const POSITION_QUERY = gql(`
+  query Position($id: ID!) {
+    futuresPosition(id: $id) {
+      id
+      account
+      isLiquidated
+      market {
+        asset
+      }
+      isOpen
+      openTimestamp
+      closeTimestamp
+      margin
+      initialMargin
+      entryPrice
+      lastPrice
+      pnl
+      exitPrice
+      leverage
+      size
+      long
+      trades
+      totalVolume
+      feesPaidToSynthetix
+      txHash
+    }
+  }
+`);

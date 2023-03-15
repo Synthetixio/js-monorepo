@@ -1,22 +1,14 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { FuturesPosition_OrderBy, OrderDirection } from '../../__generated__/graphql';
-import { Currency, TableHeaderCell, Market, Size } from '../Shared';
-import { ACCOUNT_ACTIONS_QUERY } from '../../queries/actions';
+import { useActions } from '../../hooks';
+import { Currency, TableHeaderCell, Market, Size, MarginTransfer } from '../Shared';
+import { Action } from '../Shared/Action';
 import { AccountActionsLoading } from './AccountActionsLoading';
 
 export const AccountActionsTable = () => {
   const { walletAddress } = useParams();
 
-  const { loading, data, error } = useQuery(ACCOUNT_ACTIONS_QUERY, {
-    variables: {
-      where: { isOpen: true, account: walletAddress },
-      orderBy: FuturesPosition_OrderBy.OpenTimestamp,
-      orderDirection: OrderDirection.Desc,
-      first: 50,
-    },
-  });
+  const { data, loading, error } = useActions(walletAddress);
 
   return (
     <>
@@ -49,22 +41,34 @@ export const AccountActionsTable = () => {
                 <AccountActionsLoading />
               </>
             )}
-            {data?.futuresPositions.map(
-              ({ market: { asset }, lastPrice, leverage, size, long, feesPaidToSynthetix, id }) => {
+            {data?.actionData.map(
+              ({ label, asset, price, leverage, size, fees, id, txHash, timestamp }) => {
+                const isLong = !size.includes('-');
+                const isPosition = label !== 'Deposit Margin' && label !== 'Withdraw Margin';
+
                 return (
                   <Tr key={id} borderTopWidth="1px">
-                    <Currency amount={lastPrice} />
-                    <Market asset={asset} leverage={leverage} long={long} />
-                    <Currency amount={lastPrice} />
-                    <Size size={size} lastPrice={lastPrice} />
-                    <Currency amount={feesPaidToSynthetix} />
+                    <Action label={label} timestamp={timestamp} txHash={txHash} />
+                    <Market
+                      asset={asset}
+                      leverage={leverage}
+                      long={isLong}
+                      isPosition={isPosition}
+                    />
+                    <Currency amount={price} />
+                    {isPosition ? (
+                      <Size size={size} lastPrice={price} />
+                    ) : (
+                      <MarginTransfer size={size} />
+                    )}
+                    <Currency amount={fees} />
                   </Tr>
                 );
               }
             )}
           </Tbody>
         </Table>
-        {(!loading && data?.futuresPositions.length === 0) ||
+        {(!loading && data?.actionData.length === 0) ||
           (error && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
