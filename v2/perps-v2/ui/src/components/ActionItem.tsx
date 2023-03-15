@@ -154,3 +154,66 @@
 //   );
 // };
 export {};
+const determineText = () => {
+  if (event.entity === 'Futures Trade') {
+    if (data?.futuresPosition) {
+      if (event.positionClosed) {
+        return 'Close '.concat(!event.size.gt(0) ? 'Long' : 'Short');
+      }
+      if (event.type === 'PositionOpened' && data.futuresPosition.trades === '1') {
+        if (!!event.futuresOrder?.status) {
+          return event.futuresOrder.status
+            .toString()
+            .concat(': Open ')
+            .concat(event.positionSize.gt(0) ? 'Long' : 'Short');
+        }
+        return 'Open '.concat(event.positionSize.gt(0) ? 'Long' : 'Short');
+      }
+      // Should never be triggered because of the `event.positionClosed` if statement, but just to make sure
+      if (event.type === 'PositionClosed' && event.size.eq(0)) {
+        return 'Close '.concat(!event.size.gt(0) ? 'Long' : 'Short');
+      }
+
+      if (event.type === 'PositionModified') {
+        return event.positionSize.gt(0)
+          ? event.size.gt(0)
+            ? 'Increase Long, +'.concat(
+                numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)).concat(
+                  ' sUSD'
+                )
+              )
+            : 'Decrease Long, '.concat(
+                numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)).concat(
+                  ' sUSD'
+                )
+              )
+          : event.size.gt(0)
+          ? 'Decrease Short, '.concat(
+              numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)).concat(
+                ' sUSD'
+              )
+            )
+          : 'Increase Short, '.concat(
+              numberWithCommas((Number(utils.formatEther(event.size)) / 1e18).toFixed(2)).concat(
+                ' sUSD'
+              )
+            );
+      }
+    }
+  }
+  if (event.type === 'Liquidated') {
+    return 'Liquidation';
+  }
+
+  if (event.entity === 'Margin Transferred') {
+    return (event.size.gt(0) ? 'Deposit' : 'Withdraw') + ' Margin';
+  }
+
+  // DelayedOffChainOrder
+  if (event.futuresOrder?.status && event.type === 'PositionOpened') {
+    return event.futuresOrder.status
+      .toString()
+      .concat(': Open ')
+      .concat(event.positionSize.gt(0) ? 'Long' : 'Short');
+  }
+};

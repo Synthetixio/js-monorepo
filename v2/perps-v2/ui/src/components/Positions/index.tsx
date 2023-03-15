@@ -1,3 +1,1 @@
-export * from './PositionsList';
-
-// export * from './PositionsTableInProg';
+export * from './PositionsTable';

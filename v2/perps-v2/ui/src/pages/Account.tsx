@@ -2,10 +2,9 @@ import { Flex, Heading, Button, Box, Link } from '@chakra-ui/react';
 import { ArrowBackIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// import { ActionTable } from '../components/ActionTable';
 import { optimisticEthercanLink } from '../utils/constants';
-import { PositionsList } from '../components/Positions';
-// import { PositionsList } from '../components/Positions';
+import { PositionsTable } from '../components/Positions';
+import { AccountActionsTable } from '../components/Actions';
 
 export const Account: FC = () => {
   const params = useParams();
@@ -39,13 +38,13 @@ export const Account: FC = () => {
         <Heading fontSize="18px" lineHeight="28px">
           Positions:
         </Heading>
-        <PositionsList />
+        <PositionsTable />
       </Box>
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
           Actions:
         </Heading>
-        {/* <ActionTable isLoading={false} /> */}
+        <AccountActionsTable />
       </Box>
     </Flex>
   );

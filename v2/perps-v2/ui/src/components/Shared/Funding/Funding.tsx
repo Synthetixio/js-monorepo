@@ -1,4 +1,4 @@
-import { Td } from '@chakra-ui/react';
+import { Fade, Td } from '@chakra-ui/react';
 import { stringToDecimal, numberWithCommas } from '../../../utils';
 
 interface FundingProps {
@@ -16,7 +16,7 @@ export const Funding = ({ amount }: FundingProps) => {
       fontWeight={500}
       color={calculatedAmount >= 0 ? 'green.500' : 'red.500'}
     >
-      ${numberWithCommas(calculatedAmount.toFixed(2))}
+      <Fade in>${numberWithCommas(calculatedAmount.toFixed(2))}</Fade>
     </Td>
   );
 };
