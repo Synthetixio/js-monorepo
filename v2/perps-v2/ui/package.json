@@ -17,7 +17,7 @@
     "@chakra-ui/react": "^2.5.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@snx-v3/useBlockchain": "workspace:*",
+    "@graphql-typed-document-node/core": "latest",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "date-fns": "^2.29.3",
@@ -27,7 +27,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.5",
-    "react-paginate": "^8.1.4",
     "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
@@ -38,7 +37,6 @@
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime-corejs3": "^7.20.13",
     "@graphql-codegen/cli": "^3.2.2",
-    "@graphql-codegen/client-preset": "^2.1.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@types/react": "^18.0.28",
     "babel-loader": "^9.1.2",

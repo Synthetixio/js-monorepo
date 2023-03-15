@@ -14,8 +14,18 @@ const provider = new providers.InfuraProvider(10, infuraId);
 
 const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
 
+interface PositionsData {
+  address: string;
+  asset: string;
+}
+
+interface PositionsState {
+  loading: boolean;
+  data: PositionsData[];
+}
+
 export const usePositions = (walletAddress?: string) => {
-  const [state, setState] = useState(null);
+  const [state, setState] = useState<PositionsState>({ loading: true, data: [] });
 
   // Initial query to give a list of markets
   const { loading, data } = useQuery(POSITIONS_QUERY_MARKET, {
@@ -37,9 +47,13 @@ export const usePositions = (walletAddress?: string) => {
 
       const id = setInterval(() => {
         (async () => {
+          const update: PositionsData[] = [];
           const markets = data?.futuresPositions.map((item) => item.market.marketKey);
           const positionsData = await fetchPositions(markets, walletAddress || '');
-          console.log('positions data update', positionsData);
+          positionsData.forEach((position) => {
+            console.log('Position', position);
+            update.push();
+          });
         })();
       }, 10000);
 
