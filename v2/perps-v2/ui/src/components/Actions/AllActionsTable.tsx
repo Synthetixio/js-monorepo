@@ -49,7 +49,7 @@ const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Marg
 export const AllActionsTable = () => {
   const { loading, data, error } = useActions();
 
-  const dataWithPosition = data.actionData
+  const dataWithPosition = data
     ?.slice()
     .reverse()
     .reduce((acc: ActionDataWithPos[], item) => {
@@ -108,7 +108,7 @@ export const AllActionsTable = () => {
                 <AllActionsLoading />
               </>
             )}
-            {data?.actionData &&
+            {data &&
               dataWithPosition.map((item, index) => {
                 const { label, address, asset, price, fees, size, txHash, timestamp, leverage } =
                   item;
@@ -138,7 +138,7 @@ export const AllActionsTable = () => {
               })}
           </Tbody>
         </Table>
-        {!loading && data?.actionData.length === 0 && (
+        {!loading && data?.length === 0 && (
           <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
             <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
               No positions
