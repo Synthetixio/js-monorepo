@@ -1,5 +1,5 @@
 import { Fade, Td } from '@chakra-ui/react';
-import { stringToDecimal, numberWithCommas } from '../../../utils';
+import { stringToDecimal, formatNumberToUsd } from '../../../utils';
 
 interface CurrencyProps {
   amount: string | null;
@@ -8,7 +8,7 @@ interface CurrencyProps {
 export const Currency = ({ amount }: CurrencyProps) => {
   return (
     <Td border="none" fontSize="14px" lineHeight="20px" fontFamily="heading" fontWeight={500}>
-      <Fade in>{amount ? `$${numberWithCommas(stringToDecimal(amount).toFixed(2))}` : '-'}</Fade>
+      <Fade in>{amount ? `${formatNumberToUsd(stringToDecimal(amount))}` : '-'}</Fade>
     </Td>
   );
 };

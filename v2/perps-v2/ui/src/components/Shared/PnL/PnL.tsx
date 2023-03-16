@@ -1,5 +1,5 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { stringToDecimal, numberWithCommas } from '../../../utils';
+import { stringToDecimal, formatNumberToUsd } from '../../../utils';
 
 interface PnLProps {
   amount: string;
@@ -14,7 +14,6 @@ export const PnL = ({ amount, entryPrice, lastPrice }: PnLProps) => {
   const last = parseInt(lastPrice) / 1e18;
 
   const percentageDiff = (100 * (last - entry)) / entry;
-
   return (
     <Td border="none">
       <Fade in>
@@ -25,13 +24,11 @@ export const PnL = ({ amount, entryPrice, lastPrice }: PnLProps) => {
           lineHeight="20px"
           color={pnl >= 0 ? 'green.500' : 'red.500'}
         >
-          {`${pnl >= 0 ? '+$' : '-$'}${numberWithCommas(
-            stringToDecimal(amount).toFixed(2)
-          ).substring(pnl >= 0 ? 0 : 1)}`}
+          {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(stringToDecimal(amount))}`}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-          {percentageDiff > 0 ? '+' : ''}
-          {`${percentageDiff.toFixed(2)}%`}
+          {pnl >= 0 ? '+' : '-'}
+          {percentageDiff.toFixed(2)}%
         </Text>
       </Fade>
     </Td>
