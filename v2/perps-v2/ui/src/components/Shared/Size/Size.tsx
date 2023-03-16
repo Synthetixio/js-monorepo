@@ -14,10 +14,10 @@ export const Size = ({ size, lastPrice }: SizeProps) => {
     <Td border="none">
       <Fade in>
         <Text fontSize="14px" lineHeight="20px" fontFamily="heading" fontWeight={500}>
-          {calculatedSize.toFixed(4)}
+          ${numberWithCommas(total)}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-          ${numberWithCommas(total)}
+          {calculatedSize.toFixed(4)}
         </Text>
       </Fade>
     </Td>
