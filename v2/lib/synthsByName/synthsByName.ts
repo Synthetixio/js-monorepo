@@ -18,6 +18,20 @@ export const loadSynthsByNameFromNetwork = (networkId: number) => {
   }
 };
 
+export type SynthsByName = Partial<
+  Record<
+    string,
+    {
+      asset: string;
+      category: string;
+      sign: string;
+      description: string;
+      name: string;
+      feed?: string;
+      subclass?: string;
+    }
+  >
+>;
 export const useGetSynthsByName = () => {
   const { networkId } = useContext(ContractContext);
   return useQuery(
