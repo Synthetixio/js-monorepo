@@ -33,6 +33,7 @@ function App() {
             mt={8}
             placeholder="Search by address"
             w="38%"
+            minW="250px"
             {...register('address')}
             alignSelf="end"
             borderColor="gray.900"
