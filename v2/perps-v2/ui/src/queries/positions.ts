@@ -9,6 +9,7 @@ export const POSITIONS_QUERY_MARKET = gql(`
       }
       entryPrice
       leverage
+      id
     }
   }
 `);

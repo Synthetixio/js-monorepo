@@ -102,8 +102,16 @@ export const usePositions = (walletAddress?: string) => {
               asset: item.market.asset,
               entryPrice: item.entryPrice,
               leverage: item.leverage,
+              id: item.id,
             };
           });
+
+          const ids = data.futuresPositions.map(({ id }) => id);
+          console.log(
+            `Polling ${ids.length} position${ids.length === 1 ? '' : 's'}:`,
+            ids.join(' ')
+          );
+          if (ids.length === 0) return;
 
           const positionsData = await fetchPositions(markets, walletAddress || '');
           positionsData.forEach(({ asset, position, entryPrice, leverage }) => {
