@@ -22,9 +22,11 @@ export const Welcome = ({ ...props }: BoxProps) => {
           />
         </Text>
         <Button
+          as={Link}
+          href={EXTERNAL_LINKS.Synthetix.Docs}
+          isExternal
           variant="outline"
           minW="120px"
-          onClick={() => window.open(EXTERNAL_LINKS.CMS.Home, '_blank')?.focus()}
           mt={[3, 3, 3, 0]}
         >
           {t('staking-v2.home.action')}

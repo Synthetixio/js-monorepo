@@ -6,7 +6,7 @@ it('walks over wallet sub-pages', () => {
   cy.visit('http://localhost:3000');
 
   cy.get('[data-testid="main menu button"]').click();
-  cy.contains('[data-testid="main menu dropdown"] button', 'Wallet').click();
+  cy.contains('[data-testid="main menu dropdown"] a', 'Wallet').click();
 
   cy.contains('h2', 'My Wallet').should('exist');
 

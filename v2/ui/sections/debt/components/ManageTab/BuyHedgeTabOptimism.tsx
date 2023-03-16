@@ -33,7 +33,6 @@ import {
   ModalItem,
   ModalItemText,
   ModalItemTitle,
-  Tooltip,
 } from '@snx-v1/styles';
 import { EXTERNAL_LINKS } from 'constants/links';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
@@ -96,7 +95,7 @@ const BuyHedgeTabOptimism = () => {
   );
   const dSnxAmount =
     actualAmountToSendBn.gt(0) && dSNXPrice
-      ? formatCryptoCurrency(wei(actualAmountToSendBn).sub(actualAmountToSendBn).div(dSNXPrice), {
+      ? formatCryptoCurrency(wei(actualAmountToSendBn).div(dSNXPrice), {
           minDecimals: 3,
         })
       : '';
@@ -163,16 +162,14 @@ const BuyHedgeTabOptimism = () => {
             dSNX
           </StyledCryptoCurrencyBox>
         </StyledInputLabel>
-        <Tooltip content={"This assumes a slippage of 1%, usually it's less than that"}>
-          <InputWrapper>
-            <StyledHedgeInput
-              type="text"
-              onChange={() => {}}
-              disabled
-              value={dSnxAmount ? `~${dSnxAmount}` : '~0'}
-            />
-          </InputWrapper>
-        </Tooltip>
+        <InputWrapper>
+          <StyledHedgeInput
+            type="text"
+            onChange={() => {}}
+            disabled
+            value={dSnxAmount ? `~${dSnxAmount}` : '~0'}
+          />
+        </InputWrapper>
         <StyledBalance>
           {t('debt.actions.manage.balance')}
           {formatCryptoCurrency(dSNXBalance || wei(0), {
