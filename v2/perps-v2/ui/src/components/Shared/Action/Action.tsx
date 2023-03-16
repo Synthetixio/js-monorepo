@@ -29,7 +29,18 @@ export const Action = ({ label, txHash, timestamp }: ActionProps) => {
           <RightUpIcon ml={1} mb={0.5} />
         </Button>
         <Text color="gray.500" fontSize="12px" lineHeight="16px">
-          <Tooltip label={date.toISOString()}>{formatDate(date)}</Tooltip>
+          <Tooltip
+            py={2}
+            px={4}
+            bg="gray.900"
+            color="gray.500"
+            fontSize="12px"
+            fontFamily="heading"
+            borderRadius="4px"
+            label={date.toISOString()}
+          >
+            {formatDate(date)}
+          </Tooltip>
         </Text>
       </Fade>
     </Td>
