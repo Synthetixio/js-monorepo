@@ -64,7 +64,7 @@ export const useActions = (account?: string) => {
   const [state, setState] = useState<ActionState>({ loading: true, actionData: [] });
 
   useEffect(() => {
-    if (liquidationData && futuresTradesData) {
+    if (liquidationData && futuresTradesData && marginData) {
       const data: ActionData[] = [];
 
       marginData?.futuresMarginTransfers.forEach((marginTransfer) => {
@@ -97,6 +97,7 @@ export const useActions = (account?: string) => {
           leverage: null,
         });
       });
+
       liquidationData.positionLiquidateds.forEach((liquidatedPosition) => {
         // When a liquidation happens we get both a liquidation event and a modify event.
         // Lets remove the modify event

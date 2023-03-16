@@ -44,6 +44,7 @@ const getPositionLabel = (pos: ActionDataWithPos) => {
   }
   throw Error('Missed to handle something');
 };
+
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
 export const AccountActionsTable = () => {
@@ -62,7 +63,8 @@ export const AccountActionsTable = () => {
           .reverse()
           .find((x) => x.asset === asset && x.currentPosSize !== undefined)?.newPosSize || 0;
 
-      const itemWithCurrentPosSize = {
+      // TODO Types
+      const itemWithCurrentPosSize: any = {
         ...item,
         currentPosSize: prevSize,
         newPosSize: prevSize + (isPosition(item.label) ? parseFloat(size) : 0),
@@ -129,14 +131,20 @@ export const AccountActionsTable = () => {
             })}
           </Tbody>
         </Table>
-        {(!loading && data?.actionData.length === 0) ||
-          (error && (
-            <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-              <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-                No actions
-              </Text>
-            </Flex>
-          ))}
+        {!loading && data?.actionData.length === 0 && (
+          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
+            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+              No actions
+            </Text>
+          </Flex>
+        )}
+        {error && (
+          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
+            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+              No actions
+            </Text>
+          </Flex>
+        )}
       </TableContainer>
     </>
   );
