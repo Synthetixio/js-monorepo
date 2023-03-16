@@ -17,7 +17,7 @@
     "@chakra-ui/react": "^2.5.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@graphql-typed-document-node/core": "latest",
+    "@graphql-typed-document-node/core": "^3.1.2",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "date-fns": "^2.29.3",
@@ -36,7 +36,7 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime-corejs3": "^7.20.13",
-    "@graphql-codegen/cli": "^3.2.2",
+    "@graphql-codegen/cli": "^3.0.0",
     "@graphql-codegen/client-preset": "^2.1.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@types/react": "^18.0.28",
@@ -71,7 +71,8 @@
       "dist"
     ],
     "ignoreMatches": [
-      "@graphql-codegen/client-preset"
+      "@graphql-codegen/client-preset",
+      "@graphql-typed-document-node/core"
     ]
   }
 }
