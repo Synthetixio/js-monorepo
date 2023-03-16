@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERED_QUERY } from '../queries/actions';
 import { LIQUIDATION_QUERY } from '../queries/liquidation';
 
-interface ActionData {
+export type ActionData = {
   id: string;
   label: string;
   txHash: string;
@@ -14,12 +14,12 @@ interface ActionData {
   size: string;
   fees: string | null;
   leverage: string | null;
-}
+};
 
-interface ActionState {
+type ActionState = {
   actionData: ActionData[];
   loading: boolean;
-}
+};
 
 export const useActions = (account?: string) => {
   const {
