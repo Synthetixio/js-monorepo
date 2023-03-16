@@ -1,25 +1,22 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-// import { usePositions } from '../../hooks';
-import { POSITIONS_QUERY } from '../../queries/positions';
-import { FuturesPosition_OrderBy, OrderDirection } from '../../__generated__/graphql';
-import { Currency, TableHeaderCell, PnL, Market, Size, Funding, MarkPrice } from '../Shared';
+import {
+  Currency,
+  TableHeaderCell,
+  PnL,
+  Market,
+  Size,
+  Funding,
+  MarkPrice,
+  NetValue,
+} from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
+import { usePositions } from '../../hooks';
 
 export const PositionsTable = () => {
   const { walletAddress } = useParams();
 
-  // const { loading: hookLoading, data: hookData } = usePositions(walletAddress);
-
-  const { loading, data, error } = useQuery(POSITIONS_QUERY, {
-    variables: {
-      where: { isOpen: true, account: walletAddress },
-      orderBy: FuturesPosition_OrderBy.Size,
-      orderDirection: OrderDirection.Asc,
-      first: 50,
-    },
-  });
+  const { loading, data, error } = usePositions(walletAddress);
 
   return (
     <>
@@ -56,11 +53,10 @@ export const PositionsTable = () => {
                 <PositionsLoading />
               </>
             )}
-            {data?.futuresPositions.map(
+            {data?.map(
               (
                 {
-                  account,
-                  market: { asset },
+                  asset,
                   entryPrice,
                   lastPrice,
                   leverage,
@@ -68,34 +64,52 @@ export const PositionsTable = () => {
                   margin,
                   size,
                   long,
+                  address,
+                  funding,
+                  liquidationPrice,
                 },
                 index
               ) => {
+                const netValue =
+                  Math.abs(parseInt(size) / 1e18) * (parseInt(lastPrice) / 1e18) +
+                  parseInt(funding) / 1e18;
+
                 return (
-                  <Tr key={account.concat(index.toString())} borderTopWidth="1px">
+                  <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
+                    {/* Market and Direction */}
                     <Market asset={asset} leverage={leverage} long={long} />
-                    <Currency amount={lastPrice} />
+                    {/* Net value */}
+                    <NetValue amount={netValue.toFixed(2)} />
                     <PnL amount={pnl} entryPrice={entryPrice} lastPrice={lastPrice} />
                     <Size size={size} lastPrice={lastPrice} />
+                    {/* Collateral */}
                     <Currency amount={margin} />
-                    <Funding amount={margin} />
+                    {/* Funding */}
+                    <Funding amount={funding} />
+                    {/* Entry Price */}
                     <Currency amount={entryPrice} />
                     <MarkPrice lastPrice={lastPrice} entryPrice={entryPrice} />
-                    <Currency amount={lastPrice} />
+                    <Currency amount={liquidationPrice} />
                   </Tr>
                 );
               }
             )}
           </Tbody>
         </Table>
-        {(!loading && data?.futuresPositions.length === 0) ||
-          (error && (
-            <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-              <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-                No open positions
-              </Text>
-            </Flex>
-          ))}
+        {!loading && data?.length === 0 && (
+          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
+            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+              No open positions
+            </Text>
+          </Flex>
+        )}
+        {error && (
+          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
+            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+              No open positions
+            </Text>
+          </Flex>
+        )}
       </TableContainer>
     </>
   );

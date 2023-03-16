@@ -5,7 +5,10 @@ export const POSITIONS_QUERY_MARKET = gql(`
     futuresPositions(first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection, where: $where) {
       market {
         marketKey
+        asset
       }
+      entryPrice
+      leverage
     }
   }
 `);
