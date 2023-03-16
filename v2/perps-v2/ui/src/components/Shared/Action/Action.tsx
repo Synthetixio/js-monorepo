@@ -1,5 +1,5 @@
 import { Button, Fade, Link, Td, Text, Tooltip } from '@chakra-ui/react';
-import { formatDistance, parse } from 'date-fns';
+import { formatDistance } from 'date-fns';
 import { optimisticEthercanTx } from '../../../utils';
 import { RightUpIcon } from '../../Icons';
 
