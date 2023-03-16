@@ -67,21 +67,6 @@ export const useActions = (account?: string) => {
     if (liquidationData && futuresTradesData) {
       const data: ActionData[] = [];
 
-      liquidationData.positionLiquidateds.forEach((liquidatedPositions) => {
-        data.push({
-          label: 'Liquidation',
-          address: liquidatedPositions.account,
-          asset: liquidatedPositions.market.asset,
-          fees: liquidatedPositions.fee,
-          id: liquidatedPositions.id,
-          price: liquidatedPositions.price,
-          size: liquidatedPositions.size,
-          timestamp: liquidatedPositions.timestamp,
-          txHash: liquidatedPositions.txHash,
-          leverage: liquidatedPositions.futuresPosition.leverage,
-        });
-      });
-
       marginData?.futuresMarginTransfers.forEach((marginTransfer) => {
         const withdraw = `${marginTransfer.size}`.includes('-');
         data.push({
@@ -110,6 +95,27 @@ export const useActions = (account?: string) => {
           timestamp: futuresTrade.timestamp,
           size: futuresTrade.size,
           leverage: null,
+        });
+      });
+      liquidationData.positionLiquidateds.forEach((liquidatedPosition) => {
+        // When a liquidation happens we get both a liquidation event and a modify event.
+        // Lets remove the modify event
+        const liquidationModifyEventIndex = data.findIndex(
+          (x) => x.timestamp === liquidatedPosition.timestamp
+        );
+        data.splice(liquidationModifyEventIndex, 1);
+
+        data.push({
+          label: 'Liquidation',
+          address: liquidatedPosition.account,
+          asset: liquidatedPosition.market.asset,
+          fees: liquidatedPosition.fee,
+          id: liquidatedPosition.id,
+          price: liquidatedPosition.price,
+          size: liquidatedPosition.size,
+          timestamp: liquidatedPosition.timestamp,
+          txHash: liquidatedPosition.txHash,
+          leverage: liquidatedPosition.futuresPosition.leverage,
         });
       });
 
