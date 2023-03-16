@@ -1,5 +1,5 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { stringToDecimal, numberWithCommas } from '../../../utils';
+import { stringToDecimal, formatNumberToUsd } from '../../../utils';
 
 interface MarkPriceProps {
   entryPrice: string;
@@ -11,10 +11,10 @@ export const MarkPrice = ({ entryPrice, lastPrice }: MarkPriceProps) => {
     <Td border="none">
       <Fade in>
         <Text fontFamily="heading" fontWeight={500} fontSize="14px" lineHeight="20px">
-          ${numberWithCommas(stringToDecimal(lastPrice).toFixed(2))}
+          {formatNumberToUsd(stringToDecimal(lastPrice))}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-          ${numberWithCommas(stringToDecimal(entryPrice).toFixed(2))}
+          {formatNumberToUsd(stringToDecimal(entryPrice))}
         </Text>
       </Fade>
     </Td>

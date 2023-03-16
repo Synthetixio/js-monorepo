@@ -1,5 +1,5 @@
 import { Fade, Td } from '@chakra-ui/react';
-import { stringToDecimal, numberWithCommas } from '../../../utils';
+import { stringToDecimal, formatNumberToUsd } from '../../../utils';
 
 interface FundingProps {
   amount: string;
@@ -8,7 +8,7 @@ interface FundingProps {
 export const Funding = ({ amount }: FundingProps) => {
   const calculatedAmount = stringToDecimal(amount);
   const isPositive = calculatedAmount >= 0;
-  const displayString = calculatedAmount.toFixed(2).replace('-', '');
+
   return (
     <Td
       border="none"
@@ -18,9 +18,7 @@ export const Funding = ({ amount }: FundingProps) => {
       fontWeight={500}
       color={isPositive ? 'green.500' : 'red.500'}
     >
-      <Fade in>
-        {`${isPositive ? '' : '-'}`}${numberWithCommas(displayString)}
-      </Fade>
+      <Fade in>{formatNumberToUsd(calculatedAmount)}</Fade>
     </Td>
   );
 };

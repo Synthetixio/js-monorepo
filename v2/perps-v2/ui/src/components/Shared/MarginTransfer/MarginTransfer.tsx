@@ -1,5 +1,5 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { numberWithCommas } from '../../../utils';
+import { formatNumberToUsd } from '../../../utils';
 
 interface DepositMarginProps {
   size: string;
@@ -7,12 +7,11 @@ interface DepositMarginProps {
 
 export const MarginTransfer = ({ size }: DepositMarginProps) => {
   const calculatedSize = Math.abs(parseFloat(size) / 1e18);
-
   return (
     <Td border="none">
       <Fade in>
         <Text fontSize="14px" lineHeight="20px" fontFamily="heading" fontWeight={500}>
-          ${numberWithCommas(calculatedSize.toString(), 2)}
+          {formatNumberToUsd(calculatedSize)}
         </Text>
       </Fade>
     </Td>
