@@ -70,6 +70,8 @@
     "ignorePatterns": [
       "dist"
     ],
-    "ignoreMatches": []
+    "ignoreMatches": [
+      "@graphql-codegen/client-preset"
+    ]
   }
 }

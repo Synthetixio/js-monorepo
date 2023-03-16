@@ -7,6 +7,8 @@ interface FundingProps {
 
 export const Funding = ({ amount }: FundingProps) => {
   const calculatedAmount = stringToDecimal(amount);
+  const isPositive = calculatedAmount >= 0;
+  const displayString = calculatedAmount.toFixed(2).replace('-', '');
   return (
     <Td
       border="none"
@@ -14,9 +16,11 @@ export const Funding = ({ amount }: FundingProps) => {
       lineHeight="20px"
       fontFamily="heading"
       fontWeight={500}
-      color={calculatedAmount >= 0 ? 'green.500' : 'red.500'}
+      color={isPositive ? 'green.500' : 'red.500'}
     >
-      <Fade in>${numberWithCommas(calculatedAmount.toFixed(2))}</Fade>
+      <Fade in>
+        {`${isPositive ? '' : '-'}`}${numberWithCommas(displayString)}
+      </Fade>
     </Td>
   );
 };

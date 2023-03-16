@@ -72,7 +72,8 @@ export const PositionsTable = () => {
               ) => {
                 const netValue =
                   Math.abs(parseInt(size) / 1e18) * (parseInt(lastPrice) / 1e18) +
-                  parseInt(funding) / 1e18;
+                  parseInt(funding) / 1e18 +
+                  parseInt(pnl) / 1e18;
 
                 return (
                   <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
