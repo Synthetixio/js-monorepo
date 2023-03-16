@@ -60,12 +60,14 @@ export const AllActionsTable = () => {
           .slice()
           .reverse()
           .find((x) => x.asset === asset && x.currentPosSize !== undefined)?.newPosSize || 0;
-
-      // TODO Types
-      const itemWithCurrentPosSize: any = {
+      const newPosSize =
+        item.label === 'Liquidation'
+          ? 0
+          : prevSize + (isPosition(item.label) ? parseFloat(size) : 0);
+      const itemWithCurrentPosSize = {
         ...item,
         currentPosSize: prevSize,
-        newPosSize: prevSize + (isPosition(item.label) ? parseFloat(size) : 0),
+        newPosSize,
       };
       return acc.concat(itemWithCurrentPosSize);
     }, [])
