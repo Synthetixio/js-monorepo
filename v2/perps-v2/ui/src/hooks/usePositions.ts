@@ -13,7 +13,7 @@ import {
   abi as multiCallAbi,
   address as multiCallAddress,
   Multicall3,
-} from '@synthetixio/v3-contracts/build/mainnet/Multicall3';
+} from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
 
 const provider = new providers.InfuraProvider(10, infuraId);
 
