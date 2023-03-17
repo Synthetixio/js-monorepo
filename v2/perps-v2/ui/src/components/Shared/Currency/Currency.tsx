@@ -1,5 +1,6 @@
 import { Fade, Td } from '@chakra-ui/react';
-import { stringToDecimal, formatNumberToUsd } from '../../../utils';
+import { formatNumberToUsd } from '@snx-v2/formatters';
+import { stringToDecimal } from '../../../utils';
 
 interface CurrencyProps {
   amount: string | null;

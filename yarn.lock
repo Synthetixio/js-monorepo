@@ -10184,6 +10184,7 @@ __metadata:
     "@graphql-codegen/client-preset": ^2.1.1
     "@graphql-typed-document-node/core": ^3.1.2
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
+    "@snx-v2/formatters": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
