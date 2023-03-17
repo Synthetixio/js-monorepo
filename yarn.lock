@@ -10185,6 +10185,7 @@ __metadata:
     "@graphql-typed-document-node/core": ^3.1.2
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@synthetixio/contracts": "workspace:*"
+    "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
     "@types/react": ^18.0.28
     babel-loader: ^9.1.2

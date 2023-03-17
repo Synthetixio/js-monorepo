@@ -19,6 +19,7 @@
     "@emotion/styled": "^11.10.5",
     "@graphql-typed-document-node/core": "^3.1.2",
     "@synthetixio/contracts": "workspace:*",
+    "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "date-fns": "^2.29.3",
     "ethers": "^5.7.2",
