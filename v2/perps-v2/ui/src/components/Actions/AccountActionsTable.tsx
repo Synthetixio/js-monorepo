@@ -50,7 +50,7 @@ export const AccountActionsTable = () => {
   const { walletAddress } = useParams();
 
   const { data, loading, error } = useActions(walletAddress);
-  const dataWithPosition = data.actionData
+  const dataWithPosition = data
     ?.slice()
     .reverse()
     .reduce((acc: ActionDataWithPos[], item) => {
@@ -132,7 +132,7 @@ export const AccountActionsTable = () => {
             })}
           </Tbody>
         </Table>
-        {(!loading && data?.actionData.length === 0) ||
+        {(!loading && data.length === 0) ||
           (error && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
