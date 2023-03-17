@@ -27,6 +27,7 @@ const babelRule = {
   include: [
     // Folders included in build
     /v2\/contracts/,
+    /v3\/contracts/,
     /v3\/theme/,
     /v3\/lib/,
     /v3\/components/,
@@ -168,6 +169,7 @@ module.exports = {
   resolve: {
     alias: {
       '@synthetixio/contracts/build': '@synthetixio/contracts/src',
+      '@synthetixio/v3-contracts/build': '@synthetixio/v3-contracts/src',
     },
     fallback: {
       buffer: require.resolve('buffer'),

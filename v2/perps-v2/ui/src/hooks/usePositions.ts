@@ -9,10 +9,16 @@ import {
   address,
   PerpsV2MarketData,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
+import {
+  abi as multiCallAbi,
+  address as multiCallAddress,
+  Multicall3,
+} from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
 
 const provider = new providers.InfuraProvider(10, infuraId);
 
 const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
+const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider) as Multicall3;
 
 interface PositionsData {
   address: string | undefined;
@@ -175,25 +181,54 @@ interface DataResponse {
   skewScale: BigNumber;
 }
 
-async function fetchPositions(positionData: PositionData[], address: string) {
-  const data: DataResponse[] = [];
-
-  await Promise.all(
-    positionData.map(async ({ entryPrice, leverage, market, asset }) => {
-      const positionData = await contract.positionDetailsForMarketKey(market, address);
-      const { fundingParameters, marketSizeDetails } = await contract.marketDetailsForKey(market);
-
-      data.push({
-        position: positionData,
+async function fetchPositions(
+  positionData: PositionData[],
+  address: string
+): Promise<DataResponse[]> {
+  const positionDetailCalls = positionData.map(({ market }) => ({
+    target: contract.address,
+    callData: contract.interface.encodeFunctionData('positionDetailsForMarketKey', [
+      market,
+      address,
+    ]),
+  }));
+  const marketDetailCalls = positionData.map(({ market }) => ({
+    target: contract.address,
+    callData: contract.interface.encodeFunctionData('marketDetailsForKey', [market]),
+  }));
+  const multiCallResponse = await Multicall3Contract.callStatic.aggregate(
+    positionDetailCalls.concat(marketDetailCalls)
+  );
+  const positionsDetailsMulticallResult = multiCallResponse.returnData.slice(
+    0,
+    positionDetailCalls.length
+  );
+  const marketDetailMulticallResult = multiCallResponse.returnData.slice(
+    positionDetailCalls.length
+  );
+  // The result from decodeFunctionResult isn't typed, we could use zod to validate but doing a type assertion for now..
+  const dataToReturn: DataResponse[] = positionsDetailsMulticallResult.map(
+    (positionDetailsBytes, index) => {
+      const positionDetails = contract.interface.decodeFunctionResult(
+        'positionDetailsForMarketKey',
+        positionDetailsBytes
+      )[0];
+      const marketDetailsBytes = marketDetailMulticallResult[index];
+      const { fundingParameters, marketSizeDetails } = contract.interface.decodeFunctionResult(
+        'marketDetailsForKey',
+        marketDetailsBytes
+      )[0];
+      const { market, leverage, entryPrice, asset } = positionData[index];
+      return {
         market,
         leverage,
         entryPrice,
         asset,
+        position: positionDetails,
         skew: marketSizeDetails.marketSkew,
         skewScale: fundingParameters.skewScale,
-      });
-    })
+      };
+    }
   );
-
-  return data;
+  return dataToReturn;
 }
