@@ -67,6 +67,8 @@ export const PositionsTable = () => {
                   address,
                   funding,
                   liquidationPrice,
+                  skew,
+                  skewScale,
                 },
                 index
               ) => {
@@ -89,7 +91,9 @@ export const PositionsTable = () => {
                     <Funding amount={funding} />
                     {/* Entry Price */}
                     <Currency amount={entryPrice} />
-                    <MarkPrice lastPrice={lastPrice} entryPrice={entryPrice} />
+                    {/* Mark Price */}
+                    <MarkPrice indexPrice={lastPrice} skew={skew} skewScale={skewScale} />
+                    {/* Liquidation Price */}
                     <Currency amount={liquidationPrice} />
                   </Tr>
                 );
