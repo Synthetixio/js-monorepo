@@ -13,6 +13,7 @@ import {
   NextPriceOrderRemoved as NextPriceOrderRemovedEvent,
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
+  PerpsTracking as PerpsTrackingEvent,
 } from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
 import {
   PositionLiquidated,
@@ -24,6 +25,7 @@ import {
   FundingRateUpdate,
   FuturesMarginTransfer,
   FuturesMarket,
+  Frontend,
 } from '../generated/schema';
 
 export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
@@ -648,4 +650,23 @@ export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
 
 export function handleMarketRemoved(event: MarketRemovedEvent): void {
   store.remove('FuturesMarket', event.params.market.toHex());
+}
+
+export function handlePerpsTracking(event: PerpsTrackingEvent): void {
+  let frontend = Frontend.load(event.params.trackingCode.toString());
+  if (!frontend) {
+    frontend = new Frontend(event.params.trackingCode.toString());
+    frontend.markets = [event.address.toHex()];
+    frontend.amount = event.params.sizeDelta.abs().toBigDecimal();
+    frontend.fees = event.params.fee.toBigDecimal();
+  } else {
+    frontend.amount = frontend.amount.plus(event.params.sizeDelta.abs().toBigDecimal());
+    frontend.fees = frontend.fees.plus(event.params.fee.abs().toBigDecimal());
+    if (!frontend.markets.includes(event.address.toHex())) {
+      const oldMarkets = frontend.markets;
+      oldMarkets.push(event.address.toHex());
+      frontend.markets = oldMarkets;
+    }
+  }
+  frontend.save();
 }
