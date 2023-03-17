@@ -23,7 +23,6 @@ import {
   FuturesTrade,
   FundingRateUpdate,
   FuturesMarginTransfer,
-  Volume,
   FuturesMarket,
 } from '../generated/schema';
 
@@ -239,11 +238,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     // else position is not new
   } else {
     // Position closed & not liquidated
-    if (
-      event.params.size.isZero() &&
-      !event.params.tradeSize.isZero() &&
-      !event.params.fee.isZero()
-    ) {
+    if (event.params.size.isZero() && !event.params.tradeSize.isZero()) {
       log.info('position closed', [positionId]);
 
       const newPnl = event.params.lastPrice
@@ -497,6 +492,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
+        tradeEntity.save();
       }
 
       // Update Synthetix values
@@ -516,10 +512,6 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
       }
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
       futuresOrderEntity.save();
-      tradeEntity.txHash = event.transaction.hash.toHex();
-      tradeEntity.futuresOrder = futuresOrderEntityId;
-      tradeEntity.type = 'PositionOpened';
-      tradeEntity.save();
     } else {
       futuresOrderEntity.status = 'Cancelled';
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
@@ -620,6 +612,7 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
+        tradeEntity.save();
       }
       // Update Synthetix values
       if (synthetix) {
@@ -637,10 +630,6 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
       }
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
       futuresOrderEntity.save();
-      tradeEntity.txHash = event.transaction.hash.toHex();
-      tradeEntity.futuresOrder = futuresOrderEntityId;
-      tradeEntity.type = 'PositionOpened';
-      tradeEntity.save();
     } else {
       futuresOrderEntity.status = 'Cancelled';
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
