@@ -8,8 +8,8 @@ interface MarkPriceProps {
 }
 
 export const MarkPrice = ({ indexPrice, skew, skewScale }: MarkPriceProps) => {
-  const markPrice =
-    (parseInt(indexPrice) / 1e18) * (1 + parseInt(skew) / 1e18 / parseInt(skewScale) / 1e18);
+  const skewRatio = parseInt(skew) / parseInt(skewScale);
+  const markPrice = (parseInt(indexPrice) / 1e18) * (1 + skewRatio);
 
   return (
     <Td border="none">
