@@ -1,11 +1,11 @@
 import { gql } from '../__generated__';
 
-export const MARGIN_TRANSFERED_QUERY = gql(`
-  query FuturesMarginTransfer($where: FuturesMarginTransfer_filter) {
+export const MARGIN_TRANSFERRED_QUERY = gql(`
+  query FuturesMarginTransfer($where: FuturesMarginTransfer_filter, $first: Int,$orderBy: FuturesMarginTransfer_orderBy, $orderDirection: OrderDirection) {
     futuresMarginTransfers(
-      first: 100
-      orderBy: timestamp
-      orderDirection: desc
+      first: $first
+      orderBy: $orderBy
+      orderDirection: $orderDirection
       where: $where
     ) {
       id
@@ -21,11 +21,11 @@ export const MARGIN_TRANSFERED_QUERY = gql(`
 `);
 
 export const FUTURES_TRADE_QUERY = gql(`
-  query FuturesTrades($where: FuturesTrade_filter) {
+  query FuturesTrades($where: FuturesTrade_filter,$first: Int,$orderBy: FuturesTrade_orderBy, $orderDirection: OrderDirection) {
     futuresTrades(
-      first: 100
-      orderBy: timestamp
-      orderDirection: desc
+      first: $first
+      orderBy: $orderBy
+      orderDirection: $orderDirection
       where: $where
     ) {
       id
@@ -51,41 +51,41 @@ export const FUTURES_TRADE_QUERY = gql(`
   }
 `);
 
-export const ACCOUNT_ACTIONS_QUERY = gql(`
-  query AccountActions($where: FuturesPosition_filter, $skip: Int, $first: Int, $orderBy: FuturesPosition_orderBy, $orderDirection: OrderDirection) {
-    futuresPositions(first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection, where: $where) {
-      id
-      market {
-        asset
-      }
-      isOpen
-      openTimestamp
-      lastPrice
-      leverage
-      size
-      long
-      trades
-      feesPaidToSynthetix
-      txHash
-    }
-  }
-`);
+// export const ACCOUNT_ACTIONS_QUERY = gql(`
+//   query AccountActions($where: FuturesPosition_filter, $skip: Int, $first: Int, $orderBy: FuturesPosition_orderBy, $orderDirection: OrderDirection) {
+//     futuresPositions(first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection, where: $where) {
+//       id
+//       market {
+//         asset
+//       }
+//       isOpen
+//       openTimestamp
+//       lastPrice
+//       leverage
+//       size
+//       long
+//       trades
+//       feesPaidToSynthetix
+//       txHash
+//     }
+//   }
+// `);
 
-export const ALL_ACTIONS_QUERY = gql(`
-  query Actions($where: FuturesPosition_filter, $skip: Int, $first: Int, $orderBy: FuturesPosition_orderBy, $orderDirection: OrderDirection) {
-    futuresPositions(first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection, where: $where) {
-      id
-      account
-      market {
-        asset
-      }
-      openTimestamp
-      lastPrice
-      leverage
-      size
-      long
-      feesPaidToSynthetix
-      txHash
-    }
-  }
-`);
+// export const ALL_ACTIONS_QUERY = gql(`
+//   query Actions($where: FuturesPosition_filter, $skip: Int, $first: Int, $orderBy: FuturesPosition_orderBy, $orderDirection: OrderDirection) {
+//     futuresPositions(first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection, where: $where) {
+//       id
+//       account
+//       market {
+//         asset
+//       }
+//       openTimestamp
+//       lastPrice
+//       leverage
+//       size
+//       long
+//       feesPaidToSynthetix
+//       txHash
+//     }
+//   }
+// `);

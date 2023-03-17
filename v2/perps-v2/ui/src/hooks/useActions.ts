@@ -1,10 +1,14 @@
 import { useQuery } from '@apollo/client';
-import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERED_QUERY } from '../queries/actions';
+import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERRED_QUERY } from '../queries/actions';
 import { LIQUIDATION_QUERY } from '../queries/liquidation';
 import {
   FuturesMarginTransferQuery,
+  FuturesMarginTransfer_OrderBy,
   FuturesTradesQuery,
+  FuturesTrade_OrderBy,
+  OrderDirection,
   PositionLiquidatedQuery,
+  PositionLiquidated_OrderBy,
 } from '../__generated__/graphql';
 
 export type ActionData = {
@@ -94,6 +98,9 @@ export const useActions = (account?: string) => {
   } = useQuery(LIQUIDATION_QUERY, {
     pollInterval: 10000,
     variables: {
+      first: account ? 1000 : 100,
+      orderBy: PositionLiquidated_OrderBy.Timestamp,
+      orderDirection: OrderDirection.Desc,
       where: {
         account,
       },
@@ -104,9 +111,12 @@ export const useActions = (account?: string) => {
     loading: marginLoading,
     data: marginData,
     error: marginError,
-  } = useQuery(MARGIN_TRANSFERED_QUERY, {
+  } = useQuery(MARGIN_TRANSFERRED_QUERY, {
     pollInterval: 10000,
     variables: {
+      first: account ? 1000 : 100,
+      orderBy: FuturesMarginTransfer_OrderBy.Timestamp,
+      orderDirection: OrderDirection.Desc,
       where: {
         account,
       },
@@ -120,6 +130,9 @@ export const useActions = (account?: string) => {
   } = useQuery(FUTURES_TRADE_QUERY, {
     pollInterval: 10000,
     variables: {
+      first: account ? 1000 : 100,
+      orderBy: FuturesTrade_OrderBy.Timestamp,
+      orderDirection: OrderDirection.Desc,
       where: {
         account,
       },
