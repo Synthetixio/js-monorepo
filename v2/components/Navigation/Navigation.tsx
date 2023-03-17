@@ -10,6 +10,7 @@ import {
   Text,
   useBreakpointValue,
   useDisclosure,
+  Link as ChakraLink,
 } from '@chakra-ui/react';
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 import {
@@ -30,7 +31,7 @@ import {
   // InfoOutline,
   InfoOutline,
 } from '@snx-v2/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { formatNumberToUsd, truncateAddress } from '@snx-v2/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
@@ -43,6 +44,7 @@ import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -89,7 +91,6 @@ export const NavigationUI = ({
   const { delegateWallet } = useDelegateWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { name, icon } = activeIcon(currentNetwork);
-  const navigate = useNavigate();
 
   const size = useBreakpointValue(
     {
@@ -256,7 +257,11 @@ export const NavigationUI = ({
               </Center>
             </MenuItem> */}
             {delegateWallet ? null : (
-              <MenuItem onClick={() => navigate('/loans')}>
+              <MenuItem
+                _hover={{ textDecoration: 'none', bg: 'whiteAlpha.400' }}
+                as={Link}
+                to="/loans"
+              >
                 <Center>
                   <LoansIcon />
                   <Text fontSize="sm" ml={2}>
@@ -265,7 +270,12 @@ export const NavigationUI = ({
                 </Center>
               </MenuItem>
             )}
-            <MenuItem onClick={() => window.open('https://governance.synthetix.io/', '_newtab')}>
+            <MenuItem
+              _hover={{ textDecoration: 'none', bg: 'whiteAlpha.400' }}
+              as={ChakraLink}
+              isExternal={true}
+              href={EXTERNAL_LINKS.Synthetix.Governance}
+            >
               <Center>
                 <GovIcon />
                 <Text fontSize="sm" ml={2}>
@@ -274,7 +284,7 @@ export const NavigationUI = ({
               </Center>
             </MenuItem>
             {Boolean(isWalletConnected && !delegateWallet) && (
-              <MenuItem onClick={() => navigate('/wallet')}>
+              <MenuItem as={Link} to="/wallet">
                 <Center>
                   <WalletIcon color="white" />
                   <Text fontSize="sm" ml={2}>
@@ -289,13 +299,18 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
               </Center>
             </MenuItem> */}
-            <MenuItem onClick={() => window.open('https://synthetix.io/guides', '_newtab')}>
+            <MenuItem
+              _hover={{ textDecoration: 'none', bg: 'whiteAlpha.400' }}
+              as={ChakraLink}
+              isExternal={true}
+              href={EXTERNAL_LINKS.Synthetix.Docs}
+            >
               <GuideIcon />
               <Text fontSize="sm" ml={2}>
-                {t('common.wallet.menu.guide')}
+                {t('common.wallet.menu.docs')}
               </Text>
             </MenuItem>
-            <MenuItem onClick={() => navigate('/terms')}>
+            <MenuItem as={Link} to="/terms">
               <InfoOutline width="20px" height="20px" />
               <Text fontSize="sm" ml={2}>
                 {t('common.wallet.menu.terms')}

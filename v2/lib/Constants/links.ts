@@ -8,11 +8,10 @@ export const EXTERNAL_LINKS = {
     Uniswap: 'https://uniswap.exchange/',
     OneInchLink: (from: string, to: string) => `https://1inch.exchange/#/1/swap/${from}/${to}`,
   },
-  CMS: {
-    Home: 'https://synthetix.io/guides',
-  },
+
   Synthetix: {
     Home: 'https://www.synthetix.io',
+    Docs: 'https://docs.synthetix.io/',
     Litepaper: 'https://docs.synthetix.io/litepaper/',
     Incentives: 'https://docs.synthetix.io/incentives/',
     SIP60: 'https://sips.synthetix.io/sips/sip-60',
@@ -23,7 +22,8 @@ export const EXTERNAL_LINKS = {
     StakingGuide: 'https://blog.synthetix.io/basics-of-staking-snx-2022/',
     SIP148Liquidations: 'https://blog.synthetix.io/new-liquidation-mechanism/',
     Governance: 'https://governance.synthetix.io',
-    RewardsGuide: ' https://synthetix.io/guides/staking-rewards-epochs',
+    RewardsGuide: 'https://docs.synthetix.io/staking/staking-guide/staking-rewards-and-epochs',
+    CRatioGuide: 'https://docs.synthetix.io/staking/staking-guide/collateralization-ratio',
     SIP255: 'https://sips.synthetix.io/sips/sip-255',
   },
   Social: {

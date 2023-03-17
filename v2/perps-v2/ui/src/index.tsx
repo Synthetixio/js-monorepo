@@ -3,12 +3,17 @@ import App from './App';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Wallet } from './Wallet';
+import Account from './pages/Account';
 import { Header } from './components/Header';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Actions } from './Actions';
+// import { Actions } from './Actions';
 import { createRoot } from 'react-dom/client';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { PERPS_V2_DASHBOARD_GRAPH_URL } from './utils/constants';
+
+const client = new ApolloClient({
+  uri: PERPS_V2_DASHBOARD_GRAPH_URL,
+  cache: new InMemoryCache(),
+});
 
 const router = createBrowserRouter([
   {
@@ -25,19 +30,19 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <Wallet />
+        <Account />
       </>
     ),
   },
-  {
-    path: '/actions',
-    element: (
-      <>
-        <Header />
-        <Actions />
-      </>
-    ),
-  },
+  // {
+  //   path: '/actions',
+  //   element: (
+  //     <>
+  //       <Header />
+  //       <Actions />
+  //     </>
+  //   ),
+  // },
 ]);
 
 const container = document.querySelector('#app');
@@ -57,24 +62,11 @@ const customTheme = extendTheme({
 
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={customTheme}>
-      <QueryClientProvider
-        client={
-          new QueryClient({
-            defaultOptions: {
-              queries: {
-                refetchOnWindowFocus: false,
-                cacheTime: 900000,
-                staleTime: 900000,
-              },
-            },
-          })
-        }
-      >
-        <ReactQueryDevtools />
+    <ApolloProvider client={client}>
+      <ChakraProvider theme={customTheme}>
         <Fonts />
         <RouterProvider router={router} />
-      </QueryClientProvider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </ApolloProvider>
   </React.StrictMode>
 );
