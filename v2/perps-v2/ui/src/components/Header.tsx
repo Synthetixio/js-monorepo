@@ -1,11 +1,18 @@
-import { FC } from 'react';
-import { Flex, Button, Link } from '@chakra-ui/react';
+import { FC, useEffect } from 'react';
+import { Flex, Button, Link, useColorMode } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { SNXIcon } from './Icons/';
 import { PerpsStats } from './PerpsStats';
 import { RightUpIcon } from './Icons/RightUpIcon';
 
 export const Header: FC = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  useEffect(() => {
+    if (colorMode === 'light') {
+      toggleColorMode();
+    }
+  }, [colorMode, toggleColorMode]);
   return (
     <Flex
       as="header"

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Button, Flex, Heading, Input, useColorMode } from '@chakra-ui/react';
+import React from 'react';
+import { Button, Flex, Heading, Input } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AllActionsTable } from './components/Actions';
@@ -11,13 +11,6 @@ function App() {
   const { register, getValues } = useForm({
     defaultValues: { address: '' },
   });
-  const { colorMode, toggleColorMode } = useColorMode();
-
-  useEffect(() => {
-    if (colorMode === 'light') {
-      toggleColorMode();
-    }
-  }, [colorMode, toggleColorMode]);
 
   const onSubmit = () => {
     if (getValues('address')) {
