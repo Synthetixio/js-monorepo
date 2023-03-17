@@ -121,6 +121,13 @@ type FuturesMarket @entity {
   timestamp: BigInt!
 }
 
+type Frontend @entity {
+  id: ID!
+  markets: [FuturesMarket!]!
+  amount: BigDecimal!
+  fees: BigDecimal!
+}
+
 enum FuturesOrderType {
   DelayedOrderSubmitted
   DelayedOffchainSubmitted
