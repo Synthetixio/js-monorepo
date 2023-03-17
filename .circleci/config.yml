@@ -373,6 +373,7 @@ jobs:
       - run: yarn download-cci-coverage v2-e2e /tmp/cov || true
       - run: yarn download-cci-coverage v3-cy /tmp/cov || true
       - run: yarn download-cci-coverage v3-e2e /tmp/cov || true
+      - run: mkdir -p /tmp/cov
       - run: ls -alR /tmp/cov
       - run: mkdir -p /tmp/cov/combined
       - run: yarn nyc merge /tmp/cov /tmp/cov/combined/coverage.json || true
