@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { Contract, providers } from 'ethers';
+import { BigNumber, Contract, providers } from 'ethers';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 import { infuraId } from '../utils';
 import { FuturesPosition_OrderBy, OrderDirection } from '../__generated__/graphql';
@@ -27,6 +27,8 @@ interface PositionsData {
   asset: string;
   funding: string;
   notionalValue: string;
+  skew: string;
+  skewScale: string;
 }
 
 interface PositionsState {
@@ -62,7 +64,7 @@ export const usePositions = (walletAddress?: string) => {
         });
         const positionsData = await fetchPositions(markets, walletAddress || '');
 
-        positionsData.forEach(({ position, entryPrice, leverage, asset }) => {
+        positionsData.forEach(({ position, entryPrice, leverage, asset, skew, skewScale }) => {
           const {
             accessibleMargin,
             liquidationPrice,
@@ -87,6 +89,8 @@ export const usePositions = (walletAddress?: string) => {
             leverage,
             funding: accruedFunding.toString(),
             notionalValue: notionalValue.toString(),
+            skew: skew.toString(),
+            skewScale: skewScale.toString(),
           });
         });
 
@@ -114,7 +118,7 @@ export const usePositions = (walletAddress?: string) => {
           if (ids.length === 0) return;
 
           const positionsData = await fetchPositions(markets, walletAddress || '');
-          positionsData.forEach(({ asset, position, entryPrice, leverage }) => {
+          positionsData.forEach(({ asset, position, entryPrice, leverage, skew, skewScale }) => {
             const {
               accessibleMargin,
               liquidationPrice,
@@ -138,6 +142,8 @@ export const usePositions = (walletAddress?: string) => {
               leverage,
               funding: accruedFunding.toString(),
               notionalValue: notionalValue.toString(),
+              skew: skew.toString(),
+              skewScale: skewScale.toString(),
             });
           });
         })();
@@ -165,6 +171,8 @@ interface DataResponse {
   entryPrice: string;
   leverage: string;
   position: PerpsV2MarketData.PositionDataStructOutput;
+  skew: BigNumber;
+  skewScale: BigNumber;
 }
 
 async function fetchPositions(positionData: PositionData[], address: string) {
@@ -173,7 +181,17 @@ async function fetchPositions(positionData: PositionData[], address: string) {
   await Promise.all(
     positionData.map(async ({ entryPrice, leverage, market, asset }) => {
       const positionData = await contract.positionDetailsForMarketKey(market, address);
-      data.push({ position: positionData, market, leverage, entryPrice, asset });
+      const { fundingParameters, marketSizeDetails } = await contract.marketDetailsForKey(market);
+
+      data.push({
+        position: positionData,
+        market,
+        leverage,
+        entryPrice,
+        asset,
+        skew: marketSizeDetails.marketSkew,
+        skewScale: fundingParameters.skewScale,
+      });
     })
   );
 

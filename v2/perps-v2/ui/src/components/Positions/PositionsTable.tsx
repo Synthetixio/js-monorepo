@@ -89,7 +89,9 @@ export const PositionsTable = () => {
                     <Funding amount={funding} />
                     {/* Entry Price */}
                     <Currency amount={entryPrice} />
-                    <MarkPrice lastPrice={lastPrice} entryPrice={entryPrice} />
+                    {/* Mark Price */}
+                    <MarkPrice markPrice={lastPrice} indexPrice={entryPrice} />
+                    {/* Liquidation Price */}
                     <Currency amount={liquidationPrice} />
                   </Tr>
                 );
