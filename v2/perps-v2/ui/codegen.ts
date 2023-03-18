@@ -7,6 +7,13 @@ const config: CodegenConfig = {
     './src/__generated__/': {
       preset: 'client',
       plugins: [],
+      config: {
+        scalars: {
+          Bytes: 'string',
+          BigInt: 'string',
+          BigDecimal: 'string',
+        },
+      },
       presetConfig: {
         gqlTagName: 'gql',
       },

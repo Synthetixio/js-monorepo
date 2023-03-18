@@ -1,15 +1,64 @@
 import { useQuery } from '@apollo/client';
 import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERRED_QUERY } from '../queries/actions';
-import { LIQUIDATION_QUERY } from '../queries/liquidation';
 import {
   FuturesMarginTransferQuery,
   FuturesMarginTransfer_OrderBy,
   FuturesTradesQuery,
   FuturesTrade_OrderBy,
   OrderDirection,
-  PositionLiquidatedQuery,
-  PositionLiquidated_OrderBy,
 } from '../__generated__/graphql';
+
+const isLongTrade = (size: number) => size > 0;
+const isShortTrade = (size: number) => !isLongTrade(size);
+const positionIsLong = (positionSize: number) => positionSize > 0;
+const positionIsShort = (positionSize: number) => !positionIsLong(positionSize);
+
+const getTradeLabelForPositionModified = (size: number, positionSize: number) => {
+  if (size === 0) {
+    return 'Unexpected Action';
+  }
+
+  const sizeBeforeTrade = positionSize - size;
+  const positionBeforeTradeWasShort = sizeBeforeTrade < 0;
+  const positionBeforeTradeWasLong = !positionBeforeTradeWasShort;
+
+  if (isLongTrade(size)) {
+    if (positionBeforeTradeWasShort) {
+      return positionIsLong(positionSize) ? 'Short Flipped To Long' : 'Short Decreased';
+    }
+    if (positionBeforeTradeWasLong) {
+      return 'Long Increased';
+    }
+  }
+
+  if (isShortTrade(size)) {
+    if (positionBeforeTradeWasLong) {
+      return positionIsShort(positionSize) ? 'Long Flipped To Short' : 'Long Decreased';
+    }
+    if (positionBeforeTradeWasShort) {
+      return 'Short Increased';
+    }
+  }
+
+  return 'Unexpected Action';
+};
+
+type TradeTypeHandler = {
+  [key in FuturesTradesQuery['futuresTrades'][number]['type']]: () => string;
+};
+
+export const getTradeLabel = (futuresTrade: FuturesTradesQuery['futuresTrades'][number]) => {
+  const size = parseFloat(futuresTrade.size);
+  const positionSize = parseFloat(futuresTrade.positionSize);
+  const tradeTypeHandlers: TradeTypeHandler = {
+    PositionOpened: () => (isLongTrade(size) ? 'Long Opened' : 'Short Opened'),
+    Liquidated: () => (isLongTrade(size) ? 'Short Liquidated' : 'Long Liquidated'),
+    PositionClosed: () => (isLongTrade(size) ? 'Short Closed' : 'Long Closed'),
+    PositionModified: () => getTradeLabelForPositionModified(size, positionSize),
+    Unknown: () => 'Unexpected Action', // Add a handler for the 'Unknown' type
+  };
+  return tradeTypeHandlers[futuresTrade.type]?.() || tradeTypeHandlers.Unknown();
+};
 
 export type ActionData = {
   id: string;
@@ -23,20 +72,17 @@ export type ActionData = {
   fees: string | null;
   leverage: string | null;
 };
-
 const mergeData = (
-  liquidationData?: PositionLiquidatedQuery['positionLiquidateds'],
   futuresTradesData?: FuturesTradesQuery['futuresTrades'],
   marginData?: FuturesMarginTransferQuery['futuresMarginTransfers']
 ) => {
-  if (!liquidationData || !futuresTradesData || !marginData) {
+  if (!futuresTradesData || !marginData) {
     return [];
   }
-  const data: ActionData[] = [];
 
-  marginData.forEach((marginTransfer) => {
+  const parsedMarginData: ActionData[] = marginData.map((marginTransfer) => {
     const withdraw = `${marginTransfer.size}`.includes('-');
-    data.push({
+    return {
       label: `${withdraw ? 'Withdraw' : 'Deposit'} Margin`,
       address: marginTransfer.account,
       asset: marginTransfer.market.asset,
@@ -47,12 +93,12 @@ const mergeData = (
       timestamp: marginTransfer.timestamp,
       txHash: marginTransfer.txHash,
       leverage: null,
-    });
+    };
   });
 
-  futuresTradesData.forEach((futuresTrade) => {
-    data.push({
-      label: 'Position Modified',
+  const parsedTradeData: ActionData[] = futuresTradesData.map((futuresTrade) => {
+    return {
+      label: getTradeLabel(futuresTrade),
       address: futuresTrade.account,
       asset: futuresTrade.market.asset,
       fees: futuresTrade.feesPaidToSynthetix,
@@ -62,51 +108,14 @@ const mergeData = (
       timestamp: futuresTrade.timestamp,
       size: futuresTrade.size,
       leverage: null,
-    });
+    };
   });
 
-  liquidationData.forEach((liquidatedPosition) => {
-    // When a liquidation happens we get both a liquidation event and a modify event.
-    // Lets remove the modify event
-    const liquidationModifyEventIndex = data.findIndex(
-      (x) => x.timestamp === liquidatedPosition.timestamp
-    );
-    data.splice(liquidationModifyEventIndex, 1);
-
-    data.push({
-      label: 'Liquidation',
-      address: liquidatedPosition.account,
-      asset: liquidatedPosition.market.asset,
-      fees: liquidatedPosition.fee,
-      id: liquidatedPosition.id,
-      price: liquidatedPosition.price,
-      size: liquidatedPosition.size,
-      timestamp: liquidatedPosition.timestamp,
-      txHash: liquidatedPosition.txHash,
-      leverage: liquidatedPosition.futuresPosition.leverage,
-    });
-  });
-
+  const data = parsedMarginData.concat(parsedTradeData);
   return data.sort((a, b) => Number(b.timestamp) - Number(a.timestamp));
 };
 
 export const useActions = (account?: string) => {
-  const {
-    loading: liquidationLoading,
-    data: liquidationData,
-    error: liquidationError,
-  } = useQuery(LIQUIDATION_QUERY, {
-    pollInterval: 10000,
-    variables: {
-      first: account ? 1000 : 100,
-      orderBy: PositionLiquidated_OrderBy.Timestamp,
-      orderDirection: OrderDirection.Desc,
-      where: {
-        account,
-      },
-    },
-  });
-
   const {
     loading: marginLoading,
     data: marginData,
@@ -122,7 +131,6 @@ export const useActions = (account?: string) => {
       },
     },
   });
-
   const {
     loading: futuresTradesLoading,
     data: futuresTradesData,
@@ -139,14 +147,13 @@ export const useActions = (account?: string) => {
     },
   });
   const sortedData = mergeData(
-    liquidationData?.positionLiquidateds,
     futuresTradesData?.futuresTrades,
     marginData?.futuresMarginTransfers
   );
 
   return {
-    loading: liquidationLoading || marginLoading || futuresTradesLoading,
+    loading: marginLoading || futuresTradesLoading,
     data: sortedData,
-    error: liquidationError || marginError || futuresError,
+    error: marginError || futuresError,
   };
 };

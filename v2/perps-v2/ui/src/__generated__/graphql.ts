@@ -12,9 +12,9 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  BigDecimal: any;
-  BigInt: any;
-  Bytes: any;
+  BigDecimal: string;
+  BigInt: string;
+  Bytes: string;
 };
 
 export type BlockChangedFilter = {
@@ -26,6 +26,67 @@ export type Block_Height = {
   number?: InputMaybe<Scalars['Int']>;
   number_gte?: InputMaybe<Scalars['Int']>;
 };
+
+export type Frontend = {
+  __typename?: 'Frontend';
+  amount: Scalars['BigDecimal'];
+  fees: Scalars['BigDecimal'];
+  id: Scalars['ID'];
+  markets: Array<FuturesMarket>;
+};
+
+export type FrontendMarketsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FuturesMarket_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<FuturesMarket_Filter>;
+};
+
+export type Frontend_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  amount?: InputMaybe<Scalars['BigDecimal']>;
+  amount_gt?: InputMaybe<Scalars['BigDecimal']>;
+  amount_gte?: InputMaybe<Scalars['BigDecimal']>;
+  amount_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  amount_lt?: InputMaybe<Scalars['BigDecimal']>;
+  amount_lte?: InputMaybe<Scalars['BigDecimal']>;
+  amount_not?: InputMaybe<Scalars['BigDecimal']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  and?: InputMaybe<Array<InputMaybe<Frontend_Filter>>>;
+  fees?: InputMaybe<Scalars['BigDecimal']>;
+  fees_gt?: InputMaybe<Scalars['BigDecimal']>;
+  fees_gte?: InputMaybe<Scalars['BigDecimal']>;
+  fees_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  fees_lt?: InputMaybe<Scalars['BigDecimal']>;
+  fees_lte?: InputMaybe<Scalars['BigDecimal']>;
+  fees_not?: InputMaybe<Scalars['BigDecimal']>;
+  fees_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  markets?: InputMaybe<Array<Scalars['String']>>;
+  markets_?: InputMaybe<FuturesMarket_Filter>;
+  markets_contains?: InputMaybe<Array<Scalars['String']>>;
+  markets_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  markets_not?: InputMaybe<Array<Scalars['String']>>;
+  markets_not_contains?: InputMaybe<Array<Scalars['String']>>;
+  markets_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  or?: InputMaybe<Array<InputMaybe<Frontend_Filter>>>;
+};
+
+export enum Frontend_OrderBy {
+  Amount = 'amount',
+  Fees = 'fees',
+  Id = 'id',
+  Markets = 'markets',
+}
 
 export type FundingRateUpdate = {
   __typename?: 'FundingRateUpdate';
@@ -1205,6 +1266,8 @@ export type Query = {
   __typename?: 'Query';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+  frontend?: Maybe<Frontend>;
+  frontends: Array<Frontend>;
   fundingRateUpdate?: Maybe<FundingRateUpdate>;
   fundingRateUpdates: Array<FundingRateUpdate>;
   futuresMarginTransfer?: Maybe<FuturesMarginTransfer>;
@@ -1227,6 +1290,22 @@ export type Query = {
 
 export type Query_MetaArgs = {
   block?: InputMaybe<Block_Height>;
+};
+
+export type QueryFrontendArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryFrontendsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Frontend_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Frontend_Filter>;
 };
 
 export type QueryFundingRateUpdateArgs = {
@@ -1377,6 +1456,8 @@ export type Subscription = {
   __typename?: 'Subscription';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+  frontend?: Maybe<Frontend>;
+  frontends: Array<Frontend>;
   fundingRateUpdate?: Maybe<FundingRateUpdate>;
   fundingRateUpdates: Array<FundingRateUpdate>;
   futuresMarginTransfer?: Maybe<FuturesMarginTransfer>;
@@ -1399,6 +1480,22 @@ export type Subscription = {
 
 export type Subscription_MetaArgs = {
   block?: InputMaybe<Block_Height>;
+};
+
+export type SubscriptionFrontendArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionFrontendsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Frontend_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Frontend_Filter>;
 };
 
 export type SubscriptionFundingRateUpdateArgs = {
@@ -1776,11 +1873,11 @@ export type FuturesMarginTransferQuery = {
   futuresMarginTransfers: Array<{
     __typename?: 'FuturesMarginTransfer';
     id: string;
-    timestamp: any;
-    account: any;
-    size: any;
+    timestamp: string;
+    account: string;
+    size: string;
     txHash: string;
-    market: { __typename?: 'FuturesMarket'; asset: any };
+    market: { __typename?: 'FuturesMarket'; asset: string };
   }>;
 };
 
@@ -1796,19 +1893,19 @@ export type FuturesTradesQuery = {
   futuresTrades: Array<{
     __typename?: 'FuturesTrade';
     id: string;
-    timestamp: any;
-    account: any;
-    margin: any;
+    timestamp: string;
+    account: string;
+    margin: string;
     positionId: string;
-    size: any;
-    feesPaidToSynthetix: any;
+    size: string;
+    feesPaidToSynthetix: string;
     type: FuturesTradeType;
-    pnl: any;
+    pnl: string;
     positionClosed: boolean;
-    positionSize: any;
-    price: any;
+    positionSize: string;
+    price: string;
     txHash: string;
-    market: { __typename?: 'FuturesMarket'; asset: any };
+    market: { __typename?: 'FuturesMarket'; asset: string };
     futuresOrder?: { __typename?: 'FuturesOrder'; status: FuturesOrderStatus } | null;
   }>;
 };
@@ -1820,19 +1917,19 @@ export type DelayedOrdersQuery = {
   futuresOrders: Array<{
     __typename?: 'FuturesOrder';
     id: string;
-    size: any;
-    account: any;
-    fee: any;
-    orderId: any;
-    targetRoundId: any;
-    targetPrice: any;
-    marginDelta: any;
-    timestamp: any;
+    size: string;
+    account: string;
+    fee: string;
+    orderId: string;
+    targetRoundId: string;
+    targetPrice: string;
+    marginDelta: string;
+    timestamp: string;
     positionId?: string | null;
-    keeper: any;
+    keeper: string;
     status: FuturesOrderStatus;
     txHash: string;
-    market: { __typename?: 'FuturesMarket'; asset: any };
+    market: { __typename?: 'FuturesMarket'; asset: string };
   }>;
 };
 
@@ -1848,37 +1945,37 @@ export type PositionLiquidatedQuery = {
   positionLiquidateds: Array<{
     __typename?: 'PositionLiquidated';
     id: string;
-    account: any;
-    liquidator: any;
-    size: any;
-    price: any;
-    fee: any;
-    block: any;
+    account: string;
+    liquidator: string;
+    size: string;
+    price: string;
+    fee: string;
+    block: string;
     txHash: string;
-    timestamp: any;
-    market: { __typename?: 'FuturesMarket'; asset: any };
+    timestamp: string;
+    market: { __typename?: 'FuturesMarket'; asset: string };
     futuresPosition: {
       __typename?: 'FuturesPosition';
       id: string;
-      account: any;
+      account: string;
       isLiquidated: boolean;
       isOpen: boolean;
-      openTimestamp: any;
-      closeTimestamp?: any | null;
-      margin: any;
-      initialMargin: any;
-      entryPrice: any;
-      lastPrice: any;
-      pnl: any;
-      exitPrice?: any | null;
-      leverage: any;
-      size: any;
+      openTimestamp: string;
+      closeTimestamp?: string | null;
+      margin: string;
+      initialMargin: string;
+      entryPrice: string;
+      lastPrice: string;
+      pnl: string;
+      exitPrice?: string | null;
+      leverage: string;
+      size: string;
       long: boolean;
-      trades: any;
-      totalVolume: any;
-      feesPaidToSynthetix: any;
+      trades: string;
+      totalVolume: string;
+      feesPaidToSynthetix: string;
       txHash: string;
-      market: { __typename?: 'FuturesMarket'; asset: any };
+      market: { __typename?: 'FuturesMarket'; asset: string };
     };
   }>;
 };
@@ -1895,10 +1992,10 @@ export type PositionsMarketQuery = {
   __typename?: 'Query';
   futuresPositions: Array<{
     __typename?: 'FuturesPosition';
-    entryPrice: any;
-    leverage: any;
+    entryPrice: string;
+    leverage: string;
     id: string;
-    market: { __typename?: 'FuturesMarket'; marketKey: any; asset: any };
+    market: { __typename?: 'FuturesMarket'; marketKey: string; asset: string };
   }>;
 };
 
@@ -1915,25 +2012,25 @@ export type PositionsQuery = {
   futuresPositions: Array<{
     __typename?: 'FuturesPosition';
     id: string;
-    account: any;
+    account: string;
     isLiquidated: boolean;
     isOpen: boolean;
-    openTimestamp: any;
-    closeTimestamp?: any | null;
-    margin: any;
-    initialMargin: any;
-    entryPrice: any;
-    lastPrice: any;
-    pnl: any;
-    exitPrice?: any | null;
-    leverage: any;
-    size: any;
+    openTimestamp: string;
+    closeTimestamp?: string | null;
+    margin: string;
+    initialMargin: string;
+    entryPrice: string;
+    lastPrice: string;
+    pnl: string;
+    exitPrice?: string | null;
+    leverage: string;
+    size: string;
     long: boolean;
-    trades: any;
-    totalVolume: any;
-    feesPaidToSynthetix: any;
+    trades: string;
+    totalVolume: string;
+    feesPaidToSynthetix: string;
     txHash: string;
-    market: { __typename?: 'FuturesMarket'; asset: any };
+    market: { __typename?: 'FuturesMarket'; asset: string };
   }>;
 };
 
@@ -1946,25 +2043,25 @@ export type PositionQuery = {
   futuresPosition?: {
     __typename?: 'FuturesPosition';
     id: string;
-    account: any;
+    account: string;
     isLiquidated: boolean;
     isOpen: boolean;
-    openTimestamp: any;
-    closeTimestamp?: any | null;
-    margin: any;
-    initialMargin: any;
-    entryPrice: any;
-    lastPrice: any;
-    pnl: any;
-    exitPrice?: any | null;
-    leverage: any;
-    size: any;
+    openTimestamp: string;
+    closeTimestamp?: string | null;
+    margin: string;
+    initialMargin: string;
+    entryPrice: string;
+    lastPrice: string;
+    pnl: string;
+    exitPrice?: string | null;
+    leverage: string;
+    size: string;
     long: boolean;
-    trades: any;
-    totalVolume: any;
-    feesPaidToSynthetix: any;
+    trades: string;
+    totalVolume: string;
+    feesPaidToSynthetix: string;
     txHash: string;
-    market: { __typename?: 'FuturesMarket'; asset: any };
+    market: { __typename?: 'FuturesMarket'; asset: string };
   } | null;
 };
 
@@ -1974,11 +2071,11 @@ export type SynthetixQuery = {
   __typename?: 'Query';
   synthetix?: {
     __typename?: 'Synthetix';
-    feesByLiquidations: any;
-    feesByPositionModifications: any;
-    totalVolume: any;
-    totalLiquidations: any;
-    totalTraders: any;
+    feesByLiquidations: string;
+    feesByPositionModifications: string;
+    totalVolume: string;
+    totalLiquidations: string;
+    totalTraders: string;
   } | null;
 };
 
