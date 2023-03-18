@@ -51,8 +51,51 @@ const mergeData = (
   });
 
   futuresTradesData.forEach((futuresTrade) => {
+    if (futuresTrade.type === 'Liquidated') {
+      // Liquidations are handled separately
+      return;
+    }
+    const getTradeLabel = () => {
+      const size = parseFloat(futuresTrade.size);
+      const positionSize = parseFloat(futuresTrade.positionSize);
+      const isLongTrade = size > 0;
+      const isShortTrade = !isLongTrade;
+      if (futuresTrade.type === 'PositionOpened') {
+        return isLongTrade ? 'Long Opened' : 'Short Opened';
+      }
+      if (futuresTrade.type === 'PositionClosed') {
+        return isLongTrade ? 'Short Closed' : 'Long Closed';
+      }
+
+      if (futuresTrade.type === 'PositionModified') {
+        const sizeBeforeTrade = positionSize - size;
+        const positionBeforeTradeWasShort = sizeBeforeTrade < 0;
+        const positionBeforeTradeWasLong = !positionBeforeTradeWasShort;
+        const positionIsLong = positionSize > 0;
+        const positionIsShort = !positionIsLong;
+        if (isLongTrade) {
+          if (positionBeforeTradeWasShort) {
+            return positionIsLong ? 'Short Flipped To Long' : 'Short Decreased';
+          }
+          if (positionBeforeTradeWasLong) {
+            return 'Long Increased';
+          }
+        }
+        if (isShortTrade) {
+          if (positionBeforeTradeWasLong) {
+            return positionIsShort ? 'Long Flipped To Short' : 'Long Decreased';
+          }
+          if (positionBeforeTradeWasShort) {
+            return 'Short Increased';
+          }
+        }
+      }
+      debugger;
+      throw Error('Missed to handle position update');
+    };
+
     data.push({
-      label: 'Position Modified',
+      label: getTradeLabel(),
       address: futuresTrade.account,
       asset: futuresTrade.market.asset,
       fees: futuresTrade.feesPaidToSynthetix,
@@ -66,13 +109,6 @@ const mergeData = (
   });
 
   liquidationData.forEach((liquidatedPosition) => {
-    // When a liquidation happens we get both a liquidation event and a modify event.
-    // Lets remove the modify event
-    const liquidationModifyEventIndex = data.findIndex(
-      (x) => x.timestamp === liquidatedPosition.timestamp
-    );
-    data.splice(liquidationModifyEventIndex, 1);
-
     data.push({
       label: 'Liquidation',
       address: liquidatedPosition.account,
