@@ -28,11 +28,10 @@ const mergeData = (
   if (!futuresTradesData || !marginData) {
     return [];
   }
-  const data: ActionData[] = [];
 
-  marginData.forEach((marginTransfer) => {
+  const parsedMarginData: ActionData[] = marginData.map((marginTransfer) => {
     const withdraw = `${marginTransfer.size}`.includes('-');
-    data.push({
+    return {
       label: `${withdraw ? 'Withdraw' : 'Deposit'} Margin`,
       address: marginTransfer.account,
       asset: marginTransfer.market.asset,
@@ -43,10 +42,10 @@ const mergeData = (
       timestamp: marginTransfer.timestamp,
       txHash: marginTransfer.txHash,
       leverage: null,
-    });
+    };
   });
 
-  futuresTradesData.forEach((futuresTrade) => {
+  const parsedTradeData: ActionData[] = futuresTradesData.map((futuresTrade) => {
     const getTradeLabel = () => {
       const size = parseFloat(futuresTrade.size);
       const positionSize = parseFloat(futuresTrade.positionSize);
@@ -88,7 +87,7 @@ const mergeData = (
       throw Error('Missed to handle position update');
     };
 
-    data.push({
+    return {
       label: getTradeLabel(),
       address: futuresTrade.account,
       asset: futuresTrade.market.asset,
@@ -99,9 +98,10 @@ const mergeData = (
       timestamp: futuresTrade.timestamp,
       size: futuresTrade.size,
       leverage: null,
-    });
+    };
   });
 
+  const data = parsedMarginData.concat(parsedTradeData);
   return data.sort((a, b) => Number(b.timestamp) - Number(a.timestamp));
 };
 
