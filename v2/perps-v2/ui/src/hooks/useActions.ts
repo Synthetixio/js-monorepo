@@ -20,6 +20,50 @@ export type ActionData = {
   fees: string | null;
   leverage: string | null;
 };
+// Exported for test
+export const getTradeLabel = (futuresTrade: FuturesTradesQuery['futuresTrades'][number]) => {
+  const size = parseFloat(futuresTrade.size);
+  const positionSize = parseFloat(futuresTrade.positionSize);
+  const isLongTrade = size > 0;
+  const isShortTrade = !isLongTrade;
+  if (futuresTrade.type === 'PositionOpened') {
+    return isLongTrade ? 'Long Opened' : 'Short Opened';
+  }
+  if (futuresTrade.type === 'Liquidated') {
+    return isLongTrade ? 'Short Liquidated' : 'Long Liquidated';
+  }
+  if (futuresTrade.type === 'PositionClosed') {
+    return isLongTrade ? 'Short Closed' : 'Long Closed';
+  }
+
+  if (futuresTrade.type === 'PositionModified') {
+    if (size === 0) {
+      return 'Unexpected Action';
+    }
+    const sizeBeforeTrade = positionSize - size;
+    const positionBeforeTradeWasShort = sizeBeforeTrade < 0;
+    const positionBeforeTradeWasLong = !positionBeforeTradeWasShort;
+    const positionIsLong = positionSize > 0;
+    const positionIsShort = !positionIsLong;
+    if (isLongTrade) {
+      if (positionBeforeTradeWasShort) {
+        return positionIsLong ? 'Short Flipped To Long' : 'Short Decreased';
+      }
+      if (positionBeforeTradeWasLong) {
+        return 'Long Increased';
+      }
+    }
+    if (isShortTrade) {
+      if (positionBeforeTradeWasLong) {
+        return positionIsShort ? 'Long Flipped To Short' : 'Long Decreased';
+      }
+      if (positionBeforeTradeWasShort) {
+        return 'Short Increased';
+      }
+    }
+  }
+  return 'Unexpected Action';
+};
 
 const mergeData = (
   futuresTradesData?: FuturesTradesQuery['futuresTrades'],
@@ -46,49 +90,8 @@ const mergeData = (
   });
 
   const parsedTradeData: ActionData[] = futuresTradesData.map((futuresTrade) => {
-    const getTradeLabel = () => {
-      const size = parseFloat(futuresTrade.size);
-      const positionSize = parseFloat(futuresTrade.positionSize);
-      const isLongTrade = size > 0;
-      const isShortTrade = !isLongTrade;
-      if (futuresTrade.type === 'PositionOpened') {
-        return isLongTrade ? 'Long Opened' : 'Short Opened';
-      }
-      if (futuresTrade.type === 'Liquidated') {
-        return isLongTrade ? 'Short Liquidated' : 'Long Liquidated';
-      }
-      if (futuresTrade.type === 'PositionClosed') {
-        return isLongTrade ? 'Short Closed' : 'Long Closed';
-      }
-
-      if (futuresTrade.type === 'PositionModified') {
-        const sizeBeforeTrade = positionSize - size;
-        const positionBeforeTradeWasShort = sizeBeforeTrade < 0;
-        const positionBeforeTradeWasLong = !positionBeforeTradeWasShort;
-        const positionIsLong = positionSize > 0;
-        const positionIsShort = !positionIsLong;
-        if (isLongTrade) {
-          if (positionBeforeTradeWasShort) {
-            return positionIsLong ? 'Short Flipped To Long' : 'Short Decreased';
-          }
-          if (positionBeforeTradeWasLong) {
-            return 'Long Increased';
-          }
-        }
-        if (isShortTrade) {
-          if (positionBeforeTradeWasLong) {
-            return positionIsShort ? 'Long Flipped To Short' : 'Long Decreased';
-          }
-          if (positionBeforeTradeWasShort) {
-            return 'Short Increased';
-          }
-        }
-      }
-      throw Error('Missed to handle position update');
-    };
-
     return {
-      label: getTradeLabel(),
+      label: getTradeLabel(futuresTrade),
       address: futuresTrade.account,
       asset: futuresTrade.market.asset,
       fees: futuresTrade.feesPaidToSynthetix,
