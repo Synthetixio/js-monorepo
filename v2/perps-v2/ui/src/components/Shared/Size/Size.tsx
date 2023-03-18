@@ -1,5 +1,5 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { formatNumberToUsd } from '../../../utils';
+import { formatNumberToUsd } from '@snx-v2/formatters';
 
 interface SizeProps {
   size: string;
