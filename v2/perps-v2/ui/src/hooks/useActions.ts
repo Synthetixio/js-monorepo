@@ -1,14 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERRED_QUERY } from '../queries/actions';
-import { LIQUIDATION_QUERY } from '../queries/liquidation';
 import {
   FuturesMarginTransferQuery,
   FuturesMarginTransfer_OrderBy,
   FuturesTradesQuery,
   FuturesTrade_OrderBy,
   OrderDirection,
-  PositionLiquidatedQuery,
-  PositionLiquidated_OrderBy,
 } from '../__generated__/graphql';
 
 export type ActionData = {
@@ -25,11 +22,10 @@ export type ActionData = {
 };
 
 const mergeData = (
-  liquidationData?: PositionLiquidatedQuery['positionLiquidateds'],
   futuresTradesData?: FuturesTradesQuery['futuresTrades'],
   marginData?: FuturesMarginTransferQuery['futuresMarginTransfers']
 ) => {
-  if (!liquidationData || !futuresTradesData || !marginData) {
+  if (!futuresTradesData || !marginData) {
     return [];
   }
   const data: ActionData[] = [];
@@ -51,10 +47,6 @@ const mergeData = (
   });
 
   futuresTradesData.forEach((futuresTrade) => {
-    if (futuresTrade.type === 'Liquidated') {
-      // Liquidations are handled separately
-      return;
-    }
     const getTradeLabel = () => {
       const size = parseFloat(futuresTrade.size);
       const positionSize = parseFloat(futuresTrade.positionSize);
@@ -62,6 +54,9 @@ const mergeData = (
       const isShortTrade = !isLongTrade;
       if (futuresTrade.type === 'PositionOpened') {
         return isLongTrade ? 'Long Opened' : 'Short Opened';
+      }
+      if (futuresTrade.type === 'Liquidated') {
+        return isLongTrade ? 'Short Liquidated' : 'Long Liquidated';
       }
       if (futuresTrade.type === 'PositionClosed') {
         return isLongTrade ? 'Short Closed' : 'Long Closed';
@@ -90,7 +85,6 @@ const mergeData = (
           }
         }
       }
-      debugger;
       throw Error('Missed to handle position update');
     };
 
@@ -108,41 +102,10 @@ const mergeData = (
     });
   });
 
-  liquidationData.forEach((liquidatedPosition) => {
-    data.push({
-      label: 'Liquidation',
-      address: liquidatedPosition.account,
-      asset: liquidatedPosition.market.asset,
-      fees: liquidatedPosition.fee,
-      id: liquidatedPosition.id,
-      price: liquidatedPosition.price,
-      size: liquidatedPosition.size,
-      timestamp: liquidatedPosition.timestamp,
-      txHash: liquidatedPosition.txHash,
-      leverage: liquidatedPosition.futuresPosition.leverage,
-    });
-  });
-
   return data.sort((a, b) => Number(b.timestamp) - Number(a.timestamp));
 };
 
 export const useActions = (account?: string) => {
-  const {
-    loading: liquidationLoading,
-    data: liquidationData,
-    error: liquidationError,
-  } = useQuery(LIQUIDATION_QUERY, {
-    pollInterval: 10000,
-    variables: {
-      first: account ? 1000 : 100,
-      orderBy: PositionLiquidated_OrderBy.Timestamp,
-      orderDirection: OrderDirection.Desc,
-      where: {
-        account,
-      },
-    },
-  });
-
   const {
     loading: marginLoading,
     data: marginData,
@@ -158,7 +121,6 @@ export const useActions = (account?: string) => {
       },
     },
   });
-
   const {
     loading: futuresTradesLoading,
     data: futuresTradesData,
@@ -175,14 +137,13 @@ export const useActions = (account?: string) => {
     },
   });
   const sortedData = mergeData(
-    liquidationData?.positionLiquidateds,
     futuresTradesData?.futuresTrades,
     marginData?.futuresMarginTransfers
   );
 
   return {
-    loading: liquidationLoading || marginLoading || futuresTradesLoading,
+    loading: marginLoading || futuresTradesLoading,
     data: sortedData,
-    error: liquidationError || marginError || futuresError,
+    error: marginError || futuresError,
   };
 };
