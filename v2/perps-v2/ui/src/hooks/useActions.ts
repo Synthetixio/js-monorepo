@@ -8,6 +8,58 @@ import {
   OrderDirection,
 } from '../__generated__/graphql';
 
+const isLongTrade = (size: number) => size > 0;
+const isShortTrade = (size: number) => !isLongTrade(size);
+const positionIsLong = (positionSize: number) => positionSize > 0;
+const positionIsShort = (positionSize: number) => !positionIsLong(positionSize);
+
+const getTradeLabelForPositionModified = (size: number, positionSize: number) => {
+  if (size === 0) {
+    return 'Unexpected Action';
+  }
+
+  const sizeBeforeTrade = positionSize - size;
+  const positionBeforeTradeWasShort = sizeBeforeTrade < 0;
+  const positionBeforeTradeWasLong = !positionBeforeTradeWasShort;
+
+  if (isLongTrade(size)) {
+    if (positionBeforeTradeWasShort) {
+      return positionIsLong(positionSize) ? 'Short Flipped To Long' : 'Short Decreased';
+    }
+    if (positionBeforeTradeWasLong) {
+      return 'Long Increased';
+    }
+  }
+
+  if (isShortTrade(size)) {
+    if (positionBeforeTradeWasLong) {
+      return positionIsShort(positionSize) ? 'Long Flipped To Short' : 'Long Decreased';
+    }
+    if (positionBeforeTradeWasShort) {
+      return 'Short Increased';
+    }
+  }
+
+  return 'Unexpected Action';
+};
+
+type TradeTypeHandler = {
+  [key in FuturesTradesQuery['futuresTrades'][number]['type']]: () => string;
+};
+
+export const getTradeLabel = (futuresTrade: FuturesTradesQuery['futuresTrades'][number]) => {
+  const size = parseFloat(futuresTrade.size);
+  const positionSize = parseFloat(futuresTrade.positionSize);
+  const tradeTypeHandlers: TradeTypeHandler = {
+    PositionOpened: () => (isLongTrade(size) ? 'Long Opened' : 'Short Opened'),
+    Liquidated: () => (isLongTrade(size) ? 'Short Liquidated' : 'Long Liquidated'),
+    PositionClosed: () => (isLongTrade(size) ? 'Short Closed' : 'Long Closed'),
+    PositionModified: () => getTradeLabelForPositionModified(size, positionSize),
+    Unknown: () => 'Unexpected Action', // Add a handler for the 'Unknown' type
+  };
+  return tradeTypeHandlers[futuresTrade.type]?.() || tradeTypeHandlers.Unknown();
+};
+
 export type ActionData = {
   id: string;
   label: string;
@@ -20,51 +72,6 @@ export type ActionData = {
   fees: string | null;
   leverage: string | null;
 };
-// Exported for test
-export const getTradeLabel = (futuresTrade: FuturesTradesQuery['futuresTrades'][number]) => {
-  const size = parseFloat(futuresTrade.size);
-  const positionSize = parseFloat(futuresTrade.positionSize);
-  const isLongTrade = size > 0;
-  const isShortTrade = !isLongTrade;
-  if (futuresTrade.type === 'PositionOpened') {
-    return isLongTrade ? 'Long Opened' : 'Short Opened';
-  }
-  if (futuresTrade.type === 'Liquidated') {
-    return isLongTrade ? 'Short Liquidated' : 'Long Liquidated';
-  }
-  if (futuresTrade.type === 'PositionClosed') {
-    return isLongTrade ? 'Short Closed' : 'Long Closed';
-  }
-
-  if (futuresTrade.type === 'PositionModified') {
-    if (size === 0) {
-      return 'Unexpected Action';
-    }
-    const sizeBeforeTrade = positionSize - size;
-    const positionBeforeTradeWasShort = sizeBeforeTrade < 0;
-    const positionBeforeTradeWasLong = !positionBeforeTradeWasShort;
-    const positionIsLong = positionSize > 0;
-    const positionIsShort = !positionIsLong;
-    if (isLongTrade) {
-      if (positionBeforeTradeWasShort) {
-        return positionIsLong ? 'Short Flipped To Long' : 'Short Decreased';
-      }
-      if (positionBeforeTradeWasLong) {
-        return 'Long Increased';
-      }
-    }
-    if (isShortTrade) {
-      if (positionBeforeTradeWasLong) {
-        return positionIsShort ? 'Long Flipped To Short' : 'Long Decreased';
-      }
-      if (positionBeforeTradeWasShort) {
-        return 'Short Increased';
-      }
-    }
-  }
-  return 'Unexpected Action';
-};
-
 const mergeData = (
   futuresTradesData?: FuturesTradesQuery['futuresTrades'],
   marginData?: FuturesMarginTransferQuery['futuresMarginTransfers']
