@@ -173,6 +173,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
   }
 
   // New position when var futuresPosition is undefined
+  // TODO @MF what happens when user just deposits margin, why we creating new position?, we need to filter out that when tradeSize != 0 then real trade
   if (!futuresPosition) {
     log.info('new position', [positionId]);
     futuresPosition = new FuturesPosition(positionId);
