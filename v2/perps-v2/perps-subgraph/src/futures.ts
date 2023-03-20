@@ -290,6 +290,13 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
         event.params.fee.toBigDecimal()
       );
+      synthetix.totalVolume = synthetix.totalVolume.plus(
+        event.params.tradeSize
+          .times(event.params.lastPrice)
+          .div(BigInt.fromI32(10).pow(18))
+          .abs()
+          .toBigDecimal()
+      );
       tradeEntity.save();
     }
     // If tradeSize and size are not zero, position got modified
