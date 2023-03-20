@@ -1057,9 +1057,9 @@ dataSources:
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
   - kind: ethereum
-    name: ExchangeRates
+    name: AAVEAggregator
     source:
-      abi: ExchangeRates
+      abi: Aggregator
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -1069,11 +1069,9 @@ dataSources:
         - LatestRate
         - RateUpdate
       abis:
-        - name: ExchangeRates
-          file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRate.json
+        - name: Aggregator
+          file: ./abis/Aggregator.json
       eventHandlers:
-        - event: 'AggregatorAdded(bytes32,address)'
-          handler: 'handleAggregatorAdded'
-        - event: 'RatesUpdated(bytes32[],uint256[])'
-          handler: 'handleRatesUpdated'
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
       file: ./src/latest-rates.ts

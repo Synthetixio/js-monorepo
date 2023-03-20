@@ -1,8 +1,96 @@
 {
   "optimism": {
-    "ExchangeRates": {
-      "address": "0x913bd76F7E1572CC8278CeF2D6b06e2140ca9Ce2",
-      "startBlock": 0
+    "ETHAggregator": {
+      "address": "0x13e3Ee699D1909E989722E753853AE30b17e08c5",
+      "startBlock": 52456507
+    },
+    "BTCAggregator": {
+      "address": "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593",
+      "startBlock": 52456507
+    },
+    "LINKAggregator": {
+      "address": "0xCc232dcFAAE6354cE191Bd574108c1aD03f86450",
+      "startBlock": 52456507
+    },
+    "SOLAggregator": {
+      "address": "0xC663315f7aF904fbbB0F785c32046dFA03e85270",
+      "startBlock": 52456507
+    },
+    "AVAXAggregator": {
+      "address": "0x5087Dc69Fd3907a016BD42B38022F7f024140727",
+      "startBlock": 52456507
+    },
+    "MATICAggregator": {
+      "address": "0x0ded608AFc23724f614B76955bbd9dFe7dDdc828",
+      "startBlock": 52456507
+    },
+    "EURAggregator": {
+      "address": "0x3626369857A10CcC6cc3A6e4f5C2f5984a519F20",
+      "startBlock": 52456507
+    },
+    "AAVEAggregator": {
+      "address": "0x338ed6787f463394D24813b297401B9F05a8C9d1",
+      "startBlock": 52456507
+    },
+    "UNIAggregator": {
+      "address": "0x11429eE838cC01071402f21C219870cbAc0a59A0",
+      "startBlock": 52456507
+    },
+    "XAUAggregator": {
+      "address": "0x8F7bFb42Bf7421c2b34AAD619be4654bFa7B3B8B",
+      "startBlock": 52456507
+    },
+    "XAGAggregator": {
+      "address": "0x290dd71254874f0d4356443607cb8234958DEe49",
+      "startBlock": 52456507
+    },
+    "APEAggregator": {
+      "address": "0x89178957E9bD07934d7792fFc0CF39f11c8C2B1F",
+      "startBlock": 52456507
+    },
+    "DYDXAggregator": {
+      "address": "0xee35A95c9a064491531493D8b380bC40A4CCd0Da",
+      "startBlock": 52456507
+    },
+    "BNBAggregator": {
+      "address": "0xD38579f7cBD14c22cF1997575eA8eF7bfe62ca2c",
+      "startBlock": 52456507
+    },
+    "OPAggregator": {
+      "address": "0x0D276FC14719f9292D5C1eA2198673d1f4269246",
+      "startBlock": 52456507
+    },
+    "DOGEAggregator": {
+      "address": "0xC6066533917f034Cf610c08e1fe5e9c7eADe0f54",
+      "startBlock": 52456507
+    },
+    "ATOMAggregator": {
+      "address": "0xEF89db2eA46B4aD4E333466B6A486b809e613F39",
+      "startBlock": 52456507
+    },
+    "AXSAggregator": {
+      "address": "0x805a61D54bb686e57F02D1EC96A1491C7aF40893",
+      "startBlock": 52456507
+    },
+    "FLOWAggregator": {
+      "address": "0x2fF1EB7D0ceC35959F0248E9354c3248c6683D9b",
+      "startBlock": 52456507
+    },
+    "FTMAggregator": {
+      "address": "0xc19d58652d6BfC6Db6FB3691eDA6Aa7f3379E4E9",
+      "startBlock": 52456507
+    },
+    "NEARAggregator": {
+      "address": "0xca6fa4b8CB365C02cd3Ba70544EFffe78f63ac82",
+      "startBlock": 52456507
+    },
+    "AUDAggregator": {
+      "address": "0x39be70E93D2D285C9E71be7f70FC5a45A7777B14",
+      "startBlock": 52456507
+    },
+    "GBPAggregator": {
+      "address": "0x540D48C01F946e729174517E013Ad0bdaE5F08C0",
+      "startBlock": 52456507
     },
     "FuturesMarketManager": {
       "address": "0xdb89f3fc45A707Dd49781495f77f8ae69bF5cA6e",
@@ -102,9 +190,101 @@
     }
   },
   "optimism-goerli": {
-    "ExchangeRates": {
-      "address": "0x061B75475035c20ef2e35E1002Beb90C3c1f24cC",
-      "startBlock": 0
+    "ETHAggregator": {
+      "address": "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8",
+      "startBlock": 3495320
+    },
+    "BTCAggregator": {
+      "address": "0xC16679B963CeB52089aD2d95312A5b85E318e9d2",
+      "startBlock": 3495320
+    },
+    "LINKAggregator": {
+      "address": "0x69C5297001f38cCBE30a81359da06E5256bd28B9",
+      "startBlock": 3495320
+    },
+    "SOLAggregator": {
+      "address": "0x5756666B2991F7C9c05Fbb71daC703Cf58F293BF",
+      "startBlock": 3495320
+    },
+    "AVAXAggregator": {
+      "address": "0xE9512B064104593083e39630a8f874cfa6B1C0A5",
+      "startBlock": 3495320
+    },
+    "MATICAggregator": {
+      "address": "0x11C944427B9ebeb1417Dd44645Ad04edBF33b95e",
+      "startBlock": 3495320
+    },
+    "EURAggregator": {
+      "address": "0x619AeaaF08dF3645e138C611bddCaE465312Ef6B",
+      "startBlock": 3495320
+    },
+    "AAVEAggregator": {
+      "address": "0xe634FfeDcA25B6D5D4610D2025C4894cCd5a5587",
+      "startBlock": 3495320
+    },
+    "UNIAggregator": {
+      "address": "0x0A024aa48E09e151090637d2b68162b1Caf7BdbA",
+      "startBlock": 3495320
+    },
+    "XAUAggregator": {
+      "address": "0xA8828D339CEFEBf99934e5fdd938d1B4B9730bc3",
+      "startBlock": 3495320
+    },
+    "XAGAggregator": {
+      "address": "0xE68AF7b40A0Cc9C5E9E2B2a36b85442Ab9C3E4Cd",
+      "startBlock": 3495320
+    },
+    "APEAggregator": {
+      "address": "0xE882831E58eec48B7f304482771F67e6b846733D",
+      "startBlock": 3495320
+    },
+    "DYDXAggregator": {
+      "address": "0x6CcbE5aDBf519C2C916ADB4390A3dbD72fFcA7F2",
+      "startBlock": 3495320
+    },
+    "BNBAggregator": {
+      "address": "0x99fc60321a196794725E6D0c572143eb2F881edB",
+      "startBlock": 3495320
+    },
+    "XMRAggregator": {
+      "address": "0xaA4D946f4b081Cc6c2F30b4e343E15c8455DDfFB",
+      "startBlock": 3495320
+    },
+    "DOGEAggregator": {
+      "address": "0xd3277B9Db5008116cd8727Fc00E704F2Db2e578F",
+      "startBlock": 3495320
+    },
+    "OPAggregator": {
+      "address": "0xd3277B9Db5008116cd8727Fc00E704F2Db2e578F",
+      "startBlock": 3495320
+    },
+    "ATOMAggregator": {
+      "address": "0xd3277B9Db5008116cd8727Fc00E704F2Db2e578F",
+      "startBlock": 3495320
+    },
+    "FLOWAggregator": {
+      "address": "0xd3277B9Db5008116cd8727Fc00E704F2Db2e578F",
+      "startBlock": 3495320
+    },
+    "FTMAggregator": {
+      "address": "0xd3277B9Db5008116cd8727Fc00E704F2Db2e578F",
+      "startBlock": 3495320
+    },
+    "NEARAggregator": {
+      "address": "0xd3277B9Db5008116cd8727Fc00E704F2Db2e578F",
+      "startBlock": 3495320
+    },
+    "AXSAggregator": {
+      "address": "0x881B413aAf96FEAbb4C92b0C639aa5a7eD746AC8",
+      "startBlock": 3495320
+    },
+    "AUDAggregator": {
+      "address": "0x619AeaaF08dF3645e138C611bddCaE465312Ef6B",
+      "startBlock": 3495320
+    },
+    "GBPAggregator": {
+      "address": "0x619AeaaF08dF3645e138C611bddCaE465312Ef6B",
+      "startBlock": 3495320
     },
     "FuturesMarketManager": {
       "address": "0xDD55BE4f3a8885E92d2Acd16869Fab857206B517",
@@ -112,95 +292,95 @@
     },
     "PerpsV2ProxyAAVEPERP": {
       "address": "0x3410215D8A0BD57dAc5911785F2A832402D5c828",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyAPEPERP": {
       "address": "0xeff373efBD352531F680575796AE14764bE0391B",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyATOMPERP": {
       "address": "0xcCdc541a12CA359216913c1893C080d951874346",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyAUDPERP": {
       "address": "0x95b78e2E07090587754f3088Ef8a8232f1Ab7E47",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyAVAXPERP": {
       "address": "0xe140356AB1F0558e020610C9C6BccdAA4FDDE2f4",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyAXSPERP": {
       "address": "0x9CE0556a563f18AeA0E89F407B0b1710F095956f",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyBNBPERP": {
       "address": "0x307072038D47bAE97CaE56C0eA87F2a5f0CD8389",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyBTCPERP": {
       "address": "0xd5844EA3701a4507C27ebc5EBA733E1Aa2915B31",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyDOGEPERP": {
       "address": "0x3A4D5262b10C670a06550FCf7346cd408343B3FB",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyDYDXPERP": {
       "address": "0xb97e868a340BA00C10557c234C9F17cC41B0f667",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyETHPERP": {
       "address": "0x111BAbcdd66b1B60A20152a2D3D06d36F8B5703c",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyEURPERP": {
       "address": "0x9C54994933205E33628A8870c05AFF0878b1A56b",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyFLOWPERP": {
       "address": "0xcFA34059b55E1a1c820e4D62A6CA4f8e00522eBB",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyFTMPERP": {
       "address": "0x70362529cCfF83f586EB48e978eF3b60384cE050",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyGBPPERP": {
       "address": "0x534181B37bdaFdD1E28104Bc5117184F40e1056F",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyLINKPERP": {
       "address": "0x6141dcfF3494921e1C4Cdb115daD20C6656f6EFA",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyMATICPERP": {
       "address": "0x7bBEa20899d358ed6d877f32af1BCb525a5fCF31",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyNEARPERP": {
       "address": "0xf503e527854b510C1952425d4b61c6bba40028CE",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyOPPERP": {
       "address": "0x4926222EDDa82965Aa08080f281928f8cba5922A",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxySOLPERP": {
       "address": "0x62068eBDCEbcB0eB984aBfEa4c7f9A244050e0Ca",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyUNIPERP": {
       "address": "0xaF11B4281259D7Ae31F945a2911Ba75347C2799d",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyXAGPERP": {
       "address": "0x78D1232449387571D652E2a893DC0feaC6E92436",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyXAUPERP": {
       "address": "0xcC312F5Bac1C36CC70AbcbE76De913633Af88FFB",
-      "startBlock": 0
+      "startBlock": 3495320
     }
   }
 }
