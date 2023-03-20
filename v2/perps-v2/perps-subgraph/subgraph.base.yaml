@@ -1056,3 +1056,24 @@ dataSources:
         - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
+  - kind: ethereum
+    name: ExchangeRates
+    source:
+      abi: ExchangeRates
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: ExchangeRates
+          file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRate.json
+      eventHandlers:
+        - event: 'AggregatorAdded(bytes32,address)'
+          handler: 'handleAggregatorAdded'
+        - event: 'RatesUpdated(bytes32[],uint256[])'
+          handler: 'handleRatesUpdated'
+      file: ./src/latest-rates.ts

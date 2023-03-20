@@ -1,5 +1,9 @@
 {
   "optimism": {
+    "ExchangeRates": {
+      "address": "0x913bd76F7E1572CC8278CeF2D6b06e2140ca9Ce2",
+      "startBlock": 0
+    },
     "FuturesMarketManager": {
       "address": "0xdb89f3fc45A707Dd49781495f77f8ae69bF5cA6e",
       "startBlock": 52456507
@@ -98,6 +102,10 @@
     }
   },
   "optimism-goerli": {
+    "ExchangeRates": {
+      "address": "0x061B75475035c20ef2e35E1002Beb90C3c1f24cC",
+      "startBlock": 0
+    },
     "FuturesMarketManager": {
       "address": "0xDD55BE4f3a8885E92d2Acd16869Fab857206B517",
       "startBlock": 3495320
