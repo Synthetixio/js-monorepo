@@ -1057,7 +1057,425 @@ dataSources:
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
   - kind: ethereum
+    name: ETHAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: BTCAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: LINKAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: SOLAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: AVAXAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: MATICAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: EURAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
     name: AAVEAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: UNIAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: XAUAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: XAGAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: APEAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: DYDXAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: BNBAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: OPAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: DOGEAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: ATOMAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: AXSAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: FLOWAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: FTMAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: NEARAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: AUDAggregator
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Candles
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+      file: ./src/latest-rates.ts
+  - kind: ethereum
+    name: GBPAggregator
     source:
       abi: Aggregator
     mapping:
