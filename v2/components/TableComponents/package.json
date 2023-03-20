@@ -1,0 +1,9 @@
+{
+  "name": "@snx-v2/TableComponents",
+  "private": true,
+  "main": "index.tsx",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.5.0"
+  }
+}

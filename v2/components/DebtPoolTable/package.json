@@ -6,6 +6,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/SynthIcons": "workspace:*",
+    "@snx-v2/TableComponents": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/synthsByName": "workspace:*",

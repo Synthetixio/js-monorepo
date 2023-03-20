@@ -7,10 +7,7 @@ import {
   Table,
   Tbody,
   Thead,
-  Td,
-  Th,
   Tr,
-  TableCellProps,
   Text,
   Tooltip,
   Image,
@@ -29,24 +26,7 @@ import {
 import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import { useGetSynthsByName, SynthsByName } from '@snx-v2/synthsByName';
 import { InfoIcon } from '@snx-v2/icons';
-
-const StyledTh: React.FC<TableCellProps> = (props) => (
-  <Th
-    sx={{
-      paddingBottom: 1,
-      paddingTop: 4,
-      borderColor: 'gray.900',
-      borderTop: 'none',
-      fontSize: 'xs',
-      whiteSpace: 'nowrap',
-    }}
-    {...props}
-  />
-);
-
-const StyledTd: React.FC<TableCellProps> = (props) => (
-  <Td sx={{ borderBottomColor: 'gray.900', fontSize: 'sm' }} {...props} />
-);
+import { StyledTd, StyledTh } from '@snx-v2/TableComponents';
 
 type DebtPoolData = { name: string; positionInUsd: number; poolProportion: number };
 
@@ -127,7 +107,7 @@ export const DebtPoolTableUi: FC<{
           {table.getHeaderGroups().map((headerGroup) => (
             <Tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <StyledTh key={header.id}>
+                <StyledTh fontSize="xs" whiteSpace="nowrap" key={header.id}>
                   {flexRender(header.column.columnDef.header, header.getContext())}
                 </StyledTh>
               ))}
@@ -138,7 +118,7 @@ export const DebtPoolTableUi: FC<{
           {table.getRowModel().rows.map((row) => (
             <Tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <StyledTd key={cell.id}>
+                <StyledTd key={cell.id} fontSize="sm">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </StyledTd>
               ))}

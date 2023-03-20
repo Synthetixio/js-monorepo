@@ -8,6 +8,7 @@
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/StatBox": "workspace:*",
     "@snx-v2/SynthIcons": "workspace:*",
+    "@snx-v2/TableComponents": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/synthsByName": "workspace:*",

@@ -25,15 +25,8 @@ import { useTranslation } from 'react-i18next';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { SNXIcon, DSNXIcon, EthereumIcon } from '@snx-v2/icons';
-import {
-  AssetTd,
-  BalanceTd,
-  HoldingTd,
-  PriceTd,
-  StyledTd,
-  StyledTh,
-  TbodyLoading,
-} from './TableComponents';
+import { AssetTd, BalanceTd, HoldingTd, PriceTd } from './TableComponents';
+import { StyledTd, StyledTh, TbodyLoading } from '@snx-v2/TableComponents';
 
 const WalletBalancesUi: React.FC<{
   totalSynthUSDBalance?: number;
