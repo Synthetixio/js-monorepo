@@ -83,7 +83,12 @@ export const PositionsTable = () => {
                     <Market asset={asset} leverage={leverage} long={long} />
                     {/* Net value */}
                     <NetValue amount={netValue} />
-                    <PnL amount={pnl} entryPrice={entryPrice} lastPrice={lastPrice} />
+                    <PnL
+                      funding={funding}
+                      amount={pnl}
+                      entryPrice={entryPrice}
+                      lastPrice={lastPrice}
+                    />
                     <Size size={size} lastPrice={lastPrice} />
                     {/* Collateral */}
                     <Currency amount={margin} />
