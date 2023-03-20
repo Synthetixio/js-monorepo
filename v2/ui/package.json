@@ -42,6 +42,7 @@
     "@snx-v2/CRatioHealthCard": "workspace:*",
     "@snx-v2/Constants": "workspace:*",
     "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/Debt": "workspace:*",
     "@snx-v2/EarnStats": "workspace:*",
     "@snx-v2/EthGasPriceEstimator": "workspace:*",
     "@snx-v2/GasSpeedContext": "workspace:*",

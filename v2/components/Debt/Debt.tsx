@@ -8,14 +8,27 @@ import {
   SkeletonText,
   Tooltip,
   Link,
+  Table,
+  Thead,
+  Tbody,
+  Skeleton,
 } from '@chakra-ui/react';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { DebtPoolTable } from '@snx-v2/DebtPoolTable';
-import { InfoIcon } from '@snx-v2/icons';
+import { ArrowTopRight, DSNXIcon, InfoIcon } from '@snx-v2/icons';
+import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { StyledTd, StyledTh } from '@snx-v2/TableComponents';
 
-export const DebtUi: FC<{ debtBalance?: number }> = ({ debtBalance }) => {
+export const DebtUi: FC<{
+  debtBalance?: number;
+  isOptimism: boolean;
+  dSNXBalance?: number;
+  dSNXBalanceUsd?: number;
+}> = ({ debtBalance, dSNXBalance, dSNXBalanceUsd }) => {
   const [detailOpen, setDetailOpen] = useState(false);
   return (
     <Box mt={8}>
@@ -83,6 +96,54 @@ export const DebtUi: FC<{ debtBalance?: number }> = ({ debtBalance }) => {
             </Link>
             .
           </Text>
+          <Table>
+            <Thead>
+              <StyledTh p={2}>Asset</StyledTh>
+              <StyledTh p={2}>Balance</StyledTh>
+              <StyledTh p={0} />
+            </Thead>
+            <Tbody>
+              <StyledTd p={2}>
+                <Flex>
+                  <Flex flexShrink={0} alignItems="center">
+                    <DSNXIcon width="30px" height="30px" />
+                  </Flex>
+                  <Flex ml={1} flexDirection="column">
+                    <Text fontSize="sm">dSNX</Text>
+                    <Text fontSize="xs" color="gray.500">
+                      Debt Mirror Index
+                    </Text>
+                  </Flex>
+                </Flex>
+              </StyledTd>
+              <StyledTd p={2}>
+                <Flex flexDirection="column">
+                  <Text fontSize="sm">
+                    {dSNXBalance !== undefined ? (
+                      formatNumber(dSNXBalance)
+                    ) : (
+                      <Skeleton as="span" w={8} height={4} />
+                    )}
+                  </Text>
+                  <Text fontSize="xs" color="gray.500">
+                    {dSNXBalanceUsd !== undefined ? (
+                      formatNumberToUsd(dSNXBalanceUsd)
+                    ) : (
+                      <Skeleton as="span" mt={2} w={8} height={4} />
+                    )}
+                  </Text>
+                </Flex>
+              </StyledTd>
+              <StyledTd p={0}>
+                <Button size="sm" variant="outline">
+                  Hedge on Torus <ArrowTopRight ml="1" />
+                </Button>
+              </StyledTd>
+            </Tbody>
+          </Table>
+          <Text color="gray.500" fontSize="xs" fontStyle="italic">
+            Warning: dSNX approximately hedges debt, users can incur losses.
+          </Text>
         </Flex>
         <Flex
           bg="navy.700"
@@ -123,5 +184,14 @@ export const DebtUi: FC<{ debtBalance?: number }> = ({ debtBalance }) => {
 };
 export const Debt = () => {
   const { data: debtData } = useDebtData();
-  return <DebtUi debtBalance={debtData?.debtBalance.toNumber()} />;
+  const { data: dSNXBalanceData } = useGetDSnxBalance();
+  const { networkId } = useContext(ContractContext);
+  return (
+    <DebtUi
+      isOptimism={networkId === NetworkIdByName['mainnet-ovm']}
+      debtBalance={debtData?.debtBalance.toNumber()}
+      dSNXBalance={dSNXBalanceData?.balance.toNumber()}
+      dSNXBalanceUsd={dSNXBalanceData?.balanceUsd.toNumber()}
+    />
+  );
 };
