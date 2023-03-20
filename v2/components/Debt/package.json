@@ -7,12 +7,14 @@
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/DebtPoolTable": "workspace:*",
+    "@snx-v2/SwitchNetworkContext": "workspace:*",
     "@snx-v2/TableComponents": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useDSnxBalance": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
+    "@synthetixio/contracts-interface": "workspace:*",
     "react": "^18.2.0"
   }
 }
