@@ -92,8 +92,6 @@ export const PositionsTable = () => {
                     <NetValue amount={netValue} />
                     <PnL
                       amount={pnl}
-                      entryPrice={entryPrice}
-                      marketPrice={marketPrice}
                       funding={funding}
                       fees={fees}
                       netValue={netValue}
