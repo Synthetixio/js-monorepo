@@ -6655,6 +6655,43 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Debt@workspace:*, @snx-v2/Debt@workspace:v2/components/Debt":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Debt@workspace:v2/components/Debt"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/DebtPoolTable": "workspace:*"
+    "@snx-v2/SwitchNetworkContext": "workspace:*"
+    "@snx-v2/SynthIcons": "workspace:*"
+    "@snx-v2/TableComponents": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useDSnxBalance": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
+    "@snx-v2/useDebtPoolData": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/DebtPoolTable@workspace:*, @snx-v2/DebtPoolTable@workspace:v2/components/DebtPoolTable":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/DebtPoolTable@workspace:v2/components/DebtPoolTable"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@snx-v2/SynthIcons": "workspace:*"
+    "@snx-v2/TableComponents": "workspace:*"
+    "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    "@snx-v2/synthsByName": "workspace:*"
+    "@snx-v2/useDebtPoolData": "workspace:*"
+    "@storybook/react": ^6.5.16
+    "@tanstack/react-table": ^8.7.9
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/EarnStats@workspace:*, @snx-v2/EarnStats@workspace:v2/components/EarnStats":
   version: 0.0.0-use.local
   resolution: "@snx-v2/EarnStats@workspace:v2/components/EarnStats"
@@ -6937,9 +6974,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/SwitchNetworkContext@workspace:*, @snx-v2/SwitchNetworkContext@workspace:v2/lib/SwitchNetworkContext":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/SwitchNetworkContext@workspace:v2/lib/SwitchNetworkContext"
+  dependencies:
+    "@synthetixio/contracts-interface": "workspace:*"
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/SynthIcons@workspace:*, @snx-v2/SynthIcons@workspace:v2/lib/SynthIcons":
   version: 0.0.0-use.local
   resolution: "@snx-v2/SynthIcons@workspace:v2/lib/SynthIcons"
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/TableComponents@workspace:*, @snx-v2/TableComponents@workspace:v2/components/TableComponents":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/TableComponents@workspace:v2/components/TableComponents"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
   languageName: unknown
   linkType: soft
 
@@ -7016,6 +7070,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
+    "@snx-v2/TableComponents": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/synthsByName": "workspace:*"
@@ -7269,6 +7324,14 @@ __metadata:
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useDebtPoolData@workspace:*, @snx-v2/useDebtPoolData@workspace:v2/lib/useDebtPoolData":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useDebtPoolData@workspace:v2/lib/useDebtPoolData"
+  dependencies:
+    "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
 
@@ -10354,6 +10417,7 @@ __metadata:
     "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/Debt": "workspace:*"
     "@snx-v2/EarnStats": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/GasSpeedContext": "workspace:*"
@@ -10365,6 +10429,7 @@ __metadata:
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
+    "@snx-v2/SwitchNetworkContext": "workspace:*"
     "@snx-v2/TermsModal": "workspace:^"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
@@ -10600,6 +10665,25 @@ __metadata:
     react-native:
       optional: true
   checksum: 250bc2cba8dd7da61680a8e360fac87ee057d079ee3be950c76dbc063f941119817634857c1cb0d9b12042dd5d4fbe847c02af5dfb89ae8daa0f9339f87ad605
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-table@npm:^8.7.9":
+  version: 8.7.9
+  resolution: "@tanstack/react-table@npm:8.7.9"
+  dependencies:
+    "@tanstack/table-core": 8.7.9
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 3c704ac903405972641c9857e1466025bcdac04ee4890d64b018386cad5a778aca3a8d3f78542ae7a0ed609841d32ef3a7e563b079e87fa93b9ae8570a310499
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.7.9":
+  version: 8.7.9
+  resolution: "@tanstack/table-core@npm:8.7.9"
+  checksum: 78d2314928c29559088e4bada0248cc7f94e93756e1a2c1f37a651db30276e9ae960d647bd3a61b67b3f0f9f7e4dec5dd58eb49b8adb80ee5952ef417b6e581f
   languageName: node
   linkType: hard
 
