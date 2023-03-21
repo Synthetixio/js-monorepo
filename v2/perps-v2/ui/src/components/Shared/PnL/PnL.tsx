@@ -4,19 +4,18 @@ import { stringToDecimal } from '../../../utils';
 
 interface PnLProps {
   amount: string;
-  entryPrice: string;
-  marketPrice: number;
   funding: string;
   fees: string;
+  netValue: number;
+  entryValue: number;
 }
 
-export const PnL = ({ amount, entryPrice, marketPrice, funding, fees = '0' }: PnLProps) => {
+export const PnL = ({ amount, funding, fees = '0', netValue, entryValue }: PnLProps) => {
   const pnl = stringToDecimal(amount) + stringToDecimal(funding) - stringToDecimal(fees);
 
-  const entry = parseInt(entryPrice) / 1e18;
-  const last = marketPrice;
+  // 100 * (net value - entry value) / entry value
+  const percentageDiff = Math.abs((100 * (netValue - entryValue)) / entryValue);
 
-  const percentageDiff = (100 * (last - entry)) / entry;
   return (
     <Td border="none">
       <Fade in>
@@ -30,7 +29,7 @@ export const PnL = ({ amount, entryPrice, marketPrice, funding, fees = '0' }: Pn
           {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(pnl)}`}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-          {pnl >= 0 ? '+' : ''}
+          {pnl >= 0 ? '+' : '-'}
           {percentageDiff.toFixed(2)}%
         </Text>
       </Fade>

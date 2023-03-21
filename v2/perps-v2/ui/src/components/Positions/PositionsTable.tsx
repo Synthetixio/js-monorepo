@@ -76,15 +76,14 @@ export const PositionsTable = () => {
                 // The last price is the price supplied by oracle.
                 // We need to contruct the market price by applying a premium
                 const marketPrice = (parseInt(lastPrice) / 1e18) * (1 + skewRatio);
-
+                const sizeAmount = parseInt(size) / 1e18;
                 // Need to take away fees
                 const netValue =
-                  Math.abs(parseInt(size) / 1e18) * marketPrice +
+                  Math.abs(sizeAmount) * marketPrice +
                   parseInt(funding) / 1e18 +
                   parseInt(pnl) / 1e18 -
                   parseInt(fees) / 1e18;
 
-                console.log('price positions is', parseInt(lastPrice) / 1e18);
                 return (
                   <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
                     {/* Market and Direction */}
@@ -97,6 +96,8 @@ export const PositionsTable = () => {
                       marketPrice={marketPrice}
                       funding={funding}
                       fees={fees}
+                      netValue={netValue}
+                      entryValue={(sizeAmount * parseInt(entryPrice)) / 1e18}
                     />
                     <Size size={size} marketPrice={marketPrice} />
                     {/* Collateral */}
