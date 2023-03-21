@@ -54,6 +54,7 @@ export const AllActionsTable = () => {
                   <Action label={label} txHash={txHash} timestamp={timestamp} />
                   <WalletAddress account={address} />
                   <Market
+                    label={label}
                     asset={asset}
                     leverage={leverage}
                     long={isLong}

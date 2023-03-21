@@ -15,7 +15,6 @@ import { usePositions } from '../../hooks';
 
 export const PositionsTable = () => {
   const { walletAddress } = useParams();
-
   const { loading, data, error } = usePositions(walletAddress);
 
   return (
@@ -69,13 +68,16 @@ export const PositionsTable = () => {
                   liquidationPrice,
                   skew,
                   skewScale,
+                  fees,
                 },
                 index
               ) => {
+                // Need to take away fees
                 const netValue =
                   Math.abs(parseInt(size) / 1e18) * (parseInt(lastPrice) / 1e18) +
                   parseInt(funding) / 1e18 +
-                  parseInt(pnl) / 1e18;
+                  parseInt(pnl) / 1e18 -
+                  parseInt(fees) / 1e18;
 
                 return (
                   <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
@@ -83,7 +85,13 @@ export const PositionsTable = () => {
                     <Market asset={asset} leverage={leverage} long={long} />
                     {/* Net value */}
                     <NetValue amount={netValue} />
-                    <PnL amount={pnl} entryPrice={entryPrice} lastPrice={lastPrice} />
+                    <PnL
+                      amount={pnl}
+                      entryPrice={entryPrice}
+                      lastPrice={lastPrice}
+                      funding={funding}
+                      fees={fees}
+                    />
                     <Size size={size} lastPrice={lastPrice} />
                     {/* Collateral */}
                     <Currency amount={margin} />

@@ -6,10 +6,12 @@ interface PnLProps {
   amount: string;
   entryPrice: string;
   lastPrice: string;
+  funding: string;
+  fees: string;
 }
 
-export const PnL = ({ amount, entryPrice, lastPrice }: PnLProps) => {
-  const pnl = stringToDecimal(amount);
+export const PnL = ({ amount, entryPrice, lastPrice, funding, fees = '0' }: PnLProps) => {
+  const pnl = stringToDecimal(amount) + stringToDecimal(funding) - stringToDecimal(fees);
 
   const entry = parseInt(entryPrice) / 1e18;
   const last = parseInt(lastPrice) / 1e18;
@@ -25,7 +27,7 @@ export const PnL = ({ amount, entryPrice, lastPrice }: PnLProps) => {
           lineHeight="20px"
           color={pnl >= 0 ? 'green.500' : 'red.500'}
         >
-          {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(stringToDecimal(amount))}`}
+          {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(pnl)}`}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
           {pnl >= 0 ? '+' : '-'}

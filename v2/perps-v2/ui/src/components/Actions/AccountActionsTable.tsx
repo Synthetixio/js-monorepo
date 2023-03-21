@@ -51,6 +51,7 @@ export const AccountActionsTable = () => {
                 <Tr key={id} borderTopWidth="1px">
                   <Action label={label} timestamp={timestamp} txHash={txHash} />
                   <Market
+                    label={label}
                     asset={asset}
                     leverage={leverage}
                     long={isLong}
