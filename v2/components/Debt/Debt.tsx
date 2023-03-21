@@ -14,7 +14,7 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { FC, useState } from 'react';
 import { DebtPoolTable } from '@snx-v2/DebtPoolTable';
 import { InfoIcon } from '@snx-v2/icons';
-import { OneClickHedging } from './OncClickHedging';
+import { OneClickHedging } from './OneClickHedging';
 import { ManualHedging } from './ManualHeding';
 
 export const DebtUi: FC<{
