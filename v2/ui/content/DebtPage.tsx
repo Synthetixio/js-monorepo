@@ -9,7 +9,7 @@ const DebtPage: FC = () => {
   return (
     <>
       <Head>
-        <title>{t('debt.page-title')}</title>
+        <title>{t('staking-v2.debt.title')}</title>
       </Head>
       <Debt />
     </>

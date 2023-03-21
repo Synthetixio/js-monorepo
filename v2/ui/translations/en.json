@@ -311,6 +311,9 @@
     },
     "delegate": {
       "missing-permission": "You don't have the authorisation to perform this action"
+    },
+    "debt": {
+      "title": "Hedge your debt"
     }
   },
   "meta": {
