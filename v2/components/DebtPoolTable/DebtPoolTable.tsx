@@ -129,7 +129,6 @@ export const DebtPoolTableUi: FC<{
       <Flex p={4} justifyContent="flex-end">
         <Flex color="gray.700" fontSize="14px" align="center">
           <strong>
-            {' '}
             {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
           </strong>
         </Flex>
@@ -169,9 +168,9 @@ export const DebtPoolTable = () => {
   if (!data)
     return (
       <Box mt={2} width="full">
-        <Skeleton h={8} mt={2} w="full"></Skeleton>
-        <Skeleton h={8} mt={2} w="full"></Skeleton>
-        <Skeleton h={8} mt={2} w="full"></Skeleton>
+        <Skeleton h={8} mt={2} w="full" />
+        <Skeleton h={8} mt={2} w="full" />
+        <Skeleton h={8} mt={2} w="full" />
       </Box>
     );
   return <DebtPoolTableUi data={data} synthsByName={synthByNameData?.SynthsByName} />;

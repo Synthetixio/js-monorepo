@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Head from 'react-helmet';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Connector from 'containers/Connector';
 
@@ -11,8 +11,6 @@ import useStakingCalculations from 'sections/staking/hooks/useStakingCalculation
 import useSelectedPriceCurrency from 'hooks/useSelectedPriceCurrency';
 import useUserStakingData from 'hooks/useUserStakingData';
 import { formatFiatCurrency, formatPercent } from 'utils/formatters/number';
-import StakedValue from 'sections/shared/modals/StakedValueModal/StakedValueBox';
-import ActiveDebt from 'sections/shared/modals/DebtValueModal/DebtValueBox';
 
 import Main from 'sections/loans/index';
 import Loans from 'containers/Loans';
@@ -21,7 +19,7 @@ type LoansPageProps = {};
 
 const LoansPage: FC<LoansPageProps> = () => {
   const { t } = useTranslation();
-
+  const theme = useTheme();
   const { walletAddress } = Connector.useContainer();
 
   const { stakedCollateralValue, debtBalance } = useStakingCalculations();
@@ -34,24 +32,24 @@ const LoansPage: FC<LoansPageProps> = () => {
         <title>{t('loans.page-title')}</title>
       </Head>
       <StatsSection>
-        <StakedValue
+        <StatBox
           title={t('common.stat-box.staked-value')}
           value={formatFiatCurrency(getPriceAtCurrentRate(stakedCollateralValue), {
             sign: selectedPriceCurrency.sign,
           })}
-          isGreen
+          titleColor={theme.colors.green}
         />
         <Earning
           title={t('common.stat-box.earning')}
           value={formatPercent(stakingAPR ? stakingAPR : 0)}
           size="lg"
         />
-        <ActiveDebt
+        <StatBox
           title={t('common.stat-box.active-debt')}
           value={formatFiatCurrency(getPriceAtCurrentRate(debtBalance), {
             sign: selectedPriceCurrency.sign,
           })}
-          isGreen
+          titleColor={theme.colors.green}
         />
       </StatsSection>
       <LineSpacer />

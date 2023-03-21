@@ -15,6 +15,7 @@ type StatBoxProps = {
   children?: ReactNode;
   tooltipContent?: string;
   onClick?: () => void;
+  titleColor?: string;
 };
 
 const StatBox: FC<StatBoxProps> = ({
@@ -53,10 +54,13 @@ const IconContainer = styled.div`
   margin-bottom: 4px;
 `;
 
-const Box = styled(FlexDivColCentered)<{ size: Size }>`
+const Box = styled(FlexDivColCentered)<{ size: Size; titleColor?: string }>`
   background-position: center;
   background-repeat: no-repeat;
   justify-content: center;
+  .title {
+    color: ${(props) => (props.titleColor ? props.theme.colors.green : 'inherit')};
+  }
   ${media.greaterThan('sm')`
     margin: 0px 20px;
   `}
