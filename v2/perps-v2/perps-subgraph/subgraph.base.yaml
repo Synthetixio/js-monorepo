@@ -14,6 +14,8 @@ templates:
       file: ./src/latest-rates.ts
       entities:
         - Candle
+        - LatestRate
+        - RateUpdate
       abis:
         - name: AggregatorProxy
           file: ./abis/AggregatorProxy.json
@@ -1096,20 +1098,27 @@ dataSources:
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
 
-      # Aggregators
+    # Aggregators
 
-  - kind: 'ethereum'
+  - kind: ethereum
     name: ExchangeRates
     source:
       abi: ExchangeRates
     mapping:
+      kind: ethereum/events
       apiVersion: 0.0.7
       language: 'wasm/assemblyscript'
       entities:
         - Candle
+        - LatestRate
+        - RateUpdate
       abis:
-        - name: 'ExchangeRates'
-          file: './abis/ExchangeRates.json'
+        - name: ExchangeRates
+          file: ./abis/ExchangeRates.json
+        - name: AggregatorProxy
+          file: ./abis/AggregatorProxy.json
+        - name: Aggregator
+          file: ./abis/Aggregator.json
       eventHandlers:
         - event: 'AggregatorAdded(bytes32,address)'
           handler: 'handleAggregatorAdded'

@@ -212,9 +212,7 @@ export function addProxyAggregator(currencyKey: string, aggregatorProxyAddress: 
     let context = new DataSourceContext();
     context.setString('currencyKey', currencyKey);
 
-    if (!currencyKey.startsWith('s')) {
-      AggregatorProxy.createWithContext(aggregatorProxyAddress, context);
-    }
+    AggregatorProxy.createWithContext(aggregatorProxyAddress, context);
 
     addAggregator(currencyKey, underlyingAggregator.value);
   } else {
@@ -238,9 +236,7 @@ export function addAggregator(currencyKey: string, aggregatorAddress: Address): 
   let context = new DataSourceContext();
   context.setString('currencyKey', currencyKey);
 
-  if (!currencyKey.startsWith('s')) {
-    Aggregator.createWithContext(aggregatorAddress, context);
-  }
+  Aggregator.createWithContext(aggregatorAddress, context);
 }
 
 export function handleAggregatorAdded(event: AggregatorAddedEvent): void {
