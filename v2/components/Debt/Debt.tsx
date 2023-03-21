@@ -15,6 +15,7 @@ import { FC, useState } from 'react';
 import { DebtPoolTable } from '@snx-v2/DebtPoolTable';
 import { InfoIcon } from '@snx-v2/icons';
 import { OneClickHedging } from './OncClickHedging';
+import { ManualHedging } from './ManualHeding';
 
 export const DebtUi: FC<{
   debtBalance?: number;
@@ -65,26 +66,9 @@ export const DebtUi: FC<{
         <Box mt={4} flexBasis="50%">
           <OneClickHedging />
         </Box>
-        <Flex
-          bg="navy.700"
-          borderWidth="1px"
-          borderColor="gray.900"
-          borderRadius="base"
-          flexBasis="50%"
-          py={4}
-          px={2}
-          mt={4}
-          gap={2}
-          flexDir="column"
-        >
-          <Heading fontSize="lg" fontWeight="700">
-            Option 2: Manual Hedging
-          </Heading>
-          <Text fontSize="xs" color="gray.500">
-            To approximately hedge the Debt Pool, swap your borrowed sUSD into the following
-            amounts, and adjust these amounts periodically.
-          </Text>
-        </Flex>
+        <Box flexBasis="50%" mt={4}>
+          <ManualHedging />
+        </Box>
       </Flex>
       <Box p={4} mt={2} borderWidth="1px" borderColor="gray.900" borderRadius="base" bg="navy.700">
         <Flex justifyContent="space-between" alignItems="center">
