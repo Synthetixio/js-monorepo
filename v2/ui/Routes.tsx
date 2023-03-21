@@ -5,7 +5,6 @@ import AppLayout from './sections/shared/Layout/AppLayout';
 import { Box, Container } from '@chakra-ui/react';
 import { HomeButton } from '@snx-v2/HomeButton';
 import LoansPage from './content/LoansPage';
-import DebtPage from './content/DebtPage';
 
 // wallet pages
 import { WalletLayout } from '@snx-v2/WalletLayout';
@@ -19,6 +18,7 @@ import BridgePage from './content/BridgePage';
 
 import NotFound from './content/404';
 
+import DebtPage from './content/DebtPage';
 import V2Earn from 'content/V2Earn';
 import V2HomePage from './content/V2Home';
 import V2MintPage from './content/V2Mint';
@@ -98,24 +98,17 @@ export default function AppRoutes() {
             />
           </Route>
 
-          <Route path="/debt" element={<Navigate to="/debt/overview" replace={true} />} />
-          <Route path="/debt/manage" element={<Navigate to="/debt/manage/buy" replace={true} />} />
           <Route
-            path="/debt/:activeTab"
+            path="/debt"
             element={
               <Wrapper>
                 <DebtPage />
               </Wrapper>
             }
           />
-          <Route
-            path="/debt/:activeTab/:action"
-            element={
-              <Wrapper>
-                <DebtPage />
-              </Wrapper>
-            }
-          />
+
+          <Route path="/debt/:activeTab" element={<Navigate to="/debt" replace={true} />} />
+          <Route path="/debt/:activeTab/:action" element={<Navigate to="/debt" replace={true} />} />
 
           <Route
             path="/migrate-escrow"
