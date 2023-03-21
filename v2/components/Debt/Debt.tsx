@@ -70,7 +70,7 @@ export const DebtUi: FC<{
           <ManualHedging />
         </Box>
       </Flex>
-      <Box p={4} mt={2} borderWidth="1px" borderColor="gray.900" borderRadius="base" bg="navy.700">
+      <Box p={4} mt={4} borderWidth="1px" borderColor="gray.900" borderRadius="base" bg="navy.700">
         <Flex justifyContent="space-between" alignItems="center">
           <Heading fontSize="lg"> Detailed Debt Pool Composition</Heading>
           <Button onClick={() => setDetailOpen((x) => !x)} variant="outline">
