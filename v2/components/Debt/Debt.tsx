@@ -23,7 +23,7 @@ export const DebtUi: FC<{
   const [detailOpen, setDetailOpen] = useState(false);
   return (
     <Box mt={8}>
-      <Flex alignItems="center" gap={4}>
+      <Flex alignItems="center" gap={4} flexDirection={{ base: 'column', sm: 'row' }}>
         <Box>
           <Heading fontSize="lg" fontWeight="700">
             Hedge your debt
@@ -40,11 +40,11 @@ export const DebtUi: FC<{
         </Box>
         <Flex
           flexDir="column"
-          w="282px"
+          w={{ base: '100%', sm: '282px' }}
           bg="navy.700"
           p={2}
           flexShrink="0"
-          alignItems="flex-end"
+          alignItems={{ base: 'center', sm: 'flex-end' }}
           borderWidth="1px"
           borderColor="gray.900"
           borderRadius="base"
@@ -62,7 +62,7 @@ export const DebtUi: FC<{
           </SkeletonText>
         </Flex>
       </Flex>
-      <Flex gap={4}>
+      <Flex gap={4} flexDirection={{ base: 'column', md: 'row' }}>
         <Box mt={4} flexBasis="50%">
           <OneClickHedging />
         </Box>
