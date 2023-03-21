@@ -25,6 +25,7 @@ export const EXTERNAL_LINKS = {
     RewardsGuide: 'https://docs.synthetix.io/staking/staking-guide/staking-rewards-and-epochs',
     CRatioGuide: 'https://docs.synthetix.io/staking/staking-guide/collateralization-ratio',
     SIP255: 'https://sips.synthetix.io/sips/sip-255',
+    HedgeStrategies: 'https://docs.synthetix.io/staking/staking-guide/debt-hedging-strategies',
   },
   Social: {
     Twitter: 'https://twitter.com/synthetix_io',
@@ -45,6 +46,7 @@ export const EXTERNAL_LINKS = {
   },
   Toros: {
     dSNXPool: 'https://toros.finance/pool/0x59babc14dd73761e38e5bda171b2298dc14da92d',
+    docs: 'https://docs.toros.finance/dynamic-vaults/synthetix-debt-hedge-index',
   },
   dHedge: {
     snxDebtMirrorDocs: 'https://docs.dhedge.org/dhedge-original-pools/v2-snx-debt-mirror',
