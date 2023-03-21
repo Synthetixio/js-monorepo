@@ -3,7 +3,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import { EXTERNAL_LINKS } from 'constants/links';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { CryptoCurrency } from 'constants/currency';
 import { formatShortDate } from 'utils/formatters/date';
 import { formatCurrency } from 'utils/formatters/number';

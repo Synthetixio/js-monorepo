@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import media from '@snx-v1/media';
-import { EXTERNAL_LINKS } from 'constants/links';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { StyledLink } from '../common';
 
 const InfoBox: FC = () => {
