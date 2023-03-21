@@ -105,7 +105,6 @@
     "react-router-dom": "^6.8.1",
     "react-select": "^4.3.1",
     "react-table": "^7.7.0",
-    "recharts": "^2.0.10",
     "recoil": "^0.7.4",
     "storybook": "^6.5.16",
     "styled-components": "^5.3.6",
