@@ -1114,7 +1114,7 @@ dataSources:
         - RateUpdate
       abis:
         - name: ExchangeRates
-          file: ./abis/ExchangeRates.json
+          file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
         - name: AggregatorProxy
           file: ./abis/AggregatorProxy.json
         - name: Aggregator

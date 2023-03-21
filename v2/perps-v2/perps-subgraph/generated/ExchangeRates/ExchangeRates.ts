@@ -76,84 +76,6 @@ export class CacheUpdated__Params {
   }
 }
 
-export class InversePriceConfigured extends ethereum.Event {
-  get params(): InversePriceConfigured__Params {
-    return new InversePriceConfigured__Params(this);
-  }
-}
-
-export class InversePriceConfigured__Params {
-  _event: InversePriceConfigured;
-
-  constructor(event: InversePriceConfigured) {
-    this._event = event;
-  }
-
-  get currencyKey(): Bytes {
-    return this._event.parameters[0].value.toBytes();
-  }
-
-  get entryPoint(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get upperLimit(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get lowerLimit(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-}
-
-export class InversePriceFrozen extends ethereum.Event {
-  get params(): InversePriceFrozen__Params {
-    return new InversePriceFrozen__Params(this);
-  }
-}
-
-export class InversePriceFrozen__Params {
-  _event: InversePriceFrozen;
-
-  constructor(event: InversePriceFrozen) {
-    this._event = event;
-  }
-
-  get currencyKey(): Bytes {
-    return this._event.parameters[0].value.toBytes();
-  }
-
-  get rate(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get roundId(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get initiator(): Address {
-    return this._event.parameters[3].value.toAddress();
-  }
-}
-
-export class OracleUpdated extends ethereum.Event {
-  get params(): OracleUpdated__Params {
-    return new OracleUpdated__Params(this);
-  }
-}
-
-export class OracleUpdated__Params {
-  _event: OracleUpdated;
-
-  constructor(event: OracleUpdated) {
-    this._event = event;
-  }
-
-  get newOracle(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-}
-
 export class OwnerChanged extends ethereum.Event {
   get params(): OwnerChanged__Params {
     return new OwnerChanged__Params(this);
@@ -194,43 +116,243 @@ export class OwnerNominated__Params {
   }
 }
 
-export class RateDeleted extends ethereum.Event {
-  get params(): RateDeleted__Params {
-    return new RateDeleted__Params(this);
+export class ExchangeRates__effectiveAtomicValueAndRatesResult {
+  value0: BigInt;
+  value1: BigInt;
+  value2: BigInt;
+  value3: BigInt;
+
+  constructor(value0: BigInt, value1: BigInt, value2: BigInt, value3: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set('value2', ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set('value3', ethereum.Value.fromUnsignedBigInt(this.value3));
+    return map;
+  }
+
+  getValue(): BigInt {
+    return this.value0;
+  }
+
+  getSystemValue(): BigInt {
+    return this.value1;
+  }
+
+  getSystemSourceRate(): BigInt {
+    return this.value2;
+  }
+
+  getSystemDestinationRate(): BigInt {
+    return this.value3;
   }
 }
 
-export class RateDeleted__Params {
-  _event: RateDeleted;
+export class ExchangeRates__effectiveAtomicValueAndRates1Result {
+  value0: BigInt;
+  value1: BigInt;
+  value2: BigInt;
+  value3: BigInt;
 
-  constructor(event: RateDeleted) {
-    this._event = event;
+  constructor(value0: BigInt, value1: BigInt, value2: BigInt, value3: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
   }
 
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set('value2', ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set('value3', ethereum.Value.fromUnsignedBigInt(this.value3));
+    return map;
+  }
+
+  getValue(): BigInt {
+    return this.value0;
+  }
+
+  getSystemValue(): BigInt {
+    return this.value1;
+  }
+
+  getSystemSourceRate(): BigInt {
+    return this.value2;
+  }
+
+  getSystemDestinationRate(): BigInt {
+    return this.value3;
+  }
+}
+
+export class ExchangeRates__effectiveAtomicValueAndRates1InputParam0Struct extends ethereum.Tuple {
   get currencyKey(): Bytes {
-    return this._event.parameters[0].value.toBytes();
+    return this[0].toBytes();
+  }
+
+  get dexPriceAggregator(): Address {
+    return this[1].toAddress();
+  }
+
+  get atomicEquivalentForDexPricing(): Address {
+    return this[2].toAddress();
+  }
+
+  get atomicExchangeFeeRate(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get atomicTwapWindow(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get atomicMaxVolumePerBlock(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get atomicVolatilityConsiderationWindow(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get atomicVolatilityUpdateThreshold(): BigInt {
+    return this[7].toBigInt();
+  }
+
+  get exchangeFeeRate(): BigInt {
+    return this[8].toBigInt();
+  }
+
+  get exchangeMaxDynamicFee(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get exchangeDynamicFeeRounds(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get exchangeDynamicFeeThreshold(): BigInt {
+    return this[11].toBigInt();
+  }
+
+  get exchangeDynamicFeeWeightDecay(): BigInt {
+    return this[12].toBigInt();
   }
 }
 
-export class RatesUpdated extends ethereum.Event {
-  get params(): RatesUpdated__Params {
-    return new RatesUpdated__Params(this);
+export class ExchangeRates__effectiveAtomicValueAndRates1InputParam2Struct extends ethereum.Tuple {
+  get currencyKey(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get dexPriceAggregator(): Address {
+    return this[1].toAddress();
+  }
+
+  get atomicEquivalentForDexPricing(): Address {
+    return this[2].toAddress();
+  }
+
+  get atomicExchangeFeeRate(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get atomicTwapWindow(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get atomicMaxVolumePerBlock(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get atomicVolatilityConsiderationWindow(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get atomicVolatilityUpdateThreshold(): BigInt {
+    return this[7].toBigInt();
+  }
+
+  get exchangeFeeRate(): BigInt {
+    return this[8].toBigInt();
+  }
+
+  get exchangeMaxDynamicFee(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get exchangeDynamicFeeRounds(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get exchangeDynamicFeeThreshold(): BigInt {
+    return this[11].toBigInt();
+  }
+
+  get exchangeDynamicFeeWeightDecay(): BigInt {
+    return this[12].toBigInt();
   }
 }
 
-export class RatesUpdated__Params {
-  _event: RatesUpdated;
-
-  constructor(event: RatesUpdated) {
-    this._event = event;
+export class ExchangeRates__effectiveAtomicValueAndRates1InputParam3Struct extends ethereum.Tuple {
+  get currencyKey(): Bytes {
+    return this[0].toBytes();
   }
 
-  get currencyKeys(): Array<Bytes> {
-    return this._event.parameters[0].value.toBytesArray();
+  get dexPriceAggregator(): Address {
+    return this[1].toAddress();
   }
 
-  get newRates(): Array<BigInt> {
-    return this._event.parameters[1].value.toBigIntArray();
+  get atomicEquivalentForDexPricing(): Address {
+    return this[2].toAddress();
+  }
+
+  get atomicExchangeFeeRate(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get atomicTwapWindow(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get atomicMaxVolumePerBlock(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get atomicVolatilityConsiderationWindow(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get atomicVolatilityUpdateThreshold(): BigInt {
+    return this[7].toBigInt();
+  }
+
+  get exchangeFeeRate(): BigInt {
+    return this[8].toBigInt();
+  }
+
+  get exchangeMaxDynamicFee(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get exchangeDynamicFeeRounds(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get exchangeDynamicFeeThreshold(): BigInt {
+    return this[11].toBigInt();
+  }
+
+  get exchangeDynamicFeeWeightDecay(): BigInt {
+    return this[12].toBigInt();
   }
 }
 
@@ -266,19 +388,15 @@ export class ExchangeRates__effectiveValueAndRatesResult {
   }
 }
 
-export class ExchangeRates__inversePricingResult {
+export class ExchangeRates__effectiveValueAndRatesAtRoundResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
-  value3: boolean;
-  value4: boolean;
 
-  constructor(value0: BigInt, value1: BigInt, value2: BigInt, value3: boolean, value4: boolean) {
+  constructor(value0: BigInt, value1: BigInt, value2: BigInt) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
-    this.value3 = value3;
-    this.value4 = value4;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -286,29 +404,19 @@ export class ExchangeRates__inversePricingResult {
     map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
     map.set('value1', ethereum.Value.fromUnsignedBigInt(this.value1));
     map.set('value2', ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set('value3', ethereum.Value.fromBoolean(this.value3));
-    map.set('value4', ethereum.Value.fromBoolean(this.value4));
     return map;
   }
 
-  getEntryPoint(): BigInt {
+  getValue(): BigInt {
     return this.value0;
   }
 
-  getUpperLimit(): BigInt {
+  getSourceRate(): BigInt {
     return this.value1;
   }
 
-  getLowerLimit(): BigInt {
+  getDestinationRate(): BigInt {
     return this.value2;
-  }
-
-  getFrozenAtUpperLimit(): boolean {
-    return this.value3;
-  }
-
-  getFrozenAtLowerLimit(): boolean {
-    return this.value4;
   }
 }
 
@@ -387,6 +495,38 @@ export class ExchangeRates__rateAndUpdatedTimeResult {
   }
 }
 
+export class ExchangeRates__rateWithSafetyChecksResult {
+  value0: BigInt;
+  value1: boolean;
+  value2: boolean;
+
+  constructor(value0: BigInt, value1: boolean, value2: boolean) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set('value0', ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set('value1', ethereum.Value.fromBoolean(this.value1));
+    map.set('value2', ethereum.Value.fromBoolean(this.value2));
+    return map;
+  }
+
+  getRate(): BigInt {
+    return this.value0;
+  }
+
+  getBroken(): boolean {
+    return this.value1;
+  }
+
+  getStaleOrInvalid(): boolean {
+    return this.value2;
+  }
+}
+
 export class ExchangeRates__ratesAndInvalidForCurrenciesResult {
   value0: Array<BigInt>;
   value1: boolean;
@@ -437,9 +577,78 @@ export class ExchangeRates__ratesAndUpdatedTimeForCurrencyLastNRoundsResult {
   }
 }
 
+export class ExchangeRates__synthTooVolatileForAtomicExchange1InputParam0Struct extends ethereum.Tuple {
+  get currencyKey(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get dexPriceAggregator(): Address {
+    return this[1].toAddress();
+  }
+
+  get atomicEquivalentForDexPricing(): Address {
+    return this[2].toAddress();
+  }
+
+  get atomicExchangeFeeRate(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get atomicTwapWindow(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get atomicMaxVolumePerBlock(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get atomicVolatilityConsiderationWindow(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get atomicVolatilityUpdateThreshold(): BigInt {
+    return this[7].toBigInt();
+  }
+
+  get exchangeFeeRate(): BigInt {
+    return this[8].toBigInt();
+  }
+
+  get exchangeMaxDynamicFee(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get exchangeDynamicFeeRounds(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get exchangeDynamicFeeThreshold(): BigInt {
+    return this[11].toBigInt();
+  }
+
+  get exchangeDynamicFeeWeightDecay(): BigInt {
+    return this[12].toBigInt();
+  }
+}
+
 export class ExchangeRates extends ethereum.SmartContract {
   static bind(address: Address): ExchangeRates {
     return new ExchangeRates('ExchangeRates', address);
+  }
+
+  CONTRACT_NAME(): Bytes {
+    let result = super.call('CONTRACT_NAME', 'CONTRACT_NAME():(bytes32)', []);
+
+    return result[0].toBytes();
+  }
+
+  try_CONTRACT_NAME(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall('CONTRACT_NAME', 'CONTRACT_NAME():(bytes32)', []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
   aggregatorKeys(param0: BigInt): Bytes {
@@ -514,18 +723,31 @@ export class ExchangeRates extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  canFreezeRate(currencyKey: Bytes): boolean {
-    let result = super.call('canFreezeRate', 'canFreezeRate(bytes32):(bool)', [
-      ethereum.Value.fromFixedBytes(currencyKey),
-    ]);
+  anyRateIsInvalidAtRound(currencyKeys: Array<Bytes>, roundIds: Array<BigInt>): boolean {
+    let result = super.call(
+      'anyRateIsInvalidAtRound',
+      'anyRateIsInvalidAtRound(bytes32[],uint256[]):(bool)',
+      [
+        ethereum.Value.fromFixedBytesArray(currencyKeys),
+        ethereum.Value.fromUnsignedBigIntArray(roundIds),
+      ]
+    );
 
     return result[0].toBoolean();
   }
 
-  try_canFreezeRate(currencyKey: Bytes): ethereum.CallResult<boolean> {
-    let result = super.tryCall('canFreezeRate', 'canFreezeRate(bytes32):(bool)', [
-      ethereum.Value.fromFixedBytes(currencyKey),
-    ]);
+  try_anyRateIsInvalidAtRound(
+    currencyKeys: Array<Bytes>,
+    roundIds: Array<BigInt>
+  ): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      'anyRateIsInvalidAtRound',
+      'anyRateIsInvalidAtRound(bytes32[],uint256[]):(bool)',
+      [
+        ethereum.Value.fromFixedBytesArray(currencyKeys),
+        ethereum.Value.fromUnsignedBigIntArray(roundIds),
+      ]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -575,23 +797,110 @@ export class ExchangeRates extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
-  currentRoundForRate(param0: Bytes): BigInt {
-    let result = super.call('currentRoundForRate', 'currentRoundForRate(bytes32):(uint256)', [
-      ethereum.Value.fromFixedBytes(param0),
-    ]);
+  effectiveAtomicValueAndRates(
+    param0: Bytes,
+    param1: BigInt,
+    param2: Bytes
+  ): ExchangeRates__effectiveAtomicValueAndRatesResult {
+    let result = super.call(
+      'effectiveAtomicValueAndRates',
+      'effectiveAtomicValueAndRates(bytes32,uint256,bytes32):(uint256,uint256,uint256,uint256)',
+      [
+        ethereum.Value.fromFixedBytes(param0),
+        ethereum.Value.fromUnsignedBigInt(param1),
+        ethereum.Value.fromFixedBytes(param2),
+      ]
+    );
 
-    return result[0].toBigInt();
+    return new ExchangeRates__effectiveAtomicValueAndRatesResult(
+      result[0].toBigInt(),
+      result[1].toBigInt(),
+      result[2].toBigInt(),
+      result[3].toBigInt()
+    );
   }
 
-  try_currentRoundForRate(param0: Bytes): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('currentRoundForRate', 'currentRoundForRate(bytes32):(uint256)', [
-      ethereum.Value.fromFixedBytes(param0),
-    ]);
+  try_effectiveAtomicValueAndRates(
+    param0: Bytes,
+    param1: BigInt,
+    param2: Bytes
+  ): ethereum.CallResult<ExchangeRates__effectiveAtomicValueAndRatesResult> {
+    let result = super.tryCall(
+      'effectiveAtomicValueAndRates',
+      'effectiveAtomicValueAndRates(bytes32,uint256,bytes32):(uint256,uint256,uint256,uint256)',
+      [
+        ethereum.Value.fromFixedBytes(param0),
+        ethereum.Value.fromUnsignedBigInt(param1),
+        ethereum.Value.fromFixedBytes(param2),
+      ]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(
+      new ExchangeRates__effectiveAtomicValueAndRatesResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+        value[2].toBigInt(),
+        value[3].toBigInt()
+      )
+    );
+  }
+
+  effectiveAtomicValueAndRates1(
+    param0: ExchangeRates__effectiveAtomicValueAndRates1InputParam0Struct,
+    param1: BigInt,
+    param2: ExchangeRates__effectiveAtomicValueAndRates1InputParam2Struct,
+    param3: ExchangeRates__effectiveAtomicValueAndRates1InputParam3Struct
+  ): ExchangeRates__effectiveAtomicValueAndRates1Result {
+    let result = super.call(
+      'effectiveAtomicValueAndRates',
+      'effectiveAtomicValueAndRates((bytes32,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256),uint256,(bytes32,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256),(bytes32,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)):(uint256,uint256,uint256,uint256)',
+      [
+        ethereum.Value.fromTuple(param0),
+        ethereum.Value.fromUnsignedBigInt(param1),
+        ethereum.Value.fromTuple(param2),
+        ethereum.Value.fromTuple(param3),
+      ]
+    );
+
+    return new ExchangeRates__effectiveAtomicValueAndRates1Result(
+      result[0].toBigInt(),
+      result[1].toBigInt(),
+      result[2].toBigInt(),
+      result[3].toBigInt()
+    );
+  }
+
+  try_effectiveAtomicValueAndRates1(
+    param0: ExchangeRates__effectiveAtomicValueAndRates1InputParam0Struct,
+    param1: BigInt,
+    param2: ExchangeRates__effectiveAtomicValueAndRates1InputParam2Struct,
+    param3: ExchangeRates__effectiveAtomicValueAndRates1InputParam3Struct
+  ): ethereum.CallResult<ExchangeRates__effectiveAtomicValueAndRates1Result> {
+    let result = super.tryCall(
+      'effectiveAtomicValueAndRates',
+      'effectiveAtomicValueAndRates((bytes32,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256),uint256,(bytes32,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256),(bytes32,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)):(uint256,uint256,uint256,uint256)',
+      [
+        ethereum.Value.fromTuple(param0),
+        ethereum.Value.fromUnsignedBigInt(param1),
+        ethereum.Value.fromTuple(param2),
+        ethereum.Value.fromTuple(param3),
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new ExchangeRates__effectiveAtomicValueAndRates1Result(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+        value[2].toBigInt(),
+        value[3].toBigInt()
+      )
+    );
   }
 
   effectiveValue(
@@ -678,16 +987,16 @@ export class ExchangeRates extends ethereum.SmartContract {
     );
   }
 
-  effectiveValueAtRound(
+  effectiveValueAndRatesAtRound(
     sourceCurrencyKey: Bytes,
     sourceAmount: BigInt,
     destinationCurrencyKey: Bytes,
     roundIdForSrc: BigInt,
     roundIdForDest: BigInt
-  ): BigInt {
+  ): ExchangeRates__effectiveValueAndRatesAtRoundResult {
     let result = super.call(
-      'effectiveValueAtRound',
-      'effectiveValueAtRound(bytes32,uint256,bytes32,uint256,uint256):(uint256)',
+      'effectiveValueAndRatesAtRound',
+      'effectiveValueAndRatesAtRound(bytes32,uint256,bytes32,uint256,uint256):(uint256,uint256,uint256)',
       [
         ethereum.Value.fromFixedBytes(sourceCurrencyKey),
         ethereum.Value.fromUnsignedBigInt(sourceAmount),
@@ -697,19 +1006,23 @@ export class ExchangeRates extends ethereum.SmartContract {
       ]
     );
 
-    return result[0].toBigInt();
+    return new ExchangeRates__effectiveValueAndRatesAtRoundResult(
+      result[0].toBigInt(),
+      result[1].toBigInt(),
+      result[2].toBigInt()
+    );
   }
 
-  try_effectiveValueAtRound(
+  try_effectiveValueAndRatesAtRound(
     sourceCurrencyKey: Bytes,
     sourceAmount: BigInt,
     destinationCurrencyKey: Bytes,
     roundIdForSrc: BigInt,
     roundIdForDest: BigInt
-  ): ethereum.CallResult<BigInt> {
+  ): ethereum.CallResult<ExchangeRates__effectiveValueAndRatesAtRoundResult> {
     let result = super.tryCall(
-      'effectiveValueAtRound',
-      'effectiveValueAtRound(bytes32,uint256,bytes32,uint256,uint256):(uint256)',
+      'effectiveValueAndRatesAtRound',
+      'effectiveValueAndRatesAtRound(bytes32,uint256,bytes32,uint256,uint256):(uint256,uint256,uint256)',
       [
         ethereum.Value.fromFixedBytes(sourceCurrencyKey),
         ethereum.Value.fromUnsignedBigInt(sourceAmount),
@@ -722,7 +1035,13 @@ export class ExchangeRates extends ethereum.SmartContract {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(
+      new ExchangeRates__effectiveValueAndRatesAtRoundResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+        value[2].toBigInt()
+      )
+    );
   }
 
   getCurrentRoundId(currencyKey: Bytes): BigInt {
@@ -785,62 +1104,6 @@ export class ExchangeRates extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  inversePricing(param0: Bytes): ExchangeRates__inversePricingResult {
-    let result = super.call(
-      'inversePricing',
-      'inversePricing(bytes32):(uint256,uint256,uint256,bool,bool)',
-      [ethereum.Value.fromFixedBytes(param0)]
-    );
-
-    return new ExchangeRates__inversePricingResult(
-      result[0].toBigInt(),
-      result[1].toBigInt(),
-      result[2].toBigInt(),
-      result[3].toBoolean(),
-      result[4].toBoolean()
-    );
-  }
-
-  try_inversePricing(param0: Bytes): ethereum.CallResult<ExchangeRates__inversePricingResult> {
-    let result = super.tryCall(
-      'inversePricing',
-      'inversePricing(bytes32):(uint256,uint256,uint256,bool,bool)',
-      [ethereum.Value.fromFixedBytes(param0)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new ExchangeRates__inversePricingResult(
-        value[0].toBigInt(),
-        value[1].toBigInt(),
-        value[2].toBigInt(),
-        value[3].toBoolean(),
-        value[4].toBoolean()
-      )
-    );
-  }
-
-  invertedKeys(param0: BigInt): Bytes {
-    let result = super.call('invertedKeys', 'invertedKeys(uint256):(bytes32)', [
-      ethereum.Value.fromUnsignedBigInt(param0),
-    ]);
-
-    return result[0].toBytes();
-  }
-
-  try_invertedKeys(param0: BigInt): ethereum.CallResult<Bytes> {
-    let result = super.tryCall('invertedKeys', 'invertedKeys(uint256):(bytes32)', [
-      ethereum.Value.fromUnsignedBigInt(param0),
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
   isResolverCached(): boolean {
@@ -910,21 +1173,6 @@ export class ExchangeRates extends ethereum.SmartContract {
 
   try_nominatedOwner(): ethereum.CallResult<Address> {
     let result = super.tryCall('nominatedOwner', 'nominatedOwner():(address)', []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  oracle(): Address {
-    let result = super.call('oracle', 'oracle():(address)', []);
-
-    return result[0].toAddress();
-  }
-
-  try_oracle(): ethereum.CallResult<Address> {
-    let result = super.tryCall('oracle', 'oracle():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1065,25 +1313,6 @@ export class ExchangeRates extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  rateIsFrozen(currencyKey: Bytes): boolean {
-    let result = super.call('rateIsFrozen', 'rateIsFrozen(bytes32):(bool)', [
-      ethereum.Value.fromFixedBytes(currencyKey),
-    ]);
-
-    return result[0].toBoolean();
-  }
-
-  try_rateIsFrozen(currencyKey: Bytes): ethereum.CallResult<boolean> {
-    let result = super.tryCall('rateIsFrozen', 'rateIsFrozen(bytes32):(bool)', [
-      ethereum.Value.fromFixedBytes(currencyKey),
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
   rateIsInvalid(currencyKey: Bytes): boolean {
     let result = super.call('rateIsInvalid', 'rateIsInvalid(bytes32):(bool)', [
       ethereum.Value.fromFixedBytes(currencyKey),
@@ -1137,6 +1366,41 @@ export class ExchangeRates extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  rateWithSafetyChecks(currencyKey: Bytes): ExchangeRates__rateWithSafetyChecksResult {
+    let result = super.call(
+      'rateWithSafetyChecks',
+      'rateWithSafetyChecks(bytes32):(uint256,bool,bool)',
+      [ethereum.Value.fromFixedBytes(currencyKey)]
+    );
+
+    return new ExchangeRates__rateWithSafetyChecksResult(
+      result[0].toBigInt(),
+      result[1].toBoolean(),
+      result[2].toBoolean()
+    );
+  }
+
+  try_rateWithSafetyChecks(
+    currencyKey: Bytes
+  ): ethereum.CallResult<ExchangeRates__rateWithSafetyChecksResult> {
+    let result = super.tryCall(
+      'rateWithSafetyChecks',
+      'rateWithSafetyChecks(bytes32):(uint256,bool,bool)',
+      [ethereum.Value.fromFixedBytes(currencyKey)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new ExchangeRates__rateWithSafetyChecksResult(
+        value[0].toBigInt(),
+        value[1].toBoolean(),
+        value[2].toBoolean()
+      )
+    );
+  }
+
   ratesAndInvalidForCurrencies(
     currencyKeys: Array<Bytes>
   ): ExchangeRates__ratesAndInvalidForCurrenciesResult {
@@ -1174,12 +1438,17 @@ export class ExchangeRates extends ethereum.SmartContract {
 
   ratesAndUpdatedTimeForCurrencyLastNRounds(
     currencyKey: Bytes,
-    numRounds: BigInt
+    numRounds: BigInt,
+    roundId: BigInt
   ): ExchangeRates__ratesAndUpdatedTimeForCurrencyLastNRoundsResult {
     let result = super.call(
       'ratesAndUpdatedTimeForCurrencyLastNRounds',
-      'ratesAndUpdatedTimeForCurrencyLastNRounds(bytes32,uint256):(uint256[],uint256[])',
-      [ethereum.Value.fromFixedBytes(currencyKey), ethereum.Value.fromUnsignedBigInt(numRounds)]
+      'ratesAndUpdatedTimeForCurrencyLastNRounds(bytes32,uint256,uint256):(uint256[],uint256[])',
+      [
+        ethereum.Value.fromFixedBytes(currencyKey),
+        ethereum.Value.fromUnsignedBigInt(numRounds),
+        ethereum.Value.fromUnsignedBigInt(roundId),
+      ]
     );
 
     return new ExchangeRates__ratesAndUpdatedTimeForCurrencyLastNRoundsResult(
@@ -1190,12 +1459,17 @@ export class ExchangeRates extends ethereum.SmartContract {
 
   try_ratesAndUpdatedTimeForCurrencyLastNRounds(
     currencyKey: Bytes,
-    numRounds: BigInt
+    numRounds: BigInt,
+    roundId: BigInt
   ): ethereum.CallResult<ExchangeRates__ratesAndUpdatedTimeForCurrencyLastNRoundsResult> {
     let result = super.tryCall(
       'ratesAndUpdatedTimeForCurrencyLastNRounds',
-      'ratesAndUpdatedTimeForCurrencyLastNRounds(bytes32,uint256):(uint256[],uint256[])',
-      [ethereum.Value.fromFixedBytes(currencyKey), ethereum.Value.fromUnsignedBigInt(numRounds)]
+      'ratesAndUpdatedTimeForCurrencyLastNRounds(bytes32,uint256,uint256):(uint256[],uint256[])',
+      [
+        ethereum.Value.fromFixedBytes(currencyKey),
+        ethereum.Value.fromUnsignedBigInt(numRounds),
+        ethereum.Value.fromUnsignedBigInt(roundId),
+      ]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1266,45 +1540,49 @@ export class ExchangeRates extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytesArray());
   }
 
-  roundFrozen(param0: Bytes): BigInt {
-    let result = super.call('roundFrozen', 'roundFrozen(bytes32):(uint256)', [
-      ethereum.Value.fromFixedBytes(param0),
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_roundFrozen(param0: Bytes): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('roundFrozen', 'roundFrozen(bytes32):(uint256)', [
-      ethereum.Value.fromFixedBytes(param0),
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  updateRates(currencyKeys: Array<Bytes>, newRates: Array<BigInt>, timeSent: BigInt): boolean {
-    let result = super.call('updateRates', 'updateRates(bytes32[],uint256[],uint256):(bool)', [
-      ethereum.Value.fromFixedBytesArray(currencyKeys),
-      ethereum.Value.fromUnsignedBigIntArray(newRates),
-      ethereum.Value.fromUnsignedBigInt(timeSent),
-    ]);
+  synthTooVolatileForAtomicExchange(param0: Bytes): boolean {
+    let result = super.call(
+      'synthTooVolatileForAtomicExchange',
+      'synthTooVolatileForAtomicExchange(bytes32):(bool)',
+      [ethereum.Value.fromFixedBytes(param0)]
+    );
 
     return result[0].toBoolean();
   }
 
-  try_updateRates(
-    currencyKeys: Array<Bytes>,
-    newRates: Array<BigInt>,
-    timeSent: BigInt
+  try_synthTooVolatileForAtomicExchange(param0: Bytes): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      'synthTooVolatileForAtomicExchange',
+      'synthTooVolatileForAtomicExchange(bytes32):(bool)',
+      [ethereum.Value.fromFixedBytes(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  synthTooVolatileForAtomicExchange1(
+    param0: ExchangeRates__synthTooVolatileForAtomicExchange1InputParam0Struct
+  ): boolean {
+    let result = super.call(
+      'synthTooVolatileForAtomicExchange',
+      'synthTooVolatileForAtomicExchange((bytes32,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)):(bool)',
+      [ethereum.Value.fromTuple(param0)]
+    );
+
+    return result[0].toBoolean();
+  }
+
+  try_synthTooVolatileForAtomicExchange1(
+    param0: ExchangeRates__synthTooVolatileForAtomicExchange1InputParam0Struct
   ): ethereum.CallResult<boolean> {
-    let result = super.tryCall('updateRates', 'updateRates(bytes32[],uint256[],uint256):(bool)', [
-      ethereum.Value.fromFixedBytesArray(currencyKeys),
-      ethereum.Value.fromUnsignedBigIntArray(newRates),
-      ethereum.Value.fromUnsignedBigInt(timeSent),
-    ]);
+    let result = super.tryCall(
+      'synthTooVolatileForAtomicExchange',
+      'synthTooVolatileForAtomicExchange((bytes32,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)):(bool)',
+      [ethereum.Value.fromTuple(param0)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1334,20 +1612,8 @@ export class ConstructorCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _oracle(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
   get _resolver(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
-
-  get _currencyKeys(): Array<Bytes> {
-    return this._call.inputValues[3].value.toBytesArray();
-  }
-
-  get _newRates(): Array<BigInt> {
-    return this._call.inputValues[4].value.toBigIntArray();
+    return this._call.inputValues[1].value.toAddress();
   }
 }
 
@@ -1419,66 +1685,6 @@ export class AddAggregatorCall__Outputs {
   }
 }
 
-export class DeleteRateCall extends ethereum.Call {
-  get inputs(): DeleteRateCall__Inputs {
-    return new DeleteRateCall__Inputs(this);
-  }
-
-  get outputs(): DeleteRateCall__Outputs {
-    return new DeleteRateCall__Outputs(this);
-  }
-}
-
-export class DeleteRateCall__Inputs {
-  _call: DeleteRateCall;
-
-  constructor(call: DeleteRateCall) {
-    this._call = call;
-  }
-
-  get currencyKey(): Bytes {
-    return this._call.inputValues[0].value.toBytes();
-  }
-}
-
-export class DeleteRateCall__Outputs {
-  _call: DeleteRateCall;
-
-  constructor(call: DeleteRateCall) {
-    this._call = call;
-  }
-}
-
-export class FreezeRateCall extends ethereum.Call {
-  get inputs(): FreezeRateCall__Inputs {
-    return new FreezeRateCall__Inputs(this);
-  }
-
-  get outputs(): FreezeRateCall__Outputs {
-    return new FreezeRateCall__Outputs(this);
-  }
-}
-
-export class FreezeRateCall__Inputs {
-  _call: FreezeRateCall;
-
-  constructor(call: FreezeRateCall) {
-    this._call = call;
-  }
-
-  get currencyKey(): Bytes {
-    return this._call.inputValues[0].value.toBytes();
-  }
-}
-
-export class FreezeRateCall__Outputs {
-  _call: FreezeRateCall;
-
-  constructor(call: FreezeRateCall) {
-    this._call = call;
-  }
-}
-
 export class NominateNewOwnerCall extends ethereum.Call {
   get inputs(): NominateNewOwnerCall__Inputs {
     return new NominateNewOwnerCall__Inputs(this);
@@ -1506,6 +1712,48 @@ export class NominateNewOwnerCall__Outputs {
 
   constructor(call: NominateNewOwnerCall) {
     this._call = call;
+  }
+}
+
+export class RateWithSafetyChecksCall extends ethereum.Call {
+  get inputs(): RateWithSafetyChecksCall__Inputs {
+    return new RateWithSafetyChecksCall__Inputs(this);
+  }
+
+  get outputs(): RateWithSafetyChecksCall__Outputs {
+    return new RateWithSafetyChecksCall__Outputs(this);
+  }
+}
+
+export class RateWithSafetyChecksCall__Inputs {
+  _call: RateWithSafetyChecksCall;
+
+  constructor(call: RateWithSafetyChecksCall) {
+    this._call = call;
+  }
+
+  get currencyKey(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+}
+
+export class RateWithSafetyChecksCall__Outputs {
+  _call: RateWithSafetyChecksCall;
+
+  constructor(call: RateWithSafetyChecksCall) {
+    this._call = call;
+  }
+
+  get rate(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+
+  get broken(): boolean {
+    return this._call.outputValues[1].value.toBoolean();
+  }
+
+  get staleOrInvalid(): boolean {
+    return this._call.outputValues[2].value.toBoolean();
   }
 }
 
@@ -1562,157 +1810,5 @@ export class RemoveAggregatorCall__Outputs {
 
   constructor(call: RemoveAggregatorCall) {
     this._call = call;
-  }
-}
-
-export class RemoveInversePricingCall extends ethereum.Call {
-  get inputs(): RemoveInversePricingCall__Inputs {
-    return new RemoveInversePricingCall__Inputs(this);
-  }
-
-  get outputs(): RemoveInversePricingCall__Outputs {
-    return new RemoveInversePricingCall__Outputs(this);
-  }
-}
-
-export class RemoveInversePricingCall__Inputs {
-  _call: RemoveInversePricingCall;
-
-  constructor(call: RemoveInversePricingCall) {
-    this._call = call;
-  }
-
-  get currencyKey(): Bytes {
-    return this._call.inputValues[0].value.toBytes();
-  }
-}
-
-export class RemoveInversePricingCall__Outputs {
-  _call: RemoveInversePricingCall;
-
-  constructor(call: RemoveInversePricingCall) {
-    this._call = call;
-  }
-}
-
-export class SetInversePricingCall extends ethereum.Call {
-  get inputs(): SetInversePricingCall__Inputs {
-    return new SetInversePricingCall__Inputs(this);
-  }
-
-  get outputs(): SetInversePricingCall__Outputs {
-    return new SetInversePricingCall__Outputs(this);
-  }
-}
-
-export class SetInversePricingCall__Inputs {
-  _call: SetInversePricingCall;
-
-  constructor(call: SetInversePricingCall) {
-    this._call = call;
-  }
-
-  get currencyKey(): Bytes {
-    return this._call.inputValues[0].value.toBytes();
-  }
-
-  get entryPoint(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get upperLimit(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get lowerLimit(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
-  }
-
-  get freezeAtUpperLimit(): boolean {
-    return this._call.inputValues[4].value.toBoolean();
-  }
-
-  get freezeAtLowerLimit(): boolean {
-    return this._call.inputValues[5].value.toBoolean();
-  }
-}
-
-export class SetInversePricingCall__Outputs {
-  _call: SetInversePricingCall;
-
-  constructor(call: SetInversePricingCall) {
-    this._call = call;
-  }
-}
-
-export class SetOracleCall extends ethereum.Call {
-  get inputs(): SetOracleCall__Inputs {
-    return new SetOracleCall__Inputs(this);
-  }
-
-  get outputs(): SetOracleCall__Outputs {
-    return new SetOracleCall__Outputs(this);
-  }
-}
-
-export class SetOracleCall__Inputs {
-  _call: SetOracleCall;
-
-  constructor(call: SetOracleCall) {
-    this._call = call;
-  }
-
-  get _oracle(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class SetOracleCall__Outputs {
-  _call: SetOracleCall;
-
-  constructor(call: SetOracleCall) {
-    this._call = call;
-  }
-}
-
-export class UpdateRatesCall extends ethereum.Call {
-  get inputs(): UpdateRatesCall__Inputs {
-    return new UpdateRatesCall__Inputs(this);
-  }
-
-  get outputs(): UpdateRatesCall__Outputs {
-    return new UpdateRatesCall__Outputs(this);
-  }
-}
-
-export class UpdateRatesCall__Inputs {
-  _call: UpdateRatesCall;
-
-  constructor(call: UpdateRatesCall) {
-    this._call = call;
-  }
-
-  get currencyKeys(): Array<Bytes> {
-    return this._call.inputValues[0].value.toBytesArray();
-  }
-
-  get newRates(): Array<BigInt> {
-    return this._call.inputValues[1].value.toBigIntArray();
-  }
-
-  get timeSent(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-}
-
-export class UpdateRatesCall__Outputs {
-  _call: UpdateRatesCall;
-
-  constructor(call: UpdateRatesCall) {
-    this._call = call;
-  }
-
-  get value0(): boolean {
-    return this._call.outputValues[0].value.toBoolean();
   }
 }
