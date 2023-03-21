@@ -14,7 +14,7 @@ export const PnL = ({ amount, funding, fees = '0', netValue, entryValue }: PnLPr
   const pnl = stringToDecimal(amount) + stringToDecimal(funding) - stringToDecimal(fees);
 
   // 100 * (net value - entry value) / entry value
-  const percentageDiff = Math.abs((100 * (netValue - entryValue)) / entryValue);
+  const percentageDiff = Math.abs((100 * (Math.abs(netValue) - Math.abs(entryValue))) / entryValue);
 
   return (
     <Td border="none">
