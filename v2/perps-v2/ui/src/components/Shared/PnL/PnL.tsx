@@ -5,16 +5,16 @@ import { stringToDecimal } from '../../../utils';
 interface PnLProps {
   amount: string;
   entryPrice: string;
-  lastPrice: string;
+  marketPrice: number;
   funding: string;
   fees: string;
 }
 
-export const PnL = ({ amount, entryPrice, lastPrice, funding, fees = '0' }: PnLProps) => {
+export const PnL = ({ amount, entryPrice, marketPrice, funding, fees = '0' }: PnLProps) => {
   const pnl = stringToDecimal(amount) + stringToDecimal(funding) - stringToDecimal(fees);
 
   const entry = parseInt(entryPrice) / 1e18;
-  const last = parseInt(lastPrice) / 1e18;
+  const last = marketPrice;
 
   const percentageDiff = (100 * (last - entry)) / entry;
   return (

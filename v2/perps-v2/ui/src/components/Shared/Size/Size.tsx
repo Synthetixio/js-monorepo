@@ -3,12 +3,12 @@ import { formatNumberToUsd } from '@snx-v2/formatters';
 
 interface SizeProps {
   size: string;
-  lastPrice: string | null;
+  marketPrice: number | null;
 }
 
-export const Size = ({ size, lastPrice }: SizeProps) => {
+export const Size = ({ size, marketPrice }: SizeProps) => {
   const calculatedSize = Math.abs(parseInt(size) / 1e18);
-  const total = lastPrice ? calculatedSize * (parseInt(lastPrice) / 1e18) : 0;
+  const total = marketPrice ? calculatedSize * marketPrice : 0;
 
   return (
     <Td border="none">

@@ -59,7 +59,7 @@ export const AccountActionsTable = () => {
                   />
                   <Currency amount={price} />
                   {isPosition(label) ? (
-                    <Size size={size} lastPrice={price} />
+                    <Size size={size} marketPrice={price ? parseInt(price) / 1e18 : null} />
                   ) : (
                     <MarginTransfer size={size} />
                   )}

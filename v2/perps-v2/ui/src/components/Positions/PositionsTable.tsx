@@ -72,13 +72,19 @@ export const PositionsTable = () => {
                 },
                 index
               ) => {
+                const skewRatio = parseInt(skew) / parseInt(skewScale);
+                // The last price is the price supplied by oracle.
+                // We need to contruct the market price by applying a premium
+                const marketPrice = (parseInt(lastPrice) / 1e18) * (1 + skewRatio);
+
                 // Need to take away fees
                 const netValue =
-                  Math.abs(parseInt(size) / 1e18) * (parseInt(lastPrice) / 1e18) +
+                  Math.abs(parseInt(size) / 1e18) * marketPrice +
                   parseInt(funding) / 1e18 +
                   parseInt(pnl) / 1e18 -
                   parseInt(fees) / 1e18;
 
+                console.log('price positions is', parseInt(lastPrice) / 1e18);
                 return (
                   <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
                     {/* Market and Direction */}
@@ -88,11 +94,11 @@ export const PositionsTable = () => {
                     <PnL
                       amount={pnl}
                       entryPrice={entryPrice}
-                      lastPrice={lastPrice}
+                      marketPrice={marketPrice}
                       funding={funding}
                       fees={fees}
                     />
-                    <Size size={size} lastPrice={lastPrice} />
+                    <Size size={size} marketPrice={marketPrice} />
                     {/* Collateral */}
                     <Currency amount={margin} />
                     {/* Funding */}
@@ -100,7 +106,7 @@ export const PositionsTable = () => {
                     {/* Entry Price */}
                     <Currency amount={entryPrice} />
                     {/* Mark Price */}
-                    <MarkPrice indexPrice={lastPrice} skew={skew} skewScale={skewScale} />
+                    <MarkPrice lastPrice={lastPrice} markPrice={marketPrice} />
                     {/* Liquidation Price */}
                     <Currency amount={liquidationPrice} />
                   </Tr>
