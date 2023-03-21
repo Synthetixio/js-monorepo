@@ -30,7 +30,7 @@ export const PnL = ({ amount, entryPrice, marketPrice, funding, fees = '0' }: Pn
           {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(pnl)}`}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-          {pnl >= 0 ? '+' : '-'}
+          {pnl >= 0 ? '+' : ''}
           {percentageDiff.toFixed(2)}%
         </Text>
       </Fade>
