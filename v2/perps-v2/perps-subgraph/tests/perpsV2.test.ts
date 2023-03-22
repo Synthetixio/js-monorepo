@@ -68,7 +68,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
@@ -265,7 +265,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
@@ -277,7 +277,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
@@ -337,19 +337,19 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(

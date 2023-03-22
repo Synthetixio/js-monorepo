@@ -6,7 +6,7 @@ import {
   PositionModified,
   PositionLiquidated,
   MarginTransferred,
-  FundingRecomputed1,
+  FundingRecomputed,
 } from '../generated/FuturesMarketManager/PerpsV2Proxy';
 
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
@@ -217,8 +217,8 @@ export function createFunctionRecomputedEvent(
   timestamp: BigInt,
   blockTimestamp: i64,
   logIndex: i64 = 0
-): FundingRecomputed1 {
-  let fundingRecomputedEvent = changetype<FundingRecomputed1>(newMockEvent());
+): FundingRecomputed {
+  let fundingRecomputedEvent = changetype<FundingRecomputed>(newMockEvent());
   fundingRecomputedEvent.parameters = new Array();
   const block = createBlock(blockTimestamp, 5);
   fundingRecomputedEvent.parameters.push(

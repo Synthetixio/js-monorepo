@@ -2,6 +2,14 @@ specVersion: 0.0.5
 schema:
   file: ./schema.graphql
 
+# https://thegraph.com/docs/en/cookbook/grafting/#grafting-manifest-definition
+# TODO @MF save last git commit hash before graph got upgraded
+features:
+  - grafting # feature name
+graft:
+  base: QmavBDavMsWjvM1U2cJvVbor2HHARBrEp1k9zrAXP5sqEE # subgraph ID of base subgraph
+  block: 6782813 # block number
+
 templates:
   - name: AggregatorProxy
     kind: ethereum/contract
@@ -22,6 +30,7 @@ templates:
       eventHandlers:
         - event: 'AggregatorConfirmed(indexed address,indexed address)'
           handler: 'handleAggregatorProxyAddressUpdated'
+
   - name: Aggregator
     kind: ethereum/contract
     source:
@@ -41,6 +50,7 @@ templates:
       eventHandlers:
         - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
           handler: 'handleAggregatorAnswerUpdated'
+
   - name: PerpetualFuturesMarket
     kind: ethereum/contract
     source:
@@ -63,8 +73,7 @@ templates:
         - name: PerpsV2Proxy
           file: ./abis/PerpsV2Proxy.json
       eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
+        - event: PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256,int256)
           handler: handlePositionModified
         - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
           handler: handlePositionLiquidated
@@ -76,12 +85,6 @@ templates:
           handler: handleDelayedOrderRemoved
         - event: MarginTransferred(indexed address,int256)
           handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
         - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
