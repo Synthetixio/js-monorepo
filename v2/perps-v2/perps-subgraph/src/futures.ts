@@ -173,6 +173,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
   }
 
   // New position when var futuresPosition is undefined
+  // TODO @MF what happens when user just deposits margin, why we creating new position?, we need to filter out that when tradeSize != 0 then real trade
   if (!futuresPosition) {
     log.info('new position', [positionId]);
     futuresPosition = new FuturesPosition(positionId);
@@ -288,6 +289,13 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
       synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
         event.params.fee.toBigDecimal()
+      );
+      synthetix.totalVolume = synthetix.totalVolume.plus(
+        event.params.tradeSize
+          .times(event.params.lastPrice)
+          .div(BigInt.fromI32(10).pow(18))
+          .abs()
+          .toBigDecimal()
       );
       tradeEntity.save();
     }

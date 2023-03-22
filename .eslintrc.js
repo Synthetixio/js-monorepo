@@ -181,6 +181,7 @@ module.exports = {
       globals: {
         changetype: true,
         i32: true,
+        u8: true,
         i64: true,
         u32: true,
         u64: true,

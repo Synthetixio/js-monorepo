@@ -1,5 +1,9 @@
 {
   "optimism": {
+    "ExchangeRates": {
+      "address": "0x913bd76F7E1572CC8278CeF2D6b06e2140ca9Ce2",
+      "startBlock": 34047215
+    },
     "FuturesMarketManager": {
       "address": "0xdb89f3fc45A707Dd49781495f77f8ae69bF5cA6e",
       "startBlock": 52456507
@@ -98,101 +102,105 @@
     }
   },
   "optimism-goerli": {
+    "ExchangeRates": {
+      "address": "0x061B75475035c20ef2e35E1002Beb90C3c1f24cC",
+      "startBlock": 2426383
+    },
     "FuturesMarketManager": {
       "address": "0xDD55BE4f3a8885E92d2Acd16869Fab857206B517",
       "startBlock": 3495320
     },
     "PerpsV2ProxyAAVEPERP": {
       "address": "0x3410215D8A0BD57dAc5911785F2A832402D5c828",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyAPEPERP": {
       "address": "0xeff373efBD352531F680575796AE14764bE0391B",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyATOMPERP": {
       "address": "0xcCdc541a12CA359216913c1893C080d951874346",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyAUDPERP": {
       "address": "0x95b78e2E07090587754f3088Ef8a8232f1Ab7E47",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyAVAXPERP": {
       "address": "0xe140356AB1F0558e020610C9C6BccdAA4FDDE2f4",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyAXSPERP": {
       "address": "0x9CE0556a563f18AeA0E89F407B0b1710F095956f",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyBNBPERP": {
       "address": "0x307072038D47bAE97CaE56C0eA87F2a5f0CD8389",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyBTCPERP": {
       "address": "0xd5844EA3701a4507C27ebc5EBA733E1Aa2915B31",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyDOGEPERP": {
       "address": "0x3A4D5262b10C670a06550FCf7346cd408343B3FB",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyDYDXPERP": {
       "address": "0xb97e868a340BA00C10557c234C9F17cC41B0f667",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyETHPERP": {
       "address": "0x111BAbcdd66b1B60A20152a2D3D06d36F8B5703c",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyEURPERP": {
       "address": "0x9C54994933205E33628A8870c05AFF0878b1A56b",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyFLOWPERP": {
       "address": "0xcFA34059b55E1a1c820e4D62A6CA4f8e00522eBB",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyFTMPERP": {
       "address": "0x70362529cCfF83f586EB48e978eF3b60384cE050",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyGBPPERP": {
       "address": "0x534181B37bdaFdD1E28104Bc5117184F40e1056F",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyLINKPERP": {
       "address": "0x6141dcfF3494921e1C4Cdb115daD20C6656f6EFA",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyMATICPERP": {
       "address": "0x7bBEa20899d358ed6d877f32af1BCb525a5fCF31",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyNEARPERP": {
       "address": "0xf503e527854b510C1952425d4b61c6bba40028CE",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyOPPERP": {
       "address": "0x4926222EDDa82965Aa08080f281928f8cba5922A",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxySOLPERP": {
       "address": "0x62068eBDCEbcB0eB984aBfEa4c7f9A244050e0Ca",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyUNIPERP": {
       "address": "0xaF11B4281259D7Ae31F945a2911Ba75347C2799d",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyXAGPERP": {
       "address": "0x78D1232449387571D652E2a893DC0feaC6E92436",
-      "startBlock": 0
+      "startBlock": 3495320
     },
     "PerpsV2ProxyXAUPERP": {
       "address": "0xcC312F5Bac1C36CC70AbcbE76De913633Af88FFB",
-      "startBlock": 0
+      "startBlock": 3495320
     }
   }
 }
