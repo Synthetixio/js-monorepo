@@ -47,6 +47,16 @@
       ]
     }
   ],
-  "redirects": [{ "source": "/:address", "destination": "/account/:address" }],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html",
+      "has": [
+        {
+          "type": "pathname",
+          "value": "/public"
+        }
+      ]
+    }
+  ]
 }

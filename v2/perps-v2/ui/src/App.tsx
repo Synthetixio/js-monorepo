@@ -14,7 +14,7 @@ function App() {
 
   const onSubmit = () => {
     if (getValues('address')) {
-      navigate(`/account/${getValues('address')}`);
+      navigate(`/${getValues('address')}`);
     }
   };
 

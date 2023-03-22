@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: 'account/:walletAddress',
+    path: '/:walletAddress',
     element: (
       <>
         <Header />
@@ -34,15 +34,6 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  // {
-  //   path: '/actions',
-  //   element: (
-  //     <>
-  //       <Header />
-  //       <Actions />
-  //     </>
-  //   ),
-  // },
 ]);
 
 const container = document.querySelector('#app');
