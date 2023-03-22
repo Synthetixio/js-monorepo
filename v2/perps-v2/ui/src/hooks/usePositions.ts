@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { BigNumber, Contract, providers } from 'ethers';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
@@ -14,40 +13,16 @@ import {
   address as multiCallAddress,
   Multicall3,
 } from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
+import { useQuery as useReactQuery } from '@tanstack/react-query';
 
 const provider = new providers.InfuraProvider(10, infuraId);
 
 const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
 const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider) as Multicall3;
 
-interface PositionsData {
-  address: string | undefined;
-  entryPrice: string;
-  indexPrice: string;
-  leverage: string;
-  pnl: string;
-  margin: string;
-  size: string;
-  long: boolean;
-  liquidationPrice: string;
-  asset: string;
-  funding: string;
-  notionalValue: string;
-  skew: string;
-  skewScale: string;
-  fees: string;
-}
-
-interface PositionsState {
-  loading: boolean;
-  data: PositionsData[];
-}
-
 export const usePositions = (walletAddress?: string) => {
-  const [state, setState] = useState<PositionsState>({ loading: true, data: [] });
-
   // Initial query to give a list of markets
-  const { loading, data, error } = useQuery(POSITIONS_QUERY_MARKET, {
+  const { data, error } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
       where: { isOpen: true, account: walletAddress },
       orderBy: FuturesPosition_OrderBy.Size,
@@ -56,131 +31,67 @@ export const usePositions = (walletAddress?: string) => {
     },
     pollInterval: 5000,
   });
+  const openPositions = data?.futuresPositions.map((item) => ({
+    market: item.market.marketKey,
+    asset: item.market.asset,
+    entryPrice: item.entryPrice,
+    leverage: item.leverage,
+    fees: item.feesPaidToSynthetix,
+  }));
+  const subgraphFetchTime = Date.now();
 
-  useEffect(() => {
-    if (data && data?.futuresPositions.length > 0) {
-      (async () => {
-        const update: PositionsData[] = [];
-        const markets = data?.futuresPositions.map((item) => {
+  return useReactQuery({
+    queryKey: [
+      'usePosition',
+      {
+        walletAddress,
+        subgraphFetchTime: subgraphFetchTime,
+      },
+    ],
+    queryFn: async () => {
+      if (!openPositions) throw Error('Query should not be enabled');
+      if (error) throw error;
+
+      const positionsData = await fetchPositions(openPositions, walletAddress || '');
+      return positionsData.map(
+        ({ position, entryPrice, leverage, asset, skew, skewScale, fees, indexPrice }) => {
+          const {
+            accessibleMargin,
+            liquidationPrice,
+            accruedFunding,
+            profitLoss,
+            position: { size },
+            notionalValue,
+          } = position;
+
+          const isLong = !size.toString().includes('-');
+
           return {
-            market: item.market.marketKey,
-            asset: item.market.asset,
-            entryPrice: item.entryPrice,
-            leverage: item.leverage,
-            fees: item.feesPaidToSynthetix,
+            address: walletAddress,
+            asset,
+            indexPrice: indexPrice.toString(),
+            liquidationPrice: liquidationPrice.toString(),
+            pnl: profitLoss.toString(),
+            margin: accessibleMargin.toString(),
+            size: size.toString(),
+            long: isLong,
+            entryPrice,
+            leverage,
+            funding: accruedFunding.toString(),
+            notionalValue: notionalValue.toString(),
+            skew: skew.toString(),
+            skewScale: skewScale.toString(),
+            fees,
           };
-        });
-
-        const positionsData = await fetchPositions(markets, walletAddress || '');
-
-        positionsData.forEach(
-          ({ position, entryPrice, leverage, asset, skew, skewScale, fees, indexPrice }) => {
-            const {
-              accessibleMargin,
-              liquidationPrice,
-              accruedFunding,
-              profitLoss,
-              position: { size },
-              notionalValue,
-            } = position;
-
-            const isLong = !size.toString().includes('-');
-
-            update.push({
-              address: walletAddress,
-              asset,
-              indexPrice: indexPrice.toString(),
-              liquidationPrice: liquidationPrice.toString(),
-              pnl: profitLoss.toString(),
-              margin: accessibleMargin.toString(),
-              size: size.toString(),
-              long: isLong,
-              entryPrice,
-              leverage,
-              funding: accruedFunding.toString(),
-              notionalValue: notionalValue.toString(),
-              skew: skew.toString(),
-              skewScale: skewScale.toString(),
-              fees,
-            });
-          }
-        );
-
-        setState({ loading: false, data: update });
-      })();
-
-      const id = setInterval(() => {
-        (async () => {
-          const update: PositionsData[] = [];
-          const markets = data?.futuresPositions.map((item) => {
-            return {
-              market: item.market.marketKey,
-              asset: item.market.asset,
-              entryPrice: item.entryPrice,
-              leverage: item.leverage,
-              id: item.id,
-              fees: item.feesPaidToSynthetix,
-            };
-          });
-
-          const ids = data.futuresPositions.map(({ id }) => id);
-          console.log(
-            `Polling ${ids.length} position${ids.length === 1 ? '' : 's'}:`,
-            ids.join(' ')
-          );
-          if (ids.length === 0) return;
-
-          const positionsData = await fetchPositions(markets, walletAddress || '');
-
-          positionsData.forEach(
-            ({ asset, position, entryPrice, leverage, skew, skewScale, indexPrice, fees }) => {
-              const {
-                accessibleMargin,
-                liquidationPrice,
-                accruedFunding,
-                profitLoss,
-                position: { size },
-                notionalValue,
-              } = position;
-              const isLong = !size.toString().includes('-');
-
-              update.push({
-                address: walletAddress,
-                asset,
-                indexPrice: indexPrice.toString(),
-                liquidationPrice: liquidationPrice.toString(),
-                pnl: profitLoss.toString(),
-                margin: accessibleMargin.toString(),
-                size: size.toString(),
-                long: isLong,
-                entryPrice,
-                leverage,
-                funding: accruedFunding.toString(),
-                notionalValue: notionalValue.toString(),
-                skew: skew.toString(),
-                skewScale: skewScale.toString(),
-                fees,
-              });
-            }
-          );
-        })();
-      }, 5000);
-
-      return () => clearInterval(id);
-    } else if (!loading && data) {
-      setState({ loading: false, data: [] });
-    }
-  }, [data, loading, walletAddress]);
-
-  return { ...state, error };
+        }
+      );
+    },
+    enabled: Boolean(openPositions),
+  });
 };
 
 interface PositionData {
   market: string;
-  asset: string;
-  entryPrice: string;
-  leverage: string;
-  fees: string;
 }
 
 interface DataResponse {
