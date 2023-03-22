@@ -16,7 +16,7 @@ export const WalletAddress = ({ account }: WalletAddressProps) => {
       fontWeight={500}
       textDecoration="underline"
     >
-      <Link to={`/${account}`}>
+      <Link to={`/account/${account}`}>
         <Fade in>{truncateAddress(account)}</Fade>
       </Link>
     </Td>
