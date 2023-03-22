@@ -6953,6 +6953,7 @@ __metadata:
   resolution: "@snx-v2/StatBox@workspace:v2/components/StatBox"
   dependencies:
     "@chakra-ui/react": ^2.5.0
+    "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.16
   languageName: unknown
   linkType: soft
@@ -10428,6 +10429,7 @@ __metadata:
     "@snx-v2/RewardsItem": "workspace:^"
     "@snx-v2/SelfLiquidation": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
+    "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/SwitchNetworkContext": "workspace:*"
     "@snx-v2/TermsModal": "workspace:^"
@@ -10438,6 +10440,8 @@ __metadata:
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/useApr": "workspace:*"
+    "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
