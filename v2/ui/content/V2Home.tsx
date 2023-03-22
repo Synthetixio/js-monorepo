@@ -53,29 +53,25 @@ const V2Home = () => {
             </Flex>
           )}
           <Container maxW="1200px" py="1" mb={8}>
-            {!isStaking && isAppReady && <Welcome mt={8} />}
             <Flex
               mt="4"
               flexDirection={['column', 'column', 'column', 'row']}
               py={4}
               justifyContent="space-between"
             >
-              {isStaking ? (
-                <Box
-                  paddingY="7"
-                  paddingX="4"
-                  bg="navy.900"
-                  flex="1"
-                  border="1px"
-                  borderColor="gray.900"
-                  borderRadius="base"
-                >
-                  <CRatioHealthCard />
-                  <MainActionCardsList connectWallet={connectWallet} />
-                </Box>
-              ) : (
+              <Box
+                paddingY={isStaking ? '7' : undefined}
+                paddingX={isStaking ? '4' : undefined}
+                bg={isStaking ? 'navy.900' : undefined}
+                border={isStaking ? '1px' : undefined}
+                borderColor={isStaking ? 'gray.900' : undefined}
+                borderRadius="base"
+                flex="1"
+              >
+                {!isStaking && isAppReady && <Welcome mb={4} />}
+                {isStaking && <CRatioHealthCard />}
                 <MainActionCardsList connectWallet={connectWallet} />
-              )}
+              </Box>
               <Flex
                 ml={[0, 0, 0, 6]}
                 mt={[8, 8, 8, 0]}
