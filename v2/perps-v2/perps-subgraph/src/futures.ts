@@ -1,4 +1,12 @@
-import { Address, BigDecimal, BigInt, log, store } from '@graphprotocol/graph-ts';
+import {
+  Address,
+  BigDecimal,
+  BigInt,
+  DataSourceContext,
+  log,
+  store,
+} from '@graphprotocol/graph-ts';
+import { PerpetualFuturesMarket } from '../generated/templates';
 import {
   PositionLiquidated as PositionLiquidatedEvent,
   PositionModified as PositionModifiedEvent,
@@ -14,7 +22,7 @@ import {
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
   PerpsTracking as PerpsTrackingEvent,
-} from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
+} from '../generated/FuturesMarketManager/PerpsV2Proxy';
 import {
   PositionLiquidated,
   Trader,
@@ -27,6 +35,23 @@ import {
   FuturesMarket,
   Frontend,
 } from '../generated/schema';
+
+export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
+  let marketEntity = new FuturesMarket(event.params.market.toHex());
+  marketEntity.asset = event.params.asset;
+  marketEntity.marketKey = event.params.marketKey;
+  marketEntity.timestamp = event.block.timestamp;
+  marketEntity.save();
+
+  if (event.params.marketKey.toString().endsWith('PERP')) {
+    let context = new DataSourceContext();
+    PerpetualFuturesMarket.createWithContext(event.params.market, context);
+  }
+}
+
+export function handleFuturesMarketRemoved(event: MarketRemovedEvent): void {
+  store.remove('FuturesMarket', event.params.market.toHex());
+}
 
 export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   const futuresPositionId = event.address.toHex() + '-' + event.params.id.toHex();
@@ -646,18 +671,6 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
       futuresOrderEntity.save();
     }
   }
-}
-
-export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
-  let marketEntity = new FuturesMarket(event.params.market.toHex());
-  marketEntity.asset = event.params.asset;
-  marketEntity.marketKey = event.params.marketKey;
-  marketEntity.timestamp = event.block.timestamp;
-  marketEntity.save();
-}
-
-export function handleMarketRemoved(event: MarketRemovedEvent): void {
-  store.remove('FuturesMarket', event.params.market.toHex());
 }
 
 export function handlePerpsTracking(event: PerpsTrackingEvent): void {

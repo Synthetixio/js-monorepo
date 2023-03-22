@@ -14,6 +14,7 @@ import {
   Bytes,
   DataSourceContext,
   dataSource,
+  log,
 } from '@graphprotocol/graph-ts';
 
 const ONE_MINUTE_SECONDS = BigInt.fromI32(60);
@@ -249,9 +250,14 @@ export function handleAggregatorProxyAddressUpdated(event: AggregatorConfirmedEv
 }
 
 export function handleAggregatorAnswerUpdated(event: AnswerUpdatedEvent): void {
-  let context = dataSource.context();
-  let rate = event.params.current.times(BigInt.fromI32(10).pow(10));
+  const context = dataSource.context();
+  // We don't care about prices before perps v2 was launched
+  // Will break candles for op-goerli network
+  if (event.block.number.lt(BigInt.fromI32(52456507))) {
+    return;
+  }
 
+  const rate = event.params.current.times(BigInt.fromI32(10).pow(10));
   addDollar('sUSD');
   addLatestRate(context.getString('currencyKey'), rate, event.address, event);
 }
