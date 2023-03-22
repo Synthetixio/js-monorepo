@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { Box, Container, Flex, Text, Center, SimpleGrid, Alert, Link } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
@@ -19,17 +18,18 @@ import {
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
 import { Welcome } from '@snx-v2/Welcome';
-import { ContractContext } from '@snx-v2/ContractContext';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 import Connector from 'containers/Connector';
-import { EXTERNAL_LINKS } from '@snx-v2/Constants';
+import { EXTERNAL_LINKS, PROD_HOSTNAME } from '@snx-v2/Constants';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { useDebtData } from '@snx-v2/useDebtData';
 
 const V2Home = () => {
   const { t } = useTranslation();
-  const { walletAddress } = useContext(ContractContext);
   const { isAppReady, connectWallet } = Connector.useContainer();
   const { delegateWallet } = useDelegateWallet();
+  const { data: debtData } = useDebtData();
+  const isStaking = debtData?.debtBalance.gt(0);
 
   return (
     <>
@@ -44,7 +44,7 @@ const V2Home = () => {
                   color="cyan.500"
                   textDecoration="underline"
                   ml={1}
-                  href="https://staking.synthetix.eth.limo/"
+                  href={PROD_HOSTNAME}
                   target="_blank"
                 >
                   staking.synthetix.eth.limo
@@ -53,14 +53,14 @@ const V2Home = () => {
             </Flex>
           )}
           <Container maxW="1200px" py="1" mb={8}>
-            {!walletAddress && isAppReady && <Welcome mt={8} />}
+            {!isStaking && isAppReady && <Welcome mt={8} />}
             <Flex
               mt="4"
               flexDirection={['column', 'column', 'column', 'row']}
               py={4}
               justifyContent="space-between"
             >
-              {walletAddress ? (
+              {isStaking ? (
                 <Box
                   paddingY="7"
                   paddingX="4"
@@ -84,9 +84,9 @@ const V2Home = () => {
                 maxWidth={['none', 'none', 'none', '287px']}
                 flexDirection="column"
               >
-                {walletAddress && <BalanceBox />}
+                {isStaking && <BalanceBox />}
                 {delegateWallet ? null : (
-                  <Box mt={walletAddress ? 4 : 0}>
+                  <Box mt={isStaking ? 4 : 0}>
                     <BoxLink
                       to="/bridge"
                       headline={t('staking-v2.v2-home.box-links.bridge.headline')}
