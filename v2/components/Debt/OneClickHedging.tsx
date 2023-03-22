@@ -132,7 +132,7 @@ const OneClickHedgingUi: FC<{
                 href={EXTERNAL_LINKS.Toros.dSNXPool}
                 isExternal={true}
               >
-                Hedge on Torus <ArrowTopRight ml="1" />
+                Hedge on Toros <ArrowTopRight ml="1" />
               </Button>
             </StyledTd>
           </Tbody>
