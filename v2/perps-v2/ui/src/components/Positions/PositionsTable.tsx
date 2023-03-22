@@ -12,10 +12,10 @@ import {
 } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
 import { usePositions } from '../../hooks';
+import { formatUnits } from 'ethers/lib/utils';
 
 export const PositionsTable = () => {
   const { walletAddress } = useParams();
-
   const { loading, data, error } = usePositions(walletAddress);
 
   return (
@@ -58,7 +58,7 @@ export const PositionsTable = () => {
                 {
                   asset,
                   entryPrice,
-                  lastPrice,
+                  indexPrice,
                   leverage,
                   pnl,
                   margin,
@@ -69,13 +69,21 @@ export const PositionsTable = () => {
                   liquidationPrice,
                   skew,
                   skewScale,
+                  fees,
                 },
                 index
               ) => {
+                const skewRatio = parseInt(skew) / parseInt(skewScale);
+                // The last price is the price supplied by oracle.
+                // We need to contruct the market price by applying a premium
+                const marketPrice = parseFloat(formatUnits(indexPrice, 18)) * (1 + skewRatio);
+                const sizeAmount = parseFloat(formatUnits(size, 18));
+                // Need to take away fees
                 const netValue =
-                  Math.abs(parseInt(size) / 1e18) * (parseInt(lastPrice) / 1e18) +
-                  parseInt(funding) / 1e18 +
-                  parseInt(pnl) / 1e18;
+                  Math.abs(sizeAmount) * marketPrice +
+                  parseFloat(formatUnits(funding, 18)) +
+                  parseFloat(formatUnits(pnl, 18)) -
+                  parseFloat(formatUnits(fees, 18));
 
                 return (
                   <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
@@ -83,8 +91,14 @@ export const PositionsTable = () => {
                     <Market asset={asset} leverage={leverage} long={long} />
                     {/* Net value */}
                     <NetValue amount={netValue} />
-                    <PnL amount={pnl} entryPrice={entryPrice} lastPrice={lastPrice} />
-                    <Size size={size} lastPrice={lastPrice} />
+                    <PnL
+                      amount={pnl}
+                      funding={funding}
+                      fees={fees}
+                      netValue={netValue}
+                      entryValue={sizeAmount * parseFloat(formatUnits(entryPrice, 18))}
+                    />
+                    <Size size={size} marketPrice={marketPrice} />
                     {/* Collateral */}
                     <Currency amount={margin} />
                     {/* Funding */}
@@ -92,7 +106,7 @@ export const PositionsTable = () => {
                     {/* Entry Price */}
                     <Currency amount={entryPrice} />
                     {/* Mark Price */}
-                    <MarkPrice indexPrice={lastPrice} skew={skew} skewScale={skewScale} />
+                    <MarkPrice lastPrice={indexPrice} markPrice={marketPrice} />
                     {/* Liquidation Price */}
                     <Currency amount={liquidationPrice} />
                   </Tr>

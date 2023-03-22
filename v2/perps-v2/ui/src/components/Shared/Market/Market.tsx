@@ -1,4 +1,5 @@
 import { Box, Fade, Flex, Td, Text } from '@chakra-ui/react';
+import { formatUnits } from 'ethers/lib/utils';
 import { utils } from 'ethers';
 import { CurrencyIcon } from '../../CurrencyIcon';
 
@@ -7,13 +8,18 @@ interface MarketProps {
   leverage: string | null;
   long: boolean;
   isPosition?: boolean;
+  label?: string;
 }
 
 const replace = ['sETH', 'sBTC'];
 
-export const Market = ({ asset, leverage, long, isPosition = true }: MarketProps) => {
+export const Market = ({ asset, leverage, long, isPosition = true, label }: MarketProps) => {
   const marketName = utils.parseBytes32String(asset);
   const assetDisplayName = replace.includes(marketName) ? marketName.substring(1) : marketName;
+
+  const showDirection = label && !label.includes('Closed');
+
+  const leverageString = leverage ? `${parseFloat(formatUnits(leverage, 18)).toFixed(2)}x` : '';
 
   return (
     <Fade in>
@@ -28,9 +34,9 @@ export const Market = ({ asset, leverage, long, isPosition = true }: MarketProps
               fontWeight={500}
               color="gray.50"
             >{`${assetDisplayName.toUpperCase()}-PERP`}</Text>
-            {isPosition && (
+            {isPosition && showDirection && (
               <Text fontSize="12px" lineHeight="16px" fontFamily="heading" color="gray.500">
-                {leverage ? `${(parseInt(leverage) / 1e18).toFixed(2)}x ` : ''}
+                {leverageString}
                 <Text as="span" color={long ? 'green.500' : 'red.500'}>
                   {long ? 'LONG' : 'SHORT'}
                 </Text>

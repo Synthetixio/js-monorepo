@@ -4,17 +4,18 @@ import { stringToDecimal } from '../../../utils';
 
 interface PnLProps {
   amount: string;
-  entryPrice: string;
-  lastPrice: string;
+  funding: string;
+  fees: string;
+  netValue: number;
+  entryValue: number;
 }
 
-export const PnL = ({ amount, entryPrice, lastPrice }: PnLProps) => {
-  const pnl = stringToDecimal(amount);
+export const PnL = ({ amount, funding, fees = '0', netValue, entryValue }: PnLProps) => {
+  const pnl = stringToDecimal(amount) + stringToDecimal(funding) - stringToDecimal(fees);
 
-  const entry = parseInt(entryPrice) / 1e18;
-  const last = parseInt(lastPrice) / 1e18;
+  // 100 * (net value - entry value) / entry value
+  const percentageDiff = Math.abs((100 * (Math.abs(netValue) - Math.abs(entryValue))) / entryValue);
 
-  const percentageDiff = (100 * (last - entry)) / entry;
   return (
     <Td border="none">
       <Fade in>
@@ -25,7 +26,7 @@ export const PnL = ({ amount, entryPrice, lastPrice }: PnLProps) => {
           lineHeight="20px"
           color={pnl >= 0 ? 'green.500' : 'red.500'}
         >
-          {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(stringToDecimal(amount))}`}
+          {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(pnl)}`}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
           {pnl >= 0 ? '+' : '-'}

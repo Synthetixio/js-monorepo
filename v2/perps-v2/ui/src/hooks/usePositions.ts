@@ -23,7 +23,7 @@ const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider
 interface PositionsData {
   address: string | undefined;
   entryPrice: string;
-  lastPrice: string;
+  indexPrice: string;
   leverage: string;
   pnl: string;
   margin: string;
@@ -35,6 +35,7 @@ interface PositionsData {
   notionalValue: string;
   skew: string;
   skewScale: string;
+  fees: string;
 }
 
 interface PositionsState {
@@ -66,39 +67,44 @@ export const usePositions = (walletAddress?: string) => {
             asset: item.market.asset,
             entryPrice: item.entryPrice,
             leverage: item.leverage,
+            fees: item.feesPaidToSynthetix,
           };
         });
+
         const positionsData = await fetchPositions(markets, walletAddress || '');
 
-        positionsData.forEach(({ position, entryPrice, leverage, asset, skew, skewScale }) => {
-          const {
-            accessibleMargin,
-            liquidationPrice,
-            accruedFunding,
-            profitLoss,
-            position: { lastPrice, size },
-            notionalValue,
-          } = position;
+        positionsData.forEach(
+          ({ position, entryPrice, leverage, asset, skew, skewScale, fees, indexPrice }) => {
+            const {
+              accessibleMargin,
+              liquidationPrice,
+              accruedFunding,
+              profitLoss,
+              position: { size },
+              notionalValue,
+            } = position;
 
-          const isLong = !size.toString().includes('-');
+            const isLong = !size.toString().includes('-');
 
-          update.push({
-            address: walletAddress,
-            asset,
-            lastPrice: lastPrice.toString(),
-            liquidationPrice: liquidationPrice.toString(),
-            pnl: profitLoss.toString(),
-            margin: accessibleMargin.toString(),
-            size: size.toString(),
-            long: isLong,
-            entryPrice,
-            leverage,
-            funding: accruedFunding.toString(),
-            notionalValue: notionalValue.toString(),
-            skew: skew.toString(),
-            skewScale: skewScale.toString(),
-          });
-        });
+            update.push({
+              address: walletAddress,
+              asset,
+              indexPrice: indexPrice.toString(),
+              liquidationPrice: liquidationPrice.toString(),
+              pnl: profitLoss.toString(),
+              margin: accessibleMargin.toString(),
+              size: size.toString(),
+              long: isLong,
+              entryPrice,
+              leverage,
+              funding: accruedFunding.toString(),
+              notionalValue: notionalValue.toString(),
+              skew: skew.toString(),
+              skewScale: skewScale.toString(),
+              fees,
+            });
+          }
+        );
 
         setState({ loading: false, data: update });
       })();
@@ -113,6 +119,7 @@ export const usePositions = (walletAddress?: string) => {
               entryPrice: item.entryPrice,
               leverage: item.leverage,
               id: item.id,
+              fees: item.feesPaidToSynthetix,
             };
           });
 
@@ -124,34 +131,38 @@ export const usePositions = (walletAddress?: string) => {
           if (ids.length === 0) return;
 
           const positionsData = await fetchPositions(markets, walletAddress || '');
-          positionsData.forEach(({ asset, position, entryPrice, leverage, skew, skewScale }) => {
-            const {
-              accessibleMargin,
-              liquidationPrice,
-              accruedFunding,
-              profitLoss,
-              position: { lastPrice, size },
-              notionalValue,
-            } = position;
-            const isLong = !size.toString().includes('-');
 
-            update.push({
-              address: walletAddress,
-              asset,
-              lastPrice: lastPrice.toString(),
-              liquidationPrice: liquidationPrice.toString(),
-              pnl: profitLoss.toString(),
-              margin: accessibleMargin.toString(),
-              size: size.toString(),
-              long: isLong,
-              entryPrice,
-              leverage,
-              funding: accruedFunding.toString(),
-              notionalValue: notionalValue.toString(),
-              skew: skew.toString(),
-              skewScale: skewScale.toString(),
-            });
-          });
+          positionsData.forEach(
+            ({ asset, position, entryPrice, leverage, skew, skewScale, indexPrice, fees }) => {
+              const {
+                accessibleMargin,
+                liquidationPrice,
+                accruedFunding,
+                profitLoss,
+                position: { size },
+                notionalValue,
+              } = position;
+              const isLong = !size.toString().includes('-');
+
+              update.push({
+                address: walletAddress,
+                asset,
+                indexPrice: indexPrice.toString(),
+                liquidationPrice: liquidationPrice.toString(),
+                pnl: profitLoss.toString(),
+                margin: accessibleMargin.toString(),
+                size: size.toString(),
+                long: isLong,
+                entryPrice,
+                leverage,
+                funding: accruedFunding.toString(),
+                notionalValue: notionalValue.toString(),
+                skew: skew.toString(),
+                skewScale: skewScale.toString(),
+                fees,
+              });
+            }
+          );
         })();
       }, 5000);
 
@@ -169,6 +180,7 @@ interface PositionData {
   asset: string;
   entryPrice: string;
   leverage: string;
+  fees: string;
 }
 
 interface DataResponse {
@@ -179,6 +191,8 @@ interface DataResponse {
   position: PerpsV2MarketData.PositionDataStructOutput;
   skew: BigNumber;
   skewScale: BigNumber;
+  indexPrice: BigNumber;
+  fees: string;
 }
 
 async function fetchPositions(
@@ -192,20 +206,25 @@ async function fetchPositions(
       address,
     ]),
   }));
+
   const marketDetailCalls = positionData.map(({ market }) => ({
     target: contract.address,
     callData: contract.interface.encodeFunctionData('marketDetailsForKey', [market]),
   }));
+
   const multiCallResponse = await Multicall3Contract.callStatic.aggregate(
     positionDetailCalls.concat(marketDetailCalls)
   );
+
   const positionsDetailsMulticallResult = multiCallResponse.returnData.slice(
     0,
     positionDetailCalls.length
   );
+
   const marketDetailMulticallResult = multiCallResponse.returnData.slice(
     positionDetailCalls.length
   );
+
   // The result from decodeFunctionResult isn't typed, we could use zod to validate but doing a type assertion for now..
   const dataToReturn: DataResponse[] = positionsDetailsMulticallResult.map(
     (positionDetailsBytes, index) => {
@@ -213,12 +232,13 @@ async function fetchPositions(
         'positionDetailsForMarketKey',
         positionDetailsBytes
       )[0];
+
       const marketDetailsBytes = marketDetailMulticallResult[index];
-      const { fundingParameters, marketSizeDetails } = contract.interface.decodeFunctionResult(
-        'marketDetailsForKey',
-        marketDetailsBytes
-      )[0];
-      const { market, leverage, entryPrice, asset } = positionData[index];
+      const { fundingParameters, marketSizeDetails, priceDetails } =
+        contract.interface.decodeFunctionResult('marketDetailsForKey', marketDetailsBytes)[0];
+
+      const { market, leverage, entryPrice, asset, fees } = positionData[index];
+
       return {
         market,
         leverage,
@@ -227,8 +247,11 @@ async function fetchPositions(
         position: positionDetails,
         skew: marketSizeDetails.marketSkew,
         skewScale: fundingParameters.skewScale,
+        indexPrice: priceDetails.price,
+        fees,
       };
     }
   );
+
   return dataToReturn;
 }

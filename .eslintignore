@@ -14,3 +14,4 @@ packages/queries/subgraphs
 **/junit.xml
 **/generated
 tools/tenderly/fork.json
+v2/perps-v2/ui/src/__generated__

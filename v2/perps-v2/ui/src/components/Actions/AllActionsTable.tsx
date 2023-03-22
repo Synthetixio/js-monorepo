@@ -3,6 +3,8 @@ import { Currency, TableHeaderCell, Market, Size, WalletAddress, MarginTransfer 
 import { AllActionsLoading } from './AllActionsLoading';
 import { useActions } from '../../hooks';
 import { Action } from '../Shared/Action';
+import { formatUnits } from 'ethers/lib/utils';
+
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
 export const AllActionsTable = () => {
@@ -54,6 +56,7 @@ export const AllActionsTable = () => {
                   <Action label={label} txHash={txHash} timestamp={timestamp} />
                   <WalletAddress account={address} />
                   <Market
+                    label={label}
                     asset={asset}
                     leverage={leverage}
                     long={isLong}
@@ -61,7 +64,10 @@ export const AllActionsTable = () => {
                   />
                   <Currency amount={price} />
                   {isPosition(label) ? (
-                    <Size size={size} lastPrice={price} />
+                    <Size
+                      size={size}
+                      marketPrice={price ? parseFloat(formatUnits(price, 18)) : null}
+                    />
                   ) : (
                     <MarginTransfer size={size} />
                   )}
