@@ -12,6 +12,7 @@ import {
 } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
 import { usePositions } from '../../hooks';
+import { formatUnits } from 'ethers/lib/utils';
 
 export const PositionsTable = () => {
   const { walletAddress } = useParams();
@@ -75,14 +76,14 @@ export const PositionsTable = () => {
                 const skewRatio = parseInt(skew) / parseInt(skewScale);
                 // The last price is the price supplied by oracle.
                 // We need to contruct the market price by applying a premium
-                const marketPrice = (parseInt(lastPrice) / 1e18) * (1 + skewRatio);
-                const sizeAmount = parseInt(size) / 1e18;
+                const marketPrice = parseFloat(formatUnits(lastPrice, 18)) * (1 + skewRatio);
+                const sizeAmount = parseFloat(formatUnits(size, 18));
                 // Need to take away fees
                 const netValue =
                   Math.abs(sizeAmount) * marketPrice +
-                  parseInt(funding) / 1e18 +
-                  parseInt(pnl) / 1e18 -
-                  parseInt(fees) / 1e18;
+                  parseFloat(formatUnits(funding, 18)) +
+                  parseFloat(formatUnits(pnl, 18)) -
+                  parseFloat(formatUnits(fees, 18));
 
                 return (
                   <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
@@ -95,7 +96,7 @@ export const PositionsTable = () => {
                       funding={funding}
                       fees={fees}
                       netValue={netValue}
-                      entryValue={(sizeAmount * parseInt(entryPrice)) / 1e18}
+                      entryValue={sizeAmount * parseFloat(formatUnits(entryPrice, 18))}
                     />
                     <Size size={size} marketPrice={marketPrice} />
                     {/* Collateral */}

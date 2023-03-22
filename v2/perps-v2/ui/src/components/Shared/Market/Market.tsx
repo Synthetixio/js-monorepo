@@ -1,4 +1,5 @@
 import { Box, Fade, Flex, Td, Text } from '@chakra-ui/react';
+import { formatUnits } from '@ethersproject/units';
 import { utils } from 'ethers';
 import { CurrencyIcon } from '../../CurrencyIcon';
 
@@ -18,6 +19,8 @@ export const Market = ({ asset, leverage, long, isPosition = true, label }: Mark
 
   const showDirection = label && !label.includes('Closed');
 
+  const leverageString = leverage ? `${parseFloat(formatUnits(leverage, 18)).toFixed(2)}x` : '';
+
   return (
     <Fade in>
       <Flex as={Td} border="none" alignItems="center">
@@ -33,7 +36,7 @@ export const Market = ({ asset, leverage, long, isPosition = true, label }: Mark
             >{`${assetDisplayName.toUpperCase()}-PERP`}</Text>
             {isPosition && showDirection && (
               <Text fontSize="12px" lineHeight="16px" fontFamily="heading" color="gray.500">
-                {leverage ? `${(parseInt(leverage) / 1e18).toFixed(2)}x ` : ''}
+                {leverageString}
                 <Text as="span" color={long ? 'green.500' : 'red.500'}>
                   {long ? 'LONG' : 'SHORT'}
                 </Text>

@@ -1,4 +1,5 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
+import { formatUnits } from 'ethers/lib/utils';
 import { useParams } from 'react-router-dom';
 import { useActions } from '../../hooks';
 import { Currency, TableHeaderCell, Market, Size, MarginTransfer } from '../Shared';
@@ -59,7 +60,10 @@ export const AccountActionsTable = () => {
                   />
                   <Currency amount={price} />
                   {isPosition(label) ? (
-                    <Size size={size} marketPrice={price ? parseInt(price) / 1e18 : null} />
+                    <Size
+                      size={size}
+                      marketPrice={price ? parseFloat(formatUnits(price, 18)) : null}
+                    />
                   ) : (
                     <MarginTransfer size={size} />
                   )}
