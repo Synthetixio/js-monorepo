@@ -23,6 +23,9 @@ import Connector from 'containers/Connector';
 import { EXTERNAL_LINKS, PROD_HOSTNAME } from '@snx-v2/Constants';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { useDebtData } from '@snx-v2/useDebtData';
+import { useApr } from '@snx-v2/useApr';
+import { StatBox } from '@snx-v2/StatBox';
+import { formatPercent } from '@snx-v2/formatters';
 
 const V2Home = () => {
   const { t } = useTranslation();
@@ -30,6 +33,7 @@ const V2Home = () => {
   const { delegateWallet } = useDelegateWallet();
   const { data: debtData } = useDebtData();
   const isStaking = debtData?.debtBalance.gt(0);
+  const { data: aprs, isLoading: isAprLoading } = useApr();
 
   return (
     <>
@@ -80,6 +84,16 @@ const V2Home = () => {
                 maxWidth={['none', 'none', 'none', '287px']}
                 flexDirection="column"
               >
+                <StatBox
+                  isLoading={isAprLoading}
+                  label="Estimated APR"
+                  alignItems={{ base: 'center', lg: 'end' }}
+                  maxW={{ base: 'initial', lg: '325px' }}
+                  w="100%"
+                  bg="navy.900"
+                  mb={4}
+                  amount={formatPercent(aprs?.combinedApr.toNumber() || 0)}
+                />
                 {isStaking && <BalanceBox />}
                 {delegateWallet ? null : (
                   <Box mt={isStaking ? 4 : 0}>
