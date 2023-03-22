@@ -34,15 +34,6 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  // {
-  //   path: '/actions',
-  //   element: (
-  //     <>
-  //       <Header />
-  //       <Actions />
-  //     </>
-  //   ),
-  // },
 ]);
 
 const container = document.querySelector('#app');

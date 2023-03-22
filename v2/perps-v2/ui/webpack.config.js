@@ -5,6 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // For depcheck to be happy
 require.resolve('webpack-dev-server');
@@ -70,25 +71,19 @@ const cssRule = {
 
 const devServer = {
   port: '3000',
-
   hot: !isTest,
   liveReload: false,
-
   historyApiFallback: true,
-
   devMiddleware: {
     writeToDisk: !isTest,
     publicPath: '/',
   },
-
   client: {
     logging: 'log',
     overlay: false,
     progress: false,
   },
-
   static: './public',
-
   headers: { 'Access-Control-Allow-Origin': '*' },
   allowedHosts: 'all',
   open: false,
@@ -100,7 +95,6 @@ module.exports = {
   devServer,
   mode: isProd ? 'production' : 'development',
   entry: './src/index.tsx',
-
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
@@ -109,7 +103,6 @@ module.exports = {
     assetModuleFilename: '[name].[contenthash:8][ext]',
     clean: true,
   },
-
   optimization: {
     runtimeChunk: false,
     splitChunks: {
@@ -130,7 +123,11 @@ module.exports = {
 
   plugins: [htmlPlugin]
     .concat([new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js'))])
-
+    .concat([
+      new CopyWebpackPlugin({
+        patterns: [{ from: 'public', to: 'public' }],
+      }),
+    ])
     .concat([
       new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/v3-theme$`),
