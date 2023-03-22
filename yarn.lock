@@ -6780,6 +6780,7 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
+    "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@storybook/react": ^6.5.16
