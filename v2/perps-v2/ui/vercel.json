@@ -47,6 +47,8 @@
       ]
     }
   ],
-  "redirects": [{ "source": "/:address", "destination": "account/:address" }],
-  "rewrites": [{ "source": "/account", "destination": "index.html" }]
+  "rewrites": [
+    { "source": "/public", "destination": "/public" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
