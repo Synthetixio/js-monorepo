@@ -49,14 +49,12 @@
   ],
   "rewrites": [
     {
+      "source": "/public/(.*)",
+      "destination": "/public/$1"
+    },
+    {
       "source": "/(.*)",
-      "destination": "/index.html",
-      "has": [
-        {
-          "type": "pathname",
-          "value": "/public"
-        }
-      ]
+      "destination": "/index.html"
     }
   ]
 }
