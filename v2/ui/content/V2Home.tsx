@@ -39,7 +39,7 @@ const V2Home = () => {
     <>
       <Flex minHeight="calc(100vh - 86px)" direction="column">
         <Box sx={{ flex: '1 0 auto' }}>
-          <CRatioBanner />
+          {isStaking && <CRatioBanner />}
           {!window.location.host.includes('.limo') && (
             <Flex mt={8} justifyContent="center">
               <Alert width="1170px" px={4} mx={4} as={Flex} flexDir={{ base: 'column', md: 'row' }}>
