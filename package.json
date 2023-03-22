@@ -79,5 +79,8 @@
       "eslint"
     ]
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.4.1",
+  "dependencies": {
+    "@tanstack/react-query": "^4.28.0"
+  }
 }
