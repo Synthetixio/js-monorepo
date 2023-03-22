@@ -1,5 +1,5 @@
 import { Box, Fade, Flex, Td, Text } from '@chakra-ui/react';
-import { formatUnits } from '@ethersproject/units';
+import { formatUnits } from 'ethers/lib/utils';
 import { utils } from 'ethers';
 import { CurrencyIcon } from '../../CurrencyIcon';
 

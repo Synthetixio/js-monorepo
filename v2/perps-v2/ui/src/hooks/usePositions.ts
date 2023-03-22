@@ -23,7 +23,7 @@ const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider
 interface PositionsData {
   address: string | undefined;
   entryPrice: string;
-  lastPrice: string;
+  indexPrice: string;
   leverage: string;
   pnl: string;
   margin: string;
@@ -74,7 +74,7 @@ export const usePositions = (walletAddress?: string) => {
         const positionsData = await fetchPositions(markets, walletAddress || '');
 
         positionsData.forEach(
-          ({ position, entryPrice, leverage, asset, skew, skewScale, fees, lastPrice }) => {
+          ({ position, entryPrice, leverage, asset, skew, skewScale, fees, indexPrice }) => {
             const {
               accessibleMargin,
               liquidationPrice,
@@ -89,7 +89,7 @@ export const usePositions = (walletAddress?: string) => {
             update.push({
               address: walletAddress,
               asset,
-              lastPrice: lastPrice.toString(),
+              indexPrice: indexPrice.toString(),
               liquidationPrice: liquidationPrice.toString(),
               pnl: profitLoss.toString(),
               margin: accessibleMargin.toString(),
@@ -133,7 +133,7 @@ export const usePositions = (walletAddress?: string) => {
           const positionsData = await fetchPositions(markets, walletAddress || '');
 
           positionsData.forEach(
-            ({ asset, position, entryPrice, leverage, skew, skewScale, lastPrice, fees }) => {
+            ({ asset, position, entryPrice, leverage, skew, skewScale, indexPrice, fees }) => {
               const {
                 accessibleMargin,
                 liquidationPrice,
@@ -147,7 +147,7 @@ export const usePositions = (walletAddress?: string) => {
               update.push({
                 address: walletAddress,
                 asset,
-                lastPrice: lastPrice.toString(),
+                indexPrice: indexPrice.toString(),
                 liquidationPrice: liquidationPrice.toString(),
                 pnl: profitLoss.toString(),
                 margin: accessibleMargin.toString(),
@@ -191,7 +191,7 @@ interface DataResponse {
   position: PerpsV2MarketData.PositionDataStructOutput;
   skew: BigNumber;
   skewScale: BigNumber;
-  lastPrice: BigNumber;
+  indexPrice: BigNumber;
   fees: string;
 }
 
@@ -247,7 +247,7 @@ async function fetchPositions(
         position: positionDetails,
         skew: marketSizeDetails.marketSkew,
         skewScale: fundingParameters.skewScale,
-        lastPrice: priceDetails.price,
+        indexPrice: priceDetails.price,
         fees,
       };
     }

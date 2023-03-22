@@ -58,7 +58,7 @@ export const PositionsTable = () => {
                 {
                   asset,
                   entryPrice,
-                  lastPrice,
+                  indexPrice,
                   leverage,
                   pnl,
                   margin,
@@ -76,7 +76,7 @@ export const PositionsTable = () => {
                 const skewRatio = parseInt(skew) / parseInt(skewScale);
                 // The last price is the price supplied by oracle.
                 // We need to contruct the market price by applying a premium
-                const marketPrice = parseFloat(formatUnits(lastPrice, 18)) * (1 + skewRatio);
+                const marketPrice = parseFloat(formatUnits(indexPrice, 18)) * (1 + skewRatio);
                 const sizeAmount = parseFloat(formatUnits(size, 18));
                 // Need to take away fees
                 const netValue =
@@ -106,7 +106,7 @@ export const PositionsTable = () => {
                     {/* Entry Price */}
                     <Currency amount={entryPrice} />
                     {/* Mark Price */}
-                    <MarkPrice lastPrice={lastPrice} markPrice={marketPrice} />
+                    <MarkPrice lastPrice={indexPrice} markPrice={marketPrice} />
                     {/* Liquidation Price */}
                     <Currency amount={liquidationPrice} />
                   </Tr>
