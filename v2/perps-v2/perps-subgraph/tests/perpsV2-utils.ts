@@ -7,7 +7,7 @@ import {
   PositionLiquidated,
   MarginTransferred,
   FundingRecomputed1,
-} from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
+} from '../generated/FuturesMarketManager/PerpsV2Proxy';
 
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
   const newBlock = new Map<string, i64>();

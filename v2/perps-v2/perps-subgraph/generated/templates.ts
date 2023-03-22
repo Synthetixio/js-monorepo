@@ -21,3 +21,13 @@ export class Aggregator extends DataSourceTemplate {
     DataSourceTemplate.createWithContext('Aggregator', [address.toHex()], context);
   }
 }
+
+export class PerpetualFuturesMarket extends DataSourceTemplate {
+  static create(address: Address): void {
+    DataSourceTemplate.create('PerpetualFuturesMarket', [address.toHex()]);
+  }
+
+  static createWithContext(address: Address, context: DataSourceContext): void {
+    DataSourceTemplate.createWithContext('PerpetualFuturesMarket', [address.toHex()], context);
+  }
+}
