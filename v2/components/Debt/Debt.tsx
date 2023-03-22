@@ -16,6 +16,7 @@ import { DebtPoolTable } from '@snx-v2/DebtPoolTable';
 import { InfoIcon } from '@snx-v2/icons';
 import { OneClickHedging } from './OneClickHedging';
 import { ManualHedging } from './ManualHeding';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 export const DebtUi: FC<{
   debtBalance?: number;
@@ -32,7 +33,7 @@ export const DebtUi: FC<{
             Your active debt is not static and depends on the debt pool. You might want to mirror
             its composition to be protected against its increase. This is done by buying similar
             assets to the debt pool or by buying dSNX. Learn more about{' '}
-            <Link textColor="cyan.400" isExternal>
+            <Link href={EXTERNAL_LINKS.Synthetix.HedgeStrategies} textColor="cyan.400" isExternal>
               debt hedging strategies
             </Link>
             .
@@ -70,7 +71,7 @@ export const DebtUi: FC<{
           <ManualHedging />
         </Box>
       </Flex>
-      <Box p={4} mt={2} borderWidth="1px" borderColor="gray.900" borderRadius="base" bg="navy.700">
+      <Box p={4} mt={4} borderWidth="1px" borderColor="gray.900" borderRadius="base" bg="navy.700">
         <Flex justifyContent="space-between" alignItems="center">
           <Heading fontSize="lg"> Detailed Debt Pool Composition</Heading>
           <Button onClick={() => setDetailOpen((x) => !x)} variant="outline">

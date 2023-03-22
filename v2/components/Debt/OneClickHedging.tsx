@@ -10,6 +10,7 @@ import {
   Tbody,
   Skeleton,
 } from '@chakra-ui/react';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
 import { ArrowTopRight, DSNXIcon } from '@snx-v2/icons';
@@ -79,7 +80,7 @@ const OneClickHedgingUi: FC<{
           To approximately hedge the debt pool, swap your borrowed sUSD into dSNX, which replicates
           the fluctuations of the Synthetix debt pool. 1 sUSD worth of dSNX pool token hedges
           approximately 1 USD worth of active debt.{' '}
-          <Link textColor="cyan.400" isExternal>
+          <Link href={EXTERNAL_LINKS.Toros.docs} textColor="cyan.400" isExternal>
             Learn how it works
           </Link>
           .
@@ -123,8 +124,15 @@ const OneClickHedgingUi: FC<{
               </Flex>
             </StyledTd>
             <StyledTd p={0}>
-              <Button size="sm" variant="outline">
-                Hedge on Torus <ArrowTopRight ml="1" />
+              <Button
+                _hover={{ textDecoration: 'none' }}
+                as={Link}
+                size="sm"
+                variant="outline"
+                href={EXTERNAL_LINKS.Toros.dSNXPool}
+                isExternal={true}
+              >
+                Hedge on Toros <ArrowTopRight ml="1" />
               </Button>
             </StyledTd>
           </Tbody>
