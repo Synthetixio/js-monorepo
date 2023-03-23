@@ -81,6 +81,7 @@
   },
   "packageManager": "yarn@3.4.1",
   "dependencies": {
-    "@tanstack/react-query": "^4.28.0"
+    "@synthetixio/wei": "workspace:*",
+    "@tanstack/react-query": "^4.24.6"
   }
 }

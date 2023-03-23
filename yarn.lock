@@ -10253,6 +10253,8 @@ __metadata:
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
     "@types/react": ^18.0.28
     babel-loader: ^9.1.2
     babel-plugin-istanbul: ^6.1.1
@@ -10638,13 +10640,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.27.0":
-  version: 4.27.0
-  resolution: "@tanstack/query-core@npm:4.27.0"
-  checksum: 914b4f01ac75632f4603b650e9105f64c739b79250baf76aad16cee216f7bad6060c04eda0c70838fe61a5f6c17883e19fcc3075b2433a906539da95ce785796
-  languageName: node
-  linkType: hard
-
 "@tanstack/react-query-devtools@npm:^4.24.6":
   version: 4.24.6
   resolution: "@tanstack/react-query-devtools@npm:4.24.6"
@@ -10676,25 +10671,6 @@ __metadata:
     react-native:
       optional: true
   checksum: 250bc2cba8dd7da61680a8e360fac87ee057d079ee3be950c76dbc063f941119817634857c1cb0d9b12042dd5d4fbe847c02af5dfb89ae8daa0f9339f87ad605
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-query@npm:^4.28.0":
-  version: 4.28.0
-  resolution: "@tanstack/react-query@npm:4.28.0"
-  dependencies:
-    "@tanstack/query-core": 4.27.0
-    use-sync-external-store: ^1.2.0
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-native: "*"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 7baa70d22b55cfa22f8a1d92ba9f8379c5436ee81fce3f0e7df4a8c29bb26bfef4a83759cf10f752b40ae2940099fcce88ce91a773240f4999ae91136980c6e3
   languageName: node
   linkType: hard
 
@@ -30623,8 +30599,9 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@synthetixio/deps": "workspace:*"
     "@synthetixio/download-cci-coverage": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/eslint-plugin-query": ^4.24.8
-    "@tanstack/react-query": ^4.28.0
+    "@tanstack/react-query": ^4.24.6
     "@types/jest": ^29.4.0
     "@typescript-eslint/eslint-plugin": ^5.52.0
     "@typescript-eslint/parser": ^5.52.0
