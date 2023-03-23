@@ -45,7 +45,7 @@ interface ContractData {
   accruedFundingSinceLastModification: Wei;
 }
 
-const calculateMarkPrice = ({
+export const calculateMarkPrice = ({
   skew,
   indexPrice,
   skewScale,
@@ -59,7 +59,7 @@ const calculateMarkPrice = ({
   return markPrice;
 };
 
-const calculateNewPnl = (
+export const calculateNewPnl = (
   subgraphPositionData: SubgraphPositionData,
   contractData: ContractData,
   marketPrice: Wei
@@ -74,7 +74,7 @@ const calculateNewPnl = (
   return newPnl;
 };
 
-const calculatePositionData = (
+export const calculatePositionData = (
   subgraphPositionData: SubgraphPositionData,
   contractData: ContractData
 ) => {
