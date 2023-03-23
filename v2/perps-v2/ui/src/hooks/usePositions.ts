@@ -76,7 +76,8 @@ export const calculateNewPnl = (
 
 export const calculatePositionData = (
   subgraphPositionData: SubgraphPositionData,
-  contractData: ContractData
+  contractData: ContractData,
+  address?: string
 ) => {
   if (contractData.size.eq(0)) return null;
   const marketPrice = calculateMarkPrice(contractData);
@@ -102,6 +103,7 @@ export const calculatePositionData = (
     marketPrice,
     notionalValue: notionalValue,
     fees: subgraphPositionData.fees,
+    address,
   };
 };
 
@@ -142,8 +144,12 @@ export const usePositions = (walletAddress?: string) => {
       const positionsData = await fetchPositions(openPositions, walletAddress || '');
       return positionsData
         .map((contractData, index) => {
-          const calculatedPositionData = calculatePositionData(openPositions[index], contractData);
-          return { walletAddress, ...calculatedPositionData };
+          const calculatedPositionData = calculatePositionData(
+            openPositions[index],
+            contractData,
+            walletAddress
+          );
+          return calculatedPositionData;
         })
         .filter(notNill);
     },
