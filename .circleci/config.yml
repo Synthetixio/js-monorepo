@@ -69,6 +69,7 @@ commands:
       - restore_cache:
           keys:
             - build-no-private-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
+
   install-foundry:
     steps:
       - run:
@@ -177,10 +178,8 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
       - checkout
-      - install-foundry
       - yarn-install
       - build-restore
-
       - run:
           name: Build
           command: |-
@@ -383,6 +382,38 @@ jobs:
           chmod +x codecov
           ./codecov -t ${CODECOV_TOKEN} --file /tmp/cov/combined/coverage.json
 
+  v2-ipfs:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    resource_class: large
+    environment:
+      DEBUG: ipfs-deploy
+      IPFS_HOST: ipfs.synthetix.io
+      IPFS_PORT: 443
+      IPFS_PROTOCOL: https
+    steps:
+      - checkout
+      - yarn-install
+      - run: yarn workspace @synthetixio/v2-ui build
+      - run: yarn workspace @synthetixio/v2-ui deploy
+
+  v3-ipfs:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    resource_class: large
+    environment:
+      DEBUG: ipfs-deploy
+      IPFS_HOST: ipfs.synthetix.io
+      IPFS_PORT: 443
+      IPFS_PROTOCOL: https
+    steps:
+      - checkout
+      - yarn-install
+      - run: yarn workspace @snx-v3/ui build
+      - run: yarn workspace @snx-v3/ui deploy
+
 workflows:
   version: 2.1
 
@@ -395,13 +426,32 @@ workflows:
           requires: [yarn-install]
       - tests:
           requires: [yarn-install]
+
       - v2-cy:
           requires: [yarn-install]
       - v2-e2e:
           requires: [yarn-install]
+      - v2-ipfs:
+          requires: [tests, typecheck, v2-cy, v2-e2e]
+          filters:
+            branches:
+              only:
+                - release
+                - master
+                - ipfs-deploy
+
       - v3-cy:
           requires: [yarn-install]
       - v3-e2e:
           requires: [yarn-install]
+      - v3-ipfs:
+          requires: [tests, typecheck, v3-cy, v3-e2e]
+          filters:
+            branches:
+              only:
+                - release
+                - master
+                - ipfs-deploy
+
       - combine-coverage:
           requires: [tests, v2-cy, v2-e2e, v3-cy, v3-e2e]
