@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import Wei, { wei } from '@synthetixio/wei';
 import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERRED_QUERY } from '../queries/actions';
 import {
   FuturesMarginTransferQuery,
@@ -64,13 +65,13 @@ export type ActionData = {
   id: string;
   label: string;
   txHash: string;
-  timestamp: string;
-  price: string | null;
+  timestamp: Wei;
+  price: Wei | null;
   address: string;
   asset: string;
-  size: string;
-  fees: string | null;
-  leverage: string | null;
+  size: Wei;
+  fees: Wei | null;
+  leverage: Wei | null;
 };
 const mergeData = (
   futuresTradesData?: FuturesTradesQuery['futuresTrades'],
@@ -89,8 +90,8 @@ const mergeData = (
       fees: null,
       id: marginTransfer.id,
       price: null,
-      size: marginTransfer.size,
-      timestamp: marginTransfer.timestamp,
+      size: wei(marginTransfer.size, 18, true),
+      timestamp: wei(marginTransfer.timestamp),
       txHash: marginTransfer.txHash,
       leverage: null,
     };
@@ -101,18 +102,18 @@ const mergeData = (
       label: getTradeLabel(futuresTrade),
       address: futuresTrade.account,
       asset: futuresTrade.market.asset,
-      fees: futuresTrade.feesPaidToSynthetix,
+      fees: wei(futuresTrade.feesPaidToSynthetix, 18, true),
       id: futuresTrade.id,
       txHash: futuresTrade.txHash,
-      price: futuresTrade.price,
-      timestamp: futuresTrade.timestamp,
-      size: futuresTrade.size,
-      leverage: null,
+      price: wei(futuresTrade.price, 18, true),
+      timestamp: wei(futuresTrade.timestamp),
+      size: wei(futuresTrade.size, 18, true),
+      leverage: null, // todo add leverage
     };
   });
 
   const data = parsedMarginData.concat(parsedTradeData);
-  return data.sort((a, b) => Number(b.timestamp) - Number(a.timestamp));
+  return data.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber());
 };
 
 export const useActions = (account?: string) => {
