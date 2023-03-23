@@ -1,5 +1,5 @@
 import { Box, Fade, Flex, Td, Text } from '@chakra-ui/react';
-import { formatUnits } from 'ethers/lib/utils';
+import { formatNumber } from '@snx-v2/formatters';
 import { utils } from 'ethers';
 import { CurrencyIcon } from '../../CurrencyIcon';
 
@@ -19,7 +19,7 @@ export const Market = ({ asset, leverage, long, isPosition = true, label }: Mark
 
   const showDirection = label && !label.includes('Closed'); // TODO move this
 
-  const leverageString = leverage ? `${parseFloat(formatUnits(leverage, 18)).toFixed(2)}x` : '';
+  const leverageString = leverage ? `${formatNumber(leverage, { minimumFractionDigits: 2 })}` : '';
 
   return (
     <Fade in>
