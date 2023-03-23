@@ -14,7 +14,6 @@ export const BurnStatsUi: FC<{
   isLoading: boolean;
   walletAddress: string | DelegateWallet | null;
 }> = ({ lastEpochBurned, burningAPR, isLoading, walletAddress }) => {
-  const lifetimeBurnLink = `https://dune.com/synthetix_community/fee-burn?address_t29bb9=${walletAddress}`;
   return (
     <Flex my={1} flexDirection={['column', 'column', 'row', 'row']} justifyContent="space-between">
       <StatBox
@@ -42,7 +41,7 @@ export const BurnStatsUi: FC<{
         label="Lifetime Fees Burned"
         amount={
           <Link
-            href={lifetimeBurnLink}
+            href={`https://dune.com/synthetix_community/fee-burn?address_t29bb9=${walletAddress}`}
             target="_blank"
             color="cyan.500"
             fontSize="18px"
@@ -74,7 +73,7 @@ export const BurnStats = () => {
 
   return (
     <BurnStatsUi
-      walletAddress={delegateWallet ?? walletAddress}
+      walletAddress={delegateWallet?.address ? delegateWallet.address : walletAddress}
       isLoading={isLoading}
       lastEpochBurned={formatNumberToUsd(feesBurned?.toNumber() || 0)}
       burningAPR={formatPercent(earning?.feesApr?.toNumber() || 0)}
