@@ -160,9 +160,8 @@ async function fetchPositions(
       const marketDetailsBytes = marketDetailMulticallResult[index];
       const { fundingParameters, marketSizeDetails, priceDetails } =
         contract.interface.decodeFunctionResult('marketDetailsForKey', marketDetailsBytes)[0];
-
       return {
-        size: wei(positionDetails.size),
+        size: wei(positionDetails.position.size),
         liquidationPrice: wei(positionDetails.liquidationPrice),
         skew: wei(marketSizeDetails.marketSkew),
         skewScale: wei(fundingParameters.skewScale),
