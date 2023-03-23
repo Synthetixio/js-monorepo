@@ -171,6 +171,7 @@ module.exports = {
     alias: {
       '@synthetixio/contracts/build': '@synthetixio/contracts/src',
       '@synthetixio/v3-contracts/build': '@synthetixio/v3-contracts/src',
+      '@synthetixio/wei/build': '@synthetixio/wei/src',
     },
     fallback: {
       buffer: require.resolve('buffer'),
