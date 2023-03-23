@@ -43,7 +43,7 @@ export const usePositions = (walletAddress?: string) => {
     fees: wei(item.feesPaidToSynthetix, 18, true),
     pnlAtLastModification: wei(item.pnl, 18, true),
     netFundingAtLastModification: wei(item.netFunding, 18, true),
-    markPriceAtLatestInteraction: wei(item.lastPrice, 18, true),
+    fillPriceAtLastInteraction: wei(item.lastPrice, 18, true),
   }));
 
   return useReactQuery({
@@ -70,7 +70,6 @@ export const usePositions = (walletAddress?: string) => {
               liquidationPrice,
               accessibleMargin,
               accruedFundingSinceLastModification,
-              pnlSinceLastModification,
             },
             index
           ) => {
@@ -82,13 +81,17 @@ export const usePositions = (walletAddress?: string) => {
             const netFunding = subgraphPositionData.netFundingAtLastModification.add(
               accruedFundingSinceLastModification
             );
-
+            const priceShiftSinceModification = marketPrice.sub(
+              subgraphPositionData.fillPriceAtLastInteraction
+            );
+            const pnlSinceModification = size.mul(priceShiftSinceModification);
             const newPnl = subgraphPositionData.pnlAtLastModification
-              .add(pnlSinceLastModification)
+              .add(pnlSinceModification)
               .add(accruedFundingSinceLastModification);
 
             const isLong = size.gt(0);
             const notionalValue = size.mul(marketPrice);
+
             return {
               address: walletAddress,
               asset: subgraphPositionData.asset,
@@ -123,7 +126,7 @@ interface SubgraphPositionData {
   fees: Wei;
   pnlAtLastModification: Wei;
   netFundingAtLastModification: Wei;
-  markPriceAtLatestInteraction: Wei;
+  fillPriceAtLastInteraction: Wei;
 }
 
 interface ContractData {
@@ -134,7 +137,6 @@ interface ContractData {
   liquidationPrice: Wei;
   accessibleMargin: Wei;
   accruedFundingSinceLastModification: Wei;
-  pnlSinceLastModification: Wei;
 }
 
 async function fetchPositions(
@@ -187,7 +189,6 @@ async function fetchPositions(
         indexPrice: wei(priceDetails.price),
         accessibleMargin: wei(positionDetails.accessibleMargin),
         accruedFundingSinceLastModification: wei(positionDetails.accruedFunding),
-        pnlSinceLastModification: wei(positionDetails.profitLoss),
       };
     }
   );
