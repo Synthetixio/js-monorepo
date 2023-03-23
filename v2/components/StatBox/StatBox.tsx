@@ -1,9 +1,10 @@
+import { ReactElement } from 'react';
 import { Fade, Flex, FlexProps, Skeleton, Text, Tooltip } from '@chakra-ui/react';
-import { InfoIcon } from '@snx-v2/icons';
+import { InfoOutline } from '@snx-v2/icons';
 
 interface StatboxProps extends FlexProps {
   label: string;
-  amount?: string;
+  amount?: string | ReactElement;
   isLoading?: boolean;
   titleToolTip?: string;
 }
@@ -12,7 +13,7 @@ export const StatBox = ({ label, amount, titleToolTip, isLoading, ...props }: St
   const labelComp = titleToolTip ? (
     <Tooltip label={titleToolTip}>
       <Flex display="flex" gap={1} alignItems="center">
-        {label} <InfoIcon />
+        {label} <InfoOutline mt="1px" height="12px" width="12px" />
       </Flex>
     </Tooltip>
   ) : (
@@ -41,7 +42,6 @@ export const StatBox = ({ label, amount, titleToolTip, isLoading, ...props }: St
       >
         {labelComp}
       </Text>
-
       {isLoading ? (
         <Skeleton height="28px" width="50%" mt="8px" />
       ) : (

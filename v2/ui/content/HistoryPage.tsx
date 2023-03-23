@@ -14,6 +14,8 @@ import sortBy from 'lodash/sortBy';
 import useSynthetixQueries from '@synthetixio/queries';
 import Connector from 'containers/Connector';
 import { useFeesClaimed } from '@snx-v2/useFeesClaimed';
+import { Flex, Link } from '@chakra-ui/react';
+import { ArrowTopRight } from '@snx-v2/icons';
 
 const HistoryPage: FC = () => {
   const { t } = useTranslation();
@@ -21,6 +23,7 @@ const HistoryPage: FC = () => {
   const { walletAddress } = Connector.useContainer();
 
   const { subgraph } = useSynthetixQueries();
+
   const issues = subgraph.useGetIssueds(
     {
       first: 1000,
@@ -30,6 +33,7 @@ const HistoryPage: FC = () => {
     },
     { id: true, timestamp: true, value: true }
   );
+
   const burns = subgraph.useGetBurneds(
     {
       first: 1000,
@@ -39,6 +43,7 @@ const HistoryPage: FC = () => {
     },
     { id: true, timestamp: true, value: true }
   );
+
   const feeClaims = useFeesClaimed();
 
   const isLoaded = issues.isSuccess && burns.isSuccess && feeClaims.isSuccess;
@@ -67,6 +72,7 @@ const HistoryPage: FC = () => {
     : [];
 
   const txCount = history.length;
+  const lifetimeBurnLink = `https://dune.com/synthetix_community/fee-burn?address_t29bb9=${walletAddress}`;
 
   return (
     <>
@@ -78,7 +84,21 @@ const HistoryPage: FC = () => {
         <TxCount title={t('common.stat-box.tx-count')} value={txCount} size="lg" />
         <div />
       </StatsSection>
+      <Flex justifyContent="end">
+        <Link
+          href={lifetimeBurnLink}
+          target="_blank"
+          color="cyan.500"
+          fontSize="12px"
+          fontFamily="heading"
+        >
+          Fee Burn Information <ArrowTopRight ml={1} mb="1px" />
+        </Link>
+      </Flex>
       <LineSpacer />
+      <LineSpacer />
+      <LineSpacer />
+
       <TransactionsContainer history={history} isLoaded={isLoaded} />
     </>
   );
