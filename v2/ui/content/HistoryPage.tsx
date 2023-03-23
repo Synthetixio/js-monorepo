@@ -72,8 +72,6 @@ const HistoryPage: FC = () => {
     : [];
 
   const txCount = history.length;
-  const lifetimeBurnLink = `https://dune.com/synthetix_community/fee-burn?address_t29bb9=${walletAddress}`;
-
   return (
     <>
       <Head>
@@ -86,7 +84,7 @@ const HistoryPage: FC = () => {
       </StatsSection>
       <Flex justifyContent="end">
         <Link
-          href={lifetimeBurnLink}
+          href={`https://dune.com/synthetix_community/fee-burn?address_t29bb9=${walletAddress}`}
           target="_blank"
           color="cyan.500"
           fontSize="12px"
