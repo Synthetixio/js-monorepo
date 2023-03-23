@@ -146,6 +146,7 @@ jobs:
       - checkout
       - yarn-install
       - run: yarn npm audit --recursive --severity=critical
+      - run: yarn dedupe --check
       - run: yarn deps
       - run: yarn deps:mismatched
       - run: yarn deps:circular
