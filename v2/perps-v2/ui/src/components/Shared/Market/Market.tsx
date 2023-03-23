@@ -5,7 +5,7 @@ import { CurrencyIcon } from '../../CurrencyIcon';
 
 interface MarketProps {
   asset: string;
-  leverage: string | null;
+  leverage: number | null;
   long: boolean;
   isPosition?: boolean;
   label?: string;
@@ -17,7 +17,7 @@ export const Market = ({ asset, leverage, long, isPosition = true, label }: Mark
   const marketName = utils.parseBytes32String(asset);
   const assetDisplayName = replace.includes(marketName) ? marketName.substring(1) : marketName;
 
-  const showDirection = label && !label.includes('Closed');
+  const showDirection = label && !label.includes('Closed'); // TODO move this
 
   const leverageString = leverage ? `${parseFloat(formatUnits(leverage, 18)).toFixed(2)}x` : '';
 

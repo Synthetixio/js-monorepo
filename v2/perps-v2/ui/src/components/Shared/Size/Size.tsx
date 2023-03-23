@@ -1,15 +1,14 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
-import { formatUnits } from 'ethers/lib/utils';
 
 interface SizeProps {
-  size: string;
+  size: number;
   marketPrice: number | null;
 }
 
 export const Size = ({ size, marketPrice }: SizeProps) => {
-  const calculatedSize = Math.abs(parseFloat(formatUnits(size, 18)));
-  const total = marketPrice ? calculatedSize * marketPrice : 0;
+  const sizeAbs = Math.abs(size);
+  const total = marketPrice ? sizeAbs * marketPrice : 0;
 
   return (
     <Td border="none">
@@ -18,7 +17,7 @@ export const Size = ({ size, marketPrice }: SizeProps) => {
           {formatNumberToUsd(total)}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-          {calculatedSize.toFixed(4)}
+          {sizeAbs.toFixed(4)}
         </Text>
       </Fade>
     </Td>

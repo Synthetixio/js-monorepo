@@ -1,20 +1,14 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
-import { stringToDecimal } from '../../../utils';
 
 interface PnLProps {
-  amount: string;
-  funding: string;
-  fees: string;
-  netValue: number;
-  entryValue: number;
+  pnl: number;
 }
 
-export const PnL = ({ amount, funding, fees = '0', netValue, entryValue }: PnLProps) => {
-  const pnl = stringToDecimal(amount) + stringToDecimal(funding) - stringToDecimal(fees);
-
+export const PnL = ({ pnl }: PnLProps) => {
   // 100 * (net value - entry value) / entry value
-  const percentageDiff = Math.abs((100 * (Math.abs(netValue) - Math.abs(entryValue))) / entryValue);
+  // const percentageDiff = Math.abs((100 * (Math.abs(netValue) - Math.abs(entryValue))) / entryValue);
+  //TODO figure out pnl percentage
 
   return (
     <Td border="none">
@@ -28,10 +22,10 @@ export const PnL = ({ amount, funding, fees = '0', netValue, entryValue }: PnLPr
         >
           {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(pnl)}`}
         </Text>
-        <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
+        {/* <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
           {pnl >= 0 ? '+' : '-'}
           {percentageDiff.toFixed(2)}%
-        </Text>
+        </Text> */}
       </Fade>
     </Td>
   );
