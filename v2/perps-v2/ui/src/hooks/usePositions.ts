@@ -24,6 +24,87 @@ const provider = new providers.InfuraProvider(10, infuraId);
 const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
 const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider) as Multicall3;
 
+interface SubgraphPositionData {
+  market: string;
+  asset: string;
+  avgEntryPrice: Wei;
+  leverage: Wei;
+  fees: Wei;
+  pnlAtLastModification: Wei;
+  netFundingAtLastModification: Wei;
+  fillPriceAtLastInteraction: Wei;
+}
+
+interface ContractData {
+  skew: Wei;
+  skewScale: Wei;
+  indexPrice: Wei;
+  size: Wei;
+  liquidationPrice: Wei;
+  accessibleMargin: Wei;
+  accruedFundingSinceLastModification: Wei;
+}
+
+const calculateMarkPrice = ({
+  skew,
+  indexPrice,
+  skewScale,
+}: {
+  skew: Wei;
+  indexPrice: Wei;
+  skewScale: Wei;
+}) => {
+  const skewRatio = skew.div(skewScale);
+  const markPrice = indexPrice.mul(wei(1).add(skewRatio));
+  return markPrice;
+};
+
+const calculateNewPnl = (
+  subgraphPositionData: SubgraphPositionData,
+  contractData: ContractData,
+  marketPrice: Wei
+) => {
+  const priceShiftSinceModification = marketPrice.sub(
+    subgraphPositionData.fillPriceAtLastInteraction
+  );
+  const pnlSinceModification = contractData.size.mul(priceShiftSinceModification);
+  const newPnl = subgraphPositionData.pnlAtLastModification
+    .add(pnlSinceModification)
+    .add(contractData.accruedFundingSinceLastModification);
+  return newPnl;
+};
+
+const calculatePositionData = (
+  subgraphPositionData: SubgraphPositionData,
+  contractData: ContractData
+) => {
+  if (contractData.size.eq(0)) return null;
+  const marketPrice = calculateMarkPrice(contractData);
+  const pnl = calculateNewPnl(subgraphPositionData, contractData, marketPrice);
+
+  const netFunding = subgraphPositionData.netFundingAtLastModification.add(
+    contractData.accruedFundingSinceLastModification
+  );
+
+  const notionalValue = contractData.size.mul(marketPrice);
+
+  return {
+    asset: subgraphPositionData.asset,
+    indexPrice: contractData.indexPrice,
+    liquidationPrice: contractData.liquidationPrice,
+    pnl,
+    margin: contractData.accessibleMargin,
+    size: contractData.size,
+    long: contractData.size.gt(0),
+    entryPrice: subgraphPositionData.avgEntryPrice,
+    leverage: subgraphPositionData.leverage,
+    funding: netFunding,
+    marketPrice,
+    notionalValue: notionalValue,
+    fees: subgraphPositionData.fees,
+  };
+};
+
 export const usePositions = (walletAddress?: string) => {
   // Initial query to give a list of markets
   const { data, error } = useQuery(POSITIONS_QUERY_MARKET, {
@@ -60,84 +141,15 @@ export const usePositions = (walletAddress?: string) => {
 
       const positionsData = await fetchPositions(openPositions, walletAddress || '');
       return positionsData
-        .map(
-          (
-            {
-              skew,
-              skewScale,
-              indexPrice,
-              size,
-              liquidationPrice,
-              accessibleMargin,
-              accruedFundingSinceLastModification,
-            },
-            index
-          ) => {
-            if (size.eq(0)) return null;
-            const subgraphPositionData = openPositions[index];
-
-            const skewRatio = skew.div(skewScale);
-            const marketPrice = indexPrice.mul(wei(1).add(skewRatio));
-            const netFunding = subgraphPositionData.netFundingAtLastModification.add(
-              accruedFundingSinceLastModification
-            );
-            const priceShiftSinceModification = marketPrice.sub(
-              subgraphPositionData.fillPriceAtLastInteraction
-            );
-            const pnlSinceModification = size.mul(priceShiftSinceModification);
-            const newPnl = subgraphPositionData.pnlAtLastModification
-              .add(pnlSinceModification)
-              .add(accruedFundingSinceLastModification);
-
-            const isLong = size.gt(0);
-            const notionalValue = size.mul(marketPrice);
-
-            return {
-              address: walletAddress,
-              asset: subgraphPositionData.asset,
-              indexPrice: indexPrice,
-              liquidationPrice: liquidationPrice,
-              pnl: newPnl,
-              margin: accessibleMargin,
-              size: size,
-              long: isLong,
-              entryPrice: subgraphPositionData.avgEntryPrice,
-              leverage: subgraphPositionData.leverage,
-              funding: netFunding,
-              marketPrice,
-              notionalValue: notionalValue,
-              skew: skew,
-              skewScale: skewScale,
-              fees: subgraphPositionData.fees,
-            };
-          }
-        )
+        .map((contractData, index) => {
+          const calculatedPositionData = calculatePositionData(openPositions[index], contractData);
+          return { walletAddress, ...calculatedPositionData };
+        })
         .filter(notNill);
     },
     enabled: Boolean(openPositions),
   });
 };
-
-interface SubgraphPositionData {
-  market: string;
-  asset: string;
-  avgEntryPrice: Wei;
-  leverage: Wei;
-  fees: Wei;
-  pnlAtLastModification: Wei;
-  netFundingAtLastModification: Wei;
-  fillPriceAtLastInteraction: Wei;
-}
-
-interface ContractData {
-  skew: Wei;
-  skewScale: Wei;
-  indexPrice: Wei;
-  size: Wei;
-  liquidationPrice: Wei;
-  accessibleMargin: Wei;
-  accruedFundingSinceLastModification: Wei;
-}
 
 async function fetchPositions(
   positionData: SubgraphPositionData[],
