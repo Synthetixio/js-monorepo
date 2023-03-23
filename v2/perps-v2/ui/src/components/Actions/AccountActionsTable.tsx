@@ -1,5 +1,4 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import { formatUnits } from 'ethers/lib/utils';
 import { useParams } from 'react-router-dom';
 import { useActions } from '../../hooks';
 import { Currency, TableHeaderCell, Market, Size, MarginTransfer } from '../Shared';
@@ -46,28 +45,25 @@ export const AccountActionsTable = () => {
             )}
             {data?.map((item) => {
               const { label, asset, price, leverage, size, fees, id, txHash, timestamp } = item;
-              const isLong = !size.includes('-');
+              const isLong = size.gt(0);
 
               return (
                 <Tr key={id} borderTopWidth="1px">
-                  <Action label={label} timestamp={timestamp} txHash={txHash} />
+                  <Action label={label} timestamp={timestamp.toNumber()} txHash={txHash} />
                   <Market
                     label={label}
                     asset={asset}
-                    leverage={leverage}
+                    leverage={leverage?.toNumber() || null}
                     long={isLong}
                     isPosition={isPosition(label)}
                   />
-                  <Currency amount={price} />
+                  <Currency amount={price?.toNumber() || null} />
                   {isPosition(label) ? (
-                    <Size
-                      size={size}
-                      marketPrice={price ? parseFloat(formatUnits(price, 18)) : null}
-                    />
+                    <Size size={size.toNumber()} marketPrice={price?.toNumber() || null} />
                   ) : (
-                    <MarginTransfer size={size} />
+                    <MarginTransfer size={size.toNumber()} />
                   )}
-                  <Currency amount={fees} />
+                  <Currency amount={fees?.toNumber() || null} />
                 </Tr>
               );
             })}
