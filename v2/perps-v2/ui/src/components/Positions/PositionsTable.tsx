@@ -79,7 +79,11 @@ export const PositionsTable = () => {
                   return (
                     <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
                       {/* Market and Direction */}
-                      <Market asset={asset} leverage={leverage.toNumber()} long={long} />
+                      <Market
+                        asset={asset}
+                        leverage={leverage.toNumber()}
+                        direction={long ? 'LONG' : 'SHORT'}
+                      />
                       {/* Net value */}
                       <NetValue amount={netValue.toNumber()} />
                       <PnL pnl={pnl.toNumber()} />

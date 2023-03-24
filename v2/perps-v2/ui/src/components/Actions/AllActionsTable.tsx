@@ -45,33 +45,29 @@ export const AllActionsTable = () => {
               </>
             )}
 
-            {data?.map((item, index) => {
-              const { label, address, asset, price, fees, size, txHash, timestamp, leverage } =
-                item;
-              const isLong = size.gt(0);
+            {data?.map(
+              ({ label, address, asset, price, fees, size, txHash, timestamp, leverage }) => {
+                return (
+                  <Tr key={txHash} borderTopWidth="1px">
+                    <Action label={label} txHash={txHash} timestamp={timestamp.toNumber()} />
+                    <WalletAddress account={address} />
+                    <Market
+                      asset={asset}
+                      leverage={leverage?.toNumber() || null}
+                      isPosition={isPosition(label)}
+                    />
+                    <Currency amount={price?.toNumber() || null} />
+                    {isPosition(label) ? (
+                      <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
+                    ) : (
+                      <MarginTransfer size={size.toNumber()} />
+                    )}
 
-              return (
-                <Tr key={address.concat(index.toString())} borderTopWidth="1px">
-                  <Action label={label} txHash={txHash} timestamp={timestamp.toNumber()} />
-                  <WalletAddress account={address} />
-                  <Market
-                    label={label}
-                    asset={asset}
-                    leverage={leverage?.toNumber() || null}
-                    long={isLong}
-                    isPosition={isPosition(label)}
-                  />
-                  <Currency amount={price?.toNumber() || null} />
-                  {isPosition(label) ? (
-                    <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
-                  ) : (
-                    <MarginTransfer size={size.toNumber()} />
-                  )}
-
-                  <Currency amount={fees?.toNumber() || null} />
-                </Tr>
-              );
-            })}
+                    <Currency amount={fees?.toNumber() || null} />
+                  </Tr>
+                );
+              }
+            )}
           </Tbody>
         </Table>
         {!loading && data?.length === 0 && (

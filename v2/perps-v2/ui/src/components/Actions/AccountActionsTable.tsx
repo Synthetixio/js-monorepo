@@ -45,16 +45,12 @@ export const AccountActionsTable = () => {
             )}
             {data?.map((item) => {
               const { label, asset, price, leverage, size, fees, id, txHash, timestamp } = item;
-              const isLong = size.gt(0);
-
               return (
                 <Tr key={id} borderTopWidth="1px">
                   <Action label={label} timestamp={timestamp.toNumber()} txHash={txHash} />
                   <Market
-                    label={label}
                     asset={asset}
                     leverage={leverage?.toNumber() || null}
-                    long={isLong}
                     isPosition={isPosition(label)}
                   />
                   <Currency amount={price?.toNumber() || null} />

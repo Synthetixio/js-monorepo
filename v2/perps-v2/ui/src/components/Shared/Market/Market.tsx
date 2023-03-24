@@ -6,21 +6,18 @@ import { CurrencyIcon } from '../../CurrencyIcon';
 interface MarketProps {
   asset: string;
   leverage: number | null;
-  long: boolean;
+  direction?: 'LONG' | 'SHORT';
   isPosition?: boolean;
-  label?: string;
 }
 
 const replace = ['sETH', 'sBTC'];
 
-export const Market = ({ asset, leverage, long, isPosition = true, label }: MarketProps) => {
+export const Market = ({ asset, leverage, direction, isPosition = true }: MarketProps) => {
   const marketName = utils.parseBytes32String(asset);
   const assetDisplayName = replace.includes(marketName) ? marketName.substring(1) : marketName;
 
-  const showDirection = label && !label.includes('Closed'); // TODO move this
-
-  const leverageString = leverage ? `${formatNumber(leverage, { minimumFractionDigits: 2 })}` : '';
-
+  const leverageString = leverage ? `${formatNumber(leverage, { minimumFractionDigits: 2 })}x` : '';
+  const isLong = direction === 'LONG';
   return (
     <Fade in>
       <Flex as={Td} border="none" alignItems="center">
@@ -34,11 +31,11 @@ export const Market = ({ asset, leverage, long, isPosition = true, label }: Mark
               fontWeight={500}
               color="gray.50"
             >{`${assetDisplayName.toUpperCase()}-PERP`}</Text>
-            {isPosition && showDirection && (
+            {Boolean(isPosition && direction) && (
               <Text fontSize="12px" lineHeight="16px" fontFamily="heading" color="gray.500">
                 {leverageString}
-                <Text as="span" color={long ? 'green.500' : 'red.500'}>
-                  {long ? 'LONG' : 'SHORT'}
+                <Text ml={1} as="span" color={isLong ? 'green.500' : 'red.500'}>
+                  {direction}
                 </Text>
               </Text>
             )}
