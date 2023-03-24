@@ -359,14 +359,18 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
           .times(futuresPosition.size)
           .div(BigInt.fromI32(10).pow(18));
 
+        const existingSize = futuresPosition.size.abs();
+        const existingPrice = existingSize.times(futuresPosition.entryPrice);
+
+        const newSize = event.params.tradeSize.abs();
+        const newPrice = newSize.times(event.params.lastPrice);
+        futuresPosition.entryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
+        futuresPosition.avgEntryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
+
         // add pnl to this position and the trader's overall stats
         tradeEntity.pnl = newPnl;
         trader.pnl = tradeEntity.pnl.plus(newPnl);
         futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
-
-        // Because we switched sides from long to short or short to long, we reset the entry price
-        futuresPosition.entryPrice = event.params.lastPrice;
-        futuresPosition.avgEntryPrice = event.params.lastPrice;
       } else {
         // check if the position side increases (long or short)
         if (event.params.size.abs().gt(futuresPosition.size.abs())) {
