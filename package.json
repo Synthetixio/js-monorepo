@@ -79,9 +79,5 @@
       "eslint"
     ]
   },
-  "packageManager": "yarn@3.4.1",
-  "dependencies": {
-    "@synthetixio/wei": "workspace:*",
-    "@tanstack/react-query": "^4.24.6"
-  }
+  "packageManager": "yarn@3.4.1"
 }
