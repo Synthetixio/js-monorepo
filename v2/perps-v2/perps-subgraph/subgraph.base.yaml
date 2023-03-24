@@ -1,14 +1,11 @@
 specVersion: 0.0.5
 schema:
   file: ./schema.graphql
-
-# https://thegraph.com/docs/en/cookbook/grafting/#grafting-manifest-definition
-# TODO @MF save last git commit hash before graph got upgraded
 features:
   - grafting # feature name
 graft:
-  base: QmavBDavMsWjvM1U2cJvVbor2HHARBrEp1k9zrAXP5sqEE # subgraph ID of base subgraph
-  block: 6782813 # block number
+  base: Qmcy5rRhydzB9Qs2V1mHYLFSymfpYBYGyY7UcvbeWfd5b9 # subgraph ID of base subgraph
+  block: 3497266 # block number
 
 templates:
   - name: AggregatorProxy
@@ -73,6 +70,8 @@ templates:
         - name: PerpsV2Proxy
           file: ./abis/PerpsV2Proxy.json
       eventHandlers:
+        - event: PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)
+          handler: handlePositionModified
         - event: PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256,int256)
           handler: handlePositionModified
         - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
@@ -92,7 +91,26 @@ templates:
 
 dataSources:
   - kind: ethereum
-    name: FuturesMarketManager
+    name: FuturesMarketManagerOld
+    source:
+      abi: PerpsV2Proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - FuturesMarket
+      abis:
+        - name: PerpsV2Proxy
+          file: ./abis/PerpsV2Proxy.json
+      eventHandlers:
+        - event: MarketAdded(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketAdded
+        - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketRemoved
+      file: ./src/futures.ts
+  - kind: ethereum
+    name: FuturesMarketManagerNew
     source:
       abi: PerpsV2Proxy
     mapping:

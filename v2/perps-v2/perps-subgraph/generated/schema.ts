@@ -783,6 +783,23 @@ export class FuturesPosition extends Entity {
       this.set('exitPrice', Value.fromBigInt(<BigInt>value));
     }
   }
+
+  get skew(): BigInt | null {
+    let value = this.get('skew');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set skew(value: BigInt | null) {
+    if (!value) {
+      this.unset('skew');
+    } else {
+      this.set('skew', Value.fromBigInt(<BigInt>value));
+    }
+  }
 }
 
 export class FuturesOrder extends Entity {
@@ -1161,6 +1178,15 @@ export class FuturesMarket extends Entity {
 
   set timestamp(value: BigInt) {
     this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get isActive(): boolean {
+    let value = this.get('isActive');
+    return value!.toBoolean();
+  }
+
+  set isActive(value: boolean) {
+    this.set('isActive', Value.fromBoolean(value));
   }
 }
 

@@ -4,9 +4,13 @@
       "address": "0x913bd76F7E1572CC8278CeF2D6b06e2140ca9Ce2",
       "startBlock": 34047215
     },
-    "FuturesMarketManager": {
+    "FuturesMarketManagerOld": {
       "address": "0xdb89f3fc45A707Dd49781495f77f8ae69bF5cA6e",
       "startBlock": 52456507
+    },
+    "FuturesMarketManagerNew": {
+      "address": "0xDD55BE4f3a8885E92d2Acd16869Fab857206B517",
+      "startBlock": 9082813
     }
   },
   "optimism-goerli": {
@@ -14,9 +18,13 @@
       "address": "0x061B75475035c20ef2e35E1002Beb90C3c1f24cC",
       "startBlock": 2426383
     },
-    "FuturesMarketManager": {
+    "FuturesMarketManagerOld": {
+      "address": "0xc429dd84c9a9a7c786764c7dcaF31e30bd35BcdF",
+      "startBlock": 3495320
+    },
+    "FuturesMarketManagerNew": {
       "address": "0xDD55BE4f3a8885E92d2Acd16869Fab857206B517",
-      "startBlock": 6782813
+      "startBlock": 6797500
     }
   }
 }

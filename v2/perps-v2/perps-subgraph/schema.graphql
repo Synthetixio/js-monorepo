@@ -82,6 +82,7 @@ type FuturesPosition @entity {
   avgEntryPrice: BigInt!
   txHash: String!
   exitPrice: BigInt
+  skew: BigInt
 }
 
 type FuturesOrder @entity {
@@ -125,6 +126,7 @@ type FuturesMarket @entity {
   asset: Bytes!
   marketKey: Bytes!
   timestamp: BigInt!
+  isActive: Boolean!
 }
 
 type Frontend @entity {

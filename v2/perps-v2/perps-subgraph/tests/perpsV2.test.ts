@@ -39,6 +39,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -52,6 +53,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(2),
       toGwei(1),
       20,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(modifyPositionEvent);
@@ -419,6 +421,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(2),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -433,6 +436,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(0),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionModifiedByLiquidationEvent);
@@ -470,6 +474,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -483,6 +488,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(closePositionEvent);
@@ -513,6 +519,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -526,6 +533,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(positionModifiedEvent);
@@ -555,6 +563,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -575,6 +584,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(2),
       toGwei(0),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(positionUpdatedByTransferredMargin);

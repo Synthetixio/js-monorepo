@@ -2,23 +2,23 @@ import {
   Address,
   BigDecimal,
   BigInt,
+  dataSource,
   DataSourceContext,
   log,
-  store,
 } from '@graphprotocol/graph-ts';
 import { PerpetualFuturesMarket } from '../generated/templates';
 import {
-  PositionLiquidated as PositionLiquidatedEvent,
-  PositionModified as PositionModifiedEvent,
+  PositionModified1 as PositionModifiedNewEvent,
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
   DelayedOrderSubmitted as DelayedOrderSubmittedEvent,
   FundingRecomputed as FundingRecomputedEvent,
+  PositionLiquidated as PositionLiquidatedEvent,
   MarginTransferred as MarginTransferredEvent,
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
   PerpsTracking as PerpsTrackingEvent,
   PositionFlagged as PositionFlaggedEvent,
-} from '../generated/FuturesMarketManager/PerpsV2Proxy';
+} from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 import {
   PositionLiquidated,
   Trader,
@@ -30,6 +30,7 @@ import {
   FuturesMarginTransfer,
   FuturesMarket,
   Frontend,
+  PositionFlagged,
 } from '../generated/schema';
 
 export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
@@ -37,6 +38,7 @@ export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
   marketEntity.asset = event.params.asset;
   marketEntity.marketKey = event.params.marketKey;
   marketEntity.timestamp = event.block.timestamp;
+  marketEntity.isActive = true;
   marketEntity.save();
 
   if (event.params.marketKey.toString().endsWith('PERP')) {
@@ -46,10 +48,22 @@ export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
 }
 
 export function handleFuturesMarketRemoved(event: MarketRemovedEvent): void {
-  store.remove('FuturesMarket', event.params.market.toHex());
+  let marketEntity = FuturesMarket.load(event.params.market.toHex());
+  if (marketEntity) {
+    marketEntity.isActive = false;
+    marketEntity.save();
+  }
 }
 
-export function handlePositionFlagged(event: PositionFlaggedEvent): void {}
+export function handlePositionFlagged(event: PositionFlaggedEvent): void {
+  const positionFlaggedEntity = new PositionFlagged(
+    event.address.toHex() + '-' + event.params.id.toString()
+  );
+  positionFlaggedEntity.flagger = event.params.flagger;
+  positionFlaggedEntity.timestamp = event.block.timestamp;
+  positionFlaggedEntity.trader = event.params.account.toHex();
+  positionFlaggedEntity.save();
+}
 
 export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   const futuresPositionId = event.address.toHex() + '-' + event.params.id.toHex();
@@ -164,12 +178,13 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
   trader.save();
 }
 
-export function handlePositionModified(event: PositionModifiedEvent): void {
+export function handlePositionModified(event: PositionModifiedNewEvent): void {
+  const network = dataSource.network();
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
   let trader = Trader.load(event.params.account.toHex());
   let synthetix = Synthetix.load('synthetix');
-
+  log.debug('margin', ['wa??', event.params.id.toString(), event.params.margin.toString()]);
   if (!synthetix) {
     synthetix = new Synthetix('synthetix');
     synthetix.feesByPositionModifications = BigDecimal.fromString('0');
@@ -227,6 +242,10 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       .div(BigInt.fromI32(10).pow(18))
       .abs()
       .toBigDecimal();
+
+    if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
+      futuresPosition.skew = event.params.skew;
+    }
 
     const tradeEntity = new FuturesTrade(
       event.transaction.hash.toHex() + '-' + event.logIndex.toString()
@@ -289,6 +308,10 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(event.params.margin)
         .abs();
 
+      if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
+        futuresPosition.skew = event.params.skew;
+      }
+
       const tradeEntity = new FuturesTrade(
         event.transaction.hash.toHex() + '-' + event.logIndex.toString()
       );
@@ -325,6 +348,10 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     // If tradeSize and size are not zero, position got modified
     else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {
       log.info('position modified {}', [positionId]);
+
+      if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
+        futuresPosition.skew = event.params.skew;
+      }
 
       const tradeEntity = new FuturesTrade(
         event.transaction.hash.toHex() + '-' + event.logIndex.toString()
