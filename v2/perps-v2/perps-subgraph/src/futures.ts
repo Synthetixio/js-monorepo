@@ -346,13 +346,22 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       } else {
         // check if the position side increases (long or short)
         if (event.params.size.abs().gt(futuresPosition.size.abs())) {
+          // calculate pnl
+          const newPnl = event.params.lastPrice
+            .minus(futuresPosition.avgEntryPrice)
+            .times(event.params.tradeSize.abs())
+            .times(event.params.size.gt(BigInt.fromI32(0)) ? BigInt.fromI32(1) : BigInt.fromI32(-1))
+            .div(BigInt.fromI32(10).pow(18));
+
+          tradeEntity.pnl = newPnl;
+          trader.pnl = tradeEntity.pnl.plus(newPnl);
+          futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
+
           // if so, calculate the new average price
           const existingSize = futuresPosition.size.abs();
           const existingPrice = existingSize.times(futuresPosition.entryPrice);
-
           const newSize = event.params.tradeSize.abs();
           const newPrice = newSize.times(event.params.lastPrice);
-          futuresPosition.entryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
           futuresPosition.avgEntryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
         } else {
           // if reducing position size, calculate pnl
@@ -362,7 +371,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
             .times(event.params.size.gt(BigInt.fromI32(0)) ? BigInt.fromI32(1) : BigInt.fromI32(-1))
             .div(BigInt.fromI32(10).pow(18));
 
-          // add pnl to this position and the trader's overall stats
           tradeEntity.pnl = newPnl;
           trader.pnl = trader.pnl.plus(newPnl);
           futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
