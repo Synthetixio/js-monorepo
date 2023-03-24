@@ -179,18 +179,12 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
 }
 
 export function handlePositionModified(event: PositionModifiedNewEvent): void {
+  if (event.params.margin.isZero()) return;
   const network = dataSource.network();
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
   let trader = Trader.load(event.params.account.toHex());
   let synthetix = Synthetix.load('synthetix');
-  if (event.params.margin.isZero()) return;
-  log.debug('margin {} {} {} {}', [
-    'wa??',
-    event.params.id.toString(),
-    event.params.margin.toString(),
-    event.address.toHex(),
-  ]);
   if (!synthetix) {
     synthetix = new Synthetix('synthetix');
     synthetix.feesByPositionModifications = BigDecimal.fromString('0');
