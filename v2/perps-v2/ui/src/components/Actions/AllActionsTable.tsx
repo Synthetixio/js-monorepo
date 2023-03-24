@@ -3,7 +3,6 @@ import { Currency, TableHeaderCell, Market, Size, WalletAddress, MarginTransfer 
 import { AllActionsLoading } from './AllActionsLoading';
 import { useActions } from '../../hooks';
 import { Action } from '../Shared/Action';
-import { formatUnits } from 'ethers/lib/utils';
 
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
@@ -46,36 +45,29 @@ export const AllActionsTable = () => {
               </>
             )}
 
-            {data?.map((item, index) => {
-              const { label, address, asset, price, fees, size, txHash, timestamp, leverage } =
-                item;
-              const isLong = !size.includes('-');
-
-              return (
-                <Tr key={address.concat(index.toString())} borderTopWidth="1px">
-                  <Action label={label} txHash={txHash} timestamp={timestamp} />
-                  <WalletAddress account={address} />
-                  <Market
-                    label={label}
-                    asset={asset}
-                    leverage={leverage}
-                    long={isLong}
-                    isPosition={isPosition(label)}
-                  />
-                  <Currency amount={price} />
-                  {isPosition(label) ? (
-                    <Size
-                      size={size}
-                      marketPrice={price ? parseFloat(formatUnits(price, 18)) : null}
+            {data?.map(
+              ({ label, address, asset, price, fees, size, txHash, timestamp, leverage }) => {
+                return (
+                  <Tr key={txHash} borderTopWidth="1px">
+                    <Action label={label} txHash={txHash} timestamp={timestamp.toNumber()} />
+                    <WalletAddress account={address} />
+                    <Market
+                      asset={asset}
+                      leverage={leverage?.toNumber() || null}
+                      isPosition={isPosition(label)}
                     />
-                  ) : (
-                    <MarginTransfer size={size} />
-                  )}
+                    <Currency amount={price?.toNumber() || null} />
+                    {isPosition(label) ? (
+                      <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
+                    ) : (
+                      <MarginTransfer size={size.toNumber()} />
+                    )}
 
-                  <Currency amount={fees} />
-                </Tr>
-              );
-            })}
+                    <Currency amount={fees?.toNumber() || null} />
+                  </Tr>
+                );
+              }
+            )}
           </Tbody>
         </Table>
         {!loading && data?.length === 0 && (

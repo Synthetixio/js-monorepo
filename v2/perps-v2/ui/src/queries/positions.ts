@@ -8,9 +8,14 @@ export const POSITIONS_QUERY_MARKET = gql(`
         asset
       }
       entryPrice
+      avgEntryPrice
       leverage
       feesPaidToSynthetix
       id
+      pnl
+      feesPaidToSynthetix
+      lastPrice
+      netFunding
     }
   }
 `);
