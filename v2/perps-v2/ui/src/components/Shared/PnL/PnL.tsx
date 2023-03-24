@@ -1,15 +1,12 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 
 interface PnLProps {
   pnl: number;
+  pnlPercentage: number;
 }
 
-export const PnL = ({ pnl }: PnLProps) => {
-  // 100 * (net value - entry value) / entry value
-  // const percentageDiff = Math.abs((100 * (Math.abs(netValue) - Math.abs(entryValue))) / entryValue);
-  //TODO figure out pnl percentage
-
+export const PnL = ({ pnl, pnlPercentage }: PnLProps) => {
   return (
     <Td border="none">
       <Fade in>
@@ -22,10 +19,10 @@ export const PnL = ({ pnl }: PnLProps) => {
         >
           {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(pnl)}`}
         </Text>
-        {/* <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
+        <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
           {pnl >= 0 ? '+' : '-'}
-          {percentageDiff.toFixed(2)}%
-        </Text> */}
+          {formatPercent(pnlPercentage)}
+        </Text>
       </Fade>
     </Td>
   );

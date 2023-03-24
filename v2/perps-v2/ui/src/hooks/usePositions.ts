@@ -74,6 +74,19 @@ export const calculateNewPnl = (
   return newPnl;
 };
 
+export const calculatePnlPercentage = (
+  subgraphPositionData: SubgraphPositionData,
+  contractData: ContractData,
+  pnl: Wei
+) => {
+  if (pnl.eq(0)) return wei(0);
+
+  const initialValue = contractData.size.mul(subgraphPositionData.avgEntryPrice);
+  const currentVal = initialValue.add(pnl);
+  const shift = currentVal.sub(initialValue);
+  return shift.div(initialValue);
+};
+
 export const calculatePositionData = (
   subgraphPositionData: SubgraphPositionData,
   contractData: ContractData,
@@ -82,18 +95,18 @@ export const calculatePositionData = (
   if (contractData.size.eq(0)) return null;
   const marketPrice = calculateMarkPrice(contractData);
   const pnl = calculateNewPnl(subgraphPositionData, contractData, marketPrice);
-
+  const notionalValue = contractData.size.mul(marketPrice);
+  const pnlPercentage = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
   const netFunding = subgraphPositionData.netFundingAtLastModification.add(
     contractData.accruedFundingSinceLastModification
   );
-
-  const notionalValue = contractData.size.mul(marketPrice);
 
   return {
     asset: subgraphPositionData.asset,
     indexPrice: contractData.indexPrice,
     liquidationPrice: contractData.liquidationPrice,
     pnl,
+    pnlPercentage,
     margin: contractData.accessibleMargin,
     size: contractData.size,
     long: contractData.size.gt(0),

@@ -70,6 +70,7 @@ export const PositionsTable = () => {
                     liquidationPrice,
                     marketPrice,
                     fees,
+                    pnlPercentage,
                   },
                   index
                 ) => {
@@ -86,7 +87,7 @@ export const PositionsTable = () => {
                       />
                       {/* Net value */}
                       <NetValue amount={netValue.toNumber()} />
-                      <PnL pnl={pnl.toNumber()} />
+                      <PnL pnl={pnl.toNumber()} pnlPercentage={pnlPercentage.toNumber()} />
 
                       <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
 

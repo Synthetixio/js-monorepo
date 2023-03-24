@@ -1,5 +1,10 @@
 import { wei } from '@synthetixio/wei';
-import { calculateMarkPrice, calculateNewPnl, calculatePositionData } from './usePositions';
+import {
+  calculateMarkPrice,
+  calculateNewPnl,
+  calculatePnlPercentage,
+  calculatePositionData,
+} from './usePositions';
 
 describe('calculateMarkPrice', () => {
   it('should correctly calculate the mark price', () => {
@@ -10,8 +15,6 @@ describe('calculateMarkPrice', () => {
     });
     expect(result).toEqual(wei('150'));
   });
-
-  // Add more test cases here if necessary
 });
 
 describe('calculateNewPnl', () => {
@@ -29,8 +32,25 @@ describe('calculateNewPnl', () => {
     const result = calculateNewPnl(subgraphPositionData, contractData, marketPrice);
     expect(result).toEqual(wei('155'));
   });
+});
+describe('calculatePnlPercentage', () => {
+  test('calculates PnL percentage correctly', () => {
+    const subgraphPositionData = { avgEntryPrice: wei(50) } as any;
+    const contractData = { size: wei(100) } as any;
+    const pnl = wei(1000);
 
-  // Add more test cases here if necessary
+    const result = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
+    expect(result.toNumber()).toBe(0.2);
+  });
+
+  test('handles zero shift case', () => {
+    const subgraphPositionData = { avgEntryPrice: wei(50) } as any;
+    const contractData = { size: wei(100) } as any;
+    const pnl = wei(0);
+
+    const result = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
+    expect(result.toNumber()).toBe(0);
+  });
 });
 
 describe('calculatePositionData', () => {
@@ -38,37 +58,40 @@ describe('calculatePositionData', () => {
     const subgraphPositionData = {
       asset: 'BTC',
       market: '0xxxx',
-      fillPriceAtLastInteraction: wei(120),
-      pnlAtLastModification: wei(50),
+      fillPriceAtLastInteraction: wei(150),
+      pnlAtLastModification: wei(150),
       netFundingAtLastModification: wei(30),
-      avgEntryPrice: wei(90),
+      avgEntryPrice: wei(100),
       leverage: wei(5),
       fees: wei(0.1),
     };
     const contractData = {
       size: wei(10),
-      indexPrice: wei(100),
+      indexPrice: wei(120),
       liquidationPrice: wei(80),
-      accessibleMargin: wei(150),
+      accessibleMargin: wei(200),
       skew: wei(10),
       skewScale: wei(20),
       accruedFundingSinceLastModification: wei(5),
     };
 
-    const result = calculatePositionData(subgraphPositionData, contractData);
+    const result = calculatePositionData(subgraphPositionData, contractData, '0xxxxx');
+
     expect(result).toEqual({
+      address: '0xxxxx',
       asset: 'BTC',
-      indexPrice: wei(100),
+      indexPrice: wei(120),
       liquidationPrice: wei(80),
-      pnl: wei(355),
-      margin: wei(150),
+      pnl: wei(455),
+      pnlPercentage: wei(0.455),
+      margin: wei(200),
       size: wei(10),
       long: true,
-      entryPrice: wei(90),
+      avgEntryPrice: wei(100),
       leverage: wei(5),
       funding: wei(35),
-      marketPrice: wei(150),
-      notionalValue: wei(1500),
+      marketPrice: wei(180),
+      notionalValue: wei(1800),
       fees: wei(0.1),
     });
   });
@@ -82,6 +105,4 @@ describe('calculatePositionData', () => {
     const result = calculatePositionData(subgraphPositionData, contractData);
     expect(result).toBe(null);
   });
-
-  // Add more test cases here if necessary
 });
