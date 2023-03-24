@@ -97,7 +97,7 @@ export const calculatePositionData = (
     margin: contractData.accessibleMargin,
     size: contractData.size,
     long: contractData.size.gt(0),
-    entryPrice: subgraphPositionData.avgEntryPrice,
+    avgEntryPrice: subgraphPositionData.avgEntryPrice,
     leverage: subgraphPositionData.leverage,
     funding: netFunding,
     marketPrice,

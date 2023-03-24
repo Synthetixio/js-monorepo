@@ -41,7 +41,7 @@ export const PositionsTable = () => {
                 <TableHeaderCell>Collateral</TableHeaderCell>
                 <TableHeaderCell>Funding</TableHeaderCell>
                 <TableHeaderCell>Fees</TableHeaderCell>
-                <TableHeaderCell>Entry Price</TableHeaderCell>
+                <TableHeaderCell>Avg Entry Price</TableHeaderCell>
                 <TableHeaderCell>Mark Price</TableHeaderCell>
                 <TableHeaderCell>Liquidation Price</TableHeaderCell>
               </Tr>
@@ -58,7 +58,7 @@ export const PositionsTable = () => {
                 (
                   {
                     asset,
-                    entryPrice,
+                    avgEntryPrice,
                     indexPrice,
                     leverage,
                     pnl,
@@ -97,7 +97,7 @@ export const PositionsTable = () => {
                       {/* Fees */}
                       <Currency amount={fees.toNumber()} />
                       {/* Entry Price */}
-                      <Currency amount={entryPrice.toNumber()} />
+                      <Currency amount={avgEntryPrice.toNumber()} />
 
                       {/* Mark Price */}
                       <MarkPrice
