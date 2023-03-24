@@ -6551,9 +6551,12 @@ __metadata:
   resolution: "@snx-v2/BurnStats@workspace:v2/components/BurnStats"
   dependencies:
     "@chakra-ui/react": ^2.5.0
+    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
     react: ^18.2.0
   languageName: unknown
@@ -6957,6 +6960,7 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/icons": "workspace:*"
     "@storybook/react": ^6.5.16
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
