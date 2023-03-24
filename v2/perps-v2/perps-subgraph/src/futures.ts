@@ -184,7 +184,13 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
   let futuresPosition = FuturesPosition.load(positionId);
   let trader = Trader.load(event.params.account.toHex());
   let synthetix = Synthetix.load('synthetix');
-  log.debug('margin', ['wa??', event.params.id.toString(), event.params.margin.toString()]);
+  if (event.params.margin.isZero()) return;
+  log.debug('margin {} {} {} {}', [
+    'wa??',
+    event.params.id.toString(),
+    event.params.margin.toString(),
+    event.address.toHex(),
+  ]);
   if (!synthetix) {
     synthetix = new Synthetix('synthetix');
     synthetix.feesByPositionModifications = BigDecimal.fromString('0');

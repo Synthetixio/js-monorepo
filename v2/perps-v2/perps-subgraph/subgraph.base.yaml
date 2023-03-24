@@ -4,7 +4,7 @@ schema:
 features:
   - grafting # feature name
 graft:
-  base: Qmcy5rRhydzB9Qs2V1mHYLFSymfpYBYGyY7UcvbeWfd5b9 # subgraph ID of base subgraph
+  base: QmfL9oqhWJLiEAxvADW1qaDWfTnVMr9MbstLtijYKuJMXe # subgraph ID of base subgraph
   block: 3497266 # block number
 
 templates:
