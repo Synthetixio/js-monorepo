@@ -510,6 +510,7 @@ describe('Perps V2', () => {
     );
     handlePositionModified(closePositionEvent);
     log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
@@ -655,6 +656,68 @@ describe('Perps V2', () => {
       `${fundingRecomputedEvent.address.toHex()}-${5}`,
       'market',
       fundingRecomputedEvent.address.toHex()
+    );
+  });
+
+  test('open a short and flip sides', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(2),
+      toEth(4),
+      toEth(1200),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      2
+    );
+    handlePositionModified(positionModifiedEvent);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'type',
+      'PositionModified'
+    );
+
+    const existingSize = toEth(-2).abs();
+    const existingPrice = existingSize.times(toEth(1000));
+    const newSize = toEth(4).abs();
+    const newPrice = newSize.times(toEth(1200));
+
+    log.info('Futures Position', []);
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
+      'entryPrice',
+      existingPrice.plus(newPrice).div(toEth(2)).toString()
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
+      'avgEntryPrice',
+      existingPrice.plus(newPrice).div(toEth(2)).toString()
     );
   });
 });
