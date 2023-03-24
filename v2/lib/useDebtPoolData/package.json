@@ -1,0 +1,9 @@
+{
+  "name": "@snx-v2/useDebtPoolData",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.5",
+  "dependencies": {
+    "@tanstack/react-query": "^4.24.6"
+  }
+}

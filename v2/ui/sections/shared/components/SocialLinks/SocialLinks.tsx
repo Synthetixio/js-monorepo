@@ -6,7 +6,7 @@ import DiscordIcon from 'assets/svg/social/discord.svg';
 import TwitterIcon from 'assets/svg/social/twitter.svg';
 import GithubIcon from 'assets/svg/social/github.svg';
 
-import { EXTERNAL_LINKS } from 'constants/links';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 import { media } from '@snx-v1/media';
 

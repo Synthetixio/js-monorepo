@@ -1,5 +1,5 @@
 import { Fade, Td } from '@chakra-ui/react';
-import { formatNumberToUsd } from '../../../utils';
+import { formatNumberToUsd } from '@snx-v2/formatters';
 
 interface NetValueProps {
   amount: number;

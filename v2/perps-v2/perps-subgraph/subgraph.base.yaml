@@ -1,6 +1,47 @@
 specVersion: 0.0.5
 schema:
   file: ./schema.graphql
+
+templates:
+  - name: AggregatorProxy
+    kind: ethereum/contract
+    source:
+      abi: AggregatorProxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/latest-rates.ts
+      entities:
+        - Candle
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: AggregatorProxy
+          file: ./abis/AggregatorProxy.json
+      eventHandlers:
+        - event: 'AggregatorConfirmed(indexed address,indexed address)'
+          handler: 'handleAggregatorProxyAddressUpdated'
+  - name: Aggregator
+    kind: ethereum/contract
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/latest-rates.ts
+      entities:
+        - Candle
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+
 dataSources:
   - kind: ethereum
     name: PerpsV2ProxyAAVEPERP
@@ -44,6 +85,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyAPEPERP
@@ -87,7 +130,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
-
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyATOMPERP
@@ -131,6 +175,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyAUDPERP
@@ -174,6 +220,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyAVAXPERP
@@ -217,6 +265,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyAXSPERP
@@ -260,6 +310,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyBNBPERP
@@ -303,6 +355,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyBTCPERP
@@ -346,6 +400,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyDOGEPERP
@@ -389,6 +445,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyDYDXPERP
@@ -432,6 +490,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyETHPERP
@@ -475,6 +535,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyEURPERP
@@ -518,6 +580,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyFLOWPERP
@@ -561,6 +625,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyFTMPERP
@@ -604,6 +670,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyGBPPERP
@@ -647,6 +715,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyLINKPERP
@@ -690,6 +760,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyMATICPERP
@@ -733,6 +805,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyNEARPERP
@@ -776,6 +850,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyOPPERP
@@ -819,6 +895,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxySOLPERP
@@ -862,6 +940,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyUNIPERP
@@ -905,6 +985,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyXAGPERP
@@ -948,6 +1030,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: PerpsV2ProxyXAUPERP
@@ -991,6 +1075,8 @@ dataSources:
           handler: handleNextPriceOrderRemoved
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
           handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
     name: FuturesMarketManager
@@ -1011,3 +1097,29 @@ dataSources:
         - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
+
+    # Aggregators
+
+  - kind: ethereum
+    name: ExchangeRates
+    source:
+      abi: ExchangeRates
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: 'wasm/assemblyscript'
+      entities:
+        - Candle
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: ExchangeRates
+          file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
+        - name: AggregatorProxy
+          file: ./abis/AggregatorProxy.json
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AggregatorAdded(bytes32,address)'
+          handler: 'handleAggregatorAdded'
+      file: './src/latest-rates.ts'

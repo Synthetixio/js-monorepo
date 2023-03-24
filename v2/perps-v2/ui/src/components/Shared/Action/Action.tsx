@@ -6,11 +6,11 @@ import { RightUpIcon } from '../../Icons';
 interface ActionProps {
   label: string;
   txHash: string;
-  timestamp: string;
+  timestamp: number;
 }
 
 export const Action = ({ label, txHash, timestamp }: ActionProps) => {
-  const date = new Date(parseFloat(timestamp) * 1000);
+  const date = new Date(timestamp * 1000);
   return (
     <Td border="none" fontSize="14px" lineHeight="20px" fontFamily="heading" fontWeight={500}>
       <Fade in>

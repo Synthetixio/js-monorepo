@@ -16,6 +16,7 @@ export const getEtherscanBaseUrl = (networkId: number) => {
   }
   return `https://etherscan.io`;
 };
+
 export const getTxnLink = (networkId: number, txnId: string | null) => {
   if (!txnId) return null;
   const baseUrl = getEtherscanBaseUrl(networkId);

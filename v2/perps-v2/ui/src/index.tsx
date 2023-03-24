@@ -9,6 +9,9 @@ import { Header } from './components/Header';
 import { createRoot } from 'react-dom/client';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { PERPS_V2_DASHBOARD_GRAPH_URL } from './utils/constants';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const client = new ApolloClient({
   uri: PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -34,15 +37,6 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  // {
-  //   path: '/actions',
-  //   element: (
-  //     <>
-  //       <Header />
-  //       <Actions />
-  //     </>
-  //   ),
-  // },
 ]);
 
 const container = document.querySelector('#app');
@@ -62,11 +56,13 @@ const customTheme = extendTheme({
 
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <ChakraProvider theme={customTheme}>
-        <Fonts />
-        <RouterProvider router={router} />
-      </ChakraProvider>
-    </ApolloProvider>
+    <QueryClientProvider client={queryClient}>
+      <ApolloProvider client={client}>
+        <ChakraProvider theme={customTheme}>
+          <Fonts />
+          <RouterProvider router={router} />
+        </ChakraProvider>
+      </ApolloProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

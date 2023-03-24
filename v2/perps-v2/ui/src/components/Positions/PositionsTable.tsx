@@ -15,8 +15,7 @@ import { usePositions } from '../../hooks';
 
 export const PositionsTable = () => {
   const { walletAddress } = useParams();
-
-  const { loading, data, error } = usePositions(walletAddress);
+  const { isLoading, data, error } = usePositions(walletAddress);
 
   return (
     <>
@@ -31,90 +30,105 @@ export const PositionsTable = () => {
           borderSpacing: 0,
         }}
       >
-        <Table bg="navy.700">
-          <Thead>
-            <Tr>
-              <TableHeaderCell>Market</TableHeaderCell>
-              <TableHeaderCell>Net Value</TableHeaderCell>
-              <TableHeaderCell>PnL</TableHeaderCell>
-              <TableHeaderCell>Size</TableHeaderCell>
-              <TableHeaderCell>Collateral</TableHeaderCell>
-              <TableHeaderCell>Funding</TableHeaderCell>
-              <TableHeaderCell>Entry Price</TableHeaderCell>
-              <TableHeaderCell>Mark Price</TableHeaderCell>
-              <TableHeaderCell>Liquidation Price</TableHeaderCell>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {loading && (
-              <>
-                <PositionsLoading />
-                <PositionsLoading />
-                <PositionsLoading />
-              </>
-            )}
-            {data?.map(
-              (
-                {
-                  asset,
-                  entryPrice,
-                  lastPrice,
-                  leverage,
-                  pnl,
-                  margin,
-                  size,
-                  long,
-                  address,
-                  funding,
-                  liquidationPrice,
-                  skew,
-                  skewScale,
-                },
-                index
-              ) => {
-                const netValue =
-                  Math.abs(parseInt(size) / 1e18) * (parseInt(lastPrice) / 1e18) +
-                  parseInt(funding) / 1e18 +
-                  parseInt(pnl) / 1e18;
+        <>
+          <Table bg="navy.700">
+            <Thead>
+              <Tr>
+                <TableHeaderCell>Market</TableHeaderCell>
+                <TableHeaderCell>Net Value</TableHeaderCell>
+                <TableHeaderCell>PnL</TableHeaderCell>
+                <TableHeaderCell>Size</TableHeaderCell>
+                <TableHeaderCell>Collateral</TableHeaderCell>
+                <TableHeaderCell>Funding</TableHeaderCell>
+                <TableHeaderCell>Fees</TableHeaderCell>
+                <TableHeaderCell>Avg Entry Price</TableHeaderCell>
+                <TableHeaderCell>Mark Price</TableHeaderCell>
+                <TableHeaderCell>Liquidation Price</TableHeaderCell>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {isLoading && (
+                <>
+                  <PositionsLoading />
+                  <PositionsLoading />
+                  <PositionsLoading />
+                </>
+              )}
+              {data?.map(
+                (
+                  {
+                    asset,
+                    avgEntryPrice,
+                    indexPrice,
+                    leverage,
+                    pnl,
+                    margin,
+                    size,
+                    long,
+                    address,
+                    funding,
+                    liquidationPrice,
+                    marketPrice,
+                    fees,
+                    pnlPercentage,
+                  },
+                  index
+                ) => {
+                  // Need to take away fees
+                  const netValue = size.abs().mul(marketPrice).add(pnl);
 
-                return (
-                  <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
-                    {/* Market and Direction */}
-                    <Market asset={asset} leverage={leverage} long={long} />
-                    {/* Net value */}
-                    <NetValue amount={netValue} />
-                    <PnL amount={pnl} entryPrice={entryPrice} lastPrice={lastPrice} />
-                    <Size size={size} lastPrice={lastPrice} />
-                    {/* Collateral */}
-                    <Currency amount={margin} />
-                    {/* Funding */}
-                    <Funding amount={funding} />
-                    {/* Entry Price */}
-                    <Currency amount={entryPrice} />
-                    {/* Mark Price */}
-                    <MarkPrice indexPrice={lastPrice} skew={skew} skewScale={skewScale} />
-                    {/* Liquidation Price */}
-                    <Currency amount={liquidationPrice} />
-                  </Tr>
-                );
-              }
-            )}
-          </Tbody>
-        </Table>
-        {!loading && data?.length === 0 && (
-          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-              No open positions
-            </Text>
-          </Flex>
-        )}
-        {error && (
-          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-              No open positions
-            </Text>
-          </Flex>
-        )}
+                  return (
+                    <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
+                      {/* Market and Direction */}
+                      <Market
+                        asset={asset}
+                        leverage={leverage.toNumber()}
+                        direction={long ? 'LONG' : 'SHORT'}
+                      />
+                      {/* Net value */}
+                      <NetValue amount={netValue.toNumber()} />
+                      <PnL pnl={pnl.toNumber()} pnlPercentage={pnlPercentage.toNumber()} />
+
+                      <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
+
+                      {/* Collateral */}
+                      <Currency amount={margin.toNumber()} />
+                      {/* Funding */}
+                      <Funding amount={funding.toNumber()} />
+                      {/* Fees */}
+                      <Currency amount={fees.toNumber()} />
+                      {/* Entry Price */}
+                      <Currency amount={avgEntryPrice.toNumber()} />
+
+                      {/* Mark Price */}
+                      <MarkPrice
+                        indexPrice={indexPrice.toNumber()}
+                        markPrice={marketPrice.toNumber()}
+                      />
+
+                      {/* Liquidation Price */}
+                      <Currency amount={liquidationPrice.toNumber()} />
+                    </Tr>
+                  );
+                }
+              )}
+            </Tbody>
+          </Table>
+          {!isLoading && data?.length === 0 && (
+            <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
+              <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+                No open positions
+              </Text>
+            </Flex>
+          )}
+          {error && (
+            <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
+              <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+                No open positions
+              </Text>
+            </Flex>
+          )}
+        </>
       </TableContainer>
     </>
   );

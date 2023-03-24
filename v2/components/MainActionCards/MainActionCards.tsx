@@ -285,6 +285,7 @@ const CollectActionCard: React.FC<{
   snxPrice?: string;
   targetThreshold?: number;
   rewardsDollarValue: number;
+  feesBurned?: number;
 }> = ({
   isLoading,
   liquidationCratioPercentage,
@@ -294,6 +295,7 @@ const CollectActionCard: React.FC<{
   hasClaimed,
   targetThreshold,
   rewardsDollarValue,
+  feesBurned,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -326,27 +328,45 @@ const CollectActionCard: React.FC<{
         isStaking ? (
           <Flex justifyContent="space-between">
             {rewardsDollarValue > 0 ? (
-              <Flex flexDirection="column">
-                <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
-                  {t('staking-v2.main-action-cards.collect-rewards')}{' '}
-                  <Tooltip
-                    label={t('staking-v2.main-action-cards.collect-rewards-tooltip')}
-                    hasArrow
+              <Flex gap={6}>
+                <Flex flexDirection="column">
+                  <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
+                    {t('staking-v2.main-action-cards.collect-rewards')}{' '}
+                    <Tooltip
+                      label={t('staking-v2.main-action-cards.collect-rewards-tooltip')}
+                      hasArrow
+                    >
+                      <Box as="span" mb={1}>
+                        <InfoIcon width="10px" height="10px" />
+                      </Box>
+                    </Tooltip>
+                  </Text>
+                  <Text
+                    data-testid="value of rewards"
+                    fontFamily="mono"
+                    fontSize="md"
+                    color="green.400"
+                    fontWeight="700"
                   >
-                    <Box as="span" mb={1}>
-                      <InfoIcon width="10px" height="10px" />
-                    </Box>
-                  </Tooltip>
-                </Text>
-                <Text
-                  data-testid="value of rewards"
-                  fontFamily="mono"
-                  fontSize="md"
-                  color="green.400"
-                  fontWeight="700"
-                >
-                  ≈ {formatNumberToUsd(rewardsDollarValue)}
-                </Text>
+                    = {formatNumberToUsd(rewardsDollarValue)}
+                  </Text>
+                </Flex>
+                <Flex flexDirection="column">
+                  <Text color="whiteAlpha.700" fontSize="xs" mr="1" fontWeight="700">
+                    {t('staking-v2.main-action-cards.collect-fees')}{' '}
+                    <Tooltip
+                      label={t('staking-v2.main-action-cards.collect-fees-tooltip')}
+                      hasArrow
+                    >
+                      <Box as="span" mb={1}>
+                        <InfoIcon width="10px" height="10px" />
+                      </Box>
+                    </Tooltip>
+                  </Text>
+                  <Text fontFamily="mono" fontSize="md" color="green.400" fontWeight="700">
+                    = {formatNumberToUsd(feesBurned || 0)}
+                  </Text>
+                </Flex>
               </Flex>
             ) : (
               <Flex flexDirection="column">
@@ -408,6 +428,7 @@ type UiProps = {
   walletAddress: string | null;
   targetThreshold?: number;
   rewardsDollarValue: number;
+  feesBurned?: number;
 };
 
 export const MainActionCardsUi: React.FC<UiProps> = ({
@@ -422,6 +443,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
   walletAddress,
   targetThreshold,
   rewardsDollarValue,
+  feesBurned,
 }) => {
   return (
     <Stack direction={['column', 'column', 'row']} align="center" spacing="14px">
@@ -451,6 +473,7 @@ export const MainActionCardsUi: React.FC<UiProps> = ({
         hasClaimed={hasClaimed}
         nextEpochStartDate={nextEpochStartDate}
         targetThreshold={targetThreshold}
+        feesBurned={feesBurned}
       />
     </Stack>
   );

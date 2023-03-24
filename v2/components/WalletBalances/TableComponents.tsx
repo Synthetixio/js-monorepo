@@ -1,27 +1,8 @@
 import { ReactElement } from 'react';
-import { Flex, Td, Th, Tr, Text, Skeleton, Progress, TableCellProps } from '@chakra-ui/react';
+import { Flex, Text, Skeleton, Progress } from '@chakra-ui/react';
 import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { StyledTd } from '@snx-v2/TableComponents';
 
-export const TbodyLoading = ({ numberOfCols }: { numberOfCols: number }) => (
-  <Tr w="full">
-    {Array.from({ length: numberOfCols }, (_x, i) => (
-      <Td key={'skeleton=' + i} border="none">
-        <Skeleton w="full" height={6} />
-      </Td>
-    ))}
-  </Tr>
-);
-
-export const StyledTh: React.FC<TableCellProps> = (props) => (
-  <Th
-    sx={{ paddingBottom: 1, paddingTop: 4, borderColor: 'gray.900', borderTop: 'none' }}
-    {...props}
-  />
-);
-
-export const StyledTd: React.FC<TableCellProps> = (props) => (
-  <Td sx={{ borderBottomColor: 'gray.900' }} {...props} />
-);
 export const AssetTd = ({
   description,
   currencyKey,

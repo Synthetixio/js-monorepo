@@ -13,6 +13,7 @@ import {
   NextPriceOrderRemoved as NextPriceOrderRemovedEvent,
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
+  PerpsTracking as PerpsTrackingEvent,
 } from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
 import {
   PositionLiquidated,
@@ -23,8 +24,8 @@ import {
   FuturesTrade,
   FundingRateUpdate,
   FuturesMarginTransfer,
-  Volume,
   FuturesMarket,
+  Frontend,
 } from '../generated/schema';
 
 export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
@@ -172,6 +173,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
   }
 
   // New position when var futuresPosition is undefined
+  // TODO @MF what happens when user just deposits margin, why we creating new position?, we need to filter out that when tradeSize != 0 then real trade
   if (!futuresPosition) {
     log.info('new position', [positionId]);
     futuresPosition = new FuturesPosition(positionId);
@@ -239,11 +241,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     // else position is not new
   } else {
     // Position closed & not liquidated
-    if (
-      event.params.size.isZero() &&
-      !event.params.tradeSize.isZero() &&
-      !event.params.fee.isZero()
-    ) {
+    if (event.params.size.isZero() && !event.params.tradeSize.isZero()) {
       log.info('position closed', [positionId]);
 
       const newPnl = event.params.lastPrice
@@ -291,6 +289,13 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
 
       synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
         event.params.fee.toBigDecimal()
+      );
+      synthetix.totalVolume = synthetix.totalVolume.plus(
+        event.params.tradeSize
+          .times(event.params.lastPrice)
+          .div(BigInt.fromI32(10).pow(18))
+          .abs()
+          .toBigDecimal()
       );
       tradeEntity.save();
     }
@@ -497,6 +502,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
+        tradeEntity.save();
       }
 
       // Update Synthetix values
@@ -516,10 +522,6 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
       }
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
       futuresOrderEntity.save();
-      tradeEntity.txHash = event.transaction.hash.toHex();
-      tradeEntity.futuresOrder = futuresOrderEntityId;
-      tradeEntity.type = 'PositionOpened';
-      tradeEntity.save();
     } else {
       futuresOrderEntity.status = 'Cancelled';
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
@@ -620,6 +622,7 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
+        tradeEntity.save();
       }
       // Update Synthetix values
       if (synthetix) {
@@ -637,10 +640,6 @@ export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): 
       }
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
       futuresOrderEntity.save();
-      tradeEntity.txHash = event.transaction.hash.toHex();
-      tradeEntity.futuresOrder = futuresOrderEntityId;
-      tradeEntity.type = 'PositionOpened';
-      tradeEntity.save();
     } else {
       futuresOrderEntity.status = 'Cancelled';
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
@@ -659,4 +658,23 @@ export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
 
 export function handleMarketRemoved(event: MarketRemovedEvent): void {
   store.remove('FuturesMarket', event.params.market.toHex());
+}
+
+export function handlePerpsTracking(event: PerpsTrackingEvent): void {
+  let frontend = Frontend.load(event.params.trackingCode.toString());
+  if (!frontend) {
+    frontend = new Frontend(event.params.trackingCode.toString());
+    frontend.markets = [event.address.toHex()];
+    frontend.amount = event.params.sizeDelta.abs().toBigDecimal();
+    frontend.fees = event.params.fee.toBigDecimal();
+  } else {
+    frontend.amount = frontend.amount.plus(event.params.sizeDelta.abs().toBigDecimal());
+    frontend.fees = frontend.fees.plus(event.params.fee.abs().toBigDecimal());
+    if (!frontend.markets.includes(event.address.toHex())) {
+      const oldMarkets = frontend.markets;
+      oldMarkets.push(event.address.toHex());
+      frontend.markets = oldMarkets;
+    }
+  }
+  frontend.save();
 }

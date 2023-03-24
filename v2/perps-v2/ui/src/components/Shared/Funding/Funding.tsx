@@ -1,13 +1,12 @@
 import { Fade, Td } from '@chakra-ui/react';
-import { stringToDecimal, formatNumberToUsd } from '../../../utils';
+import { formatNumberToUsd } from '@snx-v2/formatters';
 
 interface FundingProps {
-  amount: string;
+  amount: number;
 }
 
 export const Funding = ({ amount }: FundingProps) => {
-  const calculatedAmount = stringToDecimal(amount);
-  const isPositive = calculatedAmount >= 0;
+  const isPositive = amount >= 0;
 
   return (
     <Td
@@ -18,7 +17,7 @@ export const Funding = ({ amount }: FundingProps) => {
       fontWeight={500}
       color={isPositive ? 'green.500' : 'red.500'}
     >
-      <Fade in>{formatNumberToUsd(calculatedAmount)}</Fade>
+      <Fade in>{formatNumberToUsd(amount)}</Fade>
     </Td>
   );
 };

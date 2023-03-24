@@ -480,65 +480,6 @@ export class Synthetix extends Entity {
   }
 }
 
-export class Volume extends Entity {
-  constructor(id: string) {
-    super();
-    this.set('id', Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get('id');
-    assert(id != null, 'Cannot save Volume entity without an ID');
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Volume must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set('Volume', id.toString(), this);
-    }
-  }
-
-  static load(id: string): Volume | null {
-    return changetype<Volume | null>(store.get('Volume', id));
-  }
-
-  get id(): string {
-    let value = this.get('id');
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set('id', Value.fromString(value));
-  }
-
-  get volume(): BigDecimal {
-    let value = this.get('volume');
-    return value!.toBigDecimal();
-  }
-
-  set volume(value: BigDecimal) {
-    this.set('volume', Value.fromBigDecimal(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get('timestamp');
-    return value!.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set('timestamp', Value.fromBigInt(value));
-  }
-
-  get market(): string {
-    let value = this.get('market');
-    return value!.toString();
-  }
-
-  set market(value: string) {
-    this.set('market', Value.fromString(value));
-  }
-}
-
 export class FuturesPosition extends Entity {
   constructor(id: string) {
     super();
@@ -1161,6 +1102,314 @@ export class FuturesMarket extends Entity {
 
   set marketKey(value: Bytes) {
     this.set('marketKey', Value.fromBytes(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+}
+
+export class Frontend extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save Frontend entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Frontend must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('Frontend', id.toString(), this);
+    }
+  }
+
+  static load(id: string): Frontend | null {
+    return changetype<Frontend | null>(store.get('Frontend', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get markets(): Array<string> {
+    let value = this.get('markets');
+    return value!.toStringArray();
+  }
+
+  set markets(value: Array<string>) {
+    this.set('markets', Value.fromStringArray(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get('amount');
+    return value!.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set('amount', Value.fromBigDecimal(value));
+  }
+
+  get fees(): BigDecimal {
+    let value = this.get('fees');
+    return value!.toBigDecimal();
+  }
+
+  set fees(value: BigDecimal) {
+    this.set('fees', Value.fromBigDecimal(value));
+  }
+}
+
+export class Candle extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save Candle entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Candle must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('Candle', id.toString(), this);
+    }
+  }
+
+  static load(id: string): Candle | null {
+    return changetype<Candle | null>(store.get('Candle', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get synth(): string {
+    let value = this.get('synth');
+    return value!.toString();
+  }
+
+  set synth(value: string) {
+    this.set('synth', Value.fromString(value));
+  }
+
+  get open(): BigDecimal {
+    let value = this.get('open');
+    return value!.toBigDecimal();
+  }
+
+  set open(value: BigDecimal) {
+    this.set('open', Value.fromBigDecimal(value));
+  }
+
+  get high(): BigDecimal {
+    let value = this.get('high');
+    return value!.toBigDecimal();
+  }
+
+  set high(value: BigDecimal) {
+    this.set('high', Value.fromBigDecimal(value));
+  }
+
+  get low(): BigDecimal {
+    let value = this.get('low');
+    return value!.toBigDecimal();
+  }
+
+  set low(value: BigDecimal) {
+    this.set('low', Value.fromBigDecimal(value));
+  }
+
+  get close(): BigDecimal {
+    let value = this.get('close');
+    return value!.toBigDecimal();
+  }
+
+  set close(value: BigDecimal) {
+    this.set('close', Value.fromBigDecimal(value));
+  }
+
+  get average(): BigDecimal {
+    let value = this.get('average');
+    return value!.toBigDecimal();
+  }
+
+  set average(value: BigDecimal) {
+    this.set('average', Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get period(): BigInt {
+    let value = this.get('period');
+    return value!.toBigInt();
+  }
+
+  set period(value: BigInt) {
+    this.set('period', Value.fromBigInt(value));
+  }
+
+  get aggregatedPrices(): BigInt {
+    let value = this.get('aggregatedPrices');
+    return value!.toBigInt();
+  }
+
+  set aggregatedPrices(value: BigInt) {
+    this.set('aggregatedPrices', Value.fromBigInt(value));
+  }
+}
+
+export class LatestRate extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save LatestRate entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type LatestRate must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('LatestRate', id.toString(), this);
+    }
+  }
+
+  static load(id: string): LatestRate | null {
+    return changetype<LatestRate | null>(store.get('LatestRate', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get rate(): BigDecimal {
+    let value = this.get('rate');
+    return value!.toBigDecimal();
+  }
+
+  set rate(value: BigDecimal) {
+    this.set('rate', Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get aggregator(): Bytes {
+    let value = this.get('aggregator');
+    return value!.toBytes();
+  }
+
+  set aggregator(value: Bytes) {
+    this.set('aggregator', Value.fromBytes(value));
+  }
+}
+
+export class RateUpdate extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save RateUpdate entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type RateUpdate must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('RateUpdate', id.toString(), this);
+    }
+  }
+
+  static load(id: string): RateUpdate | null {
+    return changetype<RateUpdate | null>(store.get('RateUpdate', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get currencyKey(): Bytes {
+    let value = this.get('currencyKey');
+    return value!.toBytes();
+  }
+
+  set currencyKey(value: Bytes) {
+    this.set('currencyKey', Value.fromBytes(value));
+  }
+
+  get synth(): string {
+    let value = this.get('synth');
+    return value!.toString();
+  }
+
+  set synth(value: string) {
+    this.set('synth', Value.fromString(value));
+  }
+
+  get rate(): BigDecimal {
+    let value = this.get('rate');
+    return value!.toBigDecimal();
+  }
+
+  set rate(value: BigDecimal) {
+    this.set('rate', Value.fromBigDecimal(value));
+  }
+
+  get block(): BigInt {
+    let value = this.get('block');
+    return value!.toBigInt();
+  }
+
+  set block(value: BigInt) {
+    this.set('block', Value.fromBigInt(value));
   }
 
   get timestamp(): BigInt {

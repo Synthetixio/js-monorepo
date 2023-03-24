@@ -24,6 +24,7 @@ import Routes from './Routes';
 import { isSupportedNetworkId } from './utils/network';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { SignerContext } from '@snx-v2/SignerContext';
+import { SwitchNetworkContext } from '@snx-v2/SwitchNetworkContext';
 import { GasSpeedProvider } from '@snx-v2/GasSpeedContext';
 import { DelegateWalletProvider } from '@snx-v2/useDelegateWallet';
 import ChakraProviderWithTheme from './components/ChakraProviderWithTheme';
@@ -47,6 +48,7 @@ function InnerApp() {
     L1DefaultProvider,
     synthetixjs,
     walletAddress,
+    switchNetwork,
   } = Connector.useContainer();
 
   useEffect(() => {
@@ -84,13 +86,15 @@ function InnerApp() {
         <GasSpeedProvider>
           <DelegateWalletProvider>
             <SignerContext.Provider value={signer}>
-              <ContractContext.Provider value={contractContextData}>
-                <Layout>
-                  <SystemStatus>
-                    <Routes />
-                  </SystemStatus>
-                </Layout>
-              </ContractContext.Provider>
+              <SwitchNetworkContext.Provider value={switchNetwork}>
+                <ContractContext.Provider value={contractContextData}>
+                  <Layout>
+                    <SystemStatus>
+                      <Routes />
+                    </SystemStatus>
+                  </Layout>
+                </ContractContext.Provider>
+              </SwitchNetworkContext.Provider>
             </SignerContext.Provider>
           </DelegateWalletProvider>
         </GasSpeedProvider>

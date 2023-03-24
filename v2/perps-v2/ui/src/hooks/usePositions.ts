@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { BigNumber, Contract, providers } from 'ethers';
+import { Contract, providers } from 'ethers';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 import { infuraId } from '../utils';
 import { FuturesPosition_OrderBy, OrderDirection } from '../__generated__/graphql';
@@ -14,39 +13,116 @@ import {
   address as multiCallAddress,
   Multicall3,
 } from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
+import { useQuery as useReactQuery } from '@tanstack/react-query';
+import Wei, { wei } from '@synthetixio/wei';
 
+export function notNill<Value>(value: Value | null | undefined): value is Value {
+  return value !== null && value !== undefined;
+}
 const provider = new providers.InfuraProvider(10, infuraId);
 
 const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
 const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider) as Multicall3;
 
-interface PositionsData {
-  address: string | undefined;
-  entryPrice: string;
-  lastPrice: string;
-  leverage: string;
-  pnl: string;
-  margin: string;
-  size: string;
-  long: boolean;
-  liquidationPrice: string;
+interface SubgraphPositionData {
+  market: string;
   asset: string;
-  funding: string;
-  notionalValue: string;
-  skew: string;
-  skewScale: string;
+  avgEntryPrice: Wei;
+  leverage: Wei;
+  fees: Wei;
+  pnlAtLastModification: Wei;
+  netFundingAtLastModification: Wei;
+  fillPriceAtLastInteraction: Wei;
 }
 
-interface PositionsState {
-  loading: boolean;
-  data: PositionsData[];
+interface ContractData {
+  skew: Wei;
+  skewScale: Wei;
+  indexPrice: Wei;
+  size: Wei;
+  liquidationPrice: Wei;
+  accessibleMargin: Wei;
+  accruedFundingSinceLastModification: Wei;
 }
+
+export const calculateMarkPrice = ({
+  skew,
+  indexPrice,
+  skewScale,
+}: {
+  skew: Wei;
+  indexPrice: Wei;
+  skewScale: Wei;
+}) => {
+  const skewRatio = skew.div(skewScale);
+  const markPrice = indexPrice.mul(wei(1).add(skewRatio));
+  return markPrice;
+};
+
+export const calculateNewPnl = (
+  subgraphPositionData: SubgraphPositionData,
+  contractData: ContractData,
+  marketPrice: Wei
+) => {
+  const priceShiftSinceModification = marketPrice.sub(
+    subgraphPositionData.fillPriceAtLastInteraction
+  );
+  const pnlSinceModification = contractData.size.mul(priceShiftSinceModification);
+  const newPnl = subgraphPositionData.pnlAtLastModification
+    .add(pnlSinceModification)
+    .add(contractData.accruedFundingSinceLastModification);
+  return newPnl;
+};
+
+export const calculatePnlPercentage = (
+  subgraphPositionData: SubgraphPositionData,
+  contractData: ContractData,
+  pnl: Wei
+) => {
+  if (pnl.eq(0)) return wei(0);
+
+  const initialValue = contractData.size.mul(subgraphPositionData.avgEntryPrice);
+  const currentVal = initialValue.add(pnl);
+  const shift = currentVal.sub(initialValue);
+  return shift.div(initialValue);
+};
+
+export const calculatePositionData = (
+  subgraphPositionData: SubgraphPositionData,
+  contractData: ContractData,
+  address?: string
+) => {
+  if (contractData.size.eq(0)) return null;
+  const marketPrice = calculateMarkPrice(contractData);
+  const pnl = calculateNewPnl(subgraphPositionData, contractData, marketPrice);
+  const notionalValue = contractData.size.mul(marketPrice);
+  const pnlPercentage = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
+  const netFunding = subgraphPositionData.netFundingAtLastModification.add(
+    contractData.accruedFundingSinceLastModification
+  );
+
+  return {
+    asset: subgraphPositionData.asset,
+    indexPrice: contractData.indexPrice,
+    liquidationPrice: contractData.liquidationPrice,
+    pnl,
+    pnlPercentage,
+    margin: contractData.accessibleMargin,
+    size: contractData.size,
+    long: contractData.size.gt(0),
+    avgEntryPrice: subgraphPositionData.avgEntryPrice,
+    leverage: subgraphPositionData.leverage,
+    funding: netFunding,
+    marketPrice,
+    notionalValue: notionalValue,
+    fees: subgraphPositionData.fees,
+    address,
+  };
+};
 
 export const usePositions = (walletAddress?: string) => {
-  const [state, setState] = useState<PositionsState>({ loading: true, data: [] });
-
   // Initial query to give a list of markets
-  const { loading, data, error } = useQuery(POSITIONS_QUERY_MARKET, {
+  const { data, error } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
       where: { isOpen: true, account: walletAddress },
       orderBy: FuturesPosition_OrderBy.Size,
@@ -55,136 +131,49 @@ export const usePositions = (walletAddress?: string) => {
     },
     pollInterval: 5000,
   });
+  const openPositions = data?.futuresPositions.map((item) => ({
+    market: item.market.marketKey,
+    asset: item.market.asset,
+    avgEntryPrice: wei(item.avgEntryPrice, 18, true),
+    leverage: wei(item.leverage, 18, true),
+    fees: wei(item.feesPaidToSynthetix, 18, true),
+    pnlAtLastModification: wei(item.pnl, 18, true),
+    netFundingAtLastModification: wei(item.netFunding, 18, true),
+    fillPriceAtLastInteraction: wei(item.lastPrice, 18, true),
+  }));
 
-  useEffect(() => {
-    if (data && data?.futuresPositions.length > 0) {
-      (async () => {
-        const update: PositionsData[] = [];
-        const markets = data?.futuresPositions.map((item) => {
-          return {
-            market: item.market.marketKey,
-            asset: item.market.asset,
-            entryPrice: item.entryPrice,
-            leverage: item.leverage,
-          };
-        });
-        const positionsData = await fetchPositions(markets, walletAddress || '');
+  return useReactQuery({
+    queryKey: [
+      'usePosition',
+      {
+        walletAddress,
+        subgraphData: JSON.stringify(data),
+      },
+    ],
+    queryFn: async () => {
+      if (!openPositions) throw Error('Query should not be enabled');
+      if (error) throw error;
 
-        positionsData.forEach(({ position, entryPrice, leverage, asset, skew, skewScale }) => {
-          const {
-            accessibleMargin,
-            liquidationPrice,
-            accruedFunding,
-            profitLoss,
-            position: { lastPrice, size },
-            notionalValue,
-          } = position;
-
-          const isLong = !size.toString().includes('-');
-
-          update.push({
-            address: walletAddress,
-            asset,
-            lastPrice: lastPrice.toString(),
-            liquidationPrice: liquidationPrice.toString(),
-            pnl: profitLoss.toString(),
-            margin: accessibleMargin.toString(),
-            size: size.toString(),
-            long: isLong,
-            entryPrice,
-            leverage,
-            funding: accruedFunding.toString(),
-            notionalValue: notionalValue.toString(),
-            skew: skew.toString(),
-            skewScale: skewScale.toString(),
-          });
-        });
-
-        setState({ loading: false, data: update });
-      })();
-
-      const id = setInterval(() => {
-        (async () => {
-          const update: PositionsData[] = [];
-          const markets = data?.futuresPositions.map((item) => {
-            return {
-              market: item.market.marketKey,
-              asset: item.market.asset,
-              entryPrice: item.entryPrice,
-              leverage: item.leverage,
-              id: item.id,
-            };
-          });
-
-          const ids = data.futuresPositions.map(({ id }) => id);
-          console.log(
-            `Polling ${ids.length} position${ids.length === 1 ? '' : 's'}:`,
-            ids.join(' ')
+      const positionsData = await fetchPositions(openPositions, walletAddress || '');
+      return positionsData
+        .map((contractData, index) => {
+          const calculatedPositionData = calculatePositionData(
+            openPositions[index],
+            contractData,
+            walletAddress
           );
-          if (ids.length === 0) return;
-
-          const positionsData = await fetchPositions(markets, walletAddress || '');
-          positionsData.forEach(({ asset, position, entryPrice, leverage, skew, skewScale }) => {
-            const {
-              accessibleMargin,
-              liquidationPrice,
-              accruedFunding,
-              profitLoss,
-              position: { lastPrice, size },
-              notionalValue,
-            } = position;
-            const isLong = !size.toString().includes('-');
-
-            update.push({
-              address: walletAddress,
-              asset,
-              lastPrice: lastPrice.toString(),
-              liquidationPrice: liquidationPrice.toString(),
-              pnl: profitLoss.toString(),
-              margin: accessibleMargin.toString(),
-              size: size.toString(),
-              long: isLong,
-              entryPrice,
-              leverage,
-              funding: accruedFunding.toString(),
-              notionalValue: notionalValue.toString(),
-              skew: skew.toString(),
-              skewScale: skewScale.toString(),
-            });
-          });
-        })();
-      }, 5000);
-
-      return () => clearInterval(id);
-    } else if (!loading && data) {
-      setState({ loading: false, data: [] });
-    }
-  }, [data, loading, walletAddress]);
-
-  return { ...state, error };
+          return calculatedPositionData;
+        })
+        .filter(notNill);
+    },
+    enabled: Boolean(openPositions),
+  });
 };
 
-interface PositionData {
-  market: string;
-  asset: string;
-  entryPrice: string;
-  leverage: string;
-}
-
-interface DataResponse {
-  market: string;
-  asset: string;
-  entryPrice: string;
-  leverage: string;
-  position: PerpsV2MarketData.PositionDataStructOutput;
-  skew: BigNumber;
-  skewScale: BigNumber;
-}
-
 async function fetchPositions(
-  positionData: PositionData[],
+  positionData: SubgraphPositionData[],
   address: string
-): Promise<DataResponse[]> {
+): Promise<ContractData[]> {
   const positionDetailCalls = positionData.map(({ market }) => ({
     target: contract.address,
     callData: contract.interface.encodeFunctionData('positionDetailsForMarketKey', [
@@ -192,43 +181,48 @@ async function fetchPositions(
       address,
     ]),
   }));
+
   const marketDetailCalls = positionData.map(({ market }) => ({
     target: contract.address,
     callData: contract.interface.encodeFunctionData('marketDetailsForKey', [market]),
   }));
+
   const multiCallResponse = await Multicall3Contract.callStatic.aggregate(
     positionDetailCalls.concat(marketDetailCalls)
   );
+
   const positionsDetailsMulticallResult = multiCallResponse.returnData.slice(
     0,
     positionDetailCalls.length
   );
+
   const marketDetailMulticallResult = multiCallResponse.returnData.slice(
     positionDetailCalls.length
   );
+
   // The result from decodeFunctionResult isn't typed, we could use zod to validate but doing a type assertion for now..
-  const dataToReturn: DataResponse[] = positionsDetailsMulticallResult.map(
+  const dataToReturn: ContractData[] = positionsDetailsMulticallResult.map(
     (positionDetailsBytes, index) => {
       const positionDetails = contract.interface.decodeFunctionResult(
         'positionDetailsForMarketKey',
         positionDetailsBytes
       )[0];
+
       const marketDetailsBytes = marketDetailMulticallResult[index];
-      const { fundingParameters, marketSizeDetails } = contract.interface.decodeFunctionResult(
-        'marketDetailsForKey',
-        marketDetailsBytes
-      )[0];
-      const { market, leverage, entryPrice, asset } = positionData[index];
+      const { fundingParameters, marketSizeDetails, priceDetails } =
+        contract.interface.decodeFunctionResult('marketDetailsForKey', marketDetailsBytes)[0];
+
       return {
-        market,
-        leverage,
-        entryPrice,
-        asset,
-        position: positionDetails,
-        skew: marketSizeDetails.marketSkew,
-        skewScale: fundingParameters.skewScale,
+        size: wei(positionDetails.position.size),
+        liquidationPrice: wei(positionDetails.liquidationPrice),
+        skew: wei(marketSizeDetails.marketSkew),
+        skewScale: wei(fundingParameters.skewScale),
+        indexPrice: wei(priceDetails.price),
+        accessibleMargin: wei(positionDetails.accessibleMargin),
+        accruedFundingSinceLastModification: wei(positionDetails.accruedFunding),
       };
     }
   );
+
   return dataToReturn;
 }

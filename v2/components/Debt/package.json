@@ -1,0 +1,22 @@
+{
+  "name": "@snx-v2/Debt",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.5.0",
+    "@snx-v2/Constants": "workspace:*",
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/DebtPoolTable": "workspace:*",
+    "@snx-v2/SwitchNetworkContext": "workspace:*",
+    "@snx-v2/SynthIcons": "workspace:*",
+    "@snx-v2/TableComponents": "workspace:*",
+    "@snx-v2/formatters": "workspace:*",
+    "@snx-v2/icons": "workspace:*",
+    "@snx-v2/useDSnxBalance": "workspace:*",
+    "@snx-v2/useDebtData": "workspace:*",
+    "@snx-v2/useDebtPoolData": "workspace:*",
+    "@snx-v2/useSynthetixContracts": "workspace:*",
+    "react": "^18.2.0"
+  }
+}

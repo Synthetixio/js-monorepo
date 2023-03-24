@@ -6,6 +6,7 @@ import { MainActionCardsUi } from './MainActionCards';
 import { NetworkId } from '@snx-v2/useSynthetixContracts';
 import { useContext } from 'react';
 import { ContractContext } from '@snx-v2/ContractContext';
+import { useFeesBurnedInPeriod } from '@snx-v2/useFeesBurnedInPeriod';
 
 interface MainActionsCardsListProps {
   connectWallet: (chainId?: NetworkId | undefined) => Promise<void>;
@@ -17,9 +18,14 @@ export const MainActionCardsList = ({ connectWallet }: MainActionsCardsListProps
   const { data: rewardsData, isLoading: isRewardsDataLoading } = useRewardsAvailable();
   const { data: exchangeRateData, isLoading: isExchangeRateDataLoading } = useExchangeRatesData();
   const { walletAddress } = useContext(ContractContext);
+  const { data: feesBurned, isLoading: isFeesBurnedLoading } = useFeesBurnedInPeriod();
 
   const isLoading =
-    isDebtDataLoading || isFeePoolDataLoading || isRewardsDataLoading || isExchangeRateDataLoading;
+    isDebtDataLoading ||
+    isFeePoolDataLoading ||
+    isRewardsDataLoading ||
+    isExchangeRateDataLoading ||
+    isFeesBurnedLoading;
 
   return (
     <MainActionCardsUi
@@ -34,6 +40,7 @@ export const MainActionCardsList = ({ connectWallet }: MainActionsCardsListProps
       nextEpochStartDate={feePoolData?.nextFeePeriodStartDate}
       walletAddress={walletAddress}
       targetThreshold={debtData?.targetThreshold.toNumber()}
+      feesBurned={feesBurned?.toNumber()}
     />
   );
 };
