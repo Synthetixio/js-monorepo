@@ -4,7 +4,7 @@ import {
   calculateNewPnl,
   calculatePnlPercentage,
   calculatePositionData,
-} from './usePositions';
+} from '../utils/calculations';
 
 describe('calculateMarkPrice', () => {
   it('should correctly calculate the mark price', () => {
