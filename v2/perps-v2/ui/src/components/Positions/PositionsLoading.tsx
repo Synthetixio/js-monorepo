@@ -50,6 +50,11 @@ export const PositionsLoading = () => {
           Lorem Ipsum
         </Skeleton>
       </Box>
+      <Box as={Td} border="none">
+        <Skeleton startColor="gray.700" endColor="gray.900" my={2}>
+          Lorem Ipsum
+        </Skeleton>
+      </Box>
     </Tr>
   );
 };
