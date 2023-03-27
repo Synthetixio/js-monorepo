@@ -217,7 +217,13 @@ export const Chart: FC<{ cannotRemoveEdges?: boolean }> = ({ cannotRemoveEdges }
         node={nodeToUpdate}
       />
       {!nodes.length && (
-        <Text position="absolute" top="50%" right="50%" transform="translate(50%, 50%)">
+        <Text
+          position="absolute"
+          top="50%"
+          right="50%"
+          transform="translate(50%, 50%)"
+          fontSize="2xl"
+        >
           Add your first Node to get started
         </Text>
       )}

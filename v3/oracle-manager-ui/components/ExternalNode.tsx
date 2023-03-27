@@ -14,12 +14,13 @@ export const ExternalNode: FC<{ data: { label: string }; id: string }> = ({ data
   const node = nodes.find((node) => node.id === id);
   return (
     <Box
-      bg="orange.800"
+      bg="gray.800"
       borderRadius="4px"
       p="3"
       display="flex"
       flexDirection="column"
       alignItems="center"
+      w="280px"
     >
       <Flex gap="2" alignItems="center" mb="2" width="100%">
         <Text fontSize="lg" fontWeight="bold" mr="auto">
@@ -27,7 +28,7 @@ export const ExternalNode: FC<{ data: { label: string }; id: string }> = ({ data
         </Text>
         <IconButton
           disabled={!!params.nodeId}
-          icon={<CloseIcon />}
+          icon={<CloseIcon color="white" />}
           onClick={(e) => {
             e.stopPropagation();
             setNodes((state) => {
@@ -53,13 +54,14 @@ export const ExternalNode: FC<{ data: { label: string }; id: string }> = ({ data
       <Flex
         flexDirection="column"
         gap="4"
-        bg="blue.900"
+        bg="gray.900"
         p="5"
         borderWidth="1px"
         borderStyle="solid"
         borderColor="whiteAlpha.400"
         borderRadius="4px"
         mb="2"
+        w="100%"
       >
         {data.label && (
           <Flex gap="2">

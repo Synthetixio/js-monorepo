@@ -20,6 +20,7 @@ export const UniswapNode: FC<{ data: { label: string }; id: string }> = ({ data,
       display="flex"
       flexDirection="column"
       alignItems="center"
+      w="280px"
     >
       <Flex gap="2" alignItems="center" mb="2" width="100%">
         <svg
@@ -78,7 +79,7 @@ export const UniswapNode: FC<{ data: { label: string }; id: string }> = ({ data,
         </Text>
         <IconButton
           disabled={!!params.nodeId}
-          icon={<CloseIcon />}
+          icon={<CloseIcon color="white" />}
           onClick={(e) => {
             e.stopPropagation();
             setNodes((state) => {
@@ -111,6 +112,7 @@ export const UniswapNode: FC<{ data: { label: string }; id: string }> = ({ data,
         borderColor="whiteAlpha.400"
         borderRadius="4px"
         mb="2"
+        w="100%"
       >
         {data.label && (
           <Flex gap="2">
