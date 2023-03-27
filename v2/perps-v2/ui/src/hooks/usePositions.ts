@@ -14,7 +14,7 @@ import {
   Multicall3,
 } from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
 import { wei } from '@synthetixio/wei';
-import { ContractData, SubgraphPositionData, PositionData } from '../types/positions';
+import { ContractData, SubgraphPositionData, PositionData } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 
 export function notNill<Value>(value: Value | null | undefined): value is Value {
@@ -58,7 +58,7 @@ export const usePositions = (walletAddress?: string) => {
     pollInterval: 1000,
   });
 
-  const positionData = (data?.positionsFromContract as PositionData[]) || undefined;
+  const positionData = data?.positionsFromContract as PositionData[];
 
   return {
     data: positionData,
