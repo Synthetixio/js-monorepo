@@ -132,6 +132,7 @@ export const useActions = (account?: string) => {
       },
     },
   });
+
   const {
     loading: futuresTradesLoading,
     data: futuresTradesData,
@@ -147,6 +148,7 @@ export const useActions = (account?: string) => {
       },
     },
   });
+
   const sortedData = mergeData(
     futuresTradesData?.futuresTrades,
     marginData?.futuresMarginTransfers

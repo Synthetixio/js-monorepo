@@ -15,7 +15,7 @@ import { usePositions } from '../../hooks';
 
 export const PositionsTable = () => {
   const { walletAddress } = useParams();
-  const { isLoading, data, error } = usePositions(walletAddress);
+  const { data, error, loading } = usePositions(walletAddress);
 
   return (
     <>
@@ -47,7 +47,7 @@ export const PositionsTable = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {isLoading && (
+              {loading && (
                 <>
                   <PositionsLoading />
                   <PositionsLoading />
@@ -114,7 +114,7 @@ export const PositionsTable = () => {
               )}
             </Tbody>
           </Table>
-          {!isLoading && data?.length === 0 && (
+          {!loading && data?.length === 0 && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
                 No open positions
