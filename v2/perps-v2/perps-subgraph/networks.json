@@ -99,6 +99,10 @@
     "PerpsV2ProxyXAUPERP": {
       "address": "0x549dbDFfbd47bD5639f9348eBE82E63e2f9F777A",
       "startBlock": 52456701
+    },
+    "PerpsV2ProxyARBPERP": {
+      "address": "0x509072A5aE4a87AC89Fc8D64D94aDCb44Bd4b88e",
+      "startBlock": 52456701
     }
   },
   "optimism-goerli": {
@@ -200,6 +204,10 @@
     },
     "PerpsV2ProxyXAUPERP": {
       "address": "0xcC312F5Bac1C36CC70AbcbE76De913633Af88FFB",
+      "startBlock": 3495320
+    },
+    "PerpsV2ProxyARBPERP": {
+      "address": "0xc880Cd434eD843398a2E20C8C617E6a9C2690A23",
       "startBlock": 3495320
     }
   }

@@ -10169,7 +10169,7 @@ __metadata:
     "@typechain/ethers-v5": ^10.2.0
     ethers: ^5.7.2
     prettier: ^2.8.4
-    synthetix: 2.83.1
+    synthetix: 2.85.0
     typechain: ^8.1.1
     typescript: ^4.9.5
   languageName: unknown
@@ -27056,6 +27056,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"openzeppelin-solidity@npm:^4.8.1":
+  version: 4.8.1
+  resolution: "openzeppelin-solidity@npm:4.8.1"
+  bin:
+    openzeppelin-contracts-migrate-imports: scripts/migrate-imports.js
+  checksum: 4337c0669a26f2768231a1e287cc2291d803caa90d36ddb6a3636995235406ef9520a51a0890cabc3907687b58db1293fc44e9069462cf3a9a8ec3b4c1ff4366
+  languageName: node
+  linkType: hard
+
 "optimism@npm:^0.16.1":
   version: 0.16.2
   resolution: "optimism@npm:0.16.2"
@@ -32635,9 +32644,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.83.1":
-  version: 2.83.1
-  resolution: "synthetix@npm:2.83.1"
+"synthetix@npm:2.85.0":
+  version: 2.85.0
+  resolution: "synthetix@npm:2.85.0"
   dependencies:
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     abi-decoder: ^2.3.0
@@ -32645,12 +32654,13 @@ __metadata:
     inquirer: ^6.5.2
     inquirer-list-search-prompt: ^1.0.2
     js-levenshtein: ^1.1.6
+    openzeppelin-solidity: ^4.8.1
     pretty-error: ^2.1.1
     solidity-parser-antlr: ^0.4.11
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: 5913e17237c02eab44db0282cee347be8750201e268a8276ffd3e43b73357ed743ca4ac1328db5e21aab79bf3a72728eec66bcceef060b438e8a115728a1951d
+  checksum: 9c288bfa07ec6fa9edc8701a2b41eb7889652c62c388cf88ed90c58a1ad5763377a08dd9ffb22c6634e22e29b35368d735afbc1002f01c8e2635cd4e7a9002ad
   languageName: node
   linkType: hard
 

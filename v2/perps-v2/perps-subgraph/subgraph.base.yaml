@@ -1079,6 +1079,51 @@ dataSources:
           handler: handlePerpsTracking
       file: ./src/futures.ts
   - kind: ethereum
+    name: PerpsV2ProxyARBPERP
+    source:
+      abi: PerpsV2Proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - PositionLiquidated
+        - FuturesPosition
+        - Trader
+        - Synthetix
+        - FuturesTrade
+        - FuturesOrder
+        - FundingRateUpdate
+        - FuturesMarginTransfer
+      abis:
+        - name: PerpsV2Proxy
+          file: ./abis/PerpsV2Proxy.json
+      eventHandlers:
+        - event: PositionModified(indexed uint256,indexed
+            address,uint256,int256,int256,uint256,uint256,uint256)
+          handler: handlePositionModified
+        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
+          handler: handlePositionLiquidated
+        - event: DelayedOrderSubmitted(indexed
+            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
+          handler: handleDelayedOrderSubmitted
+        - event: DelayedOrderRemoved(indexed
+            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
+          handler: handleDelayedOrderRemoved
+        - event: MarginTransferred(indexed address,int256)
+          handler: handleMarginTransferred
+        - event: NextPriceOrderSubmitted(indexed
+            address,int256,uint256,uint256,uint256,bytes32)
+          handler: handleNextPriceOrderSubmitted
+        - event: NextPriceOrderRemoved(indexed
+            address,uint256,int256,uint256,uint256,uint256,bytes32)
+          handler: handleNextPriceOrderRemoved
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
+      file: ./src/futures.ts
+  - kind: ethereum
     name: FuturesMarketManager
     source:
       abi: PerpsV2Proxy
