@@ -147,16 +147,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'pnl',
-      toGwei(1)
-        .times(BigInt.fromI32(-1))
-        .plus(
-          toEth(1200)
-            .minus(toEth(1000))
-            .times(toEth(-1).abs())
-            .times(BigInt.fromI32(-1))
-            .div(BigInt.fromI32(10).pow(18))
-        )
-        .toString()
+      '-200000000001000000000'
     );
     assert.fieldEquals(
       'FuturesPosition',
@@ -198,7 +189,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'avgEntryPrice',
-      toEth(1000).toString()
+      '1066666666666666666666'
     );
     assert.assertNull(
       store
@@ -253,21 +244,7 @@ describe('Perps V2', () => {
         .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
         .toString()
     );
-    assert.fieldEquals(
-      'Trader',
-      trader.toLowerCase(),
-      'pnl',
-      toGwei(1)
-        .times(BigInt.fromI32(-1))
-        .plus(
-          toEth(1200)
-            .minus(toEth(1000))
-            .times(toEth(-1).abs())
-            .times(BigInt.fromI32(-1))
-            .div(BigInt.fromI32(10).pow(18))
-        )
-        .toString()
-    );
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'pnl', '-400000000000000000000');
     assert.fieldEquals(
       'Trader',
       trader.toLowerCase(),
@@ -337,7 +314,7 @@ describe('Perps V2', () => {
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
       'pnl',
-      toGwei(-1).toString()
+      '-1000000000'
     );
     assert.fieldEquals(
       'FuturesTrade',
@@ -510,6 +487,7 @@ describe('Perps V2', () => {
     );
     handlePositionModified(closePositionEvent);
     log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
@@ -655,6 +633,69 @@ describe('Perps V2', () => {
       `${fundingRecomputedEvent.address.toHex()}-${5}`,
       'market',
       fundingRecomputedEvent.address.toHex()
+    );
+  });
+
+  test('open a short and flip sides', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(2),
+      toEth(4),
+      toEth(1200),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      2
+    );
+    handlePositionModified(positionModifiedEvent);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'type',
+      'PositionModified'
+    );
+
+    const existingSize = toEth(-2).abs();
+    const existingPrice = existingSize.times(toEth(1000));
+    const newSize = toEth(4).abs();
+    const newPrice = newSize.times(toEth(1200));
+
+    log.info('Futures Position', []);
+    log.info('a {}', [existingPrice.plus(newPrice).div(toEth(2)).toString()]);
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
+      'entryPrice',
+      existingPrice.plus(newPrice).div(toEth(2)).toString()
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
+      'avgEntryPrice',
+      existingPrice.plus(newPrice).div(toEth(2)).toString()
     );
   });
 });
