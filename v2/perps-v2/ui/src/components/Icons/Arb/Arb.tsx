@@ -1,6 +1,6 @@
 import { Icon, IconProps } from '@chakra-ui/react';
 
-export const Ape = ({ width = '300px', height = '300px' }: IconProps) => (
+export const Arb = ({ width = '300px', height = '300px' }: IconProps) => (
   <Icon width={width} height={height} viewBox="0 0 42 42">
     <circle cx="21" cy="21" r="21" fill="#2D374B" />
     <path
