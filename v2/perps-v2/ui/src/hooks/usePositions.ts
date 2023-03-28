@@ -16,6 +16,7 @@ import {
 import { wei } from '@synthetixio/wei';
 import { ContractData, SubgraphPositionData, PositionData } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
+import { useSearchParams } from 'react-router-dom';
 
 export function notNill<Value>(value: Value | null | undefined): value is Value {
   return value !== null && value !== undefined;
@@ -26,6 +27,9 @@ const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
 const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider) as Multicall3;
 
 export const usePositions = (walletAddress?: string) => {
+  const [searchParams] = useSearchParams();
+  const marketAddress = searchParams.get('marketAddress') || undefined;
+
   // Initial query to give a list of markets
   const {
     data: marketData,
@@ -33,7 +37,11 @@ export const usePositions = (walletAddress?: string) => {
     error: marketError,
   } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
-      where: { isOpen: true, account: walletAddress },
+      where: {
+        isOpen: true,
+        account: walletAddress,
+        market: marketAddress,
+      },
       orderBy: FuturesPosition_OrderBy.Size,
       orderDirection: OrderDirection.Desc,
       first: 50,
