@@ -58,7 +58,7 @@ export const usePositions = (walletAddress?: string) => {
     pollInterval: 1000,
   });
 
-  const positionData = data?.positionsFromContract as PositionData[];
+  const positionData = (data?.positionsFromContract as PositionData[]) || undefined;
 
   return {
     data: positionData,
