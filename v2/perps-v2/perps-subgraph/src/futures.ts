@@ -411,6 +411,29 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     }
   }
 
+  // if there is an existing position...
+  if (futuresPosition.fundingIndex.lt(event.params.fundingIndex)) {
+    // add accrued funding to position
+    let pastFundingEntity = FundingRateUpdate.load(
+      event.address.toHex() + '-' + futuresPosition.fundingIndex.toString()
+    );
+
+    let currentFundingEntity = FundingRateUpdate.load(
+      event.address.toHex() + '-' + event.params.fundingIndex.toString()
+    );
+
+    if (pastFundingEntity && currentFundingEntity) {
+      // add accrued funding
+      let fundingAccrued = currentFundingEntity.funding
+        .minus(pastFundingEntity.funding)
+        .times(futuresPosition.size)
+        .div(BigInt.fromI32(10).pow(18));
+
+      futuresPosition.netFunding = futuresPosition.netFunding.plus(fundingAccrued);
+      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.minus(fundingAccrued.toBigDecimal());
+    }
+  }
+
   const marginTransferEntity = FuturesMarginTransfer.load(
     event.address.toHex() +
       '-' +
@@ -429,7 +452,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       .times(BigInt.fromI32(-1));
     const newPositionPnl = newPositionPnlWithFeesPaid
       .plus(futuresPosition.feesPaidToSynthetix)
-      .minus(futuresPosition.netFunding);
+      .plus(futuresPosition.netFunding);
     const newTradePnl = newPositionPnl.minus(futuresPosition.pnl);
 
     // temporarily set the pnl to the difference in the position pnl
@@ -454,30 +477,6 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     futuresPosition.pnl = newPositionPnl;
     trader.pnl = tradeEntity.pnl.plus(newTradePnl);
     tradeEntity.save();
-  }
-
-  // if there is an existing position...
-  if (futuresPosition.fundingIndex != event.params.fundingIndex) {
-    // add accrued funding to position
-    let pastFundingEntity = FundingRateUpdate.load(
-      event.address.toHex() + '-' + futuresPosition.fundingIndex.toString()
-    );
-
-    let currentFundingEntity = FundingRateUpdate.load(
-      event.address.toHex() + '-' + event.params.fundingIndex.toString()
-    );
-
-    if (pastFundingEntity && currentFundingEntity) {
-      // add accrued funding
-      let fundingAccrued = currentFundingEntity.funding
-        .minus(pastFundingEntity.funding)
-        .times(futuresPosition.size)
-        .div(BigInt.fromI32(10).pow(18));
-
-      futuresPosition.netFunding = futuresPosition.netFunding.plus(fundingAccrued);
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.minus(fundingAccrued.toBigDecimal());
-    }
-    futuresPosition.save();
   }
 
   futuresPosition.save();
