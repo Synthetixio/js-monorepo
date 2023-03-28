@@ -1,20 +1,24 @@
-import { Address, BigDecimal, BigInt, log, store } from '@graphprotocol/graph-ts';
 import {
-  PositionLiquidated as PositionLiquidatedEvent,
-  PositionModified as PositionModifiedEvent,
+  Address,
+  BigDecimal,
+  BigInt,
+  dataSource,
+  DataSourceContext,
+  log,
+} from '@graphprotocol/graph-ts';
+import { PerpetualFuturesMarket } from '../generated/templates';
+import {
+  PositionModified1 as PositionModifiedNewEvent,
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
   DelayedOrderSubmitted as DelayedOrderSubmittedEvent,
-  /**
-   * @dev We need to listen to the event from v2 and not v1, be careful
-   */
-  FundingRecomputed1 as FundingRecomputedEvent,
+  FundingRecomputed as FundingRecomputedEvent,
+  PositionLiquidated as PositionLiquidatedEvent,
   MarginTransferred as MarginTransferredEvent,
-  NextPriceOrderSubmitted as NextPriceOrderSubmittedEvent,
-  NextPriceOrderRemoved as NextPriceOrderRemovedEvent,
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
   PerpsTracking as PerpsTrackingEvent,
-} from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
+  PositionFlagged as PositionFlaggedEvent,
+} from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 import {
   PositionLiquidated,
   Trader,
@@ -26,12 +30,45 @@ import {
   FuturesMarginTransfer,
   FuturesMarket,
   Frontend,
+  PositionFlagged,
 } from '../generated/schema';
+
+export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
+  let marketEntity = new FuturesMarket(event.params.market.toHex());
+  marketEntity.asset = event.params.asset;
+  marketEntity.marketKey = event.params.marketKey;
+  marketEntity.timestamp = event.block.timestamp;
+  marketEntity.isActive = true;
+  marketEntity.save();
+
+  if (event.params.marketKey.toString().endsWith('PERP')) {
+    let context = new DataSourceContext();
+    PerpetualFuturesMarket.createWithContext(event.params.market, context);
+  }
+}
+
+export function handleFuturesMarketRemoved(event: MarketRemovedEvent): void {
+  let marketEntity = FuturesMarket.load(event.params.market.toHex());
+  if (marketEntity) {
+    marketEntity.isActive = false;
+    marketEntity.save();
+  }
+}
+
+export function handlePositionFlagged(event: PositionFlaggedEvent): void {
+  const positionFlaggedEntity = new PositionFlagged(
+    event.address.toHex() + '-' + event.params.id.toString()
+  );
+  positionFlaggedEntity.flagger = event.params.flagger;
+  positionFlaggedEntity.timestamp = event.block.timestamp;
+  positionFlaggedEntity.trader = event.params.account.toHex();
+  positionFlaggedEntity.save();
+}
 
 export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   const futuresPositionId = event.address.toHex() + '-' + event.params.id.toHex();
   const positionLiquidatedEntity = new PositionLiquidated(event.params.id.toString());
-  positionLiquidatedEntity.account = event.params.account;
+  positionLiquidatedEntity.trader = event.params.account.toHex();
   positionLiquidatedEntity.market = event.address.toHex();
   positionLiquidatedEntity.liquidator = event.params.liquidator;
   positionLiquidatedEntity.size = event.params.size.toBigDecimal();
@@ -39,7 +76,6 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   positionLiquidatedEntity.fee = event.params.fee.toBigDecimal();
   positionLiquidatedEntity.futuresPosition = futuresPositionId;
   positionLiquidatedEntity.timestamp = event.block.timestamp;
-  positionLiquidatedEntity.block = event.block.number;
   positionLiquidatedEntity.txHash = event.transaction.hash.toHex();
   positionLiquidatedEntity.save();
 
@@ -47,15 +83,17 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
   );
   if (tradeEntity) {
-    tradeEntity.size = event.params.size.times(BigInt.fromI32(-1));
+    tradeEntity.size = event.params.size.times(BigInt.fromI32(-1)).toBigDecimal();
     tradeEntity.positionClosed = true;
     tradeEntity.timestamp = event.block.timestamp;
-    tradeEntity.account = event.params.account;
-    tradeEntity.positionId = futuresPositionId;
-    tradeEntity.price = event.params.price;
+    tradeEntity.trader = event.params.account.toHex();
+    tradeEntity.futuresPosition = futuresPositionId;
+    tradeEntity.price = event.params.price.toBigDecimal();
     tradeEntity.txHash = event.transaction.hash.toHex();
-    tradeEntity.positionSize = BigInt.fromI32(0);
-    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(event.params.fee);
+    tradeEntity.positionSize = BigDecimal.fromString('0');
+    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
+      event.params.fee.toBigDecimal()
+    );
     tradeEntity.pnl = tradeEntity.pnl.plus(event.params.fee);
     tradeEntity.type = 'Liquidated';
     tradeEntity.save();
@@ -103,8 +141,8 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
   );
 
   marginTransferEntity.market = event.address.toHex();
-  marginTransferEntity.size = event.params.marginDelta;
-  marginTransferEntity.account = event.params.account;
+  marginTransferEntity.size = event.params.marginDelta.toBigDecimal();
+  marginTransferEntity.trader = event.params.account.toHex();
   marginTransferEntity.timestamp = event.block.timestamp;
   marginTransferEntity.txHash = event.transaction.hash.toHex();
 
@@ -140,12 +178,12 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
   trader.save();
 }
 
-export function handlePositionModified(event: PositionModifiedEvent): void {
+export function handlePositionModified(event: PositionModifiedNewEvent): void {
+  const network = dataSource.network();
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
   let trader = Trader.load(event.params.account.toHex());
   let synthetix = Synthetix.load('synthetix');
-
   if (!synthetix) {
     synthetix = new Synthetix('synthetix');
     synthetix.feesByPositionModifications = BigDecimal.fromString('0');
@@ -172,13 +210,11 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     trader.trades = oldTrades;
   }
 
-  // New position when var futuresPosition is undefined
-  // TODO @MF what happens when user just deposits margin, why we creating new position?, we need to filter out that when tradeSize != 0 then real trade
   if (!futuresPosition) {
-    log.info('new position', [positionId]);
+    log.info('new position {}', [positionId]);
     futuresPosition = new FuturesPosition(positionId);
     futuresPosition.openTimestamp = event.block.timestamp;
-    futuresPosition.account = event.params.account;
+    futuresPosition.trader = event.params.account.toHex();
     futuresPosition.isOpen = true;
     futuresPosition.isLiquidated = false;
     futuresPosition.size = event.params.size;
@@ -189,7 +225,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     futuresPosition.margin = event.params.margin;
     futuresPosition.pnl = event.params.fee.times(BigInt.fromI32(-1));
     futuresPosition.entryPrice = event.params.lastPrice;
-    futuresPosition.lastPrice = event.params.lastPrice;
+    futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
     futuresPosition.trades = BigInt.fromI32(1);
     futuresPosition.long = event.params.tradeSize.gt(BigInt.fromI32(0));
     futuresPosition.market = event.address.toHex();
@@ -203,21 +239,26 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     futuresPosition.totalVolume = event.params.tradeSize
       .times(event.params.lastPrice)
       .div(BigInt.fromI32(10).pow(18))
-      .abs();
+      .abs()
+      .toBigDecimal();
+
+    if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
+      futuresPosition.skew = event.params.skew;
+    }
 
     const tradeEntity = new FuturesTrade(
       event.transaction.hash.toHex() + '-' + event.logIndex.toString()
     );
     tradeEntity.timestamp = event.block.timestamp;
-    tradeEntity.account = event.params.account;
-    tradeEntity.positionId = positionId;
+    tradeEntity.trader = event.params.account.toHex();
+    tradeEntity.futuresPosition = positionId;
     tradeEntity.margin = event.params.margin.plus(event.params.fee);
-    tradeEntity.size = event.params.tradeSize;
-    tradeEntity.positionSize = event.params.size;
+    tradeEntity.size = event.params.tradeSize.toBigDecimal();
+    tradeEntity.positionSize = event.params.size.toBigDecimal();
     tradeEntity.market = event.address.toHex();
-    tradeEntity.price = event.params.lastPrice;
+    tradeEntity.price = event.params.lastPrice.toBigDecimal();
     tradeEntity.pnl = event.params.fee.times(BigInt.fromI32(-1));
-    tradeEntity.feesPaidToSynthetix = event.params.fee;
+    tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
     tradeEntity.positionClosed = false;
     tradeEntity.type = 'PositionOpened';
     tradeEntity.txHash = event.transaction.hash.toHex();
@@ -242,7 +283,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
   } else {
     // Position closed & not liquidated
     if (event.params.size.isZero() && !event.params.tradeSize.isZero()) {
-      log.info('position closed', [positionId]);
+      log.info('position closed {}', [positionId]);
 
       const newPnl = event.params.lastPrice
         .minus(futuresPosition.avgEntryPrice)
@@ -258,7 +299,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .minus(futuresPosition.netFunding);
       futuresPosition.margin = event.params.margin;
       futuresPosition.size = event.params.size;
-      futuresPosition.lastPrice = event.params.lastPrice;
+      futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
       futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
       futuresPosition.long = !event.params.tradeSize.gt(BigInt.fromI32(0));
       futuresPosition.leverage = event.params.tradeSize
@@ -266,20 +307,24 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(event.params.margin)
         .abs();
 
+      if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
+        futuresPosition.skew = event.params.skew;
+      }
+
       const tradeEntity = new FuturesTrade(
         event.transaction.hash.toHex() + '-' + event.logIndex.toString()
       );
 
       tradeEntity.timestamp = event.block.timestamp;
-      tradeEntity.account = event.params.account;
-      tradeEntity.positionId = positionId;
+      tradeEntity.trader = event.params.account.toHex();
+      tradeEntity.futuresPosition = positionId;
       tradeEntity.margin = event.params.margin.plus(event.params.fee);
-      tradeEntity.size = event.params.tradeSize;
+      tradeEntity.size = event.params.tradeSize.toBigDecimal();
       tradeEntity.market = event.address.toHex();
-      tradeEntity.price = event.params.lastPrice;
-      tradeEntity.positionSize = event.params.size;
+      tradeEntity.price = event.params.lastPrice.toBigDecimal();
+      tradeEntity.positionSize = event.params.size.toBigDecimal();
       tradeEntity.pnl = newPnl;
-      tradeEntity.feesPaidToSynthetix = event.params.fee;
+      tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
       tradeEntity.positionClosed = true;
       tradeEntity.type = 'PositionClosed';
       tradeEntity.txHash = event.transaction.hash.toHex();
@@ -301,21 +346,25 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     }
     // If tradeSize and size are not zero, position got modified
     else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {
-      log.info('position modified', [positionId]);
+      log.info('position modified {}', [positionId]);
+
+      if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
+        futuresPosition.skew = event.params.skew;
+      }
 
       const tradeEntity = new FuturesTrade(
         event.transaction.hash.toHex() + '-' + event.logIndex.toString()
       );
 
       tradeEntity.timestamp = event.block.timestamp;
-      tradeEntity.account = event.params.account;
-      tradeEntity.positionId = positionId;
+      tradeEntity.trader = event.params.account.toHex();
+      tradeEntity.futuresPosition = positionId;
       tradeEntity.margin = event.params.margin.plus(event.params.fee);
-      tradeEntity.size = event.params.tradeSize;
+      tradeEntity.size = event.params.tradeSize.toBigDecimal();
       tradeEntity.market = event.address.toHex();
-      tradeEntity.price = event.params.lastPrice;
-      tradeEntity.positionSize = event.params.size;
-      tradeEntity.feesPaidToSynthetix = event.params.fee;
+      tradeEntity.price = event.params.lastPrice.toBigDecimal();
+      tradeEntity.positionSize = event.params.size.toBigDecimal();
+      tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
       tradeEntity.positionClosed = false;
       tradeEntity.type = 'PositionModified';
       tradeEntity.txHash = event.transaction.hash.toHex();
@@ -383,7 +432,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       futuresPosition.size = event.params.size;
       futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
       futuresPosition.margin = futuresPosition.margin.plus(event.params.margin);
-      futuresPosition.lastPrice = event.params.lastPrice;
+      futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
       futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
 
       futuresPosition.leverage = event.params.size
@@ -399,15 +448,16 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
       const volume = event.params.tradeSize
         .times(event.params.lastPrice)
         .div(BigInt.fromI32(10).pow(18))
-        .abs();
+        .abs()
+        .toBigDecimal();
 
-      trader.totalVolume = trader.totalVolume.plus(volume.toBigDecimal());
-      synthetix.totalVolume = synthetix.totalVolume.plus(volume.toBigDecimal());
+      trader.totalVolume = trader.totalVolume.plus(volume);
+      synthetix.totalVolume = synthetix.totalVolume.plus(volume);
       futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
 
       tradeEntity.save();
     } else {
-      log.debug('Transferred Margin Event skipped', [positionId]);
+      log.debug('Transferred Margin Event skipped {}', [positionId]);
     }
   }
 
@@ -430,7 +480,7 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
         .div(BigInt.fromI32(10).pow(18));
 
       futuresPosition.netFunding = futuresPosition.netFunding.plus(fundingAccrued);
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.minus(fundingAccrued.toBigDecimal());
+      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(fundingAccrued.toBigDecimal());
     }
   }
 
@@ -462,15 +512,15 @@ export function handlePositionModified(event: PositionModifiedEvent): void {
     );
     tradeEntity.margin = BigInt.fromI32(0);
     tradeEntity.timestamp = event.block.timestamp;
-    tradeEntity.account = event.params.account;
+    tradeEntity.trader = event.params.account.toHex();
     tradeEntity.market = event.address.toHex();
-    tradeEntity.size = BigInt.fromI32(0);
-    tradeEntity.price = event.params.lastPrice;
-    tradeEntity.positionId = positionId;
-    tradeEntity.positionSize = BigInt.fromI32(0);
+    tradeEntity.size = BigInt.fromI32(0).toBigDecimal();
+    tradeEntity.price = event.params.lastPrice.toBigDecimal();
+    tradeEntity.futuresPosition = positionId;
+    tradeEntity.positionSize = BigInt.fromI32(0).toBigDecimal();
     tradeEntity.positionClosed = true;
     tradeEntity.pnl = newTradePnl;
-    tradeEntity.feesPaidToSynthetix = event.params.fee;
+    tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
     tradeEntity.type = 'Liquidated';
     tradeEntity.txHash = event.transaction.hash.toHex();
 
@@ -495,14 +545,14 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
 
   // Update FuturesOrderEntity
   if (futuresOrderEntity) {
-    futuresOrderEntity.fee = event.params.keeperDeposit;
+    futuresOrderEntity.fee = event.params.keeperDeposit.toBigDecimal();
     futuresOrderEntity.keeper = event.transaction.from;
 
     if (tradeEntity) {
-      futuresOrderEntity.positionId = tradeEntity.positionId;
+      futuresOrderEntity.futuresPosition = tradeEntity.futuresPosition;
       futuresOrderEntity.status = 'Filled';
 
-      let positionEntity = FuturesPosition.load(tradeEntity.positionId);
+      let positionEntity = FuturesPosition.load(tradeEntity.futuresPosition);
       if (positionEntity) {
         positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
@@ -510,9 +560,9 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         positionEntity.save();
       }
       // add fee if not self-executed
-      if (futuresOrderEntity.keeper != futuresOrderEntity.account) {
+      if (futuresOrderEntity.keeper.toString() != futuresOrderEntity.trader) {
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit
+          event.params.keeperDeposit.toBigDecimal()
         );
         tradeEntity.save();
       }
@@ -549,13 +599,13 @@ export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): 
   if (!futuresOrderEntity) {
     futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
   }
-  futuresOrderEntity.size = event.params.sizeDelta;
+  futuresOrderEntity.size = event.params.sizeDelta.toBigDecimal();
   futuresOrderEntity.market = event.address.toHex();
-  futuresOrderEntity.fee = BigInt.fromI32(0);
-  futuresOrderEntity.account = event.params.account;
+  futuresOrderEntity.fee = BigInt.fromI32(0).toBigDecimal();
+  futuresOrderEntity.trader = event.params.account.toHex();
   futuresOrderEntity.orderId = event.params.targetRoundId;
   futuresOrderEntity.targetRoundId = event.params.targetRoundId;
-  futuresOrderEntity.targetPrice = BigInt.fromI32(0);
+  futuresOrderEntity.targetPrice = BigInt.fromI32(0).toBigDecimal();
   futuresOrderEntity.marginDelta = BigInt.fromI32(0);
   futuresOrderEntity.timestamp = event.block.timestamp;
   futuresOrderEntity.orderType = event.params.isOffchain
@@ -578,98 +628,6 @@ export function handleFundingRecomputed(event: FundingRecomputedEvent): void {
   fundingRateUpdateEntity.funding = event.params.funding;
   fundingRateUpdateEntity.index = event.params.index;
   fundingRateUpdateEntity.save();
-}
-
-export function handleNextPriceOrderSubmitted(event: NextPriceOrderSubmittedEvent): void {
-  const futuresOrderEntityId = `${event.params.account.toHex()}-${event.params.targetRoundId.toString()}`;
-  let futuresOrderEntity = FuturesOrder.load(futuresOrderEntityId);
-  if (futuresOrderEntity == null) {
-    futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
-  }
-
-  futuresOrderEntity.size = event.params.sizeDelta;
-  futuresOrderEntity.market = event.address.toHex();
-  futuresOrderEntity.account = event.params.account;
-  futuresOrderEntity.orderId = event.params.targetRoundId;
-  futuresOrderEntity.targetRoundId = event.params.targetRoundId;
-  futuresOrderEntity.targetPrice = BigInt.fromI32(0);
-  futuresOrderEntity.marginDelta = BigInt.fromI32(0);
-  futuresOrderEntity.timestamp = event.block.timestamp;
-  futuresOrderEntity.orderType = 'NextPriceOrderSubmitted';
-  futuresOrderEntity.status = 'Pending';
-  futuresOrderEntity.keeper = Address.fromHexString('0x0000000000000000000000000000000000000000');
-  futuresOrderEntity.txHash = event.transaction.hash.toHex();
-
-  futuresOrderEntity.save();
-}
-
-export function handleNextPriceOrderRemoved(event: NextPriceOrderRemovedEvent): void {
-  const futuresOrderEntityId = `${event.params.account.toHexString()}-${event.params.targetRoundId.toString()}`;
-  let futuresOrderEntity = FuturesOrder.load(futuresOrderEntityId);
-  let trader = Trader.load(event.params.account.toHex());
-  let tradeEntity = FuturesTrade.load(
-    event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
-  );
-  const synthetix = Synthetix.load('synthetix');
-
-  if (futuresOrderEntity) {
-    futuresOrderEntity.keeper = event.transaction.from;
-    let tradeEntity = FuturesTrade.load(
-      event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
-    );
-
-    if (tradeEntity) {
-      futuresOrderEntity.positionId = tradeEntity.positionId;
-      futuresOrderEntity.status = 'Filled';
-      futuresOrderEntity.orderType = 'NextPriceOrderRemoved';
-      let positionEntity = FuturesPosition.load(tradeEntity.positionId);
-      if (positionEntity) {
-        positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit
-        );
-        positionEntity.save();
-      }
-      // add fee if not self-executed
-      if (futuresOrderEntity.keeper != futuresOrderEntity.account) {
-        tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit
-        );
-        tradeEntity.save();
-      }
-      // Update Synthetix values
-      if (synthetix) {
-        synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
-          event.params.keeperDeposit.toBigDecimal()
-        );
-        synthetix.save();
-      }
-      // Update Trader fee value
-      if (trader) {
-        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit.toBigDecimal()
-        );
-        trader.save();
-      }
-      futuresOrderEntity.txHash = event.transaction.hash.toHex();
-      futuresOrderEntity.save();
-    } else {
-      futuresOrderEntity.status = 'Cancelled';
-      futuresOrderEntity.txHash = event.transaction.hash.toHex();
-      futuresOrderEntity.save();
-    }
-  }
-}
-
-export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
-  let marketEntity = new FuturesMarket(event.params.market.toHex());
-  marketEntity.asset = event.params.asset;
-  marketEntity.marketKey = event.params.marketKey;
-  marketEntity.timestamp = event.block.timestamp;
-  marketEntity.save();
-}
-
-export function handleMarketRemoved(event: MarketRemovedEvent): void {
-  store.remove('FuturesMarket', event.params.market.toHex());
 }
 
 export function handlePerpsTracking(event: PerpsTrackingEvent): void {

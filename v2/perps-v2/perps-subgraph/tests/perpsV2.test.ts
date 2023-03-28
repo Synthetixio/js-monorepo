@@ -39,6 +39,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -52,6 +53,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(2),
       toGwei(1),
       20,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(modifyPositionEvent);
@@ -68,7 +70,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
@@ -265,7 +267,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
@@ -277,7 +279,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
@@ -337,19 +339,19 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
@@ -419,10 +421,10 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(2),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
-
     const positionModifiedByLiquidationEvent = createPositionModifiedEvent(
       BigInt.fromI32(1),
       Address.fromString(trader),
@@ -433,7 +435,8 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(0),
       10,
-      1
+      BigInt.fromI32(12),
+      2
     );
     handlePositionModified(positionModifiedByLiquidationEvent);
     const positionLiquidatedEvent = createPositionLiquidatedEvent(
@@ -443,17 +446,19 @@ describe('Perps V2', () => {
       toEth(10),
       toEth(800),
       toEth(1),
-      20
+      20,
+      3
     );
     handlePositionLiquidated(positionLiquidatedEvent);
     log.warning('STARTING ASSERTION', []);
     // SYNTHETIX
     log.info('Synthetix', []);
     assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', toEth(1).toString());
+    // FUTURES TRADE
     log.info('Futures Trade', []);
     assert.fieldEquals(
       'FuturesTrade',
-      `${positionLiquidatedEvent.transaction.hash.toHex()}-${1}`,
+      `${positionLiquidatedEvent.transaction.hash.toHex()}-${2}`,
       'type',
       'Liquidated'
     );
@@ -470,6 +475,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -483,6 +489,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(closePositionEvent);
@@ -513,6 +520,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -526,6 +534,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(positionModifiedEvent);
@@ -555,6 +564,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -575,6 +585,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(2),
       toGwei(0),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(positionUpdatedByTransferredMargin);
@@ -647,6 +658,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(200),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -660,6 +672,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(200),
       2
     );
     handlePositionModified(positionModifiedEvent);
@@ -684,7 +697,6 @@ describe('Perps V2', () => {
     const newPrice = newSize.times(toEth(1200));
 
     log.info('Futures Position', []);
-    log.info('a {}', [existingPrice.plus(newPrice).div(toEth(2)).toString()]);
     assert.fieldEquals(
       'FuturesPosition',
       `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,

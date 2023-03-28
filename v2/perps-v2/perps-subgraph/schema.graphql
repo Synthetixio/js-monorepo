@@ -1,15 +1,21 @@
 type PositionLiquidated @entity {
   id: ID!
-  account: Bytes!
+  trader: Trader!
   market: FuturesMarket!
   liquidator: Bytes!
   size: BigDecimal!
   price: BigDecimal!
   fee: BigDecimal!
   futuresPosition: FuturesPosition!
-  block: BigInt!
   timestamp: BigInt!
   txHash: String!
+}
+
+type PositionFlagged @entity {
+  id: ID!
+  trader: Trader!
+  flagger: Bytes!
+  timestamp: BigInt!
 }
 
 type Trader @entity {
@@ -27,17 +33,17 @@ type Trader @entity {
 type FuturesTrade @entity {
   id: ID!
   timestamp: BigInt!
-  account: Bytes!
+  trader: Trader!
   margin: BigInt!
-  positionId: String!
+  futuresPosition: FuturesPosition!
   futuresOrder: FuturesOrder
-  size: BigInt!
+  size: BigDecimal!
   market: FuturesMarket!
-  price: BigInt!
-  positionSize: BigInt!
+  price: BigDecimal!
+  positionSize: BigDecimal!
   positionClosed: Boolean!
   pnl: BigInt!
-  feesPaidToSynthetix: BigInt!
+  feesPaidToSynthetix: BigDecimal!
   type: FuturesTradeType!
   txHash: String!
 }
@@ -53,7 +59,7 @@ type Synthetix @entity {
 
 type FuturesPosition @entity {
   id: ID!
-  account: Bytes!
+  trader: Trader!
   openTimestamp: BigInt!
   closeTimestamp: BigInt
   long: Boolean!
@@ -69,30 +75,31 @@ type FuturesPosition @entity {
   margin: BigInt!
   pnl: BigInt!
   fundingIndex: BigInt!
-  totalVolume: BigInt!
+  totalVolume: BigDecimal!
   entryPrice: BigInt!
   netTransfers: BigInt!
-  lastPrice: BigInt!
+  lastPrice: BigDecimal!
   avgEntryPrice: BigInt!
   txHash: String!
   exitPrice: BigInt
+  skew: BigInt
 }
 
 type FuturesOrder @entity {
   id: ID!
-  size: BigInt!
+  size: BigDecimal!
   market: FuturesMarket!
-  account: Bytes!
+  trader: Trader!
   orderId: BigInt!
   targetRoundId: BigInt!
-  targetPrice: BigInt!
+  targetPrice: BigDecimal!
   marginDelta: BigInt!
   timestamp: BigInt!
   orderType: FuturesOrderType!
   status: FuturesOrderStatus!
-  fee: BigInt!
+  fee: BigDecimal!
   keeper: Bytes!
-  positionId: String
+  futuresPosition: FuturesPosition
   txHash: String!
 }
 
@@ -108,9 +115,9 @@ type FundingRateUpdate @entity {
 type FuturesMarginTransfer @entity {
   id: ID!
   timestamp: BigInt!
-  account: Bytes!
+  trader: Trader!
   market: FuturesMarket!
-  size: BigInt!
+  size: BigDecimal!
   txHash: String!
 }
 
@@ -119,6 +126,7 @@ type FuturesMarket @entity {
   asset: Bytes!
   marketKey: Bytes!
   timestamp: BigInt!
+  isActive: Boolean!
 }
 
 type Frontend @entity {
@@ -129,9 +137,7 @@ type Frontend @entity {
 }
 
 type Candle @entity {
-  # synth-period-periodId (periodId is timestamp / period)
   id: ID!
-  # Ticker for synth (e.g. 'sUSD') or 'SNX'
   synth: String!
   open: BigDecimal!
   high: BigDecimal!
@@ -139,36 +145,25 @@ type Candle @entity {
   close: BigDecimal!
   average: BigDecimal!
   timestamp: BigInt!
-  # Duration this candle captures in seconds. Year, quarter, month, week, day, hour, and 15 minutes available.
   period: BigInt!
-  # Number of RateUpdates aggregated into this candle, mostly useful for the indexer to calculate averages
   aggregatedPrices: BigInt!
 }
 
 type LatestRate @entity {
   # Name of synth. E.g. sUSD
   id: ID!
-  # Synth USD rate
   rate: BigDecimal!
-  # Timestamp the rate was updated
   timestamp: BigInt!
-  # Address of the aggregator which produces current result
   aggregator: Bytes!
 }
 
 # Latest Rates over time
 type RateUpdate @entity {
-  # <transaction hash>-<currency key>
   id: ID!
-  # currencyKey for which this this rate update applies
   currencyKey: Bytes!
-  # currencyKey expressed as a string
   synth: String!
-  # the rate recorded at this timestamp
   rate: BigDecimal!
-  # the block which this rate was recorded
   block: BigInt!
-  # timestamp of the block in which the rate was recorded
   timestamp: BigInt!
 }
 
