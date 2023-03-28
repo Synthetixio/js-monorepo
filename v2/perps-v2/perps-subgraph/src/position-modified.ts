@@ -9,20 +9,8 @@ import {
   FuturesMarginTransfer,
 } from '../generated/schema';
 
-export function handlePositionModified(event: PositionModifiedNewEvent): void {
-  const network = dataSource.network();
-  const positionId = event.address.toHex() + '-' + event.params.id.toHex();
-  let futuresPosition = FuturesPosition.load(positionId);
+function getOrCreateTrader(event: PositionModifiedNewEvent): Trader {
   let trader = Trader.load(event.params.account.toHex());
-  let synthetix = Synthetix.load('synthetix');
-  if (!synthetix) {
-    synthetix = new Synthetix('synthetix');
-    synthetix.feesByPositionModifications = BigDecimal.fromString('0');
-    synthetix.feesByLiquidations = BigDecimal.fromString('0');
-    synthetix.totalLiquidations = BigInt.fromI32(0);
-    synthetix.totalTraders = BigInt.fromI32(0);
-    synthetix.totalVolume = BigDecimal.fromString('0');
-  }
 
   if (!trader) {
     trader = new Trader(event.params.account.toHex());
@@ -32,14 +20,43 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     trader.feesPaidToSynthetix = BigDecimal.fromString('0');
     trader.totalVolume = BigDecimal.fromString('0');
     trader.pnl = BigInt.fromI32(0);
-    trader.trades = [event.transaction.hash.toHex() + '-' + event.logIndex.toString()];
+    trader.trades = [];
     trader.margin = BigDecimal.fromString('0');
-    synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(1));
-  } else {
-    const oldTrades = trader.trades;
-    oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
-    trader.trades = oldTrades;
   }
+  return trader;
+}
+function getOrCreateSynthetix(): Synthetix {
+  let synthetix = Synthetix.load('synthetix');
+  if (!synthetix) {
+    synthetix = new Synthetix('synthetix');
+    synthetix.feesByPositionModifications = BigDecimal.fromString('0');
+    synthetix.feesByLiquidations = BigDecimal.fromString('0');
+    synthetix.totalLiquidations = BigInt.fromI32(0);
+    synthetix.totalTraders = BigInt.fromI32(0);
+    synthetix.totalVolume = BigDecimal.fromString('0');
+  }
+  return synthetix;
+}
+
+/**
+ * Mutative functions
+ */
+function updateTrades(event: PositionModifiedNewEvent, synthetix: Synthetix, trader: Trader): void {
+  if (trader.trades.length == 0) {
+    synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(1));
+  }
+  const oldTrades = trader.trades;
+  oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
+  trader.trades = oldTrades;
+}
+
+export function handlePositionModified(event: PositionModifiedNewEvent): void {
+  const network = dataSource.network();
+  const positionId = event.address.toHex() + '-' + event.params.id.toHex();
+  let futuresPosition = FuturesPosition.load(positionId);
+  let synthetix = getOrCreateSynthetix();
+  let trader = getOrCreateTrader(event);
+  updateTrades(event, synthetix, trader);
 
   if (!futuresPosition) {
     log.info('new position {}', [positionId]);
