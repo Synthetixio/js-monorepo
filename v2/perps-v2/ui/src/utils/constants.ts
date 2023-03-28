@@ -34,6 +34,7 @@ export enum FuturesMarketAsset {
   AXS = 'AXS',
   AUD = 'AUD',
   GBP = 'GBP',
+  ARB = 'ARB',
 }
 
 export enum FuturesMarketKey {
@@ -60,6 +61,7 @@ export enum FuturesMarketKey {
   sAXSPERP = 'sAXSPERP',
   sAUDPERP = 'sAUDPERP',
   sGBPPERP = 'sGBPPERP',
+  sARBPERP = 'sARBPERP',
 }
 
 export interface FuturesMarketConfig {
@@ -304,6 +306,16 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     pythIds: {
       mainnet: '0x84c2dde9633d93d1bcad84e7dc41c9d56578b7ec52fabedc1f335d673df0a7c1',
       testnet: '0xbcbdc2755bd74a2065f9d3283c2b8acbd898e473bdb90a6764b3dbd467c56ecd',
+    },
+  },
+  [FuturesMarketKey.sARBPERP]: {
+    key: FuturesMarketKey.sARBPERP,
+    asset: FuturesMarketAsset.ARB,
+    supports: 'mainnet',
+    version: 2,
+    pythIds: {
+      mainnet: '0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5',
+      testnet: '0x37f40d2898159e8f2e52b93cb78f47cc3829a31e525ab975c49cc5c5d9176378',
     },
   },
 };

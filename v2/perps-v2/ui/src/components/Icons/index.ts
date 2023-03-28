@@ -24,3 +24,4 @@ export * from './Silver';
 export * from './Solana';
 export * from './Uniswap';
 export * from './SearchIcon';
+export * from './Arb';
