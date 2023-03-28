@@ -75,7 +75,7 @@ export const PositionsTable = () => {
                   index
                 ) => {
                   // Need to take away fees
-                  const netValue = size.abs().mul(marketPrice).add(pnl);
+                  const netValue = size.abs().mul(marketPrice).add(pnl).sub(fees);
 
                   return (
                     <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
