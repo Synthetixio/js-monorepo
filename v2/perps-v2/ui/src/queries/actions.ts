@@ -33,6 +33,7 @@ export const FUTURES_TRADE_QUERY = gql(`
       account
       margin
       market {
+        id
         asset
       }
       positionId
