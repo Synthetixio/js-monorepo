@@ -102,7 +102,7 @@
     },
     "PerpsV2ProxyARBPERP": {
       "address": "0x509072A5aE4a87AC89Fc8D64D94aDCb44Bd4b88e",
-      "startBlock": 52456701
+      "startBlock": 84119507
     }
   },
   "optimism-goerli": {
