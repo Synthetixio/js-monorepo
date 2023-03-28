@@ -118,6 +118,8 @@
     "ignorePatterns": [
       "dist"
     ],
-    "ignoreMatches": []
+    "ignoreMatches": [
+      "@noisekit/ipfs-deploy"
+    ]
   }
 }

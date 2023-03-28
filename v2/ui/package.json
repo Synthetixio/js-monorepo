@@ -194,6 +194,7 @@
       "tmp"
     ],
     "ignoreMatches": [
+      "@noisekit/ipfs-deploy",
       "assets",
       "components",
       "containers",
