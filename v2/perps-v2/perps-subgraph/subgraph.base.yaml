@@ -1,52 +1,47 @@
 specVersion: 0.0.5
 schema:
   file: ./schema.graphql
-features:
-  - grafting # feature name
-graft:
-  base: QmfL9oqhWJLiEAxvADW1qaDWfTnVMr9MbstLtijYKuJMXe # subgraph ID of base subgraph
-  block: 3497266 # block number
 
 templates:
-  - name: AggregatorProxy
-    kind: ethereum/contract
-    source:
-      abi: AggregatorProxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: ./src/latest-rates.ts
-      entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
-      abis:
-        - name: AggregatorProxy
-          file: ./abis/AggregatorProxy.json
-      eventHandlers:
-        - event: 'AggregatorConfirmed(indexed address,indexed address)'
-          handler: 'handleAggregatorProxyAddressUpdated'
+  # - name: AggregatorProxy
+  #   kind: ethereum/contract
+  #   source:
+  #     abi: AggregatorProxy
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/latest-rates.ts
+  #     entities:
+  #       - Candle
+  #       - LatestRate
+  #       - RateUpdate
+  #     abis:
+  #       - name: AggregatorProxy
+  #         file: ./abis/AggregatorProxy.json
+  #     eventHandlers:
+  #       - event: 'AggregatorConfirmed(indexed address,indexed address)'
+  #         handler: 'handleAggregatorProxyAddressUpdated'
 
-  - name: Aggregator
-    kind: ethereum/contract
-    source:
-      abi: Aggregator
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: ./src/latest-rates.ts
-      entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
-      abis:
-        - name: Aggregator
-          file: ./abis/Aggregator.json
-      eventHandlers:
-        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
-          handler: 'handleAggregatorAnswerUpdated'
+  # - name: Aggregator
+  #   kind: ethereum/contract
+  #   source:
+  #     abi: Aggregator
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/latest-rates.ts
+  #     entities:
+  #       - Candle
+  #       - LatestRate
+  #       - RateUpdate
+  #     abis:
+  #       - name: Aggregator
+  #         file: ./abis/Aggregator.json
+  #     eventHandlers:
+  #       - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+  #         handler: 'handleAggregatorAnswerUpdated'
 
   - name: PerpetualFuturesMarket
     kind: ethereum/contract
@@ -128,26 +123,26 @@ dataSources:
         - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
-  - kind: ethereum
-    name: ExchangeRates
-    source:
-      abi: ExchangeRates
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: 'wasm/assemblyscript'
-      entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
-      abis:
-        - name: ExchangeRates
-          file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
-        - name: AggregatorProxy
-          file: ./abis/AggregatorProxy.json
-        - name: Aggregator
-          file: ./abis/Aggregator.json
-      eventHandlers:
-        - event: 'AggregatorAdded(bytes32,address)'
-          handler: 'handleAggregatorAdded'
-      file: './src/latest-rates.ts'
+  # - kind: ethereum
+  #   name: ExchangeRates
+  #   source:
+  #     abi: ExchangeRates
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: 'wasm/assemblyscript'
+  #     entities:
+  #       - Candle
+  #       - LatestRate
+  #       - RateUpdate
+  #     abis:
+  #       - name: ExchangeRates
+  #         file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
+  #       - name: AggregatorProxy
+  #         file: ./abis/AggregatorProxy.json
+  #       - name: Aggregator
+  #         file: ./abis/Aggregator.json
+  #     eventHandlers:
+  #       - event: 'AggregatorAdded(bytes32,address)'
+  #         handler: 'handleAggregatorAdded'
+  #     file: './src/latest-rates.ts'

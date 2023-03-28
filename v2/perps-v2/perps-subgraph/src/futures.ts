@@ -179,7 +179,6 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
 }
 
 export function handlePositionModified(event: PositionModifiedNewEvent): void {
-  if (event.params.margin.isZero()) return;
   const network = dataSource.network();
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
@@ -481,7 +480,7 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
         .div(BigInt.fromI32(10).pow(18));
 
       futuresPosition.netFunding = futuresPosition.netFunding.plus(fundingAccrued);
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.minus(fundingAccrued.toBigDecimal());
+      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(fundingAccrued.toBigDecimal());
     }
   }
 
