@@ -1,17 +1,22 @@
 import Wei, { wei } from '@synthetixio/wei';
-import { SubgraphPositionData, ContractData } from '../types/positions';
+import { SubgraphPositionData, ContractData } from '../types';
 
-export const calculateMarkPrice = ({
-  skew,
-  indexPrice,
-  skewScale,
-}: {
-  skew: Wei;
-  indexPrice: Wei;
-  skewScale: Wei;
-}) => {
+export const calculateMarkPrice = (
+  pythPrice: Wei | undefined,
+  {
+    skew,
+    indexPrice,
+    skewScale,
+  }: {
+    skew: Wei;
+    indexPrice: Wei;
+    skewScale: Wei;
+  }
+) => {
   const skewRatio = skew.div(skewScale);
-  const markPrice = indexPrice.mul(wei(1).add(skewRatio));
+  const markPrice = pythPrice
+    ? pythPrice.mul(wei(1).add(skewRatio))
+    : indexPrice.mul(wei(1).add(skewRatio));
   return markPrice;
 };
 
@@ -45,11 +50,12 @@ export const calculatePnlPercentage = (
 
 export const calculatePositionData = (
   subgraphPositionData: SubgraphPositionData,
+  pythPrice: Wei | undefined,
   contractData: ContractData,
   address?: string
 ) => {
   if (contractData.size.eq(0)) return null;
-  const marketPrice = calculateMarkPrice(contractData);
+  const marketPrice = calculateMarkPrice(pythPrice, contractData);
   const pnl = calculateNewPnl(subgraphPositionData, contractData, marketPrice);
   const notionalValue = contractData.size.mul(marketPrice);
   const pnlPercentage = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
@@ -59,7 +65,7 @@ export const calculatePositionData = (
 
   return {
     asset: subgraphPositionData.asset,
-    indexPrice: contractData.indexPrice,
+    indexPrice: pythPrice ? pythPrice : contractData.indexPrice,
     liquidationPrice: contractData.liquidationPrice,
     pnl,
     pnlPercentage,
