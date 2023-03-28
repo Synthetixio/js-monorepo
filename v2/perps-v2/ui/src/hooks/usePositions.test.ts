@@ -8,7 +8,7 @@ import {
 
 describe('calculateMarkPrice', () => {
   it('should correctly calculate the mark price', () => {
-    const result = calculateMarkPrice({
+    const result = calculateMarkPrice(wei(100), {
       skew: wei(10),
       indexPrice: wei(100),
       skewScale: wei(20),
@@ -33,6 +33,7 @@ describe('calculateNewPnl', () => {
     expect(result).toEqual(wei('155'));
   });
 });
+
 describe('calculatePnlPercentage', () => {
   test('calculates PnL percentage correctly', () => {
     const subgraphPositionData = { avgEntryPrice: wei(50) } as any;
@@ -75,7 +76,9 @@ describe('calculatePositionData', () => {
       accruedFundingSinceLastModification: wei(5),
     };
 
-    const result = calculatePositionData(subgraphPositionData, contractData, '0xxxxx');
+    const pythPrice = wei(120);
+
+    const result = calculatePositionData(subgraphPositionData, pythPrice, contractData, '0xxxxx');
 
     expect(result).toEqual({
       address: '0xxxxx',
@@ -102,7 +105,9 @@ describe('calculatePositionData', () => {
       size: wei(0),
     } as any;
 
-    const result = calculatePositionData(subgraphPositionData, contractData);
+    const pythPrice = wei(0);
+
+    const result = calculatePositionData(subgraphPositionData, pythPrice, contractData);
     expect(result).toBe(null);
   });
 });
