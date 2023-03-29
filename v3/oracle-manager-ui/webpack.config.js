@@ -30,7 +30,6 @@ const babelRule = {
     /v3\/contracts/,
     /v3\/lib/,
     /v3\/components/,
-    /packages\/[^\/]+\/src/,
   ],
   resolve: {
     fullySpecified: false,
@@ -160,9 +159,6 @@ module.exports = {
     ),
 
   resolve: {
-    alias: {
-      '@synthetixio/contracts/build': '@synthetixio/contracts/src',
-    },
     fallback: {
       buffer: require.resolve('buffer'),
       stream: require.resolve('stream-browserify'),

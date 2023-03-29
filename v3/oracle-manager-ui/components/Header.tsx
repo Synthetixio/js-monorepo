@@ -19,7 +19,6 @@ import {
   useNetwork,
   Network,
 } from '@snx-v3/useBlockchain';
-import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface/src';
 import { FC } from 'react';
 import { shortAddress } from '../utils/addresses';
 import { GitHubIcon } from './GitHubIcon';
@@ -46,7 +45,7 @@ export const Header: FC = () => {
   const wallet = useWallet();
 
   const { name, icon } = activeIcon(currentNetwork);
-  const switchNetwork = async (id: NetworkId) => {
+  const switchNetwork = async (id: number) => {
     return onboard?.setChain({ chainId: `0x${id.toString(16)}` });
   };
   return (
@@ -94,25 +93,25 @@ export const Header: FC = () => {
                     </>
                   </MenuButton>
                   <MenuList>
-                    <MenuItem onClick={() => switchNetwork(NetworkIdByName.mainnet)}>
+                    <MenuItem onClick={() => switchNetwork(1)}>
                       <EthereumIcon />
                       <Text variant="nav" ml={2}>
                         Ethereum Mainnet
                       </Text>
                     </MenuItem>
-                    <MenuItem onClick={() => switchNetwork(NetworkIdByName['goerli'])}>
+                    <MenuItem onClick={() => switchNetwork(5)}>
                       <EthereumIcon />
                       <Text variant="nav" ml={2}>
                         Goerli
                       </Text>
                     </MenuItem>
-                    <MenuItem onClick={() => switchNetwork(NetworkIdByName['mainnet-ovm'])}>
+                    <MenuItem onClick={() => switchNetwork(10)}>
                       <OptimismIcon />
                       <Text variant="nav" ml={2}>
                         Optimism
                       </Text>
                     </MenuItem>
-                    <MenuItem onClick={() => switchNetwork(NetworkIdByName['goerli-ovm'])}>
+                    <MenuItem onClick={() => switchNetwork(420)}>
                       <OptimismIcon />
                       <Text variant="nav" ml={2}>
                         Optimism Goerli
