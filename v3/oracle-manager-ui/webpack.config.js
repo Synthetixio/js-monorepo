@@ -30,7 +30,7 @@ const babelRule = {
     /v3\/contracts\/deployments/,
     /v3\/lib/,
     /v3\/components/,
-    /packages\/[^\/]+\/src/,
+    /packages\/contracts-interface\/src\/types/,
   ],
   resolve: {
     fullySpecified: false,
