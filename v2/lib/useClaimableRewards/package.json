@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v2/useGetUpcomingRewards",
+  "name": "@snx-v2/useClaimableRewards",
   "private": true,
   "main": "index.ts",
   "version": "0.0.3",
