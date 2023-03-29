@@ -173,7 +173,7 @@ function handlePositionClosed(
   /**
    * Add fees
    */
-  futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(event.params.fee); //Before it had: `.plus(futuresPosition.netFunding);`  TODO, I don't think net funding is paid to synthetix?
+  futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(event.params.fee);
   trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
   synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
     event.params.fee.toBigDecimal()
@@ -214,7 +214,6 @@ function handleActualPositionModification(
 
     // add pnl to this position and the trader's overall stats
     createTradeEntityForPositionModification(event, futuresPosition.id, newPnl);
-    // TODO Remove comment and add comment to github: This had a bug before, it was using the size
     trader.pnl = trader.pnl.plus(newPnl);
     futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
   } else {
@@ -228,7 +227,6 @@ function handleActualPositionModification(
         .div(BigInt.fromI32(10).pow(18));
 
       createTradeEntityForPositionModification(event, futuresPosition.id, newPnl);
-      // TODO Remove comment and add comment to github: This had a bug before, it was using the size
       trader.pnl = trader.pnl.plus(newPnl);
       futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
 
@@ -299,7 +297,6 @@ export function updateFunding(
         futuresPosition.size
       );
       futuresPosition.netFunding = futuresPosition.netFunding.plus(fundingAccrued);
-      //TODO Comment, Bug fix: This was the problem!!!!!
       futuresPosition.fundingIndex = event.params.fundingIndex;
     }
   }
@@ -314,7 +311,6 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
   if (!futuresPosition) {
     log.info('new position {}', [positionId]);
     futuresPosition = handlePositionOpenUpdates(event, synthetix, trader, positionId);
-    // TODO Ideally we return here
 
     // else position is not new
   } else {
