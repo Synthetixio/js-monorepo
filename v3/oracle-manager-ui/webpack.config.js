@@ -160,6 +160,9 @@ module.exports = {
     ),
 
   resolve: {
+    alias: {
+      '@synthetixio/contracts/build': '@synthetixio/contracts/src',
+    },
     fallback: {
       buffer: require.resolve('buffer'),
       stream: require.resolve('stream-browserify'),
