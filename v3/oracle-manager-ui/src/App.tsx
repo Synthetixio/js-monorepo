@@ -94,7 +94,7 @@ export const App: FC = () => {
             disabled={!isWalletConnected}
             onClick={() => {
               if (signer && network?.id) {
-                const multicallContract = getMultiCallContract(signer);
+                const multicallContract = getMultiCallContract(network.id, signer);
                 const oracleManagerContract = getNodeModuleContract(signer, network.id);
                 const data = nodes
                   .slice()
