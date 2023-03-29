@@ -8,6 +8,10 @@ import {
   FundingRateUpdate,
   FuturesMarginTransfer,
 } from '../generated/schema';
+import { calculateLeverage, calculateVolume } from './calculations';
+import { createTradeEntityForNewPosition } from './trade-entities';
+
+const SIP2004_AND_2005_GOERLI_BLOCK_NUMBER = BigInt.fromI32(6782813);
 
 function getOrCreateTrader(event: PositionModifiedNewEvent): Trader {
   let trader = Trader.load(event.params.account.toHex());
@@ -50,6 +54,66 @@ function updateTrades(event: PositionModifiedNewEvent, synthetix: Synthetix, tra
   trader.trades = oldTrades;
 }
 
+function createFuturesPosition(
+  event: PositionModifiedNewEvent,
+  positionId: string
+): FuturesPosition {
+  const network = dataSource.network();
+  let futuresPosition = new FuturesPosition(positionId);
+  futuresPosition.openTimestamp = event.block.timestamp;
+  futuresPosition.trader = event.params.account.toHex();
+  futuresPosition.isOpen = true;
+  futuresPosition.isLiquidated = false;
+  futuresPosition.size = event.params.size;
+  futuresPosition.avgEntryPrice = event.params.lastPrice;
+  futuresPosition.feesPaidToSynthetix = event.params.fee;
+  futuresPosition.netTransfers = BigInt.fromI32(0);
+  futuresPosition.initialMargin = event.params.margin.plus(event.params.fee);
+  futuresPosition.margin = event.params.margin;
+  futuresPosition.pnl = event.params.fee.times(BigInt.fromI32(-1));
+  futuresPosition.entryPrice = event.params.lastPrice;
+  futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
+  futuresPosition.trades = BigInt.fromI32(1);
+  futuresPosition.long = event.params.tradeSize.gt(BigInt.fromI32(0));
+  futuresPosition.market = event.address.toHex();
+  futuresPosition.fundingIndex = event.params.fundingIndex;
+  futuresPosition.leverage = calculateLeverage(
+    event.params.size,
+    event.params.lastPrice,
+    event.params.margin
+  );
+  futuresPosition.netFunding = BigInt.fromI32(0);
+  futuresPosition.txHash = event.transaction.hash.toHex();
+  futuresPosition.totalVolume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
+  if (
+    network === 'optimism-goerli' &&
+    event.block.number.gt(SIP2004_AND_2005_GOERLI_BLOCK_NUMBER)
+  ) {
+    futuresPosition.skew = event.params.skew;
+  }
+  return futuresPosition;
+}
+
+function handlePositionOpenUpdates(
+  event: PositionModifiedNewEvent,
+  synthetix: Synthetix,
+  trader: Trader,
+  positionId: string
+): FuturesPosition {
+  createTradeEntityForNewPosition(event, positionId);
+  synthetix.feesByPositionModifications = synthetix.feesByLiquidations.plus(
+    event.params.fee.toBigDecimal()
+  );
+  const volume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
+
+  synthetix.totalVolume = synthetix.totalVolume.plus(volume);
+  trader.totalVolume = trader.totalVolume.plus(volume);
+  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
+  trader.margin = trader.margin.plus(event.params.margin.toBigDecimal());
+  trader.pnl = trader.pnl.plus(event.params.fee.times(BigInt.fromI32(-1)));
+  return createFuturesPosition(event, positionId);
+}
+
 export function handlePositionModified(event: PositionModifiedNewEvent): void {
   const network = dataSource.network();
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
@@ -60,73 +124,9 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
 
   if (!futuresPosition) {
     log.info('new position {}', [positionId]);
-    futuresPosition = new FuturesPosition(positionId);
-    futuresPosition.openTimestamp = event.block.timestamp;
-    futuresPosition.trader = event.params.account.toHex();
-    futuresPosition.isOpen = true;
-    futuresPosition.isLiquidated = false;
-    futuresPosition.size = event.params.size;
-    futuresPosition.avgEntryPrice = event.params.lastPrice;
-    futuresPosition.feesPaidToSynthetix = event.params.fee;
-    futuresPosition.netTransfers = BigInt.fromI32(0);
-    futuresPosition.initialMargin = event.params.margin.plus(event.params.fee);
-    futuresPosition.margin = event.params.margin;
-    futuresPosition.pnl = event.params.fee.times(BigInt.fromI32(-1));
-    futuresPosition.entryPrice = event.params.lastPrice;
-    futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
-    futuresPosition.trades = BigInt.fromI32(1);
-    futuresPosition.long = event.params.tradeSize.gt(BigInt.fromI32(0));
-    futuresPosition.market = event.address.toHex();
-    futuresPosition.fundingIndex = event.params.fundingIndex;
-    futuresPosition.leverage = event.params.size
-      .times(event.params.lastPrice)
-      .div(event.params.margin)
-      .abs();
-    futuresPosition.netFunding = BigInt.fromI32(0);
-    futuresPosition.txHash = event.transaction.hash.toHex();
-    futuresPosition.totalVolume = event.params.tradeSize
-      .times(event.params.lastPrice)
-      .div(BigInt.fromI32(10).pow(18))
-      .abs()
-      .toBigDecimal();
+    futuresPosition = handlePositionOpenUpdates(event, synthetix, trader, positionId);
+    // TODO Ideally we return here
 
-    if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
-      futuresPosition.skew = event.params.skew;
-    }
-
-    const tradeEntity = new FuturesTrade(
-      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-    );
-    tradeEntity.timestamp = event.block.timestamp;
-    tradeEntity.trader = event.params.account.toHex();
-    tradeEntity.futuresPosition = positionId;
-    tradeEntity.margin = event.params.margin.plus(event.params.fee);
-    tradeEntity.size = event.params.tradeSize.toBigDecimal();
-    tradeEntity.positionSize = event.params.size.toBigDecimal();
-    tradeEntity.market = event.address.toHex();
-    tradeEntity.price = event.params.lastPrice.toBigDecimal();
-    tradeEntity.pnl = event.params.fee.times(BigInt.fromI32(-1));
-    tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
-    tradeEntity.positionClosed = false;
-    tradeEntity.type = 'PositionOpened';
-    tradeEntity.txHash = event.transaction.hash.toHex();
-
-    synthetix.feesByPositionModifications = synthetix.feesByLiquidations.plus(
-      event.params.fee.toBigDecimal()
-    );
-
-    const volume = event.params.tradeSize
-      .times(event.params.lastPrice)
-      .div(BigInt.fromI32(10).pow(18))
-      .abs()
-      .toBigDecimal();
-
-    synthetix.totalVolume = synthetix.totalVolume.plus(volume);
-    trader.totalVolume = trader.totalVolume.plus(volume);
-    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
-    trader.margin = trader.margin.plus(event.params.margin.toBigDecimal());
-    trader.pnl = trader.pnl.plus(event.params.fee.times(BigInt.fromI32(-1)));
-    tradeEntity.save();
     // else position is not new
   } else {
     // Position closed & not liquidated
@@ -155,7 +155,10 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
         .div(event.params.margin)
         .abs();
 
-      if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
+      if (
+        network === 'optimism-goerli' &&
+        event.block.number.gt(SIP2004_AND_2005_GOERLI_BLOCK_NUMBER)
+      ) {
         futuresPosition.skew = event.params.skew;
       }
 
@@ -196,7 +199,10 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {
       log.info('position modified {}', [positionId]);
 
-      if (network === 'optimism-goerli' && event.block.number.gt(BigInt.fromI32(6782813))) {
+      if (
+        network === 'optimism-goerli' &&
+        event.block.number.gt(SIP2004_AND_2005_GOERLI_BLOCK_NUMBER)
+      ) {
         futuresPosition.skew = event.params.skew;
       }
 
