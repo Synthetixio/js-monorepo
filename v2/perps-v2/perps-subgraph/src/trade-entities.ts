@@ -40,3 +40,15 @@ export function createTradeEntityForPositionClosed(
   tradeEntity.type = 'PositionClosed';
   tradeEntity.save();
 }
+
+export function createTradeEntityForPositionModification(
+  event: PositionModifiedNewEvent,
+  positionId: string,
+  pnl: BigInt
+): void {
+  let tradeEntity = createBaseTradeEntity(event, positionId);
+  tradeEntity.pnl = pnl;
+  tradeEntity.positionClosed = false;
+  tradeEntity.type = 'PositionModified';
+  tradeEntity.save();
+}

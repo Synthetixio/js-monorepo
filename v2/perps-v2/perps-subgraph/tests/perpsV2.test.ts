@@ -44,17 +44,17 @@ describe('Perps V2', () => {
     );
     handlePositionModified(positionOpenedEvent);
     const modifyPositionEvent = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(0),
-      toEth(-3),
-      toEth(-1),
-      toEth(1200),
-      BigInt.fromI32(2),
-      toGwei(1),
-      20,
-      BigInt.fromI32(12),
-      2
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(0), // margin
+      toEth(-3), //size
+      toEth(-1), // trade size
+      toEth(1200), // last price
+      BigInt.fromI32(2), // funding index
+      toGwei(1), // fee
+      20, // timestamp
+      BigInt.fromI32(12), //skew
+      2 // log index
     );
     handlePositionModified(modifyPositionEvent);
 
@@ -246,7 +246,7 @@ describe('Perps V2', () => {
         .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
         .toString()
     );
-    assert.fieldEquals('Trader', trader.toLowerCase(), 'pnl', '-400000000000000000000');
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'pnl', '-200000000001000000000'); // This trade have only done one position open + position modified. PNL should be the same as the Position
     assert.fieldEquals(
       'Trader',
       trader.toLowerCase(),

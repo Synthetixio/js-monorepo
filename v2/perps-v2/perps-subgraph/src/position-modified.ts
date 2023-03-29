@@ -12,6 +12,7 @@ import { calculateLeverage, calculatePnl, calculateVolume } from './calculations
 import {
   createTradeEntityForNewPosition,
   createTradeEntityForPositionClosed,
+  createTradeEntityForPositionModification,
 } from './trade-entities';
 
 const SIP2004_AND_2005_GOERLI_BLOCK_NUMBER = BigInt.fromI32(6782813);
@@ -172,9 +173,104 @@ function handlePositionClosed(
   );
   createTradeEntityForPositionClosed(event, futuresPosition.id, newPnl);
 }
+function handleActualPositionModification(
+  event: PositionModifiedNewEvent,
+  futuresPosition: FuturesPosition,
+  synthetix: Synthetix,
+  trader: Trader
+): void {
+  if (
+    network === 'optimism-goerli' &&
+    event.block.number.gt(SIP2004_AND_2005_GOERLI_BLOCK_NUMBER)
+  ) {
+    futuresPosition.skew = event.params.skew;
+  }
+
+  // if position changes sides, reset the entry price
+  if (
+    (futuresPosition.size.lt(BigInt.fromI32(0)) && event.params.size.gt(BigInt.fromI32(0))) ||
+    (futuresPosition.size.gt(BigInt.fromI32(0)) && event.params.size.lt(BigInt.fromI32(0)))
+  ) {
+    // calculate pnl
+    const newPnl = event.params.lastPrice
+      .minus(futuresPosition.avgEntryPrice) // TODO, look into this, should we be using the old avg and and not the new one?
+      .times(futuresPosition.size)
+      .div(BigInt.fromI32(10).pow(18));
+
+    const existingSize = futuresPosition.size.abs();
+    const existingPrice = existingSize.times(futuresPosition.entryPrice);
+
+    const newSize = event.params.tradeSize.abs();
+    const newPrice = newSize.times(event.params.lastPrice);
+    futuresPosition.entryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
+    futuresPosition.avgEntryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
+
+    // add pnl to this position and the trader's overall stats
+    createTradeEntityForPositionModification(event, futuresPosition.id, newPnl);
+    // TODO Remove comment and add comment to github: This had a bug before, it was using the size
+    trader.pnl = trader.pnl.plus(newPnl);
+    futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
+  } else {
+    // check if the position side increases (long or short)
+    if (event.params.size.abs().gt(futuresPosition.size.abs())) {
+      // calculate pnl
+      const newPnl = event.params.lastPrice
+        .minus(futuresPosition.avgEntryPrice)
+        .times(event.params.tradeSize.abs())
+        .times(event.params.size.gt(BigInt.fromI32(0)) ? BigInt.fromI32(1) : BigInt.fromI32(-1))
+        .div(BigInt.fromI32(10).pow(18));
+
+      createTradeEntityForPositionModification(event, futuresPosition.id, newPnl);
+      // TODO Remove comment and add comment to github: This had a bug before, it was using the size
+      trader.pnl = trader.pnl.plus(newPnl);
+      futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
+
+      // if so, calculate the new average price
+      const existingSize = futuresPosition.size.abs();
+      const existingPrice = existingSize.times(futuresPosition.entryPrice);
+      const newSize = event.params.tradeSize.abs();
+      const newPrice = newSize.times(event.params.lastPrice);
+      futuresPosition.avgEntryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
+    } else {
+      // if reducing position size, calculate pnl
+      const newPnl = event.params.lastPrice
+        .minus(futuresPosition.avgEntryPrice)
+        .times(event.params.tradeSize.abs())
+        .times(event.params.size.gt(BigInt.fromI32(0)) ? BigInt.fromI32(1) : BigInt.fromI32(-1))
+        .div(BigInt.fromI32(10).pow(18));
+
+      createTradeEntityForPositionModification(event, futuresPosition.id, newPnl);
+      trader.pnl = trader.pnl.plus(newPnl);
+      futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
+    }
+  }
+
+  futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(event.params.fee);
+  futuresPosition.size = event.params.size;
+  futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
+  futuresPosition.margin = futuresPosition.margin.plus(event.params.margin);
+  futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
+  futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
+
+  futuresPosition.leverage = calculateLeverage(
+    event.params.size,
+    event.params.lastPrice,
+    futuresPosition.margin // Bug fixed, prev we did: `futuresPosition.margin.plus(event.params.margin)` but the margin on the position has already been updated
+  );
+
+  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
+  synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
+    event.params.fee.toBigDecimal()
+  );
+
+  const volume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
+
+  trader.totalVolume = trader.totalVolume.plus(volume);
+  synthetix.totalVolume = synthetix.totalVolume.plus(volume);
+  futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
+}
 
 export function handlePositionModified(event: PositionModifiedNewEvent): void {
-  const network = dataSource.network();
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
   let synthetix = getOrCreateSynthetix();
@@ -197,118 +293,7 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     // If tradeSize and size are not zero, position got modified
     else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {
       log.info('position modified {}', [positionId]);
-
-      if (
-        network === 'optimism-goerli' &&
-        event.block.number.gt(SIP2004_AND_2005_GOERLI_BLOCK_NUMBER)
-      ) {
-        futuresPosition.skew = event.params.skew;
-      }
-
-      const tradeEntity = new FuturesTrade(
-        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-      );
-
-      tradeEntity.timestamp = event.block.timestamp;
-      tradeEntity.trader = event.params.account.toHex();
-      tradeEntity.futuresPosition = positionId;
-      tradeEntity.margin = event.params.margin.plus(event.params.fee);
-      tradeEntity.size = event.params.tradeSize.toBigDecimal();
-      tradeEntity.market = event.address.toHex();
-      tradeEntity.price = event.params.lastPrice.toBigDecimal();
-      tradeEntity.positionSize = event.params.size.toBigDecimal();
-      tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
-      tradeEntity.positionClosed = false;
-      tradeEntity.type = 'PositionModified';
-      tradeEntity.txHash = event.transaction.hash.toHex();
-
-      // if position changes sides, reset the entry price
-      if (
-        (futuresPosition.size.lt(BigInt.fromI32(0)) && event.params.size.gt(BigInt.fromI32(0))) ||
-        (futuresPosition.size.gt(BigInt.fromI32(0)) && event.params.size.lt(BigInt.fromI32(0)))
-      ) {
-        // calculate pnl
-        const newPnl = event.params.lastPrice
-          .minus(futuresPosition.avgEntryPrice)
-          .times(futuresPosition.size)
-          .div(BigInt.fromI32(10).pow(18));
-
-        const existingSize = futuresPosition.size.abs();
-        const existingPrice = existingSize.times(futuresPosition.entryPrice);
-
-        const newSize = event.params.tradeSize.abs();
-        const newPrice = newSize.times(event.params.lastPrice);
-        futuresPosition.entryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
-        futuresPosition.avgEntryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
-
-        // add pnl to this position and the trader's overall stats
-        tradeEntity.pnl = newPnl;
-        trader.pnl = tradeEntity.pnl.plus(newPnl);
-        futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
-      } else {
-        // check if the position side increases (long or short)
-        if (event.params.size.abs().gt(futuresPosition.size.abs())) {
-          // calculate pnl
-          const newPnl = event.params.lastPrice
-            .minus(futuresPosition.avgEntryPrice)
-            .times(event.params.tradeSize.abs())
-            .times(event.params.size.gt(BigInt.fromI32(0)) ? BigInt.fromI32(1) : BigInt.fromI32(-1))
-            .div(BigInt.fromI32(10).pow(18));
-
-          tradeEntity.pnl = newPnl;
-          trader.pnl = tradeEntity.pnl.plus(newPnl);
-          futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
-
-          // if so, calculate the new average price
-          const existingSize = futuresPosition.size.abs();
-          const existingPrice = existingSize.times(futuresPosition.entryPrice);
-          const newSize = event.params.tradeSize.abs();
-          const newPrice = newSize.times(event.params.lastPrice);
-          futuresPosition.avgEntryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
-        } else {
-          // if reducing position size, calculate pnl
-          const newPnl = event.params.lastPrice
-            .minus(futuresPosition.avgEntryPrice)
-            .times(event.params.tradeSize.abs())
-            .times(event.params.size.gt(BigInt.fromI32(0)) ? BigInt.fromI32(1) : BigInt.fromI32(-1))
-            .div(BigInt.fromI32(10).pow(18));
-
-          tradeEntity.pnl = newPnl;
-          trader.pnl = trader.pnl.plus(newPnl);
-          futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
-        }
-      }
-
-      futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(
-        event.params.fee
-      );
-      futuresPosition.size = event.params.size;
-      futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
-      futuresPosition.margin = futuresPosition.margin.plus(event.params.margin);
-      futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
-      futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
-
-      futuresPosition.leverage = event.params.size
-        .times(event.params.lastPrice)
-        .div(futuresPosition.margin.plus(event.params.margin))
-        .abs();
-
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
-      synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
-        event.params.fee.toBigDecimal()
-      );
-
-      const volume = event.params.tradeSize
-        .times(event.params.lastPrice)
-        .div(BigInt.fromI32(10).pow(18))
-        .abs()
-        .toBigDecimal();
-
-      trader.totalVolume = trader.totalVolume.plus(volume);
-      synthetix.totalVolume = synthetix.totalVolume.plus(volume);
-      futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
-
-      tradeEntity.save();
+      handleActualPositionModification(event, futuresPosition, synthetix, trader);
     } else {
       log.debug('Transferred Margin Event skipped {}', [positionId]);
     }
