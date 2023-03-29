@@ -19,7 +19,7 @@ import {
   useNetwork,
   Network,
 } from '@snx-v3/useBlockchain';
-import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface/src';
+import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 import { FC } from 'react';
 import { shortAddress } from '../utils/addresses';
 import { GitHubIcon } from './GitHubIcon';
