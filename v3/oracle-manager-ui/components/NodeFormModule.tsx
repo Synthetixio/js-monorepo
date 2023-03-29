@@ -154,7 +154,12 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       }}
     >
       <ModalOverlay />
-      <ModalContent bg="gray.900">
+      <ModalContent
+        bg="linear-gradient(73.6deg, #171923 2.11%, #141414 100%),linear-gradient(0deg, #2D2D38, #2D2D38)"
+        borderWidth="1px"
+        borderStyle="solid"
+        borderColor="gray.900"
+      >
         <ModalHeader textAlign="center">{node ? `Update Node ${node.id}` : 'New Node'}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>

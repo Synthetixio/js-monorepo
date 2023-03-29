@@ -22,6 +22,7 @@ export const PriceDeviationCircuitBreakerNode: FC<{ data: { label: string }; id:
       display="flex"
       flexDirection="column"
       alignItems="center"
+      w="280px"
     >
       <Flex gap="2" alignItems="center" mb="2" width="100%">
         <Text fontSize="lg" fontWeight="bold" mr="auto">
@@ -30,7 +31,7 @@ export const PriceDeviationCircuitBreakerNode: FC<{ data: { label: string }; id:
         </Text>
         <IconButton
           disabled={!!params.nodeId}
-          icon={<CloseIcon />}
+          icon={<CloseIcon color="white" />}
           onClick={(e) => {
             e.stopPropagation();
             setNodes((state) => {
@@ -63,9 +64,10 @@ export const PriceDeviationCircuitBreakerNode: FC<{ data: { label: string }; id:
         borderColor="whiteAlpha.400"
         borderRadius="4px"
         mb="2"
+        w="100%"
       >
         {data.label && (
-          <Flex gap="2">
+          <Flex gap="2" w="100%">
             <Text fontWeight="bold" color="whiteAlpha.800" fontSize="xs">
               Name:
             </Text>
