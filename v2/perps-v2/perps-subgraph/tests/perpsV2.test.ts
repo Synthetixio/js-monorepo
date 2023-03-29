@@ -469,6 +469,46 @@ describe('Perps V2', () => {
     );
   });
 
+  test('calculate PNL for closed long position', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), // margin
+      toEth(2), //size
+      toEth(2), // trade size
+      toEth(1000), // last price
+      BigInt.fromI32(1), // funding index
+      toGwei(1), // fee
+      10, // timestamp
+      BigInt.fromI32(12), // skew
+      1 // log index
+    );
+    handlePositionModified(positionOpenedEvent);
+    const modifyPositionEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), // margin
+      toEth(0), //size
+      toEth(-2), // trade size
+      toEth(1200), // last price
+      BigInt.fromI32(2), // funding index
+      toGwei(1), // fee
+      20, // timestamp
+      BigInt.fromI32(12), //skew
+      2 // log index
+    );
+    handlePositionModified(modifyPositionEvent);
+
+    // FUTURES POSITION
+
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'pnl',
+      '400000000000000000000'
+    );
+  });
+
   test('position got liquidated', () => {
     const positionOpenedEvent = createPositionModifiedEvent(
       BigInt.fromI32(1),

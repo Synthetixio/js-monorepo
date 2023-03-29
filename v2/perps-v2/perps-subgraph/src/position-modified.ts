@@ -129,6 +129,18 @@ function handlePositionClosed(
   trader: Trader,
   synthetix: Synthetix
 ): void {
+  const newPnl = calculatePnl(
+    event.params.lastPrice,
+    futuresPosition.avgEntryPrice,
+    futuresPosition.size // Note that it's important to use the size before we update it from the event. The updated size will be 0 since the position is closed
+  );
+
+  futuresPosition.leverage = calculateLeverage(
+    event.params.tradeSize, // Note that we use tradeSize rather than size here. This will give us what the leverage was before closing the position
+    event.params.lastPrice,
+    futuresPosition.margin
+  );
+
   futuresPosition.isOpen = false;
   futuresPosition.exitPrice = event.params.lastPrice;
   futuresPosition.closeTimestamp = event.block.timestamp;
@@ -137,11 +149,6 @@ function handlePositionClosed(
   futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
   futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
   futuresPosition.long = !event.params.tradeSize.gt(BigInt.fromI32(0));
-  futuresPosition.leverage = calculateLeverage(
-    event.params.tradeSize, // Note that we use tradeSize rather than size here. This will give us what the leverage was before closing the position
-    event.params.lastPrice,
-    event.params.margin
-  );
 
   if (
     network === 'optimism-goerli' &&
@@ -161,12 +168,7 @@ function handlePositionClosed(
   /**
    * Add pnl
    */
-  const newPnl = calculatePnl(
-    event.params.lastPrice,
-    futuresPosition.avgEntryPrice,
-    event.params.size // TODO Remove comment and add comment to github: This had a bug before, it was using the size from the position before it had been updated
-  );
-  futuresPosition.pnl = newPnl;
+  futuresPosition.pnl = futuresPosition.pnl.plus(newPnl);
   trader.pnl = trader.pnl.plus(newPnl);
   /**
    * Add fees
