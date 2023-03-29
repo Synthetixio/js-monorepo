@@ -8,10 +8,14 @@ import {
   FundingRateUpdate,
   FuturesMarginTransfer,
 } from '../generated/schema';
-import { calculateLeverage, calculateVolume } from './calculations';
-import { createTradeEntityForNewPosition } from './trade-entities';
+import { calculateLeverage, calculatePnl, calculateVolume } from './calculations';
+import {
+  createTradeEntityForNewPosition,
+  createTradeEntityForPositionClosed,
+} from './trade-entities';
 
 const SIP2004_AND_2005_GOERLI_BLOCK_NUMBER = BigInt.fromI32(6782813);
+const network = dataSource.network();
 
 function getOrCreateTrader(event: PositionModifiedNewEvent): Trader {
   let trader = Trader.load(event.params.account.toHex());
@@ -58,7 +62,6 @@ function createFuturesPosition(
   event: PositionModifiedNewEvent,
   positionId: string
 ): FuturesPosition {
-  const network = dataSource.network();
   let futuresPosition = new FuturesPosition(positionId);
   futuresPosition.openTimestamp = event.block.timestamp;
   futuresPosition.trader = event.params.account.toHex();
@@ -114,6 +117,62 @@ function handlePositionOpenUpdates(
   return createFuturesPosition(event, positionId);
 }
 
+function handlePositionClosed(
+  event: PositionModifiedNewEvent,
+  futuresPosition: FuturesPosition,
+  trader: Trader,
+  synthetix: Synthetix
+): void {
+  futuresPosition.isOpen = false;
+  futuresPosition.exitPrice = event.params.lastPrice;
+  futuresPosition.closeTimestamp = event.block.timestamp;
+  futuresPosition.margin = event.params.margin;
+  futuresPosition.size = event.params.size;
+  futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
+  futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
+  futuresPosition.long = !event.params.tradeSize.gt(BigInt.fromI32(0));
+  futuresPosition.leverage = calculateLeverage(
+    event.params.tradeSize, // Note that we use tradeSize rather than size here. This will give us what the leverage was before closing the position
+    event.params.lastPrice,
+    event.params.margin
+  );
+
+  if (
+    network === 'optimism-goerli' &&
+    event.block.number.gt(SIP2004_AND_2005_GOERLI_BLOCK_NUMBER)
+  ) {
+    futuresPosition.skew = event.params.skew;
+  }
+  /**
+   * Add volume
+   */
+  const newVolume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
+  synthetix.totalVolume = synthetix.totalVolume.plus(newVolume);
+  // Bug fixed, we forgot to add volume too trader and futures position
+  trader.totalVolume = trader.totalVolume.plus(newVolume);
+  futuresPosition.totalVolume = futuresPosition.totalVolume.plus(newVolume);
+
+  /**
+   * Add pnl
+   */
+  const newPnl = calculatePnl(
+    event.params.lastPrice,
+    futuresPosition.avgEntryPrice,
+    event.params.size // TODO Remove comment and add comment to github: This had a bug before, it was using the size from the position before it had been updated
+  );
+  futuresPosition.pnl = newPnl;
+  trader.pnl = trader.pnl.plus(newPnl);
+  /**
+   * Add fees
+   */
+  futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(event.params.fee); //Before it had: `.plus(futuresPosition.netFunding);`  TODO, I don't think net funding is paid to synthetix?
+  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
+  synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
+    event.params.fee.toBigDecimal()
+  );
+  createTradeEntityForPositionClosed(event, futuresPosition.id, newPnl);
+}
+
 export function handlePositionModified(event: PositionModifiedNewEvent): void {
   const network = dataSource.network();
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
@@ -133,67 +192,7 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     if (event.params.size.isZero() && !event.params.tradeSize.isZero()) {
       log.info('position closed {}', [positionId]);
 
-      const newPnl = event.params.lastPrice
-        .minus(futuresPosition.avgEntryPrice)
-        .times(futuresPosition.size)
-        .div(BigInt.fromI32(10).pow(18));
-
-      futuresPosition.pnl = newPnl;
-      futuresPosition.isOpen = false;
-      futuresPosition.exitPrice = event.params.lastPrice;
-      futuresPosition.closeTimestamp = event.block.timestamp;
-      futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix
-        .plus(event.params.fee)
-        .minus(futuresPosition.netFunding);
-      futuresPosition.margin = event.params.margin;
-      futuresPosition.size = event.params.size;
-      futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
-      futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
-      futuresPosition.long = !event.params.tradeSize.gt(BigInt.fromI32(0));
-      futuresPosition.leverage = event.params.tradeSize
-        .times(event.params.lastPrice)
-        .div(event.params.margin)
-        .abs();
-
-      if (
-        network === 'optimism-goerli' &&
-        event.block.number.gt(SIP2004_AND_2005_GOERLI_BLOCK_NUMBER)
-      ) {
-        futuresPosition.skew = event.params.skew;
-      }
-
-      const tradeEntity = new FuturesTrade(
-        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-      );
-
-      tradeEntity.timestamp = event.block.timestamp;
-      tradeEntity.trader = event.params.account.toHex();
-      tradeEntity.futuresPosition = positionId;
-      tradeEntity.margin = event.params.margin.plus(event.params.fee);
-      tradeEntity.size = event.params.tradeSize.toBigDecimal();
-      tradeEntity.market = event.address.toHex();
-      tradeEntity.price = event.params.lastPrice.toBigDecimal();
-      tradeEntity.positionSize = event.params.size.toBigDecimal();
-      tradeEntity.pnl = newPnl;
-      tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
-      tradeEntity.positionClosed = true;
-      tradeEntity.type = 'PositionClosed';
-      tradeEntity.txHash = event.transaction.hash.toHex();
-
-      trader.pnl = trader.pnl.plus(newPnl);
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
-
-      synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
-        event.params.fee.toBigDecimal()
-      );
-      synthetix.totalVolume = synthetix.totalVolume.plus(
-        event.params.tradeSize
-          .times(event.params.lastPrice)
-          .div(BigInt.fromI32(10).pow(18))
-          .abs()
-          .toBigDecimal()
-      );
-      tradeEntity.save();
+      handlePositionClosed(event, futuresPosition, trader, synthetix);
     }
     // If tradeSize and size are not zero, position got modified
     else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {

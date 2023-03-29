@@ -28,3 +28,15 @@ export function createTradeEntityForNewPosition(
   tradeEntity.type = 'PositionOpened';
   tradeEntity.save();
 }
+
+export function createTradeEntityForPositionClosed(
+  event: PositionModifiedNewEvent,
+  positionId: string,
+  pnl: BigInt
+): void {
+  let tradeEntity = createBaseTradeEntity(event, positionId);
+  tradeEntity.pnl = pnl;
+  tradeEntity.positionClosed = true;
+  tradeEntity.type = 'PositionClosed';
+  tradeEntity.save();
+}
