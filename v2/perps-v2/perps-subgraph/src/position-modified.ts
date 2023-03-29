@@ -79,7 +79,7 @@ function createFuturesPosition(
   futuresPosition.netTransfers = BigInt.fromI32(0);
   futuresPosition.initialMargin = event.params.margin.plus(event.params.fee);
   futuresPosition.margin = event.params.margin;
-  futuresPosition.pnl = event.params.fee.times(BigInt.fromI32(-1));
+  futuresPosition.pnl = BigInt.fromI32(0);
   futuresPosition.entryPrice = event.params.lastPrice;
   futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
   futuresPosition.trades = BigInt.fromI32(1);
@@ -119,7 +119,7 @@ function handlePositionOpenUpdates(
   trader.totalVolume = trader.totalVolume.plus(volume);
   trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
   trader.margin = trader.margin.plus(event.params.margin.toBigDecimal());
-  trader.pnl = trader.pnl.plus(event.params.fee.times(BigInt.fromI32(-1)));
+  trader.pnl = BigInt.fromI32(0);
   return createFuturesPosition(event, positionId);
 }
 

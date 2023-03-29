@@ -27,6 +27,7 @@ describe('Perps V2', () => {
   afterEach(() => {
     clearStore();
   });
+
   test('net funding works for short position and funding decreasing', () => {
     // This just tests one case, all the cases are tested seperately in calculation.test.ts
     const initialFunding = 1000;
@@ -87,7 +88,7 @@ describe('Perps V2', () => {
     assert.fieldEquals('FuturesPosition', positionId, 'fundingIndex', '5');
   });
 
-  test('calculate PNL', () => {
+  test('calculate PNL for open short position', () => {
     const positionOpenedEvent = createPositionModifiedEvent(
       BigInt.fromI32(1),
       Address.fromString(trader),
@@ -208,7 +209,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'pnl',
-      '-200000000001000000000'
+      '-200000000000000000000'
     );
     assert.fieldEquals(
       'FuturesPosition',
@@ -305,7 +306,7 @@ describe('Perps V2', () => {
         .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
         .toString()
     );
-    assert.fieldEquals('Trader', trader.toLowerCase(), 'pnl', '-200000000001000000000'); // This trade have only done one position open + position modified. PNL should be the same as the Position
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'pnl', '-200000000000000000000'); // This trade have only done one position open + position modified. PNL should be the same as the Position
     assert.fieldEquals(
       'Trader',
       trader.toLowerCase(),
