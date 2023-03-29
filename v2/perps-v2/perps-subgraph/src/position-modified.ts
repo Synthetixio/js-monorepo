@@ -8,7 +8,12 @@ import {
   FundingRateUpdate,
   FuturesMarginTransfer,
 } from '../generated/schema';
-import { calculateLeverage, calculatePnl, calculateVolume } from './calculations';
+import {
+  calculateAccruedFunding,
+  calculateLeverage,
+  calculatePnl,
+  calculateVolume,
+} from './calculations';
 import {
   createTradeEntityForNewPosition,
   createTradeEntityForPositionClosed,
@@ -270,6 +275,33 @@ function handleActualPositionModification(
   futuresPosition.totalVolume = futuresPosition.totalVolume.plus(volume);
 }
 
+export function updateFunding(
+  event: PositionModifiedNewEvent,
+  futuresPosition: FuturesPosition
+): void {
+  // if there is an existing position...
+  if (futuresPosition.fundingIndex.lt(event.params.fundingIndex)) {
+    let pastFundingEntity = FundingRateUpdate.load(
+      event.address.toHex() + '-' + futuresPosition.fundingIndex.toString()
+    );
+
+    let currentFundingEntity = FundingRateUpdate.load(
+      event.address.toHex() + '-' + event.params.fundingIndex.toString()
+    );
+    if (pastFundingEntity && currentFundingEntity) {
+      // Calculate funding accrued since the last time the position was modified
+      // We multiple with size, since this is funding per unit
+      let fundingAccrued = calculateAccruedFunding(
+        pastFundingEntity.funding,
+        currentFundingEntity.funding,
+        futuresPosition.size
+      );
+      futuresPosition.netFunding = futuresPosition.netFunding.plus(fundingAccrued);
+      //TODO Comment, Bug fix: This was the problem!!!!!
+      futuresPosition.fundingIndex = event.params.fundingIndex;
+    }
+  }
+}
 export function handlePositionModified(event: PositionModifiedNewEvent): void {
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
@@ -299,28 +331,7 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     }
   }
 
-  // if there is an existing position...
-  if (futuresPosition.fundingIndex.lt(event.params.fundingIndex)) {
-    // add accrued funding to position
-    let pastFundingEntity = FundingRateUpdate.load(
-      event.address.toHex() + '-' + futuresPosition.fundingIndex.toString()
-    );
-
-    let currentFundingEntity = FundingRateUpdate.load(
-      event.address.toHex() + '-' + event.params.fundingIndex.toString()
-    );
-
-    if (pastFundingEntity && currentFundingEntity) {
-      // add accrued funding
-      let fundingAccrued = currentFundingEntity.funding
-        .minus(pastFundingEntity.funding)
-        .times(futuresPosition.size)
-        .div(BigInt.fromI32(10).pow(18));
-
-      futuresPosition.netFunding = futuresPosition.netFunding.plus(fundingAccrued);
-      trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(fundingAccrued.toBigDecimal());
-    }
-  }
+  updateFunding(event, futuresPosition);
 
   const marginTransferEntity = FuturesMarginTransfer.load(
     event.address.toHex() +

@@ -27,6 +27,65 @@ describe('Perps V2', () => {
   afterEach(() => {
     clearStore();
   });
+  test('net funding works for short position and funding decreasing', () => {
+    // This just tests one case, all the cases are tested seperately in calculation.test.ts
+    const initialFunding = 1000;
+    const initialFundingRecomputedEvent = createFunctionRecomputedEvent(
+      BigInt.fromI32(initialFunding), // funding
+      BigInt.fromI32(10), // fundingRate
+      BigInt.fromI32(1), // index
+      BigInt.fromI32(15), // block timestamp
+      10 // log index
+    );
+    handleFundingRecomputed(initialFundingRecomputedEvent);
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), //margin
+      toEth(-2), // size
+      toEth(-2), // trade size
+      toEth(1000), // last price
+      BigInt.fromI32(1), // funding index
+      toGwei(1), // fee
+      10, //  timestamp
+      BigInt.fromI32(12), // skew
+      1 // log index
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionId = `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`;
+    // Assert funding is 0 when opening
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', '0');
+    assert.fieldEquals('FuturesPosition', positionId, 'fundingIndex', '1');
+
+    const fundingRecomputedEvent = createFunctionRecomputedEvent(
+      BigInt.fromI32(initialFunding - 100), // funding
+      BigInt.fromI32(10), // fundingRate
+      BigInt.fromI32(5), // index
+      BigInt.fromI32(15), // block timestamp
+      10 // log index
+    );
+    handleFundingRecomputed(fundingRecomputedEvent);
+    const modifyPositionEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(0), // margin
+      toEth(-3), //size
+      toEth(-1), // trade size
+      toEth(1200), // last price
+      BigInt.fromI32(5), // funding index
+      toGwei(1), // fee
+      20, // timestamp
+      BigInt.fromI32(12), //skew
+      2 // log index
+    );
+    handlePositionModified(modifyPositionEvent);
+    // The funding has decreased with 100 since we opened the position
+    // When funding decreases and we have a short opened, it means we getting paid.
+    // The initial funding was 10000. The new funding is 9900. So a diff of 100
+    // We have a size of 3, which means we expect to net funding to be 100 * 3 = 300
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', '300');
+    assert.fieldEquals('FuturesPosition', positionId, 'fundingIndex', '5');
+  });
 
   test('calculate PNL', () => {
     const positionOpenedEvent = createPositionModifiedEvent(
