@@ -23,6 +23,7 @@ import {
   Axie,
   Aud,
   Gbp,
+  Arb,
 } from '../Icons';
 
 type CurrencyKey =
@@ -99,6 +100,8 @@ const PerpIcon = (currencyKey: CurrencyKey, props: IconProps) => {
       return <Bitcoin {...props} />;
     case 'sETH':
       return <Ethereum {...props} />;
+    case 'ARB':
+      return <Arb {...props} />;
 
     default:
       return null;
