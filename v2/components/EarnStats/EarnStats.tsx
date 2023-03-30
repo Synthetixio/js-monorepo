@@ -3,20 +3,20 @@ import { Flex } from '@chakra-ui/react';
 import { StatBox } from '@snx-v2/StatBox';
 import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
-import { useGetUpcomingRewards } from '@snx-v2/useGetUpcomingRewards';
+import { useClaimableRewards } from '@snx-v2/useClaimableRewards';
 import { useApr } from '@snx-v2/useApr';
 
 export const EarnStatsUi: FC<{
   lifetimeRewards?: number;
   earning?: number;
-  upcomingRewards?: number;
+  claimableRewards?: number;
   isLoading: boolean;
-}> = ({ lifetimeRewards, earning, upcomingRewards, isLoading }) => {
+}> = ({ lifetimeRewards, earning, claimableRewards, isLoading }) => {
   return (
     <Flex my={1} flexDirection={['column', 'column', 'row', 'row']} justifyContent="space-between">
       <StatBox
-        label="Estimated Upcoming Rewards"
-        amount={upcomingRewards !== undefined ? formatNumberToUsd(upcomingRewards) : undefined}
+        label="Claimable Rewards"
+        amount={claimableRewards !== undefined ? formatNumberToUsd(claimableRewards) : undefined}
         mb={[3, 3, 0, 0]}
         alignItems="start"
         mr={3}
@@ -49,7 +49,7 @@ export const EarnStatsUi: FC<{
 
 export const EarnStats = () => {
   const { data: lifetimeRewardsData, isLoading: isGetLifetimeLoading } = useGetLifetimeRewards();
-  const { data: upcomingRewards, isLoading: isUpcomingLoading } = useGetUpcomingRewards();
+  const { data: claimableRewards, isLoading: isUpcomingLoading } = useClaimableRewards();
   const { data: aprs, isLoading: isAprLoading } = useApr();
 
   const isLoading = isGetLifetimeLoading || isUpcomingLoading || isAprLoading;
@@ -58,7 +58,7 @@ export const EarnStats = () => {
     <EarnStatsUi
       isLoading={isLoading}
       lifetimeRewards={lifetimeRewardsData?.combinedTotal}
-      upcomingRewards={upcomingRewards}
+      claimableRewards={claimableRewards}
       earning={aprs?.snxApr?.toNumber()}
     />
   );

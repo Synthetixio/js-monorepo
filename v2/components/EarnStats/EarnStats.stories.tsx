@@ -12,6 +12,6 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   lifetimeRewards: 1000,
-  upcomingRewards: 100,
+  claimableRewards: 100,
   earning: 0.2,
 };

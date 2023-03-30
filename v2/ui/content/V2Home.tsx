@@ -48,7 +48,7 @@ const V2Home = () => {
                   color="cyan.500"
                   textDecoration="underline"
                   ml={1}
-                  href={PROD_HOSTNAME}
+                  href={`https://${PROD_HOSTNAME}`}
                   target="_blank"
                 >
                   staking.synthetix.eth.limo

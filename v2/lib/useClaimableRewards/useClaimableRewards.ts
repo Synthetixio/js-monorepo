@@ -3,7 +3,7 @@ import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { useQuery } from '@tanstack/react-query';
 
-export const useGetUpcomingRewards = () => {
+export const useClaimableRewards = () => {
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: liquidationData } = useGetLiquidationRewards();
   const { data: rewardsData } = useRewardsAvailable();
@@ -12,7 +12,7 @@ export const useGetUpcomingRewards = () => {
 
   const enabled = Boolean(SNXRate && liquidationData && rewardsData);
   return useQuery(
-    ['useGetUpcomingRewards', SNXRate],
+    ['useClaimableRewards', SNXRate],
     () => {
       if (!SNXRate || !liquidationData || !rewardsData) throw Error('Missing required data');
       let total = 0;
