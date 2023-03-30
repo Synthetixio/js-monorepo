@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'Issuer';
-export const address = '0x2eb6860FAdC59910bF187965da8714d91F20f4dB';
+export const address = '0xca68a3D663483515a9D434E854AB59A41b3A523c';
 export const source = 'Issuer';
 export const abi = [
   'constructor(address _owner, address _resolver)',
@@ -43,6 +43,7 @@ export const abi = [
   'function liquidationAmounts(address account, bool isSelfLiquidation) view returns (uint256 totalRedeemed, uint256 debtToRemove, uint256 escrowToLiquidate, uint256 initialDebtBalance)',
   'function maxIssuableSynths(address _issuer) view returns (uint256)',
   'function minimumStakeTime() view returns (uint256)',
+  'function modifyDebtSharesForMigration(address account, uint256 amount)',
   'function nominateNewOwner(address _owner)',
   'function nominatedOwner() view returns (address)',
   'function owner() view returns (address)',
@@ -119,6 +120,7 @@ export interface IssuerInterface extends utils.Interface {
     'liquidationAmounts(address,bool)': FunctionFragment;
     'maxIssuableSynths(address)': FunctionFragment;
     'minimumStakeTime()': FunctionFragment;
+    'modifyDebtSharesForMigration(address,uint256)': FunctionFragment;
     'nominateNewOwner(address)': FunctionFragment;
     'nominatedOwner()': FunctionFragment;
     'owner()': FunctionFragment;
@@ -171,6 +173,7 @@ export interface IssuerInterface extends utils.Interface {
       | 'liquidationAmounts'
       | 'maxIssuableSynths'
       | 'minimumStakeTime'
+      | 'modifyDebtSharesForMigration'
       | 'nominateNewOwner'
       | 'nominatedOwner'
       | 'owner'
@@ -273,6 +276,10 @@ export interface IssuerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'minimumStakeTime', values?: undefined): string;
   encodeFunctionData(
+    functionFragment: 'modifyDebtSharesForMigration',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: 'nominateNewOwner',
     values: [PromiseOrValue<string>]
   ): string;
@@ -345,6 +352,7 @@ export interface IssuerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'liquidationAmounts', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxIssuableSynths', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'minimumStakeTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'modifyDebtSharesForMigration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominatedOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
@@ -609,6 +617,12 @@ export interface Issuer extends BaseContract {
 
     minimumStakeTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    modifyDebtSharesForMigration(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -830,6 +844,12 @@ export interface Issuer extends BaseContract {
 
   minimumStakeTime(overrides?: CallOverrides): Promise<BigNumber>;
 
+  modifyDebtSharesForMigration(
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   nominateNewOwner(
     _owner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1045,6 +1065,12 @@ export interface Issuer extends BaseContract {
     ): Promise<BigNumber>;
 
     minimumStakeTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    modifyDebtSharesForMigration(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
@@ -1268,6 +1294,12 @@ export interface Issuer extends BaseContract {
 
     minimumStakeTime(overrides?: CallOverrides): Promise<BigNumber>;
 
+    modifyDebtSharesForMigration(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1483,6 +1515,12 @@ export interface Issuer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     minimumStakeTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    modifyDebtSharesForMigration(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
       _owner: PromiseOrValue<string>,
