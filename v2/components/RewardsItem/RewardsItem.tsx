@@ -30,7 +30,7 @@ interface RewardsItemProps extends FlexProps {
   Icon: FC;
   title: string;
   description: string;
-  apyReturn: string | null;
+  aprReturn: string | null;
   endDate: Date | null | string;
   percentCompleted?: number;
   RewardBalance: FC;
@@ -44,8 +44,7 @@ export const RewardsItemUI = ({
   Icon,
   title,
   description,
-  apyReturn,
-
+  aprReturn,
   endDate,
   percentCompleted,
   RewardBalance,
@@ -112,10 +111,10 @@ export const RewardsItemUI = ({
                   lineHeight="5"
                   color="whiteAlpha.900"
                 >
-                  {apyReturn || '—'}
+                  {aprReturn || '—'}
                 </Text>
                 <Text fontFamily="heading" fontSize="xs" lineHeight="4" color="whiteAlpha.600">
-                  {apyReturn ? t('staking-v2.earn.apy') : '—'}
+                  {aprReturn ? t('staking-v2.earn.apr') : '—'}
                 </Text>
               </>
             </Flex>
@@ -310,7 +309,7 @@ export const Rewards = () => {
           )}
           title={t('staking-v2.earn.staking-rewards.title')}
           description={t('staking-v2.earn.staking-rewards.description')}
-          apyReturn={aprData?.snxApr !== undefined ? formatPercent(aprData.snxApr.toNumber()) : ''}
+          aprReturn={aprData?.snxApr !== undefined ? formatPercent(aprData.snxApr.toNumber()) : ''}
           endDate={feePoolData?.nextFeePeriodStartDate || null}
           percentCompleted={percentEpochCompleted(
             feePoolData?.nextFeePeriodStartDate,
@@ -394,7 +393,7 @@ export const Rewards = () => {
           )}
           title={t('staking-v2.earn.liquidation-rewards.title')}
           description={t('staking-v2.earn.liquidation-rewards.description')}
-          apyReturn={null}
+          aprReturn={null}
           endDate={null}
           isLoading={isLoading}
           RewardBalance={() => {

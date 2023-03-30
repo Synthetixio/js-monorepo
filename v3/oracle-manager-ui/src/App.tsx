@@ -25,6 +25,7 @@ import {
   hashId,
 } from '../utils/contracts';
 import { useIsConnected, useNetwork, useSigner } from '@snx-v3/useBlockchain';
+import { SearchIcon } from '@chakra-ui/icons';
 
 export const App: FC = () => {
   const [nodes] = useRecoilState(nodesState);
@@ -54,14 +55,15 @@ export const App: FC = () => {
             Search for existing Nodes here:
           </Text>
           <Flex>
-            <Input
-              placeholder="Enter Node ID"
-              bg="whiteAlpha.300"
-              minW="340px"
-              {...register('search')}
-            />
+            <Input placeholder="Enter Node ID" minW="340px" {...register('search')} />
             <Button
+              ml="2"
               variant="outline"
+              colorScheme="gray"
+              color="white"
+              p="2"
+              w="200px"
+              leftIcon={<SearchIcon />}
               onClick={() => {
                 const nodeId = getValues('search').trim();
                 if (nodeId.startsWith('0x')) navigate('node/' + nodeId);
@@ -92,7 +94,7 @@ export const App: FC = () => {
             disabled={!isWalletConnected}
             onClick={() => {
               if (signer && network?.id) {
-                const multicallContract = getMultiCallContract(signer, network.id);
+                const multicallContract = getMultiCallContract(network.id, signer);
                 const oracleManagerContract = getNodeModuleContract(signer, network.id);
                 const data = nodes
                   .slice()

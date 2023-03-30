@@ -3,1083 +3,90 @@ schema:
   file: ./schema.graphql
 
 templates:
-  - name: AggregatorProxy
+  # - name: AggregatorProxy
+  #   kind: ethereum/contract
+  #   source:
+  #     abi: AggregatorProxy
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/latest-rates.ts
+  #     entities:
+  #       - Candle
+  #       - LatestRate
+  #       - RateUpdate
+  #     abis:
+  #       - name: AggregatorProxy
+  #         file: ./abis/AggregatorProxy.json
+  #     eventHandlers:
+  #       - event: 'AggregatorConfirmed(indexed address,indexed address)'
+  #         handler: 'handleAggregatorProxyAddressUpdated'
+
+  # - name: Aggregator
+  #   kind: ethereum/contract
+  #   source:
+  #     abi: Aggregator
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/latest-rates.ts
+  #     entities:
+  #       - Candle
+  #       - LatestRate
+  #       - RateUpdate
+  #     abis:
+  #       - name: Aggregator
+  #         file: ./abis/Aggregator.json
+  #     eventHandlers:
+  #       - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+  #         handler: 'handleAggregatorAnswerUpdated'
+
+  - name: PerpetualFuturesMarket
     kind: ethereum/contract
     source:
-      abi: AggregatorProxy
+      abi: PerpsV2Proxy
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/latest-rates.ts
+      file: ./src/futures.ts
       entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
+        - PositionLiquidated
+        - FuturesPosition
+        - Trader
+        - Synthetix
+        - FuturesTrade
+        - FuturesOrder
+        - FundingRateUpdate
+        - FuturesMarginTransfer
       abis:
-        - name: AggregatorProxy
-          file: ./abis/AggregatorProxy.json
+        - name: PerpsV2Proxy
+          file: ./abis/PerpsV2Proxy.json
       eventHandlers:
-        - event: 'AggregatorConfirmed(indexed address,indexed address)'
-          handler: 'handleAggregatorProxyAddressUpdated'
-  - name: Aggregator
-    kind: ethereum/contract
-    source:
-      abi: Aggregator
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: ./src/latest-rates.ts
-      entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
-      abis:
-        - name: Aggregator
-          file: ./abis/Aggregator.json
-      eventHandlers:
-        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
-          handler: 'handleAggregatorAnswerUpdated'
+        - event: PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)
+          handler: handlePositionModified
+        - event: PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256,int256)
+          handler: handlePositionModified
+        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
+          handler: handlePositionLiquidated
+        - event: DelayedOrderSubmitted(indexed
+            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
+          handler: handleDelayedOrderSubmitted
+        - event: DelayedOrderRemoved(indexed
+            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
+          handler: handleDelayedOrderRemoved
+        - event: MarginTransferred(indexed address,int256)
+          handler: handleMarginTransferred
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
 
 dataSources:
   - kind: ethereum
-    name: PerpsV2ProxyAAVEPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyAPEPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyATOMPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyAUDPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyAVAXPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyAXSPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyBNBPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyBTCPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyDOGEPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyDYDXPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyETHPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyEURPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyFLOWPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyFTMPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyGBPPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyLINKPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyMATICPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyNEARPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyOPPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxySOLPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyUNIPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyXAGPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: PerpsV2ProxyXAUPERP
-    source:
-      abi: PerpsV2Proxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - PositionLiquidated
-        - FuturesPosition
-        - Trader
-        - Synthetix
-        - FuturesTrade
-        - FuturesOrder
-        - FundingRateUpdate
-        - FuturesMarginTransfer
-      abis:
-        - name: PerpsV2Proxy
-          file: ./abis/PerpsV2Proxy.json
-      eventHandlers:
-        - event: PositionModified(indexed uint256,indexed
-            address,uint256,int256,int256,uint256,uint256,uint256)
-          handler: handlePositionModified
-        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
-          handler: handlePositionLiquidated
-        - event: DelayedOrderSubmitted(indexed
-            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleDelayedOrderRemoved
-        - event: MarginTransferred(indexed address,int256)
-          handler: handleMarginTransferred
-        - event: NextPriceOrderSubmitted(indexed
-            address,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderSubmitted
-        - event: NextPriceOrderRemoved(indexed
-            address,uint256,int256,uint256,uint256,uint256,bytes32)
-          handler: handleNextPriceOrderRemoved
-        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
-          handler: 'handleFundingRecomputed'
-        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
-          handler: handlePerpsTracking
-      file: ./src/futures.ts
-  - kind: ethereum
-    name: FuturesMarketManager
+    name: FuturesMarketManagerOld
     source:
       abi: PerpsV2Proxy
     mapping:
@@ -1097,29 +104,45 @@ dataSources:
         - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
-
-    # Aggregators
-
   - kind: ethereum
-    name: ExchangeRates
+    name: FuturesMarketManagerNew
     source:
-      abi: ExchangeRates
+      abi: PerpsV2Proxy
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
-      language: 'wasm/assemblyscript'
+      language: wasm/assemblyscript
       entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
+        - FuturesMarket
       abis:
-        - name: ExchangeRates
-          file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
-        - name: AggregatorProxy
-          file: ./abis/AggregatorProxy.json
-        - name: Aggregator
-          file: ./abis/Aggregator.json
+        - name: PerpsV2Proxy
+          file: ./abis/PerpsV2Proxy.json
       eventHandlers:
-        - event: 'AggregatorAdded(bytes32,address)'
-          handler: 'handleAggregatorAdded'
-      file: './src/latest-rates.ts'
+        - event: MarketAdded(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketAdded
+        - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketRemoved
+      file: ./src/futures.ts
+  # - kind: ethereum
+  #   name: ExchangeRates
+  #   source:
+  #     abi: ExchangeRates
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: 'wasm/assemblyscript'
+  #     entities:
+  #       - Candle
+  #       - LatestRate
+  #       - RateUpdate
+  #     abis:
+  #       - name: ExchangeRates
+  #         file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
+  #       - name: AggregatorProxy
+  #         file: ./abis/AggregatorProxy.json
+  #       - name: Aggregator
+  #         file: ./abis/Aggregator.json
+  #     eventHandlers:
+  #       - event: 'AggregatorAdded(bytes32,address)'
+  #         handler: 'handleAggregatorAdded'
+  #     file: './src/latest-rates.ts'

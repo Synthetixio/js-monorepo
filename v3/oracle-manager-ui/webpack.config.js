@@ -27,8 +27,7 @@ const babelRule = {
     // Need to list all the folders in v3 and outside (if used)
     /v3\/oracle-manager-ui/,
     /v3\/theme/,
-    /packages\/contracts-interface/,
-    /v3\/contracts\/deployments/,
+    /v3\/contracts/,
     /v3\/lib/,
     /v3\/components/,
   ],

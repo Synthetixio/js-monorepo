@@ -20,7 +20,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "standalone-install": "yarn workspaces focus '@synthetixio/v2-ui'",
-    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v2-ui' run build"
+    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v2-ui' run build",
+    "deploy": "ipfs-deploy ./out"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.20.13",
@@ -29,6 +30,7 @@
     "@emotion/styled": "^11.10.5",
     "@gnosis.pm/safe-apps-provider": "^0.14.0",
     "@gnosis.pm/safe-apps-sdk": "^7.8.0",
+    "@noisekit/ipfs-deploy": "^1.0.3",
     "@reach/dialog": "^0.15.3",
     "@snx-v1/Card": "workspace:*",
     "@snx-v1/constantsUi": "workspace:*",
@@ -192,6 +194,7 @@
       "tmp"
     ],
     "ignoreMatches": [
+      "@noisekit/ipfs-deploy",
       "assets",
       "components",
       "containers",

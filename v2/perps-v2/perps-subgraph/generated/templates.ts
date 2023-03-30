@@ -2,22 +2,12 @@
 
 import { Address, DataSourceTemplate, DataSourceContext } from '@graphprotocol/graph-ts';
 
-export class AggregatorProxy extends DataSourceTemplate {
+export class PerpetualFuturesMarket extends DataSourceTemplate {
   static create(address: Address): void {
-    DataSourceTemplate.create('AggregatorProxy', [address.toHex()]);
+    DataSourceTemplate.create('PerpetualFuturesMarket', [address.toHex()]);
   }
 
   static createWithContext(address: Address, context: DataSourceContext): void {
-    DataSourceTemplate.createWithContext('AggregatorProxy', [address.toHex()], context);
-  }
-}
-
-export class Aggregator extends DataSourceTemplate {
-  static create(address: Address): void {
-    DataSourceTemplate.create('Aggregator', [address.toHex()]);
-  }
-
-  static createWithContext(address: Address, context: DataSourceContext): void {
-    DataSourceTemplate.createWithContext('Aggregator', [address.toHex()], context);
+    DataSourceTemplate.createWithContext('PerpetualFuturesMarket', [address.toHex()], context);
   }
 }

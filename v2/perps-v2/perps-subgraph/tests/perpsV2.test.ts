@@ -39,6 +39,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -52,6 +53,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(2),
       toGwei(1),
       20,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(modifyPositionEvent);
@@ -68,7 +70,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
@@ -147,16 +149,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'pnl',
-      toGwei(1)
-        .times(BigInt.fromI32(-1))
-        .plus(
-          toEth(1200)
-            .minus(toEth(1000))
-            .times(toEth(-1).abs())
-            .times(BigInt.fromI32(-1))
-            .div(BigInt.fromI32(10).pow(18))
-        )
-        .toString()
+      '-200000000001000000000'
     );
     assert.fieldEquals(
       'FuturesPosition',
@@ -198,7 +191,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'avgEntryPrice',
-      toEth(1000).toString()
+      '1066666666666666666666'
     );
     assert.assertNull(
       store
@@ -253,21 +246,7 @@ describe('Perps V2', () => {
         .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
         .toString()
     );
-    assert.fieldEquals(
-      'Trader',
-      trader.toLowerCase(),
-      'pnl',
-      toGwei(1)
-        .times(BigInt.fromI32(-1))
-        .plus(
-          toEth(1200)
-            .minus(toEth(1000))
-            .times(toEth(-1).abs())
-            .times(BigInt.fromI32(-1))
-            .div(BigInt.fromI32(10).pow(18))
-        )
-        .toString()
-    );
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'pnl', '-400000000000000000000');
     assert.fieldEquals(
       'Trader',
       trader.toLowerCase(),
@@ -288,7 +267,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
@@ -300,7 +279,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
@@ -337,7 +316,7 @@ describe('Perps V2', () => {
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
       'pnl',
-      toGwei(-1).toString()
+      '-1000000000'
     );
     assert.fieldEquals(
       'FuturesTrade',
@@ -360,19 +339,19 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'positionId',
+      'futuresPosition',
       `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
     );
     assert.fieldEquals(
@@ -442,10 +421,10 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(2),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
-
     const positionModifiedByLiquidationEvent = createPositionModifiedEvent(
       BigInt.fromI32(1),
       Address.fromString(trader),
@@ -456,7 +435,8 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(0),
       10,
-      1
+      BigInt.fromI32(12),
+      2
     );
     handlePositionModified(positionModifiedByLiquidationEvent);
     const positionLiquidatedEvent = createPositionLiquidatedEvent(
@@ -466,17 +446,19 @@ describe('Perps V2', () => {
       toEth(10),
       toEth(800),
       toEth(1),
-      20
+      20,
+      3
     );
     handlePositionLiquidated(positionLiquidatedEvent);
     log.warning('STARTING ASSERTION', []);
     // SYNTHETIX
     log.info('Synthetix', []);
     assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', toEth(1).toString());
+    // FUTURES TRADE
     log.info('Futures Trade', []);
     assert.fieldEquals(
       'FuturesTrade',
-      `${positionLiquidatedEvent.transaction.hash.toHex()}-${1}`,
+      `${positionLiquidatedEvent.transaction.hash.toHex()}-${2}`,
       'type',
       'Liquidated'
     );
@@ -493,6 +475,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -506,10 +489,12 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(closePositionEvent);
     log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
@@ -535,6 +520,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -548,6 +534,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(positionModifiedEvent);
@@ -577,6 +564,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(1),
       toGwei(1),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
@@ -597,6 +585,7 @@ describe('Perps V2', () => {
       BigInt.fromI32(2),
       toGwei(0),
       10,
+      BigInt.fromI32(12),
       2
     );
     handlePositionModified(positionUpdatedByTransferredMargin);
@@ -655,6 +644,70 @@ describe('Perps V2', () => {
       `${fundingRecomputedEvent.address.toHex()}-${5}`,
       'market',
       fundingRecomputedEvent.address.toHex()
+    );
+  });
+
+  test('open a short and flip sides', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      BigInt.fromI32(200),
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(2),
+      toEth(4),
+      toEth(1200),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      BigInt.fromI32(200),
+      2
+    );
+    handlePositionModified(positionModifiedEvent);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'type',
+      'PositionModified'
+    );
+
+    const existingSize = toEth(-2).abs();
+    const existingPrice = existingSize.times(toEth(1000));
+    const newSize = toEth(4).abs();
+    const newPrice = newSize.times(toEth(1200));
+
+    log.info('Futures Position', []);
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
+      'entryPrice',
+      existingPrice.plus(newPrice).div(toEth(2)).toString()
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
+      'avgEntryPrice',
+      existingPrice.plus(newPrice).div(toEth(2)).toString()
     );
   });
 });

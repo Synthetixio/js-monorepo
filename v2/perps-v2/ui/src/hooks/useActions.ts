@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import Wei, { wei } from '@synthetixio/wei';
+import { useSearchParams } from 'react-router-dom';
 import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERRED_QUERY } from '../queries/actions';
 import {
   FuturesMarginTransferQuery,
@@ -117,6 +118,9 @@ const mergeData = (
 };
 
 export const useActions = (account?: string) => {
+  const [searchParams] = useSearchParams();
+  const marketAddress = searchParams.get('marketAddress') || undefined;
+
   const {
     loading: marginLoading,
     data: marginData,
@@ -129,9 +133,11 @@ export const useActions = (account?: string) => {
       orderDirection: OrderDirection.Desc,
       where: {
         account,
+        market: marketAddress,
       },
     },
   });
+
   const {
     loading: futuresTradesLoading,
     data: futuresTradesData,
@@ -144,9 +150,11 @@ export const useActions = (account?: string) => {
       orderDirection: OrderDirection.Desc,
       where: {
         account,
+        market: marketAddress,
       },
     },
   });
+
   const sortedData = mergeData(
     futuresTradesData?.futuresTrades,
     marginData?.futuresMarginTransfers

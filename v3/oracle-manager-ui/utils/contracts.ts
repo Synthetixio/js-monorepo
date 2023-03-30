@@ -1,34 +1,39 @@
 import { Contract, providers, utils } from 'ethers';
-import ProxyAbiOPGoerli from '@synthetixio/v3-contracts/deployments/goerli/oracle_manager/Proxy.json';
-import ProxyAbiGoerli from '@synthetixio/v3-contracts/deployments/optimism-goerli/oracle_manager/Proxy.json';
+import ProxyAbiOPGorli from '@synthetixio/v3-contracts/deployments/optimism-goerli/oracle_manager/Proxy.json';
+import ProxyAbiOP from '@synthetixio/v3-contracts/deployments/optimism-mainnet/oracle_manager/Proxy.json';
+import ProxyAbiMainnet from '@synthetixio/v3-contracts/deployments/mainnet/oracle_manager/Proxy.json';
+import ProxyAbiGoerli from '@synthetixio/v3-contracts/deployments/goerli/oracle_manager/Proxy.json';
+import {
+  address as multicallAddressMainnet,
+  abi as multicallAbiMainnet,
+} from '@synthetixio/v3-contracts/src/mainnet/Multicall3';
+import {
+  address as multicallAddressGoerli,
+  abi as multicallAbiGoerli,
+} from '@synthetixio/v3-contracts/src/goerli/Multicall3';
+import {
+  address as multicallAddressOPGoerli,
+  abi as multicallAbiOPGoerli,
+} from '@synthetixio/v3-contracts/src/optimism-goerli/Multicall3';
+import {
+  address as multicallAddressOP,
+  abi as multicallAbiOP,
+} from '@synthetixio/v3-contracts/src/optimism-mainnet/Multicall3';
 import { Node } from './types';
 import { ORACLE_NODE_TYPES } from './constants';
 
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
-    // TODO @MF when deployed, add it here
-    case 5:
-      return ProxyAbiGoerli.address;
-    case 420:
-      return ProxyAbiOPGoerli.address;
-    default:
-      return ProxyAbiGoerli.address;
-  }
-}
-
-function resolveNetworkIdToMultiCallAddress(networkId: number) {
-  switch (networkId) {
     case 1:
-      return '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441';
+      return ProxyAbiMainnet.address;
     case 5:
-      return '0x77dCa2C955b15e9dE4dbBCf1246B4B85b651e50e';
+      return ProxyAbiGoerli.address;
     case 10:
-      return '0x2DC0E2aa608532Da689e89e237dF582B783E552C';
+      return ProxyAbiOP.address;
     case 420:
-      // TODO @MF when deployed, add it here
-      return ProxyAbiOPGoerli.address;
+      return ProxyAbiOPGorli.address;
     default:
-      return '0x77dCa2C955b15e9dE4dbBCf1246B4B85b651e50e';
+      return ProxyAbiMainnet.address;
   }
 }
 
@@ -132,34 +137,19 @@ export const getNodeModuleContract = (
 };
 
 export const getMultiCallContract = (
-  signerOrProvider: providers.JsonRpcSigner,
-  networkId: number
+  network: number,
+  signerOrProvider: providers.JsonRpcSigner
 ) => {
-  return new Contract(
-    resolveNetworkIdToMultiCallAddress(networkId),
-    [
-      {
-        constant: false,
-        inputs: [
-          {
-            components: [
-              { name: 'target', type: 'address' },
-              { name: 'callData', type: 'bytes' },
-            ],
-            name: 'calls',
-            type: 'tuple[]',
-          },
-        ],
-        name: 'aggregate',
-        outputs: [
-          { name: 'blockNumber', type: 'uint256' },
-          { name: 'returnData', type: 'bytes[]' },
-        ],
-        payable: false,
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-    ],
-    signerOrProvider
-  );
+  switch (network) {
+    case 1:
+      return new Contract(multicallAddressMainnet, multicallAbiMainnet, signerOrProvider);
+    case 5:
+      return new Contract(multicallAddressGoerli, multicallAbiGoerli, signerOrProvider);
+    case 10:
+      return new Contract(multicallAddressOP, multicallAbiOP, signerOrProvider);
+    case 420:
+      return new Contract(multicallAddressOPGoerli, multicallAbiOPGoerli, signerOrProvider);
+    default:
+      return new Contract(multicallAddressMainnet, multicallAbiMainnet, signerOrProvider);
+  }
 };

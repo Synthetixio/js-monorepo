@@ -3,11 +3,11 @@ import { ethereum, Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   DelayedOrderRemoved,
   DelayedOrderSubmitted,
-  PositionModified,
+  PositionModified1 as positionModifiedEventNew,
   PositionLiquidated,
   MarginTransferred,
-  FundingRecomputed1,
-} from '../generated/PerpsV2ProxyAAVEPERP/PerpsV2Proxy';
+  FundingRecomputed,
+} from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
   const newBlock = new Map<string, i64>();
@@ -26,9 +26,10 @@ export function createPositionModifiedEvent(
   fundingIndex: BigInt,
   fee: BigInt,
   timestamp: i64,
+  skew: BigInt = BigInt.fromI32(200),
   logIndex: i64 = 0
-): PositionModified {
-  let positionModifiedEvent = changetype<PositionModified>(newMockEvent());
+): positionModifiedEventNew {
+  let positionModifiedEvent = changetype<positionModifiedEventNew>(newMockEvent());
   positionModifiedEvent.parameters = new Array();
   const block = createBlock(timestamp, 5);
   positionModifiedEvent.parameters.push(
@@ -54,6 +55,9 @@ export function createPositionModifiedEvent(
   );
   positionModifiedEvent.parameters.push(
     new ethereum.EventParam('fee', ethereum.Value.fromUnsignedBigInt(fee))
+  );
+  positionModifiedEvent.parameters.push(
+    new ethereum.EventParam('skew', ethereum.Value.fromUnsignedBigInt(skew))
   );
 
   positionModifiedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
@@ -217,8 +221,8 @@ export function createFunctionRecomputedEvent(
   timestamp: BigInt,
   blockTimestamp: i64,
   logIndex: i64 = 0
-): FundingRecomputed1 {
-  let fundingRecomputedEvent = changetype<FundingRecomputed1>(newMockEvent());
+): FundingRecomputed {
+  let fundingRecomputedEvent = changetype<FundingRecomputed>(newMockEvent());
   fundingRecomputedEvent.parameters = new Array();
   const block = createBlock(blockTimestamp, 5);
   fundingRecomputedEvent.parameters.push(
