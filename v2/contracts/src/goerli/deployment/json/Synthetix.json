@@ -643,6 +643,18 @@
   },
   {
     "constant": false,
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "migrateAccountBalances",
+    "outputs": [
+      { "internalType": "uint256", "name": "totalEscrowRevoked", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalLiquidBalance", "type": "uint256" }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
     "inputs": [],
     "name": "migrateEscrowBalanceToRewardEscrowV2",
     "outputs": [],
