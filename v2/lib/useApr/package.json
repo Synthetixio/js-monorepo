@@ -2,11 +2,10 @@
   "name": "@snx-v2/useApr",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.5-0",
+  "version": "0.0.5",
   "dependencies": {
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useGlobalStakingApr": "workspace:*",
     "@snx-v2/useStakingApr": "workspace:*"
-  },
-  "stableVersion": "0.0.4"
+  }
 }

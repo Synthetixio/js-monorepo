@@ -2,7 +2,7 @@
   "name": "@snx-v2/WalletBalances",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.4-0",
+  "version": "0.0.4",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/ContractContext": "workspace:*",
@@ -21,6 +21,5 @@
     "@synthetixio/wei": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5"
-  },
-  "stableVersion": "0.0.3"
+  }
 }

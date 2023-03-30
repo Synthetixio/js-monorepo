@@ -2,7 +2,7 @@
   "name": "@snx-v2/cypress",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.5-0",
+  "version": "0.0.5",
   "scripts": {
     "start": "yarn cy",
     "cy": "cypress open --component --browser chrome",
@@ -41,6 +41,5 @@
       "translations",
       "utils"
     ]
-  },
-  "stableVersion": "0.0.4"
+  }
 }

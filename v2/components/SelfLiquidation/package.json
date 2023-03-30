@@ -2,7 +2,7 @@
   "name": "@snx-v2/SelfLiquidation",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.5-0",
+  "version": "0.0.5",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/CRatioProgressBar": "workspace:*",
@@ -26,6 +26,5 @@
     "react": "^18.2.0",
     "react-i18next": "^12.1.5",
     "react-router-dom": "^6.8.1"
-  },
-  "stableVersion": "0.0.4"
+  }
 }

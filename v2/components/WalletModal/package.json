@@ -2,7 +2,7 @@
   "name": "@snx-v2/WalletModal",
   "private": true,
   "main": "index.tsx",
-  "version": "0.0.6-0",
+  "version": "0.0.6",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/ContractContext": "workspace:*",
@@ -21,6 +21,5 @@
     "react": "^18.2.0",
     "react-i18next": "^12.1.5",
     "react-router-dom": "^6.8.1"
-  },
-  "stableVersion": "0.0.5"
+  }
 }
