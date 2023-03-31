@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react';
-import { Flex, Button, Link, useColorMode } from '@chakra-ui/react';
+import { Flex, useColorMode } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { SNXIcon } from './Icons/';
 import { PerpsStats } from './PerpsStats';
-import { RightUpIcon } from './Icons/RightUpIcon';
+import { AddressInput } from './AddressInput';
 
 export const Header: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -13,6 +13,7 @@ export const Header: FC = () => {
       toggleColorMode();
     }
   }, [colorMode, toggleColorMode]);
+
   return (
     <Flex
       as="header"
@@ -24,6 +25,8 @@ export const Header: FC = () => {
       justifyContent="space-between"
       borderBottomWidth="1px"
       borderBottomColor="gray.900"
+      borderTopWidth="1px"
+      borderTopColor="transparent"
     >
       <Flex alignItems="center">
         <RouterLink to="/">
@@ -31,19 +34,7 @@ export const Header: FC = () => {
           <PerpsStats mt="3px" ml={3} />
         </RouterLink>
       </Flex>
-      <Button
-        as={Link}
-        variant="outline"
-        href="https://synthetix.io/perps"
-        target="_blank"
-        rel="noopener"
-        _hover={{ textDecoration: 'none' }}
-        rightIcon={<RightUpIcon />}
-        fontFamily="inter"
-        fontWeight="700"
-      >
-        Trade
-      </Button>
+      <AddressInput />
     </Flex>
   );
 };
