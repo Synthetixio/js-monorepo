@@ -1,13 +1,17 @@
 import { ethers } from 'ethers';
-import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
+// import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
 import { getCollateralConfig } from './getCollateralConfig';
+
+// TODO: make it more dynamic, for now just want to fix tests
+const owner = '0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9';
 
 export async function getSnx({ address, amount }) {
   const config = await getCollateralConfig('SNX');
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
 
-  const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider);
-  const owner = await coreProxy.owner();
+  //  const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider);
+  //  const owner = await coreProxy.owner();
+  //  console.log('getSnx', { owner });
   console.log('getSnx', { owner });
 
   const erc20 = new ethers.Contract(

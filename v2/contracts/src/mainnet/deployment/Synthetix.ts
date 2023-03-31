@@ -63,6 +63,7 @@ export const abi = [
   'function liquidateSelf() returns (bool)',
   'function maxIssuableSynths(address account) view returns (uint256 maxIssuable)',
   'function messageSender() view returns (address)',
+  'function migrateAccountBalances(address account) returns (uint256 totalEscrowRevoked, uint256 totalLiquidBalance)',
   'function migrateEscrowBalanceToRewardEscrowV2()',
   'function migrateEscrowContractBalance()',
   'function mint() returns (bool)',
@@ -166,6 +167,7 @@ export interface SynthetixInterface extends utils.Interface {
     'liquidateSelf()': FunctionFragment;
     'maxIssuableSynths(address)': FunctionFragment;
     'messageSender()': FunctionFragment;
+    'migrateAccountBalances(address)': FunctionFragment;
     'migrateEscrowBalanceToRewardEscrowV2()': FunctionFragment;
     'migrateEscrowContractBalance()': FunctionFragment;
     'mint()': FunctionFragment;
@@ -245,6 +247,7 @@ export interface SynthetixInterface extends utils.Interface {
       | 'liquidateSelf'
       | 'maxIssuableSynths'
       | 'messageSender'
+      | 'migrateAccountBalances'
       | 'migrateEscrowBalanceToRewardEscrowV2'
       | 'migrateEscrowContractBalance'
       | 'mint'
@@ -464,6 +467,10 @@ export interface SynthetixInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'messageSender', values?: undefined): string;
   encodeFunctionData(
+    functionFragment: 'migrateAccountBalances',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: 'migrateEscrowBalanceToRewardEscrowV2',
     values?: undefined
   ): string;
@@ -578,6 +585,7 @@ export interface SynthetixInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'liquidateSelf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxIssuableSynths', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'messageSender', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'migrateAccountBalances', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'migrateEscrowBalanceToRewardEscrowV2',
     data: BytesLike
@@ -1042,6 +1050,11 @@ export interface Synthetix extends BaseContract {
 
     messageSender(overrides?: CallOverrides): Promise<[string]>;
 
+    migrateAccountBalances(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     migrateEscrowBalanceToRewardEscrowV2(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1394,6 +1407,11 @@ export interface Synthetix extends BaseContract {
 
   messageSender(overrides?: CallOverrides): Promise<string>;
 
+  migrateAccountBalances(
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   migrateEscrowBalanceToRewardEscrowV2(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1732,6 +1750,13 @@ export interface Synthetix extends BaseContract {
     ): Promise<BigNumber>;
 
     messageSender(overrides?: CallOverrides): Promise<string>;
+
+    migrateAccountBalances(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & { totalEscrowRevoked: BigNumber; totalLiquidBalance: BigNumber }
+    >;
 
     migrateEscrowBalanceToRewardEscrowV2(overrides?: CallOverrides): Promise<void>;
 
@@ -2190,6 +2215,11 @@ export interface Synthetix extends BaseContract {
 
     messageSender(overrides?: CallOverrides): Promise<BigNumber>;
 
+    migrateAccountBalances(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     migrateEscrowBalanceToRewardEscrowV2(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -2544,6 +2574,11 @@ export interface Synthetix extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     messageSender(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    migrateAccountBalances(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     migrateEscrowBalanceToRewardEscrowV2(
       overrides?: Overrides & { from?: PromiseOrValue<string> }

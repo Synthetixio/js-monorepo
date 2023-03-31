@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider, ComponentStyleConfig, extendTheme } from '@chakra-ui/react';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { RecoilRoot } from 'recoil';
 import { App } from './App';
@@ -8,8 +8,20 @@ import { Header } from '../components/Header';
 import { RegisteredNode } from './RegisteredNode';
 import { BlockchainProvider } from '@snx-v3/useBlockchain';
 
+const Alert: ComponentStyleConfig = {
+  variants: {
+    solid: (props) => {
+      return {
+        icon: { color: 'black' },
+        container: { bg: `${props.colorScheme}.500`, color: 'black' },
+      };
+    },
+  },
+};
+
 const customTheme = extendTheme({
   ...theme,
+  components: { Alert },
   styles: {
     global: {
       body: {

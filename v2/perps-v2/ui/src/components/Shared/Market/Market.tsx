@@ -18,30 +18,33 @@ export const Market = ({ asset, leverage, direction, isPosition = true }: Market
 
   const leverageString = leverage ? `${formatNumber(leverage, { minimumFractionDigits: 2 })}x` : '';
   const isLong = direction === 'LONG';
+
   return (
-    <Fade in>
-      <Flex as={Td} border="none" alignItems="center">
+    <Td border="none">
+      <Fade in>
         <Flex alignItems="center">
-          <CurrencyIcon width="30px" height="30px" currencyKey={marketName} />
-          <Box ml={3}>
-            <Text
-              fontFamily="heading"
-              fontSize="14px"
-              lineHeight="20px"
-              fontWeight={500}
-              color="gray.50"
-            >{`${assetDisplayName.toUpperCase()}-PERP`}</Text>
-            {Boolean(isPosition && direction) && (
-              <Text fontSize="12px" lineHeight="16px" fontFamily="heading" color="gray.500">
-                {leverageString}
-                <Text ml={1} as="span" color={isLong ? 'green.500' : 'red.500'}>
-                  {direction}
+          <Flex alignItems="center">
+            <CurrencyIcon width="30px" height="30px" currencyKey={marketName} />
+            <Box ml={3}>
+              <Text
+                fontFamily="heading"
+                fontSize="14px"
+                lineHeight="20px"
+                fontWeight={500}
+                color="gray.50"
+              >{`${assetDisplayName.toUpperCase()}-PERP`}</Text>
+              {Boolean(isPosition && direction) && (
+                <Text fontSize="12px" lineHeight="16px" fontFamily="heading" color="gray.500">
+                  {leverageString}
+                  <Text ml={1} as="span" color={isLong ? 'green.500' : 'red.500'}>
+                    {direction}
+                  </Text>
                 </Text>
-              </Text>
-            )}
-          </Box>
+              )}
+            </Box>
+          </Flex>
         </Flex>
-      </Flex>
-    </Fade>
+      </Fade>
+    </Td>
   );
 };

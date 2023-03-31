@@ -195,7 +195,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
           e.stopPropagation();
           navigator.clipboard.writeText(nodeId);
           toast({
-            title: 'Copy ID to clipboard',
+            description: 'Copy ID to clipboard',
             status: 'success',
             duration: 9000,
             isClosable: true,
