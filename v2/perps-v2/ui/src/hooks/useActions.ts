@@ -128,7 +128,7 @@ export const useActions = (account?: string) => {
   } = useQuery(MARGIN_TRANSFERRED_QUERY, {
     pollInterval: 10000,
     variables: {
-      first: account ? 1000 : 100,
+      first: 50,
       orderBy: FuturesMarginTransfer_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {
@@ -145,7 +145,7 @@ export const useActions = (account?: string) => {
   } = useQuery(FUTURES_TRADE_QUERY, {
     pollInterval: 10000,
     variables: {
-      first: account ? 1000 : 100,
+      first: 50,
       orderBy: FuturesTrade_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {

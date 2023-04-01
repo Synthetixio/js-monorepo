@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
-import { Flex, useColorMode } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Flex, useColorMode, Text } from '@chakra-ui/react';
+import { NavLink as RouterLink } from 'react-router-dom';
 import { SNXIcon } from './Icons/';
 import { PerpsStats } from './PerpsStats';
 import { AddressInput } from './AddressInput';
@@ -33,6 +33,38 @@ export const Header: FC = () => {
           <SNXIcon />
           <PerpsStats mt="3px" ml={3} />
         </RouterLink>
+        <Flex alignItems="center" mt="3px" ml={16}>
+          <RouterLink
+            to="/"
+            className={({ isActive, isPending }) =>
+              isPending ? 'pending' : isActive ? 'active' : ''
+            }
+          >
+            {({ isActive }) => (
+              <Text
+                fontSize="14px"
+                fontWeight={700}
+                fontFamily="heading"
+                color={isActive ? 'white' : 'gray.400'}
+              >
+                Dashboard
+              </Text>
+            )}
+          </RouterLink>
+          <RouterLink to="/actions">
+            {({ isActive }) => (
+              <Text
+                ml={10}
+                fontSize="14px"
+                fontWeight={700}
+                fontFamily="heading"
+                color={isActive ? 'white' : 'gray.400'}
+              >
+                Actions
+              </Text>
+            )}
+          </RouterLink>
+        </Flex>
       </Flex>
       <AddressInput />
     </Flex>

@@ -1,5 +1,4 @@
 import React from 'react';
-import App from './App';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -9,6 +8,8 @@ import { createRoot } from 'react-dom/client';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { PERPS_V2_DASHBOARD_GRAPH_URL } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
+import Dashboard from './pages/Dashboard';
+import Actions from './pages/Actions';
 
 const client = new ApolloClient({
   uri: PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -23,7 +24,16 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <App />
+        <Dashboard />
+      </>
+    ),
+  },
+  {
+    path: '/actions',
+    element: (
+      <>
+        <Header />
+        <Actions />
       </>
     ),
   },
