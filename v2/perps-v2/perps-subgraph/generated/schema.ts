@@ -268,13 +268,13 @@ export class Trader extends Entity {
     this.set('totalVolume', Value.fromBigDecimal(value));
   }
 
-  get pnl(): BigInt {
-    let value = this.get('pnl');
+  get realizedPnl(): BigInt {
+    let value = this.get('realizedPnl');
     return value!.toBigInt();
   }
 
-  set pnl(value: BigInt) {
-    this.set('pnl', Value.fromBigInt(value));
+  set realizedPnl(value: BigInt) {
+    this.set('realizedPnl', Value.fromBigInt(value));
   }
 
   get trades(): Array<string> {
@@ -416,13 +416,22 @@ export class FuturesTrade extends Entity {
     this.set('positionClosed', Value.fromBoolean(value));
   }
 
-  get pnl(): BigInt {
-    let value = this.get('pnl');
+  get realizedPnl(): BigInt {
+    let value = this.get('realizedPnl');
     return value!.toBigInt();
   }
 
-  set pnl(value: BigInt) {
-    this.set('pnl', Value.fromBigInt(value));
+  set realizedPnl(value: BigInt) {
+    this.set('realizedPnl', Value.fromBigInt(value));
+  }
+
+  get netFunding(): BigInt {
+    let value = this.get('netFunding');
+    return value!.toBigInt();
+  }
+
+  set netFunding(value: BigInt) {
+    this.set('netFunding', Value.fromBigInt(value));
   }
 
   get feesPaidToSynthetix(): BigDecimal {
@@ -695,13 +704,22 @@ export class FuturesPosition extends Entity {
     this.set('margin', Value.fromBigInt(value));
   }
 
-  get pnl(): BigInt {
-    let value = this.get('pnl');
+  get realizedPnl(): BigInt {
+    let value = this.get('realizedPnl');
     return value!.toBigInt();
   }
 
-  set pnl(value: BigInt) {
-    this.set('pnl', Value.fromBigInt(value));
+  set realizedPnl(value: BigInt) {
+    this.set('realizedPnl', Value.fromBigInt(value));
+  }
+
+  get unrealizedPnl(): BigInt {
+    let value = this.get('unrealizedPnl');
+    return value!.toBigInt();
+  }
+
+  set unrealizedPnl(value: BigInt) {
+    this.set('unrealizedPnl', Value.fromBigInt(value));
   }
 
   get fundingIndex(): BigInt {

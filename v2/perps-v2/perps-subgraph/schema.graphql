@@ -26,7 +26,7 @@ type Trader @entity {
   totalMarginLiquidated: BigDecimal!
   feesPaidToSynthetix: BigDecimal!
   totalVolume: BigDecimal!
-  pnl: BigInt!
+  realizedPnl: BigInt!
   trades: [FuturesTrade!]!
 }
 
@@ -42,7 +42,8 @@ type FuturesTrade @entity {
   price: BigDecimal!
   positionSize: BigDecimal!
   positionClosed: Boolean!
-  pnl: BigInt!
+  realizedPnl: BigInt!
+  netFunding: BigInt!
   feesPaidToSynthetix: BigDecimal!
   type: FuturesTradeType!
   txHash: String!
@@ -73,7 +74,8 @@ type FuturesPosition @entity {
   leverage: BigInt!
   netFunding: BigInt!
   margin: BigInt!
-  pnl: BigInt!
+  realizedPnl: BigInt!
+  unrealizedPnl: BigInt!
   fundingIndex: BigInt!
   totalVolume: BigDecimal!
   entryPrice: BigInt!
