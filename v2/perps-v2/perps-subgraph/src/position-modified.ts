@@ -1,4 +1,4 @@
-import { BigDecimal, BigInt, dataSource, log } from '@graphprotocol/graph-ts';
+import { BigInt, dataSource } from '@graphprotocol/graph-ts';
 import { PositionModified1 as PositionModifiedNewEvent } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 import {
   Trader,
@@ -351,12 +351,13 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
   let futuresPosition = FuturesPosition.load(positionId);
   let synthetix = getOrCreateSynthetix();
   let trader = getOrCreateTrader(event);
+  let accruedFunding = BigInt.fromI32(0);
   updateTrades(event, synthetix, trader);
   if (!futuresPosition) {
     futuresPosition = handlePositionOpenUpdates(event, synthetix, trader, positionId);
     // else position is not new
   } else {
-    const accruedFunding = updateFunding(event, futuresPosition);
+    accruedFunding = updateFunding(event, futuresPosition);
 
     // Position closed & not liquidated
     if (event.params.size.isZero() && !event.params.tradeSize.isZero()) {
@@ -365,8 +366,6 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     // If tradeSize and size are not zero, position got modified
     else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {
       handleActualPositionModification(event, futuresPosition, synthetix, trader, accruedFunding);
-    } else {
-      log.debug('Transferred Margin Event skipped {}', [positionId]);
     }
   }
 
@@ -411,6 +410,8 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     futuresPosition.unrealizedPnl = BigInt.fromI32(0);
     trader.realizedPnl = trader.realizedPnl.plus(realizedPnl);
     tradeEntity.save();
+  } else if (marginTransferEntity) {
+    futuresPosition.netTransfers = futuresPosition.netTransfers.plus(marginTransferEntity.size);
   }
   futuresPosition.save();
   trader.save();
