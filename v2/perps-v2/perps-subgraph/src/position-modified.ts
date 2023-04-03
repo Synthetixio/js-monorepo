@@ -381,19 +381,11 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
   // this check is here to get around the fact that the sometimes a withdrawalAll margin transfer event
   // will trigger a trade entity liquidation to be created. guarding against this event for now.
   if (marginTransferEntity == null && event.params.size.isZero() && event.params.margin.isZero()) {
-    /**
-     * TODO check that this actually happens.. If it does check the pnls
-     */
-
     // recalculate pnl to ensure a 100% position loss
     // this calculation is required since the liquidation price could result in pnl slightly above/below 100%
-    const newPositionPnlWithFeesPaid = futuresPosition.initialMargin
+    const realizedPnl = futuresPosition.initialMargin
       .plus(futuresPosition.netTransfers)
       .times(BigInt.fromI32(-1));
-    const newPositionPnl = newPositionPnlWithFeesPaid
-      .plus(futuresPosition.feesPaidToSynthetix)
-      .plus(futuresPosition.netFunding);
-    const newTradePnl = newPositionPnl.minus(futuresPosition.realizedPnl);
 
     // temporarily set the pnl to the difference in the position pnl
     // we will add liquidation fees during the PositionLiquidated handler
@@ -409,14 +401,15 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     tradeEntity.futuresPosition = positionId;
     tradeEntity.positionSize = BigInt.fromI32(0);
     tradeEntity.positionClosed = true;
-    tradeEntity.realizedPnl = newTradePnl;
+    tradeEntity.realizedPnl = realizedPnl;
     tradeEntity.feesPaidToSynthetix = event.params.fee;
     tradeEntity.type = 'Liquidated';
     tradeEntity.txHash = event.transaction.hash.toHex();
+    tradeEntity.netFunding = accruedFunding;
 
-    futuresPosition.realizedPnl = newPositionPnl;
+    futuresPosition.realizedPnl = realizedPnl;
     futuresPosition.unrealizedPnl = BigInt.fromI32(0);
-    // trader.pnl = tradeEntity.pnl.plus(newTradePnl);
+    trader.realizedPnl = trader.realizedPnl.plus(realizedPnl);
     tradeEntity.save();
   }
   futuresPosition.save();
