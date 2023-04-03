@@ -69,31 +69,31 @@ export class PositionLiquidated extends Entity {
     this.set('liquidator', Value.fromBytes(value));
   }
 
-  get size(): BigDecimal {
+  get size(): BigInt {
     let value = this.get('size');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set size(value: BigDecimal) {
-    this.set('size', Value.fromBigDecimal(value));
+  set size(value: BigInt) {
+    this.set('size', Value.fromBigInt(value));
   }
 
-  get price(): BigDecimal {
+  get price(): BigInt {
     let value = this.get('price');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set price(value: BigDecimal) {
-    this.set('price', Value.fromBigDecimal(value));
+  set price(value: BigInt) {
+    this.set('price', Value.fromBigInt(value));
   }
 
-  get fee(): BigDecimal {
+  get fee(): BigInt {
     let value = this.get('fee');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set fee(value: BigDecimal) {
-    this.set('fee', Value.fromBigDecimal(value));
+  set fee(value: BigInt) {
+    this.set('fee', Value.fromBigInt(value));
   }
 
   get futuresPosition(): string {
@@ -223,13 +223,13 @@ export class Trader extends Entity {
     this.set('timestamp', Value.fromBigInt(value));
   }
 
-  get margin(): BigDecimal {
+  get margin(): BigInt {
     let value = this.get('margin');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set margin(value: BigDecimal) {
-    this.set('margin', Value.fromBigDecimal(value));
+  set margin(value: BigInt) {
+    this.set('margin', Value.fromBigInt(value));
   }
 
   get totalLiquidations(): BigInt {
@@ -241,31 +241,31 @@ export class Trader extends Entity {
     this.set('totalLiquidations', Value.fromBigInt(value));
   }
 
-  get totalMarginLiquidated(): BigDecimal {
+  get totalMarginLiquidated(): BigInt {
     let value = this.get('totalMarginLiquidated');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set totalMarginLiquidated(value: BigDecimal) {
-    this.set('totalMarginLiquidated', Value.fromBigDecimal(value));
+  set totalMarginLiquidated(value: BigInt) {
+    this.set('totalMarginLiquidated', Value.fromBigInt(value));
   }
 
-  get feesPaidToSynthetix(): BigDecimal {
+  get feesPaidToSynthetix(): BigInt {
     let value = this.get('feesPaidToSynthetix');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set feesPaidToSynthetix(value: BigDecimal) {
-    this.set('feesPaidToSynthetix', Value.fromBigDecimal(value));
+  set feesPaidToSynthetix(value: BigInt) {
+    this.set('feesPaidToSynthetix', Value.fromBigInt(value));
   }
 
-  get totalVolume(): BigDecimal {
+  get totalVolume(): BigInt {
     let value = this.get('totalVolume');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set totalVolume(value: BigDecimal) {
-    this.set('totalVolume', Value.fromBigDecimal(value));
+  set totalVolume(value: BigInt) {
+    this.set('totalVolume', Value.fromBigInt(value));
   }
 
   get realizedPnl(): BigInt {
@@ -371,13 +371,13 @@ export class FuturesTrade extends Entity {
     }
   }
 
-  get size(): BigDecimal {
+  get size(): BigInt {
     let value = this.get('size');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set size(value: BigDecimal) {
-    this.set('size', Value.fromBigDecimal(value));
+  set size(value: BigInt) {
+    this.set('size', Value.fromBigInt(value));
   }
 
   get market(): string {
@@ -389,22 +389,22 @@ export class FuturesTrade extends Entity {
     this.set('market', Value.fromString(value));
   }
 
-  get price(): BigDecimal {
+  get price(): BigInt {
     let value = this.get('price');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set price(value: BigDecimal) {
-    this.set('price', Value.fromBigDecimal(value));
+  set price(value: BigInt) {
+    this.set('price', Value.fromBigInt(value));
   }
 
-  get positionSize(): BigDecimal {
+  get positionSize(): BigInt {
     let value = this.get('positionSize');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set positionSize(value: BigDecimal) {
-    this.set('positionSize', Value.fromBigDecimal(value));
+  set positionSize(value: BigInt) {
+    this.set('positionSize', Value.fromBigInt(value));
   }
 
   get positionClosed(): boolean {
@@ -434,13 +434,13 @@ export class FuturesTrade extends Entity {
     this.set('netFunding', Value.fromBigInt(value));
   }
 
-  get feesPaidToSynthetix(): BigDecimal {
+  get feesPaidToSynthetix(): BigInt {
     let value = this.get('feesPaidToSynthetix');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set feesPaidToSynthetix(value: BigDecimal) {
-    this.set('feesPaidToSynthetix', Value.fromBigDecimal(value));
+  set feesPaidToSynthetix(value: BigInt) {
+    this.set('feesPaidToSynthetix', Value.fromBigInt(value));
   }
 
   get type(): string {
@@ -493,22 +493,22 @@ export class Synthetix extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get feesByLiquidations(): BigDecimal {
+  get feesByLiquidations(): BigInt {
     let value = this.get('feesByLiquidations');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set feesByLiquidations(value: BigDecimal) {
-    this.set('feesByLiquidations', Value.fromBigDecimal(value));
+  set feesByLiquidations(value: BigInt) {
+    this.set('feesByLiquidations', Value.fromBigInt(value));
   }
 
-  get feesByPositionModifications(): BigDecimal {
+  get feesByPositionModifications(): BigInt {
     let value = this.get('feesByPositionModifications');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set feesByPositionModifications(value: BigDecimal) {
-    this.set('feesByPositionModifications', Value.fromBigDecimal(value));
+  set feesByPositionModifications(value: BigInt) {
+    this.set('feesByPositionModifications', Value.fromBigInt(value));
   }
 
   get totalLiquidations(): BigInt {
@@ -520,13 +520,13 @@ export class Synthetix extends Entity {
     this.set('totalLiquidations', Value.fromBigInt(value));
   }
 
-  get totalVolume(): BigDecimal {
+  get totalVolume(): BigInt {
     let value = this.get('totalVolume');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set totalVolume(value: BigDecimal) {
-    this.set('totalVolume', Value.fromBigDecimal(value));
+  set totalVolume(value: BigInt) {
+    this.set('totalVolume', Value.fromBigInt(value));
   }
 
   get totalTraders(): BigInt {
@@ -731,13 +731,13 @@ export class FuturesPosition extends Entity {
     this.set('fundingIndex', Value.fromBigInt(value));
   }
 
-  get totalVolume(): BigDecimal {
+  get totalVolume(): BigInt {
     let value = this.get('totalVolume');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set totalVolume(value: BigDecimal) {
-    this.set('totalVolume', Value.fromBigDecimal(value));
+  set totalVolume(value: BigInt) {
+    this.set('totalVolume', Value.fromBigInt(value));
   }
 
   get entryPrice(): BigInt {
@@ -758,13 +758,13 @@ export class FuturesPosition extends Entity {
     this.set('netTransfers', Value.fromBigInt(value));
   }
 
-  get lastPrice(): BigDecimal {
+  get lastPrice(): BigInt {
     let value = this.get('lastPrice');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set lastPrice(value: BigDecimal) {
-    this.set('lastPrice', Value.fromBigDecimal(value));
+  set lastPrice(value: BigInt) {
+    this.set('lastPrice', Value.fromBigInt(value));
   }
 
   get avgEntryPrice(): BigInt {
@@ -851,13 +851,13 @@ export class FuturesOrder extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get size(): BigDecimal {
+  get size(): BigInt {
     let value = this.get('size');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set size(value: BigDecimal) {
-    this.set('size', Value.fromBigDecimal(value));
+  set size(value: BigInt) {
+    this.set('size', Value.fromBigInt(value));
   }
 
   get market(): string {
@@ -896,13 +896,13 @@ export class FuturesOrder extends Entity {
     this.set('targetRoundId', Value.fromBigInt(value));
   }
 
-  get targetPrice(): BigDecimal {
+  get targetPrice(): BigInt {
     let value = this.get('targetPrice');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set targetPrice(value: BigDecimal) {
-    this.set('targetPrice', Value.fromBigDecimal(value));
+  set targetPrice(value: BigInt) {
+    this.set('targetPrice', Value.fromBigInt(value));
   }
 
   get marginDelta(): BigInt {
@@ -941,13 +941,13 @@ export class FuturesOrder extends Entity {
     this.set('status', Value.fromString(value));
   }
 
-  get fee(): BigDecimal {
+  get fee(): BigInt {
     let value = this.get('fee');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set fee(value: BigDecimal) {
-    this.set('fee', Value.fromBigDecimal(value));
+  set fee(value: BigInt) {
+    this.set('fee', Value.fromBigInt(value));
   }
 
   get keeper(): Bytes {
@@ -1121,13 +1121,13 @@ export class FuturesMarginTransfer extends Entity {
     this.set('market', Value.fromString(value));
   }
 
-  get size(): BigDecimal {
+  get size(): BigInt {
     let value = this.get('size');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set size(value: BigDecimal) {
-    this.set('size', Value.fromBigDecimal(value));
+  set size(value: BigInt) {
+    this.set('size', Value.fromBigInt(value));
   }
 
   get txHash(): string {
@@ -1248,22 +1248,22 @@ export class Frontend extends Entity {
     this.set('markets', Value.fromStringArray(value));
   }
 
-  get amount(): BigDecimal {
+  get amount(): BigInt {
     let value = this.get('amount');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set amount(value: BigDecimal) {
-    this.set('amount', Value.fromBigDecimal(value));
+  set amount(value: BigInt) {
+    this.set('amount', Value.fromBigInt(value));
   }
 
-  get fees(): BigDecimal {
+  get fees(): BigInt {
     let value = this.get('fees');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set fees(value: BigDecimal) {
-    this.set('fees', Value.fromBigDecimal(value));
+  set fees(value: BigInt) {
+    this.set('fees', Value.fromBigInt(value));
   }
 }
 

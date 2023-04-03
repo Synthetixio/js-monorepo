@@ -31,12 +31,12 @@ function getOrCreateTrader(event: PositionModifiedNewEvent): Trader {
     trader = new Trader(event.params.account.toHex());
     trader.timestamp = event.block.timestamp;
     trader.totalLiquidations = BigInt.fromI32(0);
-    trader.totalMarginLiquidated = BigDecimal.fromString('0');
-    trader.feesPaidToSynthetix = BigDecimal.fromString('0');
-    trader.totalVolume = BigDecimal.fromString('0');
+    trader.totalMarginLiquidated = BigInt.fromI32(0);
+    trader.feesPaidToSynthetix = BigInt.fromI32(0);
+    trader.totalVolume = BigInt.fromI32(0);
     trader.realizedPnl = BigInt.fromI32(0);
     trader.trades = [];
-    trader.margin = BigDecimal.fromString('0');
+    trader.margin = BigInt.fromI32(0);
   }
   return trader;
 }
@@ -44,11 +44,11 @@ function getOrCreateSynthetix(): Synthetix {
   let synthetix = Synthetix.load('synthetix');
   if (!synthetix) {
     synthetix = new Synthetix('synthetix');
-    synthetix.feesByPositionModifications = BigDecimal.fromString('0');
-    synthetix.feesByLiquidations = BigDecimal.fromString('0');
+    synthetix.feesByPositionModifications = BigInt.fromI32(0);
+    synthetix.feesByLiquidations = BigInt.fromI32(0);
     synthetix.totalLiquidations = BigInt.fromI32(0);
     synthetix.totalTraders = BigInt.fromI32(0);
-    synthetix.totalVolume = BigDecimal.fromString('0');
+    synthetix.totalVolume = BigInt.fromI32(0);
   }
   return synthetix;
 }
@@ -83,7 +83,7 @@ function createFuturesPosition(
   futuresPosition.realizedPnl = event.params.fee.times(BigInt.fromI32(-1));
   futuresPosition.unrealizedPnl = BigInt.fromI32(0);
   futuresPosition.entryPrice = event.params.lastPrice;
-  futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
+  futuresPosition.lastPrice = event.params.lastPrice;
   futuresPosition.trades = BigInt.fromI32(1);
   futuresPosition.long = event.params.tradeSize.gt(BigInt.fromI32(0));
   futuresPosition.market = event.address.toHex();
@@ -112,15 +112,13 @@ function handlePositionOpenUpdates(
   positionId: string
 ): FuturesPosition {
   createTradeEntityForNewPosition(event, positionId);
-  synthetix.feesByPositionModifications = synthetix.feesByLiquidations.plus(
-    event.params.fee.toBigDecimal()
-  );
+  synthetix.feesByPositionModifications = synthetix.feesByLiquidations.plus(event.params.fee);
   const volume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
 
   synthetix.totalVolume = synthetix.totalVolume.plus(volume);
   trader.totalVolume = trader.totalVolume.plus(volume);
-  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
-  trader.margin = trader.margin.plus(event.params.margin.toBigDecimal());
+  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee);
+  trader.margin = trader.margin.plus(event.params.margin);
   trader.realizedPnl = event.params.fee.times(BigInt.fromI32(-1));
   return createFuturesPosition(event, positionId);
 }
@@ -167,7 +165,7 @@ function handlePositionClosed(
   futuresPosition.margin = event.params.margin;
   futuresPosition.size = event.params.size;
   futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
-  futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
+  futuresPosition.lastPrice = event.params.lastPrice;
   futuresPosition.long = !event.params.tradeSize.gt(BigInt.fromI32(0));
 
   if (
@@ -189,9 +187,9 @@ function handlePositionClosed(
    * Add fees
    */
   futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(event.params.fee);
-  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
+  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee);
   synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
-    event.params.fee.toBigDecimal()
+    event.params.fee
   );
 }
 function handleActualPositionModification(
@@ -299,7 +297,7 @@ function handleActualPositionModification(
   futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
   // TODO, should margin be accumulative?
   futuresPosition.margin = futuresPosition.margin.plus(event.params.margin);
-  futuresPosition.lastPrice = event.params.lastPrice.toBigDecimal();
+  futuresPosition.lastPrice = event.params.lastPrice;
   futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
 
   futuresPosition.leverage = calculateLeverage(
@@ -308,9 +306,9 @@ function handleActualPositionModification(
     futuresPosition.margin // Bug fixed, prev we did: `futuresPosition.margin.plus(event.params.margin)` but the margin on the position has already been updated
   );
 
-  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
+  trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee);
   synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
-    event.params.fee.toBigDecimal()
+    event.params.fee
   );
 
   const volume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
@@ -406,13 +404,13 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     tradeEntity.timestamp = event.block.timestamp;
     tradeEntity.trader = event.params.account.toHex();
     tradeEntity.market = event.address.toHex();
-    tradeEntity.size = BigInt.fromI32(0).toBigDecimal();
-    tradeEntity.price = event.params.lastPrice.toBigDecimal();
+    tradeEntity.size = BigInt.fromI32(0);
+    tradeEntity.price = event.params.lastPrice;
     tradeEntity.futuresPosition = positionId;
-    tradeEntity.positionSize = BigInt.fromI32(0).toBigDecimal();
+    tradeEntity.positionSize = BigInt.fromI32(0);
     tradeEntity.positionClosed = true;
     tradeEntity.realizedPnl = newTradePnl;
-    tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
+    tradeEntity.feesPaidToSynthetix = event.params.fee;
     tradeEntity.type = 'Liquidated';
     tradeEntity.txHash = event.transaction.hash.toHex();
 

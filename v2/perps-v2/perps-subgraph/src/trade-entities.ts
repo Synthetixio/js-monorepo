@@ -10,11 +10,11 @@ function createBaseTradeEntity(event: PositionModifiedNewEvent, positionId: stri
   tradeEntity.trader = event.params.account.toHex();
   tradeEntity.futuresPosition = positionId;
   tradeEntity.margin = event.params.margin;
-  tradeEntity.size = event.params.tradeSize.toBigDecimal();
-  tradeEntity.positionSize = event.params.size.toBigDecimal();
+  tradeEntity.size = event.params.tradeSize;
+  tradeEntity.positionSize = event.params.size;
   tradeEntity.market = event.address.toHex();
-  tradeEntity.price = event.params.lastPrice.toBigDecimal();
-  tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
+  tradeEntity.price = event.params.lastPrice;
+  tradeEntity.feesPaidToSynthetix = event.params.fee;
   tradeEntity.txHash = event.transaction.hash.toHex();
 
   return tradeEntity;

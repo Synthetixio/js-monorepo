@@ -3,9 +3,9 @@ type PositionLiquidated @entity {
   trader: Trader!
   market: FuturesMarket!
   liquidator: Bytes!
-  size: BigDecimal!
-  price: BigDecimal!
-  fee: BigDecimal!
+  size: BigInt!
+  price: BigInt!
+  fee: BigInt!
   futuresPosition: FuturesPosition!
   timestamp: BigInt!
   txHash: String!
@@ -21,11 +21,11 @@ type PositionFlagged @entity {
 type Trader @entity {
   id: ID!
   timestamp: BigInt!
-  margin: BigDecimal!
+  margin: BigInt!
   totalLiquidations: BigInt!
-  totalMarginLiquidated: BigDecimal!
-  feesPaidToSynthetix: BigDecimal!
-  totalVolume: BigDecimal!
+  totalMarginLiquidated: BigInt!
+  feesPaidToSynthetix: BigInt!
+  totalVolume: BigInt!
   realizedPnl: BigInt!
   trades: [FuturesTrade!]!
 }
@@ -37,24 +37,24 @@ type FuturesTrade @entity {
   margin: BigInt!
   futuresPosition: FuturesPosition!
   futuresOrder: FuturesOrder
-  size: BigDecimal!
+  size: BigInt!
   market: FuturesMarket!
-  price: BigDecimal!
-  positionSize: BigDecimal!
+  price: BigInt!
+  positionSize: BigInt!
   positionClosed: Boolean!
   realizedPnl: BigInt!
   netFunding: BigInt!
-  feesPaidToSynthetix: BigDecimal!
+  feesPaidToSynthetix: BigInt!
   type: FuturesTradeType!
   txHash: String!
 }
 
 type Synthetix @entity {
   id: ID!
-  feesByLiquidations: BigDecimal!
-  feesByPositionModifications: BigDecimal!
+  feesByLiquidations: BigInt!
+  feesByPositionModifications: BigInt!
   totalLiquidations: BigInt!
-  totalVolume: BigDecimal!
+  totalVolume: BigInt!
   totalTraders: BigInt!
 }
 
@@ -77,10 +77,10 @@ type FuturesPosition @entity {
   realizedPnl: BigInt!
   unrealizedPnl: BigInt!
   fundingIndex: BigInt!
-  totalVolume: BigDecimal!
+  totalVolume: BigInt!
   entryPrice: BigInt!
   netTransfers: BigInt!
-  lastPrice: BigDecimal!
+  lastPrice: BigInt!
   avgEntryPrice: BigInt!
   txHash: String!
   exitPrice: BigInt
@@ -89,17 +89,17 @@ type FuturesPosition @entity {
 
 type FuturesOrder @entity {
   id: ID!
-  size: BigDecimal!
+  size: BigInt!
   market: FuturesMarket!
   trader: Trader!
   orderId: BigInt!
   targetRoundId: BigInt!
-  targetPrice: BigDecimal!
+  targetPrice: BigInt!
   marginDelta: BigInt!
   timestamp: BigInt!
   orderType: FuturesOrderType!
   status: FuturesOrderStatus!
-  fee: BigDecimal!
+  fee: BigInt!
   keeper: Bytes!
   futuresPosition: FuturesPosition
   txHash: String!
@@ -119,7 +119,7 @@ type FuturesMarginTransfer @entity {
   timestamp: BigInt!
   trader: Trader!
   market: FuturesMarket!
-  size: BigDecimal!
+  size: BigInt!
   txHash: String!
 }
 
@@ -134,8 +134,8 @@ type FuturesMarket @entity {
 type Frontend @entity {
   id: ID!
   markets: [FuturesMarket!]!
-  amount: BigDecimal!
-  fees: BigDecimal!
+  amount: BigInt!
+  fees: BigInt!
 }
 
 type Candle @entity {
