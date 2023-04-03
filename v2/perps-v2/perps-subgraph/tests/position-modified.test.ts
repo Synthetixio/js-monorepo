@@ -316,5 +316,89 @@ describe('modify position handler', () => {
         expectedTradePnl
       );
     });
+    test('long open -> long decrease:  with price going down and funding going up', () => {
+      const initialFunding = 1000;
+      const initialFundingRecomputedEvent = createFunctionRecomputedEvent(
+        toEth(initialFunding), // funding
+        toEth(10), // fundingRate
+        BigInt.fromI32(1), // index
+        BigInt.fromI32(15), // block timestamp
+        10 // log index
+      );
+      handleFundingRecomputed(initialFundingRecomputedEvent);
+      const openedEvent = createPositionModifiedEvent(
+        BigInt.fromI32(1), // id
+        Address.fromString(trader), // account
+        toEth(5), // margin
+        toEth(2), //size
+        toEth(2), // trade size
+        toEth(1000), // last price
+        BigInt.fromI32(1), // funding index
+        toGwei(1000000000), // fee  (equal to toETH(1))
+        10, // timestamp
+        BigInt.fromI32(12), // skew
+        1 // log index
+      );
+      handlePositionModified(openedEvent);
+      const positionId = `${openedEvent.address.toHex() + '-' + '0x1'}`;
+      let expectedRealizedPnl = toEth(-1).toString();
+      let expectedUnrealizedPnl = toEth(0).toString();
+      let expectedEntry = toEth(1000).toString();
+      let expectedTradePnl = toEth(-1).toString();
+
+      assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', expectedRealizedPnl);
+      assert.fieldEquals('FuturesPosition', positionId, 'unrealizedPnl', expectedUnrealizedPnl);
+      assert.fieldEquals('FuturesPosition', positionId, 'avgEntryPrice', expectedEntry);
+      assert.fieldEquals(
+        'FuturesTrade',
+        `${openedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+        'realizedPnl',
+        expectedTradePnl
+      );
+
+      const FundingRecomputedEvent1 = createFunctionRecomputedEvent(
+        toEth(initialFunding + 10), // funding
+        toEth(10), // fundingRate
+        BigInt.fromI32(2), // index
+        BigInt.fromI32(16), // block timestamp
+        10 // log index
+      );
+      handleFundingRecomputed(FundingRecomputedEvent1);
+      const modifyEvent = createPositionModifiedEvent(
+        BigInt.fromI32(1), // id
+        Address.fromString(trader), // account
+        toEth(5), // margin
+        toEth(2), //size
+        toEth(-1), // trade size
+        toEth(900), // last price
+        BigInt.fromI32(2), // funding index
+        toGwei(1000000000), // fee  (equal to toETH(1))
+        20, // timestamp
+        BigInt.fromI32(12), //skew
+        1 // log index
+      );
+      handlePositionModified(modifyEvent);
+      // (avgEntryPrice - lastPrice) * (tradeSize * -1)
+      // priceActionLoss = (900 - 1000) * 1 = =100
+      // accruedRealizedPnl = priceActionLoss - fees + netFunding
+      // accruedRealizedPnl = -100 - 1 + (10 * 2) = -81
+      // previousRealizedPnl = -1
+      // newExpectedRealizedPnl =previousRealizedPnl + accruedRealizedPnl
+      // newExpectedRealizedPnl = -1 + -81 = -82
+
+      expectedRealizedPnl = toEth(-82).toString();
+      expectedUnrealizedPnl = toEth(-200).toString(); // (900- 1000) * 2
+      expectedEntry = toEth(1000).toString();
+      expectedTradePnl = toEth(-81).toString();
+      assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', expectedRealizedPnl);
+      assert.fieldEquals('FuturesPosition', positionId, 'unrealizedPnl', expectedUnrealizedPnl);
+      assert.fieldEquals('FuturesPosition', positionId, 'avgEntryPrice', expectedEntry);
+      assert.fieldEquals(
+        'FuturesTrade',
+        `${openedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+        'realizedPnl',
+        expectedTradePnl
+      );
+    });
   });
 });
