@@ -108,11 +108,6 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     futuresPosition.isOpen = false;
     futuresPosition.closeTimestamp = event.block.timestamp;
     futuresPosition.feesPaidToSynthetix = event.params.fee;
-    futuresPosition.unrealizedPnl = BigInt.fromI32(0);
-    // TODO validate that this is correct
-    futuresPosition.realizedPnl = futuresPosition.realizedPnl
-      .minus(futuresPosition.feesPaidToSynthetix)
-      .plus(futuresPosition.netFunding);
     futuresPosition.exitPrice = event.params.price;
     futuresPosition.save();
   }
