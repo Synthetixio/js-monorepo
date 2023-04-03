@@ -375,6 +375,10 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
   // this check is here to get around the fact that the sometimes a withdrawalAll margin transfer event
   // will trigger a trade entity liquidation to be created. guarding against this event for now.
   if (marginTransferEntity == null && event.params.size.isZero() && event.params.margin.isZero()) {
+    /**
+     * TODO check that this actually happens.. If it does check the pnls
+     */
+
     // recalculate pnl to ensure a 100% position loss
     // this calculation is required since the liquidation price could result in pnl slightly above/below 100%
     const realizedPnl = futuresPosition.initialMargin
