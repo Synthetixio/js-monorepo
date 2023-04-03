@@ -9,6 +9,15 @@ import {
   FundingRecomputed,
 } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 
+export function toEth(n: u64): BigInt {
+  if (n < 0) return BigInt.fromU64(n).times(BigInt.fromI32(10).pow(18));
+  return BigInt.fromI64(changetype<i64>(n)).times(BigInt.fromI64(10).pow(18));
+}
+export function toGwei(n: u64): BigInt {
+  if (n < 0) return BigInt.fromU64(n).times(BigInt.fromI32(10).pow(9));
+  return BigInt.fromI64(changetype<i64>(n)).times(BigInt.fromI64(10).pow(9));
+}
+
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
   const newBlock = new Map<string, i64>();
   newBlock.set('timestamp', timestamp);

@@ -9,13 +9,14 @@ function createBaseTradeEntity(event: PositionModifiedNewEvent, positionId: stri
   tradeEntity.timestamp = event.block.timestamp;
   tradeEntity.trader = event.params.account.toHex();
   tradeEntity.futuresPosition = positionId;
-  tradeEntity.margin = event.params.margin.plus(event.params.fee);
+  tradeEntity.margin = event.params.margin;
   tradeEntity.size = event.params.tradeSize.toBigDecimal();
   tradeEntity.positionSize = event.params.size.toBigDecimal();
   tradeEntity.market = event.address.toHex();
   tradeEntity.price = event.params.lastPrice.toBigDecimal();
   tradeEntity.feesPaidToSynthetix = event.params.fee.toBigDecimal();
   tradeEntity.txHash = event.transaction.hash.toHex();
+
   return tradeEntity;
 }
 export function createTradeEntityForNewPosition(
@@ -23,7 +24,8 @@ export function createTradeEntityForNewPosition(
   positionId: string
 ): void {
   let tradeEntity = createBaseTradeEntity(event, positionId);
-  tradeEntity.pnl = event.params.fee.times(BigInt.fromI32(-1));
+  tradeEntity.realizedPnl = event.params.fee.times(BigInt.fromI32(-1));
+  tradeEntity.netFunding = BigInt.fromI32(0);
   tradeEntity.positionClosed = false;
   tradeEntity.type = 'PositionOpened';
   tradeEntity.save();
@@ -32,10 +34,12 @@ export function createTradeEntityForNewPosition(
 export function createTradeEntityForPositionClosed(
   event: PositionModifiedNewEvent,
   positionId: string,
-  pnl: BigInt
+  pnl: BigInt,
+  accruedFunding: BigInt
 ): void {
   let tradeEntity = createBaseTradeEntity(event, positionId);
-  tradeEntity.pnl = pnl;
+  tradeEntity.realizedPnl = pnl;
+  tradeEntity.netFunding = accruedFunding;
   tradeEntity.positionClosed = true;
   tradeEntity.type = 'PositionClosed';
   tradeEntity.save();
@@ -44,10 +48,12 @@ export function createTradeEntityForPositionClosed(
 export function createTradeEntityForPositionModification(
   event: PositionModifiedNewEvent,
   positionId: string,
-  pnl: BigInt
+  pnl: BigInt,
+  accruedFunding: BigInt
 ): void {
   let tradeEntity = createBaseTradeEntity(event, positionId);
-  tradeEntity.pnl = pnl;
+  tradeEntity.realizedPnl = pnl;
+  tradeEntity.netFunding = accruedFunding;
   tradeEntity.positionClosed = false;
   tradeEntity.type = 'PositionModified';
   tradeEntity.save();
