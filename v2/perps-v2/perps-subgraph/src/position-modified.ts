@@ -149,9 +149,8 @@ function handlePositionClosed(
    */
   futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(realizedPnl);
   futuresPosition.unrealizedPnl = BigInt.fromI32(0);
+  trader.realizedPnl = trader.realizedPnl.plus(realizedPnl);
   createTradeEntityForPositionClosed(event, futuresPosition.id, tradePnl, accruedFunding);
-  // TODO figure out what to do here. this is incorrect
-  // trader.pnl = trader.pnl.plus(positionPnl);
 
   futuresPosition.leverage = calculateLeverage(
     event.params.tradeSize, // Note that we use tradeSize rather than size here. This will give us what the leverage was before closing the position
@@ -211,7 +210,7 @@ function handleActualPositionModification(
   // if position changes sides, reset the entry price
   if (positionFlippedSides) {
     // calculate pnl
-    const realizedPnl = calculatePnl(
+    const accruedRealizedPnl = calculatePnl(
       event.params.lastPrice,
       futuresPosition.avgEntryPrice,
       futuresPosition.size
@@ -226,21 +225,17 @@ function handleActualPositionModification(
     createTradeEntityForPositionModification(
       event,
       futuresPosition.id,
-      realizedPnl,
+      accruedRealizedPnl,
       accruedFunding
     );
 
-    futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(realizedPnl);
+    futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(accruedRealizedPnl);
+    trader.realizedPnl = trader.realizedPnl.plus(accruedRealizedPnl);
     futuresPosition.unrealizedPnl = BigInt.fromI32(0);
-    // TODO trader pnl
   } else {
     const positionIsIncreasing = event.params.size.abs().gt(futuresPosition.size.abs());
     // check if the position side increases (long or short)
     if (positionIsIncreasing) {
-      // TODO trader PNL.. I think we need to have two fields to track this properly,
-      // PNL from closed trades and pnl on currently open.
-      // trader.pnl = trader.pnl.plus(positionPnl);
-
       // calculate the new average price
       const existingSize = futuresPosition.size.abs();
       const existingPrice = existingSize.times(futuresPosition.entryPrice);
@@ -253,15 +248,15 @@ function handleActualPositionModification(
         futuresPosition.avgEntryPrice,
         event.params.size
       );
-      const realizedPnl = accruedFunding.minus(event.params.fee);
+      const accruedRealizedPnl = accruedFunding.minus(event.params.fee);
 
       futuresPosition.unrealizedPnl = unrealizedPnl;
-      futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(realizedPnl);
-
+      futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(accruedRealizedPnl);
+      trader.realizedPnl = trader.realizedPnl.plus(accruedRealizedPnl);
       createTradeEntityForPositionModification(
         event,
         futuresPosition.id,
-        realizedPnl,
+        accruedRealizedPnl,
         accruedFunding
       );
     } else {

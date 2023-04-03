@@ -306,7 +306,7 @@ describe('Perps V2', () => {
         .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
         .toString()
     );
-    assert.fieldEquals('Trader', trader.toLowerCase(), 'realizedPnl', '-1000000000');
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'realizedPnl', '-2000000000');
     assert.fieldEquals(
       'Trader',
       trader.toLowerCase(),
