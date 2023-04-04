@@ -21,7 +21,7 @@ const Alert: ComponentStyleConfig = {
 
 const customTheme = extendTheme({
   ...theme,
-  components: { Alert },
+  components: { ...theme.components, Alert },
   styles: {
     global: {
       body: {
