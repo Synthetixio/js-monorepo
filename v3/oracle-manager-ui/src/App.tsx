@@ -91,7 +91,7 @@ export const App: FC = () => {
           <Button
             variant="outline"
             colorScheme="gray"
-            disabled={!isWalletConnected}
+            isDisabled={!isWalletConnected}
             onClick={() => {
               if (signer && network?.id) {
                 const multicallContract = getMultiCallContract(network.id, signer);
