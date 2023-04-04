@@ -39,7 +39,7 @@ export const usePositions = (walletAddress?: string) => {
     variables: {
       where: {
         isOpen: true,
-        account: walletAddress,
+        trader: walletAddress,
         market: marketAddress,
       },
       orderBy: FuturesPosition_OrderBy.Size,
@@ -55,7 +55,8 @@ export const usePositions = (walletAddress?: string) => {
     avgEntryPrice: wei(item.avgEntryPrice, 18, true),
     leverage: wei(item.leverage, 18, true),
     fees: wei(item.feesPaidToSynthetix, 18, true),
-    pnlAtLastModification: wei(item.pnl, 18, true),
+    unrealizedAtLastModification: wei(item.unrealizedPnl, 18, true),
+    realizedAtLastModification: wei(item.realizedPnl, 18, true),
     netFundingAtLastModification: wei(item.netFunding, 18, true),
     fillPriceAtLastInteraction: wei(item.lastPrice, 18, true),
   }));
