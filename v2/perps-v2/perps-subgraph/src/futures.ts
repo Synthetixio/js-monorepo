@@ -4,7 +4,8 @@ import {
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
   DelayedOrderSubmitted as DelayedOrderSubmittedEvent,
   FundingRecomputed as FundingRecomputedEvent,
-  PositionLiquidated as PositionLiquidatedEvent,
+  PositionLiquidated as PositionLiquidatedEventLegacy,
+  PositionLiquidated1 as PositionLiquidatedEvent,
   MarginTransferred as MarginTransferredEvent,
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
@@ -58,7 +59,9 @@ export function handlePositionFlagged(event: PositionFlaggedEvent): void {
   positionFlaggedEntity.save();
 }
 
-export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
+export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLegacy): void {
+  // TODO @MF calculate the fee correctly
+
   const futuresPositionId = event.address.toHex() + '-' + event.params.id.toHex();
   const positionLiquidatedEntity = new PositionLiquidated(event.params.id.toString());
   positionLiquidatedEntity.trader = event.params.account.toHex();
@@ -115,6 +118,72 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   let trader = Trader.load(event.params.account.toHex());
   if (trader) {
     trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee);
+    trader.totalLiquidations = trader.totalLiquidations.plus(BigInt.fromI32(1));
+    trader.totalMarginLiquidated = trader.totalMarginLiquidated.plus(event.params.size);
+    trader.margin = trader.margin.minus(event.params.size);
+    trader.save();
+  }
+}
+
+export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
+  const futuresPositionId = event.address.toHex() + '-' + event.params.id.toHex();
+  const positionLiquidatedEntity = new PositionLiquidated(event.params.id.toString());
+  positionLiquidatedEntity.trader = event.params.account.toHex();
+  positionLiquidatedEntity.market = event.address.toHex();
+  positionLiquidatedEntity.liquidator = event.params.liquidator;
+  positionLiquidatedEntity.size = event.params.size;
+  positionLiquidatedEntity.price = event.params.price;
+  positionLiquidatedEntity.fee = event.params.stakersFee.plus(
+    event.params.flaggerFee.plus(event.params.liquidatorFee)
+  );
+  positionLiquidatedEntity.futuresPosition = futuresPositionId;
+  positionLiquidatedEntity.timestamp = event.block.timestamp;
+  positionLiquidatedEntity.txHash = event.transaction.hash.toHex();
+  positionLiquidatedEntity.save();
+
+  const tradeEntity = FuturesTrade.load(
+    event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
+  );
+  if (tradeEntity) {
+    tradeEntity.size = event.params.size.times(BigInt.fromI32(-1));
+    tradeEntity.positionClosed = true;
+    tradeEntity.timestamp = event.block.timestamp;
+    tradeEntity.trader = event.params.account.toHex();
+    tradeEntity.futuresPosition = futuresPositionId;
+    tradeEntity.price = event.params.price;
+    tradeEntity.txHash = event.transaction.hash.toHex();
+    tradeEntity.positionSize = BigInt.fromI32(0);
+    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(event.params.stakersFee);
+
+    // TODO make sure this is correct. I think we need to subtract something else.
+    tradeEntity.realizedPnl = tradeEntity.realizedPnl
+      .minus(event.params.fee)
+      .minus(tradeEntity.netFunding); // you loose funding when liquidated
+    tradeEntity.netFunding = BigInt.fromI32(0);
+    tradeEntity.type = 'Liquidated';
+    tradeEntity.save();
+  }
+
+  const synthetix = Synthetix.load('synthetix');
+  if (synthetix) {
+    synthetix.feesByLiquidations = synthetix.feesByLiquidations.plus(event.params.stakersFee);
+    synthetix.totalLiquidations = synthetix.totalLiquidations.plus(BigInt.fromI32(1));
+    synthetix.save();
+  }
+
+  const futuresPosition = FuturesPosition.load(futuresPositionId);
+  if (futuresPosition) {
+    futuresPosition.isLiquidated = true;
+    futuresPosition.isOpen = false;
+    futuresPosition.closeTimestamp = event.block.timestamp;
+    futuresPosition.feesPaidToSynthetix = event.params.stakersFee;
+    futuresPosition.exitPrice = event.params.price;
+    futuresPosition.save();
+  }
+
+  let trader = Trader.load(event.params.account.toHex());
+  if (trader) {
+    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.stakersFee);
     trader.totalLiquidations = trader.totalLiquidations.plus(BigInt.fromI32(1));
     trader.totalMarginLiquidated = trader.totalMarginLiquidated.plus(event.params.size);
     trader.margin = trader.margin.minus(event.params.size);
