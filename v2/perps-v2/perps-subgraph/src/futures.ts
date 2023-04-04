@@ -60,8 +60,6 @@ export function handlePositionFlagged(event: PositionFlaggedEvent): void {
 }
 
 export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLegacy): void {
-  // TODO @MF calculate the fee correctly
-
   const futuresPositionId = event.address.toHex() + '-' + event.params.id.toHex();
   const positionLiquidatedEntity = new PositionLiquidated(event.params.id.toString());
   positionLiquidatedEntity.trader = event.params.account.toHex();
@@ -75,6 +73,28 @@ export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLeg
   positionLiquidatedEntity.txHash = event.transaction.hash.toHex();
   positionLiquidatedEntity.save();
 
+  const futuresPosition = FuturesPosition.load(futuresPositionId);
+
+  let feeForSynthetix = BigInt.fromI32(0);
+
+  if (futuresPosition && futuresPosition.margin.gt(BigInt.fromI32(1000).pow(18))) {
+    feeForSynthetix = event.params.fee.minus(BigInt.fromI32(1002).pow(18));
+  } else {
+    const ninetyPercent = event.params.fee
+      .times(BigInt.fromI32(90).pow(18))
+      .div(BigInt.fromI32(100).pow(18));
+    feeForSynthetix = event.params.fee.minus(ninetyPercent);
+  }
+
+  if (futuresPosition) {
+    futuresPosition.isLiquidated = true;
+    futuresPosition.isOpen = false;
+    futuresPosition.closeTimestamp = event.block.timestamp;
+    futuresPosition.feesPaidToSynthetix = feeForSynthetix;
+    futuresPosition.exitPrice = event.params.price;
+    futuresPosition.save();
+  }
+
   const tradeEntity = FuturesTrade.load(
     event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
   );
@@ -87,7 +107,7 @@ export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLeg
     tradeEntity.price = event.params.price;
     tradeEntity.txHash = event.transaction.hash.toHex();
     tradeEntity.positionSize = BigInt.fromI32(0);
-    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(event.params.fee);
+    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(feeForSynthetix);
 
     // TODO make sure this is correct. I think we need to subtract something else.
     tradeEntity.realizedPnl = tradeEntity.realizedPnl
@@ -100,24 +120,14 @@ export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLeg
 
   const synthetix = Synthetix.load('synthetix');
   if (synthetix) {
-    synthetix.feesByLiquidations = synthetix.feesByLiquidations.plus(event.params.fee);
+    synthetix.feesByLiquidations = synthetix.feesByLiquidations.plus(feeForSynthetix);
     synthetix.totalLiquidations = synthetix.totalLiquidations.plus(BigInt.fromI32(1));
     synthetix.save();
   }
 
-  const futuresPosition = FuturesPosition.load(futuresPositionId);
-  if (futuresPosition) {
-    futuresPosition.isLiquidated = true;
-    futuresPosition.isOpen = false;
-    futuresPosition.closeTimestamp = event.block.timestamp;
-    futuresPosition.feesPaidToSynthetix = event.params.fee;
-    futuresPosition.exitPrice = event.params.price;
-    futuresPosition.save();
-  }
-
   let trader = Trader.load(event.params.account.toHex());
   if (trader) {
-    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee);
+    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(feeForSynthetix);
     trader.totalLiquidations = trader.totalLiquidations.plus(BigInt.fromI32(1));
     trader.totalMarginLiquidated = trader.totalMarginLiquidated.plus(event.params.size);
     trader.margin = trader.margin.minus(event.params.size);
@@ -157,7 +167,7 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
 
     // TODO make sure this is correct. I think we need to subtract something else.
     tradeEntity.realizedPnl = tradeEntity.realizedPnl
-      .minus(event.params.fee)
+      .minus(event.params.stakersFee.plus(event.params.liquidatorFee).plus(event.params.flaggerFee))
       .minus(tradeEntity.netFunding); // you loose funding when liquidated
     tradeEntity.netFunding = BigInt.fromI32(0);
     tradeEntity.type = 'Liquidated';
