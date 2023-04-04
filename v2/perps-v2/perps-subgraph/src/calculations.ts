@@ -5,6 +5,7 @@ export function calculateVolume(tradeSize: BigInt, lastPrice: BigInt): BigInt {
 }
 
 export function calculateLeverage(size: BigInt, lastPrice: BigInt, margin: BigInt): BigInt {
+  if (size.equals(BigInt.fromI32(0))) return BigInt.fromI32(0);
   return size.times(lastPrice).div(margin).abs();
 }
 
