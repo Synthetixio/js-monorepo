@@ -60,7 +60,6 @@ export const App: FC = () => {
               ml="2"
               variant="outline"
               colorScheme="gray"
-              color="white"
               p="2"
               w="200px"
               leftIcon={<SearchIcon />}
@@ -91,6 +90,7 @@ export const App: FC = () => {
         <Flex justifyContent="center" gap="2">
           <Button
             variant="outline"
+            colorScheme="gray"
             disabled={!isWalletConnected}
             onClick={() => {
               if (signer && network?.id) {
@@ -128,6 +128,7 @@ export const App: FC = () => {
           </Button>
           <Button
             variant="outline"
+            colorScheme="gray"
             onClick={() => {
               toast({
                 title: 'Saved to local storage',
@@ -143,9 +144,10 @@ export const App: FC = () => {
           <Button
             disabled={!nodes.length}
             variant="outline"
+            colorScheme="gray"
             onClick={() => {
               toast({
-                title: 'Generated link and put it on your clipboard',
+                title: 'Generated link copied to your clipboard”',
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -155,7 +157,9 @@ export const App: FC = () => {
           >
             Save & Share
           </Button>
-          <Button onClick={onOpen}>Add Node</Button>
+          <Button onClick={onOpen} variant="solid" colorScheme="cyan">
+            Add Node
+          </Button>
         </Flex>
       </Flex>
       <NodeFormModule isOpen={isOpen} onClose={onClose} />
