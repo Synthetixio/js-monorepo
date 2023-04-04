@@ -1,11 +1,4 @@
-import {
-  Address,
-  BigDecimal,
-  BigInt,
-  dataSource,
-  DataSourceContext,
-  log,
-} from '@graphprotocol/graph-ts';
+import { Address, BigInt, DataSourceContext, log } from '@graphprotocol/graph-ts';
 import { PerpetualFuturesMarket } from '../generated/templates';
 import {
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
@@ -71,9 +64,9 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
   positionLiquidatedEntity.trader = event.params.account.toHex();
   positionLiquidatedEntity.market = event.address.toHex();
   positionLiquidatedEntity.liquidator = event.params.liquidator;
-  positionLiquidatedEntity.size = event.params.size.toBigDecimal();
-  positionLiquidatedEntity.price = event.params.price.toBigDecimal();
-  positionLiquidatedEntity.fee = event.params.fee.toBigDecimal();
+  positionLiquidatedEntity.size = event.params.size;
+  positionLiquidatedEntity.price = event.params.price;
+  positionLiquidatedEntity.fee = event.params.fee;
   positionLiquidatedEntity.futuresPosition = futuresPositionId;
   positionLiquidatedEntity.timestamp = event.block.timestamp;
   positionLiquidatedEntity.txHash = event.transaction.hash.toHex();
@@ -83,27 +76,28 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     event.transaction.hash.toHex() + '-' + event.logIndex.minus(BigInt.fromI32(1)).toString()
   );
   if (tradeEntity) {
-    tradeEntity.size = event.params.size.times(BigInt.fromI32(-1)).toBigDecimal();
+    tradeEntity.size = event.params.size.times(BigInt.fromI32(-1));
     tradeEntity.positionClosed = true;
     tradeEntity.timestamp = event.block.timestamp;
     tradeEntity.trader = event.params.account.toHex();
     tradeEntity.futuresPosition = futuresPositionId;
-    tradeEntity.price = event.params.price.toBigDecimal();
+    tradeEntity.price = event.params.price;
     tradeEntity.txHash = event.transaction.hash.toHex();
-    tradeEntity.positionSize = BigDecimal.fromString('0');
-    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
-      event.params.fee.toBigDecimal()
-    );
-    tradeEntity.pnl = tradeEntity.pnl.plus(event.params.fee);
+    tradeEntity.positionSize = BigInt.fromI32(0);
+    tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(event.params.fee);
+
+    // TODO make sure this is correct. I think we need to subtract something else.
+    tradeEntity.realizedPnl = tradeEntity.realizedPnl
+      .minus(event.params.fee)
+      .minus(tradeEntity.netFunding); // you loose funding when liquidated
+    tradeEntity.netFunding = BigInt.fromI32(0);
     tradeEntity.type = 'Liquidated';
     tradeEntity.save();
   }
 
   const synthetix = Synthetix.load('synthetix');
   if (synthetix) {
-    synthetix.feesByLiquidations = synthetix.feesByLiquidations.plus(
-      event.params.fee.toBigDecimal()
-    );
+    synthetix.feesByLiquidations = synthetix.feesByLiquidations.plus(event.params.fee);
     synthetix.totalLiquidations = synthetix.totalLiquidations.plus(BigInt.fromI32(1));
     synthetix.save();
   }
@@ -114,21 +108,16 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     futuresPosition.isOpen = false;
     futuresPosition.closeTimestamp = event.block.timestamp;
     futuresPosition.feesPaidToSynthetix = event.params.fee;
-    futuresPosition.pnl = futuresPosition.pnl
-      .minus(futuresPosition.feesPaidToSynthetix)
-      .plus(futuresPosition.netFunding);
     futuresPosition.exitPrice = event.params.price;
     futuresPosition.save();
   }
 
   let trader = Trader.load(event.params.account.toHex());
   if (trader) {
-    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee.toBigDecimal());
+    trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee);
     trader.totalLiquidations = trader.totalLiquidations.plus(BigInt.fromI32(1));
-    trader.totalMarginLiquidated = trader.totalMarginLiquidated.plus(
-      event.params.size.toBigDecimal()
-    );
-    trader.margin = trader.margin.minus(event.params.size.toBigDecimal());
+    trader.totalMarginLiquidated = trader.totalMarginLiquidated.plus(event.params.size);
+    trader.margin = trader.margin.minus(event.params.size);
     trader.save();
   }
 }
@@ -141,36 +130,36 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
   );
 
   marginTransferEntity.market = event.address.toHex();
-  marginTransferEntity.size = event.params.marginDelta.toBigDecimal();
+  marginTransferEntity.size = event.params.marginDelta;
   marginTransferEntity.trader = event.params.account.toHex();
   marginTransferEntity.timestamp = event.block.timestamp;
   marginTransferEntity.txHash = event.transaction.hash.toHex();
 
   if (!synthetix) {
     synthetix = new Synthetix('synthetix');
-    synthetix.feesByLiquidations = BigDecimal.fromString('0');
-    synthetix.feesByPositionModifications = BigDecimal.fromString('0');
+    synthetix.feesByLiquidations = BigInt.fromI32(0);
+    synthetix.feesByPositionModifications = BigInt.fromI32(0);
     synthetix.totalLiquidations = BigInt.fromI32(0);
-    synthetix.totalVolume = BigDecimal.fromString('0');
+    synthetix.totalVolume = BigInt.fromI32(0);
     synthetix.totalTraders = BigInt.fromI32(0);
   }
 
   if (!trader) {
     trader = new Trader(event.params.account.toHex());
     trader.timestamp = event.block.timestamp;
-    trader.feesPaidToSynthetix = BigDecimal.fromString('0');
+    trader.feesPaidToSynthetix = BigInt.fromI32(0);
     trader.trades = [];
-    trader.totalVolume = event.params.marginDelta.toBigDecimal();
+    trader.totalVolume = event.params.marginDelta;
     trader.totalLiquidations = BigInt.fromI32(0);
-    trader.totalMarginLiquidated = BigDecimal.fromString('0');
-    trader.margin = event.params.marginDelta.toBigDecimal();
-    trader.pnl = BigInt.fromI32(0);
+    trader.totalMarginLiquidated = BigInt.fromI32(0);
+    trader.margin = event.params.marginDelta;
+    trader.realizedPnl = BigInt.fromI32(0);
     synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(0));
   } else {
     if (event.params.marginDelta.gt(BigInt.fromI32(0))) {
-      trader.margin = trader.margin.plus(event.params.marginDelta.toBigDecimal());
+      trader.margin = trader.margin.plus(event.params.marginDelta);
     } else if (event.params.marginDelta.lt(BigInt.fromI32(0))) {
-      trader.margin = trader.margin.minus(event.params.marginDelta.toBigDecimal());
+      trader.margin = trader.margin.minus(event.params.marginDelta);
     }
   }
   marginTransferEntity.save();
@@ -189,7 +178,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
 
   // Update FuturesOrderEntity
   if (futuresOrderEntity) {
-    futuresOrderEntity.fee = event.params.keeperDeposit.toBigDecimal();
+    futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
 
     if (tradeEntity) {
@@ -206,7 +195,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
       // add fee if not self-executed
       if (futuresOrderEntity.keeper.toString() != futuresOrderEntity.trader) {
         tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit.toBigDecimal()
+          event.params.keeperDeposit
         );
         tradeEntity.save();
       }
@@ -214,16 +203,14 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
       // Update Synthetix values
       if (synthetix) {
         synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
-          event.params.keeperDeposit.toBigDecimal()
+          event.params.keeperDeposit
         );
         synthetix.save();
       }
 
       // Update Trader fee value
       if (trader) {
-        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit.toBigDecimal()
-        );
+        trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.keeperDeposit);
         trader.save();
       }
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
@@ -243,13 +230,13 @@ export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): 
   if (!futuresOrderEntity) {
     futuresOrderEntity = new FuturesOrder(futuresOrderEntityId);
   }
-  futuresOrderEntity.size = event.params.sizeDelta.toBigDecimal();
+  futuresOrderEntity.size = event.params.sizeDelta;
   futuresOrderEntity.market = event.address.toHex();
-  futuresOrderEntity.fee = BigInt.fromI32(0).toBigDecimal();
+  futuresOrderEntity.fee = BigInt.fromI32(0);
   futuresOrderEntity.trader = event.params.account.toHex();
   futuresOrderEntity.orderId = event.params.targetRoundId;
   futuresOrderEntity.targetRoundId = event.params.targetRoundId;
-  futuresOrderEntity.targetPrice = BigInt.fromI32(0).toBigDecimal();
+  futuresOrderEntity.targetPrice = BigInt.fromI32(0);
   futuresOrderEntity.marginDelta = BigInt.fromI32(0);
   futuresOrderEntity.timestamp = event.block.timestamp;
   futuresOrderEntity.orderType = event.params.isOffchain
@@ -279,11 +266,11 @@ export function handlePerpsTracking(event: PerpsTrackingEvent): void {
   if (!frontend) {
     frontend = new Frontend(event.params.trackingCode.toString());
     frontend.markets = [event.address.toHex()];
-    frontend.amount = event.params.sizeDelta.abs().toBigDecimal();
-    frontend.fees = event.params.fee.toBigDecimal();
+    frontend.amount = event.params.sizeDelta.abs();
+    frontend.fees = event.params.fee;
   } else {
-    frontend.amount = frontend.amount.plus(event.params.sizeDelta.abs().toBigDecimal());
-    frontend.fees = frontend.fees.plus(event.params.fee.abs().toBigDecimal());
+    frontend.amount = frontend.amount.plus(event.params.sizeDelta.abs());
+    frontend.fees = frontend.fees.plus(event.params.fee.abs());
     if (!frontend.markets.includes(event.address.toHex())) {
       const oldMarkets = frontend.markets;
       oldMarkets.push(event.address.toHex());
