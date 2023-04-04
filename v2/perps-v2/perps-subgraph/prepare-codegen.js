@@ -519,6 +519,61 @@ fs.writeFileSync(
         name: 'FundingRecomputed',
         type: 'event',
       },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            indexed: false,
+            internalType: 'address',
+            name: 'account',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'address',
+            name: 'liquidator',
+            type: 'address',
+          },
+          {
+            indexed: false,
+            internalType: 'int256',
+            name: 'size',
+            type: 'int256',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'price',
+            type: 'uint256',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'flaggerFee',
+            type: 'uint256',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'liquidatorFee',
+            type: 'uint256',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256',
+            name: 'stakersFee',
+            type: 'uint256',
+          },
+        ],
+        name: 'PositionLiquidated',
+        type: 'event',
+      },
     ]),
     {
       parser: 'json',

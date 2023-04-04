@@ -438,6 +438,52 @@ export class FundingRecomputed1__Params {
   }
 }
 
+export class PositionLiquidated1 extends ethereum.Event {
+  get params(): PositionLiquidated1__Params {
+    return new PositionLiquidated1__Params(this);
+  }
+}
+
+export class PositionLiquidated1__Params {
+  _event: PositionLiquidated1;
+
+  constructor(event: PositionLiquidated1) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get account(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get liquidator(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+
+  get size(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get price(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get flaggerFee(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get liquidatorFee(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get stakersFee(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
+  }
+}
+
 export class PerpsV2Proxy extends ethereum.SmartContract {
   static bind(address: Address): PerpsV2Proxy {
     return new PerpsV2Proxy('PerpsV2Proxy', address);
