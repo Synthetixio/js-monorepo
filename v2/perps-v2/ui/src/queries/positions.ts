@@ -8,6 +8,10 @@ export const POSITIONS_QUERY_MARKET = gql(`
         marketKey
         asset
       }
+      trader {
+        id
+      }
+      isOpen
       entryPrice
       avgEntryPrice
       leverage
