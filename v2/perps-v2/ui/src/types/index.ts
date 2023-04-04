@@ -6,7 +6,8 @@ export interface SubgraphPositionData {
   avgEntryPrice: Wei;
   leverage: Wei;
   fees: Wei;
-  pnlAtLastModification: Wei;
+  realizedPnl: Wei;
+  unrealizedPnlAtLastModification: Wei;
   netFundingAtLastModification: Wei;
   fillPriceAtLastInteraction: Wei;
 }

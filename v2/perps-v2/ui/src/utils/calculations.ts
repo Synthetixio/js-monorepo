@@ -20,7 +20,7 @@ export const calculateMarkPrice = (
   return markPrice;
 };
 
-export const calculateNewPnl = (
+export const calculateNewUnrealizedPnl = (
   subgraphPositionData: SubgraphPositionData,
   contractData: ContractData,
   marketPrice: Wei
@@ -29,9 +29,7 @@ export const calculateNewPnl = (
     subgraphPositionData.fillPriceAtLastInteraction
   );
   const pnlSinceModification = contractData.size.mul(priceShiftSinceModification);
-  const newPnl = subgraphPositionData.pnlAtLastModification
-    .add(pnlSinceModification)
-    .add(contractData.accruedFundingSinceLastModification);
+  const newPnl = subgraphPositionData.unrealizedPnlAtLastModification.add(pnlSinceModification);
   return newPnl;
 };
 
@@ -56,9 +54,12 @@ export const calculatePositionData = (
 ) => {
   if (contractData.size.eq(0)) return null;
   const marketPrice = calculateMarkPrice(pythPrice, contractData);
-  const pnl = calculateNewPnl(subgraphPositionData, contractData, marketPrice);
+  const unrealizedPnl = calculateNewUnrealizedPnl(subgraphPositionData, contractData, marketPrice);
+  const realizedPnl = subgraphPositionData.realizedPnl.add(
+    contractData.accruedFundingSinceLastModification
+  );
   const notionalValue = contractData.size.mul(marketPrice);
-  const pnlPercentage = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
+  const pnlPercentage = calculatePnlPercentage(subgraphPositionData, contractData, unrealizedPnl);
   const netFunding = subgraphPositionData.netFundingAtLastModification.add(
     contractData.accruedFundingSinceLastModification
   );
@@ -67,7 +68,8 @@ export const calculatePositionData = (
     asset: subgraphPositionData.asset,
     indexPrice: pythPrice ? pythPrice : contractData.indexPrice,
     liquidationPrice: contractData.liquidationPrice,
-    pnl,
+    unrealizedPnl,
+    realizedPnl,
     pnlPercentage,
     margin: contractData.accessibleMargin,
     size: contractData.size,
