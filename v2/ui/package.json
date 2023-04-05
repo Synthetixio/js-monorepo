@@ -114,7 +114,7 @@
     "storybook": "^6.5.16",
     "styled-components": "^5.3.6",
     "styled-media-query": "^2.1.2",
-    "synthetix": "2.85.0",
+    "synthetix": "2.86.0-alpha",
     "tippy.js": "^6.3.7",
     "unstated-next": "^1.1.0"
   },
