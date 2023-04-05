@@ -290,8 +290,7 @@ function handleActualPositionModification(
   futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(event.params.fee);
   futuresPosition.size = event.params.size;
   futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
-  // TODO, should margin be accumulative?
-  futuresPosition.margin = futuresPosition.margin.plus(event.params.margin);
+  futuresPosition.margin = event.params.margin;
   futuresPosition.lastPrice = event.params.lastPrice;
   futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
 
