@@ -32,7 +32,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.5",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
