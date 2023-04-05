@@ -228,6 +228,7 @@ function handleActualPositionModification(
       accruedFunding
     );
 
+    futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
     futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(accruedRealizedPnl);
     trader.realizedPnl = trader.realizedPnl.plus(accruedRealizedPnl);
     futuresPosition.unrealizedPnl = BigInt.fromI32(0);
