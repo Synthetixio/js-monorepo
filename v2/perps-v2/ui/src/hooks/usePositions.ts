@@ -7,12 +7,12 @@ import {
   abi,
   address,
   PerpsV2MarketData,
-} from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
+} from '@synthetixio/contracts/build/goerli-ovm/deployment/PerpsV2MarketData';
 import {
   abi as multiCallAbi,
   address as multiCallAddress,
   Multicall3,
-} from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
+} from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
 import { wei } from '@synthetixio/wei';
 import { ContractData, SubgraphPositionData, PositionData } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
@@ -21,7 +21,7 @@ import { useSearchParams } from 'react-router-dom';
 export function notNill<Value>(value: Value | null | undefined): value is Value {
   return value !== null && value !== undefined;
 }
-const provider = new providers.InfuraProvider(10, infuraId);
+const provider = new providers.InfuraProvider(420, infuraId);
 
 const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
 const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider) as Multicall3;
