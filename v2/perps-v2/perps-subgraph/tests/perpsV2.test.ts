@@ -680,6 +680,31 @@ describe('Perps V2', () => {
     assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', toEth(19).toString()); // -1 + (10 * 2)
     assert.fieldEquals('FuturesPosition', positionId, 'margin', toEth(400).toString());
     assert.fieldEquals('FuturesPosition', positionId, 'leverage', toEth(5).toString());
+
+    const FundingRecomputedEvent2 = createFunctionRecomputedEvent(
+      toEth(initialFunding + 10), // funding going down
+      toEth(10), // fundingRate
+      BigInt.fromI32(3), //funding index
+      BigInt.fromI32(16), // block timestamp
+      10 // log index
+    );
+    handleFundingRecomputed(FundingRecomputedEvent2);
+    const increasePos = createPositionModifiedEvent(
+      BigInt.fromI32(1), //id
+      Address.fromString(trader), //account
+      toEth(400), // margin
+      toEth(-3), // size
+      toEth(-1), // tradeSize
+      toEth(1000), // lastPrice
+      BigInt.fromI32(3), // funding index
+      toGwei(1000000000), // fee
+      10, // timestamp
+      BigInt.fromI32(12), // skew
+      2 // log index
+    );
+    handlePositionModified(increasePos);
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', toEth(-20).toString()); // (10 * 2) + (-20* 2)
+    assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', toEth(-22).toString()); // -1 + (10 * 2) +  (-20 * 2) -1
   });
 
   test('funding recomputed', () => {
