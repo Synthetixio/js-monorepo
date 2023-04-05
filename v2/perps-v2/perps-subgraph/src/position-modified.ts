@@ -132,7 +132,7 @@ function handlePositionClosed(
 ): void {
   const tradePnl = calculatePnl(
     event.params.lastPrice,
-    BigInt.fromString(futuresPosition.lastPrice.toString()),
+    futuresPosition.lastPrice,
     futuresPosition.size // Note that it's important to use the size before we update it from the event. The updated size will be 0 since the position is closed
   )
     .minus(event.params.fee)
