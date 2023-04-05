@@ -35,8 +35,9 @@ export const PositionsTable = () => {
             <Thead>
               <Tr>
                 <TableHeaderCell>Market</TableHeaderCell>
-                <TableHeaderCell>Net Value</TableHeaderCell>
-                <TableHeaderCell>PnL</TableHeaderCell>
+                {/* <TableHeaderCell>Net Value</TableHeaderCell> */}
+                <TableHeaderCell>Unrealized PNL</TableHeaderCell>
+                <TableHeaderCell>Realized PNL</TableHeaderCell>
                 <TableHeaderCell>Size</TableHeaderCell>
                 <TableHeaderCell>Collateral</TableHeaderCell>
                 <TableHeaderCell>Funding</TableHeaderCell>
@@ -61,7 +62,8 @@ export const PositionsTable = () => {
                     avgEntryPrice,
                     indexPrice,
                     leverage,
-                    pnl,
+                    unrealizedPnl,
+                    realizedPnl,
                     margin,
                     size,
                     long,
@@ -75,7 +77,7 @@ export const PositionsTable = () => {
                   index
                 ) => {
                   // Need to take away fees
-                  const netValue = size.abs().mul(marketPrice).add(pnl).sub(fees);
+                  // const netValue = size.abs().mul(marketPrice).add(pnl).sub(fees);
 
                   return (
                     <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
@@ -86,8 +88,12 @@ export const PositionsTable = () => {
                         direction={long ? 'LONG' : 'SHORT'}
                       />
                       {/* Net value */}
-                      <NetValue amount={netValue.toNumber()} />
-                      <PnL pnl={pnl.toNumber()} pnlPercentage={pnlPercentage.toNumber()} />
+                      {/* <NetValue amount={netValue.toNumber()} /> */}
+                      <PnL
+                        pnl={unrealizedPnl.toNumber()}
+                        pnlPercentage={pnlPercentage.toNumber()}
+                      />
+                      <PnL pnl={realizedPnl.toNumber()} />
 
                       <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
 

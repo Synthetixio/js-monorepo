@@ -3,7 +3,7 @@ import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 
 interface PnLProps {
   pnl: number;
-  pnlPercentage: number;
+  pnlPercentage?: number;
 }
 
 export const PnL = ({ pnl, pnlPercentage }: PnLProps) => {
@@ -19,10 +19,12 @@ export const PnL = ({ pnl, pnlPercentage }: PnLProps) => {
         >
           {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(pnl)}`}
         </Text>
-        <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-          {pnl >= 0 ? '+' : '-'}
-          {formatPercent(pnlPercentage)}
-        </Text>
+        {pnlPercentage === undefined ? null : (
+          <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
+            {pnl >= 0 ? '+' : '-'}
+            {formatPercent(pnlPercentage)}
+          </Text>
+        )}
       </Fade>
     </Td>
   );

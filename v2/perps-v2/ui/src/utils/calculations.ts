@@ -55,9 +55,11 @@ export const calculatePositionData = (
   if (contractData.size.eq(0)) return null;
   const marketPrice = calculateMarkPrice(pythPrice, contractData);
   const unrealizedPnl = calculateNewUnrealizedPnl(subgraphPositionData, contractData, marketPrice);
-  const realizedPnl = subgraphPositionData.realizedPnl.add(
+
+  const realizedPnl = subgraphPositionData.realizedPnlAtLastModification.add(
     contractData.accruedFundingSinceLastModification
   );
+
   const notionalValue = contractData.size.mul(marketPrice);
   const pnlPercentage = calculatePnlPercentage(subgraphPositionData, contractData, unrealizedPnl);
   const netFunding = subgraphPositionData.netFundingAtLastModification.add(
