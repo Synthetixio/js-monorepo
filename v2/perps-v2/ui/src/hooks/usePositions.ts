@@ -14,7 +14,7 @@ import {
   Multicall3,
 } from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
 import { wei } from '@synthetixio/wei';
-import { ContractData, SubgraphPositionData, PositionData } from '../types';
+import { ContractData, SubgraphPositionData, PositionsDataSchema } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 import { useSearchParams } from 'react-router-dom';
 
@@ -55,8 +55,8 @@ export const usePositions = (walletAddress?: string) => {
     avgEntryPrice: wei(item.avgEntryPrice, 18, true),
     leverage: wei(item.leverage, 18, true),
     fees: wei(item.feesPaidToSynthetix, 18, true),
-    unrealizedAtLastModification: wei(item.unrealizedPnl, 18, true),
-    realizedAtLastModification: wei(item.realizedPnl, 18, true),
+    unrealizedPnlAtLastModification: wei(item.unrealizedPnl, 18, true),
+    realizedPnlAtLastModification: wei(item.realizedPnl, 18, true),
     netFundingAtLastModification: wei(item.netFunding, 18, true),
     fillPriceAtLastInteraction: wei(item.lastPrice, 18, true),
   }));
@@ -67,10 +67,12 @@ export const usePositions = (walletAddress?: string) => {
     pollInterval: 1000,
   });
 
-  const positionData = data?.positionsFromContract as PositionData[];
+  const positionsData = data?.positionsFromContract
+    ? PositionsDataSchema.parse(data.positionsFromContract)
+    : undefined;
 
   return {
-    data: positionData,
+    data: positionsData,
     loading: loading || marketLoading,
     error: error || marketError,
   };
