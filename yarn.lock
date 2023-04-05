@@ -10340,7 +10340,7 @@ __metadata:
     "@typechain/ethers-v5": ^10.2.0
     ethers: ^5.7.2
     prettier: ^2.8.4
-    synthetix: 2.85.0
+    synthetix: 2.86.0-alpha
     typechain: ^8.1.1
     typescript: ^4.9.5
   languageName: unknown
@@ -33242,9 +33242,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.85.0":
-  version: 2.85.0
-  resolution: "synthetix@npm:2.85.0"
+"synthetix@npm:2.86.0-alpha":
+  version: 2.86.0-alpha
+  resolution: "synthetix@npm:2.86.0-alpha"
   dependencies:
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     abi-decoder: ^2.3.0
@@ -33258,7 +33258,7 @@ __metadata:
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: 9c288bfa07ec6fa9edc8701a2b41eb7889652c62c388cf88ed90c58a1ad5763377a08dd9ffb22c6634e22e29b35368d735afbc1002f01c8e2635cd4e7a9002ad
+  checksum: bb79d01bfc4276a8085bc49962fb5ca2c350d70a3451f505ece484e28ee24c805b8a8076f0a20af834a9dbcc7793e6456b8029056a5b86ac404ddbfdb86b9433
   languageName: node
   linkType: hard
 
