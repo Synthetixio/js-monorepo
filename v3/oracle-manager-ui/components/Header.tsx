@@ -132,7 +132,7 @@ export const Header: FC = () => {
           {isWalletConnected ? (
             <Button onClick={disconnect}>{shortAddress(wallet?.address || '')}</Button>
           ) : (
-            <Button onClick={() => onboard.connectWallet()}>Connect</Button>
+            <Button onClick={() => onboard.connectWallet()}>Connect Wallet</Button>
           )}
         </Flex>
       </Flex>
