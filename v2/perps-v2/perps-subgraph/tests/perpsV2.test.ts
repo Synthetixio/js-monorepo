@@ -63,7 +63,7 @@ describe('Perps V2', () => {
     const modifyPositionEvent = createPositionModifiedEvent(
       BigInt.fromI32(1), // id
       Address.fromString(trader), // account
-      toEth(0), // margin
+      toEth(5), // margin
       toEth(-3), //size
       toEth(-1), // trade size
       toEth(1200), // last price
@@ -84,23 +84,23 @@ describe('Perps V2', () => {
 
   test('calculate PNL for open short position', () => {
     const positionOpenedEvent = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(5),
-      toEth(-2),
-      toEth(-2),
-      toEth(1000),
-      BigInt.fromI32(1),
-      toGwei(1),
-      10,
-      BigInt.fromI32(12),
-      1
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), // margin
+      toEth(-2), // size
+      toEth(-2), // tradeSize
+      toEth(1000), // lastPrice
+      BigInt.fromI32(1), // funding index
+      toGwei(1), // fee
+      10, // timestamp
+      BigInt.fromI32(12), // skew
+      1 // log index
     );
     handlePositionModified(positionOpenedEvent);
     const modifyPositionEvent = createPositionModifiedEvent(
       BigInt.fromI32(1), // id
       Address.fromString(trader), // account
-      toEth(0), // margin
+      toEth(5), // margin
       toEth(-3), //size
       toEth(-1), // trade size
       toEth(1200), // last price
