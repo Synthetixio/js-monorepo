@@ -49,12 +49,11 @@ export const resolvers: Resolvers | Resolvers[] = {
       return positionsData
 
         .map((contractData, index) => {
-          const pythPrice = offchainPrices.find(
-            (item) => item.asset === openPositions[index]?.asset
-          );
+          const subgraphData = openPositions[index];
+          const pythPrice = offchainPrices.find((item) => item.asset === subgraphData?.asset);
 
           const calculatedPositionData = calculatePositionData(
-            openPositions[index],
+            subgraphData,
             pythPrice?.price,
             contractData,
             walletAddress
