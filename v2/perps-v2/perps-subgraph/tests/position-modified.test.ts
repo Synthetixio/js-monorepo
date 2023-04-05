@@ -1,4 +1,4 @@
-import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
 import {
   assert,
   describe,

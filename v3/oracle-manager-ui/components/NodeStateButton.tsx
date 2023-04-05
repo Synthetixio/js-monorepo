@@ -160,8 +160,10 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
         <Spinner colorScheme="cyan" />
       ) : nodeState !== 'nodeRegistered' ? (
         <Button
+          border="1px solid white"
           size="xs"
           variant="outline"
+          colorScheme="gray"
           onClick={(e) => {
             e.stopPropagation();
             handleButtonClick();

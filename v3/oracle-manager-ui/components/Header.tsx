@@ -64,7 +64,13 @@ export const Header: FC = () => {
           />
         </svg>
 
-        <Heading fontFamily="Lustra Text" marginRight="auto" marginLeft="4" size="lg">
+        <Heading
+          fontFamily="Lustra Text"
+          fontWeight="normal"
+          marginRight="auto"
+          marginLeft="4"
+          fontSize="2xl"
+        >
           Oracle Manager
         </Heading>
         <Flex alignItems="center" gap="2">

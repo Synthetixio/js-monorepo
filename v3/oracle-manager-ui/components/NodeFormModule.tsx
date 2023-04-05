@@ -154,16 +154,13 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       }}
     >
       <ModalOverlay />
-      <ModalContent
-        bg="linear-gradient(73.6deg, #171923 2.11%, #141414 100%),linear-gradient(0deg, #2D2D38, #2D2D38)"
-        borderWidth="1px"
-        borderStyle="solid"
-        borderColor="gray.900"
-      >
-        <ModalHeader textAlign="center">{node ? `Update Node ${node.id}` : 'New Node'}</ModalHeader>
+      <ModalContent bg="navy.900" borderWidth="1px" borderStyle="solid" borderColor="gray.900">
+        <ModalHeader textAlign="center" fontSize="md">
+          {node ? `Update Node ${node.id}` : 'New Node'}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Flex flexDir="column">
+          <Flex flexDir="column" gap="2">
             {!node && (
               <Select {...register('oracleNodeType')}>
                 <option value="" selected disabled hidden>
@@ -185,6 +182,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           <Flex justifyContent="center" width="100%">
             {node && (
               <Button
+                minW="150px"
                 variant="outline"
                 mr="2"
                 onClick={() => {
@@ -209,6 +207,8 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
               </Button>
             )}
             <Button
+              variant="solid"
+              w="100%"
               onClick={() => {
                 if (node) {
                   setNodes((state) => {

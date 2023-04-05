@@ -11,7 +11,7 @@ import {
 import {
   handleFundingRecomputed,
   handleMarginTransferred,
-  handlePositionLiquidated,
+  handlePositionLiquidatedLegacy,
   handlePositionModified,
 } from '../src/futures';
 
@@ -498,11 +498,12 @@ describe('Perps V2', () => {
       20,
       3
     );
-    handlePositionLiquidated(positionLiquidatedEvent);
+    handlePositionLiquidatedLegacy(positionLiquidatedEvent);
     log.warning('STARTING ASSERTION', []);
     // SYNTHETIX
     log.info('Synthetix', []);
-    assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', toEth(1).toString());
+    // 90% of the total fee
+    assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', '849905364703000879');
     // FUTURES TRADE
     log.info('Futures Trade', []);
     assert.fieldEquals(
