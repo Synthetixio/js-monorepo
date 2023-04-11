@@ -10688,6 +10688,7 @@ __metadata:
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
+    "@tauri-apps/cli": ^1.2.3
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
     "@testing-library/user-event": ^14.4.3
@@ -10910,6 +10911,107 @@ __metadata:
   version: 8.7.9
   resolution: "@tanstack/table-core@npm:8.7.9"
   checksum: 78d2314928c29559088e4bada0248cc7f94e93756e1a2c1f37a651db30276e9ae960d647bd3a61b67b3f0f9f7e4dec5dd58eb49b8adb80ee5952ef417b6e581f
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-darwin-arm64@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-darwin-arm64@npm:1.2.3"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-darwin-x64@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-darwin-x64@npm:1.2.3"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-linux-arm-gnueabihf@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-linux-arm-gnueabihf@npm:1.2.3"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-linux-arm64-gnu@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-linux-arm64-gnu@npm:1.2.3"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-linux-arm64-musl@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-linux-arm64-musl@npm:1.2.3"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-linux-x64-gnu@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-linux-x64-gnu@npm:1.2.3"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-linux-x64-musl@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-linux-x64-musl@npm:1.2.3"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-win32-ia32-msvc@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-win32-ia32-msvc@npm:1.2.3"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli-win32-x64-msvc@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli-win32-x64-msvc@npm:1.2.3"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/cli@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "@tauri-apps/cli@npm:1.2.3"
+  dependencies:
+    "@tauri-apps/cli-darwin-arm64": 1.2.3
+    "@tauri-apps/cli-darwin-x64": 1.2.3
+    "@tauri-apps/cli-linux-arm-gnueabihf": 1.2.3
+    "@tauri-apps/cli-linux-arm64-gnu": 1.2.3
+    "@tauri-apps/cli-linux-arm64-musl": 1.2.3
+    "@tauri-apps/cli-linux-x64-gnu": 1.2.3
+    "@tauri-apps/cli-linux-x64-musl": 1.2.3
+    "@tauri-apps/cli-win32-ia32-msvc": 1.2.3
+    "@tauri-apps/cli-win32-x64-msvc": 1.2.3
+  dependenciesMeta:
+    "@tauri-apps/cli-darwin-arm64":
+      optional: true
+    "@tauri-apps/cli-darwin-x64":
+      optional: true
+    "@tauri-apps/cli-linux-arm-gnueabihf":
+      optional: true
+    "@tauri-apps/cli-linux-arm64-gnu":
+      optional: true
+    "@tauri-apps/cli-linux-arm64-musl":
+      optional: true
+    "@tauri-apps/cli-linux-x64-gnu":
+      optional: true
+    "@tauri-apps/cli-linux-x64-musl":
+      optional: true
+    "@tauri-apps/cli-win32-ia32-msvc":
+      optional: true
+    "@tauri-apps/cli-win32-x64-msvc":
+      optional: true
+  bin:
+    tauri: tauri.js
+  checksum: 1df8404183b04e0bef637f9aff429a21ee1ad594c0c72feb94ca0b66b404628f93ccad7a1dee3894ca7b4d566721c676d0187f184333af3d562dad31f27de72e
   languageName: node
   linkType: hard
 
