@@ -1,7 +1,7 @@
 {
   "$schema": "../../../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "yarn build",
+    "beforeBuildCommand": "NEXT_PUBLIC_INFURA_PROJECT_ID=$INFURA_KEY yarn build",
     "beforeDevCommand": "yarn start",
     "devPath": "http://localhost:3000",
     "distDir": "../out"

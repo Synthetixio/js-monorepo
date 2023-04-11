@@ -1,0 +1,12 @@
+{
+  "name": "@synthetixio/tauri-icons",
+  "private": true,
+  "version": "1.0.0",
+  "author": "Noisekit <noisekit@btnk.au>",
+  "repository": "github:Synthetixio/js-monorepo",
+  "license": "MIT",
+  "bin": "./tauri-icons.js",
+  "devDependencies": {
+    "sharp": "^0.32.0"
+  }
+}

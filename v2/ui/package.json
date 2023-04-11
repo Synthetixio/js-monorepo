@@ -22,6 +22,7 @@
     "standalone-install": "yarn workspaces focus '@synthetixio/v2-ui'",
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v2-ui' run build",
     "deploy": "ipfs-deploy ./out",
+    "app:icons": "tauri-icons ./src-tauri/icons/icon.svg ./src-tauri/icons",
     "app:dev": "tauri dev",
     "app:build": "tauri build"
   },
@@ -80,6 +81,7 @@
     "@synthetixio/providers": "workspace:*",
     "@synthetixio/queries": "workspace:*",
     "@synthetixio/safe-import": "workspace:*",
+    "@synthetixio/tauri-icons": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
