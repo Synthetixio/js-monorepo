@@ -271,6 +271,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
+        positionEntity.realizedPnl = positionEntity.realizedPnl.minus(event.params.keeperDeposit);
         positionEntity.save();
       }
       // add fee if not self-executed

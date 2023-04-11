@@ -1,6 +1,15 @@
-import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
-import { assert, describe, test, clearStore, afterEach } from 'matchstick-as/assembly/index';
+import { Address, BigInt, Bytes, log, store } from '@graphprotocol/graph-ts';
 import {
+  assert,
+  describe,
+  test,
+  clearStore,
+  afterEach,
+  logStore,
+} from 'matchstick-as/assembly/index';
+import {
+  createDelayedOrderRemovedEvent,
+  createDelayedOrderSubmittedEvent,
   createFunctionRecomputedEvent,
   createMarginTransferredEvent,
   createPositionLiquidatedEvent,
@@ -9,6 +18,8 @@ import {
   toGwei,
 } from './perpsV2-utils';
 import {
+  handleDelayedOrderRemoved,
+  handleDelayedOrderSubmitted,
   handleFundingRecomputed,
   handleMarginTransferred,
   handlePositionLiquidatedLegacy,
@@ -794,11 +805,6 @@ describe('Perps V2', () => {
       'PositionModified'
     );
 
-    const existingSize = toEth(-2).abs();
-    const existingPrice = existingSize.times(toEth(1000));
-    const newSize = toEth(4).abs();
-    const newPrice = newSize.times(toEth(1200));
-
     log.info('Futures Position', []);
     assert.fieldEquals(
       'FuturesPosition',
@@ -812,5 +818,53 @@ describe('Perps V2', () => {
       'avgEntryPrice',
       toEth(1200).toString()
     );
+  });
+  test('Keeper fees are added as fees', () => {
+    const createOrderEvent = createDelayedOrderSubmittedEvent(
+      Address.fromString(trader), // account
+      true, // isOffchain
+      toEth(1), //sizeDelta
+      BigInt.fromI32(2), //targetRoundId
+      BigInt.fromI32(1), // intentionTime
+      BigInt.fromI32(10), // executableAtTime
+      toEth(1), //commit Deposit
+      toEth(1), //keeperDeposit:
+      Bytes.fromUTF8('joey'), // trackingCode
+      1, //timestamp
+      2 // logIndex
+    );
+    handleDelayedOrderSubmitted(createOrderEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), //account
+      toEth(5), //margin
+      toEth(1), // size
+      toEth(1), // tradeSize
+      toEth(1200), // lastPrice
+      BigInt.fromI32(1), // fundingIndex
+      toEth(1), // fee
+      10, // skew
+      BigInt.fromI32(200), // timestamp
+      1 // logIndex
+    );
+    handlePositionModified(positionModifiedEvent);
+    const orderRemovedEvent = createDelayedOrderRemovedEvent(
+      Address.fromString(trader), // account
+      true, // isOffchain
+      BigInt.fromI32(2), //currentRoundId
+      toEth(1), //sizeDelta
+      BigInt.fromI32(2), //targetRoundId
+      toEth(1), //commitDeposit
+      toEth(1), //keeperDeposit:
+      Bytes.fromUTF8('joey'), // trackingCode
+      1, //timestamp
+      2 // logIndex
+    );
+    handleDelayedOrderRemoved(orderRemovedEvent);
+
+    const positionId = `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`;
+
+    assert.fieldEquals('FuturesPosition', positionId, 'feesPaidToSynthetix', toEth(2).toString()); // 1 keeper fee, 1 open pos fee
+    assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', toEth(-2).toString()); // 1 keeper fee, 1 open pos fee
   });
 });
