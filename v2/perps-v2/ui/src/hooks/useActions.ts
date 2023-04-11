@@ -120,7 +120,7 @@ const mergeData = (
 export const useActions = (account?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('marketAddress') || undefined;
-
+  const accountLower = account?.toLowerCase();
   const {
     loading: marginLoading,
     data: marginData,
@@ -132,7 +132,7 @@ export const useActions = (account?: string) => {
       orderBy: FuturesMarginTransfer_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {
-        trader: account,
+        trader: accountLower,
         market: marketAddress,
       },
     },
@@ -149,7 +149,7 @@ export const useActions = (account?: string) => {
       orderBy: FuturesTrade_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {
-        trader: account,
+        trader: accountLower,
         market: marketAddress,
       },
     },

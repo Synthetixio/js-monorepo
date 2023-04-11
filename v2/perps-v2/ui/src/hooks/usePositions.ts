@@ -29,7 +29,7 @@ const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider
 export const usePositions = (walletAddress?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('marketAddress') || undefined;
-
+  const walletAddressLowerCase = walletAddress?.toLowerCase();
   // Initial query to give a list of markets
   const {
     data: marketData,
@@ -39,7 +39,7 @@ export const usePositions = (walletAddress?: string) => {
     variables: {
       where: {
         isOpen: true,
-        trader: walletAddress,
+        trader: walletAddressLowerCase,
         market: marketAddress,
       },
       orderBy: FuturesPosition_OrderBy.Size,
@@ -62,7 +62,7 @@ export const usePositions = (walletAddress?: string) => {
   }));
 
   const { data, loading, error } = useQuery(POSITIONS_CONTRACT_QUERY, {
-    variables: { walletAddress, openPositions },
+    variables: { walletAddress: walletAddressLowerCase, openPositions },
     skip: marketData?.futuresPositions ? false : true,
     pollInterval: 1000,
   });
