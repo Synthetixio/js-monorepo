@@ -408,6 +408,18 @@
   },
   {
     "constant": false,
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "modifyDebtSharesForMigration",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
     "inputs": [{ "internalType": "address", "name": "_owner", "type": "address" }],
     "name": "nominateNewOwner",
     "outputs": [],

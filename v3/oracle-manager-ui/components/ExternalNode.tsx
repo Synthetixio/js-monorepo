@@ -87,14 +87,14 @@ export const ExternalNode: FC<{ data: { label: string }; id: string }> = ({ data
         type="target"
         isValidConnection={() => true}
         position={Position.Top}
-        style={{ background: '#743002' }}
+        style={{ background: '#575768' }}
         isConnectable
       ></Handle>
       <Handle
         type="source"
         isValidConnection={() => true}
         position={Position.Bottom}
-        style={{ background: '#743002' }}
+        style={{ background: '#575768' }}
         isConnectable
       ></Handle>
     </Box>

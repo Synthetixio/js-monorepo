@@ -5,30 +5,84 @@ import {
   createMarginTransferredEvent,
   createPositionLiquidatedEvent,
   createPositionModifiedEvent,
+  toEth,
+  toGwei,
 } from './perpsV2-utils';
 import {
   handleFundingRecomputed,
   handleMarginTransferred,
-  handlePositionLiquidated,
+  handlePositionLiquidatedLegacy,
   handlePositionModified,
 } from '../src/futures';
 
 const trader = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
-function toEth(n: u64): BigInt {
-  if (n < 0) return BigInt.fromU64(n).times(BigInt.fromI32(10).pow(18));
-  return BigInt.fromI64(changetype<i64>(n)).times(BigInt.fromI64(10).pow(18));
-}
-function toGwei(n: u64): BigInt {
-  if (n < 0) return BigInt.fromU64(n).times(BigInt.fromI32(10).pow(9));
-  return BigInt.fromI64(changetype<i64>(n)).times(BigInt.fromI64(10).pow(9));
-}
 
 describe('Perps V2', () => {
   afterEach(() => {
     clearStore();
   });
 
-  test('calculate PNL', () => {
+  test('net funding works for short position and funding decreasing', () => {
+    // This just tests one case, all the cases are tested seperately in calculation.test.ts
+    const initialFunding = 1000;
+    const initialFundingRecomputedEvent = createFunctionRecomputedEvent(
+      BigInt.fromI32(initialFunding), // funding
+      BigInt.fromI32(10), // fundingRate
+      BigInt.fromI32(1), // index
+      BigInt.fromI32(15), // block timestamp
+      10 // log index
+    );
+    handleFundingRecomputed(initialFundingRecomputedEvent);
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), //margin
+      toEth(-2), // size
+      toEth(-2), // trade size
+      toEth(1000), // last price
+      BigInt.fromI32(1), // funding index
+      toGwei(1), // fee
+      10, //  timestamp
+      BigInt.fromI32(12), // skew
+      1 // log index
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionId = `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`;
+    // Assert funding is 0 when opening
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', '0');
+    assert.fieldEquals('FuturesPosition', positionId, 'fundingIndex', '1');
+
+    const fundingRecomputedEvent = createFunctionRecomputedEvent(
+      BigInt.fromI32(initialFunding - 100), // funding
+      BigInt.fromI32(10), // fundingRate
+      BigInt.fromI32(5), // index
+      BigInt.fromI32(15), // block timestamp
+      10 // log index
+    );
+    handleFundingRecomputed(fundingRecomputedEvent);
+    const modifyPositionEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(0), // margin
+      toEth(-3), //size
+      toEth(-1), // trade size
+      toEth(1200), // last price
+      BigInt.fromI32(5), // funding index
+      toGwei(1), // fee
+      20, // timestamp
+      BigInt.fromI32(12), //skew
+      2 // log index
+    );
+    handlePositionModified(modifyPositionEvent);
+    // The funding has decreased with 100 since we opened the position
+    // When funding decreases and we have a short opened, it means we getting paid.
+    // The initial funding was 10000. The new funding is 9900. So a diff of 100
+    // We have a size of 2 when opening till now, which means we expect to net funding to be 100 * 2 = 200
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', '200');
+    assert.fieldEquals('FuturesPosition', positionId, 'fundingIndex', '5');
+  });
+
+  test('calculate PNL for open short position', () => {
     const positionOpenedEvent = createPositionModifiedEvent(
       BigInt.fromI32(1),
       Address.fromString(trader),
@@ -44,17 +98,17 @@ describe('Perps V2', () => {
     );
     handlePositionModified(positionOpenedEvent);
     const modifyPositionEvent = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(0),
-      toEth(-3),
-      toEth(-1),
-      toEth(1200),
-      BigInt.fromI32(2),
-      toGwei(1),
-      20,
-      BigInt.fromI32(12),
-      2
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(0), // margin
+      toEth(-3), //size
+      toEth(-1), // trade size
+      toEth(1200), // last price
+      BigInt.fromI32(2), // funding index
+      toGwei(1), // fee
+      20, // timestamp
+      BigInt.fromI32(12), //skew
+      2 // log index
     );
     handlePositionModified(modifyPositionEvent);
 
@@ -125,7 +179,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'initialMargin',
-      toEth(5).plus(toGwei(1)).toString()
+      toEth(5).toString()
     );
     assert.fieldEquals(
       'FuturesPosition',
@@ -148,8 +202,14 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'pnl',
-      '-200000000001000000000'
+      'realizedPnl',
+      '-2000000000'
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'unrealizedPnl',
+      '-400000000000000000002'
     );
     assert.fieldEquals(
       'FuturesPosition',
@@ -246,7 +306,7 @@ describe('Perps V2', () => {
         .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
         .toString()
     );
-    assert.fieldEquals('Trader', trader.toLowerCase(), 'pnl', '-400000000000000000000');
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'realizedPnl', '-2000000000');
     assert.fieldEquals(
       'Trader',
       trader.toLowerCase(),
@@ -274,7 +334,7 @@ describe('Perps V2', () => {
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
       'margin',
-      toEth(5).plus(toGwei(1)).toString()
+      toEth(5).toString()
     );
     assert.fieldEquals(
       'FuturesTrade',
@@ -315,7 +375,7 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
-      'pnl',
+      'realizedPnl',
       '-1000000000'
     );
     assert.fieldEquals(
@@ -384,18 +444,7 @@ describe('Perps V2', () => {
       'positionClosed',
       'false'
     );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
-      'pnl',
 
-      toEth(1200)
-        .minus(toEth(1000))
-        .times(toEth(-1).abs())
-        .times(BigInt.fromI32(-1))
-        .div(BigInt.fromI32(10).pow(18))
-        .toString()
-    );
     assert.fieldEquals(
       'FuturesTrade',
       `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
@@ -449,11 +498,12 @@ describe('Perps V2', () => {
       20,
       3
     );
-    handlePositionLiquidated(positionLiquidatedEvent);
+    handlePositionLiquidatedLegacy(positionLiquidatedEvent);
     log.warning('STARTING ASSERTION', []);
     // SYNTHETIX
     log.info('Synthetix', []);
-    assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', toEth(1).toString());
+    // 90% of the total fee
+    assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', '849905364703000879');
     // FUTURES TRADE
     log.info('Futures Trade', []);
     assert.fieldEquals(
@@ -701,13 +751,13 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
       'entryPrice',
-      existingPrice.plus(newPrice).div(toEth(2)).toString()
+      toEth(1200).toString()
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
       'avgEntryPrice',
-      existingPrice.plus(newPrice).div(toEth(2)).toString()
+      toEth(1200).toString()
     );
   });
 });

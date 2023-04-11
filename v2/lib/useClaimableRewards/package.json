@@ -2,7 +2,7 @@
   "name": "@snx-v2/useClaimableRewards",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useGetLiquidationRewards": "workspace:*",
