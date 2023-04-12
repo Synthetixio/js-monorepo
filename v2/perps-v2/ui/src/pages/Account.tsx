@@ -36,13 +36,13 @@ export const Account: FC = () => {
       </Link>
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
-          Positions:
+          Positions
         </Heading>
         <PositionsTable />
       </Box>
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
-          Actions:
+          Actions
         </Heading>
         <AccountActionsTable />
       </Box>
