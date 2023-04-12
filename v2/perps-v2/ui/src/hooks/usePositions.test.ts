@@ -1,7 +1,7 @@
 import { wei } from '@synthetixio/wei';
 import {
   calculateMarkPrice,
-  calculateNewPnl,
+  calculateNewUnrealizedPnl,
   calculatePnlPercentage,
   calculatePositionData,
 } from '../utils/calculations';
@@ -18,38 +18,33 @@ describe('calculateMarkPrice', () => {
 });
 
 describe('calculateNewPnl', () => {
-  it('should correctly calculate the new pnl', () => {
+  it('should correctly calculate the new unrealized pnl', () => {
     const subgraphPositionData = {
       fillPriceAtLastInteraction: wei(100),
-      pnlAtLastModification: wei(50),
+      unrealizedPnlAtLastModification: wei(50),
     } as any;
-    const contractData = {
-      size: wei(10),
-      accruedFundingSinceLastModification: wei(5),
-    } as any;
+    const contractData = { size: wei(10) } as any;
     const marketPrice = wei(110);
 
-    const result = calculateNewPnl(subgraphPositionData, contractData, marketPrice);
-    expect(result).toEqual(wei('155'));
+    const result = calculateNewUnrealizedPnl(subgraphPositionData, contractData, marketPrice);
+    expect(result).toEqual(wei('150')); // ((110 - 100) * 10) + (5 * 10)
   });
 });
 
 describe('calculatePnlPercentage', () => {
   test('calculates PnL percentage correctly', () => {
     const subgraphPositionData = { avgEntryPrice: wei(50) } as any;
-    const contractData = { size: wei(100) } as any;
-    const pnl = wei(1000);
+    const marketPrice = wei(100);
 
-    const result = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
-    expect(result.toNumber()).toBe(0.2);
+    const result = calculatePnlPercentage(subgraphPositionData, marketPrice);
+    expect(result.toNumber()).toBe(1);
   });
 
   test('handles zero shift case', () => {
-    const subgraphPositionData = { avgEntryPrice: wei(50) } as any;
-    const contractData = { size: wei(100) } as any;
-    const pnl = wei(0);
+    const subgraphPositionData = { avgEntryPrice: wei(100) } as any;
+    const marketPrice = wei(100);
 
-    const result = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
+    const result = calculatePnlPercentage(subgraphPositionData, marketPrice);
     expect(result.toNumber()).toBe(0);
   });
 });
@@ -60,7 +55,8 @@ describe('calculatePositionData', () => {
       asset: 'BTC',
       market: '0xxxx',
       fillPriceAtLastInteraction: wei(150),
-      pnlAtLastModification: wei(150),
+      unrealizedPnlAtLastModification: wei(150),
+      realizedPnlAtLastModification: wei(-31.1),
       netFundingAtLastModification: wei(30),
       avgEntryPrice: wei(100),
       leverage: wei(5),
@@ -70,7 +66,8 @@ describe('calculatePositionData', () => {
       size: wei(10),
       indexPrice: wei(120),
       liquidationPrice: wei(80),
-      accessibleMargin: wei(200),
+      accessibleMargin: wei(100),
+      remainingMargin: wei(200),
       skew: wei(10),
       skewScale: wei(20),
       accruedFundingSinceLastModification: wei(5),
@@ -85,15 +82,16 @@ describe('calculatePositionData', () => {
       asset: 'BTC',
       indexPrice: wei(120),
       liquidationPrice: wei(80),
-      pnl: wei(455),
-      pnlPercentage: wei(0.455),
-      margin: wei(200),
+      realizedPnl: wei(-26.1), // -30.1 + 5
+      unrealizedPnl: wei(450), // ((180 - 150) * 10) + 150
+      unrealizedPnlPercentage: wei(0.8), // (180- 100) / 100
+      remainingMargin: wei(200),
       size: wei(10),
       long: true,
       avgEntryPrice: wei(100),
-      leverage: wei(5),
+      leverage: wei(9), // (10 * 180) / 200
       funding: wei(35),
-      marketPrice: wei(180),
+      marketPrice: wei(180), // 120 * (1 + (10 / 20) )
       notionalValue: wei(1800),
       fees: wei(0.1),
     });
