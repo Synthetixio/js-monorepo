@@ -1,4 +1,4 @@
-import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text, Td, Fade } from '@chakra-ui/react';
+import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { Currency, TableHeaderCell, PnL, Market, Size, Funding, MarkPrice } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
