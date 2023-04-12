@@ -3,7 +3,7 @@ import { ArrowBackIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { optimisticEthercanLink } from '../utils/constants';
-import { PositionsTable } from '../components/Positions';
+// import { PositionsTable } from '../components/Positions';
 import { AccountActionsTable } from '../components/Actions';
 
 export const Account: FC = () => {
@@ -34,12 +34,12 @@ export const Account: FC = () => {
         </Heading>
         <ExternalLinkIcon ml={2} color="cyan.500" />
       </Link>
-      <Box mt={6}>
+      {/* <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
           Positions
         </Heading>
         <PositionsTable />
-      </Box>
+      </Box> */}
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
           Actions
