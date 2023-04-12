@@ -32,7 +32,7 @@ export const PositionDataSchema = z.object({
   liquidationPrice: ZodWei,
   unrealizedPnl: ZodWei,
   realizedPnl: ZodWei,
-  pnlPercentage: ZodWei,
+  unrealizedPnlPercentage: ZodWei,
   remainingMargin: ZodWei,
   size: ZodWei,
   long: z.boolean(),

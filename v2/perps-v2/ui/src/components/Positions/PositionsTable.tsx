@@ -62,7 +62,7 @@ export const PositionsTable = () => {
                     liquidationPrice,
                     marketPrice,
                     fees,
-                    pnlPercentage,
+                    unrealizedPnlPercentage,
                   },
                   index
                 ) => {
@@ -76,7 +76,7 @@ export const PositionsTable = () => {
                       />
                       <PnL
                         pnl={unrealizedPnl.toNumber()}
-                        pnlPercentage={pnlPercentage.toNumber()}
+                        pnlPercentage={unrealizedPnlPercentage.toNumber()} //
                       />
                       <PnL pnl={realizedPnl.toNumber()} />
 

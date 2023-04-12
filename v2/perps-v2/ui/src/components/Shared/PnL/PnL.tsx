@@ -21,7 +21,7 @@ export const PnL = ({ pnl, pnlPercentage }: PnLProps) => {
         </Text>
         {pnlPercentage === undefined ? null : (
           <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-            {pnl >= 0 ? '+' : '-'}
+            {pnl >= 0 ? '+' : ''}
             {formatPercent(pnlPercentage)}
           </Text>
         )}

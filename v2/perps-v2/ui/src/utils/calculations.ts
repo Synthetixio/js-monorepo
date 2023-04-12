@@ -39,13 +39,10 @@ export const calculateNewUnrealizedPnl = (
 
 export const calculatePnlPercentage = (
   subgraphPositionData: SubgraphPositionData,
-  contractData: ContractData,
-  pnl: Wei
+  marketPrice: Wei
 ) => {
-  if (pnl.eq(0)) return wei(0);
-
-  const initialValue = contractData.size.mul(subgraphPositionData.avgEntryPrice);
-  const currentVal = initialValue.add(pnl);
+  const initialValue = subgraphPositionData.avgEntryPrice;
+  const currentVal = marketPrice;
   const shift = currentVal.sub(initialValue);
   return shift.div(initialValue);
 };
@@ -65,7 +62,7 @@ export const calculatePositionData = (
   );
 
   const notionalValue = contractData.size.mul(marketPrice);
-  const pnlPercentage = calculatePnlPercentage(subgraphPositionData, contractData, unrealizedPnl);
+  const unrealizedPnlPercentage = calculatePnlPercentage(subgraphPositionData, marketPrice);
   const netFunding = subgraphPositionData.netFundingAtLastModification.add(
     contractData.accruedFundingSinceLastModification
   );
@@ -76,7 +73,7 @@ export const calculatePositionData = (
     liquidationPrice: contractData.liquidationPrice,
     unrealizedPnl,
     realizedPnl,
-    pnlPercentage,
+    unrealizedPnlPercentage,
     remainingMargin: contractData.remainingMargin,
     size: contractData.size,
     long: contractData.size.gt(0),
