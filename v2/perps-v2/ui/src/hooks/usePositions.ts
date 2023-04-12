@@ -127,6 +127,7 @@ export async function fetchPositions(
         skewScale: wei(fundingParameters.skewScale),
         indexPrice: wei(priceDetails.price),
         accessibleMargin: wei(positionDetails.accessibleMargin),
+        remainingMargin: wei(positionDetails.remainingMargin),
         accruedFundingSinceLastModification: wei(positionDetails.accruedFunding),
       };
     }

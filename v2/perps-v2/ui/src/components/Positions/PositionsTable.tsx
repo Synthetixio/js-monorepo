@@ -1,15 +1,6 @@
-import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
+import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text, Td, Fade } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import {
-  Currency,
-  TableHeaderCell,
-  PnL,
-  Market,
-  Size,
-  Funding,
-  MarkPrice,
-  NetValue,
-} from '../Shared';
+import { Currency, TableHeaderCell, PnL, Market, Size, Funding, MarkPrice } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
 import { usePositions } from '../../hooks';
 
@@ -35,11 +26,10 @@ export const PositionsTable = () => {
             <Thead>
               <Tr>
                 <TableHeaderCell>Market</TableHeaderCell>
-                {/* <TableHeaderCell>Net Value</TableHeaderCell> */}
                 <TableHeaderCell>Unrealized PNL</TableHeaderCell>
                 <TableHeaderCell>Realized PNL</TableHeaderCell>
                 <TableHeaderCell>Size</TableHeaderCell>
-                <TableHeaderCell>Collateral</TableHeaderCell>
+                <TableHeaderCell>Remaining Margin</TableHeaderCell>
                 <TableHeaderCell>Funding</TableHeaderCell>
                 <TableHeaderCell>Fees</TableHeaderCell>
                 <TableHeaderCell>Avg Entry Price</TableHeaderCell>
@@ -64,7 +54,7 @@ export const PositionsTable = () => {
                     leverage,
                     unrealizedPnl,
                     realizedPnl,
-                    margin,
+                    remainingMargin,
                     size,
                     long,
                     address,
@@ -76,9 +66,6 @@ export const PositionsTable = () => {
                   },
                   index
                 ) => {
-                  // Need to take away fees
-                  // const netValue = size.abs().mul(marketPrice).add(pnl).sub(fees);
-
                   return (
                     <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
                       {/* Market and Direction */}
@@ -87,8 +74,6 @@ export const PositionsTable = () => {
                         leverage={leverage.toNumber()}
                         direction={long ? 'LONG' : 'SHORT'}
                       />
-                      {/* Net value */}
-                      {/* <NetValue amount={netValue.toNumber()} /> */}
                       <PnL
                         pnl={unrealizedPnl.toNumber()}
                         pnlPercentage={pnlPercentage.toNumber()}
@@ -98,7 +83,7 @@ export const PositionsTable = () => {
                       <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
 
                       {/* Collateral */}
-                      <Currency amount={margin.toNumber()} />
+                      <Currency amount={remainingMargin.toNumber()} />
                       {/* Funding */}
                       <Funding amount={funding.toNumber()} />
                       {/* Fees */}

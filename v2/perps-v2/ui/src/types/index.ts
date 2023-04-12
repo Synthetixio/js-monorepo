@@ -20,6 +20,7 @@ export interface ContractData {
   size: Wei;
   liquidationPrice: Wei;
   accessibleMargin: Wei;
+  remainingMargin: Wei;
   accruedFundingSinceLastModification: Wei;
 }
 
@@ -32,7 +33,7 @@ export const PositionDataSchema = z.object({
   unrealizedPnl: ZodWei,
   realizedPnl: ZodWei,
   pnlPercentage: ZodWei,
-  margin: ZodWei,
+  remainingMargin: ZodWei,
   size: ZodWei,
   long: z.boolean(),
   avgEntryPrice: ZodWei,
