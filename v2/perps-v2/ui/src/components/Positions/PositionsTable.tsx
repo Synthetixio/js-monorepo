@@ -26,14 +26,14 @@ export const PositionsTable = () => {
             <Thead>
               <Tr>
                 <TableHeaderCell>Market</TableHeaderCell>
+                <TableHeaderCell>Mark Price</TableHeaderCell>
+                <TableHeaderCell>Size</TableHeaderCell>
                 <TableHeaderCell>Unrealized PNL</TableHeaderCell>
                 <TableHeaderCell>Realized PNL</TableHeaderCell>
-                <TableHeaderCell>Size</TableHeaderCell>
                 <TableHeaderCell>Remaining Margin</TableHeaderCell>
                 <TableHeaderCell>Funding</TableHeaderCell>
                 <TableHeaderCell>Fees</TableHeaderCell>
                 <TableHeaderCell>Avg Entry Price</TableHeaderCell>
-                <TableHeaderCell>Mark Price</TableHeaderCell>
                 <TableHeaderCell>Liquidation Price</TableHeaderCell>
               </Tr>
             </Thead>
@@ -74,13 +74,18 @@ export const PositionsTable = () => {
                         leverage={leverage.toNumber()}
                         direction={long ? 'LONG' : 'SHORT'}
                       />
+                      {/* Mark Price */}
+                      <MarkPrice
+                        indexPrice={indexPrice.toNumber()}
+                        markPrice={marketPrice.toNumber()}
+                      />
+                      <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
+
                       <PnL
                         pnl={unrealizedPnl.toNumber()}
                         pnlPercentage={unrealizedPnlPercentage.toNumber()} //
                       />
                       <PnL pnl={realizedPnl.toNumber()} />
-
-                      <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
 
                       {/* Collateral */}
                       <Currency amount={remainingMargin.toNumber()} />
@@ -90,12 +95,6 @@ export const PositionsTable = () => {
                       <Currency amount={fees.toNumber()} />
                       {/* Entry Price */}
                       <Currency amount={avgEntryPrice.toNumber()} />
-
-                      {/* Mark Price */}
-                      <MarkPrice
-                        indexPrice={indexPrice.toNumber()}
-                        markPrice={marketPrice.toNumber()}
-                      />
 
                       {/* Liquidation Price */}
                       <Currency amount={liquidationPrice.toNumber()} />
