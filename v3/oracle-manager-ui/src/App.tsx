@@ -43,6 +43,7 @@ export const App: FC = () => {
       toggleColorMode();
     }
   }, [colorMode, toggleColorMode]);
+
   return (
     <Box px="10" py="5">
       <Flex justifyContent="space-between" mb="5">
@@ -55,9 +56,8 @@ export const App: FC = () => {
             Search for existing Nodes here:
           </Text>
           <Flex>
-            <Input placeholder="Enter Node ID" minW="340px" {...register('search')} />
+            <Input placeholder="Enter Node ID" minW="340px" {...register('search')} mr="16px" />
             <Button
-              ml="2"
               variant="outline"
               colorScheme="gray"
               p="2"
@@ -87,10 +87,11 @@ export const App: FC = () => {
           <br />
           Click on the black connection lines to disconnect a parent node from a child node.
         </Text>
-        <Flex justifyContent="center" gap="2">
+        <Flex justifyContent="center">
           <Button
             variant="outline"
             colorScheme="gray"
+            mr="16px"
             isDisabled={!isWalletConnected}
             onClick={() => {
               if (signer && network?.id) {
@@ -127,6 +128,7 @@ export const App: FC = () => {
             Register All Nodes
           </Button>
           <Button
+            mr="16px"
             variant="outline"
             colorScheme="gray"
             onClick={() => {
@@ -142,6 +144,7 @@ export const App: FC = () => {
             Save
           </Button>
           <Button
+            mr="16px"
             disabled={!nodes.length}
             variant="outline"
             colorScheme="gray"
