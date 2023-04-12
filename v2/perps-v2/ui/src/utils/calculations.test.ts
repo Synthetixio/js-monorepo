@@ -4,7 +4,7 @@ import {
   calculateNewUnrealizedPnl,
   calculatePnlPercentage,
   calculatePositionData,
-} from '../utils/calculations';
+} from './calculations';
 
 describe('calculateMarkPrice', () => {
   it('should correctly calculate the mark price', () => {
