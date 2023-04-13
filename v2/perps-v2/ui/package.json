@@ -6,8 +6,8 @@
     "start": "yarn compile && webpack-cli serve",
     "build": "yarn compile && webpack-cli",
     "compile": "graphql-codegen",
-    "test": "NODE_ENV=test jest",
-    "typecheck": "tsc --noEmit",
+    "test": "yarn compile && NODE_ENV=test jest",
+    "typecheck": "yarn compile && tsc --noEmit",
     "standalone-install": "yarn workspaces focus '@synthetixio/perps-v2-dashboard'",
     "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/perps-v2-dashboard' run build"
   },
