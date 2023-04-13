@@ -9,17 +9,17 @@ import {
   PerpsV2MarketData as PerpsV2MarketDataGoerli,
 } from '@synthetixio/contracts/build/goerli-ovm/deployment/PerpsV2MarketData';
 
-import {
-  abi,
-  address,
-  PerpsV2MarketData,
-} from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
+// import {
+//   abi,
+//   address,
+//   PerpsV2MarketData,
+// } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import {
   abi as multiCallAbi,
   address as multiCallAddressGoerli,
   Multicall3,
 } from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
-import { address as multicallMainnetAddress } from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
+import { address as multicallMainnetAddress } from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
 import { wei } from '@synthetixio/wei';
 import { ContractData, SubgraphPositionData, PositionsDataSchema } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
@@ -31,14 +31,20 @@ const OPTIMISM__ID = 10;
 
 const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
 const provider = new providers.InfuraProvider(networkId, infuraId);
-
+// todo remove when synthetix release is done
+const ADDRESS_TO_MAINNET_REMOVE_ME_SOON = '0x58e6227510F83d3F45B339F2f7A05a699fDEE6D4';
 const contract = isStaging
   ? (new Contract(
       perpsMarketDataAddressGoerli,
       perpsMarketDataAbiGoerli,
       provider
     ) as PerpsV2MarketDataGoerli)
-  : (new Contract(address, abi, provider) as PerpsV2MarketData);
+  : // TODO, use the address, abu and PerpsV2MarketData from mainnet-ovm/deployment/PerpsV2MarketData
+    (new Contract(
+      ADDRESS_TO_MAINNET_REMOVE_ME_SOON,
+      perpsMarketDataAbiGoerli,
+      provider
+    ) as PerpsV2MarketDataGoerli);
 
 const Multicall3Contract = new Contract(
   isStaging ? multiCallAddressGoerli : multicallMainnetAddress,
