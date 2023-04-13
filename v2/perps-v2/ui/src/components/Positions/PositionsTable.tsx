@@ -1,15 +1,6 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import {
-  Currency,
-  TableHeaderCell,
-  PnL,
-  Market,
-  Size,
-  Funding,
-  MarkPrice,
-  NetValue,
-} from '../Shared';
+import { Currency, TableHeaderCell, PnL, Market, Size, Funding, MarkPrice } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
 import { usePositions } from '../../hooks';
 
@@ -35,14 +26,14 @@ export const PositionsTable = () => {
             <Thead>
               <Tr>
                 <TableHeaderCell>Market</TableHeaderCell>
-                <TableHeaderCell>Net Value</TableHeaderCell>
-                <TableHeaderCell>PnL</TableHeaderCell>
+                <TableHeaderCell>Mark Price</TableHeaderCell>
                 <TableHeaderCell>Size</TableHeaderCell>
-                <TableHeaderCell>Collateral</TableHeaderCell>
+                <TableHeaderCell>Unrealized PNL</TableHeaderCell>
+                <TableHeaderCell>Realized PNL</TableHeaderCell>
+                <TableHeaderCell>Remaining Margin</TableHeaderCell>
                 <TableHeaderCell>Funding</TableHeaderCell>
                 <TableHeaderCell>Fees</TableHeaderCell>
                 <TableHeaderCell>Avg Entry Price</TableHeaderCell>
-                <TableHeaderCell>Mark Price</TableHeaderCell>
                 <TableHeaderCell>Liquidation Price</TableHeaderCell>
               </Tr>
             </Thead>
@@ -61,8 +52,9 @@ export const PositionsTable = () => {
                     avgEntryPrice,
                     indexPrice,
                     leverage,
-                    pnl,
-                    margin,
+                    unrealizedPnl,
+                    realizedPnl,
+                    remainingMargin,
                     size,
                     long,
                     address,
@@ -70,13 +62,10 @@ export const PositionsTable = () => {
                     liquidationPrice,
                     marketPrice,
                     fees,
-                    pnlPercentage,
+                    unrealizedPnlPercentage,
                   },
                   index
                 ) => {
-                  // Need to take away fees
-                  const netValue = size.abs().mul(marketPrice).add(pnl).sub(fees);
-
                   return (
                     <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
                       {/* Market and Direction */}
@@ -85,26 +74,27 @@ export const PositionsTable = () => {
                         leverage={leverage.toNumber()}
                         direction={long ? 'LONG' : 'SHORT'}
                       />
-                      {/* Net value */}
-                      <NetValue amount={netValue.toNumber()} />
-                      <PnL pnl={pnl.toNumber()} pnlPercentage={pnlPercentage.toNumber()} />
-
+                      {/* Mark Price */}
+                      <MarkPrice
+                        indexPrice={indexPrice.toNumber()}
+                        markPrice={marketPrice.toNumber()}
+                      />
                       <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
 
+                      <PnL
+                        pnl={unrealizedPnl.toNumber()}
+                        pnlPercentage={unrealizedPnlPercentage.toNumber()} //
+                      />
+                      <PnL pnl={realizedPnl.toNumber()} />
+
                       {/* Collateral */}
-                      <Currency amount={margin.toNumber()} />
+                      <Currency amount={remainingMargin.toNumber()} />
                       {/* Funding */}
                       <Funding amount={funding.toNumber()} />
                       {/* Fees */}
                       <Currency amount={fees.toNumber()} />
                       {/* Entry Price */}
                       <Currency amount={avgEntryPrice.toNumber()} />
-
-                      {/* Mark Price */}
-                      <MarkPrice
-                        indexPrice={indexPrice.toNumber()}
-                        markPrice={marketPrice.toNumber()}
-                      />
 
                       {/* Liquidation Price */}
                       <Currency amount={liquidationPrice.toNumber()} />

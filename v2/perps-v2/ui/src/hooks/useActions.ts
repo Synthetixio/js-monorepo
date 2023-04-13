@@ -86,7 +86,7 @@ const mergeData = (
     const withdraw = `${marginTransfer.size}`.includes('-');
     return {
       label: `${withdraw ? 'Withdraw' : 'Deposit'} Margin`,
-      address: marginTransfer.account,
+      address: marginTransfer.trader.id,
       asset: marginTransfer.market.asset,
       fees: null,
       id: marginTransfer.id,
@@ -101,7 +101,7 @@ const mergeData = (
   const parsedTradeData: ActionData[] = futuresTradesData.map((futuresTrade) => {
     return {
       label: getTradeLabel(futuresTrade),
-      address: futuresTrade.account,
+      address: futuresTrade.trader.id,
       asset: futuresTrade.market.asset,
       fees: wei(futuresTrade.feesPaidToSynthetix, 18, true),
       id: futuresTrade.id,
@@ -120,7 +120,7 @@ const mergeData = (
 export const useActions = (account?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('marketAddress') || undefined;
-
+  const accountLower = account?.toLowerCase();
   const {
     loading: marginLoading,
     data: marginData,
@@ -132,7 +132,7 @@ export const useActions = (account?: string) => {
       orderBy: FuturesMarginTransfer_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {
-        account,
+        trader: accountLower,
         market: marketAddress,
       },
     },
@@ -149,7 +149,7 @@ export const useActions = (account?: string) => {
       orderBy: FuturesTrade_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {
-        account,
+        trader: accountLower,
         market: marketAddress,
       },
     },

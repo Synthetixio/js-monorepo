@@ -39,8 +39,7 @@
                 "internalType": "uint256",
                 "name": "makerFeeOffchainDelayedOrder",
                 "type": "uint256"
-              },
-              { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" }
+              }
             ],
             "internalType": "struct PerpsV2MarketData.FeeRates",
             "name": "feeRates",
@@ -88,8 +87,7 @@
                 "internalType": "uint256",
                 "name": "makerFeeOffchainDelayedOrder",
                 "type": "uint256"
-              },
-              { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" }
+              }
             ],
             "internalType": "struct PerpsV2MarketData.FeeRates",
             "name": "feeRates",
@@ -114,8 +112,8 @@
         "components": [
           { "internalType": "uint256", "name": "minInitialMargin", "type": "uint256" },
           { "internalType": "uint256", "name": "liquidationFeeRatio", "type": "uint256" },
-          { "internalType": "uint256", "name": "liquidationBufferRatio", "type": "uint256" },
-          { "internalType": "uint256", "name": "minKeeperFee", "type": "uint256" }
+          { "internalType": "uint256", "name": "minKeeperFee", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxKeeperFee", "type": "uint256" }
         ],
         "internalType": "struct PerpsV2MarketData.FuturesGlobals",
         "name": "",
@@ -153,8 +151,7 @@
                 "internalType": "uint256",
                 "name": "makerFeeOffchainDelayedOrder",
                 "type": "uint256"
-              },
-              { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" }
+              }
             ],
             "internalType": "struct PerpsV2MarketData.FeeRates",
             "name": "feeRates",
@@ -241,8 +238,7 @@
                 "internalType": "uint256",
                 "name": "makerFeeOffchainDelayedOrder",
                 "type": "uint256"
-              },
-              { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" }
+              }
             ],
             "internalType": "struct PerpsV2MarketData.FeeRates",
             "name": "feeRates",
@@ -336,8 +332,7 @@
                 "internalType": "uint256",
                 "name": "makerFeeOffchainDelayedOrder",
                 "type": "uint256"
-              },
-              { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" }
+              }
             ],
             "internalType": "struct PerpsV2MarketData.FeeRates",
             "name": "feeRates",
@@ -385,8 +380,7 @@
                 "internalType": "uint256",
                 "name": "makerFeeOffchainDelayedOrder",
                 "type": "uint256"
-              },
-              { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" }
+              }
             ],
             "internalType": "struct PerpsV2MarketData.FeeRates",
             "name": "feeRates",
@@ -411,7 +405,6 @@
         "components": [
           { "internalType": "uint256", "name": "takerFee", "type": "uint256" },
           { "internalType": "uint256", "name": "makerFee", "type": "uint256" },
-          { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" },
           { "internalType": "uint256", "name": "takerFeeDelayedOrder", "type": "uint256" },
           { "internalType": "uint256", "name": "makerFeeDelayedOrder", "type": "uint256" },
           { "internalType": "uint256", "name": "takerFeeOffchainDelayedOrder", "type": "uint256" },
@@ -427,7 +420,11 @@
           { "internalType": "uint256", "name": "offchainDelayedOrderMinAge", "type": "uint256" },
           { "internalType": "uint256", "name": "offchainDelayedOrderMaxAge", "type": "uint256" },
           { "internalType": "bytes32", "name": "offchainMarketKey", "type": "bytes32" },
-          { "internalType": "uint256", "name": "offchainPriceDivergence", "type": "uint256" }
+          { "internalType": "uint256", "name": "offchainPriceDivergence", "type": "uint256" },
+          { "internalType": "uint256", "name": "liquidationPremiumMultiplier", "type": "uint256" },
+          { "internalType": "uint256", "name": "liquidationBufferRatio", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxLiquidationDelta", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxPD", "type": "uint256" }
         ],
         "internalType": "struct IPerpsV2MarketSettings.Parameters",
         "name": "",
