@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Subgraph types needs to be built based on the enviorment
+*__generated__*
