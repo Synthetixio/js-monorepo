@@ -26,9 +26,6 @@ import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 import { useSearchParams } from 'react-router-dom';
 import { isStaging } from '../utils/isStaging';
 
-export function notNill<Value>(value: Value | null | undefined): value is Value {
-  return value !== null && value !== undefined;
-}
 const OPTIMISM_GOERLI_NETWORK_ID = 420;
 const OPTIMISM__ID = 10;
 

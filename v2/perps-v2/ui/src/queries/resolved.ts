@@ -2,7 +2,8 @@ import { Resolvers, gql } from '@apollo/client';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
 import Wei, { wei } from '@synthetixio/wei';
 import { utils } from 'ethers';
-import { fetchPositions, notNill } from '../hooks';
+import { fetchPositions } from '../hooks';
+import { notNill } from '../utils/notNil';
 import { FuturesMarketKey, MARKETS, scale, calculatePositionData } from '../utils';
 
 export const POSITIONS_CONTRACT_QUERY = gql(`
