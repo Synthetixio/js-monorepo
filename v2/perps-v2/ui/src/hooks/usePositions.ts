@@ -4,15 +4,22 @@ import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 import { infuraId } from '../utils';
 import { FuturesPosition_OrderBy, OrderDirection } from '../__generated__/graphql';
 import {
+  abi as perpsMarketDataAbiGoerli,
+  address as perpsMarketDataAddressGoerli,
+  PerpsV2MarketData as PerpsV2MarketDataGoerli,
+} from '@synthetixio/contracts/build/goerli-ovm/deployment/PerpsV2MarketData';
+
+import {
   abi,
   address,
   PerpsV2MarketData,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/PerpsV2MarketData';
+} from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import {
   abi as multiCallAbi,
-  address as multiCallAddress,
+  address as multiCallAddressGoerli,
   Multicall3,
 } from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
+import { address as multicallMainnetAddress } from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
 import { wei } from '@synthetixio/wei';
 import { ContractData, SubgraphPositionData, PositionsDataSchema } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
@@ -28,8 +35,19 @@ const OPTIMISM__ID = 10;
 const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
 const provider = new providers.InfuraProvider(networkId, infuraId);
 
-const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
-const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider) as Multicall3;
+const contract = isStaging
+  ? (new Contract(
+      perpsMarketDataAddressGoerli,
+      perpsMarketDataAbiGoerli,
+      provider
+    ) as PerpsV2MarketDataGoerli)
+  : (new Contract(address, abi, provider) as PerpsV2MarketData);
+
+const Multicall3Contract = new Contract(
+  isStaging ? multiCallAddressGoerli : multicallMainnetAddress,
+  multiCallAbi,
+  provider
+) as Multicall3;
 
 export const usePositions = (walletAddress?: string) => {
   const [searchParams] = useSearchParams();
