@@ -17,11 +17,16 @@ import { wei } from '@synthetixio/wei';
 import { ContractData, SubgraphPositionData, PositionsDataSchema } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 import { useSearchParams } from 'react-router-dom';
+import { isStaging } from '../utils/isStaging';
 
 export function notNill<Value>(value: Value | null | undefined): value is Value {
   return value !== null && value !== undefined;
 }
-const provider = new providers.InfuraProvider(420, infuraId);
+const OPTIMISM_GOERLI_NETWORK_ID = 420;
+const OPTIMISM__ID = 10;
+
+const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
+const provider = new providers.InfuraProvider(networkId, infuraId);
 
 const contract = new Contract(address, abi, provider) as PerpsV2MarketData;
 const Multicall3Contract = new Contract(multiCallAddress, multiCallAbi, provider) as Multicall3;
