@@ -1,23 +1,28 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'FuturesMarketManager';
-export const address = '0xc429dd84c9a9a7c786764c7dcaF31e30bd35BcdF';
+export const address = '0x93E42aF866EEEf6C8c6f22B1BcDbf97a00159a2e';
 export const source = 'FuturesMarketManager';
 export const abi = [
   'constructor(address _owner, address _resolver)',
   'event CacheUpdated(bytes32 name, address destination)',
+  'event EndorsedAddressAdded(address endorsedAddress)',
+  'event EndorsedAddressRemoved(address endorsedAddress)',
   'event MarketAdded(address market, bytes32 indexed asset, bytes32 indexed marketKey)',
   'event MarketRemoved(address market, bytes32 indexed asset, bytes32 indexed marketKey)',
   'event OwnerChanged(address oldOwner, address newOwner)',
   'event OwnerNominated(address newOwner)',
   'function CONTRACT_NAME() view returns (bytes32)',
   'function acceptOwnership()',
+  'function addEndorsedAddresses(address[] addresses)',
   'function addMarkets(address[] marketsToAdd)',
   'function addProxiedMarkets(address[] marketsToAdd)',
+  'function allEndorsedAddresses() view returns (address[])',
   'function allMarketSummaries() view returns (tuple(address market, bytes32 asset, bytes32 marketKey, uint256 price, uint256 marketSize, int256 marketSkew, uint256 marketDebt, int256 currentFundingRate, int256 currentFundingVelocity, bool priceInvalid, bool proxied)[])',
   'function allMarkets() view returns (address[])',
   'function allMarkets(bool proxiedMarkets) view returns (address[])',
   'function burnSUSD(address account, uint256 amount) returns (uint256 postReclamationAmount)',
+  'function isEndorsed(address account) view returns (bool)',
   'function isResolverCached() view returns (bool)',
   'function issueSUSD(address account, uint256 amount)',
   'function marketForKey(bytes32) view returns (address)',
@@ -34,6 +39,7 @@ export const abi = [
   'function payFee(uint256 amount, bytes32 trackingCode)',
   'function payFee(uint256 amount)',
   'function rebuildCache()',
+  'function removeEndorsedAddresses(address[] addresses)',
   'function removeMarkets(address[] marketsToRemove)',
   'function removeMarketsByKey(bytes32[] marketKeysToRemove)',
   'function resolver() view returns (address)',
@@ -112,12 +118,15 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
   functions: {
     'CONTRACT_NAME()': FunctionFragment;
     'acceptOwnership()': FunctionFragment;
+    'addEndorsedAddresses(address[])': FunctionFragment;
     'addMarkets(address[])': FunctionFragment;
     'addProxiedMarkets(address[])': FunctionFragment;
+    'allEndorsedAddresses()': FunctionFragment;
     'allMarketSummaries()': FunctionFragment;
     'allMarkets()': FunctionFragment;
     'allMarkets(bool)': FunctionFragment;
     'burnSUSD(address,uint256)': FunctionFragment;
+    'isEndorsed(address)': FunctionFragment;
     'isResolverCached()': FunctionFragment;
     'issueSUSD(address,uint256)': FunctionFragment;
     'marketForKey(bytes32)': FunctionFragment;
@@ -134,6 +143,7 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
     'payFee(uint256,bytes32)': FunctionFragment;
     'payFee(uint256)': FunctionFragment;
     'rebuildCache()': FunctionFragment;
+    'removeEndorsedAddresses(address[])': FunctionFragment;
     'removeMarkets(address[])': FunctionFragment;
     'removeMarketsByKey(bytes32[])': FunctionFragment;
     'resolver()': FunctionFragment;
@@ -146,12 +156,15 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'CONTRACT_NAME'
       | 'acceptOwnership'
+      | 'addEndorsedAddresses'
       | 'addMarkets'
       | 'addProxiedMarkets'
+      | 'allEndorsedAddresses'
       | 'allMarketSummaries'
       | 'allMarkets()'
       | 'allMarkets(bool)'
       | 'burnSUSD'
+      | 'isEndorsed'
       | 'isResolverCached'
       | 'issueSUSD'
       | 'marketForKey'
@@ -168,6 +181,7 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
       | 'payFee(uint256,bytes32)'
       | 'payFee(uint256)'
       | 'rebuildCache'
+      | 'removeEndorsedAddresses'
       | 'removeMarkets'
       | 'removeMarketsByKey'
       | 'resolver'
@@ -178,11 +192,16 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'CONTRACT_NAME', values?: undefined): string;
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'addEndorsedAddresses',
+    values: [PromiseOrValue<string>[]]
+  ): string;
   encodeFunctionData(functionFragment: 'addMarkets', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(
     functionFragment: 'addProxiedMarkets',
     values: [PromiseOrValue<string>[]]
   ): string;
+  encodeFunctionData(functionFragment: 'allEndorsedAddresses', values?: undefined): string;
   encodeFunctionData(functionFragment: 'allMarketSummaries', values?: undefined): string;
   encodeFunctionData(functionFragment: 'allMarkets()', values?: undefined): string;
   encodeFunctionData(
@@ -193,6 +212,7 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
     functionFragment: 'burnSUSD',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'isEndorsed', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'issueSUSD',
@@ -239,6 +259,10 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'removeEndorsedAddresses',
+    values: [PromiseOrValue<string>[]]
+  ): string;
   encodeFunctionData(functionFragment: 'removeMarkets', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(
     functionFragment: 'removeMarketsByKey',
@@ -254,12 +278,15 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: 'CONTRACT_NAME', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addEndorsedAddresses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addMarkets', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addProxiedMarkets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allEndorsedAddresses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allMarketSummaries', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allMarkets()', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allMarkets(bool)', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'burnSUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isEndorsed', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'issueSUSD', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'marketForKey', data: BytesLike): Result;
@@ -276,6 +303,7 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'payFee(uint256,bytes32)', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'payFee(uint256)', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeEndorsedAddresses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'removeMarkets', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'removeMarketsByKey', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
@@ -285,6 +313,8 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
 
   events: {
     'CacheUpdated(bytes32,address)': EventFragment;
+    'EndorsedAddressAdded(address)': EventFragment;
+    'EndorsedAddressRemoved(address)': EventFragment;
     'MarketAdded(address,bytes32,bytes32)': EventFragment;
     'MarketRemoved(address,bytes32,bytes32)': EventFragment;
     'OwnerChanged(address,address)': EventFragment;
@@ -292,6 +322,8 @@ export interface FuturesMarketManagerInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: 'CacheUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'EndorsedAddressAdded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'EndorsedAddressRemoved'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'MarketAdded'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'MarketRemoved'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
@@ -305,6 +337,20 @@ export interface CacheUpdatedEventObject {
 export type CacheUpdatedEvent = TypedEvent<[string, string], CacheUpdatedEventObject>;
 
 export type CacheUpdatedEventFilter = TypedEventFilter<CacheUpdatedEvent>;
+
+export interface EndorsedAddressAddedEventObject {
+  endorsedAddress: string;
+}
+export type EndorsedAddressAddedEvent = TypedEvent<[string], EndorsedAddressAddedEventObject>;
+
+export type EndorsedAddressAddedEventFilter = TypedEventFilter<EndorsedAddressAddedEvent>;
+
+export interface EndorsedAddressRemovedEventObject {
+  endorsedAddress: string;
+}
+export type EndorsedAddressRemovedEvent = TypedEvent<[string], EndorsedAddressRemovedEventObject>;
+
+export type EndorsedAddressRemovedEventFilter = TypedEventFilter<EndorsedAddressRemovedEvent>;
 
 export interface MarketAddedEventObject {
   market: string;
@@ -370,6 +416,11 @@ export interface FuturesMarketManager extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    addEndorsedAddresses(
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     addMarkets(
       marketsToAdd: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -379,6 +430,8 @@ export interface FuturesMarketManager extends BaseContract {
       marketsToAdd: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    allEndorsedAddresses(overrides?: CallOverrides): Promise<[string[]]>;
 
     allMarketSummaries(
       overrides?: CallOverrides
@@ -396,6 +449,8 @@ export interface FuturesMarketManager extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    isEndorsed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     isResolverCached(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -466,6 +521,11 @@ export interface FuturesMarketManager extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    removeEndorsedAddresses(
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     removeMarkets(
       marketsToRemove: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -498,6 +558,11 @@ export interface FuturesMarketManager extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  addEndorsedAddresses(
+    addresses: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   addMarkets(
     marketsToAdd: PromiseOrValue<string>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -507,6 +572,8 @@ export interface FuturesMarketManager extends BaseContract {
     marketsToAdd: PromiseOrValue<string>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  allEndorsedAddresses(overrides?: CallOverrides): Promise<string[]>;
 
   allMarketSummaries(
     overrides?: CallOverrides
@@ -524,6 +591,8 @@ export interface FuturesMarketManager extends BaseContract {
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  isEndorsed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -594,6 +663,11 @@ export interface FuturesMarketManager extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  removeEndorsedAddresses(
+    addresses: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   removeMarkets(
     marketsToRemove: PromiseOrValue<string>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -622,12 +696,19 @@ export interface FuturesMarketManager extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
+    addEndorsedAddresses(
+      addresses: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     addMarkets(marketsToAdd: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     addProxiedMarkets(
       marketsToAdd: PromiseOrValue<string>[],
       overrides?: CallOverrides
     ): Promise<void>;
+
+    allEndorsedAddresses(overrides?: CallOverrides): Promise<string[]>;
 
     allMarketSummaries(
       overrides?: CallOverrides
@@ -645,6 +726,8 @@ export interface FuturesMarketManager extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    isEndorsed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -710,6 +793,11 @@ export interface FuturesMarketManager extends BaseContract {
 
     rebuildCache(overrides?: CallOverrides): Promise<void>;
 
+    removeEndorsedAddresses(
+      addresses: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     removeMarkets(
       marketsToRemove: PromiseOrValue<string>[],
       overrides?: CallOverrides
@@ -737,6 +825,12 @@ export interface FuturesMarketManager extends BaseContract {
   filters: {
     'CacheUpdated(bytes32,address)'(name?: null, destination?: null): CacheUpdatedEventFilter;
     CacheUpdated(name?: null, destination?: null): CacheUpdatedEventFilter;
+
+    'EndorsedAddressAdded(address)'(endorsedAddress?: null): EndorsedAddressAddedEventFilter;
+    EndorsedAddressAdded(endorsedAddress?: null): EndorsedAddressAddedEventFilter;
+
+    'EndorsedAddressRemoved(address)'(endorsedAddress?: null): EndorsedAddressRemovedEventFilter;
+    EndorsedAddressRemoved(endorsedAddress?: null): EndorsedAddressRemovedEventFilter;
 
     'MarketAdded(address,bytes32,bytes32)'(
       market?: null,
@@ -772,6 +866,11 @@ export interface FuturesMarketManager extends BaseContract {
 
     acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
+    addEndorsedAddresses(
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     addMarkets(
       marketsToAdd: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -781,6 +880,8 @@ export interface FuturesMarketManager extends BaseContract {
       marketsToAdd: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    allEndorsedAddresses(overrides?: CallOverrides): Promise<BigNumber>;
 
     allMarketSummaries(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -796,6 +897,8 @@ export interface FuturesMarketManager extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    isEndorsed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isResolverCached(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -864,6 +967,11 @@ export interface FuturesMarketManager extends BaseContract {
 
     rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
+    removeEndorsedAddresses(
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     removeMarkets(
       marketsToRemove: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -893,6 +1001,11 @@ export interface FuturesMarketManager extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    addEndorsedAddresses(
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     addMarkets(
       marketsToAdd: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -902,6 +1015,8 @@ export interface FuturesMarketManager extends BaseContract {
       marketsToAdd: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    allEndorsedAddresses(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allMarketSummaries(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -916,6 +1031,11 @@ export interface FuturesMarketManager extends BaseContract {
       account: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    isEndorsed(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -987,6 +1107,11 @@ export interface FuturesMarketManager extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     rebuildCache(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    removeEndorsedAddresses(
+      addresses: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -142,6 +142,7 @@ module.exports = {
     .concat([
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
+        'process.env.NETWORK_TO_USE': JSON.stringify(process.env.NETWORK_TO_USE),
         'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
         'process.env.NEXT_PUBLIC_INFURA_PROJECT_ID': JSON.stringify(
           process.env.NEXT_PUBLIC_INFURA_PROJECT_ID

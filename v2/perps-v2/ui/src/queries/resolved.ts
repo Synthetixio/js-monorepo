@@ -2,7 +2,8 @@ import { Resolvers, gql } from '@apollo/client';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
 import Wei, { wei } from '@synthetixio/wei';
 import { utils } from 'ethers';
-import { fetchPositions, notNill } from '../hooks';
+import { fetchPositions } from '../hooks';
+import { notNill } from '../utils/notNil';
 import { FuturesMarketKey, MARKETS, scale, calculatePositionData } from '../utils';
 
 export const POSITIONS_CONTRACT_QUERY = gql(`
@@ -49,12 +50,11 @@ export const resolvers: Resolvers | Resolvers[] = {
       return positionsData
 
         .map((contractData, index) => {
-          const pythPrice = offchainPrices.find(
-            (item) => item.asset === openPositions[index]?.asset
-          );
+          const subgraphData = openPositions[index];
+          const pythPrice = offchainPrices.find((item) => item.asset === subgraphData?.asset);
 
           const calculatedPositionData = calculatePositionData(
-            openPositions[index],
+            subgraphData,
             pythPrice?.price,
             contractData,
             walletAddress

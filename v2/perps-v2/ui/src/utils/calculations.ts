@@ -1,6 +1,10 @@
 import Wei, { wei } from '@synthetixio/wei';
 import { SubgraphPositionData, ContractData } from '../types';
 
+export function calculateLeverage(size: Wei, markPrice: Wei, margin: Wei) {
+  if (size.eq(0)) return wei(0);
+  return size.mul(markPrice).div(margin).abs();
+}
 export const calculateMarkPrice = (
   pythPrice: Wei | undefined,
   {
@@ -20,7 +24,7 @@ export const calculateMarkPrice = (
   return markPrice;
 };
 
-export const calculateNewPnl = (
+export const calculateNewUnrealizedPnl = (
   subgraphPositionData: SubgraphPositionData,
   contractData: ContractData,
   marketPrice: Wei
@@ -29,21 +33,16 @@ export const calculateNewPnl = (
     subgraphPositionData.fillPriceAtLastInteraction
   );
   const pnlSinceModification = contractData.size.mul(priceShiftSinceModification);
-  const newPnl = subgraphPositionData.pnlAtLastModification
-    .add(pnlSinceModification)
-    .add(contractData.accruedFundingSinceLastModification);
+  const newPnl = subgraphPositionData.unrealizedPnlAtLastModification.add(pnlSinceModification);
   return newPnl;
 };
 
 export const calculatePnlPercentage = (
   subgraphPositionData: SubgraphPositionData,
-  contractData: ContractData,
-  pnl: Wei
+  marketPrice: Wei
 ) => {
-  if (pnl.eq(0)) return wei(0);
-
-  const initialValue = contractData.size.mul(subgraphPositionData.avgEntryPrice);
-  const currentVal = initialValue.add(pnl);
+  const initialValue = subgraphPositionData.avgEntryPrice;
+  const currentVal = marketPrice;
   const shift = currentVal.sub(initialValue);
   return shift.div(initialValue);
 };
@@ -56,9 +55,14 @@ export const calculatePositionData = (
 ) => {
   if (contractData.size.eq(0)) return null;
   const marketPrice = calculateMarkPrice(pythPrice, contractData);
-  const pnl = calculateNewPnl(subgraphPositionData, contractData, marketPrice);
+  const unrealizedPnl = calculateNewUnrealizedPnl(subgraphPositionData, contractData, marketPrice);
+
+  const realizedPnl = subgraphPositionData.realizedPnlAtLastModification.add(
+    contractData.accruedFundingSinceLastModification
+  );
+
   const notionalValue = contractData.size.mul(marketPrice);
-  const pnlPercentage = calculatePnlPercentage(subgraphPositionData, contractData, pnl);
+  const unrealizedPnlPercentage = calculatePnlPercentage(subgraphPositionData, marketPrice);
   const netFunding = subgraphPositionData.netFundingAtLastModification.add(
     contractData.accruedFundingSinceLastModification
   );
@@ -67,13 +71,14 @@ export const calculatePositionData = (
     asset: subgraphPositionData.asset,
     indexPrice: pythPrice ? pythPrice : contractData.indexPrice,
     liquidationPrice: contractData.liquidationPrice,
-    pnl,
-    pnlPercentage,
-    margin: contractData.accessibleMargin,
+    unrealizedPnl,
+    realizedPnl,
+    unrealizedPnlPercentage,
+    remainingMargin: contractData.remainingMargin,
     size: contractData.size,
     long: contractData.size.gt(0),
     avgEntryPrice: subgraphPositionData.avgEntryPrice,
-    leverage: subgraphPositionData.leverage,
+    leverage: calculateLeverage(contractData.size, marketPrice, contractData.remainingMargin),
     funding: netFunding,
     marketPrice,
     notionalValue: notionalValue,

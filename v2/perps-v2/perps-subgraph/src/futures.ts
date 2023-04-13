@@ -90,7 +90,7 @@ export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLeg
     futuresPosition.isLiquidated = true;
     futuresPosition.isOpen = false;
     futuresPosition.closeTimestamp = event.block.timestamp;
-    futuresPosition.feesPaidToSynthetix = feeForSynthetix;
+    futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(feeForSynthetix);
     futuresPosition.exitPrice = event.params.price;
     futuresPosition.save();
   }
@@ -186,7 +186,9 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     futuresPosition.isLiquidated = true;
     futuresPosition.isOpen = false;
     futuresPosition.closeTimestamp = event.block.timestamp;
-    futuresPosition.feesPaidToSynthetix = event.params.stakersFee;
+    futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(
+      event.params.stakersFee
+    );
     futuresPosition.exitPrice = event.params.price;
     futuresPosition.save();
   }
@@ -269,6 +271,7 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
           event.params.keeperDeposit
         );
+        positionEntity.realizedPnl = positionEntity.realizedPnl.minus(event.params.keeperDeposit);
         positionEntity.save();
       }
       // add fee if not self-executed
