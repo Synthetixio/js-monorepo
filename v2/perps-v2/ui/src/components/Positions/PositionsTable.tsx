@@ -7,7 +7,7 @@ import { usePositions } from '../../hooks';
 export const PositionsTable = () => {
   const { walletAddress } = useParams();
   const { data, error, loading } = usePositions(walletAddress);
-
+  const noData = !data?.length;
   return (
     <>
       <TableContainer
@@ -104,17 +104,18 @@ export const PositionsTable = () => {
               )}
             </Tbody>
           </Table>
-          {!loading && data?.length === 0 && (
+
+          {!loading && !error && noData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
                 No open positions
               </Text>
             </Flex>
           )}
-          {error && (
+          {error && noData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-                No open positions
+                We&apos;re having problem loading the position data
               </Text>
             </Flex>
           )}
