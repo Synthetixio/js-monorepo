@@ -1,1 +1,1 @@
-export const isStaging = process.env.NODE_ENV === 'staging';
+export const isStaging = process.env.NETWORK_TO_USE === 'goerli';

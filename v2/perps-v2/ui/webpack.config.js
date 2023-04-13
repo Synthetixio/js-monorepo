@@ -10,7 +10,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // For depcheck to be happy
 require.resolve('webpack-dev-server');
 
-const isProdOrStaging = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging';
+const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 
 const htmlPlugin = new HtmlWebpackPlugin({
@@ -92,15 +92,15 @@ const devServer = {
 };
 
 module.exports = {
-  devtool: isProdOrStaging ? 'source-map' : isTest ? false : 'eval',
+  devtool: isProd ? 'source-map' : isTest ? false : 'eval',
   devServer,
-  mode: isProdOrStaging ? 'production' : 'development',
+  mode: isProd ? 'production' : 'development',
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     filename: '[name].js',
-    chunkFilename: isProdOrStaging ? 'chunk/[name].[contenthash:8].js' : '[name].js',
+    chunkFilename: isProd ? 'chunk/[name].[contenthash:8].js' : '[name].js',
     assetModuleFilename: '[name].[contenthash:8][ext]',
     clean: true,
   },
@@ -114,9 +114,9 @@ module.exports = {
       automaticNameDelimiter: '--',
       name: false,
     },
-    moduleIds: isProdOrStaging ? 'deterministic' : 'named',
-    chunkIds: isProdOrStaging ? 'deterministic' : 'named',
-    minimize: isProdOrStaging,
+    moduleIds: isProd ? 'deterministic' : 'named',
+    chunkIds: isProd ? 'deterministic' : 'named',
+    minimize: isProd,
     minimizer: [new TerserPlugin()],
     innerGraph: true,
     emitOnErrors: false,
@@ -141,9 +141,7 @@ module.exports = {
     ])
     .concat([
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(
-          isProdOrStaging ? process.env.NODE_ENV : 'development'
-        ),
+        'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
         'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
         'process.env.NEXT_PUBLIC_INFURA_PROJECT_ID': JSON.stringify(
           process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
@@ -157,9 +155,7 @@ module.exports = {
       }),
     ])
 
-    .concat(
-      isProdOrStaging ? [] : isTest ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })]
-    )
+    .concat(isProd ? [] : isTest ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })])
     .concat(
       process.env.GENERATE_BUNDLE_REPORT === 'true'
         ? [
