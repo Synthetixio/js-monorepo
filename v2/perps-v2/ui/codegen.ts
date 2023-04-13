@@ -1,8 +1,10 @@
+require('dotenv').config({ path: '.env.local', override: true });
 import { CodegenConfig } from '@graphql-codegen/cli';
+import { PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL, PERPS_V2_DASHBOARD_GRAPH_URL } from './src/utils';
+import { isStaging } from './src/utils/isStaging';
 
-// TODO change this back to non goerli once we're happy with the changes
 const config: CodegenConfig = {
-  schema: 'https://api.thegraph.com/subgraphs/name/synthetix-perps/perps-op-goerli',
+  schema: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
   documents: ['src/**/*.ts'],
   generates: {
     './src/__generated__/': {

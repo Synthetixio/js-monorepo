@@ -8,13 +8,14 @@ import { Header } from './components/Header';
 import { createRoot } from 'react-dom/client';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import {
-  // PERPS_V2_DASHBOARD_GRAPH_URL,
+  PERPS_V2_DASHBOARD_GRAPH_URL,
   PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
+import { isStaging } from './utils/isStaging';
 
 const client = new ApolloClient({
-  uri: PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
+  uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
   cache: new InMemoryCache(),
   resolvers,
   typeDefs,
