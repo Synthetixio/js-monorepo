@@ -13,7 +13,7 @@
     "src",
     "index.js"
   ],
-  "version": "1.1.9",
+  "version": "1.1.10",
   "author": "Nikita <noisekit@btnk.au>",
   "repository": "github:Synthetixio/js-monorepo",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "@typechain/ethers-v5": "^10.2.0",
     "ethers": "^5.7.2",
     "prettier": "^2.8.4",
-    "synthetix": "2.86.0-alpha",
+    "synthetix": "2.86.1",
     "typechain": "^8.1.1",
     "typescript": "^4.9.5"
   },
