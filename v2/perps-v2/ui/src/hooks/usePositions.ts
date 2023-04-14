@@ -8,12 +8,11 @@ import {
   address as perpsMarketDataAddressGoerli,
   PerpsV2MarketData as PerpsV2MarketDataGoerli,
 } from '@synthetixio/contracts/build/goerli-ovm/deployment/PerpsV2MarketData';
-
-// import {
-//   abi,
-//   address,
-//   PerpsV2MarketData,
-// } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
+import {
+  abi as abiPerpsMarketData,
+  address as addressPerpsMarketData,
+  PerpsV2MarketData,
+} from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import {
   abi as multiCallAbi,
   address as multiCallAddressGoerli,
@@ -31,20 +30,14 @@ const OPTIMISM__ID = 10;
 
 const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
 const provider = new providers.InfuraProvider(networkId, infuraId);
-// todo remove when synthetix release is done
-const ADDRESS_TO_MAINNET_REMOVE_ME_SOON = '0x58e6227510F83d3F45B339F2f7A05a699fDEE6D4';
-const contract = isStaging
+
+const perpsMarketDataContract = isStaging
   ? (new Contract(
       perpsMarketDataAddressGoerli,
       perpsMarketDataAbiGoerli,
       provider
     ) as PerpsV2MarketDataGoerli)
-  : // TODO, use the address, abu and PerpsV2MarketData from mainnet-ovm/deployment/PerpsV2MarketData
-    (new Contract(
-      ADDRESS_TO_MAINNET_REMOVE_ME_SOON,
-      perpsMarketDataAbiGoerli,
-      provider
-    ) as PerpsV2MarketDataGoerli);
+  : (new Contract(addressPerpsMarketData, abiPerpsMarketData, provider) as PerpsV2MarketData);
 
 const Multicall3Contract = new Contract(
   isStaging ? multiCallAddressGoerli : multicallMainnetAddress,
@@ -109,16 +102,16 @@ export async function fetchPositions(
   address: string
 ): Promise<ContractData[]> {
   const positionDetailCalls = positionData.map(({ market }) => ({
-    target: contract.address,
-    callData: contract.interface.encodeFunctionData('positionDetailsForMarketKey', [
+    target: perpsMarketDataContract.address,
+    callData: perpsMarketDataContract.interface.encodeFunctionData('positionDetailsForMarketKey', [
       market,
       address,
     ]),
   }));
 
   const marketDetailCalls = positionData.map(({ market }) => ({
-    target: contract.address,
-    callData: contract.interface.encodeFunctionData('marketDetailsForKey', [market]),
+    target: perpsMarketDataContract.address,
+    callData: perpsMarketDataContract.interface.encodeFunctionData('marketDetailsForKey', [market]),
   }));
 
   const multiCallResponse = await Multicall3Contract.callStatic.aggregate(
@@ -137,14 +130,17 @@ export async function fetchPositions(
   // The result from decodeFunctionResult isn't typed, we could use zod to validate but doing a type assertion for now..
   const dataToReturn: ContractData[] = positionsDetailsMulticallResult.map(
     (positionDetailsBytes, index) => {
-      const positionDetails = contract.interface.decodeFunctionResult(
+      const positionDetails = perpsMarketDataContract.interface.decodeFunctionResult(
         'positionDetailsForMarketKey',
         positionDetailsBytes
       )[0];
 
       const marketDetailsBytes = marketDetailMulticallResult[index];
       const { fundingParameters, marketSizeDetails, priceDetails } =
-        contract.interface.decodeFunctionResult('marketDetailsForKey', marketDetailsBytes)[0];
+        perpsMarketDataContract.interface.decodeFunctionResult(
+          'marketDetailsForKey',
+          marketDetailsBytes
+        )[0];
 
       return {
         size: wei(positionDetails.position.size),
