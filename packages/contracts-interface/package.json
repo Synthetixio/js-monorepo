@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.77.1",
+  "version": "2.77.2",
   "description": "A library for interacting with Synthetix smart contracts",
   "source": "./src/index.ts",
   "main": "./build/index.js",

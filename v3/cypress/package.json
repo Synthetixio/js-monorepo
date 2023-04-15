@@ -2,7 +2,7 @@
   "name": "@snx-v3/cypress",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "scripts": {
     "start": "anvil --fork-url https://goerli.infura.io/v3/$INFURA_KEY",
     "cy": "NODE_ENV=test cypress open --component --browser chrome",

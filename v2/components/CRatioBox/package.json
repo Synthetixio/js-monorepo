@@ -2,7 +2,7 @@
   "name": "@snx-v2/CRatioBox",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/formatters": "workspace:*",
