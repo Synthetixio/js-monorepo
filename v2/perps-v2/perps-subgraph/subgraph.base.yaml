@@ -70,6 +70,8 @@ templates:
         - event: PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256,int256)
           handler: handlePositionModified
         - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
+          handler: handlePositionLiquidatedLegacy
+        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256,uint256,uint256)
           handler: handlePositionLiquidated
         - event: DelayedOrderSubmitted(indexed
             address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)

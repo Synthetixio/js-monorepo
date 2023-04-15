@@ -43,6 +43,7 @@ export const App: FC = () => {
       toggleColorMode();
     }
   }, [colorMode, toggleColorMode]);
+
   return (
     <Box px="10" py="5">
       <Flex justifyContent="space-between" mb="5">
@@ -55,12 +56,10 @@ export const App: FC = () => {
             Search for existing Nodes here:
           </Text>
           <Flex>
-            <Input placeholder="Enter Node ID" minW="340px" {...register('search')} />
+            <Input placeholder="Enter Node ID" minW="340px" {...register('search')} mr="16px" />
             <Button
-              ml="2"
               variant="outline"
               colorScheme="gray"
-              color="white"
               p="2"
               w="200px"
               leftIcon={<SearchIcon />}
@@ -88,10 +87,12 @@ export const App: FC = () => {
           <br />
           Click on the black connection lines to disconnect a parent node from a child node.
         </Text>
-        <Flex justifyContent="center" gap="2">
+        <Flex justifyContent="center">
           <Button
             variant="outline"
-            disabled={!isWalletConnected}
+            colorScheme="gray"
+            mr="16px"
+            isDisabled={!isWalletConnected}
             onClick={() => {
               if (signer && network?.id) {
                 const multicallContract = getMultiCallContract(network.id, signer);
@@ -127,7 +128,9 @@ export const App: FC = () => {
             Register All Nodes
           </Button>
           <Button
+            mr="16px"
             variant="outline"
+            colorScheme="gray"
             onClick={() => {
               toast({
                 title: 'Saved to local storage',
@@ -141,11 +144,13 @@ export const App: FC = () => {
             Save
           </Button>
           <Button
+            mr="16px"
             disabled={!nodes.length}
             variant="outline"
+            colorScheme="gray"
             onClick={() => {
               toast({
-                title: 'Generated link and put it on your clipboard',
+                title: 'Generated link copied to your clipboard”',
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -155,7 +160,9 @@ export const App: FC = () => {
           >
             Save & Share
           </Button>
-          <Button onClick={onOpen}>Add Node</Button>
+          <Button onClick={onOpen} variant="solid" colorScheme="cyan">
+            Add Node
+          </Button>
         </Flex>
       </Flex>
       <NodeFormModule isOpen={isOpen} onClose={onClose} />

@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Text, Center, SimpleGrid, Alert, Link } from '@chakra-ui/react';
+import { Box, Container, Flex, Text, Center, SimpleGrid } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { Welcome } from '@snx-v2/Welcome';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 import Connector from 'containers/Connector';
-import { EXTERNAL_LINKS, PROD_HOSTNAME } from '@snx-v2/Constants';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useApr } from '@snx-v2/useApr';
@@ -40,22 +40,6 @@ const V2Home = () => {
       <Flex minHeight="calc(100vh - 86px)" direction="column">
         <Box sx={{ flex: '1 0 auto' }}>
           {isStaking && <CRatioBanner />}
-          {!window.location.host.includes('.limo') && (
-            <Flex mt={8} justifyContent="center">
-              <Alert width="1170px" px={4} mx={4} as={Flex} flexDir={{ base: 'column', md: 'row' }}>
-                Staking has moved to
-                <Link
-                  color="cyan.500"
-                  textDecoration="underline"
-                  ml={1}
-                  href={`https://${PROD_HOSTNAME}`}
-                  target="_blank"
-                >
-                  staking.synthetix.eth.limo
-                </Link>
-              </Alert>
-            </Flex>
-          )}
           <Container maxW="1200px" py="1" mb={8}>
             <Flex
               mt="4"
