@@ -2,7 +2,7 @@
   "name": "@snx-v2/useSelfLiquidationMutation",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "dependencies": {
     "@snx-v2/useGasOptions": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",

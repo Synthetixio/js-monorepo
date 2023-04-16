@@ -19,6 +19,14 @@
   },
   {
     "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "uint256", "name": "keeperFee", "type": "uint256" }
+    ],
+    "name": "KeeperLiquidationFeeUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
     "inputs": [{ "indexed": false, "internalType": "uint256", "name": "bps", "type": "uint256" }],
     "name": "LiquidationBufferRatioUpdated",
     "type": "event"
@@ -87,6 +95,15 @@
     "type": "event"
   },
   {
+    "constant": true,
+    "inputs": [],
+    "name": "CONTRACT_NAME",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": false,
     "inputs": [],
     "name": "acceptOwnership",
@@ -116,6 +133,15 @@
   {
     "constant": true,
     "inputs": [],
+    "name": "keeperLiquidationFee",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" }],
     "name": "liquidationBufferRatio",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
@@ -206,7 +232,25 @@
   {
     "constant": true,
     "inputs": [{ "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" }],
+    "name": "maxLiquidationDelta",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" }],
     "name": "maxMarketValue",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" }],
+    "name": "maxPD",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
     "stateMutability": "view",
@@ -304,15 +348,6 @@
   },
   {
     "constant": true,
-    "inputs": [{ "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" }],
-    "name": "overrideCommitFee",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
     "inputs": [],
     "name": "owner",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
@@ -329,7 +364,6 @@
         "components": [
           { "internalType": "uint256", "name": "takerFee", "type": "uint256" },
           { "internalType": "uint256", "name": "makerFee", "type": "uint256" },
-          { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" },
           { "internalType": "uint256", "name": "takerFeeDelayedOrder", "type": "uint256" },
           { "internalType": "uint256", "name": "makerFeeDelayedOrder", "type": "uint256" },
           { "internalType": "uint256", "name": "takerFeeOffchainDelayedOrder", "type": "uint256" },
@@ -346,7 +380,10 @@
           { "internalType": "uint256", "name": "offchainDelayedOrderMaxAge", "type": "uint256" },
           { "internalType": "bytes32", "name": "offchainMarketKey", "type": "bytes32" },
           { "internalType": "uint256", "name": "offchainPriceDivergence", "type": "uint256" },
-          { "internalType": "uint256", "name": "liquidationPremiumMultiplier", "type": "uint256" }
+          { "internalType": "uint256", "name": "liquidationPremiumMultiplier", "type": "uint256" },
+          { "internalType": "uint256", "name": "liquidationBufferRatio", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxLiquidationDelta", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxPD", "type": "uint256" }
         ],
         "internalType": "struct IPerpsV2MarketSettings.Parameters",
         "name": "",
@@ -398,7 +435,19 @@
   },
   {
     "constant": false,
-    "inputs": [{ "internalType": "uint256", "name": "_ratio", "type": "uint256" }],
+    "inputs": [{ "internalType": "uint256", "name": "_keeperFee", "type": "uint256" }],
+    "name": "setKeeperLiquidationFee",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" },
+      { "internalType": "uint256", "name": "_ratio", "type": "uint256" }
+    ],
     "name": "setLiquidationBufferRatio",
     "outputs": [],
     "payable": false,
@@ -511,9 +560,33 @@
     "constant": false,
     "inputs": [
       { "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" },
+      { "internalType": "uint256", "name": "_maxLiquidationDelta", "type": "uint256" }
+    ],
+    "name": "setMaxLiquidationDelta",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" },
       { "internalType": "uint256", "name": "_maxMarketValue", "type": "uint256" }
     ],
     "name": "setMaxMarketValue",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" },
+      { "internalType": "uint256", "name": "_maxPD", "type": "uint256" }
+    ],
+    "name": "setMaxPD",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -613,23 +686,10 @@
     "constant": false,
     "inputs": [
       { "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" },
-      { "internalType": "uint256", "name": "_overrideCommitFee", "type": "uint256" }
-    ],
-    "name": "setOverrideCommitFee",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      { "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" },
       {
         "components": [
           { "internalType": "uint256", "name": "takerFee", "type": "uint256" },
           { "internalType": "uint256", "name": "makerFee", "type": "uint256" },
-          { "internalType": "uint256", "name": "overrideCommitFee", "type": "uint256" },
           { "internalType": "uint256", "name": "takerFeeDelayedOrder", "type": "uint256" },
           { "internalType": "uint256", "name": "makerFeeDelayedOrder", "type": "uint256" },
           { "internalType": "uint256", "name": "takerFeeOffchainDelayedOrder", "type": "uint256" },
@@ -646,7 +706,10 @@
           { "internalType": "uint256", "name": "offchainDelayedOrderMaxAge", "type": "uint256" },
           { "internalType": "bytes32", "name": "offchainMarketKey", "type": "bytes32" },
           { "internalType": "uint256", "name": "offchainPriceDivergence", "type": "uint256" },
-          { "internalType": "uint256", "name": "liquidationPremiumMultiplier", "type": "uint256" }
+          { "internalType": "uint256", "name": "liquidationPremiumMultiplier", "type": "uint256" },
+          { "internalType": "uint256", "name": "liquidationBufferRatio", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxLiquidationDelta", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxPD", "type": "uint256" }
         ],
         "internalType": "struct IPerpsV2MarketSettings.Parameters",
         "name": "_parameters",

@@ -138,36 +138,36 @@ type Frontend @entity {
   fees: BigInt!
 }
 
-type Candle @entity {
-  id: ID!
-  synth: String!
-  open: BigDecimal!
-  high: BigDecimal!
-  low: BigDecimal!
-  close: BigDecimal!
-  average: BigDecimal!
-  timestamp: BigInt!
-  period: BigInt!
-  aggregatedPrices: BigInt!
-}
+# type Candle @entity {
+#   id: ID!
+#   synth: String!
+#   open: BigDecimal!
+#   high: BigDecimal!
+#   low: BigDecimal!
+#   close: BigDecimal!
+#   average: BigDecimal!
+#   timestamp: BigInt!
+#   period: BigInt!
+#   aggregatedPrices: BigInt!
+# }
 
-type LatestRate @entity {
-  # Name of synth. E.g. sUSD
-  id: ID!
-  rate: BigDecimal!
-  timestamp: BigInt!
-  aggregator: Bytes!
-}
+# type LatestRate @entity {
+#   # Name of synth. E.g. sUSD
+#   id: ID!
+#   rate: BigDecimal!
+#   timestamp: BigInt!
+#   aggregator: Bytes!
+# }
 
-# Latest Rates over time
-type RateUpdate @entity {
-  id: ID!
-  currencyKey: Bytes!
-  synth: String!
-  rate: BigDecimal!
-  block: BigInt!
-  timestamp: BigInt!
-}
+# # Latest Rates over time
+# type RateUpdate @entity {
+#   id: ID!
+#   currencyKey: Bytes!
+#   synth: String!
+#   rate: BigDecimal!
+#   block: BigInt!
+#   timestamp: BigInt!
+# }
 
 enum FuturesOrderType {
   DelayedOrderSubmitted

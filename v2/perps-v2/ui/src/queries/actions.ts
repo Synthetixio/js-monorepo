@@ -10,7 +10,9 @@ export const MARGIN_TRANSFERRED_QUERY = gql(`
     ) {
       id
       timestamp
-      account
+      trader {
+        id
+      }
       market {
         asset
       }
@@ -30,24 +32,25 @@ export const FUTURES_TRADE_QUERY = gql(`
     ) {
       id
       timestamp
-      account
+      trader {
+        id
+      }
       margin
       market {
         id
         asset
       }
-      positionId
+      futuresPosition {
+        id
+      }
       size
       feesPaidToSynthetix
       type
-      pnl
+      realizedPnl
       positionClosed
       positionSize
       price
       txHash
-      futuresOrder {
-        status
-      }
     }
   }
 `);

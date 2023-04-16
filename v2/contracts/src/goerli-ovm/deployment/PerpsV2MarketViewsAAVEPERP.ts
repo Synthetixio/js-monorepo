@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'PerpsV2MarketViewsAAVEPERP';
-export const address = '0x9085208a2f39A0cbA5128b736E041ff5C3dFefBf';
+export const address = '0x9A6690Eb972E25B6bac51C5EfAB7647Bc1b699f5';
 export const source = 'PerpsV2MarketViews';
 export const abi = [
   'constructor(address _marketState, address _owner, address _resolver)',
@@ -16,10 +16,13 @@ export const abi = [
   'function canLiquidate(address account) view returns (bool)',
   'function currentFundingRate() view returns (int256)',
   'function currentFundingVelocity() view returns (int256)',
+  'function delayedOrders(address account) view returns (tuple(bool isOffchain, int128 sizeDelta, uint128 desiredFillPrice, uint128 targetRoundId, uint128 commitDeposit, uint128 keeperDeposit, uint256 executableAtTime, uint256 intentionTime, bytes32 trackingCode))',
   'function fillPrice(int256 sizeDelta) view returns (uint256 price, bool invalid)',
   'function fundingLastRecomputed() view returns (uint32)',
+  'function fundingRateLastRecomputed() view returns (int128)',
   'function fundingSequence(uint256 index) view returns (int128)',
   'function fundingSequenceLength() view returns (uint256)',
+  'function isFlagged(address account) view returns (bool)',
   'function isResolverCached() view returns (bool)',
   'function liquidationFee(address account) view returns (uint256)',
   'function liquidationPrice(address account) view returns (uint256 price, bool invalid)',
@@ -69,6 +72,40 @@ import type {
 } from './common';
 
 export declare namespace IPerpsV2MarketBaseTypes {
+  export type DelayedOrderStruct = {
+    isOffchain: PromiseOrValue<boolean>;
+    sizeDelta: PromiseOrValue<BigNumberish>;
+    desiredFillPrice: PromiseOrValue<BigNumberish>;
+    targetRoundId: PromiseOrValue<BigNumberish>;
+    commitDeposit: PromiseOrValue<BigNumberish>;
+    keeperDeposit: PromiseOrValue<BigNumberish>;
+    executableAtTime: PromiseOrValue<BigNumberish>;
+    intentionTime: PromiseOrValue<BigNumberish>;
+    trackingCode: PromiseOrValue<BytesLike>;
+  };
+
+  export type DelayedOrderStructOutput = [
+    boolean,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    string
+  ] & {
+    isOffchain: boolean;
+    sizeDelta: BigNumber;
+    desiredFillPrice: BigNumber;
+    targetRoundId: BigNumber;
+    commitDeposit: BigNumber;
+    keeperDeposit: BigNumber;
+    executableAtTime: BigNumber;
+    intentionTime: BigNumber;
+    trackingCode: string;
+  };
+
   export type PositionStruct = {
     id: PromiseOrValue<BigNumberish>;
     lastFundingIndex: PromiseOrValue<BigNumberish>;
@@ -96,10 +133,13 @@ export interface PerpsV2MarketViewsAAVEPERPInterface extends utils.Interface {
     'canLiquidate(address)': FunctionFragment;
     'currentFundingRate()': FunctionFragment;
     'currentFundingVelocity()': FunctionFragment;
+    'delayedOrders(address)': FunctionFragment;
     'fillPrice(int256)': FunctionFragment;
     'fundingLastRecomputed()': FunctionFragment;
+    'fundingRateLastRecomputed()': FunctionFragment;
     'fundingSequence(uint256)': FunctionFragment;
     'fundingSequenceLength()': FunctionFragment;
+    'isFlagged(address)': FunctionFragment;
     'isResolverCached()': FunctionFragment;
     'liquidationFee(address)': FunctionFragment;
     'liquidationPrice(address)': FunctionFragment;
@@ -134,10 +174,13 @@ export interface PerpsV2MarketViewsAAVEPERPInterface extends utils.Interface {
       | 'canLiquidate'
       | 'currentFundingRate'
       | 'currentFundingVelocity'
+      | 'delayedOrders'
       | 'fillPrice'
       | 'fundingLastRecomputed'
+      | 'fundingRateLastRecomputed'
       | 'fundingSequence'
       | 'fundingSequenceLength'
+      | 'isFlagged'
       | 'isResolverCached'
       | 'liquidationFee'
       | 'liquidationPrice'
@@ -173,13 +216,16 @@ export interface PerpsV2MarketViewsAAVEPERPInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'canLiquidate', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'currentFundingRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentFundingVelocity', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'delayedOrders', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'fillPrice', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'fundingLastRecomputed', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'fundingRateLastRecomputed', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'fundingSequence',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: 'fundingSequenceLength', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isFlagged', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidationFee', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
@@ -228,10 +274,13 @@ export interface PerpsV2MarketViewsAAVEPERPInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'canLiquidate', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'currentFundingRate', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'currentFundingVelocity', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'delayedOrders', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'fillPrice', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'fundingLastRecomputed', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fundingRateLastRecomputed', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'fundingSequence', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'fundingSequenceLength', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isFlagged', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'liquidationFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'liquidationPrice', data: BytesLike): Result;
@@ -340,6 +389,11 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
     currentFundingVelocity(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    delayedOrders(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[IPerpsV2MarketBaseTypes.DelayedOrderStructOutput]>;
+
     fillPrice(
       sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -347,12 +401,16 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
     fundingLastRecomputed(overrides?: CallOverrides): Promise<[number]>;
 
+    fundingRateLastRecomputed(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     fundingSequence(
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     fundingSequenceLength(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    isFlagged(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     isResolverCached(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -475,6 +533,11 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
   currentFundingVelocity(overrides?: CallOverrides): Promise<BigNumber>;
 
+  delayedOrders(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<IPerpsV2MarketBaseTypes.DelayedOrderStructOutput>;
+
   fillPrice(
     sizeDelta: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -482,12 +545,16 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
   fundingLastRecomputed(overrides?: CallOverrides): Promise<number>;
 
+  fundingRateLastRecomputed(overrides?: CallOverrides): Promise<BigNumber>;
+
   fundingSequence(
     index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   fundingSequenceLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+  isFlagged(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -603,6 +670,11 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
     currentFundingVelocity(overrides?: CallOverrides): Promise<BigNumber>;
 
+    delayedOrders(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<IPerpsV2MarketBaseTypes.DelayedOrderStructOutput>;
+
     fillPrice(
       sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -610,12 +682,16 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
     fundingLastRecomputed(overrides?: CallOverrides): Promise<number>;
 
+    fundingRateLastRecomputed(overrides?: CallOverrides): Promise<BigNumber>;
+
     fundingSequence(
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     fundingSequenceLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+    isFlagged(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
 
@@ -733,6 +809,8 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
     currentFundingVelocity(overrides?: CallOverrides): Promise<BigNumber>;
 
+    delayedOrders(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
     fillPrice(
       sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -740,12 +818,16 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
     fundingLastRecomputed(overrides?: CallOverrides): Promise<BigNumber>;
 
+    fundingRateLastRecomputed(overrides?: CallOverrides): Promise<BigNumber>;
+
     fundingSequence(
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     fundingSequenceLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+    isFlagged(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isResolverCached(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -836,6 +918,11 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
     currentFundingVelocity(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    delayedOrders(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     fillPrice(
       sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -843,12 +930,19 @@ export interface PerpsV2MarketViewsAAVEPERP extends BaseContract {
 
     fundingLastRecomputed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    fundingRateLastRecomputed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     fundingSequence(
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     fundingSequenceLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    isFlagged(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

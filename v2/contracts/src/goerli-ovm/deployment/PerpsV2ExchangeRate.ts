@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'PerpsV2ExchangeRate';
-export const address = '0x59b9D61F28C6D296a917f8171e42C6fcE5C1Fbea';
+export const address = '0x699DFf510a94ac0738548b9097E3FE896EEa7331';
 export const source = 'PerpsV2ExchangeRate';
 export const abi = [
   'constructor(address _owner, address _resolver)',

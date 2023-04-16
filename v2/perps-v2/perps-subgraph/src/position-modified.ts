@@ -132,7 +132,7 @@ function handlePositionClosed(
 ): void {
   const tradePnl = calculatePnl(
     event.params.lastPrice,
-    BigInt.fromString(futuresPosition.lastPrice.toString()),
+    futuresPosition.lastPrice,
     futuresPosition.size // Note that it's important to use the size before we update it from the event. The updated size will be 0 since the position is closed
   )
     .minus(event.params.fee)
@@ -178,7 +178,6 @@ function handlePositionClosed(
    */
   const newVolume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
   synthetix.totalVolume = synthetix.totalVolume.plus(newVolume);
-  // Bug fixed, we forgot to add volume too trader and futures position
   trader.totalVolume = trader.totalVolume.plus(newVolume);
   futuresPosition.totalVolume = futuresPosition.totalVolume.plus(newVolume);
 
@@ -229,6 +228,7 @@ function handleActualPositionModification(
       accruedFunding
     );
 
+    futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
     futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(accruedRealizedPnl);
     trader.realizedPnl = trader.realizedPnl.plus(accruedRealizedPnl);
     futuresPosition.unrealizedPnl = BigInt.fromI32(0);
@@ -248,6 +248,7 @@ function handleActualPositionModification(
         futuresPosition.avgEntryPrice,
         event.params.size
       );
+
       const accruedRealizedPnl = accruedFunding.minus(event.params.fee);
 
       futuresPosition.unrealizedPnl = unrealizedPnl;
@@ -266,7 +267,7 @@ function handleActualPositionModification(
         futuresPosition.avgEntryPrice,
         event.params.size
       );
-      const realizedPnl = calculateAccruedPnlForReducingPositions(
+      const accruedRealizedPnl = calculateAccruedPnlForReducingPositions(
         event.params.lastPrice,
         futuresPosition.avgEntryPrice,
         event.params.tradeSize
@@ -275,30 +276,29 @@ function handleActualPositionModification(
         .plus(accruedFunding);
 
       futuresPosition.unrealizedPnl = unrealizedPnl;
-      futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(realizedPnl);
+      futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(accruedRealizedPnl);
+      trader.realizedPnl = trader.realizedPnl.plus(accruedRealizedPnl);
 
       createTradeEntityForPositionModification(
         event,
         futuresPosition.id,
-        realizedPnl,
+        accruedRealizedPnl,
         accruedFunding
       );
-      // trader.pnl = trader.pnl.plus(newTradePnl);
     }
   }
 
   futuresPosition.feesPaidToSynthetix = futuresPosition.feesPaidToSynthetix.plus(event.params.fee);
   futuresPosition.size = event.params.size;
   futuresPosition.trades = futuresPosition.trades.plus(BigInt.fromI32(1));
-  // TODO, should margin be accumulative?
-  futuresPosition.margin = futuresPosition.margin.plus(event.params.margin);
+  futuresPosition.margin = event.params.margin;
   futuresPosition.lastPrice = event.params.lastPrice;
   futuresPosition.long = event.params.size.gt(BigInt.fromI32(0));
 
   futuresPosition.leverage = calculateLeverage(
     event.params.size,
     event.params.lastPrice,
-    futuresPosition.margin // Bug fixed, prev we did: `futuresPosition.margin.plus(event.params.margin)` but the margin on the position has already been updated
+    futuresPosition.margin
   );
 
   trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.fee);
@@ -361,6 +361,23 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     // If tradeSize and size are not zero, position got modified
     else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {
       handleActualPositionModification(event, futuresPosition, synthetix, trader, accruedFunding);
+    } else {
+      // Margin withdrawal/ deposit
+      const accruedRealizedPnl = accruedFunding.minus(event.params.fee);
+      futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(accruedRealizedPnl);
+      futuresPosition.margin = event.params.margin;
+      futuresPosition.size = event.params.size;
+      futuresPosition.lastPrice = event.params.lastPrice;
+      futuresPosition.leverage = calculateLeverage(
+        futuresPosition.size,
+        futuresPosition.lastPrice,
+        futuresPosition.margin
+      );
+      futuresPosition.unrealizedPnl = calculatePnl(
+        futuresPosition.lastPrice,
+        futuresPosition.avgEntryPrice,
+        futuresPosition.size
+      );
     }
   }
 

@@ -118,6 +118,32 @@
   },
   {
     "constant": true,
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "delayedOrders",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isOffchain", "type": "bool" },
+          { "internalType": "int128", "name": "sizeDelta", "type": "int128" },
+          { "internalType": "uint128", "name": "desiredFillPrice", "type": "uint128" },
+          { "internalType": "uint128", "name": "targetRoundId", "type": "uint128" },
+          { "internalType": "uint128", "name": "commitDeposit", "type": "uint128" },
+          { "internalType": "uint128", "name": "keeperDeposit", "type": "uint128" },
+          { "internalType": "uint256", "name": "executableAtTime", "type": "uint256" },
+          { "internalType": "uint256", "name": "intentionTime", "type": "uint256" },
+          { "internalType": "bytes32", "name": "trackingCode", "type": "bytes32" }
+        ],
+        "internalType": "struct IPerpsV2MarketBaseTypes.DelayedOrder",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
     "inputs": [{ "internalType": "int256", "name": "sizeDelta", "type": "int256" }],
     "name": "fillPrice",
     "outputs": [
@@ -139,6 +165,15 @@
   },
   {
     "constant": true,
+    "inputs": [],
+    "name": "fundingRateLastRecomputed",
+    "outputs": [{ "internalType": "int128", "name": "", "type": "int128" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
     "inputs": [{ "internalType": "uint256", "name": "index", "type": "uint256" }],
     "name": "fundingSequence",
     "outputs": [{ "internalType": "int128", "name": "", "type": "int128" }],
@@ -151,6 +186,15 @@
     "inputs": [],
     "name": "fundingSequenceLength",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "isFlagged",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "payable": false,
     "stateMutability": "view",
     "type": "function"

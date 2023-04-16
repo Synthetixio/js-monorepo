@@ -1,4 +1,5 @@
-export const OPTIMISM_GRAPH_URL = 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-perps';
+export const PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL =
+  'https://api.thegraph.com/subgraphs/name/synthetix-perps/perps-op-goerli';
 export const PERPS_V2_DASHBOARD_GRAPH_URL =
   'https://api.thegraph.com/subgraphs/name/synthetix-perps/perps';
 
@@ -8,7 +9,7 @@ export const optimisticEthercanLink = (address: string) =>
 export const optimisticEthercanTx = (txHash: string) =>
   `https://optimistic.etherscan.io/tx/${txHash}`;
 
-export const infuraId = '8c6bfe963db94518b16b17114e29e628';
+export const infuraId = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID;
 
 export enum FuturesMarketAsset {
   sBTC = 'sBTC',
