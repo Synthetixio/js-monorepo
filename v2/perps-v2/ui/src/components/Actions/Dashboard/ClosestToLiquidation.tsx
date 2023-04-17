@@ -1,31 +1,29 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import { POSITIONS_QUERY } from '../../queries/positions';
-import { Market, PnL, TableHeaderCell, WalletAddress } from '../Shared';
-import { AccountActionsLoading } from './AccountActionsLoading';
-import { FuturesPosition_OrderBy, OrderDirection } from '../../__generated__/graphql';
+import { POSITIONS_QUERY_MARKET } from '../../../queries/positions';
+import { Market, PnL, TableHeaderCell, WalletAddress } from '../../Shared';
+import { FuturesPosition_OrderBy, OrderDirection } from '../../../__generated__/graphql';
 import { getUnixTime, subDays } from 'date-fns';
+import { wei } from '@synthetixio/wei';
+import { SmallTableLoading } from './SmallTableLoading';
 
-const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
-
-export const SmallActionsTable = () => {
+export const ClosestToLiquidation = () => {
   const { walletAddress } = useParams();
 
-  const { data, loading, error } = useQuery(POSITIONS_QUERY, {
+  const { data, loading, error } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
       where: {
-        account: walletAddress,
+        trader: walletAddress,
         openTimestamp_gte: `${getUnixTime(subDays(new Date(), 1))}`,
         isOpen: true,
       },
-      orderBy: FuturesPosition_OrderBy.Pnl,
+      orderBy: FuturesPosition_OrderBy.Leverage,
       orderDirection: OrderDirection.Desc,
       first: 3,
     },
+    pollInterval: 10000,
   });
-
-  console.log(data, error);
 
   return (
     <>
@@ -39,40 +37,46 @@ export const SmallActionsTable = () => {
           borderCollapse: 'separate !important',
           borderSpacing: 0,
         }}
+        bg="navy.700"
       >
+        <Text pt={4} px={6} fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
+          Closest to Liquidation
+        </Text>
         <Table bg="navy.700">
           <Thead>
             <Tr>
-              <TableHeaderCell>Action</TableHeaderCell>
               <TableHeaderCell>Market</TableHeaderCell>
-              <TableHeaderCell>Realised PnL</TableHeaderCell>
+              <TableHeaderCell>Wallet Address</TableHeaderCell>
+              <TableHeaderCell>Unrealised PnL</TableHeaderCell>
             </Tr>
           </Thead>
           <Tbody>
             {loading && (
               <>
-                <AccountActionsLoading />
-                <AccountActionsLoading />
-                <AccountActionsLoading />
+                <SmallTableLoading />
+                <SmallTableLoading />
+                <SmallTableLoading />
               </>
             )}
             {data?.futuresPositions.map((item) => {
               const {
                 id,
-                account,
+                trader,
                 market: { asset },
-                pnl,
+                leverage,
+                long,
+                unrealizedPnl,
               } = item;
 
               return (
                 <Tr key={id} borderTopWidth="1px">
                   <Market
                     asset={asset}
-                    leverage={leverage?.toNumber() || null}
-                    isPosition={isPosition(label)}
+                    leverage={wei(leverage, 18, true).toNumber()}
+                    direction={long ? 'LONG' : 'SHORT'}
                   />
-                  <WalletAddress account={account} />
-                  <PnL pnl={pnl} />
+                  <WalletAddress account={trader.id} />
+                  <PnL pnl={wei(unrealizedPnl, 18, true).toNumber()} />
                 </Tr>
               );
             })}

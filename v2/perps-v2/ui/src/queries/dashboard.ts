@@ -15,7 +15,9 @@ export const LIQUIDATED_QUERY = gql(`
   query LiquidatedQuery($where: PositionLiquidated_filter, $orderBy: PositionLiquidated_orderBy, $orderDirection: OrderDirection) {
     positionLiquidateds(where: $where, orderBy: $orderBy, orderDirection: $orderDirection) {
       id
-      account
+      trader {
+        id
+      }
       size
       market {
         asset

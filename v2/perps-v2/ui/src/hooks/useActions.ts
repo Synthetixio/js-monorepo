@@ -121,6 +121,7 @@ export const useActions = (account?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('marketAddress') || undefined;
   const accountLower = account?.toLowerCase();
+
   const {
     loading: marginLoading,
     data: marginData,

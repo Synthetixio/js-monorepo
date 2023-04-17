@@ -8,6 +8,7 @@ export const PositionsTable = () => {
   const { walletAddress } = useParams();
   const { data, error, loading } = usePositions(walletAddress);
   const noData = !data?.length;
+
   return (
     <>
       <TableContainer
