@@ -4,9 +4,14 @@ export const TRADERS_QUERY = gql(`
   query Traders($where: Trader_filter) {
     traders(where: $where) {
       id
-      trades {
-        timestamp
-      }
+    }
+  }
+`);
+
+export const TRADES_QUERY = gql(`
+  query Trades($where: Trader_filter) {
+    traders(where: $where) {
+      id
     }
   }
 `);

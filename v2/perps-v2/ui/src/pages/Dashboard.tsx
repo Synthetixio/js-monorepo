@@ -8,17 +8,22 @@ import {
   ClosestToLiquidation,
   DashboardActions,
 } from '../components';
+import { Trades, Traders } from '../components/Trades';
 
 export const Dashboard: FC = () => {
   const navigate = useNavigate();
   return (
     <Box px="40px">
-      <Heading mt={8} fontSize="36px">
+      <Heading mt={16} fontSize="36px">
         Dashboard
       </Heading>
       <Flex pt={8} pb={2} justifyContent="space-between">
         <Flex flexDir="column">
           <Heading fontSize="30px">Stats</Heading>
+          <Flex justifyContent="space-between">
+            <Trades />
+            <Traders />
+          </Flex>
           <Flex mt={8} justifyContent="space-between">
             <Heading fontSize="30px">Latest Actions</Heading>
             <Button onClick={() => navigate('/actions')} variant="outline">

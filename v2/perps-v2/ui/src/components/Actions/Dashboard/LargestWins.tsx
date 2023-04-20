@@ -12,6 +12,7 @@ export const LargestWins = () => {
     variables: {
       where: {
         openTimestamp_gte: `${getUnixTime(subDays(new Date(), 1))}`,
+        isOpen: false,
       },
       orderBy: FuturesPosition_OrderBy.RealizedPnl,
       orderDirection: OrderDirection.Desc,
