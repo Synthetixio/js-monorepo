@@ -1,0 +1,150 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+
+templates:
+  - name: AggregatorProxy
+    kind: ethereum/contract
+    source:
+      abi: AggregatorProxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/latest-rates.ts
+      entities:
+        - Candle
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: AggregatorProxy
+          file: ./abis/AggregatorProxy.json
+      eventHandlers:
+        - event: 'AggregatorConfirmed(indexed address,indexed address)'
+          handler: 'handleAggregatorProxyAddressUpdated'
+
+  - name: Aggregator
+    kind: ethereum/contract
+    source:
+      abi: Aggregator
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/latest-rates.ts
+      entities:
+        - Candle
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
+          handler: 'handleAggregatorAnswerUpdated'
+
+  - name: PerpetualFuturesMarket
+    kind: ethereum/contract
+    source:
+      abi: PerpsV2Proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/futures.ts
+      entities:
+        - PositionLiquidated
+        - FuturesPosition
+        - Trader
+        - Synthetix
+        - FuturesTrade
+        - FuturesOrder
+        - FundingRateUpdate
+        - FuturesMarginTransfer
+      abis:
+        - name: PerpsV2Proxy
+          file: ./abis/PerpsV2Proxy.json
+      eventHandlers:
+        - event: PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256)
+          handler: handlePositionModified
+        - event: PositionModified(indexed uint256,indexed address,uint256,int256,int256,uint256,uint256,uint256,int256)
+          handler: handlePositionModified
+        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256)
+          handler: handlePositionLiquidatedLegacy
+        - event: PositionLiquidated(uint256,address,address,int256,uint256,uint256,uint256,uint256)
+          handler: handlePositionLiquidated
+        - event: DelayedOrderSubmitted(indexed
+            address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
+          handler: handleDelayedOrderSubmitted
+        - event: DelayedOrderRemoved(indexed
+            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
+          handler: handleDelayedOrderRemoved
+        - event: MarginTransferred(indexed address,int256)
+          handler: handleMarginTransferred
+        - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
+          handler: 'handleFundingRecomputed'
+        - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
+          handler: handlePerpsTracking
+
+dataSources:
+  - kind: ethereum
+    name: FuturesMarketManagerOld
+    source:
+      abi: PerpsV2Proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - FuturesMarket
+      abis:
+        - name: PerpsV2Proxy
+          file: ./abis/PerpsV2Proxy.json
+      eventHandlers:
+        - event: MarketAdded(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketAdded
+        - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketRemoved
+      file: ./src/futures.ts
+  - kind: ethereum
+    name: FuturesMarketManagerNew
+    source:
+      abi: PerpsV2Proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - FuturesMarket
+      abis:
+        - name: PerpsV2Proxy
+          file: ./abis/PerpsV2Proxy.json
+      eventHandlers:
+        - event: MarketAdded(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketAdded
+        - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
+          handler: handleFuturesMarketRemoved
+      file: ./src/futures.ts
+  - kind: ethereum
+    name: ExchangeRates
+    source:
+      abi: ExchangeRates
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: 'wasm/assemblyscript'
+      entities:
+        - Candle
+        - LatestRate
+        - RateUpdate
+      abis:
+        - name: ExchangeRates
+          file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
+        - name: AggregatorProxy
+          file: ./abis/AggregatorProxy.json
+        - name: Aggregator
+          file: ./abis/Aggregator.json
+      eventHandlers:
+        - event: 'AggregatorAdded(bytes32,address)'
+          handler: 'handleAggregatorAdded'
+      file: './src/latest-rates.ts'

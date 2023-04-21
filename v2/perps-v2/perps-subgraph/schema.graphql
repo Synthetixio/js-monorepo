@@ -181,7 +181,6 @@ enum FuturesTradeType {
   PositionClosed
   PositionModified
   Liquidated
-  Unknown
 }
 
 enum FuturesOrderStatus {
