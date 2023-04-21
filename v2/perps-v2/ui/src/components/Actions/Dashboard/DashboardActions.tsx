@@ -14,7 +14,7 @@ import { DashboardActionsLoading } from './DashboardActionsLoading';
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
 export const DashboardActions = () => {
-  const { loading, data, error } = useActions();
+  const { loading, data, error } = useActions(undefined, 5);
 
   return (
     <>
