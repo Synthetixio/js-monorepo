@@ -1,79 +1,24 @@
 import { useState } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/react';
-// import { useQuery } from '@apollo/client';
-// import { TRADERS_QUERY } from '../../queries/dashboard';
+import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
 import { TimeBadge } from '../TimeBadge';
 import { KeyColour } from './KeyColour';
-import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, Tooltip } from 'recharts';
-import { CustomTooltip } from '../CustomTooltip';
-// import { FuturesPosition_OrderBy, OrderDirection } from '../../__generated__/graphql';
-// import { getUnixTime, subDays } from 'date-fns';
+import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip } from 'recharts';
+import { useTraders } from '../../hooks';
+import { TradersTooltip } from './TradersTooltip';
+import { formatNumber } from '@snx-v2/formatters';
 
 export const Traders = () => {
-  const [state, setState] = useState<'M' | 'Y'>('Y');
+  const [state, setState] = useState<'M' | 'Y'>('M');
 
-  // const { data: tradersData } = useQuery(TRADERS_QUERY, {
-  //   // variables: {
-  //   //   orderBy: FuturesPosition_OrderBy.RealizedPnl,
-  //   //   orderDirection: OrderDirection.Desc,
-  //   //   first: 3,
-  //   // },
-  //   pollInterval: 10000,
-  // });
+  const { data, loading } = useTraders(state);
 
-  const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-      label: 'Jan',
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-      label: 'Feb',
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-      label: 'Mar',
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-      label: 'Apr',
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-      label: 'May',
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-      label: 'Jun',
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-      label: 'Jul',
-    },
-  ];
-
-  const tradesNumber = 2890;
+  const tradersNumber =
+    data?.reduce((acc, { newTraders, returningTraders }) => {
+      if (newTraders && returningTraders) {
+        return acc + newTraders + returningTraders;
+      }
+      return acc;
+    }, 0) || 0;
 
   return (
     <>
@@ -97,38 +42,51 @@ export const Traders = () => {
           </Text>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
+            {/* <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} /> */}
           </Box>
         </Flex>
         <Flex mt={6}>
           <KeyColour label="RETURNING" colour="whiteAlpha.400" />
           <KeyColour ml={4} label="NEW" colour="pink.300" />
-          <KeyColour ml={4} label="CUMULATIVE" colour="cyan.500" />
+          {/* <KeyColour ml={4} label="CUMULATIVE" colour="cyan.500" /> */}
         </Flex>
-        <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
-          {tradesNumber}
-        </Text>
-        <ResponsiveContainer minWidth="100%" minHeight={200}>
-          <ComposedChart
-            data={data}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <Tooltip cursor={false} content={CustomTooltip} />
-            <Bar dataKey="uv" stackId="a" fill="#F471FF" />
-            <Bar dataKey="pv" stackId="a" fill="#FFFFFF3D" />
-            <Line dataKey="amt" stroke="#00D1FF" type="basis" strokeWidth="2px" />
-            <XAxis
-              dataKey="label"
-              tickLine={{ display: 'none' }}
-              tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
+        {loading ? (
+          <Flex justifyContent="center" alignItems="center" height="100%">
+            <Spinner size="xl" />
+          </Flex>
+        ) : (
+          <>
+            <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
+              {formatNumber(tradersNumber, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+            </Text>
+            <ResponsiveContainer minWidth="100%" minHeight={200}>
+              <ComposedChart
+                data={data || []}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <Tooltip
+                  cursor={false}
+                  content={TradersTooltip}
+                  wrapperStyle={{ outline: 'none' }}
+                />
+                <Bar dataKey="newTraders" stackId="a" fill="#F471FF" />
+                <Bar dataKey="returningTraders" stackId="a" fill="#FFFFFF3D" />
+                {/* Removed until better solution found */}
+                {/* <Line dataKey="amt" stroke="#00D1FF" type="basis" strokeWidth="2px" /> */}
+                <XAxis
+                  dataKey="label"
+                  tickLine={{ display: 'none' }}
+                  tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
+                />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </>
+        )}
       </Flex>
     </>
   );

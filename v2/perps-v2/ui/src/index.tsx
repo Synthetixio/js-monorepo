@@ -68,12 +68,10 @@ const customTheme = extendTheme({
 });
 
 root.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <ChakraProvider theme={customTheme}>
-        <Fonts />
-        <RouterProvider router={router} />
-      </ChakraProvider>
-    </ApolloProvider>
-  </React.StrictMode>
+  <ApolloProvider client={client}>
+    <ChakraProvider theme={customTheme}>
+      <Fonts />
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  </ApolloProvider>
 );

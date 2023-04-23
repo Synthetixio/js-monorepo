@@ -49,10 +49,14 @@ type TradeTypeHandler = {
   [key in FuturesTradesQuery['futuresTrades'][number]['type']]: () => string;
 };
 
+interface TradeTypeExtended extends TradeTypeHandler {
+  Unknown: () => string;
+}
+
 export const getTradeLabel = (futuresTrade: FuturesTradesQuery['futuresTrades'][number]) => {
   const size = parseFloat(futuresTrade.size);
   const positionSize = parseFloat(futuresTrade.positionSize);
-  const tradeTypeHandlers: TradeTypeHandler = {
+  const tradeTypeHandlers: TradeTypeExtended = {
     PositionOpened: () => (isLongTrade(size) ? 'Long Opened' : 'Short Opened'),
     Liquidated: () => (isLongTrade(size) ? 'Short Liquidated' : 'Long Liquidated'),
     PositionClosed: () => (isLongTrade(size) ? 'Short Closed' : 'Long Closed'),
@@ -121,8 +125,6 @@ export const useActions = (account?: string, limit?: number) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('marketAddress') || undefined;
   const accountLower = account?.toLowerCase();
-
-  console.log('limit is', limit);
 
   const {
     loading: marginLoading,

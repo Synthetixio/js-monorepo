@@ -24,7 +24,7 @@ export const LargestOpen = () => {
   return (
     <>
       <TableContainer
-        maxW="100%"
+        width="100%"
         my={5}
         borderColor="gray.900"
         borderWidth="1px"
