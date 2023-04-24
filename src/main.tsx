@@ -6,13 +6,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { WagmiConfig } from "wagmi";
 
-import { App } from "./App";
+import { App } from "./pages/App";
 import { chains, client } from "./wagmi";
 
 import theme from "./theme";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { Index } from "./pages/Index";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Index />,
+  },
   {
     path: "/markets/:marketId",
     element: <App />,

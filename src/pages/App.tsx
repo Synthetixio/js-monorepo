@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { Header, Market, Sidebar } from "./components";
+import { Header, Market, Sidebar } from "../components";
 
 export function App() {
   return (

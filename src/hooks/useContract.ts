@@ -1,19 +1,15 @@
 import { ethers } from "ethers";
 import { useProvider } from "wagmi";
-import PerpsMarketProxy from "../../deployments/perpsMarket/PerpsMarketProxy.json";
+import { contracts } from "../constants/contracts";
 
-// Similar to https://wagmi.sh/docs/hooks/useContract, but its aware of the currently selected network.
-export const useContract = (name: string, chainId = 13370) => {
+export const useContract = (name: keyof typeof contracts, chainId = 13370) => {
   const provider = useProvider();
+  const contract = contracts[name];
 
   return {
-    address: PerpsMarketProxy.address as `0x${string}`,
-    abi: PerpsMarketProxy.abi,
-    contract: new ethers.Contract(
-      PerpsMarketProxy.address,
-      PerpsMarketProxy.abi,
-      provider,
-    ),
+    address: contract.address as `0x${string}`,
+    abi: contract.abi,
+    contract: new ethers.Contract(contract.address, contract.abi, provider),
     chainId,
   };
 };

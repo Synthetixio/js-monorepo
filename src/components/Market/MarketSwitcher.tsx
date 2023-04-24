@@ -12,7 +12,7 @@ import {
 import { ArrowUpDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
-import markets from "../../markets";
+import markets from "../../constants/markets";
 
 export function MarketSwitcher() {
   const { isOpen, onOpen, onClose } = useDisclosure();

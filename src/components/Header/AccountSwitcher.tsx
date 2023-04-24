@@ -7,6 +7,8 @@ import { useContractWrite } from "wagmi";
 import { useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
 import { useContract } from "../../hooks/useContract";
+import { useCreateAccount } from "../../hooks/useCreateAccount";
+import { useGetAccounts } from "../../hooks/useGetAccounts";
 
 export function AccountSwitcher() {
   const { isConnected, address } = useAccount();
@@ -14,6 +16,11 @@ export function AccountSwitcher() {
   const accountIdsData = [""];
   const [searchParams, setSelectedAccountId] = useSearchParams();
   const selectedAccountId = searchParams.get("accountId");
+
+  const { data } = useGetAccounts();
+  const { createAccount } = useCreateAccount((accountId) =>
+    setSelectedAccountId({ accountId }),
+  );
 
   // const { isLoading: acccountCountisLoading, data: acccountCountData } =
   //   usePerpsMarketAccountProxyBalanceOf({
@@ -44,11 +51,6 @@ export function AccountSwitcher() {
   //     ),
   //   });
 
-  const newId = useMemo(() => {
-    const randomNumber = Math.floor(Math.random() * 10000) + 1;
-    return ethers.BigNumber.from(randomNumber.toString());
-  }, []);
-
   // const { write, isLoading } = useContractWrite({
   //   mode: "recklesslyUnprepared",
   //   addressOrName: coreProxy!.address,
@@ -57,24 +59,9 @@ export function AccountSwitcher() {
   //   args: [1],
   // });
 
-  const coreProxy = useContract("");
-  const { writeAsync } = useContractWrite({
-    mode: "recklesslyUnprepared",
-    address: coreProxy.address,
-    abi: coreProxy.abi,
-    functionName: "createAccount",
-    args: [newId],
-  });
-
   if (!isConnected) {
     return null;
   }
-
-  const createAccount = async () => {
-    const txResponse = await writeAsync();
-    await txResponse.wait();
-    setSelectedAccountId({ accountId: newId.toString() });
-  };
 
   return accountIdsData?.length || selectedAccountId ? (
     <Menu>
@@ -92,13 +79,13 @@ export function AccountSwitcher() {
             <>Account #{accountId.toString()}</>
           </MenuItem>
         ))}
-        <MenuItem key={accountIdsData?.length} onClick={createAccount}>
+        <MenuItem key={accountIdsData?.length} onClick={() => createAccount()}>
           Create New Account
         </MenuItem>
       </MenuList>
     </Menu>
   ) : (
-    <Button colorScheme="cyan" onClick={createAccount}>
+    <Button colorScheme="cyan" onClick={() => createAccount()}>
       Create Account
     </Button>
   );
