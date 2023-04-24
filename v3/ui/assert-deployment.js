@@ -8,6 +8,10 @@ if (!infuraKey) {
 
 function importCoreProxy(chainName) {
   switch (chainName) {
+    case 'mainnet':
+      return require('@synthetixio/v3-contracts/build/mainnet/CoreProxy');
+    case 'optimism-mainnet':
+      return require('@synthetixio/v3-contracts/build/optimism-mainnet/CoreProxy');
     case 'goerli':
       return require('@synthetixio/v3-contracts/build/goerli/CoreProxy');
     case 'optimism-goerli':
@@ -51,7 +55,6 @@ const runNetwork = async (chainName) => {
       () => CoreProxy.getCollateralPrice(collaterals[1].tokenAddress),
       `CoreProxy.getCollateralPrice ${collaterals[1].tokenAddress}`
     ),
-    ,
   ]);
 };
 

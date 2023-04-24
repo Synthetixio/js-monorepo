@@ -1,17 +1,27 @@
 import { Contract } from '@ethersproject/contracts';
 import { useQuery } from '@tanstack/react-query';
-import type { AccountProxy as AccountProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/AccountProxy';
-import type { AccountProxy as AccountProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/AccountProxy';
 import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
+import type { AccountProxy as AccountProxyMainnet } from '@synthetixio/v3-contracts/build/mainnet/AccountProxy';
+import type { AccountProxy as AccountProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/AccountProxy';
+import type { AccountProxy as AccountProxyOptimismMainnet } from '@synthetixio/v3-contracts/build/optimism-mainnet/AccountProxy';
+import type { AccountProxy as AccountProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/AccountProxy';
 
-export type AccountProxy = AccountProxyGoerli | AccountProxyOptimismGoerli;
+export type AccountProxyType =
+  | AccountProxyMainnet
+  | AccountProxyGoerli
+  | AccountProxyOptimismMainnet
+  | AccountProxyOptimismGoerli;
 
-export async function importAccount(chainName: string) {
+export async function importAccountProxy(chainName: string) {
   switch (chainName) {
+    case 'mainnet':
+      return import('@synthetixio/v3-contracts/build/mainnet/AccountProxy');
     case 'goerli':
-      return await import('@synthetixio/v3-contracts/build/goerli/AccountProxy');
+      return import('@synthetixio/v3-contracts/build/goerli/AccountProxy');
+    case 'optimism-mainnet':
+      return import('@synthetixio/v3-contracts/build/optimism-mainnet/AccountProxy');
     case 'optimism-goerli':
-      return await import('@synthetixio/v3-contracts/build/optimism-goerli/AccountProxy');
+      return import('@synthetixio/v3-contracts/build/optimism-goerli/AccountProxy');
     default:
       throw new Error(`Unsupported chain ${chainName}`);
   }
@@ -27,8 +37,8 @@ export function useAccountProxy() {
   return useQuery({
     queryKey: [network.name, 'AccountProxy', { withSigner }],
     queryFn: async function () {
-      const { address, abi } = await importAccount(network.name);
-      return new Contract(address, abi, signerOrProvider) as AccountProxy;
+      const { address, abi } = await importAccountProxy(network.name);
+      return new Contract(address, abi, signerOrProvider) as AccountProxyType;
     },
     enabled: Boolean(network.isSupported && signerOrProvider),
     staleTime: Infinity,
