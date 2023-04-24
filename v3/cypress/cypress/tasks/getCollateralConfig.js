@@ -1,7 +1,8 @@
 import { ethers } from 'ethers';
-import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
+import { importCoreProxy } from './importCoreProxy';
 
 export async function getCollateralConfig(symbol) {
+  const CoreProxy = await importCoreProxy();
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
 
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider);

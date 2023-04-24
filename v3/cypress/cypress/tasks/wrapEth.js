@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
+import { importCoreProxy } from './importCoreProxy';
 
 const erc20Abi = [
   'function symbol() view returns (string)',
@@ -8,6 +8,7 @@ const erc20Abi = [
 ];
 
 export async function wrapEth({ privateKey, amount }) {
+  const CoreProxy = await importCoreProxy();
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const wallet = new ethers.Wallet(privateKey, provider);
 
