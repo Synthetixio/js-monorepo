@@ -39,7 +39,17 @@ export const NETWORKS: Record<string, Network> = {
     rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
     label: 'Ethereum',
     Icon: () => <EthereumIcon />,
-    isSupported: false,
+    isSupported: true,
+  },
+  'optimism-mainnet': {
+    id: 10,
+    hexId: `0x${Number(10).toString(16)}`,
+    token: 'ETH',
+    name: 'optimism-mainnet',
+    rpcUrl: `https://optimism-mainnet.infura.io/v3/${INFURA_KEY}`,
+    label: 'Optimism',
+    Icon: () => <OptimismIcon />,
+    isSupported: true,
   },
   goerli: {
     id: 5,
@@ -50,16 +60,6 @@ export const NETWORKS: Record<string, Network> = {
     label: 'Goerli Testnet',
     Icon: () => <EthereumIcon />,
     isSupported: true,
-  },
-  optimism: {
-    id: 10,
-    hexId: `0x${Number(10).toString(16)}`,
-    token: 'ETH',
-    name: 'optimism',
-    rpcUrl: `https://optimism.infura.io/v3/${INFURA_KEY}`,
-    label: 'Optimism',
-    Icon: () => <OptimismIcon />,
-    isSupported: false,
   },
   'optimism-goerli': {
     id: 420,
@@ -73,7 +73,7 @@ export const NETWORKS: Record<string, Network> = {
   },
 };
 
-export const DEFAULT_NETWORK = NETWORKS.goerli;
+export const DEFAULT_NETWORK = NETWORKS['optimism-mainnet'];
 
 const injected = injectedModule();
 const walletConnect = walletConnectModule();
@@ -117,9 +117,6 @@ export const onboard = onboardInit({
     enabled: false,
   },
 });
-
-export const getDefaultProvider = (defaultNetwork: keyof typeof NETWORKS) =>
-  new ethers.providers.InfuraProvider(NETWORKS[defaultNetwork].name, process.env.INFURA_KEY);
 
 export const BlockchainContext = React.createContext<{ state: AppState }>({
   state: onboard.state.get(),
@@ -168,7 +165,7 @@ export function useIsConnected(): boolean {
 export function useProvider() {
   const wallet = useOnboardWallet();
   if (!wallet) {
-    return getDefaultProvider('goerli');
+    return new ethers.providers.InfuraProvider(DEFAULT_NETWORK.id, process.env.INFURA_KEY);
   }
   return new ethers.providers.Web3Provider(wallet.provider, 'any');
 }

@@ -115,7 +115,7 @@ describe('useGasOptions', () => {
   });
 
   test('Returns gas options for optimism', async () => {
-    useNetwork.mockReturnValue({ name: 'optimism', id: 10 });
+    useNetwork.mockReturnValue({ name: 'optimism-mainnet', id: 10 });
     getGasPrice.mockReturnValue(gasPricesOptimismMockData);
     useOptimismLayer1Fee.mockReturnValue({ data: wei(0.00000001) });
 
@@ -123,7 +123,7 @@ describe('useGasOptions', () => {
 
     const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
     expect(queryKey).toEqual([
-      'optimism',
+      'optimism-mainnet',
       'GasOptions',
       {
         args: [],
