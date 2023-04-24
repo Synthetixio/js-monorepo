@@ -1,5 +1,5 @@
 {
-  "address": "0x2973233296a6960740F035DB6bc58B890B2A2e94",
+  "address": "0xF1226404f335670C4926Cf09060EaFe5Fe3d542F",
   "abi": [
     {
       "inputs": [
@@ -10,17 +10,6 @@
         }
       ],
       "name": "AccountNotFound",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "which",
-          "type": "bytes32"
-        }
-      ],
-      "name": "FeatureUnavailable",
       "type": "error"
     },
     {
@@ -83,6 +72,27 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ValueAlreadyInSet",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ValueNotInSet",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint128",
           "name": "accountId",
           "type": "uint128"
@@ -102,11 +112,29 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "synthId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxCollateralAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMaxCollateralAmount",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x438ccaceee55e7eb3b5035bd3dc4e9bf281f904066c21704cd2c12ec2ad028fd",
+  "deployTxnHash": "0xd4468d67fe89eb8462efaa5b8521ff02ec252f8787d4a150508ac8111e48331b",
   "sourceName": "contracts/modules/CollateralModule.sol",
   "contractName": "CollateralModule",
   "deployedOn": "contract.CollateralModule"

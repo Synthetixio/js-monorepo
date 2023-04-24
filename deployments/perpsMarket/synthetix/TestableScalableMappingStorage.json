@@ -1,0 +1,223 @@
+{
+  "address": "0xc97A01873B0d62B9d744110B3017b56F4727D202",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "CannotScaleEmptyMapping",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InsufficientMappedAmount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt128ToUint128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToUint256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToInt256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToUint128",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "actorId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "ScalableMapping_get",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountD18",
+          "type": "uint256"
+        }
+      ],
+      "name": "ScalableMapping_getSharesForAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ScalableMapping_get_scaleModifierD27",
+      "outputs": [
+        {
+          "internalType": "int128",
+          "name": "",
+          "type": "int128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "idx",
+          "type": "bytes32"
+        }
+      ],
+      "name": "ScalableMapping_get_sharesD18",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ScalableMapping_get_totalSharesD18",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "valueD18",
+          "type": "int256"
+        }
+      ],
+      "name": "ScalableMapping_scale",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "actorId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "newActorValueD18",
+          "type": "uint256"
+        }
+      ],
+      "name": "ScalableMapping_set",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int128",
+          "name": "val",
+          "type": "int128"
+        }
+      ],
+      "name": "ScalableMapping_set_scaleModifierD27",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "idx",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "val",
+          "type": "uint256"
+        }
+      ],
+      "name": "ScalableMapping_set_sharesD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "ScalableMapping_set_totalSharesD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ScalableMapping_totalAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x99bac2e9524458ca25abb630e2a9e5d6994211f1f791977b6e00d244e796ee57",
+  "sourceName": "contracts/generated/test/TestableScalableMappingStorage.sol",
+  "contractName": "TestableScalableMappingStorage",
+  "deployedOn": "contract.TestableScalableMappingStorage"
+}

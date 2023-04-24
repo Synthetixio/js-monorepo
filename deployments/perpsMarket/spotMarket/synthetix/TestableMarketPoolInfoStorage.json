@@ -1,0 +1,63 @@
+{
+  "address": "0xD6413ea2b9A2232e4D4D285eb9eF680c362892D3",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "MarketPoolInfo_get_creditCapacityAmountD18",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MarketPoolInfo_get_pendingDebtD18",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "MarketPoolInfo_set_creditCapacityAmountD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "MarketPoolInfo_set_pendingDebtD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x220063f79237f1367934caeb6e31722df01c2d1e071e3af21dbe565054968b5c",
+  "sourceName": "contracts/generated/test/TestableMarketPoolInfoStorage.sol",
+  "contractName": "TestableMarketPoolInfoStorage",
+  "deployedOn": "contract.TestableMarketPoolInfoStorage"
+}

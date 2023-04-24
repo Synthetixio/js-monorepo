@@ -1,5 +1,5 @@
 {
-  "address": "0xbc2BF4aFe98383Dfb870F7e3727afFc7A836b600",
+  "address": "0x2Ba3E8397133E79e327DeF5415b42a8D5329E0Dd",
   "abi": [
     {
       "inputs": [
@@ -31,22 +31,6 @@
         }
       ],
       "name": "MinimumSettlementAmountNotMet",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "expected",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "actual",
-          "type": "bytes32"
-        }
-      ],
-      "name": "MismatchAssociatedSystemKind",
       "type": "error"
     },
     {
@@ -181,10 +165,32 @@
           "type": "uint256"
         },
         {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
           "indexed": false,
-          "internalType": "int256",
-          "name": "totalFees",
-          "type": "int256"
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         },
         {
           "indexed": false,
@@ -195,7 +201,7 @@
         {
           "indexed": true,
           "internalType": "address",
-          "name": "sender",
+          "name": "settler",
           "type": "address"
         }
       ],
@@ -232,18 +238,35 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "finalOrderAmount",
           "type": "uint256"
         },
         {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
@@ -266,18 +289,35 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "finalOrderAmount",
           "type": "uint256"
         },
         {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "payable",
@@ -286,7 +326,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x8623ac721c3ede6a21ca9154ecef9305fb044ec5b647d59b95a95425c9dac0ea",
+  "deployTxnHash": "0x493ab5a9adf483d98674b8f27b72ddb39906dad105f20da323261da55231c735",
   "sourceName": "contracts/modules/AsyncOrderSettlementModule.sol",
   "contractName": "AsyncOrderSettlementModule",
   "deployedOn": "contract.AsyncOrderSettlementModule"

@@ -1,0 +1,235 @@
+{
+  "address": "0x204eC246f58d06878AbAD54542712C40F918a5E1",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "InsufficientFee",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidArgument",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidGovernanceDataSource",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidGovernanceMessage",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidGovernanceTarget",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidUpdateData",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidUpdateDataSource",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidWormholeVaa",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoFreshUpdate",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OldGovernanceMessage",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PriceFeedNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PriceFeedNotFoundWithinRange",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "StalePrice",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "updateDataSize",
+          "type": "uint256"
+        }
+      ],
+      "name": "getUpdateFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "updateData",
+          "type": "bytes[]"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "priceIds",
+          "type": "bytes32[]"
+        },
+        {
+          "internalType": "uint64",
+          "name": "minPublishTime",
+          "type": "uint64"
+        },
+        {
+          "internalType": "uint64",
+          "name": "maxPublishTime",
+          "type": "uint64"
+        }
+      ],
+      "name": "parsePriceFeedUpdates",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "id",
+              "type": "bytes32"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "int64",
+                  "name": "price",
+                  "type": "int64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "conf",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "int32",
+                  "name": "expo",
+                  "type": "int32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "publishTime",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct IPythVerifier.Price",
+              "name": "price",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "int64",
+                  "name": "price",
+                  "type": "int64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "conf",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "int32",
+                  "name": "expo",
+                  "type": "int32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "publishTime",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct IPythVerifier.Price",
+              "name": "emaPrice",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct IPythVerifier.PriceFeed[]",
+          "name": "priceFeeds",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "price",
+      "outputs": [
+        {
+          "internalType": "int64",
+          "name": "",
+          "type": "int64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int64",
+          "name": "newPrice",
+          "type": "int64"
+        }
+      ],
+      "name": "setPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "chainlinkBlob",
+          "type": "bytes"
+        }
+      ],
+      "name": "verify",
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "verifierResponse",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x95f87a5cc4444d9e84c9f05e9d5ebf1c2c9c7acc233cea9457d70b894505cbbc",
+  "sourceName": "contracts/mocks/OracleVerifierMock.sol",
+  "contractName": "OracleVerifierMock",
+  "deployedOn": "contract.OracleVerifierMock"
+}

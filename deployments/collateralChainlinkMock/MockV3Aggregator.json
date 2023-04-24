@@ -1,5 +1,5 @@
 {
-  "address": "0xE4c370cc7478d3bFC96A5A95fe308F19d5D0d12E",
+  "address": "0x27F4A37Ce881a405BdceCa1bc91E2fF2622E763F",
   "abi": [
     {
       "inputs": [
@@ -249,10 +249,10 @@
   ],
   "constructorArgs": [
     "18",
-    "2000000000000000000"
+    "1000000000000000000"
   ],
   "linkedLibraries": {},
-  "deployTxnHash": "0x09ac0b9102218b81928659d25d443fbe5d5484ef7d9aafbcdf264b2169ad2b9b",
+  "deployTxnHash": "0x26996912b41c2f2a471fc3a6257d7e62ee27db8b6a73d2eddf74e01eaca26241",
   "sourceName": "src/MockV3Aggregator.sol",
   "contractName": "MockV3Aggregator",
   "deployedOn": "contract.MockV3Aggregator"

@@ -1,0 +1,89 @@
+{
+  "address": "0xeB8202F536559bE65cD21c2c7e45F3ccB836e352",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "MarketConfiguration_get_marketId",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MarketConfiguration_get_maxDebtShareValueD18",
+      "outputs": [
+        {
+          "internalType": "int128",
+          "name": "",
+          "type": "int128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MarketConfiguration_get_weightD18",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "MarketConfiguration_set_marketId",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int128",
+          "name": "val",
+          "type": "int128"
+        }
+      ],
+      "name": "MarketConfiguration_set_maxDebtShareValueD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "MarketConfiguration_set_weightD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x875218e3d8bb27afdeb10bdf7aab378f1bc0c7c41015da729aedaa1ed62b7377",
+  "sourceName": "contracts/generated/test/TestableMarketConfigurationStorage.sol",
+  "contractName": "TestableMarketConfigurationStorage",
+  "deployedOn": "contract.TestableMarketConfigurationStorage"
+}

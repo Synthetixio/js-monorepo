@@ -1,5 +1,5 @@
 {
-  "address": "0x6cF107A8B46df420bB8E67EE8e2443f9F496f92D",
+  "address": "0x6488132d72E055C7CAb8b0724a7e6d598463f996",
   "abi": [
     {
       "inputs": [
@@ -15,6 +15,22 @@
         }
       ],
       "name": "IneligibleForCancellation",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "expected",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "actual",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientSharesAmount",
       "type": "error"
     },
     {
@@ -43,12 +59,12 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "amount",
+          "name": "minimumAmount",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "settlementReward",
+          "name": "amount",
           "type": "uint256"
         }
       ],
@@ -80,22 +96,6 @@
     {
       "inputs": [
         {
-          "internalType": "bytes32",
-          "name": "expected",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "actual",
-          "type": "bytes32"
-        }
-      ],
-      "name": "MismatchAssociatedSystemKind",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint256",
           "name": "asyncOrderId",
           "type": "uint256"
@@ -112,11 +112,6 @@
     {
       "inputs": [],
       "name": "OverflowInt256ToUint256",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "OverflowUint256ToInt256",
       "type": "error"
     },
     {
@@ -167,11 +162,6 @@
               "type": "uint256"
             },
             {
-              "internalType": "int256",
-              "name": "committedAmountUsd",
-              "type": "int256"
-            },
-            {
               "internalType": "uint256",
               "name": "minimumSettlementAmount",
               "type": "uint256"
@@ -180,6 +170,11 @@
               "internalType": "uint256",
               "name": "settledAt",
               "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
             }
           ],
           "indexed": false,
@@ -228,6 +223,12 @@
           "indexed": true,
           "internalType": "address",
           "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "referrer",
           "type": "address"
         }
       ],
@@ -278,15 +279,15 @@
           "internalType": "uint256",
           "name": "minimumSettlementAmount",
           "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
         }
       ],
       "name": "commitOrder",
       "outputs": [
-        {
-          "internalType": "uint128",
-          "name": "asyncOrderId",
-          "type": "uint128"
-        },
         {
           "components": [
             {
@@ -320,11 +321,6 @@
               "type": "uint256"
             },
             {
-              "internalType": "int256",
-              "name": "committedAmountUsd",
-              "type": "int256"
-            },
-            {
               "internalType": "uint256",
               "name": "minimumSettlementAmount",
               "type": "uint256"
@@ -333,6 +329,11 @@
               "internalType": "uint256",
               "name": "settledAt",
               "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
             }
           ],
           "internalType": "struct AsyncOrderClaim.Data",
@@ -391,11 +392,6 @@
               "type": "uint256"
             },
             {
-              "internalType": "int256",
-              "name": "committedAmountUsd",
-              "type": "int256"
-            },
-            {
               "internalType": "uint256",
               "name": "minimumSettlementAmount",
               "type": "uint256"
@@ -404,20 +400,25 @@
               "internalType": "uint256",
               "name": "settledAt",
               "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
             }
           ],
           "internalType": "struct AsyncOrderClaim.Data",
-          "name": "",
+          "name": "asyncOrderClaim",
           "type": "tuple"
         }
       ],
-      "stateMutability": "view",
+      "stateMutability": "pure",
       "type": "function"
     }
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x59b938690d61dbb447eaad1c8cc9a3b00b5d8992e07434da7139be4875a841e9",
+  "deployTxnHash": "0x59ffce78f69b7b591a808ca3527e2de1d697bec077e8809071669ee069032607",
   "sourceName": "contracts/modules/AsyncOrderModule.sol",
   "contractName": "AsyncOrderModule",
   "deployedOn": "contract.AsyncOrderModule"

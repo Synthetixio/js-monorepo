@@ -1,6 +1,17 @@
 {
-  "address": "0xcF8d02dD544EeA1403AD1d36Ef52078F982316Bb",
+  "address": "0x1ecCEd37dB77A095A3D960581a27336782c2bE41",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidCollateralLeverage",
+      "type": "error"
+    },
     {
       "inputs": [
         {
@@ -10,6 +21,11 @@
         }
       ],
       "name": "InvalidFeeCollectorInterface",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidWrapperFees",
       "type": "error"
     },
     {
@@ -77,6 +93,25 @@
         },
         {
           "indexed": false,
+          "internalType": "uint256",
+          "name": "collateralLeverage",
+          "type": "uint256"
+        }
+      ],
+      "name": "CollateralLeverageSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "synthMarketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
           "internalType": "address",
           "name": "feeCollector",
           "type": "address"
@@ -121,6 +156,31 @@
         }
       ],
       "name": "MarketUtilizationFeesSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "sharePercentage",
+          "type": "uint256"
+        }
+      ],
+      "name": "ReferrerShareUpdated",
       "type": "event"
     },
     {
@@ -205,6 +265,24 @@
         }
       ],
       "name": "setAtomicFixedFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "collateralLeverage",
+          "type": "uint256"
+        }
+      ],
+      "name": "setCollateralLeverage",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -308,12 +386,35 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "sharePercentage",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateReferrerShare",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x570f21e044c41f834d959588de8114c44565f01e2f8fd572c1f432fbfc8492d0",
-  "sourceName": "contracts/modules/FeeConfigurationModule.sol",
-  "contractName": "FeeConfigurationModule",
-  "deployedOn": "contract.FeeConfigurationModule"
+  "deployTxnHash": "0xb12ac2a8c160a6dd58637960f67d759312be8968a7ea0eefa41362f298ea35e9",
+  "sourceName": "contracts/modules/MarketConfigurationModule.sol",
+  "contractName": "MarketConfigurationModule",
+  "deployedOn": "contract.MarketConfigurationModule"
 }

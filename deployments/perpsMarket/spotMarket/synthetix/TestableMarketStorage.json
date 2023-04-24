@@ -1,0 +1,890 @@
+{
+  "address": "0x330b2de1a041c2D78225337dfDf7F3c922dE684B",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "EmptyDistribution",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "MarketNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowInt256ToUint256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint128ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToInt256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToUint128",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market__testOnly_getOutstandingDebt",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market__testOnly_inRangePools",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market__testOnly_outRangePools",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "newCreditCapacityD18",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "newPoolMaxShareValueD18",
+          "type": "int256"
+        }
+      ],
+      "name": "Market_adjustPoolShares",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "int256",
+          "name": "maxDistributedD18",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxIter",
+          "type": "uint256"
+        }
+      ],
+      "name": "Market_bumpPools",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxIter",
+          "type": "uint256"
+        }
+      ],
+      "name": "Market_distributeDebtToPools",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "creditCapacitySharesD18",
+          "type": "uint256"
+        },
+        {
+          "internalType": "int256",
+          "name": "maxShareValueD18",
+          "type": "int256"
+        }
+      ],
+      "name": "Market_getCreditCapacityContribution",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_getDebtPerShare",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_getDepositedCollateralValue",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_getLockedCreditCapacity",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_getPoolCreditCapacity",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_getReportedDebt",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "int256",
+          "name": "valueToDistributeD18",
+          "type": "int256"
+        }
+      ],
+      "name": "Market_getTargetValuePerShare",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get___reservedForLater1",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get___reservedForLater2",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get___reservedForLater3",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get___reservedForLater4",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get_creditCapacityD18",
+      "outputs": [
+        {
+          "internalType": "int128",
+          "name": "",
+          "type": "int128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get_id",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get_lastDistributedMarketBalanceD18",
+      "outputs": [
+        {
+          "internalType": "int128",
+          "name": "",
+          "type": "int128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get_marketAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "idx",
+          "type": "address"
+        }
+      ],
+      "name": "Market_get_maximumDepositableD18",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get_minDelegateTime",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get_minLiquidityRatioD18",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_get_netIssuanceD18",
+      "outputs": [
+        {
+          "internalType": "int128",
+          "name": "",
+          "type": "int128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_isCapacityLocked",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "int256",
+          "name": "maxDebtShareValueD18",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "newCreditCapacityD18",
+          "type": "uint256"
+        }
+      ],
+      "name": "Market_rebalancePools",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint32",
+          "name": "val",
+          "type": "uint32"
+        }
+      ],
+      "name": "Market_set___reservedForLater1",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint64",
+          "name": "val",
+          "type": "uint64"
+        }
+      ],
+      "name": "Market_set___reservedForLater2",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint64",
+          "name": "val",
+          "type": "uint64"
+        }
+      ],
+      "name": "Market_set___reservedForLater3",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint64",
+          "name": "val",
+          "type": "uint64"
+        }
+      ],
+      "name": "Market_set___reservedForLater4",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "int128",
+          "name": "val",
+          "type": "int128"
+        }
+      ],
+      "name": "Market_set_creditCapacityD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_set_id",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "int128",
+          "name": "val",
+          "type": "int128"
+        }
+      ],
+      "name": "Market_set_lastDistributedMarketBalanceD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "val",
+          "type": "address"
+        }
+      ],
+      "name": "Market_set_marketAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "idx",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "val",
+          "type": "uint256"
+        }
+      ],
+      "name": "Market_set_maximumDepositableD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint32",
+          "name": "val",
+          "type": "uint32"
+        }
+      ],
+      "name": "Market_set_minDelegateTime",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "val",
+          "type": "uint256"
+        }
+      ],
+      "name": "Market_set_minLiquidityRatioD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        },
+        {
+          "internalType": "int128",
+          "name": "val",
+          "type": "int128"
+        }
+      ],
+      "name": "Market_set_netIssuanceD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "_load_id",
+          "type": "uint128"
+        }
+      ],
+      "name": "Market_totalDebt",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xe9f35b99f7aea02813fae143547ccd2f6de9985c75e13e03fe040c0012b834f8",
+  "sourceName": "contracts/generated/test/TestableMarketStorage.sol",
+  "contractName": "TestableMarketStorage",
+  "deployedOn": "contract.TestableMarketStorage"
+}

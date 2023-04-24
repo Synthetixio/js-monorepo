@@ -1,0 +1,63 @@
+{
+  "address": "0x407dF88963443940815d706Ff0Dbba029317e10E",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "DistributionActor_get_lastValuePerShareD27",
+      "outputs": [
+        {
+          "internalType": "int128",
+          "name": "",
+          "type": "int128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "DistributionActor_get_sharesD18",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int128",
+          "name": "val",
+          "type": "int128"
+        }
+      ],
+      "name": "DistributionActor_set_lastValuePerShareD27",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "DistributionActor_set_sharesD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xbda46b359d4ddb5826f88c17b9058d79c3586a11133eb6117c74e355a99c1c62",
+  "sourceName": "contracts/generated/test/TestableDistributionActorStorage.sol",
+  "contractName": "TestableDistributionActorStorage",
+  "deployedOn": "contract.TestableDistributionActorStorage"
+}

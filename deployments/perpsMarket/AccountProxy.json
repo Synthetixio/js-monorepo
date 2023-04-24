@@ -1,5 +1,5 @@
 {
-  "address": "0x5Fc20f9AC2FFE5FE669521AAF8CFaE22580509De",
+  "address": "0xC9da560B235D064E3f9015AB161d05Ca3dbFC69D",
   "abi": [
     {
       "inputs": [
@@ -405,7 +405,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "balance",
           "type": "uint256"
         }
       ],
@@ -437,7 +437,7 @@
       "outputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "operator",
           "type": "address"
         }
       ],
@@ -660,6 +660,19 @@
         }
       ],
       "name": "setApprovalForAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "uri",
+          "type": "string"
+        }
+      ],
+      "name": "setBaseTokenURI",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

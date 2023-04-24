@@ -1,5 +1,5 @@
 {
-  "address": "0xe2c91D7F445eBb40EF1fb9410597D10224039c6c",
+  "address": "0xc186D029DeEB3324c0B2Bd4429d9ebF8838F23F4",
   "abi": [
     {
       "inputs": [
@@ -21,13 +21,13 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint128",
           "name": "synthMarketId",
           "type": "uint128"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "strategyId",
           "type": "uint256"
@@ -40,13 +40,13 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint128",
           "name": "synthMarketId",
           "type": "uint128"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "strategyId",
           "type": "uint256"
@@ -108,6 +108,16 @@
             {
               "internalType": "uint256",
               "name": "priceDeviationTolerance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minimumUsdExchangeAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxRoundingLoss",
               "type": "uint256"
             },
             {
@@ -190,13 +200,23 @@
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
+              "name": "minimumUsdExchangeAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxRoundingLoss",
+              "type": "uint256"
+            },
+            {
               "internalType": "bool",
               "name": "disabled",
               "type": "bool"
             }
           ],
           "internalType": "struct SettlementStrategy.Data",
-          "name": "",
+          "name": "settlementStrategy",
           "type": "tuple"
         }
       ],
@@ -229,7 +249,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x71f3801097f0e459458c21b79cae64a9454846e7ffbff020cd4fe043c12a7cf9",
+  "deployTxnHash": "0xa9aaa63cf976e785599d0fa781d75f7a90988936d99568f47aebfb10896e5a45",
   "sourceName": "contracts/modules/AsyncOrderConfigurationModule.sol",
   "contractName": "AsyncOrderConfigurationModule",
   "deployedOn": "contract.AsyncOrderConfigurationModule"

@@ -1,0 +1,90 @@
+{
+  "address": "0x2710cCB2ce5F658099b0859fBf8d097DCDF30d62",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "feeAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint8",
+          "name": "tradeType",
+          "type": "uint8"
+        }
+      ],
+      "name": "quoteFees",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract ITokenModule",
+          "name": "_usdToken",
+          "type": "address"
+        }
+      ],
+      "name": "setUsdToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "usdToken",
+      "outputs": [
+        {
+          "internalType": "contract ITokenModule",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x299319f0a9fb5481f8ca8de6409f1dc8b54224bcfb49bf5b7449d061b0f54e8f",
+  "sourceName": "contracts/mocks/FeeCollectorMock.sol",
+  "contractName": "FeeCollectorMock",
+  "deployedOn": "contract.FeeCollectorMock"
+}

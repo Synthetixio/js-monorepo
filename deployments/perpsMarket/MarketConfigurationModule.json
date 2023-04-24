@@ -1,0 +1,116 @@
+{
+  "address": "0xa146e66747B7336e63723b9AA7EA478bfFb838C8",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "marketOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "OnlyMarketOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "components": [
+            {
+              "internalType": "enum SettlementStrategy.Type",
+              "name": "strategyType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementDelay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementWindowDuration",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "priceVerificationContract",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "feedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementReward",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "priceDeviationTolerance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "disabled",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct SettlementStrategy.Data",
+          "name": "strategy",
+          "type": "tuple"
+        }
+      ],
+      "name": "addSettlementStrategy",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "skewScale",
+          "type": "uint256"
+        }
+      ],
+      "name": "setSkewScale",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x25ab4804080292aead9ca6afd734156bc26f3baf9fbfa67c6b94419edaafa4d6",
+  "sourceName": "contracts/modules/MarketConfigurationModule.sol",
+  "contractName": "MarketConfigurationModule",
+  "deployedOn": "contract.MarketConfigurationModule"
+}

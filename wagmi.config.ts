@@ -1,5 +1,4 @@
 import { defineConfig } from "@wagmi/cli";
-import { react } from "@wagmi/cli/plugins";
 import fs from "fs";
 import path from "path";
 
@@ -48,11 +47,5 @@ const contracts = readDirectory(directoryPath);
 export default defineConfig({
   out: "src/generated.ts",
   contracts,
-  plugins: [
-    /**
-     * Generates react hooks from your abis
-     * @see https://wagmi.sh/cli/plugins/react
-     */
-    react(),
-  ],
+  plugins: [],
 });

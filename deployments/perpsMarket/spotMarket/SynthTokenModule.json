@@ -1,5 +1,5 @@
 {
-  "address": "0xD9522d65892cc87d6A77676062E1b8D85EBD80eD",
+  "address": "0xcfFeDd57Fb83874FfA1830DF54d6844F77615D2a",
   "abi": [
     {
       "inputs": [],
@@ -36,6 +36,27 @@
         }
       ],
       "name": "InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidDecayRate",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
@@ -164,7 +185,7 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "owner",
+          "name": "user",
           "type": "address"
         }
       ],
@@ -469,7 +490,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x2b3c8976980e7101e3fbcc778b7ff03d12f375eb4ff65cfc88428328f725becd",
+  "deployTxnHash": "0xf32492748df3018b63b7c31d5d3602ae0b341dce1bbae90b9f7f6e3b716b7648",
   "sourceName": "contracts/modules/token/SynthTokenModule.sol",
   "contractName": "SynthTokenModule",
   "deployedOn": "contract.SynthTokenModule"

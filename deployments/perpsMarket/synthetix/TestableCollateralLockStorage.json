@@ -1,0 +1,63 @@
+{
+  "address": "0xc08e5Df07c71b628D3c3c6DD5E3A7639c33b65CC",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "CollateralLock_get_amountD18",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "CollateralLock_get_lockExpirationTime",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "CollateralLock_set_amountD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint64",
+          "name": "val",
+          "type": "uint64"
+        }
+      ],
+      "name": "CollateralLock_set_lockExpirationTime",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x0ddd6783fd83a042c8dcf6346355689653fb40954e05f846306833aeaa695e81",
+  "sourceName": "contracts/generated/test/TestableCollateralLockStorage.sol",
+  "contractName": "TestableCollateralLockStorage",
+  "deployedOn": "contract.TestableCollateralLockStorage"
+}
