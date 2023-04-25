@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers";
 import { useAccount, useContractRead, useContractReads } from "wagmi";
 import { useContract } from "./useContract";
 
@@ -23,7 +22,6 @@ export const useGetAccounts = () => {
       console.log("error!", error);
     },
   });
-  console.log("data:", acccountCount?.toString());
 
   const { data: accountIds, isLoading: accountIdsIsLoading } = useContractReads(
     {
