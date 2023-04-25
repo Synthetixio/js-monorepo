@@ -489,7 +489,7 @@
     }
   ],
   "deployedOn": "router.OracleRouter",
-  "deployTxnHash": "0xfa8b10f2d8f2b06358f2ebc6e97ad4482a58cb06d24d8f3a34f9597f986bddde",
+  "deployTxnHash": "0xa23be5b304175f210d09ee1ce0f6a89b9ef7de1f57927758b50a230034739b74",
   "contractName": "OracleRouter",
   "sourceName": "OracleRouter.sol"
 }

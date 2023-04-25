@@ -1,5 +1,5 @@
 {
-  "address": "0xF10F5CBFf868c749cc89F4Db789e805eCDF3a50c",
+  "address": "0x5B7f3A742B804fa07A39581Ac3439F9F1276cdc8",
   "abi": [
     {
       "inputs": [
@@ -290,6 +290,19 @@
     {
       "inputs": [
         {
+          "internalType": "uint128[]",
+          "name": "synthDeductionPriority",
+          "type": "uint128[]"
+        }
+      ],
+      "name": "setSynthDeductionPriority",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "contract ISynthetixSystem",
           "name": "synthetix",
           "type": "address"
@@ -340,7 +353,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xa418a6a390d9fbf05ac5e04ad3b24c5f96115be2fb6180516820cb1b5a47486d",
+  "deployTxnHash": "0x6c4a94be43cf22efb416f48e5bcf9fff7f59dbf29080d71f875e15c3020288f3",
   "sourceName": "contracts/modules/PerpsMarketFactoryModule.sol",
   "contractName": "PerpsMarketFactoryModule",
   "deployedOn": "contract.PerpsMarketFactoryModule"

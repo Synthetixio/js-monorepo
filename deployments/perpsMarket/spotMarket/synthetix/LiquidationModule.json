@@ -414,7 +414,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x122c2e3dd112195e38f561a3942bcb9bbee3090ac5e9b4e045888ee3ad0a25d3",
+  "deployTxnHash": "0x8bb7789db3528d0c6211c9a4ba89949049302a26ac4eee7ec7dfea25d7e59276",
   "sourceName": "contracts/modules/core/LiquidationModule.sol",
   "contractName": "LiquidationModule",
   "deployedOn": "contract.LiquidationModule"

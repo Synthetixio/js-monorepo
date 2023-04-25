@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "synthetix": "cannon inspect synthetix-sandbox:3.1.0-alpha.0 --write-deployments ./deployments && npm run wagmi && cannon synthetix-sandbox:3.1.0-alpha.0 --fund-addresses 0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "synthetix": "cannon inspect synthetix-sandbox:3.1.0-alpha.3 --write-deployments ./deployments && npm run wagmi && cannon synthetix-sandbox:3.1.0-alpha.3 --fund-addresses 0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
     "build": "vite build",
     "build:production": "vite build",
     "preview": "vite preview",
@@ -24,7 +24,7 @@
     "@openzeppelin/contracts": "4.7.3",
     "@openzeppelin/contracts-upgradeable": "4.7.3",
     "@rainbow-me/rainbowkit": "^0.11.0",
-    "@usecannon/cli": "^2.4.4",
+    "@usecannon/cli": "^2.4.7",
     "@wagmi/cli": "^0.1.15",
     "buffer": "^6.0.3",
     "ethers": "^5.7.2",

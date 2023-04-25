@@ -1,11 +1,16 @@
-import { useAccount, useContractRead } from "wagmi";
+import { BigNumber } from "ethers";
+import { useAccount, useContractRead, useContractReads } from "wagmi";
 import { useContract } from "./useContract";
 
 export const useGetAccounts = () => {
   const { address, isConnected } = useAccount();
   const accountProxy = useContract("ACCOUNT_PROXY");
 
-  const { data, refetch } = useContractRead({
+  const {
+    data: acccountCount,
+    isLoading: acccountCountisLoading,
+    refetch,
+  } = useContractRead({
     address: accountProxy.address,
     abi: accountProxy.abi,
     functionName: "balanceOf",
@@ -18,10 +23,28 @@ export const useGetAccounts = () => {
       console.log("error!", error);
     },
   });
-  console.log("data:", data);
+  console.log("data:", acccountCount?.toString());
+
+  const { data: accountIds, isLoading: accountIdsIsLoading } = useContractReads(
+    {
+      enabled: Boolean(!acccountCountisLoading && !!acccountCount),
+      contracts: Array.from(
+        Array(Number(acccountCount?.toString())).keys(),
+      )?.map((index) => {
+        return {
+          address: accountProxy.address,
+          abi: accountProxy.abi,
+          functionName: "tokenOfOwnerByIndex",
+          args: [address, index],
+        };
+      }),
+    },
+  );
 
   return {
-    data,
+    acccountCount,
+    accountIds,
+    isLoading: accountIdsIsLoading || acccountCountisLoading,
     refetch,
   };
 };

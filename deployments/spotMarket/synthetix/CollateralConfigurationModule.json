@@ -283,7 +283,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x78bc418858f40ad775c937b84126711e5fec3d02ecbde3bcdcb22ad8c0b51fa2",
+  "deployTxnHash": "0x90e7a2687879c7386b5368572b7ef6fad3c15a1c7b99547dbb86b567b0be3135",
   "sourceName": "contracts/modules/core/CollateralConfigurationModule.sol",
   "contractName": "CollateralConfigurationModule",
   "deployedOn": "contract.CollateralConfigurationModule"

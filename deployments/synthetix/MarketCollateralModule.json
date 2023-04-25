@@ -349,7 +349,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x2015506e5508bc6bd6d8b486010715e8aa61a268ea2b9ea02cdb46fc1cb23f21",
+  "deployTxnHash": "0xd4d347af6366f094454628e0be7f7abf1fb66d2cf6f39a210ef687fb5a988361",
   "sourceName": "contracts/modules/core/MarketCollateralModule.sol",
   "contractName": "MarketCollateralModule",
   "deployedOn": "contract.MarketCollateralModule"

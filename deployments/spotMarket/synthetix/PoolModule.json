@@ -1,5 +1,5 @@
 {
-  "address": "0x28f1d1052d4eD8F4c1E8393CC2499aC633AFCbEd",
+  "address": "0xd14aA7Ac9f07c98F3C2984e3cFCC1Bcc5B766701",
   "abi": [
     {
       "inputs": [
@@ -571,7 +571,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x539d78ed7bcb8619ffc5e91c90e19f12a170d3a18195ea10acdc0475355d5b47",
+  "deployTxnHash": "0x9fe3f430e64cd6ba142601debb05a96d94c02f48fd1ddb2294d9a8fcc27589fb",
   "sourceName": "contracts/modules/core/PoolModule.sol",
   "contractName": "PoolModule",
   "deployedOn": "contract.PoolModule"

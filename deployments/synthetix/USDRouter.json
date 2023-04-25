@@ -841,7 +841,7 @@
     }
   ],
   "deployedOn": "router.USDRouter",
-  "deployTxnHash": "0x1ee0d3e93611ed9a89717657b57277b349fa53854e278d536ceaa3774fc27037",
+  "deployTxnHash": "0xb201f10e5632fb10df002fa1c15e870e7abaaef87fc4603c7ee866f45c8726b7",
   "contractName": "USDRouter",
   "sourceName": "USDRouter.sol"
 }

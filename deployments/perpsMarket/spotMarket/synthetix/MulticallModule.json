@@ -23,7 +23,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xc8bb5dd2194cb63d4f7e1ea2bc57e36dbefe12eb3646b75deaf91a980b2d045d",
+  "deployTxnHash": "0xacab8e3ce3e4ced12709112413097a34fc0e97de1de0338101434e89c1b5ba52",
   "sourceName": "contracts/modules/core/MulticallModule.sol",
   "contractName": "MulticallModule",
   "deployedOn": "contract.MulticallModule"

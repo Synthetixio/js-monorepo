@@ -1,5 +1,5 @@
 {
-  "address": "0xaf95fA6F2016a2E5280E1c146634DE0e48BB557C",
+  "address": "0x0137ecb811330763277daE159B6Cf9306645c18f",
   "abi": [
     {
       "inputs": [],
@@ -135,6 +135,25 @@
         }
       ],
       "name": "MarketRegistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "feeAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "MarketSystemFeePaid",
       "type": "event"
     },
     {
@@ -603,7 +622,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x4fbd07deaf526b349e6874523678010373b05a9d23f72dce72347305fb43ec36",
+  "deployTxnHash": "0xa4290b6e00c22080c4f39fd5cb314d37a628eec94b942e0b711b55fd018c4214",
   "sourceName": "contracts/modules/core/MarketManagerModule.sol",
   "contractName": "MarketManagerModule",
   "deployedOn": "contract.MarketManagerModule"

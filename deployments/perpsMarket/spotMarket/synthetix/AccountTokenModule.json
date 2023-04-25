@@ -624,7 +624,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x2cf1af2d21b7845675b37b001814d5803532ed9b92ccf870706dbb0c116e39cf",
+  "deployTxnHash": "0x4312e043f1fd62d51c8e5e2a92094ff09dce71fd51f4729427e57c30ebab3f1c",
   "sourceName": "contracts/modules/account/AccountTokenModule.sol",
   "contractName": "AccountTokenModule",
   "deployedOn": "contract.AccountTokenModule"

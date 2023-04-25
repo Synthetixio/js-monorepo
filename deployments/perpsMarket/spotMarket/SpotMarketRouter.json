@@ -1,5 +1,5 @@
 {
-  "address": "0x9b88EB2B71BA849bcB9CE74f3388Be5788778a82",
+  "address": "0x8E66469c2c4645Cd92D3Ea1286fe166A8CE06235",
   "abi": [
     {
       "inputs": [
@@ -3501,7 +3501,7 @@
     }
   ],
   "deployedOn": "router.SpotMarketRouter",
-  "deployTxnHash": "0xec85c31dac142c345d3c1a722611ac873fa78d6801bd01ba5ab374bf3051dc47",
+  "deployTxnHash": "0x87c6bc63e21080abf46770d7ddc1a8b37cef43e0dac638506d156789bc5d09a3",
   "contractName": "SpotMarketRouter",
   "sourceName": "SpotMarketRouter.sol"
 }

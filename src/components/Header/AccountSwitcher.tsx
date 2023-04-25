@@ -17,7 +17,7 @@ export function AccountSwitcher() {
   const [searchParams, setSelectedAccountId] = useSearchParams();
   const selectedAccountId = searchParams.get("accountId");
 
-  const { data } = useGetAccounts();
+  const { acccountCount } = useGetAccounts();
   const { createAccount } = useCreateAccount((accountId) =>
     setSelectedAccountId({ accountId }),
   );

@@ -206,7 +206,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x56dbc3da620db679cb90b1c9aedcb909265f51f8cd194a9f74b16252d2ed30b3",
+  "deployTxnHash": "0xb5a315fbfe773f595aae3b5e586811a2525795a7680611d743796d0699eb6f7a",
   "sourceName": "contracts/modules/InitialModuleBundle.sol",
   "contractName": "InitialModuleBundle",
   "deployedOn": "contract.InitialModuleBundle"

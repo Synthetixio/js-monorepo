@@ -1,5 +1,5 @@
 {
-  "address": "0xc3aE235b6640b9187A0FbbdDF77BC9D43Ee2Be8f",
+  "address": "0x5E24C91ec6E9f5D4746B123E177bC96BEf695c57",
   "abi": [
     {
       "inputs": [
@@ -1050,6 +1050,19 @@
     {
       "inputs": [
         {
+          "internalType": "uint128[]",
+          "name": "synthDeductionPriority",
+          "type": "uint128[]"
+        }
+      ],
+      "name": "setSynthDeductionPriority",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "contract ISynthetixSystem",
           "name": "synthetix",
           "type": "address"
@@ -1095,6 +1108,93 @@
       "name": "updatePriceData",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint128ToInt128",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToInt256",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OverflowUint256ToUint128",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "openPosition",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "totalAccountOpenInterest",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "totalCollateralValue",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1179,21 +1279,6 @@
     {
       "inputs": [],
       "name": "OverflowInt256ToInt128",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "OverflowUint128ToInt128",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "OverflowUint256ToInt256",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "OverflowUint256ToUint128",
       "type": "error"
     },
     {
@@ -1898,7 +1983,7 @@
     }
   ],
   "deployedOn": "router.PerpsMarketRouter",
-  "deployTxnHash": "0x327223c824f6aad9c6cb944928833dc57b1fc33305f8f383414957ca2aa8b000",
+  "deployTxnHash": "0x264a7bf113bf5895797d2cae8fa7f644e4fd1f589bd33070e505284109478d98",
   "contractName": "PerpsMarketRouter",
   "sourceName": "PerpsMarketRouter.sol"
 }
