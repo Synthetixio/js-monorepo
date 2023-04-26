@@ -40,7 +40,7 @@ export function useUSDProxy() {
       const { address, abi } = await importUSDProxy(network.name);
       return new Contract(address, abi, signerOrProvider) as USDProxyType;
     },
-    enabled: Boolean(network.isSupported && signerOrProvider),
+    enabled: Boolean(signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

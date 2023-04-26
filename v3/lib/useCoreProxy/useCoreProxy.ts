@@ -40,7 +40,7 @@ export function useCoreProxy() {
       const { address, abi } = await importCoreProxy(network.name);
       return new Contract(address, abi, signerOrProvider) as CoreProxyType;
     },
-    enabled: Boolean(network.isSupported && signerOrProvider),
+    enabled: Boolean(signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

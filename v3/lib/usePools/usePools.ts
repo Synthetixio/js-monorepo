@@ -46,6 +46,6 @@ export const usePools = () => {
       });
       return [preferredPool].concat(approvedPools.filter(({ id }) => id !== preferredPool.id));
     },
-    enabled: Boolean(CoreProxyContract && preferredPool && network?.isSupported),
+    enabled: Boolean(CoreProxyContract && preferredPool),
   });
 };

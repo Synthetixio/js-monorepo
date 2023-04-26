@@ -27,8 +27,6 @@ export const useTokenBalance = (address?: string, networkId?: number) => {
       const contract = new Contract(tokenAddress, abi, provider);
       return BalanceSchema.parse(await contract.balanceOf(wallet.address));
     },
-    enabled: Boolean(
-      (networkId ?? network.id) && wallet?.address && tokenAddress && network.isSupported
-    ),
+    enabled: Boolean((networkId ?? network.id) && wallet?.address && tokenAddress),
   });
 };

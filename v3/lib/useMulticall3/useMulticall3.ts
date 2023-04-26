@@ -40,7 +40,7 @@ export function useMulticall3() {
       const { address, abi } = await importMulticall3(network.name);
       return new Contract(address, abi, signerOrProvider) as Multicall3Type;
     },
-    enabled: Boolean(network.isSupported && signerOrProvider),
+    enabled: Boolean(signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });

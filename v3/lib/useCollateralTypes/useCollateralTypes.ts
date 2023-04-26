@@ -109,7 +109,7 @@ export function useCollateralTypes() {
       return loadCollateralTypes({ CoreProxy, Multicall3 });
     },
     placeholderData: [],
-    enabled: Boolean(CoreProxy && Multicall3 && network.isSupported),
+    enabled: Boolean(CoreProxy && Multicall3),
   });
 }
 

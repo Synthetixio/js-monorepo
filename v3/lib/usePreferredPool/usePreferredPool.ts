@@ -21,7 +21,7 @@ export const usePreferredPool = () => {
       const name = await CoreProxyContract.getPoolName(id);
       return PoolSchema.parse({ id, name: name || undefined });
     },
-    enabled: Boolean(CoreProxyContract && network.isSupported),
+    enabled: Boolean(CoreProxyContract),
     staleTime: Infinity,
   });
 };
