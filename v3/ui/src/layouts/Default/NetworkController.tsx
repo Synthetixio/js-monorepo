@@ -1,11 +1,19 @@
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { ChevronDown, ChevronUp, WalletIcon } from '@snx-v3/icons';
-import { disconnect, NETWORKS, onboard, useWallet, useNetwork } from '@snx-v3/useBlockchain';
+import {
+  disconnect,
+  NETWORKS,
+  onboard,
+  useNetwork,
+  useSetNetwork,
+  useWallet,
+} from '@snx-v3/useBlockchain';
 import { prettyString } from '@snx-v3/format';
 
 export function NetworkController() {
   const wallet = useWallet();
   const activeNetwork = useNetwork();
+  const setNetwork = useSetNetwork();
   return (
     <Flex>
       <Menu>
@@ -13,7 +21,6 @@ export function NetworkController() {
           <>
             <MenuButton
               as={Button}
-              isDisabled={!Boolean(wallet)}
               variant="outline"
               colorScheme="gray"
               sx={{ '> span': { display: 'flex', alignItems: 'center' } }}
@@ -41,9 +48,7 @@ export function NetworkController() {
                   <MenuItem
                     key={network.name}
                     disabled={!network.isSupported}
-                    onClick={async () => {
-                      await onboard.setChain({ chainId: `0x${network.id.toString(16)}` });
-                    }}
+                    onClick={() => setNetwork(network)}
                   >
                     <network.Icon />
                     <Text variant="nav" ml={2}>
