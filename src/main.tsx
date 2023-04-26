@@ -6,13 +6,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { WagmiConfig } from "wagmi";
 
-import { App } from "./pages/App";
+import { PerpsMarket } from "./pages/perps/PerpsMarket";
 import { chains, client } from "./wagmi";
 
 import theme from "./theme";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { Index } from "./pages/Index";
-import { Admin } from "./pages/Admin";
+import { PerpsAdmin } from "./pages/perps/PerpsAdmin";
+import { SpotMarket } from "./pages/spot/SpotMarket";
 
 const router = createBrowserRouter([
   {
@@ -20,16 +21,20 @@ const router = createBrowserRouter([
     element: <Index />,
   },
   {
-    path: "/admin",
-    element: <Admin />,
+    path: "/perps/admin",
+    element: <PerpsAdmin />,
   },
   {
-    path: "/markets/:marketId",
-    element: <App />,
+    path: "/perps/markets/:marketId",
+    element: <PerpsMarket />,
   },
   {
-    path: "/markets/:marketId/:accountId",
-    element: <App />,
+    path: "/perps/markets/:marketId/:accountId",
+    element: <PerpsMarket />,
+  },
+  {
+    path: "/spot/markets/:marketId",
+    element: <SpotMarket />,
   },
 ]);
 

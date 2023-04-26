@@ -1983,7 +1983,7 @@
     }
   ],
   "deployedOn": "router.PerpsMarketRouter",
-  "deployTxnHash": "0x264a7bf113bf5895797d2cae8fa7f644e4fd1f589bd33070e505284109478d98",
+  "deployTxnHash": "0x8341f61381ebedfb7f5935b9c497aff9fe5c0868a93d306e4ab4e9ccc07db388",
   "contractName": "PerpsMarketRouter",
   "sourceName": "PerpsMarketRouter.sol"
 }

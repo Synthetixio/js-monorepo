@@ -5,11 +5,21 @@ interface MarketData {
   };
 }
 
-const marketData: MarketData = {
+export const perpsMarkets: MarketData = {
+  ETH: {
+    marketId: 2,
+    tradingViewSymbol: "PYTH:ETHUSD",
+  },
+};
+
+export const spotMarkets: MarketData = {
   ETH: {
     marketId: 1,
     tradingViewSymbol: "PYTH:ETHUSD",
   },
 };
 
-export default marketData;
+export enum StrategyType {
+  ONCHAIN = 0,
+  PYTH = 1,
+}

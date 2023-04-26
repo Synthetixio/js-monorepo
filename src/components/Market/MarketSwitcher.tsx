@@ -12,11 +12,11 @@ import {
 import { ArrowUpDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
-import markets from "../../constants/markets";
+import { perpsMarkets } from "../../constants/markets";
 
 export function MarketSwitcher() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const marketIds = Object.keys(markets);
+  const marketIds = Object.keys(perpsMarkets);
 
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export function MarketSwitcher() {
         onClick={onOpen}
         width="140px"
         p="4"
-        align="center"
+        alignItems="center"
         height="100%"
         bg="whiteAlpha.100"
         borderRadius="0"
