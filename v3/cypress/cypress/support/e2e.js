@@ -14,16 +14,12 @@ beforeEach(() => {
     return subgraph(req);
   }).as('subgraph');
 
-  cy.intercept('https://mainnet.infura.io/v3/*', (req) => {
-    req.url = 'http://127.0.0.1:8545';
-    req.continue();
-  }).as('mainnet');
-
-  cy.intercept('https://goerli.infura.io/v3/*', (req) => {
-    req.url = 'http://127.0.0.1:8545';
-    req.continue();
-  }).as('goerli');
-  //  cy.intercept(' https://optimism-mainnet.infura.io/v3/*', { statusCode: 404 }).as('optimism');
+  ['mainnet', 'optimism-mainnet', 'goerli', 'optimism-goerli'].forEach((networkName) => {
+    cy.intercept(`https://${networkName}.infura.io/v3/*`, (req) => {
+      req.url = 'http://127.0.0.1:8545';
+      req.continue();
+    }).as(networkName);
+  });
 
   cy.on('window:before:load', (win) => {
     win.localStorage.setItem('UNSAFE_IMPORT', 'true');

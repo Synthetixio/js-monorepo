@@ -1,8 +1,9 @@
 import { ethers } from 'ethers';
-import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
 import { getCollateralConfig } from './getCollateralConfig';
+import { importCoreProxy } from './importCoreProxy';
 
 export async function depositCollateral({ privateKey, accountId, symbol, amount }) {
+  const CoreProxy = await importCoreProxy();
   const config = await getCollateralConfig(symbol);
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const wallet = new ethers.Wallet(privateKey, provider);

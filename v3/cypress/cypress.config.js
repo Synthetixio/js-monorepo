@@ -31,7 +31,6 @@ module.exports = defineConfig({
         require('@cypress/code-coverage/task')(on, config);
       }
       on('task', {
-        ...require('./cypress/tasks/forkReset'),
         ...require('./cypress/tasks/setEthBalance'),
         ...require('./cypress/tasks/wrapEth'),
         ...require('./cypress/tasks/getCollateralConfig'),

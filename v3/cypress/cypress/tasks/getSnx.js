@@ -1,14 +1,29 @@
 import { ethers } from 'ethers';
-// import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
 import { getCollateralConfig } from './getCollateralConfig';
 
-// TODO: make it more dynamic, for now just want to fix tests
-const owner = '0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9';
+async function getOwner() {
+  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const network = await provider.getNetwork();
+
+  switch (network.chainId) {
+    case 1:
+      return '0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92';
+    case 5:
+      return '0x48914229dedd5a9922f44441ffccfc2cb7856ee9';
+    case 10:
+      return '0xf977814e90da44bfa03b6295a0616a897441acec';
+    case 420:
+      return '0x48914229dedd5a9922f44441ffccfc2cb7856ee9';
+    default:
+      throw new Error(`Unsupported chain ${network.chainId}`);
+  }
+}
 
 export async function getSnx({ address, amount }) {
   const config = await getCollateralConfig('SNX');
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
 
+  const owner = await getOwner();
   //  const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider);
   //  const owner = await coreProxy.owner();
   //  console.log('getSnx', { owner });
