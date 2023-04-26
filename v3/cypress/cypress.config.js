@@ -31,6 +31,8 @@ module.exports = defineConfig({
         require('@cypress/code-coverage/task')(on, config);
       }
       on('task', {
+        ...require('./cypress/tasks/automineBlocks'),
+        ...require('./cypress/tasks/mineBlock'),
         ...require('./cypress/tasks/setEthBalance'),
         ...require('./cypress/tasks/wrapEth'),
         ...require('./cypress/tasks/getCollateralConfig'),
@@ -40,6 +42,7 @@ module.exports = defineConfig({
         ...require('./cypress/tasks/depositCollateral'),
         ...require('./cypress/tasks/delegateCollateral'),
         ...require('./cypress/tasks/borrowUsd'),
+        ...require('./cypress/tasks/setConfig'),
       });
 
       return config;
