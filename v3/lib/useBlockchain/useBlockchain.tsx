@@ -73,7 +73,9 @@ export const NETWORKS: Record<string, Network> = {
   },
 };
 
-export const DEFAULT_NETWORK = NETWORKS['optimism-mainnet'];
+const DEFAULT_NETWORK_NAME = window.localStorage.getItem('DEFAULT_NETWORK') || 'optimism-mainnet';
+export const DEFAULT_NETWORK =
+  DEFAULT_NETWORK_NAME in NETWORKS ? NETWORKS[DEFAULT_NETWORK_NAME] : NETWORKS['optimism-mainnet'];
 
 const injected = injectedModule();
 const walletConnect = walletConnectModule();
@@ -118,22 +120,49 @@ export const onboard = onboardInit({
   },
 });
 
-export const BlockchainContext = React.createContext<{ state: AppState }>({
-  state: onboard.state.get(),
+export const BlockchainContext = React.createContext<{
+  onboardState: AppState;
+  network: Network;
+  setNetwork: React.Dispatch<React.SetStateAction<Network>>;
+}>({
+  onboardState: onboard.state.get(),
+  network: DEFAULT_NETWORK,
+  setNetwork: () => null,
 });
 
 export const BlockchainProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [state, setState] = React.useState(onboard.state.get());
+  const [onboardState, setOnboardState] = React.useState(onboard.state.get());
+  const [network, setNetwork] = React.useState(DEFAULT_NETWORK);
   React.useEffect(() => {
-    const { unsubscribe } = onboard.state.select().subscribe(setState);
+    const { unsubscribe } = onboard.state.select().subscribe((nextState) => {
+      setOnboardState(nextState);
+
+      const [currentWallet] = nextState.wallets;
+      if (currentWallet) {
+        const [chain] = currentWallet.chains;
+        if (chain) {
+          const selectedNetwork = Object.values(NETWORKS).find(
+            (network) => network.hexId === chain.id
+          );
+          if (selectedNetwork) {
+            setNetwork(selectedNetwork);
+            window.localStorage.setItem('DEFAULT_NETWORK', selectedNetwork.name);
+          }
+        }
+      }
+    });
     return unsubscribe;
   }, []);
-  return <BlockchainContext.Provider value={{ state }}>{children}</BlockchainContext.Provider>;
+  return (
+    <BlockchainContext.Provider value={{ onboardState, network, setNetwork }}>
+      {children}
+    </BlockchainContext.Provider>
+  );
 };
 
 export function useOnboardWallet(): WalletState | undefined {
-  const { state } = React.useContext(BlockchainContext);
-  const { wallets } = state;
+  const { onboardState } = React.useContext(BlockchainContext);
+  const { wallets } = onboardState;
   if (wallets.length < 1) {
     return undefined;
   }
@@ -142,9 +171,10 @@ export function useOnboardWallet(): WalletState | undefined {
 }
 
 export function useNetwork() {
+  const { network } = React.useContext(BlockchainContext);
   const wallet = useOnboardWallet();
   if (!wallet) {
-    return DEFAULT_NETWORK;
+    return network;
   }
   const connectedChain = Object.values(NETWORKS).find(
     // chainId does not exist on type, but it does exist on actual wallet
@@ -157,6 +187,23 @@ export function useNetwork() {
   return UNSUPPORTED_NETWORK;
 }
 
+export function useSetNetwork() {
+  const { setNetwork } = React.useContext(BlockchainContext);
+  const wallet = useOnboardWallet();
+  const hasWallet = Boolean(wallet);
+  return React.useCallback(
+    async (network: Network) => {
+      if (hasWallet) {
+        await onboard.setChain({ chainId: network.hexId });
+      } else {
+        setNetwork(network);
+        window.localStorage.setItem('DEFAULT_NETWORK', network.name);
+      }
+    },
+    [setNetwork, hasWallet]
+  );
+}
+
 export function useIsConnected(): boolean {
   const wallet = useOnboardWallet();
   return Boolean(wallet);
@@ -164,10 +211,11 @@ export function useIsConnected(): boolean {
 
 export function useProvider() {
   const wallet = useOnboardWallet();
-  if (!wallet) {
-    return new ethers.providers.InfuraProvider(DEFAULT_NETWORK.id, process.env.INFURA_KEY);
+  const network = useNetwork();
+  if (wallet) {
+    return new ethers.providers.Web3Provider(wallet.provider, 'any');
   }
-  return new ethers.providers.Web3Provider(wallet.provider, 'any');
+  return new ethers.providers.JsonRpcProvider(network.rpcUrl);
 }
 
 export function useSigner() {
