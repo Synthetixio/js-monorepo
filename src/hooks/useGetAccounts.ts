@@ -15,12 +15,6 @@ export const useGetAccounts = () => {
     functionName: "balanceOf",
     args: [address || "0x"],
     enabled: isConnected && !!address,
-    onSuccess: () => {
-      console.log("success!");
-    },
-    onError: (error) => {
-      console.log("error!", error);
-    },
   });
 
   const { data: accountIds, isLoading: accountIdsIsLoading } = useContractReads(
