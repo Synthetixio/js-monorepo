@@ -1,5 +1,5 @@
 {
-  "address": "0x6D9337486A1f9dCcA051204caf821Dde3a0E419c",
+  "address": "0xF63c4a1fe26b66fB2880A51aAE16A108a1155f18",
   "abi": [
     {
       "inputs": [
@@ -241,6 +241,27 @@
       "type": "error"
     },
     {
+      "inputs": [],
+      "name": "InvalidDecayRate",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
+      "type": "error"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -355,7 +376,7 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "owner",
+          "name": "user",
           "type": "address"
         }
       ],
@@ -659,7 +680,7 @@
     }
   ],
   "deployedOn": "router.SynthRouter",
-  "deployTxnHash": "0x2051e8e47d760b69fff67b75338f091bad3fc2b48bdc75bcb346f3c8579b49aa",
+  "deployTxnHash": "0xfadcca8e4d4078337ca615289488921a14c0c5b0a5b2394f0fab2c3dd6d76688",
   "contractName": "SynthRouter",
   "sourceName": "SynthRouter.sol"
 }

@@ -1,0 +1,63 @@
+{
+  "address": "0x83D0EA8FCD52b2994f0EE2aaE45E2254e32210Dd",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "RewardDistributionClaimStatus_get_lastRewardPerShareD18",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "RewardDistributionClaimStatus_get_pendingSendD18",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "RewardDistributionClaimStatus_set_lastRewardPerShareD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "val",
+          "type": "uint128"
+        }
+      ],
+      "name": "RewardDistributionClaimStatus_set_pendingSendD18",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xae977a2d0849e087c510abfe2866b4c053463d3875b4d173d382387e7149b377",
+  "sourceName": "contracts/generated/test/TestableRewardDistributionClaimStatusStorage.sol",
+  "contractName": "TestableRewardDistributionClaimStatusStorage",
+  "deployedOn": "contract.TestableRewardDistributionClaimStatusStorage"
+}

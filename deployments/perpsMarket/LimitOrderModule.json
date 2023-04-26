@@ -1,9 +1,9 @@
 {
-  "address": "0x5657aE0591c1eaCf11C6039c206e386D22666A23",
+  "address": "0x4bd3026d3EbE3D660330b9502E07e427B4657E6a",
   "abi": [],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x534d7d63f8cbf4b681af6a64c32e9ecee7d2bf6e0f6abffd9228f77c547a5985",
+  "deployTxnHash": "0x9ea8636e093d46a680e8302ecf0e144b372b66eaeaa4ddc8fd3e323384fac727",
   "sourceName": "contracts/modules/LimitOrderModule.sol",
   "contractName": "LimitOrderModule",
   "deployedOn": "contract.LimitOrderModule"

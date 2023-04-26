@@ -1,5 +1,5 @@
 {
-  "address": "0xa2bdBFfbe6c8037dE11752A8D514a4635674d306",
+  "address": "0x2bb21b684E1C92B5C43941037AEdb3910c4caEe1",
   "abi": [
     {
       "inputs": [
@@ -10,6 +10,22 @@
         }
       ],
       "name": "FeatureUnavailable",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidMarketOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "synthImplementation",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidSynthImplementation",
       "type": "error"
     },
     {
@@ -37,11 +53,6 @@
         }
       ],
       "name": "MissingAssociatedSystem",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "NotInitialized",
       "type": "error"
     },
     {
@@ -135,6 +146,25 @@
         {
           "indexed": false,
           "internalType": "address",
+          "name": "nominee",
+          "type": "address"
+        }
+      ],
+      "name": "MarketNominationRenounced",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "oldOwner",
           "type": "address"
         },
@@ -177,7 +207,7 @@
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "proxy",
           "type": "address"
@@ -202,13 +232,13 @@
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "buyFeedId",
           "type": "bytes32"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "sellFeedId",
           "type": "bytes32"
@@ -265,7 +295,7 @@
       "outputs": [
         {
           "internalType": "uint128",
-          "name": "",
+          "name": "synthMarketId",
           "type": "uint128"
         }
       ],
@@ -308,7 +338,7 @@
       "outputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "marketOwner",
           "type": "address"
         }
       ],
@@ -327,7 +357,26 @@
       "outputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "synthAddress",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "getSynthImpl",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "implAddress",
           "type": "address"
         }
       ],
@@ -403,57 +452,16 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "snxAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "usdTokenAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "oracleManager",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "initialSynthImplementation",
-          "type": "address"
-        }
-      ],
-      "name": "initialize",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint128",
           "name": "marketId",
           "type": "uint128"
         }
       ],
-      "name": "locked",
+      "name": "minimumCredit",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "lockedAmount",
           "type": "uint256"
         }
       ],
@@ -472,7 +480,7 @@
       "outputs": [
         {
           "internalType": "string",
-          "name": "",
+          "name": "marketName",
           "type": "string"
         }
       ],
@@ -519,6 +527,19 @@
       "inputs": [
         {
           "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "renounceMarketNomination",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
           "name": "marketId",
           "type": "uint128"
         }
@@ -527,11 +548,55 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "reportedDebtAmount",
           "type": "uint256"
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rate",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDecayRate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "synthImplementation",
+          "type": "address"
+        }
+      ],
+      "name": "setSynthImplementation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract ISynthetixSystem",
+          "name": "synthetix",
+          "type": "address"
+        }
+      ],
+      "name": "setSynthetix",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -546,7 +611,7 @@
       "outputs": [
         {
           "internalType": "bool",
-          "name": "",
+          "name": "isSupported",
           "type": "bool"
         }
       ],
@@ -582,11 +647,6 @@
           "internalType": "uint128",
           "name": "marketId",
           "type": "uint128"
-        },
-        {
-          "internalType": "address",
-          "name": "synthImpl",
-          "type": "address"
         }
       ],
       "name": "upgradeSynthImpl",
@@ -597,7 +657,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x06e22979a428d5e21525e29762cedccaaac90cfb19517e52c1090792b0875b03",
+  "deployTxnHash": "0x5168f33d1444eb60586f2dee8f8c5cd78b3c75c51cc451ecce6e8f65721107da",
   "sourceName": "contracts/modules/SpotMarketFactoryModule.sol",
   "contractName": "SpotMarketFactoryModule",
   "deployedOn": "contract.SpotMarketFactoryModule"

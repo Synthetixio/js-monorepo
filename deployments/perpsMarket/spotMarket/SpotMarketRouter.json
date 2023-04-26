@@ -1,5 +1,5 @@
 {
-  "address": "0x009333b633Ac7e03e8A049fA8713d205bb4bB98e",
+  "address": "0x8E66469c2c4645Cd92D3Ea1286fe166A8CE06235",
   "abi": [
     {
       "inputs": [
@@ -215,6 +215,22 @@
       "type": "error"
     },
     {
+      "inputs": [],
+      "name": "InvalidMarketOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "synthImplementation",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidSynthImplementation",
+      "type": "error"
+    },
+    {
       "inputs": [
         {
           "internalType": "bytes32",
@@ -239,11 +255,6 @@
         }
       ],
       "name": "MissingAssociatedSystem",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "NotInitialized",
       "type": "error"
     },
     {
@@ -310,6 +321,25 @@
         {
           "indexed": false,
           "internalType": "address",
+          "name": "nominee",
+          "type": "address"
+        }
+      ],
+      "name": "MarketNominationRenounced",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "oldOwner",
           "type": "address"
         },
@@ -352,7 +382,7 @@
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "proxy",
           "type": "address"
@@ -377,13 +407,13 @@
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "buyFeedId",
           "type": "bytes32"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "bytes32",
           "name": "sellFeedId",
           "type": "bytes32"
@@ -440,7 +470,7 @@
       "outputs": [
         {
           "internalType": "uint128",
-          "name": "",
+          "name": "synthMarketId",
           "type": "uint128"
         }
       ],
@@ -483,7 +513,7 @@
       "outputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "marketOwner",
           "type": "address"
         }
       ],
@@ -502,7 +532,26 @@
       "outputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "synthAddress",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "getSynthImpl",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "implAddress",
           "type": "address"
         }
       ],
@@ -578,57 +627,16 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "snxAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "usdTokenAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "oracleManager",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "initialSynthImplementation",
-          "type": "address"
-        }
-      ],
-      "name": "initialize",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint128",
           "name": "marketId",
           "type": "uint128"
         }
       ],
-      "name": "locked",
+      "name": "minimumCredit",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "lockedAmount",
           "type": "uint256"
         }
       ],
@@ -647,7 +655,7 @@
       "outputs": [
         {
           "internalType": "string",
-          "name": "",
+          "name": "marketName",
           "type": "string"
         }
       ],
@@ -694,6 +702,19 @@
       "inputs": [
         {
           "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        }
+      ],
+      "name": "renounceMarketNomination",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
           "name": "marketId",
           "type": "uint128"
         }
@@ -702,11 +723,55 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "reportedDebtAmount",
           "type": "uint256"
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rate",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDecayRate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "synthImplementation",
+          "type": "address"
+        }
+      ],
+      "name": "setSynthImplementation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract ISynthetixSystem",
+          "name": "synthetix",
+          "type": "address"
+        }
+      ],
+      "name": "setSynthetix",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -721,7 +786,7 @@
       "outputs": [
         {
           "internalType": "bool",
-          "name": "",
+          "name": "isSupported",
           "type": "bool"
         }
       ],
@@ -757,11 +822,6 @@
           "internalType": "uint128",
           "name": "marketId",
           "type": "uint128"
-        },
-        {
-          "internalType": "address",
-          "name": "synthImpl",
-          "type": "address"
         }
       ],
       "name": "upgradeSynthImpl",
@@ -773,16 +833,32 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "expected",
+          "name": "maxSynthAmount",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "current",
+          "name": "synthAmountCharged",
           "type": "uint256"
         }
       ],
-      "name": "InsufficientAllowance",
+      "name": "ExceedsMaxSynthAmount",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "maxUsdAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdAmountCharged",
+          "type": "uint256"
+        }
+      ],
+      "name": "ExceedsMaxUsdAmount",
       "type": "error"
     },
     {
@@ -802,11 +878,6 @@
       "type": "error"
     },
     {
-      "inputs": [],
-      "name": "InsufficientFunds",
-      "type": "error"
-    },
-    {
       "inputs": [
         {
           "internalType": "uint128",
@@ -815,6 +886,11 @@
         }
       ],
       "name": "InvalidMarket",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidPrices",
       "type": "error"
     },
     {
@@ -838,16 +914,44 @@
           "type": "uint256"
         },
         {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
           "indexed": false,
-          "internalType": "int256",
-          "name": "totalFees",
-          "type": "int256"
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         },
         {
           "indexed": false,
           "internalType": "uint256",
           "name": "collectedFees",
           "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
         }
       ],
       "name": "SynthBought",
@@ -869,16 +973,44 @@
           "type": "uint256"
         },
         {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
           "indexed": false,
-          "internalType": "int256",
-          "name": "totalFees",
-          "type": "int256"
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         },
         {
           "indexed": false,
           "internalType": "uint256",
           "name": "collectedFees",
           "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
         }
       ],
       "name": "SynthSold",
@@ -900,14 +1032,433 @@
           "internalType": "uint256",
           "name": "minAmountReceived",
           "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
         }
       ],
       "name": "buy",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "synthAmount",
           "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minAmountReceived",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
+        }
+      ],
+      "name": "buyExactIn",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "synthAmount",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "synthAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxUsdAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
+        }
+      ],
+      "name": "buyExactOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "usdAmountCharged",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "quoteBuyExactIn",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "synthAmount",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "synthAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "quoteBuyExactOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "usdAmountCharged",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "synthAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "quoteSellExactIn",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "returnAmount",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "quoteSellExactOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "synthToBurn",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "synthAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minUsdAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
+        }
+      ],
+      "name": "sell",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "usdAmountReceived",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
@@ -929,14 +1480,107 @@
           "internalType": "uint256",
           "name": "minAmountReceived",
           "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
         }
       ],
-      "name": "sell",
+      "name": "sellExactIn",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "returnAmount",
           "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "usdAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxSynthAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
+        }
+      ],
+      "name": "sellExactOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "synthToBurn",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
@@ -956,6 +1600,22 @@
         }
       ],
       "name": "IneligibleForCancellation",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "expected",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "actual",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientSharesAmount",
       "type": "error"
     },
     {
@@ -984,12 +1644,12 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "amount",
+          "name": "minimumAmount",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "settlementReward",
+          "name": "amount",
           "type": "uint256"
         }
       ],
@@ -1071,11 +1731,6 @@
               "type": "uint256"
             },
             {
-              "internalType": "int256",
-              "name": "committedAmountUsd",
-              "type": "int256"
-            },
-            {
               "internalType": "uint256",
               "name": "minimumSettlementAmount",
               "type": "uint256"
@@ -1084,6 +1739,11 @@
               "internalType": "uint256",
               "name": "settledAt",
               "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
             }
           ],
           "indexed": false,
@@ -1132,6 +1792,12 @@
           "indexed": true,
           "internalType": "address",
           "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "referrer",
           "type": "address"
         }
       ],
@@ -1182,15 +1848,15 @@
           "internalType": "uint256",
           "name": "minimumSettlementAmount",
           "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
         }
       ],
       "name": "commitOrder",
       "outputs": [
-        {
-          "internalType": "uint128",
-          "name": "asyncOrderId",
-          "type": "uint128"
-        },
         {
           "components": [
             {
@@ -1224,11 +1890,6 @@
               "type": "uint256"
             },
             {
-              "internalType": "int256",
-              "name": "committedAmountUsd",
-              "type": "int256"
-            },
-            {
               "internalType": "uint256",
               "name": "minimumSettlementAmount",
               "type": "uint256"
@@ -1237,6 +1898,11 @@
               "internalType": "uint256",
               "name": "settledAt",
               "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
             }
           ],
           "internalType": "struct AsyncOrderClaim.Data",
@@ -1295,11 +1961,6 @@
               "type": "uint256"
             },
             {
-              "internalType": "int256",
-              "name": "committedAmountUsd",
-              "type": "int256"
-            },
-            {
               "internalType": "uint256",
               "name": "minimumSettlementAmount",
               "type": "uint256"
@@ -1308,14 +1969,19 @@
               "internalType": "uint256",
               "name": "settledAt",
               "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
             }
           ],
           "internalType": "struct AsyncOrderClaim.Data",
-          "name": "",
+          "name": "asyncOrderClaim",
           "type": "tuple"
         }
       ],
-      "stateMutability": "view",
+      "stateMutability": "pure",
       "type": "function"
     },
     {
@@ -1445,10 +2111,32 @@
           "type": "uint256"
         },
         {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
           "indexed": false,
-          "internalType": "int256",
-          "name": "totalFees",
-          "type": "int256"
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         },
         {
           "indexed": false,
@@ -1459,7 +2147,7 @@
         {
           "indexed": true,
           "internalType": "address",
-          "name": "sender",
+          "name": "settler",
           "type": "address"
         }
       ],
@@ -1496,18 +2184,35 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "finalOrderAmount",
           "type": "uint256"
         },
         {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
@@ -1530,18 +2235,35 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "finalOrderAmount",
           "type": "uint256"
         },
         {
-          "internalType": "int256",
-          "name": "",
-          "type": "int256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "payable",
@@ -1551,13 +2273,13 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint128",
           "name": "synthMarketId",
           "type": "uint128"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "strategyId",
           "type": "uint256"
@@ -1570,13 +2292,13 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint128",
           "name": "synthMarketId",
           "type": "uint128"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "uint256",
           "name": "strategyId",
           "type": "uint256"
@@ -1638,6 +2360,16 @@
             {
               "internalType": "uint256",
               "name": "priceDeviationTolerance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minimumUsdExchangeAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxRoundingLoss",
               "type": "uint256"
             },
             {
@@ -1720,13 +2452,23 @@
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
+              "name": "minimumUsdExchangeAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxRoundingLoss",
+              "type": "uint256"
+            },
+            {
               "internalType": "bool",
               "name": "disabled",
               "type": "bool"
             }
           ],
           "internalType": "struct SettlementStrategy.Data",
-          "name": "",
+          "name": "settlementStrategy",
           "type": "tuple"
         }
       ],
@@ -1755,6 +2497,27 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "FailedTransfer",
+      "type": "error"
     },
     {
       "inputs": [],
@@ -1798,10 +2561,32 @@
           "type": "uint256"
         },
         {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
           "indexed": false,
-          "internalType": "int256",
-          "name": "totalFees",
-          "type": "int256"
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         },
         {
           "indexed": false,
@@ -1829,10 +2614,32 @@
           "type": "uint256"
         },
         {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
           "indexed": false,
-          "internalType": "int256",
-          "name": "totalFees",
-          "type": "int256"
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         },
         {
           "indexed": false,
@@ -1854,7 +2661,7 @@
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "wrapCollateralType",
           "type": "address"
@@ -1916,6 +2723,33 @@
           "internalType": "uint256",
           "name": "returnCollateralAmount",
           "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
@@ -1945,10 +2779,48 @@
           "internalType": "uint256",
           "name": "amountToMint",
           "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidCollateralLeverage",
+      "type": "error"
     },
     {
       "inputs": [
@@ -1959,6 +2831,11 @@
         }
       ],
       "name": "InvalidFeeCollectorInterface",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidWrapperFees",
       "type": "error"
     },
     {
@@ -1997,6 +2874,25 @@
         }
       ],
       "name": "AtomicFixedFeeSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "synthMarketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "collateralLeverage",
+          "type": "uint256"
+        }
+      ],
+      "name": "CollateralLeverageSet",
       "type": "event"
     },
     {
@@ -2054,6 +2950,31 @@
         }
       ],
       "name": "MarketUtilizationFeesSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "sharePercentage",
+          "type": "uint256"
+        }
+      ],
+      "name": "ReferrerShareUpdated",
       "type": "event"
     },
     {
@@ -2138,6 +3059,24 @@
         }
       ],
       "name": "setAtomicFixedFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "collateralLeverage",
+          "type": "uint256"
+        }
+      ],
+      "name": "setCollateralLeverage",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -2238,6 +3177,29 @@
         }
       ],
       "name": "setWrapperFees",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "address",
+          "name": "referrer",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "sharePercentage",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateReferrerShare",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -2539,7 +3501,7 @@
     }
   ],
   "deployedOn": "router.SpotMarketRouter",
-  "deployTxnHash": "0xa72abcfc615d66cec966c62d46005f7c0e286319878dbc8ff64c0dfb473f02a2",
+  "deployTxnHash": "0x87c6bc63e21080abf46770d7ddc1a8b37cef43e0dac638506d156789bc5d09a3",
   "contractName": "SpotMarketRouter",
   "sourceName": "SpotMarketRouter.sol"
 }

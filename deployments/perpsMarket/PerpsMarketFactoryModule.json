@@ -1,5 +1,5 @@
 {
-  "address": "0xEa1893b2499acf1DE0c9409aBffFbaFbe9Cd9cd9",
+  "address": "0x5B7f3A742B804fa07A39581Ac3439F9F1276cdc8",
   "abi": [
     {
       "inputs": [
@@ -98,6 +98,25 @@
           "type": "uint128"
         },
         {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "feedId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MarketPriceDataUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "perpsMarketId",
+          "type": "uint128"
+        },
+        {
           "indexed": true,
           "internalType": "address",
           "name": "marketOwner",
@@ -165,25 +184,6 @@
       "inputs": [
         {
           "internalType": "uint128",
-          "name": "marketId",
-          "type": "uint128"
-        }
-      ],
-      "name": "getAccountToken",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint128",
           "name": "perpsMarketId",
           "type": "uint128"
         }
@@ -207,7 +207,7 @@
           "type": "uint128"
         }
       ],
-      "name": "locked",
+      "name": "minimumCredit",
       "outputs": [
         {
           "internalType": "uint256",
@@ -290,6 +290,19 @@
     {
       "inputs": [
         {
+          "internalType": "uint128[]",
+          "name": "synthDeductionPriority",
+          "type": "uint128[]"
+        }
+      ],
+      "name": "setSynthDeductionPriority",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "contract ISynthetixSystem",
           "name": "synthetix",
           "type": "address"
@@ -318,11 +331,29 @@
       ],
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "perpsMarketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "feedId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "updatePriceData",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x81d28177f34276731adf27b2f35f43c08f92ff80827dbbd11afec20ef126da72",
+  "deployTxnHash": "0x6c4a94be43cf22efb416f48e5bcf9fff7f59dbf29080d71f875e15c3020288f3",
   "sourceName": "contracts/modules/PerpsMarketFactoryModule.sol",
   "contractName": "PerpsMarketFactoryModule",
   "deployedOn": "contract.PerpsMarketFactoryModule"

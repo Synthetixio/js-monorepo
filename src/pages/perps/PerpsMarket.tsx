@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { Header, Market, Sidebar } from "./components";
+import { Header, Market, Sidebar } from "../../components";
 
-export function App() {
+export function PerpsMarket() {
   return (
     <Flex height="100vh" maxHeight="100vh" flexDirection="column">
       <Header />

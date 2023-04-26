@@ -1,20 +1,25 @@
 {
-  "address": "0x1Ffcc3E3DA1D03696bA615D9bb74EC0E4fDEE07E",
+  "address": "0xf7CC3aB05a3C043a62d5aa35D9C91f6c15810b21",
   "abi": [
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "expected",
-          "type": "uint256"
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
         },
         {
           "internalType": "uint256",
-          "name": "current",
+          "name": "value",
           "type": "uint256"
         }
       ],
-      "name": "InsufficientAllowance",
+      "name": "FailedTransfer",
       "type": "error"
     },
     {
@@ -35,11 +40,6 @@
     },
     {
       "inputs": [],
-      "name": "InsufficientFunds",
-      "type": "error"
-    },
-    {
-      "inputs": [],
       "name": "InvalidCollateralType",
       "type": "error"
     },
@@ -52,22 +52,6 @@
         }
       ],
       "name": "InvalidMarket",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "expected",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "actual",
-          "type": "bytes32"
-        }
-      ],
-      "name": "MismatchAssociatedSystemKind",
       "type": "error"
     },
     {
@@ -133,10 +117,32 @@
           "type": "uint256"
         },
         {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
           "indexed": false,
-          "internalType": "int256",
-          "name": "totalFees",
-          "type": "int256"
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         },
         {
           "indexed": false,
@@ -164,10 +170,32 @@
           "type": "uint256"
         },
         {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
           "indexed": false,
-          "internalType": "int256",
-          "name": "totalFees",
-          "type": "int256"
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         },
         {
           "indexed": false,
@@ -189,7 +217,7 @@
           "type": "uint256"
         },
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
           "name": "wrapCollateralType",
           "type": "address"
@@ -251,6 +279,33 @@
           "internalType": "uint256",
           "name": "returnCollateralAmount",
           "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
@@ -280,6 +335,33 @@
           "internalType": "uint256",
           "name": "amountToMint",
           "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "fixedFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "utilizationFees",
+              "type": "uint256"
+            },
+            {
+              "internalType": "int256",
+              "name": "skewFees",
+              "type": "int256"
+            },
+            {
+              "internalType": "int256",
+              "name": "wrapperFees",
+              "type": "int256"
+            }
+          ],
+          "internalType": "struct OrderFees.Data",
+          "name": "fees",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
@@ -288,7 +370,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xe1e819d8ee5a3cd7c84f1ad4d6769b2bee4d0e32ede090256c96434c4a3aceaf",
+  "deployTxnHash": "0xcf6cf1a5084b8b9092253fa72d8606190c9fa7c9c63b4eb82ea6977dc1a699c6",
   "sourceName": "contracts/modules/WrapperModule.sol",
   "contractName": "WrapperModule",
   "deployedOn": "contract.WrapperModule"

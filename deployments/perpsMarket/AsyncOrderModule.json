@@ -1,9 +1,25 @@
 {
-  "address": "0xd6D61ee581Ff0b3231FC5591C69877D63FaD8292",
+  "address": "0x0E86250fEbcc22c5053cc9b7D6cB1E0a5F80F63d",
   "abi": [
     {
       "inputs": [],
       "name": "FlaggedForLiquidation",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "availableMargin",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minMargin",
+          "type": "uint256"
+        }
+      ],
+      "name": "InsufficientMargin",
       "type": "error"
     },
     {
@@ -95,6 +111,11 @@
       "type": "error"
     },
     {
+      "inputs": [],
+      "name": "PositionOutOfBounds",
+      "type": "error"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -150,6 +171,11 @@
     {
       "inputs": [],
       "name": "ValueNotInSet",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ZeroSizeOrder",
       "type": "error"
     },
     {
@@ -243,16 +269,6 @@
               "internalType": "bytes32",
               "name": "trackingCode",
               "type": "bytes32"
-            },
-            {
-              "internalType": "uint256",
-              "name": "liqPremium",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "liqMargin",
-              "type": "uint256"
             }
           ],
           "internalType": "struct AsyncOrder.Data",
@@ -307,7 +323,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x96d54c140e94d030615bbfe67f126548c94353a62c12e9fd519b7b79e85063cc",
+  "deployTxnHash": "0xa716c4ea42dc2063a547b36995ad5b20c754b932d2b5a9e1198699ee68637ed9",
   "sourceName": "contracts/modules/AsyncOrderModule.sol",
   "contractName": "AsyncOrderModule",
   "deployedOn": "contract.AsyncOrderModule"
