@@ -15,6 +15,7 @@ type PositionFlagged @entity {
   id: ID!
   trader: Trader!
   flagger: Bytes!
+  price: BigInt
   timestamp: BigInt!
 }
 

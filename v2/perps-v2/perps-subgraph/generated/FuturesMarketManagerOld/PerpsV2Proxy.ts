@@ -860,6 +860,40 @@ export class PositionLiquidated2__Params {
   }
 }
 
+export class PositionFlagged1 extends ethereum.Event {
+  get params(): PositionFlagged1__Params {
+    return new PositionFlagged1__Params(this);
+  }
+}
+
+export class PositionFlagged1__Params {
+  _event: PositionFlagged1;
+
+  constructor(event: PositionFlagged1) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get account(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get flagger(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+
+  get price(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get timestamp(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+}
+
 export class PerpsV2Proxy extends ethereum.SmartContract {
   static bind(address: Address): PerpsV2Proxy {
     return new PerpsV2Proxy('PerpsV2Proxy', address);

@@ -173,6 +173,23 @@ export class PositionFlagged extends Entity {
     this.set('flagger', Value.fromBytes(value));
   }
 
+  get price(): BigInt | null {
+    let value = this.get('price');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set price(value: BigInt | null) {
+    if (!value) {
+      this.unset('price');
+    } else {
+      this.set('price', Value.fromBigInt(<BigInt>value));
+    }
+  }
+
   get timestamp(): BigInt {
     let value = this.get('timestamp');
     return value!.toBigInt();
