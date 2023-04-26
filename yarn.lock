@@ -8560,10 +8560,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/useMulticall3@workspace:v3/lib/useMulticall3"
   dependencies:
+    "@ethersproject/contracts": ^5.7.0
     "@snx-v3/useBlockchain": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@tanstack/react-query": ^4.24.6
-    ethers: ^5.7.2
   languageName: unknown
   linkType: soft
 
