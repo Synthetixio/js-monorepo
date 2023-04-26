@@ -78,6 +78,7 @@ fs.writeFileSync(
         ...perpsV2MarketLiquidateAAVEPERPNew,
         ...futuresMarketManager,
         ...oldEvents,
+        // TODO @DEV remove when new snx lib is released
         {
           anonymous: false,
           inputs: [
