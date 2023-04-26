@@ -11,5 +11,5 @@ echo SYNTHETIX_VERSION=$SYNTHETIX_VERSION
 
 export DEBUG="cannon:*"
 
-echo yarn cannon synthetix:$SYNTHETIX_VERSION --fork https://$CHAIN_NAME.infura.io/v3/\$INFURA_KEY
-yarn cannon synthetix:$SYNTHETIX_VERSION --fork https://$CHAIN_NAME.infura.io/v3/$INFURA_KEY
+echo yarn cannon synthetix:$SYNTHETIX_VERSION --provider-url https://$CHAIN_NAME.infura.io/v3/\$INFURA_KEY
+yarn cannon synthetix:$SYNTHETIX_VERSION --provider-url https://$CHAIN_NAME.infura.io/v3/$INFURA_KEY
