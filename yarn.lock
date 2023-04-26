@@ -10754,7 +10754,7 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.6
+    "@usecannon/cli": ^2.4.7
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -12481,9 +12481,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.4.6":
-  version: 2.4.6
-  resolution: "@usecannon/builder@npm:2.4.6"
+"@usecannon/builder@npm:^2.4.7":
+  version: 2.4.7
+  resolution: "@usecannon/builder@npm:2.4.7"
   dependencies:
     ajv: ^8.11.0
     axios: ^1.2.2
@@ -12495,17 +12495,17 @@ __metadata:
     promise-events: ^0.2.4
   peerDependencies:
     ethers: ">=5.6.0"
-  checksum: 6d4b27c7334cde5f3f0ef318da35f10949f873261aea9c35ae311043d051758bcaaa2e2d5d0863aff4945f6c2c8f62319030023d446e7c24d78741c8086c04ae
+  checksum: eff98f528964a39cd8824f2f0b8735849a6532353a0d26aa6fd109398455bd7713470d47fb77e24f4b50d45ebc4f9d4c606bda9a4e9286ef90fb6f5a9c9a05e9
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^2.4.6":
-  version: 2.4.6
-  resolution: "@usecannon/cli@npm:2.4.6"
+"@usecannon/cli@npm:^2.4.7":
+  version: 2.4.7
+  resolution: "@usecannon/cli@npm:2.4.7"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.4.6
+    "@usecannon/builder": ^2.4.7
     chalk: ^4.1.2
     commander: ^9.3.0
     debug: ^4.3.4
@@ -12520,7 +12520,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: dist/bin/cannon.js
-  checksum: cadeb1d015da23667e42f4f3d76fd31ea7f72d0fe798b31f44e67fc739ec09293b80936eab1f5c5eac84d6bfd121fc41a223e1a31408fc8abd51d2577a642136
+  checksum: 0a0efe3e8a852e35633f30941f958d16567aaa0ae94500635f840b3f2263b6633d47e8d10b7fb5553574787dab620168973c98bcada6ec1c8dab68b3473976ef
   languageName: node
   linkType: hard
 
