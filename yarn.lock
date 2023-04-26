@@ -8477,17 +8477,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/useExternalMulticall@workspace:*, @snx-v3/useExternalMulticall@workspace:v3/lib/useExternalMulticall":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/useExternalMulticall@workspace:v3/lib/useExternalMulticall"
-  dependencies:
-    "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/v3-contracts": "workspace:*"
-    "@tanstack/react-query": ^4.24.6
-    ethers: ^5.7.2
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/useGasOptions@workspace:*, @snx-v3/useGasOptions@workspace:v3/lib/useGasOptions":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useGasOptions@workspace:v3/lib/useGasOptions"
@@ -8560,10 +8549,21 @@ __metadata:
   resolution: "@snx-v3/useMarketNamesById@workspace:v3/lib/useMarketNamesById"
   dependencies:
     "@snx-v3/useBlockchain": "workspace:*"
-    "@snx-v3/useExternalMulticall": "workspace:*"
+    "@snx-v3/useMulticall3": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     zod: ^3.20.6
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useMulticall3@workspace:*, @snx-v3/useMulticall3@workspace:v3/lib/useMulticall3":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useMulticall3@workspace:v3/lib/useMulticall3"
+  dependencies:
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/v3-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
 

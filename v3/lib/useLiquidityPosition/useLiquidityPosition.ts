@@ -1,4 +1,4 @@
-import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
+import { CoreProxyType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
@@ -34,7 +34,7 @@ export const loadPosition = async ({
   poolId,
   tokenAddress,
 }: {
-  CoreProxy: CoreProxyContractType;
+  CoreProxy: CoreProxyType;
   accountId: string;
   poolId: string;
   tokenAddress: string;

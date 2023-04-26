@@ -6,5 +6,5 @@ export const DEFAULT_QUERY_STALE_TIME = 300_000; // 5min
 export const INFURA_KEY = '23087ce9f88c44d1b1c54fd7c07c65fb';
 export const ONBOARD_KEY = 'sec_jykTuCK0ZuqXWf3wNYqizxs2';
 
-export const getSubgraphUrl = (networkName = 'goerli') =>
+export const getSubgraphUrl = (networkName = 'optimism-mainnet') =>
   `https://api.thegraph.com/subgraphs/name/snx-v3/${networkName}`;

@@ -1,11 +1,11 @@
 import { utils } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
-import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
+import { CoreProxyType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { z } from 'zod';
 import { useMemo } from 'react';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
-import { MulticallContractType, useExternalMulticall } from '../useExternalMulticall';
+import { Multicall3Type, useMulticall3 } from '../useMulticall3';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
 const CollateralConfigurationSchema = z.object({
@@ -30,17 +30,17 @@ const SymbolSchema = z.string();
 const ERC20Interface = new utils.Interface(['function symbol() view returns (string)']);
 
 async function loadSymbols({
-  MulticallContract,
+  Multicall3,
   tokenConfigs,
 }: {
-  MulticallContract: MulticallContractType;
+  Multicall3: Multicall3Type;
   tokenConfigs: z.infer<typeof CollateralConfigurationSchema>[];
 }) {
   const calls = tokenConfigs.map((tokenConfig) => ({
     target: tokenConfig.tokenAddress,
     callData: ERC20Interface.encodeFunctionData('symbol'),
   }));
-  const multicallResult = await MulticallContract.callStatic.aggregate(calls);
+  const multicallResult = await Multicall3.callStatic.aggregate(calls);
   return multicallResult.returnData.map((bytes) =>
     SymbolSchema.parse(ERC20Interface.decodeFunctionResult('symbol', bytes)[0])
   );
@@ -49,40 +49,37 @@ async function loadSymbols({
 const PriceSchema = ZodBigNumber.transform((x) => wei(x));
 
 async function loadPrices({
-  CoreProxyContract,
+  CoreProxy,
   tokenConfigs,
 }: {
-  CoreProxyContract: CoreProxyContractType;
+  CoreProxy: CoreProxyType;
   tokenConfigs: z.infer<typeof CollateralConfigurationSchema>[];
 }) {
   const calls = tokenConfigs.map((x) =>
-    CoreProxyContract.interface.encodeFunctionData('getCollateralPrice', [x.tokenAddress])
+    CoreProxy.interface.encodeFunctionData('getCollateralPrice', [x.tokenAddress])
   );
-  const multicallResult = await CoreProxyContract.callStatic.multicall(calls);
+  const multicallResult = await CoreProxy.callStatic.multicall(calls);
   return multicallResult.map((bytes) => {
-    const decoded = CoreProxyContract.interface.decodeFunctionResult(
-      'getCollateralPrice',
-      bytes
-    )[0];
+    const decoded = CoreProxy.interface.decodeFunctionResult('getCollateralPrice', bytes)[0];
     return PriceSchema.parse(decoded);
   });
 }
 
 async function loadCollateralTypes({
-  CoreProxyContract,
-  MulticallContract,
+  CoreProxy,
+  Multicall3,
 }: {
-  CoreProxyContract: CoreProxyContractType;
-  MulticallContract: MulticallContractType;
+  CoreProxy: CoreProxyType;
+  Multicall3: Multicall3Type;
 }): Promise<CollateralType[]> {
-  const tokenConfigsRaw = (await CoreProxyContract.getCollateralConfigurations(true)) as object[];
+  const tokenConfigsRaw = (await CoreProxy.getCollateralConfigurations(true)) as object[];
   const tokenConfigs = tokenConfigsRaw
     .map((x) => CollateralConfigurationSchema.parse({ ...x }))
     .filter((x) => x.depositingEnabled);
 
   const [symbols, prices] = await Promise.all([
-    loadSymbols({ MulticallContract, tokenConfigs }),
-    loadPrices({ CoreProxyContract, tokenConfigs }),
+    loadSymbols({ Multicall3, tokenConfigs }),
+    loadPrices({ CoreProxy, tokenConfigs }),
   ]);
 
   return tokenConfigs.map((config, i) => ({
@@ -101,18 +98,18 @@ async function loadCollateralTypes({
 
 export function useCollateralTypes() {
   const network = useNetwork();
-  const { data: CoreProxyContract } = useCoreProxy();
-  const { data: MulticallContract } = useExternalMulticall();
+  const { data: CoreProxy } = useCoreProxy();
+  const { data: Multicall3 } = useMulticall3();
 
   return useQuery({
     queryKey: [network.name, 'CollateralTypes'],
     queryFn: async () => {
-      if (!CoreProxyContract || !MulticallContract)
+      if (!CoreProxy || !Multicall3)
         throw Error('Query should not be enabled when contracts missing');
-      return loadCollateralTypes({ CoreProxyContract, MulticallContract });
+      return loadCollateralTypes({ CoreProxy, Multicall3 });
     },
     placeholderData: [],
-    enabled: Boolean(CoreProxyContract && MulticallContract && network.isSupported),
+    enabled: Boolean(CoreProxy && Multicall3),
   });
 }
 
