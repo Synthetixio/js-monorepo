@@ -88,7 +88,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xc839c306ca875ba07377809ff25ca909a554ce9f853b8ae14ce74c070fcc1aa4",
+  "deployTxnHash": "0x5979b6747fd840529b125cf470dafcfcf4e7026106df40788f51daf31e2026a8",
   "sourceName": "contracts/modules/core/UtilsModule.sol",
   "contractName": "UtilsModule",
   "deployedOn": "contract.UtilsModule"

@@ -490,7 +490,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xe4db467ca332ea7404e86ea7144775c0f64636c9bc2e53cddf77381a68f29f53",
+  "deployTxnHash": "0x568ac67aa882888011b2cf5a73774b6427a2408ab1755fda3e874c7f7beeb3a9",
   "sourceName": "contracts/modules/token/SynthTokenModule.sol",
   "contractName": "SynthTokenModule",
   "deployedOn": "contract.SynthTokenModule"

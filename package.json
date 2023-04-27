@@ -1,10 +1,10 @@
 {
-  "name": "perps-v3-prototype",
+  "name": "v3-markets-prototype",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
-    "synthetix": "cannon inspect synthetix-sandbox:3.1.0-alpha.3 --write-deployments ./deployments && npm run wagmi && cannon synthetix-sandbox:3.1.0-alpha.3 --fund-addresses 0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "synthetix": "cannon inspect synthetix-sandbox --write-deployments ./deployments && npm run wagmi && cannon synthetix-sandbox --fund-addresses 0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
     "build": "vite build",
     "build:production": "vite build",
     "preview": "vite preview",

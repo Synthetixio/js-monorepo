@@ -501,7 +501,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xfb71e7d82532641b08936ff5c1f787651678dc1e1c79f2b3536d93aa9dcc558e",
+  "deployTxnHash": "0x9cf8b497eb0383536f0f606d8c9759c08536f09625bc7cd128eabfd75b974d13",
   "sourceName": "contracts/modules/usd/USDTokenModule.sol",
   "contractName": "USDTokenModule",
   "deployedOn": "contract.USDTokenModule"

@@ -21,18 +21,9 @@ export const useSpotMarketInfo = (marketId: string | number) => {
     enabled: !!marketId,
   });
 
-  const { data: marketOwner } = useContractRead({
-    address: spotMarketProxy.address,
-    abi: spotMarketProxy.abi,
-    functionName: "getMarketOwner",
-    args: [marketId],
-    enabled: !!marketId,
-  });
-
   return {
     synthAddress: synthAddress as string,
     marketName: marketName as string,
-    marketOwner: marketOwner as string,
   };
 };
 
@@ -47,16 +38,7 @@ export const useSpotMarketStat = (marketId: string | number) => {
     enabled: !!marketId,
   });
 
-  const { data: minimumCredit } = useContractRead({
-    address: spotMarketProxy.address,
-    abi: spotMarketProxy.abi,
-    functionName: "minimumCredit",
-    args: [marketId],
-    enabled: !!marketId,
-  });
-
   return {
     reportedDebt: reportedDebt as BigNumber,
-    minimumCredit: minimumCredit as BigNumber,
   };
 };

@@ -3503,5 +3503,5 @@
   "deployTxnHash": "",
   "sourceName": "",
   "contractName": "",
-  "deployedOn": "invoke.upgrade_spot_market_proxy"
+  "deployedOn": "invoke.upgradeSpotMarketProxy"
 }

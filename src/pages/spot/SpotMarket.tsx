@@ -28,8 +28,8 @@ import { useTokenInfo } from "../../hooks/useTokenInfo";
 export function SpotMarket() {
   const { marketId } = useParams();
   const id = spotMarkets[marketId?.toUpperCase() || ""].marketId;
-  const { synthAddress, marketName, marketOwner } = useSpotMarketInfo(id);
-  const { minimumCredit, reportedDebt } = useSpotMarketStat(id);
+  const { synthAddress, marketName } = useSpotMarketInfo(id);
+  const { reportedDebt } = useSpotMarketStat(id);
   const { symbol, decimals, name } = useTokenInfo(synthAddress);
 
   if (!id || !synthAddress) {
@@ -40,14 +40,6 @@ export function SpotMarket() {
     <Flex height="100vh" maxHeight="100vh" flexDirection="column">
       <>
         <Header isSpot />
-        Market: {marketName}
-        <br />
-        Market Owner: {marketOwner}
-        <br />
-        Synth: {synthAddress}
-        <br />
-        {name} {symbol} {decimals}
-        <br />
         <Flex flex="1" height="100%" minHeight={0}>
           <Box flex="5" pb="32px">
             <Flex direction="column" height="100%" width="100%">
@@ -83,7 +75,10 @@ export function SpotMarket() {
                         fontFamily="mono"
                         fontWeight="thin"
                       >
-                        $1.3M
+                        {reportedDebt.toNumber().toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
                       </StatNumber>
                     </Stat>
                     <Stat
@@ -98,7 +93,7 @@ export function SpotMarket() {
                         fontFamily="mono"
                         fontWeight="thin"
                       >
-                        $1.3M
+                        $0
                       </StatNumber>
                     </Stat>
                     <Stat
@@ -211,48 +206,15 @@ export function SpotMarket() {
               <Heading size="md" mb="3">
                 Market Details
               </Heading>
+
               <Box mb="2">
-                <Heading size="xs">Utilization</Heading>
-                0% (of X)
-              </Box>
-              <Box mb="2">
-                <Heading size="xs">Skew</Heading>
-                -100 ETH (targetting 100ETH)
-              </Box>
-              <Box mb="2">
-                <Heading size="xs">Atomic Fixed Fee</Heading>
-                0%
-              </Box>
-              <Box mb="2">
-                <>
-                  <Heading size="xs">Reported Debt</Heading>
-                  {reportedDebt.toString()}
-                </>
+                <Heading size="xs">Name</Heading>
+                {marketName}
               </Box>
 
               <Box mb="2">
-                <>
-                  <Heading size="xs">Minimum Credit</Heading>
-                  {minimumCredit.toString()}
-                </>
-              </Box>
-              <Box mb="2">
-                <Heading size="xs">Direct Integrations</Heading>
-              </Box>
-              <Box mb="2">
-                <Heading size="xs">Async Fixed Fee</Heading>
-                0%
-              </Box>
-              <Box mb="2">
-                <Heading size="xs">Interest Rate</Heading>
-                0%
-              </Box>
-              <Box mb="2">
-                <Heading size="xs">Custom Fee Collector</Heading>
-                <Code>0x0000...</Code>
-              </Box>
-              <Box mb="2">
-                <Heading size="xs">Referrers</Heading>
+                <Heading size="xs">Synth Address</Heading>
+                {synthAddress}
               </Box>
             </Box>
           </Box>
