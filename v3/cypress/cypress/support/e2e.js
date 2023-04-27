@@ -21,7 +21,16 @@ beforeEach(() => {
     }).as(networkName);
   });
 
-  cy.on('window:before:load', (win) => {
+  cy.on('window:before:load', async (win) => {
+    const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+    const network = await provider.getNetwork();
+    const networkName = {
+      1: 'mainnet',
+      10: 'optimism-mainnet',
+      5: 'goerli',
+      420: 'optimism-goerli',
+    }[network.chainId];
+    win.localStorage.setItem('DEFAULT_NETWORK', networkName);
     win.localStorage.setItem('UNSAFE_IMPORT', 'true');
     win.localStorage.setItem('connectedWallets', '["MetaMask"]');
   });
