@@ -3,7 +3,7 @@ import { generatePath } from 'react-router-dom';
 it('should withdraw borrowed snxUSD and get back SNX collateral', () => {
   cy.connectWallet().then(({ address, privateKey }) => {
     // Disable collateral withdrawal timeout
-    cy.task('setConfig', { key: 'accountTimeoutWithdraw', value: 0 });
+    cy.task('setConfig', { key: 'accountTimeoutWithdraw', value: '' });
 
     cy.task('setEthBalance', { address, balance: 100 });
     cy.task('getSnx', { address, amount: 500 });
