@@ -41,106 +41,14 @@ export function SpotMarket() {
       <>
         <Header isSpot />
         <Flex flex="1" height="100%" minHeight={0}>
-          <Box flex="5" pb="32px">
-            <Flex direction="column" height="100%" width="100%">
-              <Flex flexDirection="column" height="100%">
-                <Flex>
-                  <Heading size="md">ETH \/</Heading>
-
-                  <StatGroup display="flex" flex="1">
-                    <Stat
-                      flex="1"
-                      p="2"
-                      borderLeft="1px solid rgba(255,255,255,0.2)"
-                      height="100%"
-                    >
-                      <StatLabel>Market Price</StatLabel>
-                      <StatNumber
-                        fontSize="lg"
-                        fontFamily="mono"
-                        fontWeight="thin"
-                      >
-                        $123,123
-                      </StatNumber>
-                    </Stat>
-                    <Stat
-                      flex="1"
-                      p="2"
-                      borderLeft="1px solid rgba(255,255,255,0.2)"
-                      height="100%"
-                    >
-                      <StatLabel>snxETH Issued</StatLabel>
-                      <StatNumber
-                        fontSize="lg"
-                        fontFamily="mono"
-                        fontWeight="thin"
-                      >
-                        {reportedDebt.toNumber().toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        })}
-                      </StatNumber>
-                    </Stat>
-                    <Stat
-                      flex="1"
-                      p="2"
-                      borderLeft="1px solid rgba(255,255,255,0.2)"
-                      height="100%"
-                    >
-                      <StatLabel>snxUSD Deposited</StatLabel>
-                      <StatNumber
-                        fontSize="lg"
-                        fontFamily="mono"
-                        fontWeight="thin"
-                      >
-                        $0
-                      </StatNumber>
-                    </Stat>
-                    <Stat
-                      flex="1"
-                      p="2"
-                      borderLeft="1px solid rgba(255,255,255,0.2)"
-                      height="100%"
-                    >
-                      <StatLabel>Market Collateralization</StatLabel>
-                      <StatNumber
-                        fontSize="lg"
-                        fontFamily="mono"
-                        fontWeight="thin"
-                      >
-                        $3.4M
-                      </StatNumber>
-                    </Stat>
-                    <Stat
-                      flex="1"
-                      p="2"
-                      borderLeft="1px solid rgba(255,255,255,0.2)"
-                      height="100%"
-                    >
-                      <StatLabel>Market Credit Capacity</StatLabel>
-                      <StatNumber
-                        fontSize="lg"
-                        fontFamily="mono"
-                        fontWeight="thin"
-                      >
-                        $3.4M
-                      </StatNumber>
-                    </Stat>
-                  </StatGroup>
-                </Flex>
-                <AdvancedRealTimeChart
-                  theme="dark"
-                  autosize
-                  symbol={"ETHUSD"}
-                ></AdvancedRealTimeChart>
-              </Flex>
-            </Flex>
-          </Box>
           <Box
-            borderLeft="1px solid rgba(255,255,255,0.2)"
+            borderRight="1px solid rgba(255,255,255,0.2)"
             flex="2"
             maxHeight="100%"
           >
+            <Box borderBottom="1px solid rgba(255,255,255,0.2)" p="4">
+              <Heading size="md">ETH (Market Switcher)</Heading>
+            </Box>
             <Box borderBottom="1px solid rgba(255,255,255,0.2)" p="4">
               <div key="form" style={{ width: "100%" }}>
                 <VStack spacing={4} align="flex-start" w="100%">
@@ -216,7 +124,44 @@ export function SpotMarket() {
                 <Heading size="xs">Synth Address</Heading>
                 {synthAddress}
               </Box>
+
+              <Box mb="2">
+                <Heading size="xs">Market Price</Heading>
+                $0
+              </Box>
+
+              <Box mb="2">
+                <Heading size="xs">snxETH Issued</Heading>
+                {reportedDebt.toNumber().toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })}
+              </Box>
+
+              <Box mb="2">
+                <Heading size="xs">snxUSD Deposited</Heading>
+                $0
+              </Box>
+
+              <Box mb="2">
+                <Heading size="xs">Market Collateralization</Heading>
+                $0
+              </Box>
+
+              <Box mb="2">
+                <Heading size="xs">Market Credit Capacity</Heading>
+                $0
+              </Box>
             </Box>
+          </Box>
+          <Box flex="5" pb="32px">
+            <Flex direction="column" height="100%" width="100%">
+              <AdvancedRealTimeChart
+                theme="dark"
+                autosize
+                symbol={"ETHUSD"}
+              ></AdvancedRealTimeChart>
+            </Flex>
           </Box>
         </Flex>
       </>
