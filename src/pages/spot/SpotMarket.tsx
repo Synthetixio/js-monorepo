@@ -87,7 +87,7 @@ export function SpotMarket() {
                       borderLeft="1px solid rgba(255,255,255,0.2)"
                       height="100%"
                     >
-                      <StatLabel>snxUSD Issued</StatLabel>
+                      <StatLabel>snxUSD Deposited</StatLabel>
                       <StatNumber
                         fontSize="lg"
                         fontFamily="mono"
