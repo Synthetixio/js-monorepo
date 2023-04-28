@@ -50,6 +50,43 @@ type FuturesTrade @entity {
   txHash: String!
 }
 
+type DailyMarketStats @entity {
+  "marketAddress-YYYY-MM-DD"
+  id: ID!
+  market: FuturesMarket!
+  day: String!
+  timestamp: BigInt!
+  volume: BigInt!
+  cumulativeVolume: BigInt!
+  fees: BigInt!
+  cumulativeFees: BigInt!
+  trades: BigInt!
+  cumulativeTrades: BigInt!
+}
+type DailyStats @entity {
+  "DailyStats-YYYY-MM-DD"
+  id: ID!
+  day: String!
+  timestamp: BigInt!
+  volume: BigInt!
+  cumulativeVolume: BigInt!
+  fees: BigInt!
+  cumulativeFees: BigInt!
+  trades: BigInt!
+  cumulativeTrades: BigInt!
+  newTraders: BigInt!
+  existingTraders: BigInt!
+  cumulativeTraders: BigInt!
+}
+
+type CumulativeMarketStats @entity {
+  "CumulativeMarketStats-marketAddress"
+  id: ID!
+  market: FuturesMarket!
+  cumulativeFees: BigInt!
+  cumulativeVolume: BigInt!
+  cumulativeTrades: BigInt!
+}
 type Synthetix @entity {
   id: ID!
   feesByLiquidations: BigInt!
@@ -57,6 +94,7 @@ type Synthetix @entity {
   totalLiquidations: BigInt!
   totalVolume: BigInt!
   totalTraders: BigInt!
+  totalTrades: BigInt!
 }
 
 type FuturesPosition @entity {
