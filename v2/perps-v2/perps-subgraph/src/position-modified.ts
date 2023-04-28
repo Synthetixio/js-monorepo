@@ -15,6 +15,7 @@ import {
   calculateAccruedPnlForReducingPositions,
   calculateVolume,
 } from './calculations';
+import { updateHistoricalTradeStats } from './historical-trade-stats';
 import {
   createTradeEntityForNewPosition,
   createTradeEntityForPositionClosed,
@@ -49,6 +50,7 @@ function getOrCreateSynthetix(): Synthetix {
     synthetix.totalLiquidations = BigInt.fromI32(0);
     synthetix.totalTraders = BigInt.fromI32(0);
     synthetix.totalVolume = BigInt.fromI32(0);
+    synthetix.totalTrades = BigInt.fromI32(0);
   }
   return synthetix;
 }
@@ -348,6 +350,7 @@ export function updateFunding(
   return BigInt.fromI32(0);
 }
 export function handlePositionModified(event: PositionModifiedNewEvent): void {
+  updateHistoricalTradeStats(event);
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
   let synthetix = getOrCreateSynthetix();
