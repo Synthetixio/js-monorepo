@@ -2,7 +2,7 @@ import { Address } from '@graphprotocol/graph-ts';
 import { BigInt } from '@graphprotocol/graph-ts';
 import { assert, clearStore, describe, log, logStore, test, afterEach } from 'matchstick-as';
 import { Trader } from '../generated/schema';
-import { timestampToDate } from '../src/historical-trade-stats';
+import { dayToEpochTimestamp, timestampToDate } from '../src/historical-trade-stats';
 import { handlePositionModified } from '../src/position-modified';
 import { createPositionModifiedEvent, toEth, toGwei } from './perpsV2-utils';
 const trader = '0x1234567890123456789012345678901234567890';
@@ -366,7 +366,13 @@ describe('calculateAccruedFunding', () => {
     assert.notInStore('CumulativeMarketStat', cumulativeMarketStatsId);
   });
   test('timestampToDate', () => {
+    const timestamp = BigInt.fromI32(1682661853); //'2023-04-28T06:04:13.000Z'
     const result = timestampToDate(BigInt.fromI32(1682661853));
     assert.stringEquals(result, '2023-04-28');
+  });
+  test('dayToEpochTimestamp', () => {
+    const result = dayToEpochTimestamp('2023-04-28');
+    const expectedTimestamp = BigInt.fromI32(1682640000); //'2023-04-28T06:04:13.000Z'
+    assert.stringEquals(result.toString(), expectedTimestamp.toString());
   });
 });

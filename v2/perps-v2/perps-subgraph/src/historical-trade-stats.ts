@@ -1,5 +1,5 @@
 import { PositionModified1 as PositionModifiedNewEvent } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
-import { BigInt } from '@graphprotocol/graph-ts';
+import { BigInt, log } from '@graphprotocol/graph-ts';
 import {
   CumulativeMarketStat,
   DailyMarketStat,
@@ -20,6 +20,12 @@ export function timestampToDate(timestamp: BigInt): string {
   return `${year}-${month}-${day}`;
 }
 
+export function dayToEpochTimestamp(dateString: string): BigInt {
+  const date = Date.parse(dateString + 'T00:00:00.000Z');
+  // eslint-disable-next-line no-undef
+  return BigInt.fromU64(<u64>Math.floor(<f64>date.getTime() / 1000));
+}
+
 const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStat => {
   const day = timestampToDate(event.block.timestamp);
   const id = 'DailyStat-'.concat(day);
@@ -37,7 +43,7 @@ const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStat => {
   if (dailyStat) return dailyStat;
   dailyStat = new DailyStat(id);
 
-  dailyStat.timestamp = BigInt.fromI32(<i32>Math.floor(<i32>(Date.parse(day).getTime() / 1000)));
+  dailyStat.timestamp = dayToEpochTimestamp(day);
   dailyStat.day = day;
   dailyStat.volume = BigInt.fromI32(0);
   dailyStat.fees = BigInt.fromI32(0);
@@ -84,9 +90,7 @@ const getOrCreateDailyMarketStat = (event: PositionModifiedNewEvent): DailyMarke
   if (dailyMarketStat) return dailyMarketStat;
   dailyMarketStat = new DailyMarketStat(id);
   dailyMarketStat.market = event.address.toHex();
-  dailyMarketStat.timestamp = BigInt.fromI32(
-    <i32>Math.floor(<i32>(Date.parse(day).getTime() / 1000))
-  );
+  dailyMarketStat.timestamp = dayToEpochTimestamp(day);
   dailyMarketStat.day = day;
   dailyMarketStat.volume = BigInt.fromI32(0);
   dailyMarketStat.fees = BigInt.fromI32(0);
