@@ -115,7 +115,9 @@ function handlePositionOpenUpdates(
   positionId: string
 ): FuturesPosition {
   createTradeEntityForNewPosition(event, positionId);
-  synthetix.feesByPositionModifications = synthetix.feesByLiquidations.plus(event.params.fee);
+  synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
+    event.params.fee
+  );
   const volume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
 
   synthetix.totalVolume = synthetix.totalVolume.plus(volume);
