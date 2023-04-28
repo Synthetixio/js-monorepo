@@ -22,3 +22,6 @@ v3/subgraphs/tests/.latest.json
 v2/perps-v2/perps-subgraph/tests/.latest.json
 .yarnrc.yml
 v2/perps-v2/ui/src/__generated__
+
+# temporary
+v3/spot-markets/ui/prototype
