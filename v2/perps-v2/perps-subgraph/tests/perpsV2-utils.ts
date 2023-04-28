@@ -36,9 +36,12 @@ export function createPositionModifiedEvent(
   fee: BigInt,
   timestamp: i64,
   skew: BigInt = BigInt.fromI32(200),
-  logIndex: i64 = 0
+  logIndex: i64 = 0,
+  marketAddress: Address = Address.fromString('0xA16081F360e3847006dB660bae1c6d1b2e17eC2A')
 ): positionModifiedEventNew {
   let positionModifiedEvent = changetype<positionModifiedEventNew>(newMockEvent());
+
+  positionModifiedEvent.address = marketAddress;
   positionModifiedEvent.parameters = new Array();
   const block = createBlock(timestamp, 5);
   positionModifiedEvent.parameters.push(
