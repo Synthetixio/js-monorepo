@@ -8,8 +8,10 @@ packages/queries/subgraphs
 cache
 artifacts
 .docusaurus
+**/subgraph.yaml
 v3/contracts/src
 v3/contracts/deployments
+v3/spot-markets/contracts/deployments
 **/tmp/
 **/.next/
 **/out/
