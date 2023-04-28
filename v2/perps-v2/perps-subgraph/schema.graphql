@@ -50,7 +50,7 @@ type FuturesTrade @entity {
   txHash: String!
 }
 
-type DailyMarketStats @entity {
+type DailyMarketStat @entity {
   "marketAddress-YYYY-MM-DD"
   id: ID!
   market: FuturesMarket!
@@ -63,8 +63,8 @@ type DailyMarketStats @entity {
   trades: BigInt!
   cumulativeTrades: BigInt!
 }
-type DailyStats @entity {
-  "DailyStats-YYYY-MM-DD"
+type DailyStat @entity {
+  "DailyStat-YYYY-MM-DD"
   id: ID!
   day: String!
   timestamp: BigInt!
@@ -79,8 +79,8 @@ type DailyStats @entity {
   cumulativeTraders: BigInt!
 }
 
-type CumulativeMarketStats @entity {
-  "CumulativeMarketStats-marketAddress"
+type CumulativeMarketStat @entity {
+  "CumulativeMarketStat-marketAddress"
   id: ID!
   market: FuturesMarket!
   cumulativeFees: BigInt!
