@@ -1,5 +1,5 @@
 import { PositionModified1 as PositionModifiedNewEvent } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
-import { BigInt, log } from '@graphprotocol/graph-ts';
+import { BigInt } from '@graphprotocol/graph-ts';
 import {
   CumulativeMarketStats,
   DailyMarketStats,
@@ -36,7 +36,7 @@ const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStats => {
   if (dailyStat) return dailyStat;
   dailyStat = new DailyStats(id);
 
-  dailyStat.timestamp = BigInt.fromI32(<i32>Math.floor(<f64>(Date.parse(day).getTime() / 1000)));
+  dailyStat.timestamp = BigInt.fromI32(<i32>Math.floor(<i32>(Date.parse(day).getTime() / 1000)));
   dailyStat.day = day;
   dailyStat.volume = BigInt.fromI32(0);
   dailyStat.fees = BigInt.fromI32(0);
@@ -84,7 +84,7 @@ const getOrCreateDailyMarketStat = (event: PositionModifiedNewEvent): DailyMarke
   dailyMarketStat = new DailyMarketStats(id);
   dailyMarketStat.market = event.address.toHex();
   dailyMarketStat.timestamp = BigInt.fromI32(
-    <i32>Math.floor(<f64>(Date.parse(day).getTime() / 1000))
+    <i32>Math.floor(<i32>(Date.parse(day).getTime() / 1000))
   );
   dailyMarketStat.day = day;
   dailyMarketStat.volume = BigInt.fromI32(0);
