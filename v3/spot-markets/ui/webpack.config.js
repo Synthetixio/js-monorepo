@@ -144,10 +144,10 @@ module.exports = {
     ])
 
     .concat([
-      new webpack.NormalModuleReplacementPlugin(
-        new RegExp(`^@synthetixio/v3-contracts$`),
-        path.resolve(path.dirname(require.resolve(`@synthetixio/v3-contracts/package.json`)), 'src')
-      ),
+      //      new webpack.NormalModuleReplacementPlugin(
+      //        new RegExp(`^@synthetixio/v3-contracts$`),
+      //        path.resolve(path.dirname(require.resolve(`@synthetixio/v3-contracts/package.json`)), 'src')
+      //      ),
       new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/v3-theme$`),
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')

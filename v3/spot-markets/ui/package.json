@@ -66,7 +66,8 @@
   ],
   "depcheck": {
     "ignorePatterns": [
-      "dist"
+      "dist",
+      "prototype"
     ],
     "ignoreMatches": [
       "@noisekit/ipfs-deploy"
