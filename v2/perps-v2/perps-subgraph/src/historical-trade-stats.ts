@@ -9,8 +9,8 @@ import {
 } from '../generated/schema';
 import { calculateVolume } from './calculations';
 
-function timestampToDate(timestamp: BigInt): string {
-  const seconds = timestamp.toI32();
+export function timestampToDate(timestamp: BigInt): string {
+  const seconds = timestamp.toI64();
   const milliseconds = seconds * 1000;
   const date = new Date(milliseconds);
   const year = date.getUTCFullYear();
@@ -19,6 +19,7 @@ function timestampToDate(timestamp: BigInt): string {
 
   return `${year}-${month}-${day}`;
 }
+
 const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStat => {
   const day = timestampToDate(event.block.timestamp);
   const id = 'DailyStat-'.concat(day);
