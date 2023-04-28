@@ -1,16 +1,16 @@
 import { PositionModified1 as PositionModifiedNewEvent } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
-import { BigInt } from '@graphprotocol/graph-ts';
+import { BigInt, log } from '@graphprotocol/graph-ts';
 import {
-  CumulativeMarketStats,
-  DailyMarketStats,
-  DailyStats,
+  CumulativeMarketStat,
+  DailyMarketStat,
+  DailyStat,
   Synthetix,
   Trader,
 } from '../generated/schema';
 import { calculateVolume } from './calculations';
 
-function timestampToDate(timestamp: BigInt): string {
-  const seconds = timestamp.toI32();
+export function timestampToDate(timestamp: BigInt): string {
+  const seconds = timestamp.toI64();
   const milliseconds = seconds * 1000;
   const date = new Date(milliseconds);
   const year = date.getUTCFullYear();
@@ -19,9 +19,16 @@ function timestampToDate(timestamp: BigInt): string {
 
   return `${year}-${month}-${day}`;
 }
-const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStats => {
+
+export function dayToEpochTimestamp(dateString: string): BigInt {
+  const date = Date.parse(dateString + 'T00:00:00.000Z');
+  // eslint-disable-next-line no-undef
+  return BigInt.fromU64(<u64>Math.floor(<f64>date.getTime() / 1000));
+}
+
+const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStat => {
   const day = timestampToDate(event.block.timestamp);
-  const id = 'DailyStats-'.concat(day);
+  const id = 'DailyStat-'.concat(day);
   let synthetix = Synthetix.load('synthetix');
 
   if (!synthetix) {
@@ -32,11 +39,11 @@ const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStats => {
     synthetix.totalTraders = BigInt.fromI32(0);
     synthetix.totalTrades = BigInt.fromI32(0);
   }
-  let dailyStat = DailyStats.load(id);
+  let dailyStat = DailyStat.load(id);
   if (dailyStat) return dailyStat;
-  dailyStat = new DailyStats(id);
+  dailyStat = new DailyStat(id);
 
-  dailyStat.timestamp = BigInt.fromI32(<i32>Math.floor(<i32>(Date.parse(day).getTime() / 1000)));
+  dailyStat.timestamp = dayToEpochTimestamp(day);
   dailyStat.day = day;
   dailyStat.volume = BigInt.fromI32(0);
   dailyStat.fees = BigInt.fromI32(0);
@@ -75,17 +82,15 @@ function updateDailyStats(event: PositionModifiedNewEvent): void {
   }
   dailyStat.save();
 }
-const getOrCreateDailyMarketStat = (event: PositionModifiedNewEvent): DailyMarketStats => {
+const getOrCreateDailyMarketStat = (event: PositionModifiedNewEvent): DailyMarketStat => {
   const day = timestampToDate(event.block.timestamp);
   const id = event.address.toHex().toString().concat('-').concat(day);
 
-  let dailyMarketStat = DailyMarketStats.load(id);
+  let dailyMarketStat = DailyMarketStat.load(id);
   if (dailyMarketStat) return dailyMarketStat;
-  dailyMarketStat = new DailyMarketStats(id);
+  dailyMarketStat = new DailyMarketStat(id);
   dailyMarketStat.market = event.address.toHex();
-  dailyMarketStat.timestamp = BigInt.fromI32(
-    <i32>Math.floor(<i32>(Date.parse(day).getTime() / 1000))
-  );
+  dailyMarketStat.timestamp = dayToEpochTimestamp(day);
   dailyMarketStat.day = day;
   dailyMarketStat.volume = BigInt.fromI32(0);
   dailyMarketStat.fees = BigInt.fromI32(0);
@@ -94,8 +99,8 @@ const getOrCreateDailyMarketStat = (event: PositionModifiedNewEvent): DailyMarke
   return dailyMarketStat;
 };
 function updateDailyMarketStats(event: PositionModifiedNewEvent): void {
-  const cumulativeMarketStats = CumulativeMarketStats.load(
-    'CumulativeMarketStats-'.concat(event.address.toHex())
+  const cumulativeMarketStats = CumulativeMarketStat.load(
+    'CumulativeMarketStat-'.concat(event.address.toHex())
   );
   if (!cumulativeMarketStats) {
     throw new Error('Expect cumulativeMarketStats to exist');
@@ -115,12 +120,12 @@ function updateDailyMarketStats(event: PositionModifiedNewEvent): void {
   dailyMarketStat.save();
 }
 
-const getOrCreateCumulativeMarketStats = (marketAddress: string): CumulativeMarketStats => {
-  const id = 'CumulativeMarketStats-'.concat(marketAddress);
+const getOrCreateCumulativeMarketStats = (marketAddress: string): CumulativeMarketStat => {
+  const id = 'CumulativeMarketStat-'.concat(marketAddress);
 
-  let cumulativeMarketStats = CumulativeMarketStats.load(id);
+  let cumulativeMarketStats = CumulativeMarketStat.load(id);
   if (cumulativeMarketStats) return cumulativeMarketStats;
-  cumulativeMarketStats = new CumulativeMarketStats(id);
+  cumulativeMarketStats = new CumulativeMarketStat(id);
   cumulativeMarketStats.market = marketAddress;
   cumulativeMarketStats.cumulativeFees = BigInt.fromI32(0);
   cumulativeMarketStats.cumulativeVolume = BigInt.fromI32(0);

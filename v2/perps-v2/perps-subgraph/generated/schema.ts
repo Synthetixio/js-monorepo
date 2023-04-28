@@ -479,7 +479,7 @@ export class FuturesTrade extends Entity {
   }
 }
 
-export class DailyMarketStats extends Entity {
+export class DailyMarketStat extends Entity {
   constructor(id: string) {
     super();
     this.set('id', Value.fromString(id));
@@ -487,18 +487,18 @@ export class DailyMarketStats extends Entity {
 
   save(): void {
     let id = this.get('id');
-    assert(id != null, 'Cannot save DailyMarketStats entity without an ID');
+    assert(id != null, 'Cannot save DailyMarketStat entity without an ID');
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type DailyMarketStats must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type DailyMarketStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set('DailyMarketStats', id.toString(), this);
+      store.set('DailyMarketStat', id.toString(), this);
     }
   }
 
-  static load(id: string): DailyMarketStats | null {
-    return changetype<DailyMarketStats | null>(store.get('DailyMarketStats', id));
+  static load(id: string): DailyMarketStat | null {
+    return changetype<DailyMarketStat | null>(store.get('DailyMarketStat', id));
   }
 
   get id(): string {
@@ -592,7 +592,7 @@ export class DailyMarketStats extends Entity {
   }
 }
 
-export class DailyStats extends Entity {
+export class DailyStat extends Entity {
   constructor(id: string) {
     super();
     this.set('id', Value.fromString(id));
@@ -600,18 +600,18 @@ export class DailyStats extends Entity {
 
   save(): void {
     let id = this.get('id');
-    assert(id != null, 'Cannot save DailyStats entity without an ID');
+    assert(id != null, 'Cannot save DailyStat entity without an ID');
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type DailyStats must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type DailyStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set('DailyStats', id.toString(), this);
+      store.set('DailyStat', id.toString(), this);
     }
   }
 
-  static load(id: string): DailyStats | null {
-    return changetype<DailyStats | null>(store.get('DailyStats', id));
+  static load(id: string): DailyStat | null {
+    return changetype<DailyStat | null>(store.get('DailyStat', id));
   }
 
   get id(): string {
@@ -723,7 +723,7 @@ export class DailyStats extends Entity {
   }
 }
 
-export class CumulativeMarketStats extends Entity {
+export class CumulativeMarketStat extends Entity {
   constructor(id: string) {
     super();
     this.set('id', Value.fromString(id));
@@ -731,18 +731,18 @@ export class CumulativeMarketStats extends Entity {
 
   save(): void {
     let id = this.get('id');
-    assert(id != null, 'Cannot save CumulativeMarketStats entity without an ID');
+    assert(id != null, 'Cannot save CumulativeMarketStat entity without an ID');
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type CumulativeMarketStats must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type CumulativeMarketStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set('CumulativeMarketStats', id.toString(), this);
+      store.set('CumulativeMarketStat', id.toString(), this);
     }
   }
 
-  static load(id: string): CumulativeMarketStats | null {
-    return changetype<CumulativeMarketStats | null>(store.get('CumulativeMarketStats', id));
+  static load(id: string): CumulativeMarketStat | null {
+    return changetype<CumulativeMarketStat | null>(store.get('CumulativeMarketStat', id));
   }
 
   get id(): string {

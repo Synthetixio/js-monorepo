@@ -2,6 +2,7 @@ import { Address } from '@graphprotocol/graph-ts';
 import { BigInt } from '@graphprotocol/graph-ts';
 import { assert, clearStore, describe, log, logStore, test, afterEach } from 'matchstick-as';
 import { Trader } from '../generated/schema';
+import { dayToEpochTimestamp, timestampToDate } from '../src/historical-trade-stats';
 import { handlePositionModified } from '../src/position-modified';
 import { createPositionModifiedEvent, toEth, toGwei } from './perpsV2-utils';
 const trader = '0x1234567890123456789012345678901234567890';
@@ -75,68 +76,63 @@ describe('calculateAccruedFunding', () => {
       handlePositionModified(events[i]);
     }
 
-    // Check DailyStats for Day 1
-    const idDay1 = 'DailyStats-1970-01-01';
-    assert.fieldEquals('DailyStats', idDay1, 'volume', toEth(4000).toString());
-    assert.fieldEquals('DailyStats', idDay1, 'fees', toGwei(2000000000).toString());
-    assert.fieldEquals('DailyStats', idDay1, 'trades', BigInt.fromI32(2).toString());
-    assert.fieldEquals('DailyStats', idDay1, 'newTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay1, 'existingTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay1, 'cumulativeFees', toGwei(2000000000).toString());
+    // Check DailyStat for Day 1
+    const idDay1 = 'DailyStat-1970-01-01';
+    assert.fieldEquals('DailyStat', idDay1, 'volume', toEth(4000).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'fees', toGwei(2000000000).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'trades', BigInt.fromI32(2).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'newTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'existingTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'cumulativeFees', toGwei(2000000000).toString());
 
-    // Check DailyStats for Day 2
-    const idDay2 = 'DailyStats-1970-01-02';
-    assert.fieldEquals('DailyStats', idDay2, 'volume', toEth(2000).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'fees', toGwei(1000000000).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'trades', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'newTraders', BigInt.fromI32(0).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'existingTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'cumulativeVolume', toEth(6000).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'cumulativeFees', toGwei(3000000000).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'cumulativeTrades', BigInt.fromI32(3).toString());
+    // Check DailyStat for Day 2
+    const idDay2 = 'DailyStat-1970-01-02';
+    assert.fieldEquals('DailyStat', idDay2, 'volume', toEth(2000).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'fees', toGwei(1000000000).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'trades', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'newTraders', BigInt.fromI32(0).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'existingTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'cumulativeVolume', toEth(6000).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'cumulativeFees', toGwei(3000000000).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'cumulativeTrades', BigInt.fromI32(3).toString());
 
-    // Check DailyStats for Day 4
-    const idDay4 = 'DailyStats-1970-01-04';
-    assert.fieldEquals('DailyStats', idDay4, 'volume', toEth(2000).toString());
-    assert.fieldEquals('DailyStats', idDay4, 'fees', toGwei(1000000000).toString());
-    assert.fieldEquals('DailyStats', idDay4, 'trades', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay4, 'newTraders', BigInt.fromI32(0).toString());
-    assert.fieldEquals('DailyStats', idDay4, 'existingTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay4, 'cumulativeVolume', toEth(8000).toString());
-    assert.fieldEquals('DailyStats', idDay4, 'cumulativeFees', toGwei(4000000000).toString());
-    assert.fieldEquals('DailyStats', idDay4, 'cumulativeTrades', BigInt.fromI32(4).toString());
+    // Check DailyStat for Day 4
+    const idDay4 = 'DailyStat-1970-01-04';
+    assert.fieldEquals('DailyStat', idDay4, 'volume', toEth(2000).toString());
+    assert.fieldEquals('DailyStat', idDay4, 'fees', toGwei(1000000000).toString());
+    assert.fieldEquals('DailyStat', idDay4, 'trades', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay4, 'newTraders', BigInt.fromI32(0).toString());
+    assert.fieldEquals('DailyStat', idDay4, 'existingTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay4, 'cumulativeVolume', toEth(8000).toString());
+    assert.fieldEquals('DailyStat', idDay4, 'cumulativeFees', toGwei(4000000000).toString());
+    assert.fieldEquals('DailyStat', idDay4, 'cumulativeTrades', BigInt.fromI32(4).toString());
 
-    // Check DailyMarketStats for Day 1
+    // Check DailyMarketStat for Day 1
     const marketIdDay1 = events[0].address.toHex().toString().concat('-1970-01-01');
-    assert.fieldEquals('DailyMarketStats', marketIdDay1, 'market', events[0].address.toHex());
-    assert.fieldEquals('DailyMarketStats', marketIdDay1, 'volume', toEth(4000).toString());
-    assert.fieldEquals('DailyMarketStats', marketIdDay1, 'fees', toGwei(2000000000).toString());
-    assert.fieldEquals('DailyMarketStats', marketIdDay1, 'trades', BigInt.fromI32(2).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay1, 'market', events[0].address.toHex());
+    assert.fieldEquals('DailyMarketStat', marketIdDay1, 'volume', toEth(4000).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay1, 'fees', toGwei(2000000000).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay1, 'trades', BigInt.fromI32(2).toString());
 
-    // Check DailyMarketStats for Day 2
+    // Check DailyMarketStat for Day 2
     const marketIdDay2 = events[0].address.toHex().toString().concat('-1970-01-02');
-    assert.fieldEquals('DailyMarketStats', marketIdDay2, 'volume', toEth(2000).toString());
-    assert.fieldEquals('DailyMarketStats', marketIdDay2, 'fees', toGwei(1000000000).toString());
-    assert.fieldEquals('DailyMarketStats', marketIdDay2, 'trades', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay2, 'volume', toEth(2000).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay2, 'fees', toGwei(1000000000).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay2, 'trades', BigInt.fromI32(1).toString());
 
-    // Check DailyMarketStats for Day 4
+    // Check DailyMarketStat for Day 4
     const marketIdDay4 = events[0].address.toHex().toString().concat('-1970-01-04');
-    assert.fieldEquals('DailyMarketStats', marketIdDay4, 'volume', toEth(2000).toString());
-    assert.fieldEquals('DailyMarketStats', marketIdDay4, 'fees', toGwei(1000000000).toString());
-    assert.fieldEquals('DailyMarketStats', marketIdDay4, 'trades', BigInt.fromI32(1).toString());
-    // Check CumulativeMarketStats
+    assert.fieldEquals('DailyMarketStat', marketIdDay4, 'volume', toEth(2000).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay4, 'fees', toGwei(1000000000).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay4, 'trades', BigInt.fromI32(1).toString());
+    // Check CumulativeMarketStat
     const marketAddress = events[0].address.toHex().toString();
-    const id = 'CumulativeMarketStats-' + marketAddress;
+    const id = 'CumulativeMarketStat-' + marketAddress;
 
-    assert.fieldEquals('CumulativeMarketStats', id, 'cumulativeVolume', toEth(8000).toString());
+    assert.fieldEquals('CumulativeMarketStat', id, 'cumulativeVolume', toEth(8000).toString());
+    assert.fieldEquals('CumulativeMarketStat', id, 'cumulativeFees', toGwei(4000000000).toString());
     assert.fieldEquals(
-      'CumulativeMarketStats',
-      id,
-      'cumulativeFees',
-      toGwei(4000000000).toString()
-    );
-    assert.fieldEquals(
-      'CumulativeMarketStats',
+      'CumulativeMarketStat',
       id,
       'cumulativeTrades',
       BigInt.fromI32(4).toString()
@@ -191,45 +187,40 @@ describe('calculateAccruedFunding', () => {
     handlePositionModified(event2);
     handlePositionModified(event3);
 
-    // // Check DailyStats
-    const idDay1 = 'DailyStats-1970-01-01';
-    const idDay2 = 'DailyStats-1970-01-02';
+    // // Check DailyStat
+    const idDay1 = 'DailyStat-1970-01-01';
+    const idDay2 = 'DailyStat-1970-01-02';
 
-    assert.fieldEquals('DailyStats', idDay1, 'volume', toEth(2000).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'volume', toEth(6000).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'volume', toEth(2000).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'volume', toEth(6000).toString());
 
-    // Check DailyMarketStats for event1 and event2
+    // Check DailyMarketStat for event1 and event2
     const marketIdDay1Event1 = event1.address.toHex().toString().concat('-1970-01-01');
     const marketIdDay2Event2 = event2.address.toHex().toString().concat('-1970-01-02');
     const marketIdDay2Event3 = event3.address.toHex().toString().concat('-1970-01-02');
 
-    assert.fieldEquals('DailyMarketStats', marketIdDay1Event1, 'volume', toEth(2000).toString());
-    assert.fieldEquals('DailyMarketStats', marketIdDay2Event2, 'volume', toEth(4500).toString());
-    assert.fieldEquals('DailyMarketStats', marketIdDay2Event3, 'volume', toEth(1500).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay1Event1, 'volume', toEth(2000).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay2Event2, 'volume', toEth(4500).toString());
+    assert.fieldEquals('DailyMarketStat', marketIdDay2Event3, 'volume', toEth(1500).toString());
 
-    // Check CumulativeMarketStats for event1 and event2
-    const defaultMarketId = 'CumulativeMarketStats-'.concat(event1.address.toHex().toString());
-    const differentMarketId = 'CumulativeMarketStats-'.concat(differentMarketAddress);
+    // Check CumulativeMarketStat for event1 and event2
+    const defaultMarketId = 'CumulativeMarketStat-'.concat(event1.address.toHex().toString());
+    const differentMarketId = 'CumulativeMarketStat-'.concat(differentMarketAddress);
 
     assert.fieldEquals(
-      'CumulativeMarketStats',
+      'CumulativeMarketStat',
       defaultMarketId,
       'cumulativeVolume',
       toEth(3500).toString()
     );
-    assert.fieldEquals('CumulativeMarketStats', defaultMarketId, 'market', event1.address.toHex());
+    assert.fieldEquals('CumulativeMarketStat', defaultMarketId, 'market', event1.address.toHex());
     assert.fieldEquals(
-      'CumulativeMarketStats',
+      'CumulativeMarketStat',
       differentMarketId,
       'cumulativeVolume',
       toEth(4500).toString()
     );
-    assert.fieldEquals(
-      'CumulativeMarketStats',
-      differentMarketId,
-      'market',
-      event2.address.toHex()
-    );
+    assert.fieldEquals('CumulativeMarketStat', differentMarketId, 'market', event2.address.toHex());
   });
   test('Daily stats updated for two new traders', () => {
     // Create two events for the same day with different traders
@@ -266,12 +257,12 @@ describe('calculateAccruedFunding', () => {
 
     // Get the day string
     const day = '1970-01-01';
-    const id = 'DailyStats-'.concat(day);
+    const id = 'DailyStat-'.concat(day);
 
-    // Check if traders are created correctly in DailyStats
-    assert.fieldEquals('DailyStats', id, 'cumulativeTraders', BigInt.fromI32(2).toString());
-    assert.fieldEquals('DailyStats', id, 'newTraders', BigInt.fromI32(2).toString());
-    assert.fieldEquals('DailyStats', id, 'existingTraders', BigInt.fromI32(0).toString());
+    // Check if traders are created correctly in DailyStat
+    assert.fieldEquals('DailyStat', id, 'cumulativeTraders', BigInt.fromI32(2).toString());
+    assert.fieldEquals('DailyStat', id, 'newTraders', BigInt.fromI32(2).toString());
+    assert.fieldEquals('DailyStat', id, 'existingTraders', BigInt.fromI32(0).toString());
 
     // Check if Trader entities are created correctly
     const traderEntity1 = Trader.load(trader);
@@ -327,17 +318,17 @@ describe('calculateAccruedFunding', () => {
     handlePositionModified(event3);
 
     // Get the day string
-    const idDay1 = 'DailyStats-1970-01-01';
-    const idDay2 = 'DailyStats-1970-01-02';
+    const idDay1 = 'DailyStat-1970-01-01';
+    const idDay2 = 'DailyStat-1970-01-02';
 
-    // Day1 Check if existingTraders is incremented correctly in DailyStats
-    assert.fieldEquals('DailyStats', idDay1, 'cumulativeTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay1, 'newTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay1, 'existingTraders', BigInt.fromI32(1).toString());
-    // Day2 Check if existingTraders is incremented correctly in DailyStats
-    assert.fieldEquals('DailyStats', idDay2, 'cumulativeTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'newTraders', BigInt.fromI32(0).toString());
-    assert.fieldEquals('DailyStats', idDay2, 'existingTraders', BigInt.fromI32(1).toString());
+    // Day1 Check if existingTraders is incremented correctly in DailyStat
+    assert.fieldEquals('DailyStat', idDay1, 'cumulativeTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'newTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'existingTraders', BigInt.fromI32(1).toString());
+    // Day2 Check if existingTraders is incremented correctly in DailyStat
+    assert.fieldEquals('DailyStat', idDay2, 'cumulativeTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'newTraders', BigInt.fromI32(0).toString());
+    assert.fieldEquals('DailyStat', idDay2, 'existingTraders', BigInt.fromI32(1).toString());
 
     // Check if Trader entity is updated correctly
     const traderEntity = Trader.load(trader1);
@@ -365,13 +356,23 @@ describe('calculateAccruedFunding', () => {
 
     // Define the day and id
     const day = '1970-01-01';
-    const dailyStatsId = 'DailyStats-'.concat(day);
-    const dailyMarketStatsId = 'DailyMarketStats-'.concat(day);
-    const cumulativeMarketStatsId = 'CumulativeMarketStats-'.concat(day);
+    const dailyStatsId = 'DailyStat-'.concat(day);
+    const dailyMarketStatsId = 'DailyMarketStat-'.concat(day);
+    const cumulativeMarketStatsId = 'CumulativeMarketStat-'.concat(day);
 
     // Check that the entities have not been created
-    assert.notInStore('DailyStats', dailyStatsId);
-    assert.notInStore('DailyMarketStats', dailyMarketStatsId);
-    assert.notInStore('CumulativeMarketStats', cumulativeMarketStatsId);
+    assert.notInStore('DailyStat', dailyStatsId);
+    assert.notInStore('DailyMarketStat', dailyMarketStatsId);
+    assert.notInStore('CumulativeMarketStat', cumulativeMarketStatsId);
+  });
+  test('timestampToDate', () => {
+    const timestamp = BigInt.fromI32(1682661853); //'2023-04-28T06:04:13.000Z'
+    const result = timestampToDate(BigInt.fromI32(1682661853));
+    assert.stringEquals(result, '2023-04-28');
+  });
+  test('dayToEpochTimestamp', () => {
+    const result = dayToEpochTimestamp('2023-04-28');
+    const expectedTimestamp = BigInt.fromI32(1682640000); //'2023-04-28T06:04:13.000Z'
+    assert.stringEquals(result.toString(), expectedTimestamp.toString());
   });
 });
