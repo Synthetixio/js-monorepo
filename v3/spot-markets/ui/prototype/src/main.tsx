@@ -10,7 +10,6 @@ import { chains, client } from "./wagmi";
 
 import theme from "./theme";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
-import { Index } from "./pages/Index";
 import { SpotMarket } from "./pages/spot/SpotMarket";
 
 const router = createBrowserRouter([
