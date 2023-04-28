@@ -57,6 +57,9 @@ function getOrCreateSynthetix(): Synthetix {
  * Mutative functions
  */
 function updateTrades(event: PositionModifiedNewEvent, synthetix: Synthetix, trader: Trader): void {
+  if (event.params.tradeSize.equals(BigInt.fromI32(0))) {
+    return;
+  }
   if (trader.trades.length == 0) {
     synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(1));
   }
