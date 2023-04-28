@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="initial-scale=1, width=device-width" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="Synthetix V3" />
+    <title>Synthetix V3</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      (function () {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src =
+          window.localStorage.UNSAFE_IMPORT === 'true' ? '/main.js' : `/main.js?_=${Date.now()}`;
+        document.body.appendChild(script);
+      })();
+    </script>
+    <style>
+      :root {
+        --onboard-connect-sidebar-background: #0b0b22;
+        --onboard-connect-sidebar-color: white;
+        --onboard-close-button-background: #0b0b22;
+        --onboard-close-button-color: white;
+        --onboard-checkbox-background: #0b0b22;
+        --onboard-checkbox-color: white;
+        --onboard-connect-sidebar-progress-background: #343a4a;
+        --onboard-connect-sidebar-progress-color: #00d1ff;
+      }
+    </style>
+  </body>
+</html>
