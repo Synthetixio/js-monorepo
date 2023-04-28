@@ -1,0 +1,37 @@
+{
+  "name": "@synthetixio/v3-spot-markets-contracts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Synthetix V3 Spot Markets contracts",
+  "version": "3.0.0",
+  "main": "./index.js",
+  "files": [
+    "build",
+    "deployments",
+    "src",
+    "index.js"
+  ],
+  "scripts": {
+    "codegen": "node ./codegen.js",
+    "build": "yarn codegen && tsc --build --verbose",
+    "start": "yarn start:optimism",
+    "start:mainnet": "./start.sh mainnet",
+    "start:goerli": "./start.sh goerli",
+    "start:optimism": "./start.sh optimism-mainnet",
+    "start:optimism-goerli": "./start.sh optimism-goerli",
+    "fetch": "./fetch.sh",
+    "fetch-deployments": "yarn fetch optimism-mainnet",
+    "cannon": "cannon"
+  },
+  "devDependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
+    "@typechain/ethers-v5": "^10.2.0",
+    "@usecannon/cli": "^2.4.7",
+    "ethers": "^5.7.2",
+    "prettier": "^2.8.4",
+    "typechain": "^8.1.1",
+    "typescript": "^4.9.5"
+  }
+}
