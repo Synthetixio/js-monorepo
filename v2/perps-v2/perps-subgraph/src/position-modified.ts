@@ -81,7 +81,7 @@ function createFuturesPosition(
   futuresPosition.avgEntryPrice = event.params.lastPrice;
   futuresPosition.feesPaidToSynthetix = event.params.fee;
   futuresPosition.netTransfers = BigInt.fromI32(0);
-  futuresPosition.initialMargin = event.params.margin;
+  futuresPosition.initialMargin = event.params.margin.minus(event.params.fee);
   futuresPosition.margin = event.params.margin;
   futuresPosition.realizedPnl = event.params.fee.times(BigInt.fromI32(-1));
   futuresPosition.unrealizedPnl = BigInt.fromI32(0);
