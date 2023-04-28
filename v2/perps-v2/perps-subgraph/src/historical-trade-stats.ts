@@ -129,7 +129,6 @@ const getOrCreateCumulativeMarketStats = (marketAddress: string): CumulativeMark
 };
 
 function updateCumulativeMarketStats(event: PositionModifiedNewEvent): void {
-  if (event.params.tradeSize.equals(BigInt.fromI32(0))) return; // not a trade
   const cumulativeMarketStats = getOrCreateCumulativeMarketStats(event.address.toHex());
   cumulativeMarketStats.cumulativeFees = cumulativeMarketStats.cumulativeFees.plus(
     event.params.fee
@@ -145,6 +144,7 @@ function updateCumulativeMarketStats(event: PositionModifiedNewEvent): void {
 }
 
 export function updateHistoricalTradeStats(event: PositionModifiedNewEvent): void {
+  if (event.params.tradeSize.equals(BigInt.fromI32(0))) return; // not a trade
   updateCumulativeMarketStats(event);
   updateDailyStats(event);
   updateDailyMarketStats(event);

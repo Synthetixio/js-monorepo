@@ -343,4 +343,35 @@ describe('calculateAccruedFunding', () => {
     const traderEntity = Trader.load(trader1);
     assert.assertNotNull(traderEntity);
   });
+
+  test('make sure postition modification with a trade size of 0 gets ignored', () => {
+    // Create the event
+    const event = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), // margin
+      toEth(2), // size
+      toEth(0), // trade size (set to 0)
+      toEth(1000), // last price
+      BigInt.fromI32(1), // funding index
+      toGwei(1000000000), // fee
+      10, // timestamp
+      BigInt.fromI32(12), // skew
+      1 // log index
+    );
+
+    // Process the event
+    handlePositionModified(event);
+
+    // Define the day and id
+    const day = '1970-01-01';
+    const dailyStatsId = 'DailyStats-'.concat(day);
+    const dailyMarketStatsId = 'DailyMarketStats-'.concat(day);
+    const cumulativeMarketStatsId = 'CumulativeMarketStats-'.concat(day);
+
+    // Check that the entities have not been created
+    assert.notInStore('DailyStats', dailyStatsId);
+    assert.notInStore('DailyMarketStats', dailyMarketStatsId);
+    assert.notInStore('CumulativeMarketStats', cumulativeMarketStatsId);
+  });
 });
