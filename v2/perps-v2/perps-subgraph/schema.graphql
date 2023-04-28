@@ -57,6 +57,7 @@ type Synthetix @entity {
   totalLiquidations: BigInt!
   totalVolume: BigInt!
   totalTraders: BigInt!
+  totalTrades: BigInt!
 }
 
 type FuturesPosition @entity {

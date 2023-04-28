@@ -63,6 +63,7 @@ function updateTrades(event: PositionModifiedNewEvent, synthetix: Synthetix, tra
   if (trader.trades.length == 0) {
     synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(1));
   }
+  synthetix.totalTrades = synthetix.totalTrades.plus(BigInt.fromI32(1));
   const oldTrades = trader.trades;
   oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
   trader.trades = oldTrades;
