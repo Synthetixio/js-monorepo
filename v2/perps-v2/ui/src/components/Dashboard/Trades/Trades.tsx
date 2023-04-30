@@ -1,24 +1,18 @@
 import { useState } from 'react';
-import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
-import { TimeBadge } from '../TimeBadge';
-import { KeyColour } from './KeyColour';
-import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip } from 'recharts';
-import { useTraders } from '../../hooks';
-import { TradersTooltip } from './TradersTooltip';
+import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
+import { Bar, Tooltip, ResponsiveContainer, Line, ComposedChart, XAxis } from 'recharts';
+import { TimeBadge } from '../../TimeBadge';
+import { KeyColour } from '../KeyColour';
 import { formatNumber } from '@snx-v2/formatters';
+import { TradesTooltip } from './TradesTooltip';
+import { useStats } from '../../../hooks';
 
-export const Traders = () => {
+export const Trades = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'M' | 'Y'>('M');
 
-  const { data, loading } = useTraders(state);
+  const { data, loading } = useStats(state);
 
-  const tradersNumber =
-    data?.reduce((acc, { newTraders, returningTraders }) => {
-      if (newTraders && returningTraders) {
-        return acc + newTraders + returningTraders;
-      }
-      return acc;
-    }, 0) || 0;
+  const tradesNumber = data?.reduce((acc, { trades }) => acc + trades, 0);
 
   return (
     <>
@@ -35,29 +29,29 @@ export const Traders = () => {
         bg="navy.700"
         flexDirection="column"
         p={4}
+        {...props}
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            Traders
+            Trades
           </Text>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            {/* <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} /> */}
+            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
           </Box>
         </Flex>
         <Flex mt={6}>
-          <KeyColour label="RETURNING" colour="whiteAlpha.400" />
-          <KeyColour ml={4} label="NEW" colour="pink.300" />
-          {/* <KeyColour ml={4} label="CUMULATIVE" colour="cyan.500" /> */}
+          <KeyColour label="TRADES" colour="whiteAlpha.400" />
+          <KeyColour ml={4} label="CUMULATIVE TRADES" colour="cyan.500" />
         </Flex>
         {loading ? (
-          <Flex justifyContent="center" alignItems="center" height="100%">
+          <Flex justifyContent="center" alignItems="center" height="100%" minHeight={200}>
             <Spinner size="xl" />
           </Flex>
         ) : (
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
-              {formatNumber(tradersNumber, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+              {formatNumber(tradesNumber || 0)}
             </Text>
             <ResponsiveContainer minWidth="100%" minHeight={200}>
               <ComposedChart
@@ -70,14 +64,12 @@ export const Traders = () => {
                 }}
               >
                 <Tooltip
+                  content={TradesTooltip}
                   cursor={false}
-                  content={TradersTooltip}
                   wrapperStyle={{ outline: 'none' }}
                 />
-                <Bar dataKey="newTraders" stackId="a" fill="#F471FF" />
-                <Bar dataKey="returningTraders" stackId="a" fill="#FFFFFF3D" />
-                {/* Removed until better solution found */}
-                {/* <Line dataKey="amt" stroke="#00D1FF" type="basis" strokeWidth="2px" /> */}
+                <Bar dataKey="trades" stackId="a" fill="#FFFFFF3D" />
+                <Line dataKey="cumulativeTrades" stroke="#00D1FF" type="basis" strokeWidth="2px" />
                 <XAxis
                   dataKey="label"
                   tickLine={{ display: 'none' }}

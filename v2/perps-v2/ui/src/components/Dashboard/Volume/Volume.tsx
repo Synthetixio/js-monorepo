@@ -1,24 +1,18 @@
 import { useState } from 'react';
 import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
-import { Bar, Tooltip, ResponsiveContainer, Line, ComposedChart, XAxis } from 'recharts';
-import { TimeBadge } from '../TimeBadge';
-import { KeyColour } from './KeyColour';
+import { TimeBadge } from '../../TimeBadge';
+import { KeyColour } from '../KeyColour';
+import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line } from 'recharts';
+import { VolumeTooltip } from './VolumeTooltip';
 import { formatNumber } from '@snx-v2/formatters';
-import { TradesTooltip } from './TradesTooltip';
-import { useTrades } from '../../hooks';
+import { useStats } from '../../../hooks';
 
-export const Trades = () => {
+export const Volume = () => {
   const [state, setState] = useState<'M' | 'Y'>('M');
 
-  const { loading, data } = useTrades(state);
+  const { data, loading } = useStats(state);
 
-  const tradesNumber =
-    data?.reduce((acc, { trades }) => {
-      if (trades) {
-        return acc + trades.size;
-      }
-      return acc;
-    }, 0) || 0;
+  const volumeNumber = data?.reduce((acc, { volume }) => acc + volume, 0);
 
   return (
     <>
@@ -38,16 +32,16 @@ export const Trades = () => {
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            Trades
+            Volume
           </Text>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            {/* <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} /> */}
+            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
           </Box>
         </Flex>
         <Flex mt={6}>
-          <KeyColour label="TRADES" colour="whiteAlpha.400" />
-          {/* <KeyColour ml={4} label="CUMULATIVE TRADES" colour="cyan.500" /> */}
+          <KeyColour label="VOLUME" colour="whiteAlpha.400" />
+          <KeyColour ml={4} label="CUMULATIVE" colour="cyan.500" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%" minHeight={200}>
@@ -56,7 +50,11 @@ export const Trades = () => {
         ) : (
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
-              {formatNumber(tradesNumber)}
+              $
+              {formatNumber(volumeNumber || 0, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              })}
             </Text>
             <ResponsiveContainer minWidth="100%" minHeight={200}>
               <ComposedChart
@@ -69,12 +67,12 @@ export const Trades = () => {
                 }}
               >
                 <Tooltip
-                  content={TradesTooltip}
                   cursor={false}
+                  content={VolumeTooltip}
                   wrapperStyle={{ outline: 'none' }}
                 />
-                <Bar dataKey="count" stackId="a" fill="#FFFFFF3D" />
-                <Line dataKey="amt" stroke="#00D1FF" type="basis" strokeWidth="2px" />
+                <Bar dataKey="volume" stackId="a" fill="#FFFFFF3D" />
+                <Line dataKey="cumulativeVolume" stroke="#00D1FF" type="basis" strokeWidth="2px" />
                 <XAxis
                   dataKey="label"
                   tickLine={{ display: 'none' }}

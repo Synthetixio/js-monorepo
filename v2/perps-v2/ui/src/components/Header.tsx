@@ -64,6 +64,19 @@ export const Header: FC = () => {
               </Text>
             )}
           </RouterLink>
+          <RouterLink to="/markets">
+            {({ isActive }) => (
+              <Text
+                ml={10}
+                fontSize="14px"
+                fontWeight={700}
+                fontFamily="heading"
+                color={isActive ? 'white' : 'gray.400'}
+              >
+                Markets
+              </Text>
+            )}
+          </RouterLink>
         </Flex>
       </Flex>
       <AddressInput />

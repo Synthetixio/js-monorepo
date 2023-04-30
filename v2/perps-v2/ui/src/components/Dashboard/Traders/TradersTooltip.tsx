@@ -1,7 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { fromUnixTime, format } from 'date-fns';
-import { TraderRange } from '../../hooks';
-import { KeyColour } from './KeyColour';
+import { KeyColour } from '../KeyColour';
 
 type TradersTooltipProps = {
   active?: boolean;
@@ -10,15 +8,11 @@ type TradersTooltipProps = {
 };
 
 export const TradersTooltip = ({ payload }: TradersTooltipProps) => {
-  const tradersInfo = payload?.[0]?.payload as TraderRange;
+  const tradersInfo = payload?.[0]?.payload as any;
 
   if (!tradersInfo) {
     return null;
   }
-
-  const timestamp = format(fromUnixTime(tradersInfo.timestamp), 'yyyy-MM-dd');
-  const newTraders = tradersInfo.newTraders;
-  const returningTraders = tradersInfo.returningTraders;
 
   return (
     <Flex
@@ -30,18 +24,24 @@ export const TradersTooltip = ({ payload }: TradersTooltipProps) => {
       borderWidth="1px"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {timestamp}
+        {tradersInfo.day}
       </Text>
       <Flex my={2} justifyContent="space-between" w="100%">
+        <KeyColour label="Returning Traders" colour="whiteAlpha.400" />
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+          {tradersInfo.existingTraders}
+        </Text>
+      </Flex>
+      <Flex my={2} justifyContent="space-between" w="100%">
         <KeyColour label="New Traders" colour="pink.300" />
-        <Text fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {newTraders}
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+          {tradersInfo.newTraders}
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Returning Traders" colour="whiteAlpha.400" />
-        <Text fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {returningTraders}
+        <KeyColour label="Cumulative Traders" colour="cyan.500" />
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+          {tradersInfo.cumulativeTraders}
         </Text>
       </Flex>
     </Flex>

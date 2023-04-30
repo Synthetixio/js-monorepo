@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
 import { AllActionsTable } from '../components/Actions';
 
-function Actions() {
+export function Actions() {
   return (
     <>
       <Flex flexDir="column" px="40px" py={2}>

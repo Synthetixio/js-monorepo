@@ -1,7 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { fromUnixTime, format } from 'date-fns';
-import { TradesRange } from '../../hooks';
-import { KeyColour } from './KeyColour';
+import { KeyColour } from '../KeyColour';
 
 type TradesTooltipProps = {
   active?: boolean;
@@ -10,14 +8,14 @@ type TradesTooltipProps = {
 };
 
 export const TradesTooltip = ({ payload }: TradesTooltipProps) => {
-  const tradersInfo = payload?.[0]?.payload as TradesRange;
+  const tradesInfo = payload?.[0]?.payload as any;
 
-  if (!tradersInfo) {
+  if (!tradesInfo) {
     return null;
   }
 
-  const timestamp = format(fromUnixTime(tradersInfo.timestamp), 'yyyy-MM-dd');
-  const totalTrades = tradersInfo.count;
+  const totalTrades = tradesInfo.trades;
+  const cumulativeTrades = tradesInfo.cumulativeTrades;
 
   return (
     <Flex
@@ -30,12 +28,18 @@ export const TradesTooltip = ({ payload }: TradesTooltipProps) => {
       borderColor="gray.900"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {timestamp}
+        {tradesInfo.day}
       </Text>
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour label="Total trades" colour="whiteAlpha.400" />
-        <Text fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           {totalTrades}
+        </Text>
+      </Flex>
+      <Flex mt={2} justifyContent="space-between" w="100%">
+        <KeyColour label="Cumulative trades" colour="cyan.500" />
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+          {cumulativeTrades}
         </Text>
       </Flex>
     </Flex>
