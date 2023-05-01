@@ -1,5 +1,5 @@
 {
-  "address": "0xebc96385Da68fAe2315eDA0bb6dD137004D78d5E",
+  "address": "0xe3360f1d6a53D75863C55962C700BDcB1605569E",
   "abi": [
     {
       "inputs": [
@@ -405,7 +405,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "balance",
           "type": "uint256"
         }
       ],
@@ -437,7 +437,7 @@
       "outputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "operator",
           "type": "address"
         }
       ],
@@ -667,6 +667,19 @@
     {
       "inputs": [
         {
+          "internalType": "string",
+          "name": "uri",
+          "type": "string"
+        }
+      ],
+      "name": "setBaseTokenURI",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "bytes4",
           "name": "interfaceId",
           "type": "bytes4"
@@ -796,7 +809,7 @@
     }
   ],
   "deployedOn": "router.AccountRouter",
-  "deployTxnHash": "0x0182102d524f695e931950f91511cb6dba577916b982b34960de37ae48c9d2b5",
+  "deployTxnHash": "0xbe80f48b63c5fbf50f562d91bb58a7b212bec51cd5783de9f39ab1f6a7c977f7",
   "contractName": "AccountRouter",
   "sourceName": "AccountRouter.sol"
 }

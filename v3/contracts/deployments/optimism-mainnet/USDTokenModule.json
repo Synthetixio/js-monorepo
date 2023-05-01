@@ -1,5 +1,5 @@
 {
-  "address": "0x6Dd69ffaB2E3A508b5A1bbFba5AB074C0b7EbF7e",
+  "address": "0x3dBB0Eaa91172CA17Eac4Fd07e5b8958A21840F9",
   "abi": [
     {
       "inputs": [],
@@ -36,6 +36,22 @@
         }
       ],
       "name": "InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
@@ -485,7 +501,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x71f4ae50dd4834be3af39e9f98a88dc923512d30dd3dbff0c535ba67b52857b3",
+  "deployTxnHash": "0xc0fba26873222025b356ddbfa66459ad0303c75d47fff91f7af44101d6c7c777",
   "sourceName": "contracts/modules/usd/USDTokenModule.sol",
   "contractName": "USDTokenModule",
   "deployedOn": "contract.USDTokenModule"

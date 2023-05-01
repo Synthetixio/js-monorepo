@@ -1,5 +1,5 @@
 {
-  "address": "0x063d10042ceDC09ddCEb81895c57c3EcC9445a37",
+  "address": "0xa1AD60B58D9280c52DAA8df7118e9278b1B6EcD9",
   "abi": [
     {
       "inputs": [
@@ -13,14 +13,8 @@
       "type": "error"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "externalNode",
-          "type": "address"
-        }
-      ],
-      "name": "IncorrectExternalNodeInterface",
+      "inputs": [],
+      "name": "InvalidInputPrice",
       "type": "error"
     },
     {
@@ -185,11 +179,11 @@
             }
           ],
           "internalType": "struct NodeDefinition.Data",
-          "name": "",
+          "name": "node",
           "type": "tuple"
         }
       ],
-      "stateMutability": "pure",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -214,7 +208,7 @@
       "outputs": [
         {
           "internalType": "bytes32",
-          "name": "",
+          "name": "nodeId",
           "type": "bytes32"
         }
       ],
@@ -255,7 +249,7 @@
             }
           ],
           "internalType": "struct NodeOutput.Data",
-          "name": "",
+          "name": "node",
           "type": "tuple"
         }
       ],
@@ -284,7 +278,7 @@
       "outputs": [
         {
           "internalType": "bytes32",
-          "name": "",
+          "name": "nodeId",
           "type": "bytes32"
         }
       ],
@@ -294,7 +288,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xe8e73314543d2e90f000856729447419549eb2a3f417282137d28bf51a1f8150",
+  "deployTxnHash": "0x09b9ef70d2b4974fe187b50f2742b296990d70381ac60901fc52f193fc0cfde0",
   "sourceName": "contracts/modules/NodeModule.sol",
   "contractName": "NodeModule",
   "deployedOn": "contract.NodeModule"
