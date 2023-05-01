@@ -29,12 +29,11 @@ export function dayToEpochTimestamp(dateString: string): BigInt {
 const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStat => {
   const day = timestampToDate(event.block.timestamp);
   const id = 'DailyStat-'.concat(day);
-  let synthetix = Synthetix.load('synthetix');
-
   let dailyStat = DailyStat.load(id);
   if (dailyStat) return dailyStat;
   dailyStat = new DailyStat(id);
 
+  let synthetix = Synthetix.load('synthetix');
   dailyStat.timestamp = dayToEpochTimestamp(day);
   dailyStat.day = day;
   dailyStat.volume = BigInt.fromI32(0);
