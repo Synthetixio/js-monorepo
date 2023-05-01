@@ -85,6 +85,10 @@ templates:
           handler: 'handleFundingRecomputed'
         - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
           handler: handlePerpsTracking
+        - event: PositionFlagged(uint256,address,address,uint256)
+          handler: handlePositionFlagged
+        - event: PositionFlagged(uint256,address,address,uint256,uint256)
+          handler: handlePositionFlagged
 
 dataSources:
   - kind: ethereum

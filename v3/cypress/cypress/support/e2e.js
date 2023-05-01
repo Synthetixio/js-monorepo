@@ -14,18 +14,23 @@ beforeEach(() => {
     return subgraph(req);
   }).as('subgraph');
 
-  cy.intercept('https://mainnet.infura.io/v3/*', (req) => {
-    req.url = 'http://127.0.0.1:8545';
-    req.continue();
-  }).as('mainnet');
+  ['mainnet', 'optimism-mainnet', 'goerli', 'optimism-goerli'].forEach((networkName) => {
+    cy.intercept(`https://${networkName}.infura.io/v3/*`, (req) => {
+      req.url = 'http://127.0.0.1:8545';
+      req.continue();
+    }).as(networkName);
+  });
 
-  cy.intercept('https://goerli.infura.io/v3/*', (req) => {
-    req.url = 'http://127.0.0.1:8545';
-    req.continue();
-  }).as('goerli');
-  //  cy.intercept(' https://optimism-mainnet.infura.io/v3/*', { statusCode: 404 }).as('optimism');
-
-  cy.on('window:before:load', (win) => {
+  cy.on('window:before:load', async (win) => {
+    const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+    const network = await provider.getNetwork();
+    const networkName = {
+      1: 'mainnet',
+      10: 'optimism-mainnet',
+      5: 'goerli',
+      420: 'optimism-goerli',
+    }[network.chainId];
+    win.localStorage.setItem('DEFAULT_NETWORK', networkName);
     win.localStorage.setItem('UNSAFE_IMPORT', 'true');
     win.localStorage.setItem('connectedWallets', '["MetaMask"]');
   });

@@ -190,7 +190,7 @@ describe('Perps V2', () => {
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'initialMargin',
-      toEth(5).toString()
+      '4999999999000000000' // margin sent from contract minus fee
     );
     assert.fieldEquals(
       'FuturesPosition',

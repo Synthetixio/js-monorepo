@@ -12,7 +12,7 @@ describe('useGasPrice', () => {
   beforeEach(async () => {
     getBlockMock = jest.fn();
     getGasPriceMock = jest.fn();
-    useNetwork = jest.fn(() => ({ id: 10, name: 'optimism' }));
+    useNetwork = jest.fn(() => ({ id: 10, name: 'optimism-mainnet' }));
 
     const InfuraProvider = function () {
       return { getBlock: getBlockMock, getGasPrice: getGasPriceMock };
@@ -69,7 +69,7 @@ describe('useGasPrice', () => {
     const result = useGasPrice();
     const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
     expect(result.data).toEqual(undefined);
-    expect(queryKey).toEqual(['optimism', 'GasPrice']);
+    expect(queryKey).toEqual(['optimism-mainnet', 'GasPrice']);
     expect(enabled).toEqual(true);
     getGasPriceMock.mockReturnValue(wei(2, GWEI_DECIMALS).toBN());
     const queryResult = await queryFn();

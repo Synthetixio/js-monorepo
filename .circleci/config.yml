@@ -278,6 +278,9 @@ jobs:
           destination: 'videos'
 
   v3-e2e:
+    parameters:
+      chain:
+        type: string
     working_directory: /tmp/app
     docker:
       - image: cypress/included:<< pipeline.parameters.cypress-version >>
@@ -297,7 +300,7 @@ jobs:
 
       - run:
           name: Run anvil localhost:8545
-          command: anvil --fork-url https://goerli.infura.io/v3/$INFURA_KEY
+          command: anvil --fork-url https://<< parameters.chain >>.infura.io/v3/$INFURA_KEY
           background: true
 
       - run:
@@ -372,7 +375,7 @@ jobs:
       - run: yarn download-cci-coverage v2-cy /tmp/cov || true
       - run: yarn download-cci-coverage v2-e2e /tmp/cov || true
       - run: yarn download-cci-coverage v3-cy /tmp/cov || true
-      - run: yarn download-cci-coverage v3-e2e /tmp/cov || true
+      - run: yarn download-cci-coverage v3-e2e-optimism-mainnet /tmp/cov || true
       - run: mkdir -p /tmp/cov
       - run: ls -alR /tmp/cov
       - run: mkdir -p /tmp/cov/combined
@@ -443,9 +446,15 @@ workflows:
       - v3-cy:
           requires: [yarn-install]
       - v3-e2e:
+          chain: optimism-mainnet
+          name: v3-e2e-optimism-mainnet
+          requires: [yarn-install]
+      - v3-e2e:
+          chain: optimism-goerli
+          name: v3-e2e-optimism-goerli
           requires: [yarn-install]
       - v3-ipfs:
-          requires: [tests, typecheck, v3-cy, v3-e2e]
+          requires: [tests, typecheck, v3-cy, v3-e2e-optimism-mainnet]
           filters:
             branches:
               only:
@@ -454,4 +463,4 @@ workflows:
                 - ipfs-deploy
 
       - combine-coverage:
-          requires: [tests, v2-cy, v2-e2e, v3-cy, v3-e2e]
+          requires: [tests, v2-cy, v2-e2e, v3-cy, v3-e2e-optimism-mainnet]

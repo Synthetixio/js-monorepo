@@ -53,6 +53,7 @@ module.exports = {
         'v3/lib/**/*',
         'v3/theme/**/*',
         'v3/oracle-manager-ui/**/*',
+        'v3/spot-markets/ui/**/*',
       ],
 
       env: {

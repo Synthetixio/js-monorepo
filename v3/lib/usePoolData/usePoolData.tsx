@@ -124,6 +124,6 @@ export const usePoolData = (poolId?: string) => {
       }
       return poolData.data.pool;
     },
-    enabled: Boolean(network.isSupported && poolId && parseInt(poolId) > 0),
+    enabled: Boolean(poolId && parseInt(poolId) > 0),
   });
 };

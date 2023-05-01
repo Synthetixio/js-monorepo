@@ -173,6 +173,23 @@ export class PositionFlagged extends Entity {
     this.set('flagger', Value.fromBytes(value));
   }
 
+  get price(): BigInt | null {
+    let value = this.get('price');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set price(value: BigInt | null) {
+    if (!value) {
+      this.unset('price');
+    } else {
+      this.set('price', Value.fromBigInt(<BigInt>value));
+    }
+  }
+
   get timestamp(): BigInt {
     let value = this.get('timestamp');
     return value!.toBigInt();
@@ -462,6 +479,318 @@ export class FuturesTrade extends Entity {
   }
 }
 
+export class DailyMarketStat extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save DailyMarketStat entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type DailyMarketStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('DailyMarketStat', id.toString(), this);
+    }
+  }
+
+  static load(id: string): DailyMarketStat | null {
+    return changetype<DailyMarketStat | null>(store.get('DailyMarketStat', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get market(): string {
+    let value = this.get('market');
+    return value!.toString();
+  }
+
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
+  }
+
+  get day(): string {
+    let value = this.get('day');
+    return value!.toString();
+  }
+
+  set day(value: string) {
+    this.set('day', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get volume(): BigInt {
+    let value = this.get('volume');
+    return value!.toBigInt();
+  }
+
+  set volume(value: BigInt) {
+    this.set('volume', Value.fromBigInt(value));
+  }
+
+  get cumulativeVolume(): BigInt {
+    let value = this.get('cumulativeVolume');
+    return value!.toBigInt();
+  }
+
+  set cumulativeVolume(value: BigInt) {
+    this.set('cumulativeVolume', Value.fromBigInt(value));
+  }
+
+  get fees(): BigInt {
+    let value = this.get('fees');
+    return value!.toBigInt();
+  }
+
+  set fees(value: BigInt) {
+    this.set('fees', Value.fromBigInt(value));
+  }
+
+  get cumulativeFees(): BigInt {
+    let value = this.get('cumulativeFees');
+    return value!.toBigInt();
+  }
+
+  set cumulativeFees(value: BigInt) {
+    this.set('cumulativeFees', Value.fromBigInt(value));
+  }
+
+  get trades(): BigInt {
+    let value = this.get('trades');
+    return value!.toBigInt();
+  }
+
+  set trades(value: BigInt) {
+    this.set('trades', Value.fromBigInt(value));
+  }
+
+  get cumulativeTrades(): BigInt {
+    let value = this.get('cumulativeTrades');
+    return value!.toBigInt();
+  }
+
+  set cumulativeTrades(value: BigInt) {
+    this.set('cumulativeTrades', Value.fromBigInt(value));
+  }
+}
+
+export class DailyStat extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save DailyStat entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type DailyStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('DailyStat', id.toString(), this);
+    }
+  }
+
+  static load(id: string): DailyStat | null {
+    return changetype<DailyStat | null>(store.get('DailyStat', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get day(): string {
+    let value = this.get('day');
+    return value!.toString();
+  }
+
+  set day(value: string) {
+    this.set('day', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get volume(): BigInt {
+    let value = this.get('volume');
+    return value!.toBigInt();
+  }
+
+  set volume(value: BigInt) {
+    this.set('volume', Value.fromBigInt(value));
+  }
+
+  get cumulativeVolume(): BigInt {
+    let value = this.get('cumulativeVolume');
+    return value!.toBigInt();
+  }
+
+  set cumulativeVolume(value: BigInt) {
+    this.set('cumulativeVolume', Value.fromBigInt(value));
+  }
+
+  get fees(): BigInt {
+    let value = this.get('fees');
+    return value!.toBigInt();
+  }
+
+  set fees(value: BigInt) {
+    this.set('fees', Value.fromBigInt(value));
+  }
+
+  get cumulativeFees(): BigInt {
+    let value = this.get('cumulativeFees');
+    return value!.toBigInt();
+  }
+
+  set cumulativeFees(value: BigInt) {
+    this.set('cumulativeFees', Value.fromBigInt(value));
+  }
+
+  get trades(): BigInt {
+    let value = this.get('trades');
+    return value!.toBigInt();
+  }
+
+  set trades(value: BigInt) {
+    this.set('trades', Value.fromBigInt(value));
+  }
+
+  get cumulativeTrades(): BigInt {
+    let value = this.get('cumulativeTrades');
+    return value!.toBigInt();
+  }
+
+  set cumulativeTrades(value: BigInt) {
+    this.set('cumulativeTrades', Value.fromBigInt(value));
+  }
+
+  get newTraders(): BigInt {
+    let value = this.get('newTraders');
+    return value!.toBigInt();
+  }
+
+  set newTraders(value: BigInt) {
+    this.set('newTraders', Value.fromBigInt(value));
+  }
+
+  get existingTraders(): BigInt {
+    let value = this.get('existingTraders');
+    return value!.toBigInt();
+  }
+
+  set existingTraders(value: BigInt) {
+    this.set('existingTraders', Value.fromBigInt(value));
+  }
+
+  get cumulativeTraders(): BigInt {
+    let value = this.get('cumulativeTraders');
+    return value!.toBigInt();
+  }
+
+  set cumulativeTraders(value: BigInt) {
+    this.set('cumulativeTraders', Value.fromBigInt(value));
+  }
+}
+
+export class CumulativeMarketStat extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save CumulativeMarketStat entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type CumulativeMarketStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('CumulativeMarketStat', id.toString(), this);
+    }
+  }
+
+  static load(id: string): CumulativeMarketStat | null {
+    return changetype<CumulativeMarketStat | null>(store.get('CumulativeMarketStat', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get market(): string {
+    let value = this.get('market');
+    return value!.toString();
+  }
+
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
+  }
+
+  get cumulativeFees(): BigInt {
+    let value = this.get('cumulativeFees');
+    return value!.toBigInt();
+  }
+
+  set cumulativeFees(value: BigInt) {
+    this.set('cumulativeFees', Value.fromBigInt(value));
+  }
+
+  get cumulativeVolume(): BigInt {
+    let value = this.get('cumulativeVolume');
+    return value!.toBigInt();
+  }
+
+  set cumulativeVolume(value: BigInt) {
+    this.set('cumulativeVolume', Value.fromBigInt(value));
+  }
+
+  get cumulativeTrades(): BigInt {
+    let value = this.get('cumulativeTrades');
+    return value!.toBigInt();
+  }
+
+  set cumulativeTrades(value: BigInt) {
+    this.set('cumulativeTrades', Value.fromBigInt(value));
+  }
+}
+
 export class Synthetix extends Entity {
   constructor(id: string) {
     super();
@@ -536,6 +865,15 @@ export class Synthetix extends Entity {
 
   set totalTraders(value: BigInt) {
     this.set('totalTraders', Value.fromBigInt(value));
+  }
+
+  get totalTrades(): BigInt {
+    let value = this.get('totalTrades');
+    return value!.toBigInt();
+  }
+
+  set totalTrades(value: BigInt) {
+    this.set('totalTrades', Value.fromBigInt(value));
   }
 }
 

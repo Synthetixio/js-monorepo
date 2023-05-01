@@ -10,7 +10,7 @@ import {
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
   PerpsTracking as PerpsTrackingEvent,
-  PositionFlagged as PositionFlaggedEvent,
+  PositionFlagged1 as PositionFlaggedEvent,
 } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 import {
   PositionLiquidated,
@@ -53,6 +53,9 @@ export function handlePositionFlagged(event: PositionFlaggedEvent): void {
   const positionFlaggedEntity = new PositionFlagged(
     event.address.toHex() + '-' + event.params.id.toString()
   );
+  if (event.params.price) {
+    positionFlaggedEntity.price = event.params.price;
+  }
   positionFlaggedEntity.flagger = event.params.flagger;
   positionFlaggedEntity.timestamp = event.block.timestamp;
   positionFlaggedEntity.trader = event.params.account.toHex();

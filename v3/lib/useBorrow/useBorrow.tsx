@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
+import { useCoreProxy, CoreProxyType } from '@snx-v3/useCoreProxy';
 import { formatGasPriceForTransaction } from '@snx-v3/useGasOptions';
 import { useMutation } from '@tanstack/react-query';
 import { useNetwork, useSigner } from '@snx-v3/useBlockchain';
@@ -16,7 +16,7 @@ const createPopulateTransaction = ({
   collateralTypeAddress,
   debtChange,
 }: {
-  CoreProxy?: CoreProxyContractType;
+  CoreProxy?: CoreProxyType;
   accountId?: string;
   poolId?: string;
   collateralTypeAddress?: string;

@@ -1,0 +1,256 @@
+{
+  "address": "0x74550D009e8b0dD1CEe5d12136Bb37bD18e9aaa6",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "marketOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "OnlyMarketOwner",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "SettlementStrategyAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "synthMarketId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
+      "name": "SettlementStrategyUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "components": [
+            {
+              "internalType": "enum SettlementStrategy.Type",
+              "name": "strategyType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementDelay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementWindowDuration",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "priceVerificationContract",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "feedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementReward",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "priceDeviationTolerance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minimumUsdExchangeAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxRoundingLoss",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "disabled",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct SettlementStrategy.Data",
+          "name": "strategy",
+          "type": "tuple"
+        }
+      ],
+      "name": "addSettlementStrategy",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getSettlementStrategy",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "enum SettlementStrategy.Type",
+              "name": "strategyType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementDelay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementWindowDuration",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "priceVerificationContract",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "feedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "url",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "settlementReward",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "priceDeviationTolerance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minimumUsdExchangeAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxRoundingLoss",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "disabled",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct SettlementStrategy.Data",
+          "name": "settlementStrategy",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "marketId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "strategyId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
+      "name": "setSettlementStrategyEnabled",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x2fc377c35e41bbe328664b21f5e5ae53aa57315bea2a333358fc2fb274fecc59",
+  "sourceName": "contracts/modules/AsyncOrderConfigurationModule.sol",
+  "contractName": "AsyncOrderConfigurationModule",
+  "deployedOn": "contract.AsyncOrderConfigurationModule"
+}

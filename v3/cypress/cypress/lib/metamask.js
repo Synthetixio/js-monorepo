@@ -6,7 +6,7 @@ export function metamask({ pk, address }) {
     get(target, prop) {
       switch (prop) {
         case 'chainId':
-          return '0x5';
+          return `0x${Number(provider._network.chainId).toString(16)}`;
         case 'isMetaMask':
           return true;
         case 'getSigner':
