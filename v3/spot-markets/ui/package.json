@@ -20,13 +20,19 @@
     "@snx-v3/icons": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useGasSpeed": "workspace:*",
+    "@snx-v3/useSpotMarketProxy": "workspace:*",
+    "@snx-v3/useSynthTokenModule": "workspace:*",
+    "@snx-v3/zod": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
+    "@synthetixio/wei": "workspace:*",
     "@tanstack/react-query-devtools": "^4.24.6",
     "framer-motion": "^7.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "react-ts-tradingview-widgets": "^1.0.14",
+    "zod": "^3.20.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

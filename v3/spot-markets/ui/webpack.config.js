@@ -34,7 +34,9 @@ const babelRule = {
     /v3\/theme/,
     /v3\/ui/,
 
-    /v3\/spot-markets/,
+    /v3\/spot-markets\/contracts/,
+    /v3\/spot-markets\/lib/,
+    /v3\/spot-markets\/ui/,
 
     /packages\/wei\/src/,
   ],
@@ -149,6 +151,13 @@ module.exports = {
       //        path.resolve(path.dirname(require.resolve(`@synthetixio/v3-contracts/package.json`)), 'src')
       //      ),
       new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/v3-spot-markets-contracts$`),
+        path.resolve(
+          path.dirname(require.resolve(`@synthetixio/v3-spot-markets-contracts/package.json`)),
+          'src'
+        )
+      ),
+      new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/v3-theme$`),
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
       ),
@@ -184,6 +193,7 @@ module.exports = {
   resolve: {
     alias: {
       '@synthetixio/v3-contracts/build': '@synthetixio/v3-contracts/src',
+      '@synthetixio/v3-spot-markets-contracts/build': '@synthetixio/v3-spot-markets-contracts/src',
     },
     fallback: {
       buffer: require.resolve('buffer'),
