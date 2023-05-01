@@ -5,8 +5,6 @@ import { kebabize } from './lib/kebabize';
 import { AddressLink } from './AddressLink';
 
 export function DeploymentAddresses({ chain }) {
-  console.log(`chain`, chain);
-  console.log(`deploymentAddresses[chain]`, deploymentAddresses[chain]);
   return (
     <table style={{ verticalAlign: 'top', whiteSpace: 'nowrap' }}>
       <thead>
