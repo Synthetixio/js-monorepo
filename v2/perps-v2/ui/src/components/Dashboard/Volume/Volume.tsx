@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line } from 'recharts';
@@ -7,7 +7,7 @@ import { VolumeTooltip } from './VolumeTooltip';
 import { formatNumber } from '@snx-v2/formatters';
 import { useStats } from '../../../hooks';
 
-export const Volume = () => {
+export const Volume = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'M' | 'Y'>('M');
 
   const { data, loading } = useStats(state);
@@ -17,7 +17,6 @@ export const Volume = () => {
   return (
     <>
       <Flex
-        width="49%"
         my={5}
         borderColor="gray.900"
         borderWidth="1px"
@@ -29,6 +28,7 @@ export const Volume = () => {
         bg="navy.700"
         flexDirection="column"
         p={4}
+        {...props}
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">

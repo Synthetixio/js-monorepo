@@ -21,7 +21,7 @@ export const AddressInput = () => {
       <Input
         placeholder="Search by address"
         w="38%"
-        minW="250px"
+        minW={{ base: '180px', md: '250px' }}
         {...register('address')}
         alignSelf="end"
         borderColor="gray.900"

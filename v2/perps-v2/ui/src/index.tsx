@@ -73,6 +73,10 @@ const customTheme = extendTheme({
       },
     },
   },
+  breakpoints: {
+    ...theme.breakpoints,
+    c900: '950px',
+  },
 });
 
 root.render(

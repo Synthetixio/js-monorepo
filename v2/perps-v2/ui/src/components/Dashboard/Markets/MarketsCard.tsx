@@ -1,4 +1,4 @@
-import { Flex, Spinner, Text } from '@chakra-ui/react';
+import { Flex, FlexProps, Spinner, Text } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
 import { wei } from '@synthetixio/wei';
 import { utils } from 'ethers';
@@ -9,13 +9,13 @@ interface MarketData extends Partial<DailyMarketStat> {
   percentageDifference: number;
 }
 
-interface MarketsCardProp {
+interface MarketsCardProp extends FlexProps {
   loading: boolean;
   data: MarketData | undefined;
   number: number;
 }
 
-export const MarketsCard = ({ loading, data, number }: MarketsCardProp) => {
+export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp) => {
   let displayName;
 
   displayName = utils.parseBytes32String(
@@ -30,9 +30,7 @@ export const MarketsCard = ({ loading, data, number }: MarketsCardProp) => {
 
   return (
     <Flex
-      minWidth={255}
       minHeight={117}
-      width="32%"
       justifyContent="center"
       alignItems="center"
       bg="navy.900"
@@ -40,6 +38,7 @@ export const MarketsCard = ({ loading, data, number }: MarketsCardProp) => {
       borderColor="gray.900"
       borderRadius="5px"
       p={4}
+      {...props}
     >
       {loading ? (
         <Spinner size="lg" />

@@ -30,24 +30,24 @@ export const Dashboard: FC = () => {
           <Flex
             justifyContent="space-between"
             width="100%"
-            flexDirection={{ base: 'column', sm: 'row' }}
+            flexDirection={{ base: 'column', md: 'row' }}
           >
-            <Volume />
-            <Fees />
+            <Volume width={{ base: '100%', md: '49%' }} />
+            <Fees width={{ base: '100%', md: '49%' }} />
           </Flex>
           <Flex
             justifyContent="space-between"
             width="100%"
-            flexDirection={{ base: 'column', sm: 'row' }}
+            flexDirection={{ base: 'column', md: 'row' }}
           >
-            <Trades width={{ base: '100%', sm: '49%' }} />
-            <Traders width={{ base: '100%', sm: '49%' }} />
+            <Trades width={{ base: '100%', md: '49%' }} />
+            <Traders width={{ base: '100%', md: '49%' }} />
           </Flex>
           <Flex mt={2} justifyContent="space-between">
             <Heading fontSize="30px">Markets</Heading>
-            <Button onClick={() => navigate('/markets')} variant="outline">
+            {/* <Button onClick={() => navigate('/markets')} variant="outline">
               See all markets
-            </Button>
+            </Button> */}
           </Flex>
           <Markets />
           <Flex mt={8} justifyContent="space-between">
