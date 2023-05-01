@@ -74,7 +74,7 @@ function updateDailyStats(event: PositionModifiedNewEvent): void {
   dailyStat.cumulativeTrades = dailyStat.cumulativeTrades.plus(newTrades);
 
   let trader = Trader.load(event.params.account.toHex());
-  if (!trader) {
+  if (trader === null) {
     dailyStat.cumulativeTraders = dailyStat.cumulativeTraders.plus(BigInt.fromI32(1));
     dailyStat.newTraders = dailyStat.newTraders.plus(BigInt.fromI32(1));
   } else {
