@@ -17,8 +17,9 @@ interface MarketsCardProp {
 
 export const MarketsCard = ({ loading, data, number }: MarketsCardProp) => {
   let displayName;
+
   displayName = utils.parseBytes32String(
-    data?.market?.asset || '0x6e61680000000000000000000000000000000000000000000000000000000000'
+    data?.market?.asset || '0x7342544300000000000000000000000000000000000000000000000000000000'
   );
 
   if (displayName === 'sETH' || displayName === 'sBTC') {
@@ -49,7 +50,10 @@ export const MarketsCard = ({ loading, data, number }: MarketsCardProp) => {
               <CurrencyIcon
                 width="30px"
                 height="30px"
-                currencyKey={utils.parseBytes32String(data?.market?.asset || '')}
+                currencyKey={utils.parseBytes32String(
+                  data?.market?.asset ||
+                    '0x7342544300000000000000000000000000000000000000000000000000000000'
+                )}
               />
               <Text
                 fontFamily="heading"

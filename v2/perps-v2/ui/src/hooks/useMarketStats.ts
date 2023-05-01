@@ -4,11 +4,11 @@ import { format, subDays } from 'date-fns';
 import { MARKETS_QUERY } from '../queries/dashboard';
 import { DailyMarketStat_OrderBy } from '../__generated__/graphql';
 
-function getDateRange() {
+function getDateRange(upperDaysAgo = 0, lowerDaysAgo = 1) {
   const now = new Date();
-  const upper = format(subDays(now, 2), 'yyyy-MM-dd');
+  const upper = format(subDays(now, upperDaysAgo), 'yyyy-MM-dd');
   // We fetch the day prior to yesterday so we can calculate 24 hour volume change
-  const lower = format(subDays(now, 3), 'yyyy-MM-dd');
+  const lower = format(subDays(now, lowerDaysAgo), 'yyyy-MM-dd');
   return { upper, lower };
 }
 
