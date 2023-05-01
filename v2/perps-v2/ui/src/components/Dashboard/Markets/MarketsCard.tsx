@@ -1,5 +1,5 @@
 import { Flex, FlexProps, Spinner, Text } from '@chakra-ui/react';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { wei } from '@synthetixio/wei';
 import { utils } from 'ethers';
 import { DailyMarketStat } from '../../../__generated__/graphql';
@@ -87,13 +87,13 @@ export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp
                 24h Change
               </Text>
               <Text
-                color={percentageDifference > 0 ? 'green.500' : 'red.500'}
+                color={percentageDifference >= 0 ? 'green.500' : 'red.500'}
                 fontSize="14px"
                 fontWeight={500}
                 lineHeight="20px"
               >
-                {percentageDifference > 0 ? '+' : '-'}
-                {Math.abs(percentageDifference).toFixed(2)}%
+                {percentageDifference >= 0 ? '+' : '-'}
+                {formatPercent(Math.abs(percentageDifference))}
               </Text>
             </Flex>
           </Flex>
