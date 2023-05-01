@@ -11,7 +11,7 @@ export const LargestLosses = () => {
   const { data, loading, error } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
       where: {
-        openTimestamp_gte: `${getUnixTime(subDays(new Date(), 1))}`,
+        closeTimestamp_gte: `${getUnixTime(subDays(new Date(), 1))}`,
       },
       orderBy: FuturesPosition_OrderBy.RealizedPnl,
       orderDirection: OrderDirection.Asc,

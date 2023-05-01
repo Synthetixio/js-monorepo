@@ -1,24 +1,26 @@
 import { useQuery } from '@apollo/client';
 import { wei } from '@synthetixio/wei';
-import { format, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 import { MARKETS_QUERY } from '../queries/dashboard';
-import { DailyMarketStat_OrderBy } from '../__generated__/graphql';
+import { DailyMarketStat_OrderBy, OrderDirection } from '../__generated__/graphql';
 
 function getDateRange(upperDaysAgo = 0, lowerDaysAgo = 1) {
   const now = new Date();
-  const upper = format(subDays(now, upperDaysAgo), 'yyyy-MM-dd');
+
+  const upper = subDays(now, upperDaysAgo).toISOString().split('T')[0];
   // We fetch the day prior to yesterday so we can calculate 24 hour volume change
-  const lower = format(subDays(now, lowerDaysAgo), 'yyyy-MM-dd');
+  const lower = subDays(now, lowerDaysAgo).toISOString().split('T')[0];
   return { upper, lower };
 }
 
 export function useMarketStats() {
-  const { upper, lower } = getDateRange();
+  const { upper, lower } = getDateRange(1, 2); // 1 day ago, 2 days ago UTC
 
   const { data: marketsData, loading } = useQuery(MARKETS_QUERY, {
     variables: {
-      where: { day_gte: lower, day_lte: upper },
-      orderBy: DailyMarketStat_OrderBy.Volume,
+      first: 3,
+      orderBy: DailyMarketStat_OrderBy.Timestamp,
+      orderDirection: OrderDirection.Desc,
     },
   });
 
@@ -39,8 +41,7 @@ export function useMarketStats() {
     const percentageDifference = wei(market.volume, 18, true)
       .sub(wei(yesterday?.volume || 0, 18, true))
       .div(wei(yesterday?.volume || 1, 18, true))
-      .mul(100)
-      .toNumber();
+      .mul(100);
 
     return {
       ...market,

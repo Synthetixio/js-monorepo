@@ -167,7 +167,7 @@ export const useActions = (account?: string, limit?: number) => {
 
   return {
     loading: marginLoading || futuresTradesLoading,
-    data: limit ? sortedData.slice(0, limit) : sortedData,
+    data: sortedData,
     error: marginError || futuresError,
   };
 };
