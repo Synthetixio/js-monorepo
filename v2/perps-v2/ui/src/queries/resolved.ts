@@ -65,10 +65,5 @@ export const resolvers: Resolvers | Resolvers[] = {
 
         .filter(notNill);
     },
-    marketsData: async (_parent, _args, _contextValue, _info) => {
-      return {
-        hello: 'world',
-      };
-    },
   },
 };

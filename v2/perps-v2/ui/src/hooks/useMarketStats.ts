@@ -18,8 +18,8 @@ export function useMarketStats() {
 
   const { data: marketsData, loading } = useQuery(MARKETS_QUERY, {
     variables: {
-      first: 3,
-      orderBy: DailyMarketStat_OrderBy.Timestamp,
+      where: { day_gte: lower, day_lte: upper },
+      orderBy: DailyMarketStat_OrderBy.Volume,
       orderDirection: OrderDirection.Desc,
     },
   });
