@@ -367,7 +367,7 @@ describe('calculateAccruedFunding', () => {
   });
   test('timestampToDate', () => {
     const timestamp = BigInt.fromI32(1682661853); //'2023-04-28T06:04:13.000Z'
-    const result = timestampToDate(BigInt.fromI32(1682661853));
+    const result = timestampToDate(timestamp);
     assert.stringEquals(result, '2023-04-28');
   });
   test('dayToEpochTimestamp', () => {

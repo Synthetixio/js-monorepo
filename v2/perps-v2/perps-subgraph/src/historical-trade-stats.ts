@@ -1,5 +1,5 @@
 import { PositionModified1 as PositionModifiedNewEvent } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
-import { BigInt, log } from '@graphprotocol/graph-ts';
+import { BigInt } from '@graphprotocol/graph-ts';
 import {
   CumulativeMarketStat,
   DailyMarketStat,
@@ -29,34 +29,26 @@ export function dayToEpochTimestamp(dateString: string): BigInt {
 const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStat => {
   const day = timestampToDate(event.block.timestamp);
   const id = 'DailyStat-'.concat(day);
-  let synthetix = Synthetix.load('synthetix');
-
-  if (!synthetix) {
-    synthetix = new Synthetix('synthetix');
-    synthetix.totalVolume = BigInt.fromI32(0);
-    synthetix.feesByLiquidations = BigInt.fromI32(0);
-    synthetix.feesByPositionModifications = BigInt.fromI32(0);
-    synthetix.totalTraders = BigInt.fromI32(0);
-    synthetix.totalTrades = BigInt.fromI32(0);
-  }
   let dailyStat = DailyStat.load(id);
   if (dailyStat) return dailyStat;
   dailyStat = new DailyStat(id);
 
+  let synthetix = Synthetix.load('synthetix');
   dailyStat.timestamp = dayToEpochTimestamp(day);
   dailyStat.day = day;
   dailyStat.volume = BigInt.fromI32(0);
   dailyStat.fees = BigInt.fromI32(0);
   dailyStat.trades = BigInt.fromI32(0);
-  dailyStat.cumulativeTraders = synthetix.totalTraders;
+  dailyStat.cumulativeTraders = synthetix === null ? BigInt.fromI32(0) : synthetix.totalTraders;
   dailyStat.newTraders = BigInt.fromI32(0);
   dailyStat.existingTraders = BigInt.fromI32(0);
-  dailyStat.cumulativeVolume = synthetix.totalVolume;
+  dailyStat.cumulativeVolume = synthetix === null ? BigInt.fromI32(0) : synthetix.totalVolume;
+  dailyStat.cumulativeTrades = synthetix === null ? BigInt.fromI32(0) : synthetix.totalTrades;
 
-  dailyStat.cumulativeFees = synthetix.feesByPositionModifications.plus(
-    synthetix.feesByLiquidations
-  );
-  dailyStat.cumulativeTrades = synthetix.totalTrades;
+  dailyStat.cumulativeFees =
+    synthetix === null
+      ? BigInt.fromI32(0)
+      : synthetix.feesByPositionModifications.plus(synthetix.feesByLiquidations);
   return dailyStat;
 };
 function updateDailyStats(event: PositionModifiedNewEvent): void {
@@ -73,12 +65,12 @@ function updateDailyStats(event: PositionModifiedNewEvent): void {
   dailyStat.cumulativeFees = dailyStat.cumulativeFees.plus(newFee);
   dailyStat.cumulativeTrades = dailyStat.cumulativeTrades.plus(newTrades);
 
-  let trader = Trader.load(event.params.account.toHex());
-  if (!trader) {
+  const trader = Trader.load(event.params.account.toHex());
+  if (trader && trader.trades.length > 0) {
+    dailyStat.existingTraders = dailyStat.existingTraders.plus(BigInt.fromI32(1));
+  } else {
     dailyStat.cumulativeTraders = dailyStat.cumulativeTraders.plus(BigInt.fromI32(1));
     dailyStat.newTraders = dailyStat.newTraders.plus(BigInt.fromI32(1));
-  } else {
-    dailyStat.existingTraders = dailyStat.existingTraders.plus(BigInt.fromI32(1));
   }
   dailyStat.save();
 }
