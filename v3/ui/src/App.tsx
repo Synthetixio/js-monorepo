@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { GasSpeedProvider } from '@snx-v3/useGasSpeed';
 import { BlockchainProvider } from '@snx-v3/useBlockchain';
+import { ExperimentalModal } from '@snx-v3/ExperimentalModal';
 import { Router } from './Router';
 import './i18n';
 
@@ -36,6 +37,7 @@ export const App = () => {
         <BlockchainProvider>
           <GasSpeedProvider>
             <BrowserRouter>
+              <ExperimentalModal />
               <Router />
             </BrowserRouter>
           </GasSpeedProvider>
