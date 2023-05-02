@@ -25,7 +25,11 @@ export const ExperimentalModal: React.FC = () => {
           <Box>
             <Text>You do not want to be here.</Text>
             <Text>
-              Please go to <Link href="https://staking.synthetix.io">staking.synthetix.io</Link>.
+              Please go to{' '}
+              <Link color="cyan.500" boxShadow="none" href="https://staking.synthetix.io">
+                staking.synthetix.io
+              </Link>
+              .
             </Text>
           </Box>
           <Checkbox onChange={() => setAccepted((x) => !x)}>I want to proceed</Checkbox>
