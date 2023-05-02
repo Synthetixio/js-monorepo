@@ -1,5 +1,5 @@
 {
-  "address": "0x596d34E0a74c8f628E7715Ac4eB0607F0c38E96E",
+  "address": "0x24f3BeF8E050Fc9611AF76a2aA2B31073C53348D",
   "abi": [
     {
       "inputs": [
@@ -112,6 +112,22 @@
         }
       ],
       "name": "MarketNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint32",
+          "name": "timeRemaining",
+          "type": "uint32"
+        }
+      ],
+      "name": "MinDelegationTimeoutPending",
       "type": "error"
     },
     {
@@ -503,7 +519,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x1de6ec1639545a566ee194e9281363e07ba39098c6550c004951e6500df13ab0",
+  "deployTxnHash": "0xbb2c57373a445d099c4730df4d174a83347197b20ca0a1bea974020f6ad24c50",
   "sourceName": "contracts/modules/core/VaultModule.sol",
   "contractName": "VaultModule",
   "deployedOn": "contract.VaultModule"
