@@ -25,6 +25,7 @@
     "@snx-v3/BorrowModal": "workspace:*",
     "@snx-v3/CollateralTypeSelector": "workspace:*",
     "@snx-v3/DepositModal": "workspace:*",
+    "@snx-v3/ExperimentalModal": "workspace:*",
     "@snx-v3/HomeLink": "workspace:*",
     "@snx-v3/ManagePositionContext": "workspace:*",
     "@snx-v3/NumberInput": "workspace:*",
