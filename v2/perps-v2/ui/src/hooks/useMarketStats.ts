@@ -14,7 +14,7 @@ function getDateRange(upperDaysAgo = 0, lowerDaysAgo = 1) {
 }
 
 export function useMarketStats() {
-  const { upper, lower } = getDateRange(1, 2); // 1 day ago, 2 days ago UTC
+  const { upper, lower } = getDateRange(2, 3); // 1 day ago, 2 days ago UTC
 
   const { data: marketsData, loading } = useQuery(MARKETS_QUERY, {
     variables: {

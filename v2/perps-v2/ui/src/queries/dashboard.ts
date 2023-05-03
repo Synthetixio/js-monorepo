@@ -74,3 +74,12 @@ export const MARKETS_QUERY = gql(`
     }
   }
 `);
+
+export const MARKETS_ID_QUERY = gql(`
+  query MarketsIdQuery {
+    futuresMarkets {
+      id
+      marketKey
+    }
+  }
+`);

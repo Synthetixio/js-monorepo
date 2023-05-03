@@ -2,28 +2,28 @@ import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/
 import { useQuery } from '@apollo/client';
 import { POSITIONS_QUERY_MARKET } from '../../../queries/positions';
 import { Market, Size, TableHeaderCell, WalletAddress } from '../../Shared';
-import { FuturesPosition_OrderBy, OrderDirection } from '../../../__generated__/graphql';
-import { getUnixTime, subDays } from 'date-fns';
+import { OrderDirection } from '../../../__generated__/graphql';
 import { wei } from '@synthetixio/wei';
 import { SmallTableLoading } from './SmallTableLoading';
+import { useLargestOpenPosition } from '../../../hooks';
 
 export const LargestOpen = () => {
-  const { data, loading, error } = useQuery(POSITIONS_QUERY_MARKET, {
-    variables: {
-      where: {
-        openTimestamp_gte: `${getUnixTime(subDays(new Date(), 1))}`,
-        isOpen: true,
-      },
-      orderBy: FuturesPosition_OrderBy.TraderFeesPaidToSynthetix,
-      orderDirection: OrderDirection.Desc,
-      first: 3,
-    },
-    pollInterval: 10000,
-  });
+  // const { data, loading, error } = useQuery(POSITIONS_QUERY_MARKET, {
+  //   variables: {
+  //     where: {
+  //       isOpen: true,
+  //       market: {},
+  //     },
+  //     orderDirection: OrderDirection.Desc,
+  //   },
+  //   pollInterval: 10000,
+  // });
+
+  const { loading, data, error } = useLargestOpenPosition();
 
   return (
     <>
-      <TableContainer
+      {/* <TableContainer
         width="100%"
         my={5}
         borderColor="gray.900"
@@ -90,7 +90,7 @@ export const LargestOpen = () => {
               </Text>
             </Flex>
           ))}
-      </TableContainer>
+      </TableContainer> */}
     </>
   );
 };

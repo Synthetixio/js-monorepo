@@ -1,22 +1,17 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
 import { POSITIONS_QUERY_MARKET } from '../../../queries/positions';
 import { Market, PnL, TableHeaderCell, WalletAddress } from '../../Shared';
 import { FuturesPosition_OrderBy, OrderDirection } from '../../../__generated__/graphql';
-import { getUnixTime, subDays } from 'date-fns';
 import { wei } from '@synthetixio/wei';
 import { SmallTableLoading } from './SmallTableLoading';
 
 export const ClosestToLiquidation = () => {
-  const { walletAddress } = useParams();
-
   const { data, loading, error } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
       where: {
-        trader: walletAddress,
-        openTimestamp_gte: `${getUnixTime(subDays(new Date(), 1))}`,
         isOpen: true,
+        unrealizedPnl_lt: '0',
       },
       orderBy: FuturesPosition_OrderBy.Leverage,
       orderDirection: OrderDirection.Desc,
