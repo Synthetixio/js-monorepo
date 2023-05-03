@@ -1,5 +1,5 @@
 import { PositionModified1 as PositionModifiedNewEvent } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
-import { BigInt } from '@graphprotocol/graph-ts';
+import { BigInt, log } from '@graphprotocol/graph-ts';
 import {
   CumulativeMarketStat,
   DailyMarketStat,
@@ -66,8 +66,13 @@ function updateDailyStats(event: PositionModifiedNewEvent): void {
   dailyStat.cumulativeTrades = dailyStat.cumulativeTrades.plus(newTrades);
 
   const trader = Trader.load(event.params.account.toHex());
-  if (trader && trader.trades.length > 0) {
-    dailyStat.existingTraders = dailyStat.existingTraders.plus(BigInt.fromI32(1));
+  if (trader && trader.trades.length > 0 && trader.lastTradeTimestamp) {
+    const lastTradedDay = timestampToDate(trader.lastTradeTimestamp as BigInt);
+
+    if (lastTradedDay != dailyStat.day) {
+      // Only update existing traders if the trader haven't traded today
+      dailyStat.existingTraders = dailyStat.existingTraders.plus(BigInt.fromI32(1));
+    }
   } else {
     dailyStat.cumulativeTraders = dailyStat.cumulativeTraders.plus(BigInt.fromI32(1));
     dailyStat.newTraders = dailyStat.newTraders.plus(BigInt.fromI32(1));

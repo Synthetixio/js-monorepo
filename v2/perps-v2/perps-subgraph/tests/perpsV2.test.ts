@@ -306,6 +306,8 @@ describe('Perps V2', () => {
     assert.fieldEquals('Trader', trader.toLowerCase(), 'totalLiquidations', '0');
     assert.fieldEquals('Trader', trader.toLowerCase(), 'feesPaidToSynthetix', toGwei(2).toString());
     assert.fieldEquals('Trader', trader.toLowerCase(), 'totalMarginLiquidated', '0');
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'createdAt', '10');
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'lastTradeTimestamp', '20');
     assert.fieldEquals(
       'Trader',
       trader.toLowerCase(),

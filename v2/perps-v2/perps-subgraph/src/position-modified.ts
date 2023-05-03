@@ -30,7 +30,7 @@ function getOrCreateTrader(event: PositionModifiedNewEvent): Trader {
 
   if (!trader) {
     trader = new Trader(event.params.account.toHex());
-    trader.timestamp = event.block.timestamp;
+    trader.createdAt = event.block.timestamp;
     trader.totalLiquidations = BigInt.fromI32(0);
     trader.totalMarginLiquidated = BigInt.fromI32(0);
     trader.feesPaidToSynthetix = BigInt.fromI32(0);
@@ -69,6 +69,7 @@ function updateTrades(event: PositionModifiedNewEvent, synthetix: Synthetix, tra
   const oldTrades = trader.trades;
   oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
   trader.trades = oldTrades;
+  trader.lastTradeTimestamp = event.block.timestamp;
 }
 
 function createFuturesPosition(

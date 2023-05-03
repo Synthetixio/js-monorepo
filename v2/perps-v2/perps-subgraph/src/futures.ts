@@ -231,7 +231,7 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
 
   if (!trader) {
     trader = new Trader(event.params.account.toHex());
-    trader.timestamp = event.block.timestamp;
+    trader.createdAt = event.block.timestamp;
     trader.feesPaidToSynthetix = BigInt.fromI32(0);
     trader.trades = [];
     trader.totalVolume = event.params.marginDelta;
