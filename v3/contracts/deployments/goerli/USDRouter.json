@@ -1,5 +1,5 @@
 {
-  "address": "0x55d1dbdD814fEB50b4CdFD554f370cdA954eB4d7",
+  "address": "0xf4f2f63caec507aDC9DC83fDA93F96ef2eC88d64",
   "abi": [
     {
       "inputs": [
@@ -404,6 +404,22 @@
         }
       ],
       "name": "InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
@@ -825,7 +841,7 @@
     }
   ],
   "deployedOn": "router.USDRouter",
-  "deployTxnHash": "0x06cbc3dc15eaba80a79c21deaecc1e296d08ad90a223ffb3330d05e13b40ffbe",
+  "deployTxnHash": "0x00e29af0b3fcbea2f4c9bc284e9800574540a414029a1f6a8bdb61a9fa74fe13",
   "contractName": "USDRouter",
   "sourceName": "USDRouter.sol"
 }
