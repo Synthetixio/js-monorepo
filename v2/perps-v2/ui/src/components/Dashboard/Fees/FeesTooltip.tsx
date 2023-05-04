@@ -26,7 +26,7 @@ export const FeesTooltip = ({ payload }: TradersTooltipProps) => {
       borderWidth="1px"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {feesInfo.day}
+        {feesInfo.label}
       </Text>
       <Flex my={2} justifyContent="space-between" w="100%">
         <KeyColour label="Total Fees" colour="whiteAlpha.400" />
