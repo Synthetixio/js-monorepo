@@ -187,7 +187,6 @@ module.exports = {
       [
         'contracts-interface',
         'optimism-networks',
-        'providers',
         'queries',
         'wei',
         'generate-subgraph-query',
@@ -254,7 +253,6 @@ module.exports = {
       '@synthetixio/contracts/build': '@synthetixio/contracts/src',
       '@synthetixio/contracts-interface/build': '@synthetixio/contracts-interface/src',
       '@synthetixio/optimism-networks/build': '@synthetixio/optimism-networks/src',
-      '@synthetixio/providers/build': '@synthetixio/providers/src',
       '@synthetixio/queries/build': '@synthetixio/queries/src',
       '@synthetixio/wei/build': '@synthetixio/wei/src',
     },
