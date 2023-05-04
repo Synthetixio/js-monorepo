@@ -24,7 +24,7 @@ export const TradersTooltip = ({ payload }: TradersTooltipProps) => {
       borderWidth="1px"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {tradersInfo.day}
+        {tradersInfo.label}
       </Text>
       <Flex my={2} justifyContent="space-between" w="100%">
         <KeyColour label="Returning Traders" colour="whiteAlpha.400" />

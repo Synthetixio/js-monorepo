@@ -28,7 +28,7 @@ export const TradesTooltip = ({ payload }: TradesTooltipProps) => {
       borderColor="gray.900"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {tradesInfo.day}
+        {tradesInfo.label}
       </Text>
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour label="Total trades" colour="whiteAlpha.400" />

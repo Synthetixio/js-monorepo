@@ -2,7 +2,7 @@ import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/
 import { Market, Size, TableHeaderCell, WalletAddress } from '../../Shared';
 import { wei } from '@synthetixio/wei';
 import { SmallTableLoading } from './SmallTableLoading';
-import { useLargestOpenPosition } from '../../../hooks';
+import { DataInterface, useLargestOpenPosition } from '../../../hooks';
 
 export const LargestOpen = () => {
   const { loading, data, error } = useLargestOpenPosition();
@@ -48,7 +48,7 @@ export const LargestOpen = () => {
                   <SmallTableLoading />
                 </>
               )}
-              {data?.map((item: any) => {
+              {data?.map((item: DataInterface) => {
                 const {
                   id,
                   trader,
