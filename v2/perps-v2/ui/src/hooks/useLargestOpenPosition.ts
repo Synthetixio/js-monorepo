@@ -25,7 +25,7 @@ const NumberStringSchema = z.string().refine((value) => !isNaN(parseFloat(value)
 
 const ZodStringToWei = NumberStringSchema.transform((value) => wei(value, 18, true));
 
-const DataInterface = z.object({
+export const DataSchema = z.object({
   averageEntryPrice: z.string(),
   entryPrice: z.string(),
   feesPaidToSynthetix: z.string(),
@@ -37,6 +37,7 @@ const DataInterface = z.object({
   market: z.object({
     id: z.string(),
     marketKey: z.string(),
+    asset: z.string(),
   }),
   netFunding: z.string(),
   notionalValue: ZodStringToWei,
@@ -49,9 +50,11 @@ const DataInterface = z.object({
   unrealisedPnl: z.string(),
 });
 
+export type DataInterface = z.infer<typeof DataSchema>;
+
 interface State {
   loading: boolean;
-  data: z.infer<typeof DataInterface>[] | null;
+  data: DataInterface[] | null;
   error: unknown | null;
 }
 
@@ -103,7 +106,7 @@ export function useLargestOpenPosition() {
           };
         });
 
-        const sizeResult: z.infer<typeof DataInterface>[] = Object.keys(sizeData)
+        const sizeResult: DataInterface[] = Object.keys(sizeData)
           .map((key: string) => {
             const marketData = sizeData[key];
 
