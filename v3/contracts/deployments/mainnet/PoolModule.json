@@ -1,5 +1,5 @@
 {
-  "address": "0x587a964ddAE3550a842730122750E92f4db714ad",
+  "address": "0xE7Da425d63f1B37b71293fF06f100403d5596C09",
   "abi": [
     {
       "inputs": [
@@ -53,6 +53,22 @@
         }
       ],
       "name": "MarketNotFound",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint32",
+          "name": "timeRemaining",
+          "type": "uint32"
+        }
+      ],
+      "name": "MinDelegationTimeoutPending",
       "type": "error"
     },
     {
@@ -290,6 +306,19 @@
         }
       ],
       "name": "PoolOwnershipAccepted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "minLiquidityRatio",
+          "type": "uint256"
+        }
+      ],
+      "name": "SetMinLiquidityRatio",
       "type": "event"
     },
     {
@@ -542,7 +571,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x9d37611c5c11fe7f4f6c693188f49d7b0db6778acd91d1931b6a6eca7e69a3eb",
+  "deployTxnHash": "0x77fa36e2bfda9d3938e0d399abc9fd31b7475052518e4ff29ddce08da95003b4",
   "sourceName": "contracts/modules/core/PoolModule.sol",
   "contractName": "PoolModule",
   "deployedOn": "contract.PoolModule"

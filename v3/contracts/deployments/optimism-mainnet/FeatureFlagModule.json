@@ -1,5 +1,5 @@
 {
-  "address": "0xD762Bf2782028051D7F16F4947Fd3452B3c462e5",
+  "address": "0x04194CD5916c77fE82dCde7B3db051D84B2d33a1",
   "abi": [
     {
       "inputs": [
@@ -310,7 +310,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x48a84c83725f213cf81f5614931bd783b5d97f34c5fac8ec958aec02d02d6d1a",
+  "deployTxnHash": "0x6142ee22f6420507d634bf38e304d1c8dec703d26e8a96c6f980445b1a432c69",
   "sourceName": "contracts/modules/core/FeatureFlagModule.sol",
   "contractName": "FeatureFlagModule",
   "deployedOn": "contract.FeatureFlagModule"

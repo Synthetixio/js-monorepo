@@ -1,8 +1,7 @@
-import { Box, Container, Flex, Link, useDisclosure } from '@chakra-ui/react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Box, Container, Flex, useDisclosure } from '@chakra-ui/react';
+import { useLocation } from 'react-router-dom';
 import { NetworkController } from './NetworkController';
 import { useEffect } from 'react';
-import { Logo, LogoIcon } from '@snx-v3/icons';
 
 export default function Header() {
   const { onClose } = useDisclosure();
@@ -13,24 +12,13 @@ export default function Header() {
   }, [location, onClose]);
 
   return (
-    <>
-      <Flex mb="8" py="4" bg="navy.900" borderBottomWidth="1px" borderBottomColor="gray.900">
-        <Container maxW="1024px" as={Flex} justifyContent="space-between" alignItems="center">
-          <Box display={{ base: 'none', md: 'inline-block' }}>
-            <Link to="/" as={RouterLink} py={4} pr={2}>
-              <Logo />
-            </Link>
-          </Box>
-          <Box display={{ md: 'none' }}>
-            <Link to="/" as={RouterLink} py={4} pr={2}>
-              <LogoIcon />
-            </Link>
-          </Box>
-          <Flex justifyContent="center" alignItems="center">
-            <NetworkController />
-          </Flex>
-        </Container>
-      </Flex>
-    </>
+    <Flex mb="8" py="4" bg="navy.900" borderBottomWidth="1px" borderBottomColor="gray.900">
+      <Container maxW="1024px" as={Flex} justifyContent="space-between" alignItems="center">
+        <Box display={{ base: 'none', md: 'inline-block' }}>&nbsp;</Box>
+        <Flex justifyContent="center" alignItems="center">
+          <NetworkController />
+        </Flex>
+      </Container>
+    </Flex>
   );
 }

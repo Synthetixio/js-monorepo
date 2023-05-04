@@ -3,6 +3,7 @@ import { deploymentAddresses } from './lib/deploymentAddresses';
 import { modules } from './lib/modules';
 import { kebabize } from './lib/kebabize';
 import { AddressLink } from './AddressLink';
+
 export function DeploymentAddresses({ chain }) {
   return (
     <table style={{ verticalAlign: 'top', whiteSpace: 'nowrap' }}>

@@ -33,9 +33,9 @@ export const abi = [
   'event ApprovalForAll(address indexed owner, address indexed operator, bool approved)',
   'event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)',
   'function approve(address to, uint256 tokenId)',
-  'function balanceOf(address holder) view returns (uint256)',
+  'function balanceOf(address holder) view returns (uint256 balance)',
   'function burn(uint256 tokenId)',
-  'function getApproved(uint256 tokenId) view returns (address)',
+  'function getApproved(uint256 tokenId) view returns (address operator)',
   'function initialize(string tokenName, string tokenSymbol, string uri)',
   'function isApprovedForAll(address holder, address operator) view returns (bool)',
   'function isInitialized() view returns (bool)',
@@ -47,6 +47,7 @@ export const abi = [
   'function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)',
   'function setAllowance(uint256 tokenId, address spender)',
   'function setApprovalForAll(address operator, bool approved)',
+  'function setBaseTokenURI(string uri)',
   'function supportsInterface(bytes4 interfaceId) view returns (bool)',
   'function symbol() view returns (string)',
   'function tokenByIndex(uint256 index) view returns (uint256)',
@@ -105,6 +106,7 @@ export interface AccountProxyInterface extends utils.Interface {
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
     'setAllowance(uint256,address)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
+    'setBaseTokenURI(string)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
     'tokenByIndex(uint256)': FunctionFragment;
@@ -139,6 +141,7 @@ export interface AccountProxyInterface extends utils.Interface {
       | 'safeTransferFrom(address,address,uint256,bytes)'
       | 'setAllowance'
       | 'setApprovalForAll'
+      | 'setBaseTokenURI'
       | 'supportsInterface'
       | 'symbol'
       | 'tokenByIndex'
@@ -212,6 +215,7 @@ export interface AccountProxyInterface extends utils.Interface {
     functionFragment: 'setApprovalForAll',
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
+  encodeFunctionData(functionFragment: 'setBaseTokenURI', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
@@ -261,6 +265,7 @@ export interface AccountProxyInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: 'setAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setApprovalForAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBaseTokenURI', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tokenByIndex', data: BytesLike): Result;
@@ -396,7 +401,10 @@ export interface AccountProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(holder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(
+      holder: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { balance: BigNumber }>;
 
     burn(
       tokenId: PromiseOrValue<BigNumberish>,
@@ -406,7 +414,7 @@ export interface AccountProxy extends BaseContract {
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<[string] & { operator: string }>;
 
     initialize(
       tokenName: PromiseOrValue<string>,
@@ -464,6 +472,11 @@ export interface AccountProxy extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setBaseTokenURI(
+      uri: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -600,6 +613,11 @@ export interface AccountProxy extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setBaseTokenURI(
+    uri: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   supportsInterface(
     interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
@@ -719,6 +737,8 @@ export interface AccountProxy extends BaseContract {
       approved: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    setBaseTokenURI(uri: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
@@ -902,6 +922,11 @@ export interface AccountProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setBaseTokenURI(
+      uri: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -1042,6 +1067,11 @@ export interface AccountProxy extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setBaseTokenURI(
+      uri: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

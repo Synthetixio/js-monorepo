@@ -1,5 +1,5 @@
 {
-  "address": "0xb61a6aF69e992e1bed69b0aE0CBa5143CA25D4D1",
+  "address": "0x4b8b8D6574811e4974d563CE82c3a9396e4816ca",
   "abi": [
     {
       "inputs": [],
@@ -219,7 +219,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "balance",
           "type": "uint256"
         }
       ],
@@ -251,7 +251,7 @@
       "outputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "operator",
           "type": "address"
         }
       ],
@@ -481,6 +481,19 @@
     {
       "inputs": [
         {
+          "internalType": "string",
+          "name": "uri",
+          "type": "string"
+        }
+      ],
+      "name": "setBaseTokenURI",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "bytes4",
           "name": "interfaceId",
           "type": "bytes4"
@@ -611,7 +624,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xa14c5637fb591687953af8ec25d30ee95c4d6a184973f1e00c1cf9c5e4a4b7dc",
+  "deployTxnHash": "0x8270eec600b4effec84e30f9158138af94f5a81065d78032f41f15fa8c7fd628",
   "sourceName": "contracts/modules/account/AccountTokenModule.sol",
   "contractName": "AccountTokenModule",
   "deployedOn": "contract.AccountTokenModule"

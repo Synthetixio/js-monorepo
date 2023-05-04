@@ -2,7 +2,11 @@ import { Address } from '@graphprotocol/graph-ts';
 import { BigInt } from '@graphprotocol/graph-ts';
 import { assert, clearStore, describe, log, logStore, test, afterEach } from 'matchstick-as';
 import { Trader } from '../generated/schema';
-import { dayToEpochTimestamp, timestampToDate } from '../src/historical-trade-stats';
+import {
+  dayToEpochTimestamp,
+  timestampToDate,
+  updateFeeStats,
+} from '../src/historical-trade-stats';
 import { handlePositionModified } from '../src/position-modified';
 import { createPositionModifiedEvent, toEth, toGwei } from './perpsV2-utils';
 const trader = '0x1234567890123456789012345678901234567890';
@@ -82,7 +86,7 @@ describe('calculateAccruedFunding', () => {
     assert.fieldEquals('DailyStat', idDay1, 'fees', toGwei(2000000000).toString());
     assert.fieldEquals('DailyStat', idDay1, 'trades', BigInt.fromI32(2).toString());
     assert.fieldEquals('DailyStat', idDay1, 'newTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStat', idDay1, 'existingTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'existingTraders', BigInt.fromI32(0).toString());
     assert.fieldEquals('DailyStat', idDay1, 'cumulativeFees', toGwei(2000000000).toString());
 
     // Check DailyStat for Day 2
@@ -312,10 +316,25 @@ describe('calculateAccruedFunding', () => {
       BigInt.fromI32(15),
       2
     );
+    // This event should no increase anything, the trader have already traded to today
+    const event4 = createPositionModifiedEvent(
+      BigInt.fromI32(2),
+      Address.fromString(trader1),
+      toEth(7),
+      toEth(3),
+      toEth(3),
+      toEth(1500),
+      BigInt.fromI32(1),
+      toGwei(1000000000),
+      60 * 60 * 24 + 20, // 1 day later
+      BigInt.fromI32(15),
+      2
+    );
 
     handlePositionModified(event1);
     handlePositionModified(event2);
     handlePositionModified(event3);
+    handlePositionModified(event4);
 
     // Get the day string
     const idDay1 = 'DailyStat-1970-01-01';
@@ -324,7 +343,8 @@ describe('calculateAccruedFunding', () => {
     // Day1 Check if existingTraders is incremented correctly in DailyStat
     assert.fieldEquals('DailyStat', idDay1, 'cumulativeTraders', BigInt.fromI32(1).toString());
     assert.fieldEquals('DailyStat', idDay1, 'newTraders', BigInt.fromI32(1).toString());
-    assert.fieldEquals('DailyStat', idDay1, 'existingTraders', BigInt.fromI32(1).toString());
+    assert.fieldEquals('DailyStat', idDay1, 'existingTraders', BigInt.fromI32(0).toString());
+
     // Day2 Check if existingTraders is incremented correctly in DailyStat
     assert.fieldEquals('DailyStat', idDay2, 'cumulativeTraders', BigInt.fromI32(1).toString());
     assert.fieldEquals('DailyStat', idDay2, 'newTraders', BigInt.fromI32(0).toString());
@@ -335,7 +355,7 @@ describe('calculateAccruedFunding', () => {
     assert.assertNotNull(traderEntity);
   });
 
-  test('make sure postition modification with a trade size of 0 gets ignored', () => {
+  test('make sure position modification with a trade size of 0 gets ignored', () => {
     // Create the event
     const event = createPositionModifiedEvent(
       BigInt.fromI32(1), // id
@@ -367,12 +387,48 @@ describe('calculateAccruedFunding', () => {
   });
   test('timestampToDate', () => {
     const timestamp = BigInt.fromI32(1682661853); //'2023-04-28T06:04:13.000Z'
-    const result = timestampToDate(BigInt.fromI32(1682661853));
+    const result = timestampToDate(timestamp);
     assert.stringEquals(result, '2023-04-28');
   });
   test('dayToEpochTimestamp', () => {
     const result = dayToEpochTimestamp('2023-04-28');
     const expectedTimestamp = BigInt.fromI32(1682640000); //'2023-04-28T06:04:13.000Z'
     assert.stringEquals(result.toString(), expectedTimestamp.toString());
+  });
+
+  test('updateStateFee updates fees', () => {
+    let feeAmount = BigInt.fromI32(100);
+    let market = Address.fromString('0x1234567890123456789012345678901234567890');
+    let timestamp = BigInt.fromI32(1630521600); // '2021-09-01T00:00:00.000Z'
+
+    updateFeeStats(feeAmount, market, timestamp);
+
+    let cumulativeMarketStatsId = 'CumulativeMarketStat-'.concat(market.toHexString());
+    assert.fieldEquals(
+      'CumulativeMarketStat',
+      cumulativeMarketStatsId,
+      'cumulativeFees',
+      BigInt.fromI32(100).toString()
+    );
+
+    let dailyMarketStatsId = market.toHexString().concat('-2021-09-01');
+
+    assert.fieldEquals(
+      'DailyMarketStat',
+      dailyMarketStatsId,
+      'fees',
+      BigInt.fromI32(100).toString()
+    );
+
+    assert.fieldEquals(
+      'DailyMarketStat',
+      dailyMarketStatsId,
+      'cumulativeFees',
+      BigInt.fromI32(100).toString()
+    );
+
+    let dailyStatsId = 'DailyStat-2021-09-01';
+    assert.fieldEquals('DailyStat', dailyStatsId, 'cumulativeFees', BigInt.fromI32(100).toString());
+    assert.fieldEquals('DailyStat', dailyStatsId, 'fees', BigInt.fromI32(100).toString());
   });
 });

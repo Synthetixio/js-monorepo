@@ -8018,6 +8018,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/ExperimentalModal@workspace:*, @snx-v3/ExperimentalModal@workspace:v3/components/ExperimentalModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/ExperimentalModal@workspace:v3/components/ExperimentalModal"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/HomeLink@workspace:*, @snx-v3/HomeLink@workspace:v3/components/HomeLink":
   version: 0.0.0-use.local
   resolution: "@snx-v3/HomeLink@workspace:v3/components/HomeLink"
@@ -8240,7 +8249,11 @@ __metadata:
     "@snx-v3/icons": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
+    "@snx-v3/useSpotMarketProxy": "workspace:*"
+    "@snx-v3/useSynthTokenModule": "workspace:*"
+    "@snx-v3/zod": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@types/react": ^18.0.28
@@ -8257,6 +8270,7 @@ __metadata:
     react-helmet: ^6.1.0
     react-refresh: ^0.14.0
     react-router-dom: ^6.8.1
+    react-ts-tradingview-widgets: ^1.0.14
     stream-browserify: ^3.0.0
     style-loader: ^3.3.1
     terser-webpack-plugin: ^5.3.6
@@ -8265,6 +8279,7 @@ __metadata:
     webpack-bundle-analyzer: ^4.8.0
     webpack-cli: ^5.0.1
     webpack-dev-server: ^4.11.1
+    zod: ^3.20.6
   languageName: unknown
   linkType: soft
 
@@ -8311,6 +8326,7 @@ __metadata:
     "@snx-v3/BorrowModal": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/DepositModal": "workspace:*"
+    "@snx-v3/ExperimentalModal": "workspace:*"
     "@snx-v3/HomeLink": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/NumberInput": "workspace:*"
@@ -8692,6 +8708,28 @@ __metadata:
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useSpotMarketProxy@workspace:*, @snx-v3/useSpotMarketProxy@workspace:v3/spot-markets/lib/useSpotMarketProxy":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useSpotMarketProxy@workspace:v3/spot-markets/lib/useSpotMarketProxy"
+  dependencies:
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/v3-spot-markets-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useSynthTokenModule@workspace:*, @snx-v3/useSynthTokenModule@workspace:v3/spot-markets/lib/useSynthTokenModule":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useSynthTokenModule@workspace:v3/spot-markets/lib/useSynthTokenModule"
+  dependencies:
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/v3-spot-markets-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
 
@@ -10804,7 +10842,7 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.7
+    "@usecannon/cli": ^2.4.8
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -10812,14 +10850,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/v3-spot-markets-contracts@workspace:v3/spot-markets/contracts":
+"@synthetixio/v3-spot-markets-contracts@workspace:*, @synthetixio/v3-spot-markets-contracts@workspace:v3/spot-markets/contracts":
   version: 0.0.0-use.local
   resolution: "@synthetixio/v3-spot-markets-contracts@workspace:v3/spot-markets/contracts"
   dependencies:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.7
+    "@usecannon/cli": ^2.4.8
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -12546,9 +12584,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.4.7":
-  version: 2.4.7
-  resolution: "@usecannon/builder@npm:2.4.7"
+"@usecannon/builder@npm:^2.4.8":
+  version: 2.4.8
+  resolution: "@usecannon/builder@npm:2.4.8"
   dependencies:
     ajv: ^8.11.0
     axios: ^1.2.2
@@ -12560,17 +12598,17 @@ __metadata:
     promise-events: ^0.2.4
   peerDependencies:
     ethers: ">=5.6.0"
-  checksum: eff98f528964a39cd8824f2f0b8735849a6532353a0d26aa6fd109398455bd7713470d47fb77e24f4b50d45ebc4f9d4c606bda9a4e9286ef90fb6f5a9c9a05e9
+  checksum: 415b7122db874c3806e3e9264b51343c71a33ca21d0461ac6b0ebe060d034fd6a8db2910f3bdf1147ea3184d552093a33e806d2f2063ad2f17555c220b8ddc0b
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^2.4.7":
-  version: 2.4.7
-  resolution: "@usecannon/cli@npm:2.4.7"
+"@usecannon/cli@npm:^2.4.8":
+  version: 2.4.8
+  resolution: "@usecannon/cli@npm:2.4.8"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.4.7
+    "@usecannon/builder": ^2.4.8
     chalk: ^4.1.2
     commander: ^9.3.0
     debug: ^4.3.4
@@ -12585,7 +12623,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: dist/bin/cannon.js
-  checksum: 0a0efe3e8a852e35633f30941f958d16567aaa0ae94500635f840b3f2263b6633d47e8d10b7fb5553574787dab620168973c98bcada6ec1c8dab68b3473976ef
+  checksum: 3e253169da5f5abcd15dc5477fd263c2ab7f586e60c855e36f4304dd43b1187bdba5a52469d270bff77dbad31b593bcdc6b0f04f66975500e871ee579c94e1e9
   languageName: node
   linkType: hard
 
@@ -30582,6 +30620,16 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
+  languageName: node
+  linkType: hard
+
+"react-ts-tradingview-widgets@npm:^1.0.14":
+  version: 1.0.14
+  resolution: "react-ts-tradingview-widgets@npm:1.0.14"
+  peerDependencies:
+    react: ^17.0.2 || ^18.1.0
+    react-dom: ^17.0.2 || ^18.1.0
+  checksum: a84eeafe020bef9dc906b0617775657dec1387d7b9d1153584f7881c80f4173392aa4cd39a3e5c91f70286a21656ab4c879a49e685bea1d7fead2b902d5938ce
   languageName: node
   linkType: hard
 

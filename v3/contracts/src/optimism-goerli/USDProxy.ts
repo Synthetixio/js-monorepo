@@ -30,6 +30,7 @@ export const abi = [
   'error AlreadyInitialized()',
   'error InsufficientAllowance(uint256 required, uint256 existing)',
   'error InsufficientBalance(uint256 required, uint256 existing)',
+  'error InvalidParameter(string parameter, string reason)',
   'event Approval(address indexed owner, address indexed spender, uint256 amount)',
   'event Transfer(address indexed from, address indexed to, uint256 amount)',
   'function allowance(address owner, address spender) view returns (uint256)',

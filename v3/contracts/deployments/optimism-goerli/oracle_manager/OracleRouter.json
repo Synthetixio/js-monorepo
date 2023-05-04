@@ -1,5 +1,5 @@
 {
-  "address": "0x70735148853688b2517895AFA4FaE2C6e91caFb5",
+  "address": "0xCB8065232F417001aB1354f380D81fd6CD846F7E",
   "abi": [
     {
       "inputs": [
@@ -215,14 +215,8 @@
       "type": "error"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "externalNode",
-          "type": "address"
-        }
-      ],
-      "name": "IncorrectExternalNodeInterface",
+      "inputs": [],
+      "name": "InvalidInputPrice",
       "type": "error"
     },
     {
@@ -387,11 +381,11 @@
             }
           ],
           "internalType": "struct NodeDefinition.Data",
-          "name": "",
+          "name": "node",
           "type": "tuple"
         }
       ],
-      "stateMutability": "pure",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -416,7 +410,7 @@
       "outputs": [
         {
           "internalType": "bytes32",
-          "name": "",
+          "name": "nodeId",
           "type": "bytes32"
         }
       ],
@@ -457,7 +451,7 @@
             }
           ],
           "internalType": "struct NodeOutput.Data",
-          "name": "",
+          "name": "node",
           "type": "tuple"
         }
       ],
@@ -486,7 +480,7 @@
       "outputs": [
         {
           "internalType": "bytes32",
-          "name": "",
+          "name": "nodeId",
           "type": "bytes32"
         }
       ],
@@ -495,7 +489,7 @@
     }
   ],
   "deployedOn": "router.OracleRouter",
-  "deployTxnHash": "0x70c72f4be230583682b207df6b6cffc6310d3587f06d0539ca8769cdaf7013b0",
+  "deployTxnHash": "0xa0e9895a8dd1c851c175a0239e3e383a6456e54d4db1b348316df921d72a2158",
   "contractName": "OracleRouter",
   "sourceName": "OracleRouter.sol"
 }

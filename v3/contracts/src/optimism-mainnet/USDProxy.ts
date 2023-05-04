@@ -1,6 +1,6 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-export const address = '0x66429CB0D18bFEd36bCb31a39299Db15Ed712A85';
+export const address = '0xb2F30A7C980f052f02563fb518dcc39e6bf38175';
 export const abi = [
   'error ImplementationIsSterile(address implementation)',
   'error NoChange()',
@@ -30,6 +30,7 @@ export const abi = [
   'error AlreadyInitialized()',
   'error InsufficientAllowance(uint256 required, uint256 existing)',
   'error InsufficientBalance(uint256 required, uint256 existing)',
+  'error InvalidParameter(string parameter, string reason)',
   'event Approval(address indexed owner, address indexed spender, uint256 amount)',
   'event Transfer(address indexed from, address indexed to, uint256 amount)',
   'function allowance(address owner, address spender) view returns (uint256)',
