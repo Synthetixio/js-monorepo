@@ -28,6 +28,7 @@ export const useStats = (queryInterval: 'M' | 'Y') => {
         day_gte: lower,
         day_lte: upper,
       },
+      first: 1000,
       orderDirection: OrderDirection.Asc,
       orderBy: DailyStat_OrderBy.Day,
     },
