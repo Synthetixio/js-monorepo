@@ -1,5 +1,5 @@
 {
-  "address": "0x2fF768E083a7510Fd30F85Df0c57C1e20343D9E0",
+  "address": "0x0208d2ee9dbe08ce79851039303E29B6f9fB357A",
   "abi": [
     {
       "inputs": [
@@ -10,6 +10,17 @@
         }
       ],
       "name": "FeatureUnavailable",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "InvalidAccountId",
       "type": "error"
     },
     {
@@ -176,6 +187,19 @@
       ],
       "name": "PermissionRevoked",
       "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "createAccount",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
       "inputs": [
@@ -415,7 +439,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x5be194bd4cd234a7e9dc30715c452c53eee7fb92969024322d444f94623beae9",
+  "deployTxnHash": "0x2ae5b9724adcecd3be3940d65ab32d194b4f8e262dc835d76f2b807e2703868d",
   "sourceName": "contracts/modules/core/AccountModule.sol",
   "contractName": "AccountModule",
   "deployedOn": "contract.AccountModule"

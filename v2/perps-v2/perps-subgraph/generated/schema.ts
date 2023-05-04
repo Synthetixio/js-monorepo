@@ -231,13 +231,30 @@ export class Trader extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get timestamp(): BigInt {
-    let value = this.get('timestamp');
+  get createdAt(): BigInt {
+    let value = this.get('createdAt');
     return value!.toBigInt();
   }
 
-  set timestamp(value: BigInt) {
-    this.set('timestamp', Value.fromBigInt(value));
+  set createdAt(value: BigInt) {
+    this.set('createdAt', Value.fromBigInt(value));
+  }
+
+  get lastTradeTimestamp(): BigInt | null {
+    let value = this.get('lastTradeTimestamp');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lastTradeTimestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset('lastTradeTimestamp');
+    } else {
+      this.set('lastTradeTimestamp', Value.fromBigInt(<BigInt>value));
+    }
   }
 
   get margin(): BigInt {

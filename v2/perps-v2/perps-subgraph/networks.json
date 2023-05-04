@@ -20,7 +20,7 @@
     },
     "FuturesMarketManagerOld": {
       "address": "0xc429dd84c9a9a7c786764c7dcaF31e30bd35BcdF",
-      "startBlock": 3495320
+      "startBlock": 3149510
     },
     "FuturesMarketManagerNew": {
       "address": "0xDD55BE4f3a8885E92d2Acd16869Fab857206B517",

@@ -1,5 +1,5 @@
 {
-  "address": "0x568D0BeddB6A0534b22F1113251cf905b51adAE2",
+  "address": "0x0aaF300E148378489a8A471DD3e9E53E30cb42e3",
   "abi": [
     {
       "inputs": [
@@ -205,11 +205,11 @@
     }
   ],
   "constructorArgs": [
-    "0xa9926406647Cc20F9b76644Ea0569E82641B75bB",
-    "0x0f9019dD6821f74FC8Ade3Cd32246859BA20a135"
+    "0x874573f87a53e6D9D6F11eE8Bb994E247dB55509",
+    "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
   ],
   "linkedLibraries": {},
-  "deployTxnHash": "0x07d146c716340ada25e58f60e17e5336a7fa5fb2fa6e03b3e6062bbbca1e5f36",
+  "deployTxnHash": "0x6253644956174f93d8b6c55810bb63a1053dc2910322fc2e5cd400387d7c16db",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",
   "deployedOn": "contract.InitialProxy"

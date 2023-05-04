@@ -8018,6 +8018,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/ExperimentalModal@workspace:*, @snx-v3/ExperimentalModal@workspace:v3/components/ExperimentalModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/ExperimentalModal@workspace:v3/components/ExperimentalModal"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/HomeLink@workspace:*, @snx-v3/HomeLink@workspace:v3/components/HomeLink":
   version: 0.0.0-use.local
   resolution: "@snx-v3/HomeLink@workspace:v3/components/HomeLink"
@@ -8240,7 +8249,11 @@ __metadata:
     "@snx-v3/icons": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
+    "@snx-v3/useSpotMarketProxy": "workspace:*"
+    "@snx-v3/useSynthTokenModule": "workspace:*"
+    "@snx-v3/zod": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
+    "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@types/react": ^18.0.28
@@ -8257,6 +8270,7 @@ __metadata:
     react-helmet: ^6.1.0
     react-refresh: ^0.14.0
     react-router-dom: ^6.8.1
+    react-ts-tradingview-widgets: ^1.0.14
     stream-browserify: ^3.0.0
     style-loader: ^3.3.1
     terser-webpack-plugin: ^5.3.6
@@ -8265,6 +8279,7 @@ __metadata:
     webpack-bundle-analyzer: ^4.8.0
     webpack-cli: ^5.0.1
     webpack-dev-server: ^4.11.1
+    zod: ^3.20.6
   languageName: unknown
   linkType: soft
 
@@ -8311,6 +8326,7 @@ __metadata:
     "@snx-v3/BorrowModal": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/DepositModal": "workspace:*"
+    "@snx-v3/ExperimentalModal": "workspace:*"
     "@snx-v3/HomeLink": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/NumberInput": "workspace:*"
@@ -8692,6 +8708,28 @@ __metadata:
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useSpotMarketProxy@workspace:*, @snx-v3/useSpotMarketProxy@workspace:v3/spot-markets/lib/useSpotMarketProxy":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useSpotMarketProxy@workspace:v3/spot-markets/lib/useSpotMarketProxy"
+  dependencies:
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/v3-spot-markets-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useSynthTokenModule@workspace:*, @snx-v3/useSynthTokenModule@workspace:v3/spot-markets/lib/useSynthTokenModule":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useSynthTokenModule@workspace:v3/spot-markets/lib/useSynthTokenModule"
+  dependencies:
+    "@ethersproject/contracts": ^5.7.0
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@synthetixio/v3-spot-markets-contracts": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
 
@@ -10812,7 +10850,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/v3-spot-markets-contracts@workspace:v3/spot-markets/contracts":
+"@synthetixio/v3-spot-markets-contracts@workspace:*, @synthetixio/v3-spot-markets-contracts@workspace:v3/spot-markets/contracts":
   version: 0.0.0-use.local
   resolution: "@synthetixio/v3-spot-markets-contracts@workspace:v3/spot-markets/contracts"
   dependencies:
@@ -30582,6 +30620,16 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
+  languageName: node
+  linkType: hard
+
+"react-ts-tradingview-widgets@npm:^1.0.14":
+  version: 1.0.14
+  resolution: "react-ts-tradingview-widgets@npm:1.0.14"
+  peerDependencies:
+    react: ^17.0.2 || ^18.1.0
+    react-dom: ^17.0.2 || ^18.1.0
+  checksum: a84eeafe020bef9dc906b0617775657dec1387d7b9d1153584f7881c80f4173392aa4cd39a3e5c91f70286a21656ab4c879a49e685bea1d7fead2b902d5938ce
   languageName: node
   linkType: hard
 

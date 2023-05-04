@@ -32,7 +32,8 @@ const createPopulateTransaction = ({
   const id = accountId ?? newAccountId;
   const accountCalls = accountId
     ? []
-    : [CoreProxy.interface.encodeFunctionData('createAccount', [BigNumber.from(id)])];
+    : // @ts-ignore
+      [CoreProxy.interface.encodeFunctionData('createAccount(uint128)', [BigNumber.from(id)])];
 
   const calls = accountCalls.concat([
     CoreProxy.interface.encodeFunctionData('deposit', [

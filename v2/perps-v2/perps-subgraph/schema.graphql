@@ -21,7 +21,8 @@ type PositionFlagged @entity {
 
 type Trader @entity {
   id: ID!
-  timestamp: BigInt!
+  createdAt: BigInt!
+  lastTradeTimestamp: BigInt
   margin: BigInt!
   totalLiquidations: BigInt!
   totalMarginLiquidated: BigInt!
