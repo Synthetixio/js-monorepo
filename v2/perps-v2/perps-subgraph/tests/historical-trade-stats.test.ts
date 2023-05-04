@@ -2,7 +2,11 @@ import { Address } from '@graphprotocol/graph-ts';
 import { BigInt } from '@graphprotocol/graph-ts';
 import { assert, clearStore, describe, log, logStore, test, afterEach } from 'matchstick-as';
 import { Trader } from '../generated/schema';
-import { dayToEpochTimestamp, timestampToDate } from '../src/historical-trade-stats';
+import {
+  dayToEpochTimestamp,
+  timestampToDate,
+  updateFeeStats,
+} from '../src/historical-trade-stats';
 import { handlePositionModified } from '../src/position-modified';
 import { createPositionModifiedEvent, toEth, toGwei } from './perpsV2-utils';
 const trader = '0x1234567890123456789012345678901234567890';
@@ -390,5 +394,41 @@ describe('calculateAccruedFunding', () => {
     const result = dayToEpochTimestamp('2023-04-28');
     const expectedTimestamp = BigInt.fromI32(1682640000); //'2023-04-28T06:04:13.000Z'
     assert.stringEquals(result.toString(), expectedTimestamp.toString());
+  });
+
+  test('updateStateFee updates fees', () => {
+    let feeAmount = BigInt.fromI32(100);
+    let market = Address.fromString('0x1234567890123456789012345678901234567890');
+    let timestamp = BigInt.fromI32(1630521600); // '2021-09-01T00:00:00.000Z'
+
+    updateFeeStats(feeAmount, market, timestamp);
+
+    let cumulativeMarketStatsId = 'CumulativeMarketStat-'.concat(market.toHexString());
+    assert.fieldEquals(
+      'CumulativeMarketStat',
+      cumulativeMarketStatsId,
+      'cumulativeFees',
+      BigInt.fromI32(100).toString()
+    );
+
+    let dailyMarketStatsId = market.toHexString().concat('-2021-09-01');
+
+    assert.fieldEquals(
+      'DailyMarketStat',
+      dailyMarketStatsId,
+      'fees',
+      BigInt.fromI32(100).toString()
+    );
+
+    assert.fieldEquals(
+      'DailyMarketStat',
+      dailyMarketStatsId,
+      'cumulativeFees',
+      BigInt.fromI32(100).toString()
+    );
+
+    let dailyStatsId = 'DailyStat-2021-09-01';
+    assert.fieldEquals('DailyStat', dailyStatsId, 'cumulativeFees', BigInt.fromI32(100).toString());
+    assert.fieldEquals('DailyStat', dailyStatsId, 'fees', BigInt.fromI32(100).toString());
   });
 });
