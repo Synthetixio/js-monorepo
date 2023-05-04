@@ -25,6 +25,7 @@ import {
   Frontend,
   PositionFlagged,
 } from '../generated/schema';
+import { updateFeeStats } from './historical-trade-stats';
 export { handlePositionModified } from './position-modified';
 
 export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
@@ -120,6 +121,7 @@ export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLeg
     tradeEntity.type = 'Liquidated';
     tradeEntity.save();
   }
+  updateFeeStats(feeForSynthetix, event.address, event.block.timestamp);
 
   const synthetix = Synthetix.load('synthetix');
   if (synthetix) {
@@ -176,6 +178,8 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     tradeEntity.type = 'Liquidated';
     tradeEntity.save();
   }
+
+  updateFeeStats(event.params.stakersFee, event.address, event.block.timestamp);
 
   const synthetix = Synthetix.load('synthetix');
   if (synthetix) {
@@ -263,6 +267,8 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
 
   // Update FuturesOrderEntity
   if (futuresOrderEntity) {
+    updateFeeStats(event.params.keeperDeposit, event.address, event.block.timestamp);
+
     futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
 
@@ -335,7 +341,7 @@ export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): 
 }
 
 export function handleFundingRecomputed(event: FundingRecomputedEvent): void {
-  let futuresMarketAddress = event.address as Address;
+  let futuresMarketAddress = event.address;
   let fundingRateUpdateEntity = new FundingRateUpdate(
     futuresMarketAddress.toHex() + '-' + event.params.index.toString()
   );
