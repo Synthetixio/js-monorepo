@@ -7738,7 +7738,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGlobalProvidersWithFallback@workspace:v2/lib/useGlobalProvidersWithFallback"
   dependencies:
-    "@snx-v2/useSynthetixContracts": "workspace:*"
     ethers: ^5.7.2
     react: ^18.2.0
   languageName: unknown
