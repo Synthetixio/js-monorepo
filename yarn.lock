@@ -7534,6 +7534,7 @@ __metadata:
   dependencies:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
@@ -7570,11 +7571,11 @@ __metadata:
   resolution: "@snx-v2/useDebtShareDataPeriod@workspace:v2/lib/useDebtShareDataPeriod"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
-    ethers: ^5.7.2
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7629,10 +7630,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeePeriodMultiNetwork@workspace:v2/lib/useFeePeriodMultiNetwork"
   dependencies:
+    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@tanstack/react-query": ^4.24.6
-    ethers: ^5.7.2
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7701,6 +7702,8 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/SignerContext": "workspace:*"
+    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
@@ -7727,6 +7730,16 @@ __metadata:
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useGlobalProvidersWithFallback@workspace:*, @snx-v2/useGlobalProvidersWithFallback@workspace:v2/lib/useGlobalProvidersWithFallback":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useGlobalProvidersWithFallback@workspace:v2/lib/useGlobalProvidersWithFallback"
+  dependencies:
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    ethers: ^5.7.2
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7798,6 +7811,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@ethersproject/transactions": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": "workspace:*"
     "@tanstack/react-query": ^4.24.6
@@ -7867,10 +7881,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts"
   dependencies:
+    "@ethersproject/providers": ^5.7.2
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
+    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
-    "@synthetixio/providers": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -10603,7 +10618,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/providers@workspace:*, @synthetixio/providers@workspace:packages/providers":
+"@synthetixio/providers@workspace:packages/providers":
   version: 0.0.0-use.local
   resolution: "@synthetixio/providers@workspace:packages/providers"
   dependencies:
@@ -10689,6 +10704,7 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.17
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
+    "@ethersproject/providers": ^5.7.2
     "@gnosis.pm/safe-apps-provider": ^0.14.0
     "@gnosis.pm/safe-apps-sdk": ^7.8.0
     "@metamask/providers": ^10.2.1
@@ -10733,6 +10749,7 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesClaimed": "workspace:*"
+    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@socket.tech/plugin": ^1.0.3
     "@storybook/addon-actions": ^6.5.16
@@ -10747,7 +10764,6 @@ __metadata:
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
-    "@synthetixio/providers": "workspace:*"
     "@synthetixio/queries": "workspace:*"
     "@synthetixio/safe-import": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
