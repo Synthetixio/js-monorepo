@@ -1,13 +1,15 @@
 import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ethers, providers } from 'ethers';
-import { isSupportedNetworkId, NetworkNameById } from './common';
+import { Provider } from '@ethersproject/providers';
+import { ethers } from 'ethers';
+import { isSupportedNetworkId, NetworkNameById, NetworkIdByName } from './common';
 import { ContractContext } from '@snx-v2/ContractContext';
 
 import type { ExchangeRates } from '@synthetixio/contracts/build/mainnet/deployment/ExchangeRates';
 import type { ExchangeRates as ExchangeRatesOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/ExchangeRates';
-import { SynthetixProvider } from '@synthetixio/providers';
+
 import { SignerContext } from '@snx-v2/SignerContext';
+import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/ExchangeRates'),
@@ -23,7 +25,7 @@ export const getExchangeRates = async ({
 }: {
   networkId: number;
   signer: ethers.Signer | null;
-  provider: SynthetixProvider;
+  provider: Provider;
 }) => {
   const signerOrProvider = signer || provider;
 
@@ -41,20 +43,24 @@ export const getExchangeRates = async ({
 export const useExchangeRates = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
-
+  const { globalProviders } = useGlobalProvidersWithFallback();
   return useQuery(
     // We add walletAddress as a query key to make sure the signer is up to date, we cant use signer directly since it cant be stringified
-    [networkId, 'useExchangeRates', walletAddress],
-    async () => {
-      if (!networkId) throw Error('Network id required');
 
-      const provider = new providers.InfuraProvider(
-        networkId,
-        process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-      );
+    {
+      queryKey: ['useExchangeRates', { networkId, walletAddress }],
+      queryFn: async () => {
+        if (!networkId) throw Error('Network id required');
+        const globalProvider =
+          networkId === NetworkIdByName.mainnet
+            ? globalProviders.mainnet
+            : globalProviders.optimism;
+        const provider = signer?.provider || globalProvider;
 
-      return getExchangeRates({ networkId, signer, provider });
-    },
-    { staleTime: Infinity, enabled: Boolean(networkId) }
+        return getExchangeRates({ networkId, signer, provider });
+      },
+      staleTime: Infinity,
+      enabled: Boolean(networkId),
+    }
   );
 };
