@@ -51,7 +51,10 @@ export const Trades = ({ ...props }: FlexProps) => {
         ) : (
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
-              {formatNumber(tradesNumber || 0)}
+              {formatNumber(tradesNumber || 0, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              })}
             </Text>
             <ResponsiveContainer minWidth="100%" minHeight={200}>
               <ComposedChart

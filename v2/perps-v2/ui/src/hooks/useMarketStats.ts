@@ -40,8 +40,7 @@ export function useMarketStats() {
     // In the off chance there was no volume yesterday we set volume to 0
     const percentageDifference = wei(market.volume, 18, true)
       .sub(wei(yesterday?.volume || 0, 18, true))
-      .div(wei(yesterday?.volume || 1, 18, true))
-      .mul(100);
+      .div(wei(yesterday?.volume || 1, 18, true));
 
     return {
       ...market,

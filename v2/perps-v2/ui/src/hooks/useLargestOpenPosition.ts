@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { gql, useApolloClient } from '@apollo/client';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
 import { MARKETS_ID_QUERY } from '../queries/dashboard';
-import { FuturesMarketKey, MARKETS } from '../utils';
+import { FuturesMarketKey, MARKETS, scale } from '../utils';
 import { utils } from 'ethers';
+import { wei } from '@synthetixio/wei';
 
 const pyth = new EvmPriceServiceConnection('https://xc-mainnet.pyth.network');
 
@@ -28,11 +29,14 @@ export function useLargestOpenPosition() {
 
         const marketPyth =
           marketsData?.futuresMarkets
+            .filter(({ marketKey }) => {
+              return utils.parseBytes32String(marketKey).includes('PERP');
+            })
             .map(({ marketKey }) => {
               const id = `${utils.parseBytes32String(marketKey)}` as FuturesMarketKey;
               const pythInfo = MARKETS[id];
 
-              if (pythInfo) {
+              if (pythInfo.pythIds?.mainnet) {
                 return { pythId: pythInfo.pythIds?.mainnet || '', marketKey } || null;
               }
 
@@ -48,34 +52,55 @@ export function useLargestOpenPosition() {
           await pyth.getLatestPriceFeeds(pythIds),
         ]);
 
-        // Attribute the pyth price to the market and the size result
-        if (sizeData && Object.keys(sizeData)) {
-          const data = Object?.keys(sizeData).map((key: string) => {
-            // 1. Get the data for this key
+        // Attribute the pyth result to the market
+        const hydratedPythResult = result?.map((item, index) => {
+          const price = item.getPriceUnchecked();
+          return {
+            ...price,
+            pythId: marketPyth[index]?.pythId,
+            marketKey: marketPyth[index]?.marketKey,
+          };
+        });
+
+        const sizeResult = Object.keys(sizeData)
+          .map((key: string) => {
             const marketData = sizeData[key];
 
             if (!marketData || marketData.length === 0) return null;
-          });
-        }
 
-        console.log('Thing is', sizeData, result);
+            return marketData;
+          })
+          .filter((item) => item !== null)
+          .flat()
+          .map((item) => {
+            const pythItem = hydratedPythResult?.find(
+              (pythItem) => pythItem?.marketKey === item?.market?.marketKey
+            );
+
+            if (!pythItem) return null;
+
+            const size = wei(item.size, 18, true);
+            const price = scale(wei(pythItem.price), pythItem.expo);
+
+            const notionalValue = size.mul(price).abs();
+
+            return {
+              notionalValue,
+              ...item,
+              pythItem,
+            };
+          })
+          .sort((a, b) => {
+            return b?.notionalValue?.sub(a?.notionalValue || 0).toNumber();
+          })
+          .slice(0, 3);
+
+        setState({ loading: false, data: sizeResult, error: null });
       } catch (error: unknown) {
         setState({ loading: false, data: undefined, error });
       }
     })();
   }, [client]);
-
-  // if (data) {
-  //   const keys = Object.keys(data);
-
-  //   keys.forEach((key) => {
-  //     if (data[key].length > 0) result.push(data[key]);
-  //   });
-  // }
-
-  // // Loop over result and sort by the absolute value of size
-  // result = result.sort;
-  // console.log(data, loading, error, result);
 
   return state;
 }
