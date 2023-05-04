@@ -37,9 +37,9 @@ export const useOptimismLayer1Fee = ({
   const { globalProviders, usingInfura, toggleRpc } = useGlobalProvidersWithFallback();
   const { networkId } = useContext(ContractContext);
 
-  return useQuery(
-    ['useOptimismLayer1Fee', networkId, populateTransaction, usingInfura, toggleRpc],
-    async () => {
+  return useQuery({
+    queryKey: ['useOptimismLayer1Fee', networkId, populateTransaction, usingInfura],
+    queryFn: async () => {
       if (!populateTransaction) {
         throw Error('populateTransaction missing, query should not be enabled');
       }
@@ -51,9 +51,8 @@ export const useOptimismLayer1Fee = ({
 
       return await getOptimismLayerOneFees(serializedTxn, networkId, globalProviders.mainnet);
     },
-    {
-      onError: () => (usingInfura ? toggleRpc() : null),
-      enabled: Boolean(populateTransaction && isNetworkIdOvm(networkId)),
-    }
-  );
+
+    onError: () => (usingInfura ? toggleRpc() : null),
+    enabled: Boolean(populateTransaction && isNetworkIdOvm(networkId)),
+  });
 };
