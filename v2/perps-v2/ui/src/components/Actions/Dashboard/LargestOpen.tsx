@@ -53,8 +53,8 @@ export const LargestOpen = () => {
                   id,
                   trader,
                   market: { asset },
+                  pythItem: { price },
                   leverage,
-                  lastPrice,
                   long,
                   size,
                 } = item;
@@ -69,7 +69,7 @@ export const LargestOpen = () => {
                     <WalletAddress account={trader.id} />
                     <Size
                       size={wei(size, 18, true).toNumber()}
-                      marketPrice={wei(lastPrice, 18, true).toNumber()}
+                      marketPrice={wei(price, 8, true).toNumber()}
                     />
                   </Tr>
                 );
