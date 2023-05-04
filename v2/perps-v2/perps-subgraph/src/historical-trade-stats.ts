@@ -1,5 +1,5 @@
 import { PositionModified1 as PositionModifiedNewEvent } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
-import { BigInt, log } from '@graphprotocol/graph-ts';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
 import {
   CumulativeMarketStat,
   DailyMarketStat,
@@ -26,8 +26,8 @@ export function dayToEpochTimestamp(dateString: string): BigInt {
   return BigInt.fromU64(<u64>Math.floor(<f64>date.getTime() / 1000));
 }
 
-const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStat => {
-  const day = timestampToDate(event.block.timestamp);
+const getOrCreateDailyStat = (timestamp: BigInt): DailyStat => {
+  const day = timestampToDate(timestamp);
   const id = 'DailyStat-'.concat(day);
   let dailyStat = DailyStat.load(id);
   if (dailyStat) return dailyStat;
@@ -53,7 +53,7 @@ const getOrCreateDailyStat = (event: PositionModifiedNewEvent): DailyStat => {
 };
 function updateDailyStats(event: PositionModifiedNewEvent): void {
   if (event.params.tradeSize.equals(BigInt.fromI32(0))) return; // not a trade
-  const dailyStat = getOrCreateDailyStat(event);
+  const dailyStat = getOrCreateDailyStat(event.block.timestamp);
   const newVol = calculateVolume(event.params.tradeSize, event.params.lastPrice);
   const newFee = event.params.fee;
   const newTrades = BigInt.fromI32(1);
@@ -79,14 +79,14 @@ function updateDailyStats(event: PositionModifiedNewEvent): void {
   }
   dailyStat.save();
 }
-const getOrCreateDailyMarketStat = (event: PositionModifiedNewEvent): DailyMarketStat => {
-  const day = timestampToDate(event.block.timestamp);
-  const id = event.address.toHex().toString().concat('-').concat(day);
+const getOrCreateDailyMarketStat = (address: Address, timestamp: BigInt): DailyMarketStat => {
+  const day = timestampToDate(timestamp);
+  const id = address.toHex().toString().concat('-').concat(day);
 
   let dailyMarketStat = DailyMarketStat.load(id);
   if (dailyMarketStat) return dailyMarketStat;
   dailyMarketStat = new DailyMarketStat(id);
-  dailyMarketStat.market = event.address.toHex();
+  dailyMarketStat.market = address.toHex();
   dailyMarketStat.timestamp = dayToEpochTimestamp(day);
   dailyMarketStat.day = day;
   dailyMarketStat.volume = BigInt.fromI32(0);
@@ -103,7 +103,7 @@ function updateDailyMarketStats(event: PositionModifiedNewEvent): void {
     throw new Error('Expect cumulativeMarketStats to exist');
   }
   if (event.params.tradeSize.equals(BigInt.fromI32(0))) return; // not a trade
-  const dailyMarketStat = getOrCreateDailyMarketStat(event);
+  const dailyMarketStat = getOrCreateDailyMarketStat(event.address, event.block.timestamp);
   // We expect cumulativeMarketStats to already be updated.
   dailyMarketStat.cumulativeVolume = cumulativeMarketStats.cumulativeVolume;
   dailyMarketStat.cumulativeFees = cumulativeMarketStats.cumulativeFees;
@@ -143,6 +143,29 @@ function updateCumulativeMarketStats(event: PositionModifiedNewEvent): void {
     BigInt.fromI32(1)
   );
   cumulativeMarketStats.save();
+}
+
+export function updateFeeStats(feeAmount: BigInt, market: Address, timestamp: BigInt): void {
+  // Update fee for cumulative market stats
+  const cumulativeMarketStats = getOrCreateCumulativeMarketStats(market.toHexString());
+  cumulativeMarketStats.cumulativeFees = cumulativeMarketStats.cumulativeFees.plus(feeAmount);
+  cumulativeMarketStats.save();
+
+  // Update fee for daily market stats
+  const dailyMarketStats = getOrCreateDailyMarketStat(market, timestamp);
+  dailyMarketStats.fees = dailyMarketStats.fees.plus(feeAmount);
+  // cumulativeMarketStats, got updated and saved just above
+  dailyMarketStats.cumulativeFees = cumulativeMarketStats.cumulativeFees;
+  // We don't expect any changes here, but we need to set these in case it's the first time cumulativeMarketStats gets updated for a certain market
+  dailyMarketStats.cumulativeVolume = cumulativeMarketStats.cumulativeVolume;
+  dailyMarketStats.cumulativeTrades = cumulativeMarketStats.cumulativeTrades;
+  dailyMarketStats.save();
+
+  // Update fee for daily stats
+  const dailyStats = getOrCreateDailyStat(timestamp);
+  dailyStats.cumulativeFees = dailyStats.cumulativeFees.plus(feeAmount);
+  dailyStats.fees = dailyStats.fees.plus(feeAmount);
+  dailyStats.save();
 }
 
 export function updateHistoricalTradeStats(event: PositionModifiedNewEvent): void {
