@@ -1,13 +1,13 @@
 import { SynthetixJS } from '@synthetixio/contracts-interface';
-import { SynthetixProvider } from '@synthetixio/providers';
 import { OnboardAPI } from '@web3-onboard/core';
 import { ethers } from 'ethers';
 import { Network } from 'store/wallet';
 import { onboard } from './config';
+import { Provider } from '@ethersproject/providers';
 
 type ConnectorState = {
   network: Network | null;
-  provider: SynthetixProvider | null;
+  provider: Provider | null;
   signer: ethers.Signer | null;
   synthetixjs: { contracts: SynthetixJS['contracts'] } | null;
   isAppReady: boolean;
@@ -43,7 +43,7 @@ export type ConnectionUpdate = {
   signer: ethers.Signer | null;
   walletType: string | null;
   synthetixjs: { contracts: SynthetixJS['contracts'] } | null;
-  provider: SynthetixProvider;
+  provider: Provider;
   ensName: string | null;
 };
 
@@ -52,7 +52,7 @@ export type EnsUpdate = {
 };
 
 export type ProviderUpdate = {
-  provider: SynthetixProvider;
+  provider: Provider;
   network: Network;
 };
 
