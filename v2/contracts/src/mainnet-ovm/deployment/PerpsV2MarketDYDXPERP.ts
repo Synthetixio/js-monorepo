@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'PerpsV2MarketDYDXPERP';
-export const address = '0x3eaf011A9B8393ceDD4F331eB5dD1739cf7DDd71';
+export const address = '0xB766E4F63da917d3D289b1d52ba5Ac3829e7c679';
 export const source = 'PerpsV2Market';
 export const abi = [
   'constructor(address _proxy, address _marketState, address _owner, address _resolver)',
@@ -11,18 +11,16 @@ export const abi = [
   'event OwnerChanged(address oldOwner, address newOwner)',
   'event OwnerNominated(address newOwner)',
   'event PerpsTracking(bytes32 indexed trackingCode, bytes32 baseAsset, bytes32 marketKey, int256 sizeDelta, uint256 fee)',
-  'event PositionLiquidated(uint256 id, address account, address liquidator, int256 size, uint256 price, uint256 fee)',
-  'event PositionModified(uint256 indexed id, address indexed account, uint256 margin, int256 size, int256 tradeSize, uint256 lastPrice, uint256 fundingIndex, uint256 fee)',
+  'event PositionModified(uint256 indexed id, address indexed account, uint256 margin, int256 size, int256 tradeSize, uint256 lastPrice, uint256 fundingIndex, uint256 fee, int256 skew)',
   'event ProxyUpdated(address proxyAddress)',
   'function acceptOwnership()',
-  'function closePosition(uint256 priceImpactDelta)',
-  'function closePositionWithTracking(uint256 priceImpactDelta, bytes32 trackingCode)',
+  'function closePosition(uint256 desiredFillPrice)',
+  'function closePositionWithTracking(uint256 desiredFillPrice, bytes32 trackingCode)',
   'function isResolverCached() view returns (bool)',
-  'function liquidatePosition(address account)',
   'function marketState() view returns (address)',
   'function messageSender() view returns (address)',
-  'function modifyPosition(int256 sizeDelta, uint256 priceImpactDelta)',
-  'function modifyPositionWithTracking(int256 sizeDelta, uint256 priceImpactDelta, bytes32 trackingCode)',
+  'function modifyPosition(int256 sizeDelta, uint256 desiredFillPrice)',
+  'function modifyPositionWithTracking(int256 sizeDelta, uint256 desiredFillPrice, bytes32 trackingCode)',
   'function nominateNewOwner(address _owner)',
   'function nominatedOwner() view returns (address)',
   'function owner() view returns (address)',
@@ -67,7 +65,6 @@ export interface PerpsV2MarketDYDXPERPInterface extends utils.Interface {
     'closePosition(uint256)': FunctionFragment;
     'closePositionWithTracking(uint256,bytes32)': FunctionFragment;
     'isResolverCached()': FunctionFragment;
-    'liquidatePosition(address)': FunctionFragment;
     'marketState()': FunctionFragment;
     'messageSender()': FunctionFragment;
     'modifyPosition(int256,uint256)': FunctionFragment;
@@ -92,7 +89,6 @@ export interface PerpsV2MarketDYDXPERPInterface extends utils.Interface {
       | 'closePosition'
       | 'closePositionWithTracking'
       | 'isResolverCached'
-      | 'liquidatePosition'
       | 'marketState'
       | 'messageSender'
       | 'modifyPosition'
@@ -121,10 +117,6 @@ export interface PerpsV2MarketDYDXPERPInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: 'isResolverCached', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'liquidatePosition',
-    values: [PromiseOrValue<string>]
-  ): string;
   encodeFunctionData(functionFragment: 'marketState', values?: undefined): string;
   encodeFunctionData(functionFragment: 'messageSender', values?: undefined): string;
   encodeFunctionData(
@@ -161,7 +153,6 @@ export interface PerpsV2MarketDYDXPERPInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'closePositionWithTracking', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isResolverCached', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'liquidatePosition', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'marketState', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'messageSender', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'modifyPosition', data: BytesLike): Result;
@@ -186,8 +177,7 @@ export interface PerpsV2MarketDYDXPERPInterface extends utils.Interface {
     'OwnerChanged(address,address)': EventFragment;
     'OwnerNominated(address)': EventFragment;
     'PerpsTracking(bytes32,bytes32,bytes32,int256,uint256)': EventFragment;
-    'PositionLiquidated(uint256,address,address,int256,uint256,uint256)': EventFragment;
-    'PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256)': EventFragment;
+    'PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256,int256)': EventFragment;
     'ProxyUpdated(address)': EventFragment;
   };
 
@@ -197,7 +187,6 @@ export interface PerpsV2MarketDYDXPERPInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PerpsTracking'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PositionLiquidated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PositionModified'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ProxyUpdated'): EventFragment;
 }
@@ -260,21 +249,6 @@ export type PerpsTrackingEvent = TypedEvent<
 
 export type PerpsTrackingEventFilter = TypedEventFilter<PerpsTrackingEvent>;
 
-export interface PositionLiquidatedEventObject {
-  id: BigNumber;
-  account: string;
-  liquidator: string;
-  size: BigNumber;
-  price: BigNumber;
-  fee: BigNumber;
-}
-export type PositionLiquidatedEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber, BigNumber, BigNumber],
-  PositionLiquidatedEventObject
->;
-
-export type PositionLiquidatedEventFilter = TypedEventFilter<PositionLiquidatedEvent>;
-
 export interface PositionModifiedEventObject {
   id: BigNumber;
   account: string;
@@ -284,9 +258,10 @@ export interface PositionModifiedEventObject {
   lastPrice: BigNumber;
   fundingIndex: BigNumber;
   fee: BigNumber;
+  skew: BigNumber;
 }
 export type PositionModifiedEvent = TypedEvent<
-  [BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
+  [BigNumber, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
   PositionModifiedEventObject
 >;
 
@@ -329,22 +304,17 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
     ): Promise<ContractTransaction>;
 
     closePosition(
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     closePositionWithTracking(
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     isResolverCached(overrides?: CallOverrides): Promise<[boolean]>;
-
-    liquidatePosition(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
 
     marketState(overrides?: CallOverrides): Promise<[string]>;
 
@@ -352,13 +322,13 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
 
     modifyPosition(
       sizeDelta: PromiseOrValue<BigNumberish>,
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     modifyPositionWithTracking(
       sizeDelta: PromiseOrValue<BigNumberish>,
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -413,22 +383,17 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
   ): Promise<ContractTransaction>;
 
   closePosition(
-    priceImpactDelta: PromiseOrValue<BigNumberish>,
+    desiredFillPrice: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   closePositionWithTracking(
-    priceImpactDelta: PromiseOrValue<BigNumberish>,
+    desiredFillPrice: PromiseOrValue<BigNumberish>,
     trackingCode: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   isResolverCached(overrides?: CallOverrides): Promise<boolean>;
-
-  liquidatePosition(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   marketState(overrides?: CallOverrides): Promise<string>;
 
@@ -436,13 +401,13 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
 
   modifyPosition(
     sizeDelta: PromiseOrValue<BigNumberish>,
-    priceImpactDelta: PromiseOrValue<BigNumberish>,
+    desiredFillPrice: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   modifyPositionWithTracking(
     sizeDelta: PromiseOrValue<BigNumberish>,
-    priceImpactDelta: PromiseOrValue<BigNumberish>,
+    desiredFillPrice: PromiseOrValue<BigNumberish>,
     trackingCode: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -493,19 +458,17 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
     closePosition(
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     closePositionWithTracking(
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     isResolverCached(overrides?: CallOverrides): Promise<boolean>;
-
-    liquidatePosition(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     marketState(overrides?: CallOverrides): Promise<string>;
 
@@ -513,13 +476,13 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
 
     modifyPosition(
       sizeDelta: PromiseOrValue<BigNumberish>,
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     modifyPositionWithTracking(
       sizeDelta: PromiseOrValue<BigNumberish>,
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -599,24 +562,7 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
       fee?: null
     ): PerpsTrackingEventFilter;
 
-    'PositionLiquidated(uint256,address,address,int256,uint256,uint256)'(
-      id?: null,
-      account?: null,
-      liquidator?: null,
-      size?: null,
-      price?: null,
-      fee?: null
-    ): PositionLiquidatedEventFilter;
-    PositionLiquidated(
-      id?: null,
-      account?: null,
-      liquidator?: null,
-      size?: null,
-      price?: null,
-      fee?: null
-    ): PositionLiquidatedEventFilter;
-
-    'PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256)'(
+    'PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256,int256)'(
       id?: PromiseOrValue<BigNumberish> | null,
       account?: PromiseOrValue<string> | null,
       margin?: null,
@@ -624,7 +570,8 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
       tradeSize?: null,
       lastPrice?: null,
       fundingIndex?: null,
-      fee?: null
+      fee?: null,
+      skew?: null
     ): PositionModifiedEventFilter;
     PositionModified(
       id?: PromiseOrValue<BigNumberish> | null,
@@ -634,7 +581,8 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
       tradeSize?: null,
       lastPrice?: null,
       fundingIndex?: null,
-      fee?: null
+      fee?: null,
+      skew?: null
     ): PositionModifiedEventFilter;
 
     'ProxyUpdated(address)'(proxyAddress?: null): ProxyUpdatedEventFilter;
@@ -645,22 +593,17 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
     acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     closePosition(
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     closePositionWithTracking(
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isResolverCached(overrides?: CallOverrides): Promise<BigNumber>;
-
-    liquidatePosition(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
 
     marketState(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -668,13 +611,13 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
 
     modifyPosition(
       sizeDelta: PromiseOrValue<BigNumberish>,
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     modifyPositionWithTracking(
       sizeDelta: PromiseOrValue<BigNumberish>,
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -724,22 +667,17 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     closePosition(
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     closePositionWithTracking(
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isResolverCached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    liquidatePosition(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
 
     marketState(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -747,13 +685,13 @@ export interface PerpsV2MarketDYDXPERP extends BaseContract {
 
     modifyPosition(
       sizeDelta: PromiseOrValue<BigNumberish>,
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     modifyPositionWithTracking(
       sizeDelta: PromiseOrValue<BigNumberish>,
-      priceImpactDelta: PromiseOrValue<BigNumberish>,
+      desiredFillPrice: PromiseOrValue<BigNumberish>,
       trackingCode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

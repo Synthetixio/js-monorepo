@@ -8,16 +8,20 @@ packages/queries/subgraphs
 cache
 artifacts
 .docusaurus
+**/subgraph.yaml
 v3/contracts/src
 v3/contracts/deployments
+v3/spot-markets/contracts/deployments
 **/tmp/
 **/.next/
 **/out/
 **/storybook-static/
 **/.nyc_output
 **/junit.xml
-tools/tenderly/fork.json
 v3/subgraphs/tests/.latest.json
 v2/perps-v2/perps-subgraph/tests/.latest.json
 .yarnrc.yml
 v2/perps-v2/ui/src/__generated__
+
+# temporary
+v3/spot-markets/ui/prototype

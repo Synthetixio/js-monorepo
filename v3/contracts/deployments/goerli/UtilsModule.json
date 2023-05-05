@@ -1,5 +1,5 @@
 {
-  "address": "0xe5BBE61dC29670Fa52E3a3bCdb7278d926Db1A2A",
+  "address": "0xC58723Db315E0abdA2811cE37b25488483e25f7C",
   "abi": [
     {
       "inputs": [
@@ -88,7 +88,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x6f2e1b552b188757731a1dcffe0a824f77e78e9d357b10bfd0dedc4675db47a1",
+  "deployTxnHash": "0x51e67e9a0926b338f9fff1d22f400b6f14bcd6842443bb0277068c5b2609f0e7",
   "sourceName": "contracts/modules/core/UtilsModule.sol",
   "contractName": "UtilsModule",
   "deployedOn": "contract.UtilsModule"

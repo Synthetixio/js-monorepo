@@ -1,13 +1,25 @@
 import { Contract } from '@ethersproject/contracts';
 import { useQuery } from '@tanstack/react-query';
-import type { USDProxy as USDProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/USDProxy';
-import type { USDProxy as USDProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/USDProxy';
 import { useNetwork, useProvider, useSigner } from '@snx-v3/useBlockchain';
+import type { USDProxy as USDProxyMainnet } from '@synthetixio/v3-contracts/build/mainnet/USDProxy';
+import type { USDProxy as USDProxyGoerli } from '@synthetixio/v3-contracts/build/goerli/USDProxy';
+import type { USDProxy as USDProxyOptimismMainnet } from '@synthetixio/v3-contracts/build/optimism-mainnet/USDProxy';
+import type { USDProxy as USDProxyOptimismGoerli } from '@synthetixio/v3-contracts/build/optimism-goerli/USDProxy';
+
+export type USDProxyType =
+  | USDProxyMainnet
+  | USDProxyGoerli
+  | USDProxyOptimismMainnet
+  | USDProxyOptimismGoerli;
 
 export async function importUSDProxy(chainName: string) {
   switch (chainName) {
+    case 'mainnet':
+      return import('@synthetixio/v3-contracts/build/mainnet/USDProxy');
     case 'goerli':
       return import('@synthetixio/v3-contracts/build/goerli/USDProxy');
+    case 'optimism-mainnet':
+      return import('@synthetixio/v3-contracts/build/optimism-mainnet/USDProxy');
     case 'optimism-goerli':
       return import('@synthetixio/v3-contracts/build/optimism-goerli/USDProxy');
     default:
@@ -15,7 +27,7 @@ export async function importUSDProxy(chainName: string) {
   }
 }
 
-export const useUSDProxy = () => {
+export function useUSDProxy() {
   const network = useNetwork();
   const provider = useProvider();
   const signer = useSigner();
@@ -25,13 +37,11 @@ export const useUSDProxy = () => {
   return useQuery({
     queryKey: [network.name, 'USDProxy', { withSigner }],
     queryFn: async function () {
-      const USDProxy = await importUSDProxy(network.name);
-      return new Contract(USDProxy.address, USDProxy.abi, signerOrProvider) as
-        | USDProxyGoerli
-        | USDProxyOptimismGoerli;
+      const { address, abi } = await importUSDProxy(network.name);
+      return new Contract(address, abi, signerOrProvider) as USDProxyType;
     },
-    enabled: Boolean(network.name && signerOrProvider),
+    enabled: Boolean(signerOrProvider),
     staleTime: Infinity,
     cacheTime: Infinity,
   });
-};
+}

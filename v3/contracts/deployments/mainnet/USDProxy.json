@@ -1,5 +1,5 @@
 {
-  "address": "0x66429CB0D18bFEd36bCb31a39299Db15Ed712A85",
+  "address": "0xb2F30A7C980f052f02563fb518dcc39e6bf38175",
   "abi": [
     {
       "inputs": [
@@ -404,6 +404,22 @@
         }
       ],
       "name": "InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {

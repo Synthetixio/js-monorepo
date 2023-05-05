@@ -2,17 +2,20 @@ import { generatePath } from 'react-router-dom';
 
 it('should withdraw borrowed snxUSD and get back SNX collateral', () => {
   cy.connectWallet().then(({ address, privateKey }) => {
+    // Disable collateral withdrawal timeout
+    cy.task('setConfig', { key: 'accountTimeoutWithdraw', value: '' });
+
     cy.task('setEthBalance', { address, balance: 100 });
-    cy.task('getSnx', { address, amount: 30 });
+    cy.task('getSnx', { address, amount: 500 });
     cy.task('approveCollateral', { privateKey, symbol: 'SNX' });
     cy.task('createAccount', { privateKey }).then((accountId) => {
       cy.wrap(accountId).as('accountId');
-      cy.task('depositCollateral', { privateKey, symbol: 'SNX', accountId, amount: 20 });
+      cy.task('depositCollateral', { privateKey, symbol: 'SNX', accountId, amount: 200 });
       cy.task('delegateCollateral', {
         privateKey,
         symbol: 'SNX',
         accountId,
-        amount: 20,
+        amount: 200,
         poolId: 1,
       });
     });
@@ -66,6 +69,6 @@ it('should withdraw borrowed snxUSD and get back SNX collateral', () => {
 
   cy.get('[data-testid="withdraw modal"]').should('not.exist');
 
-  cy.get('[data-testid="manage stats collateral"]').should('include.text', `15 SNX`);
-  cy.get('[data-testid="available to withdraw"]').should('have.text', '15');
+  cy.get('[data-testid="manage stats collateral"]').should('include.text', `195 SNX`);
+  cy.get('[data-testid="available to withdraw"]').should('have.text', '195');
 });

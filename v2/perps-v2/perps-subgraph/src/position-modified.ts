@@ -15,6 +15,7 @@ import {
   calculateAccruedPnlForReducingPositions,
   calculateVolume,
 } from './calculations';
+import { updateHistoricalTradeStats } from './historical-trade-stats';
 import {
   createTradeEntityForNewPosition,
   createTradeEntityForPositionClosed,
@@ -29,7 +30,7 @@ function getOrCreateTrader(event: PositionModifiedNewEvent): Trader {
 
   if (!trader) {
     trader = new Trader(event.params.account.toHex());
-    trader.timestamp = event.block.timestamp;
+    trader.createdAt = event.block.timestamp;
     trader.totalLiquidations = BigInt.fromI32(0);
     trader.totalMarginLiquidated = BigInt.fromI32(0);
     trader.feesPaidToSynthetix = BigInt.fromI32(0);
@@ -49,6 +50,7 @@ function getOrCreateSynthetix(): Synthetix {
     synthetix.totalLiquidations = BigInt.fromI32(0);
     synthetix.totalTraders = BigInt.fromI32(0);
     synthetix.totalVolume = BigInt.fromI32(0);
+    synthetix.totalTrades = BigInt.fromI32(0);
   }
   return synthetix;
 }
@@ -57,12 +59,17 @@ function getOrCreateSynthetix(): Synthetix {
  * Mutative functions
  */
 function updateTrades(event: PositionModifiedNewEvent, synthetix: Synthetix, trader: Trader): void {
+  if (event.params.tradeSize.equals(BigInt.fromI32(0))) {
+    return;
+  }
   if (trader.trades.length == 0) {
     synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(1));
   }
+  synthetix.totalTrades = synthetix.totalTrades.plus(BigInt.fromI32(1));
   const oldTrades = trader.trades;
   oldTrades.push(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
   trader.trades = oldTrades;
+  trader.lastTradeTimestamp = event.block.timestamp;
 }
 
 function createFuturesPosition(
@@ -78,7 +85,7 @@ function createFuturesPosition(
   futuresPosition.avgEntryPrice = event.params.lastPrice;
   futuresPosition.feesPaidToSynthetix = event.params.fee;
   futuresPosition.netTransfers = BigInt.fromI32(0);
-  futuresPosition.initialMargin = event.params.margin;
+  futuresPosition.initialMargin = event.params.margin.minus(event.params.fee);
   futuresPosition.margin = event.params.margin;
   futuresPosition.realizedPnl = event.params.fee.times(BigInt.fromI32(-1));
   futuresPosition.unrealizedPnl = BigInt.fromI32(0);
@@ -112,7 +119,9 @@ function handlePositionOpenUpdates(
   positionId: string
 ): FuturesPosition {
   createTradeEntityForNewPosition(event, positionId);
-  synthetix.feesByPositionModifications = synthetix.feesByLiquidations.plus(event.params.fee);
+  synthetix.feesByPositionModifications = synthetix.feesByPositionModifications.plus(
+    event.params.fee
+  );
   const volume = calculateVolume(event.params.tradeSize, event.params.lastPrice);
 
   synthetix.totalVolume = synthetix.totalVolume.plus(volume);
@@ -342,6 +351,7 @@ export function updateFunding(
   return BigInt.fromI32(0);
 }
 export function handlePositionModified(event: PositionModifiedNewEvent): void {
+  updateHistoricalTradeStats(event);
   const positionId = event.address.toHex() + '-' + event.params.id.toHex();
   let futuresPosition = FuturesPosition.load(positionId);
   let synthetix = getOrCreateSynthetix();

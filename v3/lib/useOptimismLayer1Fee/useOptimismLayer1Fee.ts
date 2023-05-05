@@ -60,6 +60,6 @@ export const useOptimismLayer1Fee = <T>(
 
       return await getOptimismLayerOneFees(serializedTxn, network?.id, network?.name);
     },
-    enabled: Boolean(args.populateTransaction && isNetworkOvm(network.name) && network.isSupported),
+    enabled: Boolean(args.populateTransaction && isNetworkOvm(network.name)),
   });
 };
