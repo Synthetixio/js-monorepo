@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
-import { Bar, Tooltip, ResponsiveContainer, Line, ComposedChart, XAxis } from 'recharts';
+import { Bar, Tooltip, ResponsiveContainer, Line, ComposedChart, XAxis, YAxis } from 'recharts';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { formatNumber } from '@snx-v2/formatters';
@@ -71,12 +71,32 @@ export const Trades = ({ ...props }: FlexProps) => {
                   cursor={false}
                   wrapperStyle={{ outline: 'none' }}
                 />
-                <Bar dataKey="trades" stackId="a" fill="#FFFFFF3D" />
-                <Line dataKey="cumulativeTrades" stroke="#00D1FF" type="basis" strokeWidth="2px" />
+                <Bar yAxisId="left" dataKey="trades" stackId="a" fill="#FFFFFF3D" />
+                <Line
+                  yAxisId="right"
+                  dataKey="cumulativeTrades"
+                  stroke="#00D1FF"
+                  type="basis"
+                  strokeWidth="2px"
+                />
                 <XAxis
                   dataKey="label"
                   tickLine={{ display: 'none' }}
                   tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
+                />
+                <YAxis
+                  hide={true}
+                  // tickFormatter={(x: number) => `$${millify(x)}`}
+                  yAxisId="left"
+                  orientation="left"
+                  stroke="#FFFFFF3D"
+                />
+                <YAxis
+                  hide={true}
+                  // tickFormatter={(x: number) => `$${millify(x)}`}
+                  yAxisId="right"
+                  orientation="right"
+                  stroke="#00D1FF"
                 />
               </ComposedChart>
             </ResponsiveContainer>
