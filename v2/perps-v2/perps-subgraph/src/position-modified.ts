@@ -15,7 +15,7 @@ import {
   calculateAccruedPnlForReducingPositions,
   calculateVolume,
 } from './calculations';
-import { updateHistoricalTradeStats } from './historical-trade-stats';
+import { updateFeeStats, updateHistoricalTradeStats } from './historical-trade-stats';
 import {
   createTradeEntityForNewPosition,
   createTradeEntityForPositionClosed,
@@ -432,6 +432,7 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
     futuresPosition.unrealizedPnl = BigInt.fromI32(0);
     trader.realizedPnl = trader.realizedPnl.plus(realizedPnl);
     tradeEntity.save();
+    updateFeeStats(event.params.fee, event.address, event.block.timestamp);
   } else if (marginTransferEntity) {
     futuresPosition.netTransfers = futuresPosition.netTransfers.plus(marginTransferEntity.size);
   }
