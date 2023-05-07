@@ -32,19 +32,42 @@ describe('calculateNewPnl', () => {
 });
 
 describe('calculatePnlPercentage', () => {
-  test('calculates PnL percentage correctly', () => {
-    const subgraphPositionData = { avgEntryPrice: wei(50) } as any;
+  test('calculates PnL percentage correctly long profit', () => {
+    const subgraphPositionData = { avgEntryPrice: wei(50), leverage: 2 } as any;
     const marketPrice = wei(100);
+    const isLong = true;
+    const result = calculatePnlPercentage(subgraphPositionData, marketPrice, isLong);
+    expect(result.toNumber()).toBe(2);
+  });
+  test('calculates PnL percentage correctly short profit', () => {
+    const subgraphPositionData = { avgEntryPrice: wei(100), leverage: 2 } as any;
+    const marketPrice = wei(50);
+    const isLong = false;
 
-    const result = calculatePnlPercentage(subgraphPositionData, marketPrice);
+    const result = calculatePnlPercentage(subgraphPositionData, marketPrice, isLong);
     expect(result.toNumber()).toBe(1);
+  });
+  test('calculates PnL percentage correctly long loss', () => {
+    const subgraphPositionData = { avgEntryPrice: wei(50), leverage: 1 } as any;
+    const marketPrice = wei(25);
+    const isLong = true;
+    const result = calculatePnlPercentage(subgraphPositionData, marketPrice, isLong);
+    expect(result.toNumber()).toBe(-0.5);
+  });
+  test('calculates PnL percentage correctly short loss', () => {
+    const subgraphPositionData = { avgEntryPrice: wei(50), leverage: 3 } as any;
+    const marketPrice = wei(100);
+    const isLong = false;
+
+    const result = calculatePnlPercentage(subgraphPositionData, marketPrice, isLong);
+    expect(result.toNumber()).toBe(-3);
   });
 
   test('handles zero shift case', () => {
-    const subgraphPositionData = { avgEntryPrice: wei(100) } as any;
+    const subgraphPositionData = { avgEntryPrice: wei(100), leverage: wei(1) } as any;
     const marketPrice = wei(100);
-
-    const result = calculatePnlPercentage(subgraphPositionData, marketPrice);
+    const isLong = true;
+    const result = calculatePnlPercentage(subgraphPositionData, marketPrice, isLong);
     expect(result.toNumber()).toBe(0);
   });
 });
@@ -59,7 +82,7 @@ describe('calculatePositionData', () => {
       realizedPnlAtLastModification: wei(-31.1),
       netFundingAtLastModification: wei(30),
       avgEntryPrice: wei(100),
-      leverage: wei(5),
+      leverage: wei(9),
       fees: wei(0.1),
     };
     const contractData = {
@@ -84,7 +107,7 @@ describe('calculatePositionData', () => {
       liquidationPrice: wei(80),
       realizedPnl: wei(-26.1), // -30.1 + 5
       unrealizedPnl: wei(450), // ((180 - 150) * 10) + 150
-      unrealizedPnlPercentage: wei(0.8), // (180- 100) / 100
+      unrealizedPnlPercentage: wei(7.2), // ((180- 100) / 100) * 9
       remainingMargin: wei(200),
       size: wei(10),
       long: true,
