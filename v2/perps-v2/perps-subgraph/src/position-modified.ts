@@ -430,6 +430,7 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
 
     futuresPosition.realizedPnl = realizedPnl;
     futuresPosition.unrealizedPnl = BigInt.fromI32(0);
+    futuresPosition.isOpen = false;
     trader.realizedPnl = trader.realizedPnl.plus(realizedPnl);
     tradeEntity.save();
     updateFeeStats(event.params.fee, event.address, event.block.timestamp);
