@@ -22,6 +22,8 @@ export const POSITIONS_QUERY_MARKET = gql(`
       feesPaidToSynthetix
       lastPrice
       netFunding
+      long
+      size
     }
   }
 `);

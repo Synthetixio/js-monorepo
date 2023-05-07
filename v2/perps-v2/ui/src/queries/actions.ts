@@ -23,7 +23,7 @@ export const MARGIN_TRANSFERRED_QUERY = gql(`
 `);
 
 export const FUTURES_TRADE_QUERY = gql(`
-  query FuturesTrades($where: FuturesTrade_filter,$first: Int,$orderBy: FuturesTrade_orderBy, $orderDirection: OrderDirection) {
+  query FuturesTrades($where: FuturesTrade_filter, $first: Int, $orderBy: FuturesTrade_orderBy, $orderDirection: OrderDirection) {
     futuresTrades(
       first: $first
       orderBy: $orderBy
