@@ -24,6 +24,15 @@ import {
   Aud,
   Gbp,
   Arb,
+  Aptos,
+  Bch,
+  Cardano,
+  Crv,
+  Gmx,
+  Filecoin,
+  Lido,
+  Litecoin,
+  Shib,
 } from '../Icons';
 
 type CurrencyKey =
@@ -50,6 +59,15 @@ type CurrencyKey =
   | 'XAG'
   | 'XAU'
   | 'sBTC'
+  | 'APT'
+  | 'LDO'
+  | 'ADA'
+  | 'GMX'
+  | 'FIL'
+  | 'LTC'
+  | 'BCH'
+  | 'SHIB'
+  | 'CRV'
   | string; //TODO Fix
 
 const PerpIcon = (currencyKey: CurrencyKey, props: IconProps) => {
@@ -102,6 +120,26 @@ const PerpIcon = (currencyKey: CurrencyKey, props: IconProps) => {
       return <Ethereum {...props} />;
     case 'ARB':
       return <Arb {...props} />;
+    case 'APT':
+      return <Aptos {...props} />;
+    case 'BCH':
+      return <Bch {...props} />;
+    case 'ADA':
+      return <Cardano {...props} />;
+    case 'BCH':
+      return <Bch {...props} />;
+    case 'CRV':
+      return <Crv {...props} />;
+    case 'GMX':
+      return <Gmx {...props} />;
+    case 'FIL':
+      return <Filecoin {...props} />;
+    case 'LDO':
+      return <Lido {...props} />;
+    case 'LTC':
+      return <Litecoin {...props} />;
+    case 'SHIB':
+      return <Shib {...props} />;
 
     default:
       return null;
