@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'PerpsV2MarketAPEPERP';
-export const address = '0x1EC225e7cbFBd9D061a9E4b3f5336133c810706E';
+export const address = '0x6f00Fa8a218024764446a6Cfa141baA11987E84B';
 export const source = 'PerpsV2Market';
 export const abi = [
   'constructor(address _proxy, address _marketState, address _owner, address _resolver)',
