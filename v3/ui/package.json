@@ -10,8 +10,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "standalone-install": "yarn workspaces focus '@synthetixio/v3-ui'",
-    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build",
-    "deploy": "ipfs-deploy ./dist"
+    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
@@ -78,6 +77,7 @@
     "@babel/runtime-corejs3": "^7.20.13",
     "@chakra-ui/storybook-addon": "^4.0.17",
     "@noisekit/ipfs-deploy": "^1.0.3",
+    "@noisekit/ipns-deploy": "^1.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
@@ -120,7 +120,8 @@
       "dist"
     ],
     "ignoreMatches": [
-      "@noisekit/ipfs-deploy"
+      "@noisekit/ipfs-deploy",
+      "@noisekit/ipns-deploy"
     ]
   }
 }
