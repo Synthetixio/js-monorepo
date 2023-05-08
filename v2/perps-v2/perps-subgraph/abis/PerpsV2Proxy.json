@@ -184,6 +184,7 @@
       { "indexed": false, "internalType": "uint256", "name": "id", "type": "uint256" },
       { "indexed": false, "internalType": "address", "name": "account", "type": "address" },
       { "indexed": false, "internalType": "address", "name": "flagger", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "price", "type": "uint256" },
       { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
     ],
     "name": "PositionFlagged",
@@ -324,7 +325,6 @@
       { "indexed": false, "internalType": "uint256", "name": "id", "type": "uint256" },
       { "indexed": false, "internalType": "address", "name": "account", "type": "address" },
       { "indexed": false, "internalType": "address", "name": "flagger", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "price", "type": "uint256" },
       { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
     ],
     "name": "PositionFlagged",

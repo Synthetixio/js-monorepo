@@ -507,8 +507,12 @@ export class PositionFlagged__Params {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get timestamp(): BigInt {
+  get price(): BigInt {
     return this._event.parameters[3].value.toBigInt();
+  }
+
+  get timestamp(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
   }
 }
 
@@ -885,12 +889,8 @@ export class PositionFlagged1__Params {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get price(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
   get timestamp(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 

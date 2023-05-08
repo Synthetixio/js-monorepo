@@ -7,8 +7,7 @@
     "build": "NODE_ENV=production webpack-cli",
     "typecheck": "tsc --noEmit",
     "standalone-install": "yarn workspaces focus '@synthetixio/v3-ui'",
-    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build",
-    "deploy": "ipfs-deploy ./dist"
+    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
@@ -42,6 +41,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime-corejs3": "^7.20.13",
     "@noisekit/ipfs-deploy": "^1.0.3",
+    "@noisekit/ipns-deploy": "^1.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@tanstack/react-query": "^4.24.6",
     "@types/react": "^18.0.28",
@@ -76,7 +76,8 @@
       "prototype"
     ],
     "ignoreMatches": [
-      "@noisekit/ipfs-deploy"
+      "@noisekit/ipfs-deploy",
+      "@noisekit/ipns-deploy"
     ]
   }
 }

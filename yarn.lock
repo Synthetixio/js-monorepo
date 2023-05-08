@@ -6052,6 +6052,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noisekit/ipns-deploy@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@noisekit/ipns-deploy@npm:1.0.0"
+  dependencies:
+    debug: ^4.3.4
+    dotenv: ^16.0.3
+    ipfs-http-client: ^60.0.0
+  bin:
+    ipns-deploy: bin.mjs
+  checksum: 9349516eba73ae7e530ad73ccf5e98c3c99dd457a6b0d6440d0bccfd819c23196d7511c2a670fb3b25666f6243660dbeeb9085eebb71a0c56561b8e977ddbd25
+  languageName: node
+  linkType: hard
+
 "@nomiclabs/hardhat-etherscan@npm:^3.1.0":
   version: 3.1.0
   resolution: "@nomiclabs/hardhat-etherscan@npm:3.1.0"
@@ -8243,6 +8256,7 @@ __metadata:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@noisekit/ipfs-deploy": ^1.0.3
+    "@noisekit/ipns-deploy": ^1.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/format": "workspace:*"
@@ -8318,6 +8332,7 @@ __metadata:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@noisekit/ipfs-deploy": ^1.0.3
+    "@noisekit/ipns-deploy": ^1.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v2/formatters": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
@@ -10408,7 +10423,7 @@ __metadata:
     ethers: ^5.7.2
     html-webpack-plugin: ^5.5.0
     jest: ^29.4.2
-    synthetix: 2.86.1
+    synthetix: 2.88.1
     ts-loader: ^9.4.2
     ts-node: ^10.9.1
     typescript: ^4.9.5
@@ -10427,7 +10442,7 @@ __metadata:
     "@typechain/ethers-v5": ^10.2.0
     ethers: ^5.7.2
     prettier: ^2.8.4
-    synthetix: 2.86.1
+    synthetix: 2.88.1
     typechain: ^8.1.1
     typescript: ^4.9.5
   languageName: unknown
@@ -10694,6 +10709,7 @@ __metadata:
     "@gnosis.pm/safe-apps-sdk": ^7.8.0
     "@metamask/providers": ^10.2.1
     "@noisekit/ipfs-deploy": ^1.0.3
+    "@noisekit/ipns-deploy": ^1.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@reach/dialog": ^0.15.3
     "@snx-v1/Card": "workspace:*"
@@ -10823,7 +10839,7 @@ __metadata:
     stream-browserify: ^3.0.0
     styled-components: ^5.3.6
     styled-media-query: ^2.1.2
-    synthetix: 2.86.1
+    synthetix: 2.88.1
     terser-webpack-plugin: ^5.3.6
     tippy.js: ^6.3.7
     typescript: ^4.9.5
@@ -33540,9 +33556,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.86.1":
-  version: 2.86.1
-  resolution: "synthetix@npm:2.86.1"
+"synthetix@npm:2.88.1":
+  version: 2.88.1
+  resolution: "synthetix@npm:2.88.1"
   dependencies:
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     abi-decoder: ^2.3.0
@@ -33556,7 +33572,7 @@ __metadata:
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: d00d03dd07036b43bd2a287702e113cd07f02a25bfa96e884fd91a3c0e9e9514a06f6f4cd5ff6d834a648460d2795c19ed4adac24628ac95518cbcd5ae77a272
+  checksum: da80247ee07fa8338642156ca80a23c19d127afee338c76632f37b0d77dc4b9f8487e03138de6d490ac01ea5ac86eb526d58431aa661be2e93a4eecc0fcc887b
   languageName: node
   linkType: hard
 
