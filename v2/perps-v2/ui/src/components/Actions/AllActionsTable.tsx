@@ -46,9 +46,9 @@ export const AllActionsTable = () => {
             )}
 
             {data?.map(
-              ({ label, address, asset, price, fees, size, txHash, timestamp, leverage }) => {
+              ({ label, address, asset, price, fees, size, txHash, timestamp, leverage, id }) => {
                 return (
-                  <Tr key={txHash} borderTopWidth="1px">
+                  <Tr key={id} borderTopWidth="1px">
                     <Action label={label} txHash={txHash} timestamp={timestamp.toNumber()} />
                     <WalletAddress account={address} />
                     <Market
@@ -62,7 +62,6 @@ export const AllActionsTable = () => {
                     ) : (
                       <MarginTransfer size={size.toNumber()} />
                     )}
-
                     <Currency amount={fees?.toNumber() || null} />
                   </Tr>
                 );
