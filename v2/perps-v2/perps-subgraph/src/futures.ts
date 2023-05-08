@@ -1,4 +1,4 @@
-import { Address, BigInt, DataSourceContext, log } from '@graphprotocol/graph-ts';
+import { Address, BigInt, DataSourceContext, ethereum } from '@graphprotocol/graph-ts';
 import { PerpetualFuturesMarket } from '../generated/templates';
 import {
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
@@ -10,7 +10,8 @@ import {
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
   PerpsTracking as PerpsTrackingEvent,
-  PositionFlagged1 as PositionFlaggedEvent,
+  PositionFlagged1 as PositionFlaggedEventOld,
+  PositionFlagged as PositionFlaggedEventNew,
 } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 import {
   PositionLiquidated,
@@ -50,13 +51,23 @@ export function handleFuturesMarketRemoved(event: MarketRemovedEvent): void {
   }
 }
 
-export function handlePositionFlagged(event: PositionFlaggedEvent): void {
+export function handlePositionFlagged(event: PositionFlaggedEventNew): void {
   const positionFlaggedEntity = new PositionFlagged(
     event.address.toHex() + '-' + event.params.id.toString()
   );
-  if (event.params.price) {
-    positionFlaggedEntity.price = event.params.price;
-  }
+
+  positionFlaggedEntity.price = event.params.price;
+  positionFlaggedEntity.flagger = event.params.flagger;
+  positionFlaggedEntity.timestamp = event.block.timestamp;
+  positionFlaggedEntity.trader = event.params.account.toHex();
+  positionFlaggedEntity.save();
+}
+
+export function handlePositionFlaggedOld(event: PositionFlaggedEventOld): void {
+  const positionFlaggedEntity = new PositionFlagged(
+    event.address.toHex() + '-' + event.params.id.toString()
+  );
+  positionFlaggedEntity.price = null;
   positionFlaggedEntity.flagger = event.params.flagger;
   positionFlaggedEntity.timestamp = event.block.timestamp;
   positionFlaggedEntity.trader = event.params.account.toHex();
