@@ -6052,6 +6052,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noisekit/ipns-deploy@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@noisekit/ipns-deploy@npm:1.0.0"
+  dependencies:
+    debug: ^4.3.4
+    dotenv: ^16.0.3
+    ipfs-http-client: ^60.0.0
+  bin:
+    ipns-deploy: bin.mjs
+  checksum: 9349516eba73ae7e530ad73ccf5e98c3c99dd457a6b0d6440d0bccfd819c23196d7511c2a670fb3b25666f6243660dbeeb9085eebb71a0c56561b8e977ddbd25
+  languageName: node
+  linkType: hard
+
 "@nomiclabs/hardhat-etherscan@npm:^3.1.0":
   version: 3.1.0
   resolution: "@nomiclabs/hardhat-etherscan@npm:3.1.0"
@@ -8243,6 +8256,7 @@ __metadata:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@noisekit/ipfs-deploy": ^1.0.3
+    "@noisekit/ipns-deploy": ^1.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/format": "workspace:*"
@@ -8318,6 +8332,7 @@ __metadata:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@noisekit/ipfs-deploy": ^1.0.3
+    "@noisekit/ipns-deploy": ^1.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v2/formatters": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
@@ -10694,6 +10709,7 @@ __metadata:
     "@gnosis.pm/safe-apps-sdk": ^7.8.0
     "@metamask/providers": ^10.2.1
     "@noisekit/ipfs-deploy": ^1.0.3
+    "@noisekit/ipns-deploy": ^1.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@reach/dialog": ^0.15.3
     "@snx-v1/Card": "workspace:*"

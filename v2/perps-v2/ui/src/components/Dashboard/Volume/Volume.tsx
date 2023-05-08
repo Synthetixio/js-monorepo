@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
-import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
 import { VolumeTooltip } from './VolumeTooltip';
 import { formatNumber } from '@snx-v2/formatters';
 import { useStats } from '../../../hooks';
@@ -71,12 +71,32 @@ export const Volume = ({ ...props }: FlexProps) => {
                   content={VolumeTooltip}
                   wrapperStyle={{ outline: 'none' }}
                 />
-                <Bar dataKey="volume" stackId="a" fill="#FFFFFF3D" />
-                <Line dataKey="cumulativeVolume" stroke="#00D1FF" type="basis" strokeWidth="2px" />
+                <Bar yAxisId="left" dataKey="volume" stackId="a" fill="#FFFFFF3D" />
+                <Line
+                  yAxisId="right"
+                  dataKey="cumulativeVolume"
+                  stroke="#00D1FF"
+                  type="basis"
+                  strokeWidth="2px"
+                />
                 <XAxis
                   dataKey="label"
                   tickLine={{ display: 'none' }}
                   tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
+                />
+                <YAxis
+                  hide={true}
+                  // tickFormatter={(x: number) => `$${millify(x)}`}
+                  yAxisId="left"
+                  orientation="left"
+                  stroke="#FFFFFF3D"
+                />
+                <YAxis
+                  hide={true}
+                  // tickFormatter={(x: number) => `$${millify(x)}`}
+                  yAxisId="right"
+                  orientation="right"
+                  stroke="#00D1FF"
                 />
               </ComposedChart>
             </ResponsiveContainer>

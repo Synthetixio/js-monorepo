@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
-import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
 import { TradersTooltip } from './TradersTooltip';
 import { formatNumber } from '@snx-v2/formatters';
 import { useStats } from '../../../hooks';
@@ -40,7 +40,7 @@ export const Traders = ({ ...props }: FlexProps) => {
           </Text>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
+            {/* <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} /> */}
           </Box>
         </Flex>
         <Flex mt={6}>
@@ -75,13 +75,33 @@ export const Traders = ({ ...props }: FlexProps) => {
                   content={TradersTooltip}
                   wrapperStyle={{ outline: 'none' }}
                 />
-                <Bar dataKey="newTraders" stackId="a" fill="#F471FF" />
-                <Bar dataKey="existingTraders" stackId="a" fill="#FFFFFF3D" />
-                <Line dataKey="cumulativeTraders" stroke="#00D1FF" type="basis" strokeWidth="2px" />
+                <Bar yAxisId="left" dataKey="newTraders" stackId="a" fill="#F471FF" />
+                <Bar yAxisId="left" dataKey="existingTraders" stackId="a" fill="#FFFFFF3D" />
+                <Line
+                  yAxisId="right"
+                  dataKey="cumulativeTraders"
+                  stroke="#00D1FF"
+                  type="basis"
+                  strokeWidth="2px"
+                />
                 <XAxis
                   dataKey="label"
                   tickLine={{ display: 'none' }}
                   tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
+                />
+                <YAxis
+                  hide={true}
+                  // tickFormatter={(x: number) => `$${millify(x)}`}
+                  yAxisId="left"
+                  orientation="left"
+                  stroke="#FFFFFF3D"
+                />
+                <YAxis
+                  hide={true}
+                  // tickFormatter={(x: number) => `$${millify(x)}`}
+                  yAxisId="right"
+                  orientation="right"
+                  stroke="#00D1FF"
                 />
               </ComposedChart>
             </ResponsiveContainer>
