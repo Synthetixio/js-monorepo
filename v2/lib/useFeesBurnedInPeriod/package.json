@@ -2,7 +2,7 @@
   "name": "@snx-v2/useFeesBurnedInPeriod",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useDebtShareDataPeriod": "workspace:*",
