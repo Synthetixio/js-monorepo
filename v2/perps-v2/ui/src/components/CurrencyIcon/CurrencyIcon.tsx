@@ -122,8 +122,6 @@ const PerpIcon = (currencyKey: CurrencyKey, props: IconProps) => {
       return <Arb {...props} />;
     case 'APT':
       return <Aptos {...props} />;
-    case 'BCH':
-      return <Bch {...props} />;
     case 'ADA':
       return <Cardano {...props} />;
     case 'BCH':
