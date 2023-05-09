@@ -80,8 +80,9 @@ export function HomeUi({
 
   return (
     <Flex height="100%" flexDirection="column">
-      <Welcome />
-      <Divider my={8} bg="gray.900" />
+      <Box mb="8">
+        <Welcome />
+      </Box>
       <Stats totalDebt={totalDebt} totalCollateral={totalCollateral} />
       <BorderBox p={4} mt={8} flexDir="column">
         <Flex

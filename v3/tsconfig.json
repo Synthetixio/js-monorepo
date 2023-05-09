@@ -34,5 +34,5 @@
     "./spot-markets/ui/prototype/**"
   ],
 
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx", "../v2/**/*.ts", "../v2/**/*.tsx"]
 }
