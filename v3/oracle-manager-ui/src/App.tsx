@@ -18,6 +18,7 @@ import { convertStateToQueryParam } from '../utils/url';
 import { NodeFormModule } from '../components/NodeFormModule';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { onboard } from '@snx-v3/useBlockchain';
 import {
   encodeBytesByNodeType,
   getMultiCallContract,
@@ -58,27 +59,32 @@ export const App: FC = () => {
           </Text>
           <Flex>
             <Input placeholder="Enter Node ID" minW="340px" {...register('search')} mr="16px" />
-            <Button
-              disabled={!isWalletConnected}
-              variant="outline"
-              colorScheme="gray"
-              p="2"
-              w="200px"
-              leftIcon={<SearchIcon />}
-              onClick={() => {
-                const nodeId = getValues('search').trim();
-                if (nodeId.startsWith('0x')) navigate('node/' + nodeId);
-                else
-                  toast({
-                    title: 'Invalid node id',
-                    status: 'error',
-                    duration: 9000,
-                    isClosable: true,
-                  });
-              }}
-            >
-              Search
-            </Button>
+            {!isWalletConnected ? (
+              <Button size="sm" onClick={() => onboard.connectWallet()}>
+                <Text p="2">Connect Wallet</Text>
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                colorScheme="gray"
+                p="2"
+                w="200px"
+                leftIcon={<SearchIcon />}
+                onClick={() => {
+                  const nodeId = getValues('search').trim();
+                  if (nodeId.startsWith('0x')) navigate('node/' + nodeId);
+                  else
+                    toast({
+                      title: 'Invalid node id',
+                      status: 'error',
+                      duration: 9000,
+                      isClosable: true,
+                    });
+                }}
+              >
+                Search
+              </Button>
+            )}
           </Flex>
         </Flex>
       </Flex>
