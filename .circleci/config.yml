@@ -401,7 +401,7 @@ jobs:
       - run: yarn workspace @synthetixio/v2-ui build
       - run: echo "export IPFS_CID=$(yarn workspace @synthetixio/v2-ui ipfs-deploy ./out)" >> $BASH_ENV
       - run: echo $IPFS_CID
-      - run: yarn workspace @synthetixio/v2-ui ipns-deploy v3.synthetix.eth $IPFS_CID
+      - run: yarn workspace @synthetixio/v2-ui ipns-deploy staking.synthetix.eth $IPFS_CID
 
   v3-ipfs:
     working_directory: /tmp/app
@@ -419,7 +419,7 @@ jobs:
       - run: yarn workspace @snx-v3/ui build
       - run: echo "export IPFS_CID=$(yarn workspace @snx-v3/ui ipfs-deploy ./dist)" >> $BASH_ENV
       - run: echo $IPFS_CID
-      - run: yarn workspace @snx-v3/ui ipns-deploy staking.synthetix.eth $IPFS_CID
+      - run: yarn workspace @snx-v3/ui ipns-deploy v3.synthetix.eth $IPFS_CID
 
   perps-watcher-ipfs:
     working_directory: /tmp/app
