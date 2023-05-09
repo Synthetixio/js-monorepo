@@ -26,9 +26,10 @@ import {
 } from '../utils/contracts';
 import { useIsConnected, useNetwork, useSigner } from '@snx-v3/useBlockchain';
 import { SearchIcon } from '@chakra-ui/icons';
+import { providers } from 'ethers';
 
 export const App: FC = () => {
-  const [nodes] = useRecoilState(nodesState);
+  const [nodes, setNodes] = useRecoilState(nodesState);
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,6 +59,7 @@ export const App: FC = () => {
           <Flex>
             <Input placeholder="Enter Node ID" minW="340px" {...register('search')} mr="16px" />
             <Button
+              disabled={!isWalletConnected}
               variant="outline"
               colorScheme="gray"
               p="2"
@@ -94,8 +96,15 @@ export const App: FC = () => {
             mr="16px"
             isDisabled={!isWalletConnected}
             onClick={() => {
-              if (signer && network?.id) {
-                const multicallContract = getMultiCallContract(network.id, signer);
+              if (nodes.every((node) => node.isRegistered)) {
+                toast({
+                  title: 'All nodes are already registered',
+                  status: 'info',
+                  duration: 9000,
+                  isClosable: true,
+                });
+              } else if (signer && network?.id) {
+                const multicallContract = getMultiCallContract(signer, network.id);
                 const oracleManagerContract = getNodeModuleContract(signer, network.id);
                 const data = nodes
                   .slice()
@@ -121,7 +130,13 @@ export const App: FC = () => {
                       ]),
                     ];
                   });
-                multicallContract.aggregate(data);
+                multicallContract.aggregate(data).then((tx: providers.TransactionResponse) =>
+                  tx.wait(1).then(() => {
+                    setNodes((state) => {
+                      return state.map((n) => ({ ...n, isRegistered: true }));
+                    });
+                  })
+                );
               }
             }}
           >
