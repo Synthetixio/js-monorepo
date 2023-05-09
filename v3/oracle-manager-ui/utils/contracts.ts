@@ -2,26 +2,26 @@ import { Contract, providers, utils } from 'ethers';
 import {
   address as OracleManagerProxyOPGoerliAddress,
   abi as OracleManagerProxyOPGoerliAbi,
-} from '@synthetixio/v3-contracts/src/optimism-goerli/OracleManagerProxy';
-import { address as OracleManagerProxyOPAddress } from '@synthetixio/v3-contracts/src/optimism-mainnet/OracleManagerProxy';
-import { address as OracleManagerProxyMainnetAddress } from '@synthetixio/v3-contracts/src/mainnet/OracleManagerProxy';
-import { address as OracleManagerProxyGoerliAddress } from '@synthetixio/v3-contracts/src/goerli/OracleManagerProxy';
+} from '@synthetixio/v3-contracts/build/optimism-goerli/OracleManagerProxy';
+import { address as OracleManagerProxyOPAddress } from '@synthetixio/v3-contracts/build/optimism-mainnet/OracleManagerProxy';
+import { address as OracleManagerProxyMainnetAddress } from '@synthetixio/v3-contracts/build/mainnet/OracleManagerProxy';
+import { address as OracleManagerProxyGoerliAddress } from '@synthetixio/v3-contracts/build/goerli/OracleManagerProxy';
 import {
   address as multicallAddressMainnet,
   abi as multicallAbiMainnet,
-} from '@synthetixio/v3-contracts/src/mainnet/Multicall3';
+} from '@synthetixio/v3-contracts/build/mainnet/Multicall3';
 import {
   address as multicallAddressGoerli,
   abi as multicallAbiGoerli,
-} from '@synthetixio/v3-contracts/src/goerli/Multicall3';
+} from '@synthetixio/v3-contracts/build/goerli/Multicall3';
 import {
   address as multicallAddressOPGoerli,
   abi as multicallAbiOPGoerli,
-} from '@synthetixio/v3-contracts/src/optimism-goerli/Multicall3';
+} from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
 import {
   address as multicallAddressOP,
   abi as multicallAbiOP,
-} from '@synthetixio/v3-contracts/src/optimism-mainnet/Multicall3';
+} from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
 import { Node } from './types';
 import { ORACLE_NODE_TYPES } from './constants';
 
