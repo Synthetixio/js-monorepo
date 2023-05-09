@@ -1,5 +1,3 @@
 {
-  "redirects": [
-    { "source": "/(.*)", "destination": "https://staking.synthetix.eth.limo" }
-  ]
+  "redirects": [{ "source": "/(.*)", "destination": "https://staking.synthetix.eth.limo" }]
 }
