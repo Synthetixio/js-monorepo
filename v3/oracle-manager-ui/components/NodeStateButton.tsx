@@ -112,7 +112,7 @@ export const NodeStateButton: FC<{ node: Node }> = ({ node }) => {
       fetchNodeState();
     }
     // eslint-disable-next-line
-  }, [isWalletConnected, network?.id, node.type, node.parameters, node.parents]);
+  }, [isWalletConnected, network?.id, node.type, node.parameters, node.parents, node.isRegistered]);
 
   const handleButtonClick = async () => {
     if (!isWalletConnected) {
