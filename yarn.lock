@@ -8031,15 +8031,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/ExperimentalModal@workspace:*, @snx-v3/ExperimentalModal@workspace:v3/components/ExperimentalModal":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/ExperimentalModal@workspace:v3/components/ExperimentalModal"
-  dependencies:
-    "@chakra-ui/react": ^2.5.0
-    react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
 "@snx-v3/HomeLink@workspace:*, @snx-v3/HomeLink@workspace:v3/components/HomeLink":
   version: 0.0.0-use.local
   resolution: "@snx-v3/HomeLink@workspace:v3/components/HomeLink"
@@ -8341,7 +8332,6 @@ __metadata:
     "@snx-v3/BorrowModal": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/DepositModal": "workspace:*"
-    "@snx-v3/ExperimentalModal": "workspace:*"
     "@snx-v3/HomeLink": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/NumberInput": "workspace:*"
