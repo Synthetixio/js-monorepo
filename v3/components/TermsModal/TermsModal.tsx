@@ -32,6 +32,7 @@ export const TermsModal = ({ defaultOpen = true }: TermsModalProps) => {
   };
 
   return (
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     <Modal isOpen={isOpen} onClose={() => {}}>
       <ModalOverlay />
       <ModalContent
