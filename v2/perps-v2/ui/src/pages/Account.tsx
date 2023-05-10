@@ -46,7 +46,7 @@ export const Account: FC = () => {
       )}
       {polynomialAccount && (
         <Text>
-          Polynomial Account:{' '}
+          Polynomial Smart Wallet:{' '}
           <Link href={`/${polynomialAccount.account}`}>{polynomialAccount.account}</Link>
         </Text>
       )}
