@@ -26,7 +26,6 @@ const babelRule = {
   include: [
     // Need to list all the folders in v3 and outside (if used)
     /v2\/lib/,
-    /v2\/components/,
 
     /v3\/lib/,
     /v3\/contracts/,
