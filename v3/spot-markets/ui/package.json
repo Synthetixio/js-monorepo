@@ -23,7 +23,7 @@
     "@snx-v3/useSynthTokenModule": "workspace:*",
     "@snx-v3/zod": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query-devtools": "^4.24.6",
     "framer-motion": "^7.0.0",
     "react": "^18.2.0",

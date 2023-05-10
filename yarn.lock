@@ -6737,7 +6737,7 @@ __metadata:
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -6931,7 +6931,7 @@ __metadata:
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -7017,7 +7017,7 @@ __metadata:
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -7060,7 +7060,7 @@ __metadata:
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/contracts-interface": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -7122,7 +7122,7 @@ __metadata:
     "@snx-v2/useSelfLiquidationMutation": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -7252,7 +7252,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/icons": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -7285,7 +7285,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -7344,7 +7344,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -7398,7 +7398,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/stakingCalculations@workspace:v2/lib/stakingCalculations"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -7522,7 +7522,7 @@ __metadata:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7537,7 +7537,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7559,7 +7559,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7580,7 +7580,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7592,7 +7592,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7605,7 +7605,7 @@ __metadata:
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7630,7 +7630,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     date-fns: ^2.29.3
     react: ^18.2.0
@@ -7644,7 +7644,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDebtShareDataPeriod": "workspace:*"
     "@snx-v2/useFeePeriodMultiNetwork": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7656,7 +7656,7 @@ __metadata:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7674,7 +7674,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useGasPrice": "workspace:*"
     "@snx-v2/useOptimismLayer1Fee": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7689,7 +7689,7 @@ __metadata:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7712,7 +7712,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7728,7 +7728,7 @@ __metadata:
     "@snx-v2/useFeePeriodMultiNetwork": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useTotalStakedSNX": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7757,7 +7757,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7786,7 +7786,7 @@ __metadata:
     "@ethersproject/transactions": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7799,7 +7799,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7815,7 +7815,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7828,7 +7828,7 @@ __metadata:
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7845,7 +7845,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7872,7 +7872,7 @@ __metadata:
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     lodash: ^4.17.21
     react: ^18.2.0
@@ -7885,7 +7885,7 @@ __metadata:
   dependencies:
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
@@ -7926,7 +7926,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/format": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7938,7 +7938,7 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/Amount": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7963,7 +7963,7 @@ __metadata:
     "@snx-v3/useBorrow": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7997,7 +7997,7 @@ __metadata:
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@xstate/react": ^3.2.1
     react: ^18.2.0
     react-router-dom: ^6.8.1
@@ -8029,7 +8029,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/ManagePositionContext@workspace:v3/lib/ManagePositionContext"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -8049,7 +8049,7 @@ __metadata:
   resolution: "@snx-v3/NumberInput@workspace:v3/components/NumberInput"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -8075,7 +8075,7 @@ __metadata:
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/usePoolData": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-router-dom: ^6.8.1
   languageName: unknown
@@ -8105,7 +8105,7 @@ __metadata:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/useRepay": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -8115,7 +8115,7 @@ __metadata:
   resolution: "@snx-v3/TrendText@workspace:v3/components/TrendText"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -8132,7 +8132,7 @@ __metadata:
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/useWithdraw": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@xstate/react": ^3.2.1
     react: ^18.2.0
     xstate: ^4.36.0
@@ -8150,7 +8150,7 @@ __metadata:
   resolution: "@snx-v3/calculations@workspace:v3/lib/calculations"
   dependencies:
     "@snx-v3/usePoolData": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     zod: ^3.20.6
   languageName: unknown
   linkType: soft
@@ -8202,7 +8202,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/format@workspace:v3/lib/format"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     ethers: ^5.7.2
   languageName: unknown
   linkType: soft
@@ -8241,7 +8241,7 @@ __metadata:
     "@synthetixio/ipfs-deploy": ^1.0.5
     "@synthetixio/ipns-deploy": ^1.0.1
     "@synthetixio/v3-theme": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@types/react": ^18.0.28
@@ -8352,7 +8352,7 @@ __metadata:
     "@synthetixio/safe-import": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@types/react": ^18.0.28
@@ -8416,7 +8416,7 @@ __metadata:
   dependencies:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
   languageName: unknown
@@ -8460,7 +8460,7 @@ __metadata:
     "@snx-v3/useGasOptions": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8474,7 +8474,7 @@ __metadata:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8503,7 +8503,7 @@ __metadata:
     "@snx-v3/useGasOptions": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8517,7 +8517,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
@@ -8527,7 +8527,7 @@ __metadata:
   resolution: "@snx-v3/useEthPrice@workspace:v3/lib/useEthPrice"
   dependencies:
     "@snx-v3/useCollateralTypes": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -8543,7 +8543,7 @@ __metadata:
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
     "@snx-v3/useOptimismLayer1Fee": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -8557,7 +8557,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -8578,7 +8578,7 @@ __metadata:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     zod: ^3.20.6
   languageName: unknown
@@ -8593,7 +8593,7 @@ __metadata:
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
     "@snx-v3/usePools": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
@@ -8630,7 +8630,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@ethersproject/transactions": ^5.7.0
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -8651,7 +8651,7 @@ __metadata:
   dependencies:
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
     zod: ^3.20.6
@@ -8693,7 +8693,7 @@ __metadata:
     "@snx-v3/useGasOptions": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8730,7 +8730,7 @@ __metadata:
     "@snx-v3/assertAddressType": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
   languageName: unknown
@@ -8755,7 +8755,7 @@ __metadata:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     zod: ^3.20.6
   languageName: unknown
@@ -8771,7 +8771,7 @@ __metadata:
     "@snx-v3/useGasOptions": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8786,7 +8786,7 @@ __metadata:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useEthBalance": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8797,7 +8797,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/validatePosition@workspace:v3/lib/validatePosition"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -10365,7 +10365,7 @@ __metadata:
     "@babel/preset-env": ^7.20.2
     "@babel/preset-typescript": ^7.18.6
     "@synthetixio/generate-subgraph-query": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@types/commander": ^2.12.2
     "@types/node": ^18.13.0
@@ -10451,7 +10451,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/generate-subgraph-query@workspace:tools/generate-subgraph-query"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     eslint: ^8.34.0
     jest: ^29.4.2
     lodash: ^4.17.21
@@ -10576,7 +10576,7 @@ __metadata:
     "@synthetixio/ipns-deploy": ^1.0.1
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@types/react": ^18.0.28
     babel-loader: ^9.1.2
     babel-plugin-istanbul: ^6.1.1
@@ -10663,7 +10663,7 @@ __metadata:
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/generate-subgraph-query": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@types/lodash": ^4.14.191
     "@types/react": ^18.0.28
@@ -10770,7 +10770,7 @@ __metadata:
     "@synthetixio/queries": "workspace:*"
     "@synthetixio/safe-import": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@testing-library/jest-dom": ^5.16.5
@@ -10910,23 +10910,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/wei@^2.74.1, @synthetixio/wei@workspace:*, @synthetixio/wei@workspace:packages/wei":
-  version: 0.0.0-use.local
-  resolution: "@synthetixio/wei@workspace:packages/wei"
+"@synthetixio/wei@npm:^2.74.1, @synthetixio/wei@npm:^2.74.4":
+  version: 2.74.4
+  resolution: "@synthetixio/wei@npm:2.74.4"
   dependencies:
-    "@babel/core": ^7.20.12
-    "@babel/plugin-transform-runtime": ^7.19.6
-    "@babel/preset-env": ^7.20.2
-    "@babel/preset-typescript": ^7.18.6
-    "@ethersproject/bignumber": ^5.7.0
-    "@ethersproject/bytes": ^5.7.0
-    "@types/big.js": ^6.1.6
-    big.js: ^6.2.1
-    eslint: ^8.34.0
-    jest: ^29.4.2
-    typescript: ^4.9.5
-  languageName: unknown
-  linkType: soft
+    "@ethersproject/bignumber": ^5.6.2
+    "@ethersproject/bytes": ^5.6.1
+    big.js: ^6.1.1
+  checksum: 03ff0a17cc5e1cdc8fc67d8240a705dab85da4676c05a92718c6a443bb41b526d7d608a5bb00e27847c0762e3e17ca30bf29ddbb1f70e000671972dada2e29dc
+  languageName: node
+  linkType: hard
 
 "@szmarczak/http-timer@npm:^1.1.2":
   version: 1.1.2
@@ -11255,13 +11248,6 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: 8992d8c1eaaf1c793e9184b930767883446939d2744c40ea4e9591086e79b631189dc519931ed8864f1e016742a189703c217db59b800aca84870b865009d8b4
-  languageName: node
-  linkType: hard
-
-"@types/big.js@npm:^6.1.6":
-  version: 6.1.6
-  resolution: "@types/big.js@npm:6.1.6"
-  checksum: 290936fc4e9ebd9883ead8e8278126f43783b3e57bf7736b12ce6d922c62515a83b8c62cd3ef557a043508109d403cb0bd89c7556b221c2c1057fd3a1d03e683
   languageName: node
   linkType: hard
 
