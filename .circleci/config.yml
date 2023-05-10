@@ -401,7 +401,7 @@ jobs:
       - run: yarn workspace @synthetixio/v2-ui build
       - run: echo "export IPFS_CID=$(yarn workspace @synthetixio/v2-ui ipfs-deploy ./out)" >> $BASH_ENV
       - run: echo $IPFS_CID
-      - run: yarn workspace @synthetixio/v2-ui ipns-deploy v3.synthetix.eth $IPFS_CID
+      - run: yarn workspace @synthetixio/v2-ui ipns-deploy staking.synthetix.eth $IPFS_CID
 
   v3-ipfs:
     working_directory: /tmp/app
@@ -419,7 +419,25 @@ jobs:
       - run: yarn workspace @snx-v3/ui build
       - run: echo "export IPFS_CID=$(yarn workspace @snx-v3/ui ipfs-deploy ./dist)" >> $BASH_ENV
       - run: echo $IPFS_CID
-      - run: yarn workspace @snx-v3/ui ipns-deploy staking.synthetix.eth $IPFS_CID
+      - run: yarn workspace @snx-v3/ui ipns-deploy v3.synthetix.eth $IPFS_CID
+
+  perps-watcher-ipfs:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    resource_class: large
+    environment:
+      DEBUG: ipfs-deploy,ipns-deploy
+      IPFS_HOST: ipfs.synthetix.io
+      IPFS_PORT: 5001
+      IPFS_PROTOCOL: https
+    steps:
+      - checkout
+      - yarn-install
+      - run: yarn workspace @synthetixio/perps-v2-dashboard build
+      - run: echo "export IPFS_CID=$(yarn workspace @synthetixio/perps-v2-dashboard ipfs-deploy ./dist)" >> $BASH_ENV
+      - run: echo $IPFS_CID
+      - run: yarn workspace @synthetixio/perps-v2-dashboard ipns-deploy watcher.synthetix.io $IPFS_CID
 
 workflows:
   version: 2.1
@@ -440,6 +458,15 @@ workflows:
           requires: [yarn-install]
       - v2-ipfs:
           requires: [tests, typecheck, v2-cy, v2-e2e]
+          filters:
+            branches:
+              only:
+                - release
+                - master
+                - ipfs-deploy
+
+      - perps-watcher-ipfs:
+          requires: [tests, typecheck]
           filters:
             branches:
               only:

@@ -10568,6 +10568,8 @@ __metadata:
     "@graphql-codegen/cli": ^3.0.0
     "@graphql-codegen/client-preset": ^2.1.1
     "@graphql-typed-document-node/core": ^3.1.2
+    "@noisekit/ipfs-deploy": ^1.0.3
+    "@noisekit/ipns-deploy": ^1.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@pythnetwork/pyth-evm-js": ^1.1.0
     "@snx-v2/formatters": "workspace:*"
