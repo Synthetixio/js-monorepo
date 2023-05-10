@@ -1,10 +1,12 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import { MarketsTableLoading } from '.';
-import { useMarkets } from '../../../hooks';
-import { Market, TableHeaderCell } from '../../Shared';
+import { MarketsTableLoading } from './MarketsTableLoading';
+import { useMarketStats } from '../../hooks';
+import { Market, TableHeaderCell } from '../Shared';
 
 export const MarketsTable = () => {
-  const { data, loading } = useMarkets();
+  const { data, loading } = useMarketStats();
+
+  console.log(data);
 
   return (
     <>
