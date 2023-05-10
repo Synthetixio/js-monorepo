@@ -7,7 +7,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { GasSpeedProvider } from '@snx-v3/useGasSpeed';
 import { BlockchainProvider } from '@snx-v3/useBlockchain';
-import { ExperimentalModal } from '@snx-v3/ExperimentalModal';
+import { TermsModal } from '@snx-v3/TermsModal';
+import { SESSION_STORAGE_KEYS } from '@snx-v3/constants';
 import { Router } from './Router';
 import './i18n';
 
@@ -30,6 +31,9 @@ export const App = () => {
     }
   }, [colorMode, toggleColorMode]);
 
+  const TERMS_CONDITIONS_ACCEPTED =
+    sessionStorage.getItem(SESSION_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED) === 'true';
+
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
@@ -37,7 +41,7 @@ export const App = () => {
         <BlockchainProvider>
           <GasSpeedProvider>
             <BrowserRouter>
-              <ExperimentalModal />
+              <TermsModal defaultOpen={!TERMS_CONDITIONS_ACCEPTED} />
               <Router />
             </BrowserRouter>
           </GasSpeedProvider>
