@@ -7,8 +7,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { GasSpeedProvider } from '@snx-v3/useGasSpeed';
 import { BlockchainProvider } from '@snx-v3/useBlockchain';
-import { TermsModal } from '@snx-v2/TermsModal';
-import { SESSION_STORAGE_KEYS } from '@snx-v2/Constants';
+import { TermsModal } from '@snx-v3/TermsModal';
+import { SESSION_STORAGE_KEYS } from '@snx-v3/constants';
 import { Router } from './Router';
 import './i18n';
 
