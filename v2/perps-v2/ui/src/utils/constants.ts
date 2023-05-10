@@ -3,6 +3,7 @@ export const PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL =
 export const PERPS_V2_DASHBOARD_GRAPH_URL =
   'https://api.thegraph.com/subgraphs/name/synthetix-perps/perps';
 
+export const KWENTA_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-perps';
 export const optimisticEthercanLink = (address: string) =>
   `https://optimistic.etherscan.io/address/${address}`;
 
