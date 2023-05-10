@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { theme } from '@synthetixio/v3-theme';
-import { SESSION_STORAGE_KEYS } from '@snx-v2/Constants';
+import { SESSION_STORAGE_KEYS } from '@snx-v3/constants';
 
 interface TermsModalProps {
   defaultOpen: boolean;

@@ -8127,6 +8127,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/TermsModal@workspace:*, @snx-v3/TermsModal@workspace:v3/components/TermsModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/TermsModal@workspace:v3/components/TermsModal"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@snx-v3/constants": "workspace:*"
+    "@storybook/react": ^6.5.16
+    "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+    react-router-dom: ^6.8.1
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/TrendText@workspace:*, @snx-v3/TrendText@workspace:v3/components/TrendText":
   version: 0.0.0-use.local
   resolution: "@snx-v3/TrendText@workspace:v3/components/TrendText"
@@ -8325,8 +8338,6 @@ __metadata:
     "@noisekit/ipfs-deploy": ^1.0.3
     "@noisekit/ipns-deploy": ^1.0.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
-    "@snx-v2/Constants": "workspace:*"
-    "@snx-v2/TermsModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
     "@snx-v3/Amount": "workspace:*"
@@ -8340,6 +8351,7 @@ __metadata:
     "@snx-v3/PercentBadges": "workspace:*"
     "@snx-v3/PoolBox": "workspace:*"
     "@snx-v3/RepayModal": "workspace:*"
+    "@snx-v3/TermsModal": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/WithdrawModal": "workspace:*"
     "@snx-v3/calculations": "workspace:*"
