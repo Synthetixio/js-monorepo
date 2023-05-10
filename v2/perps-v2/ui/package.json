@@ -24,7 +24,6 @@
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "@synthetixio/wei": "workspace:*",
-    "@tanstack/react-query": "^4.24.6",
     "date-fns": "^2.29.3",
     "ethers": "^5.7.2",
     "framer-motion": "^7.0.0",

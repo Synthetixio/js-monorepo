@@ -1,8 +1,12 @@
 import { z } from 'zod';
-import { useQuery } from '@tanstack/react-query';
 import { KWENTA_SUBGRAPH_URL } from '../utils';
+import { ApolloClient, InMemoryCache, useQuery, gql } from '@apollo/client';
 
-const gql = (data: TemplateStringsArray) => data[0];
+const kwentaClient = new ApolloClient({
+  uri: KWENTA_SUBGRAPH_URL,
+  cache: new InMemoryCache(),
+});
+
 const AccountQuery = gql`
   query Account($owner: String) {
     smartMarginAccounts(where: { owner: $owner }) {
@@ -11,16 +15,6 @@ const AccountQuery = gql`
     }
   }
 `;
-
-const LocationSchema = z.object({
-  line: z.number(),
-  column: z.number(),
-});
-
-const ErrorSchema = z.object({
-  locations: z.array(LocationSchema),
-  message: z.string(),
-});
 
 const SmartMarginAccountSchema = z.array(
   z
@@ -31,39 +25,18 @@ const SmartMarginAccountSchema = z.array(
     .transform((x) => ({ account: x.id, owner: x.owner }))
 );
 
-const DataSchema = z.object({
-  smartMarginAccounts: SmartMarginAccountSchema,
-});
-
-const ResponseSchema = z.union([
-  z.object({
-    data: DataSchema,
-  }),
-  z.object({
-    errors: z.array(ErrorSchema),
-  }),
-]);
+const ResponseSchema = z
+  .object({
+    smartMarginAccounts: SmartMarginAccountSchema,
+  })
+  .optional();
 
 export const useKwentaAccount = (address?: string) => {
-  return useQuery({
-    queryKey: ['useKwentaAccount', address],
-    queryFn: async () => {
-      const res = await fetch(KWENTA_SUBGRAPH_URL, {
-        method: 'POST',
-        body: JSON.stringify({
-          query: AccountQuery,
-          variables: { owner: address?.toLowerCase() },
-        }),
-      });
-      const resp = await res.json();
-      const json = ResponseSchema.parse(resp);
-      if ('errors' in json) {
-        const { message } = json.errors[0];
-        throw new Error(message);
-      }
-      return json.data.smartMarginAccounts.at(0) || null;
-    },
-    enabled: Boolean(address),
-    staleTime: 10000,
+  const { data, ...rest } = useQuery(AccountQuery, {
+    client: kwentaClient,
+    variables: { owner: address },
+    skip: !address,
   });
+  const parsedData = ResponseSchema.parse(data);
+  return { ...rest, data: parsedData?.smartMarginAccounts.at(0) };
 };

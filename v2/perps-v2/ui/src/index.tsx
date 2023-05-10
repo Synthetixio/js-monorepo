@@ -13,7 +13,6 @@ import {
 import { resolvers, typeDefs } from './queries/resolved';
 import { Dashboard, Actions } from './pages';
 import { isStaging } from './utils/isStaging';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const client = new ApolloClient({
   uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -80,14 +79,11 @@ const customTheme = extendTheme({
   },
 });
 
-const queryClient = new QueryClient();
 root.render(
   <ApolloProvider client={client}>
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={customTheme}>
-        <Fonts />
-        <RouterProvider router={router} />
-      </ChakraProvider>
-    </QueryClientProvider>
+    <ChakraProvider theme={customTheme}>
+      <Fonts />
+      <RouterProvider router={router} />
+    </ChakraProvider>
   </ApolloProvider>
 );
