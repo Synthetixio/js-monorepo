@@ -1,4 +1,4 @@
-import { Flex, Heading, Button, Box, Link } from '@chakra-ui/react';
+import { Flex, Heading, Button, Box, Link, Text } from '@chakra-ui/react';
 import { ArrowBackIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -23,7 +23,7 @@ export const Account: FC = () => {
           onClick={() => navigate('/')}
           leftIcon={<ArrowBackIcon />}
         >
-          All Actions
+          Home
         </Button>
       </Box>
       <Link
