@@ -44,9 +44,9 @@
     "@babel/runtime-corejs3": "^7.20.13",
     "@graphql-codegen/cli": "^3.0.0",
     "@graphql-codegen/client-preset": "^2.1.1",
-    "@noisekit/ipfs-deploy": "^1.0.3",
-    "@noisekit/ipns-deploy": "^1.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@synthetixio/ipfs-deploy": "^1.0.5",
+    "@synthetixio/ipns-deploy": "^1.0.1",
     "@types/react": "^18.0.28",
     "babel-loader": "^9.1.2",
     "babel-plugin-istanbul": "^6.1.1",
@@ -83,8 +83,8 @@
     "ignoreMatches": [
       "@graphql-codegen/client-preset",
       "@graphql-typed-document-node/core",
-      "@noisekit/ipfs-deploy",
-      "@noisekit/ipns-deploy"
+      "@synthetixio/ipfs-deploy",
+      "@synthetixio/ipns-deploy"
     ]
   }
 }

@@ -40,9 +40,9 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime-corejs3": "^7.20.13",
-    "@noisekit/ipfs-deploy": "^1.0.3",
-    "@noisekit/ipns-deploy": "^1.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@synthetixio/ipfs-deploy": "^1.0.5",
+    "@synthetixio/ipns-deploy": "^1.0.1",
     "@tanstack/react-query": "^4.24.6",
     "@types/react": "^18.0.28",
     "@types/react-helmet": "^6.1.6",
@@ -76,8 +76,8 @@
       "prototype"
     ],
     "ignoreMatches": [
-      "@noisekit/ipfs-deploy",
-      "@noisekit/ipns-deploy"
+      "@synthetixio/ipfs-deploy",
+      "@synthetixio/ipns-deploy"
     ]
   }
 }

@@ -124,8 +124,6 @@
     "@babel/preset-typescript": "^7.18.6",
     "@chakra-ui/storybook-addon": "^4.0.17",
     "@metamask/providers": "^10.2.1",
-    "@noisekit/ipfs-deploy": "^1.0.3",
-    "@noisekit/ipns-deploy": "^1.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-docs": "^6.5.16",
@@ -136,6 +134,8 @@
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
     "@svgr/webpack": "^6.5.1",
+    "@synthetixio/ipfs-deploy": "^1.0.5",
+    "@synthetixio/ipns-deploy": "^1.0.1",
     "@tanstack/react-query-devtools": "^4.24.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -194,8 +194,8 @@
       "tmp"
     ],
     "ignoreMatches": [
-      "@noisekit/ipfs-deploy",
-      "@noisekit/ipns-deploy",
+      "@synthetixio/ipfs-deploy",
+      "@synthetixio/ipns-deploy",
       "assets",
       "components",
       "containers",
