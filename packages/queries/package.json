@@ -42,7 +42,7 @@
     "@synthetixio/contracts-interface": "workspace:*",
     "@synthetixio/generate-subgraph-query": "workspace:*",
     "@synthetixio/optimism-networks": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "axios": "^1.3.3",
     "date-fns": "^2.29.3",
     "graphql": "^16.6.0",

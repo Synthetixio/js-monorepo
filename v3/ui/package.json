@@ -55,7 +55,7 @@
     "@synthetixio/safe-import": "workspace:*",
     "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query-devtools": "^4.24.6",
     "babel-jest": "^29.4.2",
     "ethers": "^5.7.2",
