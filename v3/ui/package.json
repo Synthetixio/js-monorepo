@@ -17,6 +17,8 @@
     "@chakra-ui/react": "^2.5.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@snx-v2/Constants": "workspace:*",
+    "@snx-v2/TermsModal": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v3/AccountsSelector": "workspace:*",
     "@snx-v3/Amount": "workspace:*",
