@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet';
 import {
   Box,
   Button,
-  Divider,
   Fade,
   Flex,
   Heading,

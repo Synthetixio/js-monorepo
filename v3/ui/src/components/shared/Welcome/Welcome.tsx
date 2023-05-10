@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Flex, Box, Alert, AlertIcon, AlertTitle, AlertDescription, Link } from '@chakra-ui/react';
 
 export const Welcome = () => (
