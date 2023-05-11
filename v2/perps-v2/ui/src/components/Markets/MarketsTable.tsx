@@ -1,12 +1,21 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { MarketsTableLoading } from './MarketsTableLoading';
-import { useMarketStats } from '../../hooks';
-import { Market, TableHeaderCell } from '../Shared';
+import { useMarkets } from '../../hooks';
+import {
+  Currency,
+  Funding,
+  Market,
+  MarkPrice,
+  OpenInterest,
+  PercentageChange,
+  PremiumDiscount,
+  Skew,
+  TableHeaderCell,
+} from '../Shared';
+import { wei } from '@synthetixio/wei';
 
 export const MarketsTable = () => {
-  const { data, loading } = useMarketStats();
-
-  console.log(data);
+  const { data, loading } = useMarkets();
 
   return (
     <>
@@ -44,26 +53,39 @@ export const MarketsTable = () => {
             )}
             {data?.map((item) => {
               const {
-                id,
-                market: { asset },
+                market: { asset, marketKey },
+                markPrice,
+                indexPrice,
+                fundingRate,
+                percentageDifference,
+                volume,
+                long,
+                short,
+                skewPercent,
               } = item;
-              return (
-                <Tr key={id} borderTopWidth="1px">
-                  <Market asset={asset} leverage={null} isPosition={false} />
 
-                  {/* <Currency amount={price?.toNumber() || null} />
-                  {isPosition(label) ? (
-                    <Size size={size.toNumber()} marketPrice={price?.toNumber() || null} />
-                  ) : (
-                    <MarginTransfer size={size.toNumber()} />
-                  )}
-                  <Currency amount={fees?.toNumber() || null} /> */}
+              const skewValue = long.div(long.add(short)).toNumber();
+
+              return (
+                <Tr key={marketKey} borderTopWidth="1px">
+                  <Market asset={asset} leverage={null} isPosition={false} />
+                  <MarkPrice markPrice={markPrice.toNumber()} indexPrice={indexPrice.toNumber()} />
+                  <PremiumDiscount amount={skewPercent.toNumber()} />
+                  <PercentageChange amount={percentageDifference.toNumber()} />
+                  <Funding withDollar={false} amount={100 * fundingRate.toNumber()} />
+                  <OpenInterest
+                    long={long.toNumber()}
+                    short={short.toNumber()}
+                    price={markPrice.toNumber()}
+                  />
+                  <Skew skew={skewValue} />
+                  <Currency amount={wei(volume, 18, true).toNumber()} decimals={2} />
                 </Tr>
               );
             })}
           </Tbody>
         </Table>
-        {!loading && data.length === 0 && (
+        {!loading && data?.length === 0 && (
           <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
             <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
               No actions

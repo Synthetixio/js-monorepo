@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { gql, useApolloClient } from '@apollo/client';
-import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
+
 import { MARKETS_ID_QUERY } from '../queries/dashboard';
 import * as z from 'zod';
 import { FuturesMarketKey, MARKETS, scale } from '../utils';
 import { utils } from 'ethers';
 import { wei } from '@synthetixio/wei';
-
-const pyth = new EvmPriceServiceConnection('https://xc-mainnet.pyth.network');
+import { pyth } from '../utils/pyth';
 
 const pythItemSchema = z.object({
   pythId: z.union([z.string(), z.undefined()]),
@@ -23,7 +22,7 @@ const NumberStringSchema = z.string().refine((value) => !isNaN(parseFloat(value)
   path: [],
 });
 
-const ZodStringToWei = NumberStringSchema.transform((value) => wei(value, 18, true));
+export const ZodStringToWei = NumberStringSchema.transform((value) => wei(value, 18, true));
 
 export const DataSchema = z.object({
   averageEntryPrice: z.string(),

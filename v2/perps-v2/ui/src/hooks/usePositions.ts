@@ -31,7 +31,7 @@ const OPTIMISM__ID = 10;
 const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
 const provider = new providers.InfuraProvider(networkId, infuraId);
 
-const perpsMarketDataContract = isStaging
+export const perpsMarketDataContract = isStaging
   ? (new Contract(
       perpsMarketDataAddressGoerli,
       perpsMarketDataAbiGoerli,

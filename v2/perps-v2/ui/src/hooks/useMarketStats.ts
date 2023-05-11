@@ -4,7 +4,7 @@ import { subDays } from 'date-fns';
 import { MARKETS_QUERY } from '../queries/dashboard';
 import { DailyMarketStat_OrderBy, OrderDirection } from '../__generated__/graphql';
 
-function getDateRange(upperDaysAgo = 0, lowerDaysAgo = 1) {
+export function getDateRange(upperDaysAgo = 0, lowerDaysAgo = 1) {
   const now = new Date();
 
   const upper = subDays(now, upperDaysAgo).toISOString().split('T')[0];

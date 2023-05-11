@@ -8,3 +8,7 @@ export * from './MarkPrice';
 export * from './WalletAddress';
 export * from './MarginTransfer';
 export * from './NetValue';
+export * from './PercentageChange';
+export * from './PremiumDiscount';
+export * from './Skew';
+export * from './OpenInterest';
