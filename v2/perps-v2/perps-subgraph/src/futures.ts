@@ -249,7 +249,7 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
     trader.createdAt = event.block.timestamp;
     trader.feesPaidToSynthetix = BigInt.fromI32(0);
     trader.trades = [];
-    trader.totalVolume = event.params.marginDelta;
+    trader.totalVolume = BigInt.fromI32(0);
     trader.totalLiquidations = BigInt.fromI32(0);
     trader.totalMarginLiquidated = BigInt.fromI32(0);
     trader.margin = event.params.marginDelta;
