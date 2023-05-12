@@ -430,36 +430,28 @@ jobs:
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     resource_class: large
-    environment:
-      DEBUG: ipfs-deploy,ipns-deploy
-      IPFS_HOST: ipfs.synthetix.io
-      IPFS_PORT: 5001
-      IPFS_PROTOCOL: https
     steps:
       - checkout
       - yarn-install
       - run: yarn workspace @snx-v3/ui build
-      - run: echo "export IPFS_CID=$(yarn workspace @snx-v3/ui ipfs-deploy ./dist)" >> $BASH_ENV
-      - run: echo $IPFS_CID
-      - run: yarn workspace @snx-v3/ui ipns-deploy v3.synthetix.eth $IPFS_CID
+      - ipfs-deploy:
+          source-dir: './v3/ui/dist'
+          ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipns-key: 'v3.synthetix.eth'
 
   perps-watcher-ipfs:
     working_directory: /tmp/app
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     resource_class: large
-    environment:
-      DEBUG: ipfs-deploy,ipns-deploy
-      IPFS_HOST: ipfs.synthetix.io
-      IPFS_PORT: 5001
-      IPFS_PROTOCOL: https
     steps:
       - checkout
       - yarn-install
       - run: yarn workspace @synthetixio/perps-v2-dashboard build
-      - run: echo "export IPFS_CID=$(yarn workspace @synthetixio/perps-v2-dashboard ipfs-deploy ./dist)" >> $BASH_ENV
-      - run: echo $IPFS_CID
-      - run: yarn workspace @synthetixio/perps-v2-dashboard ipns-deploy watcher.synthetix.io $IPFS_CID
+      - ipfs-deploy:
+          source-dir: './v2/perps-v2/ui/dist'
+          ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipns-key: 'watcher.synthetix.io'
 
 workflows:
   version: 2.1
@@ -467,52 +459,53 @@ workflows:
   ui:
     jobs:
       - yarn-install
-      #      - checks:
-      #          requires: [yarn-install]
-      #      - typecheck:
-      #          requires: [yarn-install]
-      #      - tests:
-      #          requires: [yarn-install]
-      #
-      #      - v2-cy:
-      #          requires: [yarn-install]
-      #      - v2-e2e:
-      #          requires: [yarn-install]
-      - v2-ipfs:
+      - checks:
           requires: [yarn-install]
-#          requires: [tests, typecheck, v2-cy, v2-e2e]
-#          filters:
-#            branches:
-#              only:
-#                - release
-#                - master
-#                - ipfs-deploy
-#      - perps-watcher-ipfs:
-#          requires: [tests, typecheck]
-#          filters:
-#            branches:
-#              only:
-#                - release
-#                - master
-#                - ipfs-deploy
-#
-#      - v3-cy:
-#          requires: [yarn-install]
-#      - v3-e2e:
-#          chain: optimism-mainnet
-#          name: v3-e2e-optimism-mainnet
-#          requires: [yarn-install]
-#      - v3-e2e:
-#          chain: optimism-goerli
-#          name: v3-e2e-optimism-goerli
-#          requires: [yarn-install]
-#      - v3-ipfs:
-#          requires: [tests, typecheck, v3-cy, v3-e2e-optimism-mainnet]
-#          filters:
-#            branches:
-#              only:
-#                - release
-#                - master
-#                - ipfs-deploy
-#      - combine-coverage:
-#          requires: [tests, v2-cy, v2-e2e, v3-cy, v3-e2e-optimism-mainnet]
+      - typecheck:
+          requires: [yarn-install]
+      - tests:
+          requires: [yarn-install]
+
+      - v2-cy:
+          requires: [yarn-install]
+      - v2-e2e:
+          requires: [yarn-install]
+      - v2-ipfs:
+          requires: [tests, typecheck, v2-cy, v2-e2e]
+          filters:
+            branches:
+              only:
+                - release
+                - master
+                - ipfs-deploy
+
+      - perps-watcher-ipfs:
+          requires: [tests, typecheck]
+          filters:
+            branches:
+              only:
+                - release
+                - master
+                - ipfs-deploy
+
+      - v3-cy:
+          requires: [yarn-install]
+      - v3-e2e:
+          chain: optimism-mainnet
+          name: v3-e2e-optimism-mainnet
+          requires: [yarn-install]
+      - v3-e2e:
+          chain: optimism-goerli
+          name: v3-e2e-optimism-goerli
+          requires: [yarn-install]
+      - v3-ipfs:
+          requires: [tests, typecheck, v3-cy, v3-e2e-optimism-mainnet]
+          filters:
+            branches:
+              only:
+                - release
+                - master
+                - ipfs-deploy
+
+      - combine-coverage:
+          requires: [tests, v2-cy, v2-e2e, v3-cy, v3-e2e-optimism-mainnet]
