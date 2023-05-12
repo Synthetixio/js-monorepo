@@ -199,10 +199,6 @@ module.exports = {
         )
       ),
       new webpack.NormalModuleReplacementPlugin(
-        new RegExp(`^@synthetixio/providers$`),
-        path.resolve(path.dirname(require.resolve(`@synthetixio/providers/package.json`)), 'src')
-      ),
-      new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/queries$`),
         path.resolve(path.dirname(require.resolve(`@synthetixio/queries/package.json`)), 'src')
       ),
