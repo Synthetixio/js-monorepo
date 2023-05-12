@@ -6,17 +6,24 @@ describe('useGasPrice', () => {
   let react;
   let reactQuery;
   let ContractContext;
+  let SignerContext;
   let synthetixContracts;
   let getBlockMock;
   let getGasPriceMock;
+  let useGlobalProvidersWithFallback;
 
   beforeEach(async () => {
+    ContractContext = 'ContractContext';
+    SignerContext = 'SignerContext';
     react = {
-      useContext: jest.fn(() => ({
-        networkId: 1,
-      })),
+      useContext: jest.fn((context) => {
+        return context === 'ContractContext'
+          ? {
+              networkId: 1,
+            }
+          : {};
+      }),
     };
-    ContractContext = jest.fn();
     // needed to mock this since this module relies on SignerContext
     synthetixContracts = {
       NetworkIdByName: { mainnet: 1, 'mainnet-ovm': 10 },
@@ -24,9 +31,12 @@ describe('useGasPrice', () => {
     getBlockMock = jest.fn();
     getGasPriceMock = jest.fn();
 
-    const InfuraProvider = function () {
-      return { getBlock: getBlockMock, getGasPrice: getGasPriceMock };
-    };
+    useGlobalProvidersWithFallback = jest.fn(() => ({
+      globalProviders: {
+        mainnet: { getBlock: getBlockMock, getGasPrice: getGasPriceMock },
+        optimism: { getGasPrice: getGasPriceMock },
+      },
+    }));
 
     reactQuery = {
       useQuery: jest.fn(() => 'useQuery'),
@@ -34,10 +44,13 @@ describe('useGasPrice', () => {
 
     jest.doMock('react', () => react);
     jest.doMock('@tanstack/react-query', () => reactQuery);
-    jest.doMock('@snx-v2/ContractContext', () => ContractContext);
+    jest.doMock('@snx-v2/ContractContext', () => ({ ContractContext }));
+    jest.doMock('@snx-v2/SignerContext', () => ({ SignerContext }));
     jest.doMock('@snx-v2/useGasPrice', () => ({ useGasPrice }));
     jest.doMock('@snx-v2/useSynthetixContracts', () => synthetixContracts);
-    jest.doMock('@ethersproject/providers', () => ({ InfuraProvider }));
+    jest.doMock('@snx-v2/useGlobalProvidersWithFallback', () => ({
+      useGlobalProvidersWithFallback,
+    }));
 
     ({ useGasPrice } = await import('./useGasPrice'));
   });
@@ -49,19 +62,23 @@ describe('useGasPrice', () => {
   test('Returns undefined values when network is undefined', async () => {
     react.useContext.mockReturnValue({ networkId: undefined });
     const result = useGasPrice();
-    const [cacheKey, _query, options] = reactQuery.useQuery.mock.lastCall;
+    const [args] = reactQuery.useQuery.mock.lastCall;
+
     expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual(['useGasPrice', undefined]);
-    expect(options).toEqual({ enabled: false });
+    expect(args.queryKey).toEqual([
+      'useGasPrice',
+      { networkId: undefined, walletAddress: undefined },
+    ]);
+    expect(args.enabled).toEqual(false);
   });
   test('Returns gas prices for mainnet', async () => {
     const result = useGasPrice();
-    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
+    const [args] = reactQuery.useQuery.mock.lastCall;
     expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual(['useGasPrice', 1]);
-    expect(options).toEqual({ enabled: true });
+    expect(args.queryKey).toEqual(['useGasPrice', { networkId: 1, walletAddress: undefined }]);
+    expect(args.enabled).toEqual(true);
     getBlockMock.mockReturnValue({ baseFeePerGas: wei(2, GWEI_DECIMALS).toBN() });
-    const queryResult = await query();
+    const queryResult = await args.queryFn();
     expect(queryResult).toEqual({
       average: {
         baseFeePerGas: wei(2, GWEI_DECIMALS).toBN(),
@@ -85,12 +102,12 @@ describe('useGasPrice', () => {
     react.useContext.mockReturnValue({ networkId: 10 });
 
     const result = useGasPrice();
-    const [cacheKey, query, options] = reactQuery.useQuery.mock.lastCall;
+    const [args] = reactQuery.useQuery.mock.lastCall;
     expect(result.data).toEqual(undefined);
-    expect(cacheKey).toEqual(['useGasPrice', 10]);
-    expect(options).toEqual({ enabled: true });
+    expect(args.queryKey).toEqual(['useGasPrice', { networkId: 10, walletAddress: undefined }]);
+    expect(args.enabled).toEqual(true);
     getGasPriceMock.mockReturnValue(wei(2, GWEI_DECIMALS).toBN());
-    const queryResult = await query();
+    const queryResult = await args.queryFn();
     expect(getGasPriceMock).toBeCalled();
 
     expect(queryResult).toEqual({

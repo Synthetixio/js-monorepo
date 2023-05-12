@@ -40,7 +40,6 @@ module.exports = {
 
               '@synthetixio/contracts-interface': './packages/contracts-interface/src',
               '@synthetixio/optimism-networks': './packages/optimism-networks/src',
-              '@synthetixio/providers': './packages/providers/src',
               '@synthetixio/queries': './packages/queries/src',
               '@synthetixio/generate-subgraph-query': './tools/generate-subgraph-query/src',
 

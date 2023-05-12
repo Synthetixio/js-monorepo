@@ -1,28 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
-import { providers } from 'ethers';
 import { getFeePool } from '@snx-v2/useSynthetixContracts';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
+import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
 
 export const useFeePeriodMultiNetwork = (period = 1 /* Defaults to previous period*/) => {
+  const { globalProviders, usingInfura, toggleRpc } = useGlobalProvidersWithFallback();
   return useQuery({
-    queryKey: ['stakingV2', 'useFeePeriodMultiNetwork'],
+    queryKey: ['stakingV2', 'useFeePeriodMultiNetwork', usingInfura],
     queryFn: async () => {
-      const optimismProvider = new providers.InfuraProvider(
-        NetworkIdByName['mainnet-ovm'],
-        process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-      );
-      const mainnetProvider = new providers.InfuraProvider(
-        NetworkIdByName.mainnet,
-        process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-      );
       const [FeePoolOptimism, FeePoolMainnet] = await Promise.all([
         getFeePool({
-          provider: optimismProvider,
+          provider: globalProviders.optimism,
           networkId: NetworkIdByName['mainnet-ovm'],
           signer: null,
         }),
         getFeePool({
-          provider: mainnetProvider,
+          provider: globalProviders.mainnet,
           networkId: NetworkIdByName.mainnet,
           signer: null,
         }),
@@ -34,7 +27,7 @@ export const useFeePeriodMultiNetwork = (period = 1 /* Defaults to previous peri
       ]);
       return { feePeriodOptimism: feePeriodOptimism, feePeriodMainnet };
     },
-
+    onError: () => (usingInfura ? toggleRpc() : null),
     enabled: true,
     staleTime: 10000,
   });

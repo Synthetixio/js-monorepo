@@ -199,10 +199,6 @@ module.exports = {
         )
       ),
       new webpack.NormalModuleReplacementPlugin(
-        new RegExp(`^@synthetixio/providers$`),
-        path.resolve(path.dirname(require.resolve(`@synthetixio/providers/package.json`)), 'src')
-      ),
-      new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/queries$`),
         path.resolve(path.dirname(require.resolve(`@synthetixio/queries/package.json`)), 'src')
       ),
@@ -272,7 +268,6 @@ module.exports = {
       '@synthetixio/contracts/build': '@synthetixio/contracts/src',
       '@synthetixio/contracts-interface/build': '@synthetixio/contracts-interface/src',
       '@synthetixio/optimism-networks/build': '@synthetixio/optimism-networks/src',
-      '@synthetixio/providers/build': '@synthetixio/providers/src',
       '@synthetixio/queries/build': '@synthetixio/queries/src',
     },
     fallback: {
