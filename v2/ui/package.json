@@ -135,8 +135,6 @@
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
     "@svgr/webpack": "^6.5.1",
-    "@synthetixio/ipfs-deploy": "^1.0.5",
-    "@synthetixio/ipns-deploy": "^1.0.1",
     "@tanstack/react-query-devtools": "^4.24.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -195,8 +193,6 @@
       "tmp"
     ],
     "ignoreMatches": [
-      "@synthetixio/ipfs-deploy",
-      "@synthetixio/ipns-deploy",
       "assets",
       "components",
       "containers",

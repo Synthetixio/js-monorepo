@@ -83,8 +83,6 @@
     "@storybook/builder-webpack5": "^6.5.16",
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
-    "@synthetixio/ipfs-deploy": "^1.0.5",
-    "@synthetixio/ipns-deploy": "^1.0.1",
     "@tanstack/react-query": "^4.24.6",
     "@types/react": "^18.0.28",
     "@types/react-helmet": "^6.1.6",
@@ -119,9 +117,6 @@
     "ignorePatterns": [
       "dist"
     ],
-    "ignoreMatches": [
-      "@synthetixio/ipfs-deploy",
-      "@synthetixio/ipns-deploy"
-    ]
+    "ignoreMatches": []
   }
 }
