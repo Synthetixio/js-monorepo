@@ -91,6 +91,8 @@ commands:
         type: string
       ipns-key:
         type: string
+      ipfs-cluster-api:
+        type: string
     steps:
       - run:
           name: Install IPFS
@@ -119,6 +121,7 @@ commands:
       - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/pin/add?recursive=true&progress=true&arg=$IPFS_CID"
       - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/key/list" | jq
       - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/name/publish?key=<< parameters.ipns-key >>&arg=$IPFS_CID" | jq
+      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-cluster-api >>/pin/add?arg=$IPFS_CID" | jq
 
 jobs:
   yarn-install:
@@ -434,6 +437,7 @@ jobs:
       - ipfs-deploy:
           source-dir: './v2/ui/out'
           ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
           ipns-key: 'staking.synthetix.eth'
 
   v3-ipfs:
@@ -448,6 +452,7 @@ jobs:
       - ipfs-deploy:
           source-dir: './v3/ui/dist'
           ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
           ipns-key: 'v3.synthetix.eth'
 
   perps-watcher-ipfs:
@@ -462,6 +467,7 @@ jobs:
       - ipfs-deploy:
           source-dir: './v2/perps-v2/ui/dist'
           ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
           ipns-key: 'watcher.synthetix.io'
 
 workflows:
