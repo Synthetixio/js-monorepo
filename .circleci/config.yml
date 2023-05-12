@@ -83,6 +83,32 @@ commands:
             echo export PATH="$PATH:$HOME/.foundry/bin" > $BASH_ENV
             foundryup
 
+  ipfs-deploy:
+    parameters:
+      source-dir:
+        type: string
+      ipfs-api:
+        type: string
+      ipns-key:
+        type: string
+    steps:
+      - run: ./.circleci/install-ipfs.sh
+      - run:
+          command: ipfs daemon
+          background: true
+      - run: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
+
+      - run: ipfs add --progress=true --pin=true --recursive "<< parameters.source-dir >>"
+      - run:
+          name: 'Save IPFS_CID'
+          command: |
+            export IPFS_CID=$(ipfs add --progress=false --pin=true --recursive --quieter "<< parameters.source-dir >>")
+            echo $IPFS_CID
+            echo "export IPFS_CID=$IPFS_CID" >> $BASH_ENV
+      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/pin/add?recursive=true&progress=true&arg=$IPFS_CID"
+      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/key/list" | jq
+      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/name/publish?key=$IPNS_KEY&arg=$IPFS_CID" | jq
+
 jobs:
   yarn-install:
     working_directory: /tmp/app
@@ -390,34 +416,14 @@ jobs:
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     resource_class: large
-    environment:
-      DEBUG: ipfs-deploy,ipns-deploy
-      IPFS_HOST: ipfs.synthetix.io
-      IPFS_PORT: 5001
-      IPFS_PROTOCOL: https
-      IPNS_KEY: staking.synthetix.eth
     steps:
       - checkout
       - yarn-install
-
-      - run: ./.circleci/install-ipfs.sh
-      - run:
-          command: ipfs daemon
-          background: true
-      - run: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' localhost:5001/api/v0/key/list
-
       - run: yarn workspace @synthetixio/v2-ui build
-      - run: yarn workspace @synthetixio/v2-ui exec 'ipfs add --progress=true --pin=true --recursive ./out'
-      - run:
-          name: 'Save IPFS_CID'
-          command: |
-            export IPFS_CID=$(yarn workspace @synthetixio/v2-ui exec 'ipfs add --progress=false --pin=true --recursive --quieter ./out')
-            echo $IPFS_CID
-            echo "export IPFS_CID=$IPFS_CID" >> $BASH_ENV
-
-      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "https://ipfs.synthetix.io:5001/api/v0/pin/add?recursive=true&progress=true&arg=$IPFS_CID"
-      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "https://ipfs.synthetix.io:5001/api/v0/key/list" | jq
-      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "https://ipfs.synthetix.io:5001/api/v0/name/publish?key=$IPNS_KEY&arg=$IPFS_CID" | jq
+      - ipfs-deploy:
+          source-dir: './v2/ui/out'
+          ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipns-key: 'staking.synthetix.eth'
 
   v3-ipfs:
     working_directory: /tmp/app
