@@ -1,7 +1,7 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
 import { POSITIONS_QUERY_MARKET } from '../../../queries/positions';
-import { Market, PnL, TableHeaderCell, WalletAddress } from '../../Shared';
+import { Market, PnL, Size, TableHeaderCell, WalletTooltip } from '../../Shared';
 import { FuturesPosition_OrderBy, OrderDirection } from '../../../__generated__/graphql';
 import { wei } from '@synthetixio/wei';
 import { SmallTableLoading } from './SmallTableLoading';
@@ -41,8 +41,8 @@ export const ClosestToLiquidation = () => {
           <Thead>
             <Tr>
               <TableHeaderCell>Market</TableHeaderCell>
-              <TableHeaderCell>Wallet Address</TableHeaderCell>
-              <TableHeaderCell>Unrealised PnL</TableHeaderCell>
+              <TableHeaderCell>Size</TableHeaderCell>
+              <TableHeaderCell>Realised PnL</TableHeaderCell>
             </Tr>
           </Thead>
           <Tbody>
@@ -61,6 +61,8 @@ export const ClosestToLiquidation = () => {
                 leverage,
                 long,
                 unrealizedPnl,
+                size,
+                lastPrice,
               } = item;
 
               return (
@@ -70,8 +72,12 @@ export const ClosestToLiquidation = () => {
                     leverage={wei(leverage, 18, true).toNumber()}
                     direction={long ? 'LONG' : 'SHORT'}
                   />
-                  <WalletAddress account={trader.id} />
+                  <Size
+                    size={wei(size, 18, true).toNumber()}
+                    marketPrice={wei(lastPrice, 18, true).toNumber()}
+                  />
                   <PnL pnl={wei(unrealizedPnl, 18, true).toNumber()} />
+                  <WalletTooltip address={trader.id} />
                 </Tr>
               );
             })}
