@@ -1,8 +1,9 @@
-import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
+import { CoreProxyType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
+import { useNetwork } from '@snx-v3/useBlockchain';
 
 const PositionCollateralSchema = z.object({
   value: ZodBigNumber.transform((x) => wei(x)),
@@ -33,7 +34,7 @@ export const loadPosition = async ({
   poolId,
   tokenAddress,
 }: {
-  CoreProxy: CoreProxyContractType;
+  CoreProxy: CoreProxyType;
   accountId: string;
   poolId: string;
   tokenAddress: string;
@@ -70,14 +71,15 @@ export const useLiquidityPosition = ({
   poolId?: string;
 }) => {
   const { data: CoreProxy } = useCoreProxy();
+  const network = useNetwork();
   return useQuery({
     queryKey: [
+      network.name,
+      { accountId },
       'LiquidityPosition',
       {
-        tokenAddress,
-        poolId,
-        accountId,
-        CoreProxy: CoreProxy?.address,
+        pool: poolId,
+        token: tokenAddress,
       },
     ],
     queryFn: async () => {

@@ -1,6 +1,17 @@
 {
-  "address": "0xE835f39951FeB63683de028E02565B8c082c7544",
+  "address": "0x80c529f6a9622556bff443c11BF62a4d49234427",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "AccountNotFound",
+      "type": "error"
+    },
     {
       "inputs": [],
       "name": "EmptyDistribution",
@@ -189,5 +200,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xe975cb902622dacfa38464530ff38e25d763cc19504c3552ab4c13425e0d6c38"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0xb27d3f2cfe823209b0160ed02b8cc0592565740e3b9c471328237d659cbe2ff1",
+  "sourceName": "contracts/modules/core/AssociateDebtModule.sol",
+  "contractName": "AssociateDebtModule",
+  "deployedOn": "contract.AssociateDebtModule"
 }

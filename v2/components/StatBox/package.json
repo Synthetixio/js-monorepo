@@ -5,6 +5,8 @@
   "version": "0.0.1",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
-    "@storybook/react": "^6.5.16"
+    "@snx-v2/icons": "workspace:*",
+    "@storybook/react": "^6.5.16",
+    "react": "^18.2.0"
   }
 }

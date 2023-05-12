@@ -2,12 +2,15 @@
   "name": "@snx-v2/BurnStats",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
+    "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/StatBox": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
+    "@snx-v2/icons": "workspace:*",
     "@snx-v2/useApr": "workspace:*",
+    "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*",
     "react": "^18.2.0"
   }

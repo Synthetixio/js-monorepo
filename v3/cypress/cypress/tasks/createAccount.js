@@ -1,8 +1,10 @@
 import { ethers } from 'ethers';
 import crypto from 'crypto';
-import * as CoreProxy from '@synthetixio/v3-contracts/src/goerli/CoreProxy';
+import { importCoreProxy } from './importCoreProxy';
 
 export async function createAccount({ privateKey }) {
+  const CoreProxy = await importCoreProxy();
+
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const wallet = new ethers.Wallet(privateKey, provider);
 
@@ -13,7 +15,7 @@ export async function createAccount({ privateKey }) {
   const currentAccountOwner = await coreProxy.getAccountOwner(accountId);
   console.log('createAccount', { accountId, currentAccountOwner });
 
-  const tx = await coreProxy.createAccount(accountId);
+  const tx = await coreProxy['createAccount(uint128)'](accountId);
   await tx.wait();
 
   const newAccountOwner = await coreProxy.getAccountOwner(accountId);

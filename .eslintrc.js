@@ -53,6 +53,7 @@ module.exports = {
         'v3/lib/**/*',
         'v3/theme/**/*',
         'v3/oracle-manager-ui/**/*',
+        'v3/spot-markets/ui/**/*',
       ],
 
       env: {
@@ -181,7 +182,10 @@ module.exports = {
       globals: {
         changetype: true,
         i32: true,
+        u8: true,
         i64: true,
+        u32: true,
+        u64: true,
         assert: true,
       },
       rules: {

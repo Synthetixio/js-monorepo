@@ -10,7 +10,7 @@ describe('useOptimismLayer1Fee', () => {
   beforeEach(async () => {
     getL1Fee = jest.fn(() => BigNumber.from(1));
     serialize = jest.fn(() => 'serialized txn');
-    useNetwork = jest.fn(() => ({ id: 10, name: 'optimism', isSupported: true }));
+    useNetwork = jest.fn(() => ({ id: 10, name: 'optimism-mainnet' }));
 
     reactQuery = {
       useQuery: jest.fn(() => ({ data: undefined })),
@@ -63,7 +63,11 @@ describe('useOptimismLayer1Fee', () => {
     expect(enabled).toEqual(true);
 
     // Assert last query call has correct query key
-    expect(queryKey).toEqual(['optimism', expect.any(Function)]);
+    expect(queryKey).toEqual([
+      'optimism-mainnet',
+      'OptimismL1Fee',
+      { args: expect.any(Function), key: undefined },
+    ]);
 
     await queryFn();
 

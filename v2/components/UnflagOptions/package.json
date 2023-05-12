@@ -2,7 +2,7 @@
   "name": "@snx-v2/UnflagOptions",
   "private": true,
   "main": "index.tsx",
-  "version": "0.0.6",
+  "version": "0.0.10",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/formatters": "workspace:*",

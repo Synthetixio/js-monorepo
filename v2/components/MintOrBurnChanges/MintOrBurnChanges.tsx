@@ -12,6 +12,7 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { useTranslation } from 'react-i18next';
+import { useEscrowBalance } from '@snx-v2/useEscrowBalance';
 
 const Row = ({
   label,
@@ -119,10 +120,13 @@ export const MintOrBurnChanges: FC<{ debtChange: number; action: 'mint' | 'burn'
   const { data: debtData } = useDebtData();
   const { data: synthBalanceData } = useSynthsBalances();
   const { data: exchangeRateData } = useExchangeRatesData();
+  const { data: escrowBalanceData } = useEscrowBalance();
+
   const stakedSnx = calculateStakedSnx({ ...debtData });
   const sUSDBalance = synthBalanceData?.balancesMap.sUSD?.balance.toNumber() || 0;
 
   if (
+    !escrowBalanceData ||
     !debtData ||
     !synthBalanceData ||
     !exchangeRateData ||
@@ -135,8 +139,6 @@ export const MintOrBurnChanges: FC<{ debtChange: number; action: 'mint' | 'burn'
   const args = {
     debtBalance: debtData.debtBalance.toNumber(),
     targetCRatio: debtData.targetCRatio.toNumber(),
-    stakedSnx: stakedSnx.toNumber(),
-    transferable: debtData?.transferable.toNumber(),
     sUSDBalance: sUSDBalance,
     collateralUsdValue: debtData.collateral.mul(exchangeRateData.SNX).toNumber(),
   };
@@ -144,6 +146,8 @@ export const MintOrBurnChanges: FC<{ debtChange: number; action: 'mint' | 'burn'
     action === 'mint'
       ? calculateChangesFromMint({
           ...args,
+          transferable: debtData.transferable.toNumber(),
+          stakedSnx: stakedSnx.toNumber(),
           stakeAmountSNX:
             calculateStakeAmountFromMint(
               debtChange,
@@ -156,11 +160,14 @@ export const MintOrBurnChanges: FC<{ debtChange: number; action: 'mint' | 'burn'
           ...args,
           collateral: debtData.collateral.toNumber(),
           burnAmountSusd: debtChange,
+          escrowedSnx: escrowBalanceData.totalEscrowed.toNumber(),
         });
 
   return (
     <MintOrBurnChangesUi
       {...args}
+      transferable={debtData.transferable.toNumber()}
+      stakedSnx={stakedSnx.toNumber()}
       changedValues={changedValues}
       collateral={debtData.collateral.toNumber()}
       currentCRatioPercentage={debtData.currentCRatioPercentage.toNumber()}

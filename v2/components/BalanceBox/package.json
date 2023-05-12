@@ -2,7 +2,7 @@
   "name": "@snx-v2/BalanceBox",
   "private": true,
   "main": "index.tsx",
-  "version": "0.0.5",
+  "version": "0.0.9",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/ContractContext": "workspace:*",
@@ -11,6 +11,7 @@
     "@snx-v2/stakingCalculations": "workspace:*",
     "@snx-v2/useDSnxBalance": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
+    "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useEscrowBalance": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useGetLiquidationRewards": "workspace:*",

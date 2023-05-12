@@ -4,7 +4,8 @@
       { "internalType": "address", "name": "_owner", "type": "address" },
       { "internalType": "address[]", "name": "_associatedContracts", "type": "address[]" },
       { "internalType": "bytes32", "name": "_baseAsset", "type": "bytes32" },
-      { "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" }
+      { "internalType": "bytes32", "name": "_marketKey", "type": "bytes32" },
+      { "internalType": "address", "name": "_legacyState", "type": "address" }
     ],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -34,6 +35,22 @@
       }
     ],
     "name": "AssociatedContractRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "bytes32", "name": "marketKey", "type": "bytes32" },
+      { "indexed": false, "internalType": "bool", "name": "legacyContractExists", "type": "bool" },
+      { "indexed": false, "internalType": "address", "name": "legacyState", "type": "address" },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "legacyFundinSequenceOffset",
+        "type": "uint256"
+      }
+    ],
+    "name": "MarketStateInitialized",
     "type": "event"
   },
   {
@@ -91,18 +108,25 @@
   },
   {
     "constant": true,
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "delayedOrders",
     "outputs": [
-      { "internalType": "bool", "name": "isOffchain", "type": "bool" },
-      { "internalType": "int128", "name": "sizeDelta", "type": "int128" },
-      { "internalType": "uint128", "name": "priceImpactDelta", "type": "uint128" },
-      { "internalType": "uint128", "name": "targetRoundId", "type": "uint128" },
-      { "internalType": "uint128", "name": "commitDeposit", "type": "uint128" },
-      { "internalType": "uint128", "name": "keeperDeposit", "type": "uint128" },
-      { "internalType": "uint256", "name": "executableAtTime", "type": "uint256" },
-      { "internalType": "uint256", "name": "intentionTime", "type": "uint256" },
-      { "internalType": "bytes32", "name": "trackingCode", "type": "bytes32" }
+      {
+        "components": [
+          { "internalType": "bool", "name": "isOffchain", "type": "bool" },
+          { "internalType": "int128", "name": "sizeDelta", "type": "int128" },
+          { "internalType": "uint128", "name": "desiredFillPrice", "type": "uint128" },
+          { "internalType": "uint128", "name": "targetRoundId", "type": "uint128" },
+          { "internalType": "uint128", "name": "commitDeposit", "type": "uint128" },
+          { "internalType": "uint128", "name": "keeperDeposit", "type": "uint128" },
+          { "internalType": "uint256", "name": "executableAtTime", "type": "uint256" },
+          { "internalType": "uint256", "name": "intentionTime", "type": "uint256" },
+          { "internalType": "bytes32", "name": "trackingCode", "type": "bytes32" }
+        ],
+        "internalType": "struct IPerpsV2MarketBaseTypes.DelayedOrder",
+        "name": "",
+        "type": "tuple"
+      }
     ],
     "payable": false,
     "stateMutability": "view",
@@ -136,6 +160,18 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "address", "name": "flagger", "type": "address" }
+    ],
+    "name": "flag",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [],
     "name": "fundingLastRecomputed",
@@ -155,7 +191,7 @@
   },
   {
     "constant": true,
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [{ "internalType": "uint256", "name": "index", "type": "uint256" }],
     "name": "fundingSequence",
     "outputs": [{ "internalType": "int128", "name": "", "type": "int128" }],
     "payable": false,
@@ -195,6 +231,27 @@
   {
     "constant": true,
     "inputs": [],
+    "name": "getFlaggedAddressesLength",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      { "internalType": "uint256", "name": "index", "type": "uint256" },
+      { "internalType": "uint256", "name": "pageSize", "type": "uint256" }
+    ],
+    "name": "getFlaggedAddressesPage",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "getPositionAddressesLength",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
@@ -211,6 +268,53 @@
     "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "initialized",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "isFlagged",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "legacyFundinSequenceOffset",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "legacyState",
+    "outputs": [
+      { "internalType": "contract PerpsV2MarketStateLegacyR1", "name": "", "type": "address" }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "linkOrInitializeState",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -279,13 +383,29 @@
   {
     "constant": true,
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "positionFlagger",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "positions",
     "outputs": [
-      { "internalType": "uint64", "name": "id", "type": "uint64" },
-      { "internalType": "uint64", "name": "lastFundingIndex", "type": "uint64" },
-      { "internalType": "uint128", "name": "margin", "type": "uint128" },
-      { "internalType": "uint128", "name": "lastPrice", "type": "uint128" },
-      { "internalType": "int128", "name": "size", "type": "int128" }
+      {
+        "components": [
+          { "internalType": "uint64", "name": "id", "type": "uint64" },
+          { "internalType": "uint64", "name": "lastFundingIndex", "type": "uint64" },
+          { "internalType": "uint128", "name": "margin", "type": "uint128" },
+          { "internalType": "uint128", "name": "lastPrice", "type": "uint128" },
+          { "internalType": "int128", "name": "size", "type": "int128" }
+        ],
+        "internalType": "struct IPerpsV2MarketBaseTypes.Position",
+        "name": "",
+        "type": "tuple"
+      }
     ],
     "payable": false,
     "stateMutability": "view",
@@ -293,7 +413,7 @@
   },
   {
     "constant": false,
-    "inputs": [{ "internalType": "int128", "name": "_fundingSequence", "type": "int128" }],
+    "inputs": [{ "internalType": "int128", "name": "fundingSequence", "type": "int128" }],
     "name": "pushFundingSequence",
     "outputs": [],
     "payable": false,
@@ -385,11 +505,20 @@
   },
   {
     "constant": false,
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "unflag",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
     "inputs": [
       { "internalType": "address", "name": "account", "type": "address" },
       { "internalType": "bool", "name": "isOffchain", "type": "bool" },
       { "internalType": "int128", "name": "sizeDelta", "type": "int128" },
-      { "internalType": "uint128", "name": "priceImpactDelta", "type": "uint128" },
+      { "internalType": "uint128", "name": "desiredFillPrice", "type": "uint128" },
       { "internalType": "uint128", "name": "targetRoundId", "type": "uint128" },
       { "internalType": "uint128", "name": "commitDeposit", "type": "uint128" },
       { "internalType": "uint128", "name": "keeperDeposit", "type": "uint128" },

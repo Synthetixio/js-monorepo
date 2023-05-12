@@ -1,11 +1,6 @@
 {
-  "address": "0x3924FC7aE841c49a9Ad864A81F95C7A9F4B2706f",
+  "address": "0xf4f2f63caec507aDC9DC83fDA93F96ef2eC88d64",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -140,32 +135,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "newNominatedOwner",
           "type": "address"
         }
@@ -248,6 +217,17 @@
         }
       ],
       "name": "MismatchAssociatedSystemKind",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MissingAssociatedSystem",
       "type": "error"
     },
     {
@@ -390,6 +370,11 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "AlreadyInitialized",
+      "type": "error"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -419,6 +404,22 @@
         }
       ],
       "name": "InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
@@ -839,5 +840,8 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x4cfc1eb64165d76c11959b2a690a2ba9634a7e25c51843b06558cedecec3193f"
+  "deployedOn": "router.USDRouter",
+  "deployTxnHash": "0x00e29af0b3fcbea2f4c9bc284e9800574540a414029a1f6a8bdb61a9fa74fe13",
+  "contractName": "USDRouter",
+  "sourceName": "USDRouter.sol"
 }

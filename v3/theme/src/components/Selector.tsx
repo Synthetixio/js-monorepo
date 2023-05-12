@@ -5,7 +5,7 @@ interface SelectorProps extends ButtonProps {
   active: boolean;
 }
 
-export default function Selector({
+export function Selector({
   children,
   leftIcon,
   rightIcon,

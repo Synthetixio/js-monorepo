@@ -1,6 +1,17 @@
 {
-  "address": "0x21502f47D4c172CF68e62241970C6Ec1FBDc25d5",
+  "address": "0x9cc1e7311B4298FC5CDf111e299E4EC94914F9ec",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        }
+      ],
+      "name": "CollateralDepositDisabled",
+      "type": "error"
+    },
     {
       "inputs": [],
       "name": "EmptyDistribution",
@@ -52,6 +63,22 @@
         }
       ],
       "name": "InsufficientDebt",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "parameter",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "InvalidParameter",
       "type": "error"
     },
     {
@@ -126,6 +153,48 @@
       ],
       "name": "PermissionDenied",
       "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
+      "name": "PoolNotFound",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "collateralType",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "feeAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "IssuanceFeePaid",
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -258,5 +327,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x0cd3c14f19de8d8f5618caaa4c45bdb8a9a7a556d8f63994cc2d5dfaaeb2b662"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x6f35bbad92cdd5a97b32cb725ce43b053c9d49c9e2fa37f91770990c14409cda",
+  "sourceName": "contracts/modules/core/IssueUSDModule.sol",
+  "contractName": "IssueUSDModule",
+  "deployedOn": "contract.IssueUSDModule"
 }

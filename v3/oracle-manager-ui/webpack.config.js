@@ -25,9 +25,11 @@ const babelRule = {
   test: /\.(ts|tsx|js|jsx)$/,
   include: [
     // Need to list all the folders in v3 and outside (if used)
-    /v3\/theme/,
-    /v3\/ui/,
     /v3\/oracle-manager-ui/,
+    /v3\/theme/,
+    /v3\/contracts/,
+    /v3\/lib/,
+    /v3\/components/,
   ],
   resolve: {
     fullySpecified: false,
@@ -141,6 +143,12 @@ module.exports = {
         process: 'process/browser.js',
       }),
     ])
+    .concat([
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/v3-contracts$`),
+        path.resolve(path.dirname(require.resolve(`@synthetixio/v3-contracts/package.json`)), 'src')
+      ),
+    ])
 
     .concat(isProd ? [] : isTest ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })])
     .concat(
@@ -157,6 +165,9 @@ module.exports = {
     ),
 
   resolve: {
+    alias: {
+      '@synthetixio/v3-contracts/build': '@synthetixio/v3-contracts/src',
+    },
     fallback: {
       buffer: require.resolve('buffer'),
       stream: require.resolve('stream-browserify'),

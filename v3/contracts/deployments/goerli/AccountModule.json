@@ -1,5 +1,5 @@
 {
-  "address": "0xc068D7E918a95de3864BcC4Ca17457971F1240bB",
+  "address": "0xe9C3749c027F1bA053d12fe3a4D7d4Eb785c2a5A",
   "abi": [
     {
       "inputs": [
@@ -10,6 +10,17 @@
         }
       ],
       "name": "FeatureUnavailable",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "name": "InvalidAccountId",
       "type": "error"
     },
     {
@@ -178,6 +189,19 @@
       "type": "event"
     },
     {
+      "inputs": [],
+      "name": "createAccount",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "accountId",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint128",
@@ -252,7 +276,7 @@
             }
           ],
           "internalType": "struct IAccountModule.AccountPermissions[]",
-          "name": "permissions",
+          "name": "accountPerms",
           "type": "tuple[]"
         }
       ],
@@ -413,5 +437,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x780bee47390e0cdad0c6218c60b8e6f6cca51f7f91efeeed76a036579e7c7fcd"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x01de27f04359cfb85a109ef2603b9cbc7e39464053b9c3a8b6ac690c9c94dd5b",
+  "sourceName": "contracts/modules/core/AccountModule.sol",
+  "contractName": "AccountModule",
+  "deployedOn": "contract.AccountModule"
 }

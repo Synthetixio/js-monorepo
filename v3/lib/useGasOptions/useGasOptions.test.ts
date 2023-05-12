@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { wei } from '@synthetixio/wei';
-import { GWEI_DECIMALS } from '@snx-v3/Constants';
+import { GWEI_DECIMALS } from '@snx-v3/constants';
 
 const gasPricesMainnetMockData = {
   fastest: {
@@ -71,7 +71,15 @@ describe('useGasOptions', () => {
     const result = useGasOptions({ populateTransaction });
     const { queryKey, enabled } = reactQuery.useQuery.mock.lastCall[0];
     expect(result.data).toEqual(undefined);
-    expect(queryKey).toEqual([undefined, 1, 'average', undefined, 1000]);
+    expect(queryKey).toEqual([
+      'mainnet',
+      'GasOptions',
+      {
+        args: [],
+        ethPrice: 1000,
+        gasSpeed: 'average',
+      },
+    ]);
     expect(enabled).toEqual(false);
   });
 
@@ -79,7 +87,15 @@ describe('useGasOptions', () => {
     useGasOptions({ populateTransaction, queryKeys: ['mykey'] });
     const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
 
-    expect(queryKey).toEqual(['mykey', undefined, 1, 'average', undefined, 1000]);
+    expect(queryKey).toEqual([
+      'mainnet',
+      'GasOptions',
+      {
+        args: ['mykey'],
+        ethPrice: 1000,
+        gasSpeed: 'average',
+      },
+    ]);
     expect(enabled).toEqual(true);
 
     const queryResult = await queryFn();
@@ -106,7 +122,16 @@ describe('useGasOptions', () => {
     useGasOptions({ populateTransaction });
 
     const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
-    expect(queryKey).toEqual([0.00000001, 10, 'average', undefined, 1000]);
+    expect(queryKey).toEqual([
+      'optimism-mainnet',
+      'GasOptions',
+      {
+        args: [],
+        ethPrice: 1000,
+        fees: 0.00000001,
+        gasSpeed: 'average',
+      },
+    ]);
     expect(enabled).toEqual(true);
 
     const queryResult = await queryFn();

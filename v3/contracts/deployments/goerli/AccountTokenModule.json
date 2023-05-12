@@ -1,5 +1,5 @@
 {
-  "address": "0x1bF1afA1fAfCaA8a64676dc153e8D8bEd0FDc7fB",
+  "address": "0x4b8b8D6574811e4974d563CE82c3a9396e4816ca",
   "abi": [
     {
       "inputs": [],
@@ -219,7 +219,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "balance",
           "type": "uint256"
         }
       ],
@@ -251,7 +251,7 @@
       "outputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "operator",
           "type": "address"
         }
       ],
@@ -372,6 +372,29 @@
       "inputs": [
         {
           "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "safeMint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "from",
           "type": "address"
         },
@@ -451,6 +474,19 @@
         }
       ],
       "name": "setApprovalForAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "uri",
+          "type": "string"
+        }
+      ],
+      "name": "setBaseTokenURI",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -586,5 +622,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x8fdd9cf9084f3e0855a30ca45143d1e58e2eda9f1ba9e0573c3bbec122b67264"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x8270eec600b4effec84e30f9158138af94f5a81065d78032f41f15fa8c7fd628",
+  "sourceName": "contracts/modules/account/AccountTokenModule.sol",
+  "contractName": "AccountTokenModule",
+  "deployedOn": "contract.AccountTokenModule"
 }

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ExternalLink } from '@snx-v1/styles';
 import PendingConfirmation from 'assets/svg/app/pending-confirmation.svg';
 import Success from 'assets/svg/app/success.svg';
-import TxState from 'sections/earn/TxState';
+import TxState from 'sections/merge-accounts/TxState';
 
 import {
   GreyHeader,

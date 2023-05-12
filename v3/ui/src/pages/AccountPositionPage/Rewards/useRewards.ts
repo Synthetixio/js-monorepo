@@ -1,3 +1,5 @@
+export {};
+/*
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 
@@ -47,3 +49,4 @@ export const useRewards = ({
     enabled: Boolean(CoreProxy && poolId && tokenAddress && accountId),
   });
 };
+*/

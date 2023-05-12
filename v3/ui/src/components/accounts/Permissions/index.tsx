@@ -1,3 +1,5 @@
+export {};
+/*
 import {
   Box,
   Flex,
@@ -28,7 +30,7 @@ export default function Permissions() {
   const [accountPermissions, setAccountPermissions] = useState<Record<string, Array<string>>>({});
 
   // Only show edit icon if current account is owner or modify permissions
-  const { address: accountAddress } = useAccount();
+  const account = useAccount();
   const params = useParams();
 
   const { isLoading: loadingAccountPermissions, data: permissionData } = useSynthetixRead({
@@ -114,8 +116,8 @@ export default function Permissions() {
           Permissions
         </Heading>
         <Box ml="auto">
-          {/* only render below if owner or has modify permissions */}
-          {/* @ts-ignore */}
+          {/!* only render below if owner or has modify permissions *!/}
+          {/!* @ts-ignore *!/}
           <PermissionsEditor />
         </Box>
       </Flex>
@@ -138,8 +140,8 @@ export default function Permissions() {
               <Tr>
                 <Td py="4">
                   <Skeleton isLoaded={!loadingOwner}>
-                    {/* wagmi types return Result which needs to be generic but currently assumes is an object */}
-                    {/* @ts-ignore */}
+                    {/!* wagmi types return Result which needs to be generic but currently assumes is an object *!/}
+                    {/!* @ts-ignore *!/}
                     <Address address={accountOwner} />
                   </Skeleton>
                 </Td>
@@ -148,7 +150,7 @@ export default function Permissions() {
                     Owner
                   </Tag>
                 </Td>
-                <Td>{accountAddress == accountOwner && <TransferOwnership />}</Td>
+                <Td>{account?.address == accountOwner && <TransferOwnership />}</Td>
               </Tr>
 
               {Object.keys(accountPermissions)
@@ -167,3 +169,4 @@ export default function Permissions() {
     </Box>
   );
 }
+*/

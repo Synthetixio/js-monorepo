@@ -13,4 +13,7 @@ packages/queries/subgraphs
 **/.nyc_output
 **/junit.xml
 **/generated
-tools/tenderly/fork.json
+v2/perps-v2/ui/src/__generated__
+
+# temporary
+v3/spot-markets/ui/prototype

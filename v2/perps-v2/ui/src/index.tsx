@@ -1,24 +1,63 @@
 import React from 'react';
-import App from './App';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Wallet } from './Wallet';
+import Account from './pages/Account';
 import { Header } from './components/Header';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Actions } from './Actions';
 import { createRoot } from 'react-dom/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {
+  PERPS_V2_DASHBOARD_GRAPH_URL,
+  PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
+} from './utils/constants';
+import { resolvers, typeDefs } from './queries/resolved';
+import { Dashboard, Actions } from './pages';
+import { isStaging } from './utils/isStaging';
+
+const client = new ApolloClient({
+  uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
+  cache: new InMemoryCache(),
+  resolvers,
+  typeDefs,
+});
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <>
+        <Header />
+        <Dashboard />
+      </>
+    ),
+  },
+  {
+    path: '/actions',
+    element: (
+      <>
+        <Header />
+        <Actions />
+      </>
+    ),
   },
   {
     path: ':walletAddress',
-    element: <Wallet />,
+    element: (
+      <>
+        <Header />
+        <Account />
+      </>
+    ),
   },
-  { path: '/actions', element: <Actions /> },
+  // {
+  //   path: '/markets',
+  //   element: (
+  //     <>
+  //       <Header />
+  //       <Markets />
+  //     </>
+  //   ),
+  // },
 ]);
 
 const container = document.querySelector('#app');
@@ -34,28 +73,17 @@ const customTheme = extendTheme({
       },
     },
   },
+  breakpoints: {
+    ...theme.breakpoints,
+    c900: '950px',
+  },
 });
 
 root.render(
-  <React.StrictMode>
+  <ApolloProvider client={client}>
     <ChakraProvider theme={customTheme}>
-      <QueryClientProvider
-        client={
-          new QueryClient({
-            defaultOptions: {
-              queries: {
-                refetchOnWindowFocus: false,
-                cacheTime: 900000,
-                staleTime: 900000,
-              },
-            },
-          })
-        }
-      >
-        <Fonts />
-        <Header />
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <Fonts />
+      <RouterProvider router={router} />
     </ChakraProvider>
-  </React.StrictMode>
+  </ApolloProvider>
 );

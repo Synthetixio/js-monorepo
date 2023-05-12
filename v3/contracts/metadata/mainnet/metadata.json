@@ -1,0 +1,299 @@
+{
+  "def": {
+    "name": "synthetix",
+    "version": "<%= package.version %>",
+    "description": "Core synthetix system",
+    "setting": {
+      "salt": {
+        "description": "Change this to a unique string when deploying multiple instances of the system. Note that only the proxy contract will be unique.",
+        "defaultValue": "main"
+      },
+      "bundleSalt": {
+        "description": "Change this to a unique string to get a new initial module bundle",
+        "defaultValue": "main"
+      },
+      "owner": {
+        "description": "Admin user for the system",
+        "defaultValue": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+      },
+      "oracle_manager_source": {
+        "defaultValue": "oracle-manager:<%= package.version %>"
+      }
+    },
+    "provision": {
+      "oracle_manager": {
+        "source": "<%= settings.oracle_manager_source %>",
+        "options": {
+          "owner": "<%= settings.owner %>",
+          "salt": "<%= settings.salt %>-oracle"
+        }
+      }
+    },
+    "contract": {
+      "InitialModuleBundle": {
+        "artifact": "contracts/modules/InitialModuleBundle.sol:InitialModuleBundle",
+        "salt": "<%= settings.bundleSalt !== 'main' ? settings.bundleSalt : settings.salt %>",
+        "create2": true
+      },
+      "FeatureFlagModule": {
+        "artifact": "contracts/modules/core/FeatureFlagModule.sol:FeatureFlagModule"
+      },
+      "AccountModule": {
+        "artifact": "contracts/modules/core/AccountModule.sol:AccountModule"
+      },
+      "AssociateDebtModule": {
+        "artifact": "contracts/modules/core/AssociateDebtModule.sol:AssociateDebtModule"
+      },
+      "AssociatedSystemsModule": {
+        "artifact": "contracts/modules/associated-systems/AssociatedSystemsModule.sol:AssociatedSystemsModule"
+      },
+      "CollateralModule": {
+        "artifact": "contracts/modules/core/CollateralModule.sol:CollateralModule"
+      },
+      "CollateralConfigurationModule": {
+        "artifact": "contracts/modules/core/CollateralConfigurationModule.sol:CollateralConfigurationModule"
+      },
+      "IssueUSDModule": {
+        "artifact": "contracts/modules/core/IssueUSDModule.sol:IssueUSDModule"
+      },
+      "LiquidationModule": {
+        "artifact": "contracts/modules/core/LiquidationModule.sol:LiquidationModule"
+      },
+      "MarketCollateralModule": {
+        "artifact": "contracts/modules/core/MarketCollateralModule.sol:MarketCollateralModule"
+      },
+      "MarketManagerModule": {
+        "artifact": "contracts/modules/core/MarketManagerModule.sol:MarketManagerModule"
+      },
+      "MulticallModule": {
+        "artifact": "contracts/modules/core/MulticallModule.sol:MulticallModule"
+      },
+      "PoolConfigurationModule": {
+        "artifact": "contracts/modules/core/PoolConfigurationModule.sol:PoolConfigurationModule"
+      },
+      "PoolModule": {
+        "artifact": "contracts/modules/core/PoolModule.sol:PoolModule"
+      },
+      "RewardsManagerModule": {
+        "artifact": "contracts/modules/core/RewardsManagerModule.sol:RewardsManagerModule"
+      },
+      "UtilsModule": {
+        "artifact": "contracts/modules/core/UtilsModule.sol:UtilsModule"
+      },
+      "VaultModule": {
+        "artifact": "contracts/modules/core/VaultModule.sol:VaultModule"
+      },
+      "AccountTokenModule": {
+        "artifact": "contracts/modules/account/AccountTokenModule.sol:AccountTokenModule"
+      },
+      "USDTokenModule": {
+        "artifact": "contracts/modules/usd/USDTokenModule.sol:USDTokenModule"
+      },
+      "InitialCoreProxy": {
+        "artifact": "contracts/Proxy.sol:Proxy",
+        "args": ["<%= contracts.InitialModuleBundle.address %>", "<%= settings.owner %>"],
+        "abiOf": ["InitialModuleBundle"],
+        "salt": "<%= settings.salt %>",
+        "create2": true,
+        "depends": ["contract.InitialModuleBundle"]
+      }
+    },
+    "router": {
+      "CoreRouter": {
+        "contracts": [
+          "InitialModuleBundle",
+          "FeatureFlagModule",
+          "AccountModule",
+          "AssociateDebtModule",
+          "AssociatedSystemsModule",
+          "CollateralModule",
+          "CollateralConfigurationModule",
+          "IssueUSDModule",
+          "LiquidationModule",
+          "MarketCollateralModule",
+          "MarketManagerModule",
+          "MulticallModule",
+          "PoolConfigurationModule",
+          "PoolModule",
+          "RewardsManagerModule",
+          "UtilsModule",
+          "VaultModule"
+        ],
+        "depends": [
+          "contract.InitialModuleBundle",
+          "contract.FeatureFlagModule",
+          "contract.AccountModule",
+          "contract.AssociateDebtModule",
+          "contract.AssociatedSystemsModule",
+          "contract.CollateralModule",
+          "contract.CollateralConfigurationModule",
+          "contract.IssueUSDModule",
+          "contract.LiquidationModule",
+          "contract.MarketCollateralModule",
+          "contract.MarketManagerModule",
+          "contract.MulticallModule",
+          "contract.PoolConfigurationModule",
+          "contract.PoolModule",
+          "contract.RewardsManagerModule",
+          "contract.UtilsModule",
+          "contract.VaultModule"
+        ]
+      },
+      "AccountRouter": {
+        "contracts": ["InitialModuleBundle", "AccountTokenModule"],
+        "depends": ["contract.InitialModuleBundle", "contract.AccountTokenModule"]
+      },
+      "USDRouter": {
+        "contracts": ["InitialModuleBundle", "AssociatedSystemsModule", "USDTokenModule"],
+        "depends": [
+          "contract.InitialModuleBundle",
+          "contract.AssociatedSystemsModule",
+          "contract.USDTokenModule"
+        ]
+      }
+    },
+    "invoke": {
+      "upgrade_core_proxy": {
+        "target": ["InitialCoreProxy"],
+        "abi": "UpgradeModule",
+        "fromCall": {
+          "func": "owner"
+        },
+        "func": "upgradeTo",
+        "args": ["<%= contracts.CoreRouter.address %>"],
+        "factory": {
+          "CoreProxy": {
+            "abiOf": ["CoreRouter"],
+            "event": "Upgraded",
+            "arg": 0
+          }
+        },
+        "depends": ["contract.InitialCoreProxy", "router.CoreRouter"]
+      },
+      "init_account": {
+        "target": ["CoreProxy"],
+        "fromCall": {
+          "func": "owner"
+        },
+        "func": "initOrUpgradeNft",
+        "args": [
+          "0x6163636f756e744e667400000000000000000000000000000000000000000000",
+          "Synthetix Account",
+          "SACCT",
+          "https://synthetix.io",
+          "<%= contracts.AccountRouter.address %>"
+        ],
+        "depends": ["invoke.upgrade_core_proxy", "router.AccountRouter"],
+        "factory": {
+          "AccountProxy": {
+            "abiOf": ["AccountRouter"],
+            "event": "AssociatedSystemSet",
+            "arg": 2
+          }
+        }
+      },
+      "init_usd": {
+        "target": ["CoreProxy"],
+        "fromCall": {
+          "func": "owner"
+        },
+        "func": "initOrUpgradeToken",
+        "args": [
+          "0x555344546f6b656e000000000000000000000000000000000000000000000000",
+          "Synthetic USD Token v3",
+          "snxUSD",
+          18,
+          "<%= contracts.USDRouter.address %>"
+        ],
+        "depends": ["invoke.upgrade_core_proxy", "router.USDRouter"],
+        "factory": {
+          "USDProxy": {
+            "abiOf": ["USDRouter"],
+            "event": "AssociatedSystemSet",
+            "arg": 2
+          }
+        }
+      },
+      "set_oracle_manager": {
+        "target": ["CoreProxy"],
+        "fromCall": {
+          "func": "owner"
+        },
+        "func": "configureOracleManager",
+        "args": ["<%= imports.oracle_manager.contracts.Proxy.address %>"],
+        "depends": ["invoke.upgrade_core_proxy", "provision.oracle_manager"]
+      },
+      "enable_basic_features": {
+        "target": ["CoreProxy"],
+        "fromCall": {
+          "func": "owner"
+        },
+        "func": "multicall",
+        "args": [
+          [
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('createAccount'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('deposit'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('withdraw'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('mintUsd'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('burnUsd'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('liquidate'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('liquidateVault'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('depositMarketCollateral'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('withdrawMarketCollateral'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('depositMarketUsd'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('withdrawMarketUsd'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('claimRewards'), true]).slice(2) %>",
+            "0x7d632bd2<%= defaultAbiCoder.encode(['bytes32', 'bool'], [formatBytes32String('delegateCollateral'), true]).slice(2) %>"
+          ]
+        ],
+        "depends": ["invoke.upgrade_core_proxy"]
+      }
+    }
+  },
+  "miscUrl": "ipfs://QmbEeX8y7UQ7vcghU3PmCVtey1oyEakNmgZ8AF6uYgLVUx",
+  "options": {
+    "owner": "0x6E1613B5c68B4Cf2A58400D8019a97849A678139",
+    "salt": "0x3330363734343032330000000000000000000000000000000000000000000000",
+    "bundleSalt": "snax"
+  },
+  "meta": {
+    "name": "@synthetixio/main",
+    "version": "3.1.0-alpha.1",
+    "description": "Core Synthetix Protocol Contracts",
+    "publishConfig": {
+      "access": "public"
+    },
+    "scripts": {
+      "clean": "hardhat clean",
+      "build": "rm -rf contracts/generated && hardhat storage:verify && hardhat generate-testable && hardhat cannon:build",
+      "build-testable": "hardhat cannon:build cannonfile.test.toml",
+      "check:storage": "git diff --exit-code storage.dump.sol",
+      "test": "yarn build && hardhat test",
+      "coverage": "yarn build && hardhat coverage --network hardhat",
+      "compile-contracts": "hardhat compile",
+      "size-contracts": "hardhat compile && hardhat size-contracts",
+      "publish-contracts": "yarn build && cannon publish synthetix:$(node -p 'require(`./package.json`).version') --quiet",
+      "postpack": "yarn publish-contracts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+      "@synthetixio/common-config": "workspace:*",
+      "@synthetixio/core-contracts": "workspace:*",
+      "@synthetixio/core-modules": "workspace:*",
+      "@synthetixio/core-utils": "workspace:*",
+      "@synthetixio/oracle-manager": "workspace:*",
+      "@synthetixio/wei": "2.74.4",
+      "@usecannon/builder": "2.4.7",
+      "ethers": "^5.0.0",
+      "handlebars": "^4.7.7",
+      "hardhat": "2.13.0",
+      "solidity-ast": "0.4.46",
+      "solidity-docgen": "0.6.0-beta.31",
+      "ts-node": "10.9.1"
+    },
+    "gitHead": "3f5d1cdc48e2360dcc2fb086dcacf6e379acac48"
+  },
+  "status": "complete"
+}

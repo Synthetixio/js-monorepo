@@ -183,24 +183,41 @@ module.exports = {
       ),
       new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js')),
     ])
-    .concat(
-      [
-        'contracts-interface',
-        'optimism-networks',
-        'providers',
-        'queries',
-        'transaction-notifier',
-        'wei',
-        'generate-subgraph-query',
-        'v3-theme',
-      ].map(
-        (name) =>
-          new webpack.NormalModuleReplacementPlugin(
-            new RegExp(`^@synthetixio/${name}$`),
-            path.resolve(path.dirname(require.resolve(`@synthetixio/${name}/package.json`)), 'src')
-          )
-      )
-    )
+    .concat([
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/contracts-interface$`),
+        path.resolve(
+          path.dirname(require.resolve(`@synthetixio/contracts-interface/package.json`)),
+          'src'
+        )
+      ),
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/optimism-networks$`),
+        path.resolve(
+          path.dirname(require.resolve(`@synthetixio/optimism-networks/package.json`)),
+          'src'
+        )
+      ),
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/providers$`),
+        path.resolve(path.dirname(require.resolve(`@synthetixio/providers/package.json`)), 'src')
+      ),
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/queries$`),
+        path.resolve(path.dirname(require.resolve(`@synthetixio/queries/package.json`)), 'src')
+      ),
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/generate-subgraph-query$`),
+        path.resolve(
+          path.dirname(require.resolve(`@synthetixio/generate-subgraph-query/package.json`)),
+          'src'
+        )
+      ),
+      new webpack.NormalModuleReplacementPlugin(
+        new RegExp(`^@synthetixio/v3-theme$`),
+        path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
+      ),
+    ])
     .concat([
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
@@ -257,8 +274,6 @@ module.exports = {
       '@synthetixio/optimism-networks/build': '@synthetixio/optimism-networks/src',
       '@synthetixio/providers/build': '@synthetixio/providers/src',
       '@synthetixio/queries/build': '@synthetixio/queries/src',
-      '@synthetixio/transaction-notifier/build': '@synthetixio/transaction-notifier/src',
-      '@synthetixio/wei/build': '@synthetixio/wei/src',
     },
     fallback: {
       buffer: require.resolve('buffer'),

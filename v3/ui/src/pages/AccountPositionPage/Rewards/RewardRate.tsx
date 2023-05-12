@@ -1,3 +1,5 @@
+export {};
+/*
 import { InfoIcon } from '@chakra-ui/icons';
 import { Tooltip } from '@chakra-ui/react';
 import { Amount } from '@snx-v3/Amount';
@@ -60,3 +62,4 @@ export function RewardRate({
     </>
   );
 }
+*/

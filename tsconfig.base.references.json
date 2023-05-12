@@ -15,8 +15,6 @@
     { "path": "./packages/optimism-networks" },
     { "path": "./packages/providers" },
     { "path": "./packages/queries" },
-    { "path": "./packages/transaction-notifier" },
-    { "path": "./packages/wei" },
 
     { "path": "./tools/codegen-graph-ts" },
 

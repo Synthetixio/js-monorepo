@@ -120,10 +120,26 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           node={node}
           tokenOne={node?.parameters[0]}
           tokenTwo={node?.parameters[1]}
-          pool={node?.parameters[2]}
-          secondsAgo={node?.parameters[3]}
-          getValuesFromForm={(tokenOne, tokenTwo, pool, secondsAgo) => {
-            setValue('nodeParameters', [tokenOne, tokenTwo, pool, secondsAgo]);
+          decimalToken={node?.parameters[2]}
+          decimalStablecoin={node?.parameters[3]}
+          pool={node?.parameters[4]}
+          secondsAgo={node?.parameters[5]}
+          getValuesFromForm={(
+            tokenOne,
+            tokenTwo,
+            decimalToken,
+            decimalStablecoin,
+            pool,
+            secondsAgo
+          ) => {
+            setValue('nodeParameters', [
+              tokenOne,
+              tokenTwo,
+              decimalToken,
+              decimalStablecoin,
+              pool,
+              secondsAgo,
+            ]);
           }}
         />
       );
@@ -138,15 +154,17 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       }}
     >
       <ModalOverlay />
-      <ModalContent bg="gray.900">
-        <ModalHeader textAlign="center">{node ? `Update Node ${node.id}` : 'New Node'}</ModalHeader>
+      <ModalContent bg="navy.900" borderWidth="1px" borderStyle="solid" borderColor="gray.900">
+        <ModalHeader textAlign="center" fontSize="md">
+          {node ? `Update Node ${node.id}` : 'New Node'}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Flex flexDir="column">
+          <Flex flexDir="column" gap="2">
             {!node && (
               <Select {...register('oracleNodeType')}>
                 <option value="" selected disabled hidden>
-                  Choose here
+                  Choose Node Type
                 </option>
                 {ORACLE_NODE_TYPES.map((type) => (
                   <option value={type.value} key={type.value}>
@@ -164,6 +182,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           <Flex justifyContent="center" width="100%">
             {node && (
               <Button
+                minW="150px"
                 variant="outline"
                 mr="2"
                 onClick={() => {
@@ -188,10 +207,21 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
               </Button>
             )}
             <Button
+              variant="solid"
+              w="100%"
               onClick={() => {
                 if (node) {
-                  setNodes((state) =>
-                    state
+                  setNodes((state) => {
+                    return state
+                      .map((state) => {
+                        if (state.parents.includes(node.id)) {
+                          return {
+                            ...state,
+                            parents: state.parents.filter((parent) => parent !== node.id),
+                          };
+                        }
+                        return state;
+                      })
                       .filter((s) => s.id !== node.id)
                       .concat({
                         ...node,
@@ -200,8 +230,17 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                         parents: getValues('nodeParents'),
                         parameters: getValues('nodeParameters'),
                         data: { label: getValues('nodeLabel') || '' },
-                      })
-                  );
+                        id: hashId(
+                          {
+                            ...node,
+                            type: getValues('oracleNodeType')!,
+                            parents: getValues('nodeParents'),
+                            parameters: getValues('nodeParameters'),
+                          },
+                          getValues('nodeParents')
+                        ),
+                      });
+                  });
                   onClose();
                 } else if (!node) {
                   const newNode = {
@@ -214,6 +253,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
                     position: { x: 200, y: 100 },
                     source: '',
                     target: '',
+                    isRegistered: false,
                   };
                   setNodes([
                     ...nodes,

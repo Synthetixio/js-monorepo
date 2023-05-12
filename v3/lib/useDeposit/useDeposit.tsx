@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { useCoreProxy, CoreProxyContractType } from '@snx-v3/useCoreProxy';
+import { useCoreProxy, CoreProxyType } from '@snx-v3/useCoreProxy';
 import { formatGasPriceForTransaction } from '@snx-v3/useGasOptions';
 import { useMutation } from '@tanstack/react-query';
 import { useNetwork, useSigner } from '@snx-v3/useBlockchain';
@@ -18,7 +18,7 @@ const createPopulateTransaction = ({
   collateralChange,
   currentCollateral,
 }: {
-  CoreProxy?: CoreProxyContractType;
+  CoreProxy?: CoreProxyType;
   accountId?: string;
   newAccountId: string;
   poolId?: string;
@@ -32,7 +32,8 @@ const createPopulateTransaction = ({
   const id = accountId ?? newAccountId;
   const accountCalls = accountId
     ? []
-    : [CoreProxy.interface.encodeFunctionData('createAccount', [BigNumber.from(id)])];
+    : // @ts-ignore
+      [CoreProxy.interface.encodeFunctionData('createAccount(uint128)', [BigNumber.from(id)])];
 
   const calls = accountCalls.concat([
     CoreProxy.interface.encodeFunctionData('deposit', [

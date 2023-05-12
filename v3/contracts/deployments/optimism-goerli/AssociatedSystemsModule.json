@@ -1,5 +1,5 @@
 {
-  "address": "0x3f09BA139BBb14fb4F9f408047eE4B08519253eE",
+  "address": "0x672bC529c434d69385148f21ce3eC008D55Bcc70",
   "abi": [
     {
       "inputs": [
@@ -15,6 +15,17 @@
         }
       ],
       "name": "MismatchAssociatedSystemKind",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "MissingAssociatedSystem",
       "type": "error"
     },
     {
@@ -168,5 +179,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x619afe15d94a467bedc3264f689e41193b145fd6e229f8575fbf970790817913"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x50449e8201df15792bf7522e2fd24410dcbdc4c9353832e79d654996fc3ff6cb",
+  "sourceName": "contracts/modules/associated-systems/AssociatedSystemsModule.sol",
+  "contractName": "AssociatedSystemsModule",
+  "deployedOn": "contract.AssociatedSystemsModule"
 }

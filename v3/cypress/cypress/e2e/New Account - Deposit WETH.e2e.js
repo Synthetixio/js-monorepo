@@ -1,6 +1,9 @@
 import { generatePath } from 'react-router-dom';
 
 it.skip('creates new account with first deposit of WETH', () => {
+  cy.on('window:before:load', (win) => {
+    win.sessionStorage.TERMS_CONDITIONS_ACCEPTED = 'true';
+  });
   cy.connectWallet().then(({ address, privateKey }) => {
     cy.task('setEthBalance', { address, balance: 100 });
     cy.task('wrapEth', { privateKey, amount: 0.1 });
@@ -40,7 +43,7 @@ it.skip('creates new account with first deposit of WETH', () => {
   cy.location('pathname').should('include', 'accounts').should('include', 'positions');
 
   cy.get('[data-testid="current account id"]').then((element) => {
-    const accountId = element.attr('data-accountId');
+    const accountId = element.attr('data-account-id');
     cy.wrap(accountId).as('accountId');
   });
 

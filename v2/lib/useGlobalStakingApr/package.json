@@ -2,7 +2,7 @@
   "name": "@snx-v2/useGlobalStakingApr",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "dependencies": {
     "@snx-v2/Constants": "workspace:*",
     "@snx-v2/ContractContext": "workspace:*",
@@ -10,7 +10,7 @@
     "@snx-v2/useFeePeriodMultiNetwork": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@snx-v2/useTotalStakedSNX": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "react": "^18.2.0"
   }
 }

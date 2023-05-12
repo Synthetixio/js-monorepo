@@ -1,77 +1,110 @@
 type PositionLiquidated @entity {
   id: ID!
-  account: Bytes!
-  market: Bytes!
+  trader: Trader!
+  market: FuturesMarket!
   liquidator: Bytes!
-  size: BigDecimal!
-  price: BigDecimal!
-  fee: BigDecimal!
-  block: BigInt!
+  size: BigInt!
+  price: BigInt!
+  fee: BigInt!
+  futuresPosition: FuturesPosition!
+  timestamp: BigInt!
+  txHash: String!
+}
+
+type PositionFlagged @entity {
+  id: ID!
+  trader: Trader!
+  flagger: Bytes!
+  price: BigInt
   timestamp: BigInt!
 }
 
 type Trader @entity {
   id: ID!
+  createdAt: BigInt!
+  lastTradeTimestamp: BigInt
+  margin: BigInt!
   totalLiquidations: BigInt!
-  totalMarginLiquidated: BigDecimal!
-  feesPaidToSynthetix: BigDecimal!
-  totalVolume: BigDecimal!
-  pnl: BigInt!
+  totalMarginLiquidated: BigInt!
+  feesPaidToSynthetix: BigInt!
+  totalVolume: BigInt!
+  realizedPnl: BigInt!
   trades: [FuturesTrade!]!
 }
 
 type FuturesTrade @entity {
   id: ID!
   timestamp: BigInt!
-  account: Bytes!
+  trader: Trader!
   margin: BigInt!
-  positionId: String!
+  futuresPosition: FuturesPosition!
+  futuresOrder: FuturesOrder
   size: BigInt!
-  market: Bytes!
+  market: FuturesMarket!
   price: BigInt!
   positionSize: BigInt!
   positionClosed: Boolean!
-  pnl: BigInt!
+  realizedPnl: BigInt!
+  netFunding: BigInt!
   feesPaidToSynthetix: BigInt!
   type: FuturesTradeType!
+  txHash: String!
 }
 
-enum FuturesTradeType {
-  PositionOpened
-  PositionClosed
-  PositionModified
-  DelayedOrderRemoved
-  DelayedOrderSubmitted
-  DelayedOffchainSubmitted
+type DailyMarketStat @entity {
+  "marketAddress-YYYY-MM-DD"
+  id: ID!
+  market: FuturesMarket!
+  day: String!
+  timestamp: BigInt!
+  volume: BigInt!
+  cumulativeVolume: BigInt!
+  fees: BigInt!
+  cumulativeFees: BigInt!
+  trades: BigInt!
+  cumulativeTrades: BigInt!
+}
+type DailyStat @entity {
+  "DailyStat-YYYY-MM-DD"
+  id: ID!
+  day: String!
+  timestamp: BigInt!
+  volume: BigInt!
+  cumulativeVolume: BigInt!
+  fees: BigInt!
+  cumulativeFees: BigInt!
+  trades: BigInt!
+  cumulativeTrades: BigInt!
+  newTraders: BigInt!
+  existingTraders: BigInt!
+  cumulativeTraders: BigInt!
 }
 
-enum FuturesOrderStatus {
-  Pending
-  Filled
-  Cancelled
+type CumulativeMarketStat @entity {
+  "CumulativeMarketStat-marketAddress"
+  id: ID!
+  market: FuturesMarket!
+  cumulativeFees: BigInt!
+  cumulativeVolume: BigInt!
+  cumulativeTrades: BigInt!
 }
-
 type Synthetix @entity {
   id: ID!
-  feesByLiquidations: BigDecimal!
-  feesByPositionModifications: BigDecimal!
+  feesByLiquidations: BigInt!
+  feesByPositionModifications: BigInt!
   totalLiquidations: BigInt!
-  totalVolume: BigDecimal!
+  totalVolume: BigInt!
   totalTraders: BigInt!
-}
-
-type Partner @entity {
-  id: ID!
-  tradeCount: BigInt!
+  totalTrades: BigInt!
 }
 
 type FuturesPosition @entity {
   id: ID!
-  account: Bytes!
+  trader: Trader!
   openTimestamp: BigInt!
   closeTimestamp: BigInt
   long: Boolean!
-  market: Bytes!
+  market: FuturesMarket!
   isOpen: Boolean!
   isLiquidated: Boolean!
   trades: BigInt!
@@ -81,34 +114,117 @@ type FuturesPosition @entity {
   leverage: BigInt!
   netFunding: BigInt!
   margin: BigInt!
-  pnl: BigInt!
+  realizedPnl: BigInt!
+  unrealizedPnl: BigInt!
   fundingIndex: BigInt!
   totalVolume: BigInt!
   entryPrice: BigInt!
+  netTransfers: BigInt!
   lastPrice: BigInt!
+  avgEntryPrice: BigInt!
+  txHash: String!
   exitPrice: BigInt
+  skew: BigInt
 }
 
 type FuturesOrder @entity {
   id: ID!
   size: BigInt!
-  market: Bytes!
-  account: Bytes!
+  market: FuturesMarket!
+  trader: Trader!
   orderId: BigInt!
   targetRoundId: BigInt!
   targetPrice: BigInt!
   marginDelta: BigInt!
   timestamp: BigInt!
-  orderType: FuturesTradeType!
+  orderType: FuturesOrderType!
   status: FuturesOrderStatus!
   fee: BigInt!
   keeper: Bytes!
+  futuresPosition: FuturesPosition
+  txHash: String!
 }
 
 type FundingRateUpdate @entity {
   id: ID!
   timestamp: BigInt!
-  market: Bytes!
-  sequenceLength: BigInt!
+  market: FuturesMarket!
+  fundingRate: BigInt!
   funding: BigInt!
+  index: BigInt!
+}
+
+type FuturesMarginTransfer @entity {
+  id: ID!
+  timestamp: BigInt!
+  trader: Trader!
+  market: FuturesMarket!
+  size: BigInt!
+  txHash: String!
+}
+
+type FuturesMarket @entity {
+  id: ID!
+  asset: Bytes!
+  marketKey: Bytes!
+  timestamp: BigInt!
+  isActive: Boolean!
+}
+
+type Frontend @entity {
+  id: ID!
+  markets: [FuturesMarket!]!
+  amount: BigInt!
+  fees: BigInt!
+}
+
+# type Candle @entity {
+#   id: ID!
+#   synth: String!
+#   open: BigDecimal!
+#   high: BigDecimal!
+#   low: BigDecimal!
+#   close: BigDecimal!
+#   average: BigDecimal!
+#   timestamp: BigInt!
+#   period: BigInt!
+#   aggregatedPrices: BigInt!
+# }
+
+# type LatestRate @entity {
+#   # Name of synth. E.g. sUSD
+#   id: ID!
+#   rate: BigDecimal!
+#   timestamp: BigInt!
+#   aggregator: Bytes!
+# }
+
+# # Latest Rates over time
+# type RateUpdate @entity {
+#   id: ID!
+#   currencyKey: Bytes!
+#   synth: String!
+#   rate: BigDecimal!
+#   block: BigInt!
+#   timestamp: BigInt!
+# }
+
+enum FuturesOrderType {
+  DelayedOrderSubmitted
+  DelayedOffchainSubmitted
+  NextPriceOrderRemoved
+  NextPriceOrderSubmitted
+}
+
+enum FuturesTradeType {
+  PositionOpened
+  PositionClosed
+  PositionModified
+  Liquidated
+}
+
+enum FuturesOrderStatus {
+  Pending
+  Filled
+  Cancelled
 }

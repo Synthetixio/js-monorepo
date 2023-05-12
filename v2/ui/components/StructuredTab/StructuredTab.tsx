@@ -5,7 +5,7 @@ import Select from 'components/Select';
 import { DesktopOnlyView, MobileOrTabletView } from 'components/Media';
 
 import { TabButton, TabList, TabPanel } from '../Tab';
-import { Col } from 'sections/gov/components/common';
+import { FlexDivCol } from '@snx-v1/styles';
 
 export type TabInfo = {
   title: string;
@@ -59,10 +59,10 @@ const StructuredTab: FC<StructuredTabProps> = ({
           }}
         >
           {icon != null && icon}
-          <Col>
+          <FlexDivCol>
             <TitleContainer>{title}</TitleContainer>
             {description && <Description>{description}</Description>}
-          </Col>
+          </FlexDivCol>
         </TabButton>
       ))}
     </TabList>

@@ -2,14 +2,14 @@
   "name": "@snx-v2/EarnStats",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.3",
+  "version": "0.0.7",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/StatBox": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
     "@snx-v2/useApr": "workspace:*",
+    "@snx-v2/useClaimableRewards": "workspace:*",
     "@snx-v2/useGetLifetimeRewards": "workspace:*",
-    "@snx-v2/useGetUpcomingRewards": "workspace:^",
     "@storybook/react": "^6.5.16",
     "react": "^18.2.0"
   }

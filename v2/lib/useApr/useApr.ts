@@ -7,5 +7,6 @@ export const useApr = () => {
   const stakingAprQuery = useStakingApr();
   const notStaking = debtData?.debtBalance.eq(0);
   const globalAprQuery = useGlobalStakingApr();
-  return notStaking ? globalAprQuery : stakingAprQuery;
+  const firstEpochUserStaking = stakingAprQuery.data?.combinedApr.eq(0);
+  return notStaking || firstEpochUserStaking ? globalAprQuery : stakingAprQuery;
 };

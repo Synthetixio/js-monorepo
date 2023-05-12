@@ -1,35 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import { PERPS_V2_DASHBOARD_GRAPH_URL } from '../utils/constants';
+import { gql } from '../__generated__';
 
-export function useGetSynthetix() {
-  return useQuery(['synthetix'], async () => {
-    const response = await fetch(PERPS_V2_DASHBOARD_GRAPH_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        query: `query snx {
-                    synthetix(id: "synthetix") {
-                        feesByLiquidations
-                        feesByPositionModifications
-                        totalVolume
-                        totalLiquidations
-                        totalTraders
-                    }
-                }`,
-      }),
-    });
-    const {
-      data,
-    }: {
-      data: {
-        synthetix: {
-          feesByLiquidations: string;
-          feesByPositionModifications: string;
-          totalVolume: string;
-          totalLiquidations: string;
-          totalTraders: string;
-        };
-      };
-    } = await response.json();
-    return data;
-  });
-}
+export const SYNTHETIX_QUERY = gql(`
+  query Synthetix {
+    synthetix(id: "synthetix") {
+      feesByLiquidations
+      feesByPositionModifications
+      totalVolume
+      totalLiquidations
+      totalTraders
+    }
+  }
+`);

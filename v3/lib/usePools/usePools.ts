@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { CoreProxyContractType, useCoreProxy } from '@snx-v3/useCoreProxy';
+import { CoreProxyType, useCoreProxy } from '@snx-v3/useCoreProxy';
 import { useNetwork } from '@snx-v3/useBlockchain';
 import { z } from 'zod';
 import { ZodBigNumber } from '@snx-v3/zod';
@@ -16,7 +16,7 @@ const loadPoolNames = async ({
   CoreProxyContract,
   poolIds,
 }: {
-  CoreProxyContract: CoreProxyContractType;
+  CoreProxyContract: CoreProxyType;
   poolIds: string[];
 }) => {
   const calls = poolIds.map((id) =>
@@ -36,7 +36,7 @@ export const usePools = () => {
   const { data: preferredPool } = usePreferredPool();
 
   return useQuery({
-    queryKey: [network.name, { preferredPool }, 'pools'],
+    queryKey: [network.name, 'Pools', { preferredPool: preferredPool?.id }],
     queryFn: async () => {
       if (!CoreProxyContract || !preferredPool) throw new Error('Query should not be enabled');
       const approvedPoolIds = await CoreProxyContract.getApprovedPools();
@@ -46,6 +46,6 @@ export const usePools = () => {
       });
       return [preferredPool].concat(approvedPools.filter(({ id }) => id !== preferredPool.id));
     },
-    enabled: Boolean(CoreProxyContract && preferredPool && network?.isSupported),
+    enabled: Boolean(CoreProxyContract && preferredPool),
   });
 };

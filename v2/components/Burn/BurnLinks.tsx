@@ -1,10 +1,22 @@
 import { BridgeIcon, DebtPoolIcon, GuideIcon, WreckedIcon } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 export const BurnLinks = () => {
   const { t } = useTranslation();
-
+  const { delegateWallet } = useDelegateWallet();
+  if (delegateWallet) {
+    return (
+      <BoxLink
+        icon={<GuideIcon />}
+        href="https://blog.synthetix.io/basics-of-staking-snx-2022/"
+        isExternal
+        subHeadline=""
+        headline={t('staking-v2.burn.links.guide')}
+      />
+    );
+  }
   return (
     <>
       <BoxLink

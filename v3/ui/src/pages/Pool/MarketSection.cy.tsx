@@ -21,7 +21,7 @@ function mockMarket(i: number) {
         reported_debt: wei('100'),
         pnl: wei('0.2'),
         updated_at: 'updated at for 2',
-        updates_in_period: 2,
+        updates_in_period: '2',
       },
       {
         id: '1',
@@ -31,7 +31,7 @@ function mockMarket(i: number) {
         reported_debt: wei('50'),
         pnl: wei('0.1'),
         updated_at: 'updated at for 1',
-        updates_in_period: 2,
+        updates_in_period: '2',
       },
     ],
   };
@@ -131,7 +131,7 @@ describe('Pool page / Market section', () => {
                     reported_debt: wei('100'),
                     pnl: wei('0.2'),
                     updated_at: 'updated at for 2',
-                    updates_in_period: 2,
+                    updates_in_period: '2',
                   },
                 ],
               },

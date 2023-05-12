@@ -3,9 +3,20 @@ import { ethereum, Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   DelayedOrderRemoved,
   DelayedOrderSubmitted,
-  PositionModified,
+  PositionModified1 as positionModifiedEventNew,
   PositionLiquidated,
-} from '../generated/PerpsV2DelayedOrderETHPERP/PerpsV2DelayedOrderETHPERP';
+  MarginTransferred,
+  FundingRecomputed,
+} from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
+
+export function toEth(n: u64): BigInt {
+  if (n < 0) return BigInt.fromU64(n).times(BigInt.fromI32(10).pow(18));
+  return BigInt.fromI64(changetype<i64>(n)).times(BigInt.fromI64(10).pow(18));
+}
+export function toGwei(n: u64): BigInt {
+  if (n < 0) return BigInt.fromU64(n).times(BigInt.fromI32(10).pow(9));
+  return BigInt.fromI64(changetype<i64>(n)).times(BigInt.fromI64(10).pow(9));
+}
 
 function createBlock(timestamp: i64, blockNumber: i64): Map<string, i64> {
   const newBlock = new Map<string, i64>();
@@ -24,9 +35,13 @@ export function createPositionModifiedEvent(
   fundingIndex: BigInt,
   fee: BigInt,
   timestamp: i64,
-  logIndex: i64 = 0
-): PositionModified {
-  let positionModifiedEvent = changetype<PositionModified>(newMockEvent());
+  skew: BigInt = BigInt.fromI32(200),
+  logIndex: i64 = 0,
+  marketAddress: Address = Address.fromString('0xA16081F360e3847006dB660bae1c6d1b2e17eC2A')
+): positionModifiedEventNew {
+  let positionModifiedEvent = changetype<positionModifiedEventNew>(newMockEvent());
+
+  positionModifiedEvent.address = marketAddress;
   positionModifiedEvent.parameters = new Array();
   const block = createBlock(timestamp, 5);
   positionModifiedEvent.parameters.push(
@@ -52,6 +67,9 @@ export function createPositionModifiedEvent(
   );
   positionModifiedEvent.parameters.push(
     new ethereum.EventParam('fee', ethereum.Value.fromUnsignedBigInt(fee))
+  );
+  positionModifiedEvent.parameters.push(
+    new ethereum.EventParam('skew', ethereum.Value.fromUnsignedBigInt(skew))
   );
 
   positionModifiedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
@@ -185,4 +203,53 @@ export function createDelayedOrderSubmittedEvent(
   delayedOrderSubmitted.block.timestamp = BigInt.fromI64(block['timestamp']);
   if (logIndex) delayedOrderSubmitted.logIndex = BigInt.fromI64(logIndex);
   return delayedOrderSubmitted;
+}
+
+export function createMarginTransferredEvent(
+  sender: Address,
+  marginDelta: BigInt,
+  timestamp: i64,
+  logIndex: i64 = 0
+): MarginTransferred {
+  let marginTransferredEvent = changetype<MarginTransferred>(newMockEvent());
+  marginTransferredEvent.parameters = new Array();
+  const block = createBlock(timestamp, 5);
+  marginTransferredEvent.parameters.push(
+    new ethereum.EventParam('sender', ethereum.Value.fromAddress(sender))
+  );
+
+  marginTransferredEvent.parameters.push(
+    new ethereum.EventParam('marginDelta', ethereum.Value.fromSignedBigInt(marginDelta))
+  );
+  marginTransferredEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  if (logIndex) marginTransferredEvent.logIndex = BigInt.fromI64(logIndex);
+  return marginTransferredEvent;
+}
+
+export function createFunctionRecomputedEvent(
+  funding: BigInt,
+  fundingRate: BigInt,
+  index: BigInt,
+  timestamp: BigInt,
+  blockTimestamp: i64,
+  logIndex: i64 = 0
+): FundingRecomputed {
+  let fundingRecomputedEvent = changetype<FundingRecomputed>(newMockEvent());
+  fundingRecomputedEvent.parameters = new Array();
+  const block = createBlock(blockTimestamp, 5);
+  fundingRecomputedEvent.parameters.push(
+    new ethereum.EventParam('funding', ethereum.Value.fromSignedBigInt(funding))
+  );
+  fundingRecomputedEvent.parameters.push(
+    new ethereum.EventParam('fundingRate', ethereum.Value.fromSignedBigInt(fundingRate))
+  );
+  fundingRecomputedEvent.parameters.push(
+    new ethereum.EventParam('index', ethereum.Value.fromSignedBigInt(index))
+  );
+  fundingRecomputedEvent.parameters.push(
+    new ethereum.EventParam('timestamp', ethereum.Value.fromSignedBigInt(timestamp))
+  );
+  fundingRecomputedEvent.block.timestamp = BigInt.fromI64(block['timestamp']);
+  if (logIndex) fundingRecomputedEvent.logIndex = BigInt.fromI64(logIndex);
+  return fundingRecomputedEvent;
 }

@@ -1,6 +1,9 @@
 import { generatePath } from 'react-router-dom';
 
 it('creates new account with first deposit of SNX', () => {
+  cy.on('window:before:load', (win) => {
+    win.sessionStorage.TERMS_CONDITIONS_ACCEPTED = 'true';
+  });
   cy.connectWallet().then(({ address }) => {
     cy.task('setEthBalance', { address, balance: 100 });
     cy.task('getSnx', { address, amount: 20 });
@@ -38,7 +41,7 @@ it('creates new account with first deposit of SNX', () => {
   cy.location('pathname').should('include', 'accounts').should('include', 'positions');
 
   cy.get('[data-testid="current account id"]').then((element) => {
-    const accountId = element.attr('data-accountId');
+    const accountId = element.attr('data-account-id');
     cy.wrap(accountId).as('accountId');
   });
 

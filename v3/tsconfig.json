@@ -30,7 +30,8 @@
     "**/stories/**",
     "**/build/**",
     "**/cache/**",
-    "**/dist/**"
+    "**/dist/**",
+    "./spot-markets/ui/prototype/**"
   ],
 
   "include": ["**/*.ts", "**/*.tsx"]

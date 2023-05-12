@@ -1,11 +1,6 @@
 {
-  "address": "0x5B2863b24143742775F3f90C18686dFB16805CE8",
+  "address": "0x76490713314fCEC173f44e99346F54c6e92a8E42",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -140,32 +135,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "newNominatedOwner",
           "type": "address"
         }
@@ -235,5 +204,13 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0x5f5442ce9d84bb1be8d548f384d12684609779e7048fc0635533568210618bdd"
+  "constructorArgs": [
+    "0x828EED723cAF0A8F822249231266E38dF614923C",
+    "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+  ],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x34e558a924d70fb7e9426e2023019698f5280900d024fac8a3f7160c6d59b698",
+  "sourceName": "contracts/Proxy.sol",
+  "contractName": "Proxy",
+  "deployedOn": "contract.InitialCoreProxy"
 }

@@ -1,3 +1,5 @@
+export {};
+/*
 import { Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useContractRead } from 'wagmi';
@@ -24,7 +26,7 @@ export const RewardsDistributor: FC<Props> = ({ distributor }) => {
 
   return (
     <>
-      {/* @ts-ignore */}
+      {/!* @ts-ignore *!/}
       <span>{name}</span>
       <Text fontSize="xs" opacity="0.66" mt="1">
         <Address address={distributor} />
@@ -32,3 +34,4 @@ export const RewardsDistributor: FC<Props> = ({ distributor }) => {
     </>
   );
 };
+*/

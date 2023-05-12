@@ -1,27 +1,6 @@
-import { Chain } from 'wagmi';
-import { optimismGoerli, goerli } from 'wagmi/chains';
-
-export const supportedChains: Chain[] = [
-  // mainnet,
-  // optimism,
-  optimismGoerli,
-  goerli,
-  // hardhat
-  // localhost,
-];
-
 export const contracts = {
   SYNTHETIX_PROXY: 'SYNTHETIX_PROXY',
   MULTICALL: 'MULTICALL',
-};
-
-export const INFURA_KEY = '23087ce9f88c44d1b1c54fd7c07c65fb';
-
-export const ALCHEMY_KEY_MAPPING: Record<number, string> = {
-  1: 'Yq-4rzpsP9Dz8mvjHRQ8lUrmNLNocuQs',
-  5: '6btiU37vkhQ8DJkdV4qggEWXehpgw2aI',
-  10: '-ktIzLrAY_Sf7AAlM1aTuZ-PObMop5sU',
-  420: 'lc1tSn8B8fmURkjmZLeyT1ibNpgqlsnr',
 };
 
 export const ORACLE_NODE_TYPES: {
@@ -113,12 +92,23 @@ export const ORACLE_NODE_TYPES: {
     parameters: [
       {
         type: 'string',
-        name: 'First token',
+        name: 'Token',
       },
       {
         type: 'string',
-        name: 'Second token',
+        name: 'Stablecoin',
       },
+
+      {
+        type: 'number',
+        name: 'Decimal token',
+      },
+
+      {
+        type: 'number',
+        name: 'Decimal stablecoin',
+      },
+
       {
         type: 'string',
         name: 'Pool address',

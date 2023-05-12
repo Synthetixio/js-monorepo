@@ -10,6 +10,7 @@ export const Welcome = ({ ...props }: BoxProps) => {
         {t('staking-v2.home.title')}
       </Text>
       <Flex
+        gap={1}
         alignItems={['flex-start', 'flex-start', 'flex-start', 'center']}
         flexDirection={['column', 'column', 'column', 'row']}
       >
@@ -21,14 +22,11 @@ export const Welcome = ({ ...props }: BoxProps) => {
             ]}
           />
         </Text>
-        <Button
-          variant="outline"
-          minW="120px"
-          onClick={() => window.open(EXTERNAL_LINKS.CMS.Home, '_blank')?.focus()}
-          mt={[3, 3, 3, 0]}
-        >
-          {t('staking-v2.home.action')}
-        </Button>
+        <Link href={EXTERNAL_LINKS.Synthetix.Docs} isExternal _hover={{ textDecoration: 'none' }}>
+          <Button variant="outline" px={2} display="block" minW="120px" mt={[3, 3, 3, 0]}>
+            {t('staking-v2.home.action')}
+          </Button>
+        </Link>
       </Flex>
     </Box>
   );

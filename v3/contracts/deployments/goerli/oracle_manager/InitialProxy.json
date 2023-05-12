@@ -1,11 +1,6 @@
 {
-  "address": "0x4dbAC2868aEddCC4b77F35953A5542eFB3696472",
+  "address": "0x12aE0D5CD26f212bFE242DA78139d463019f7a73",
   "abi": [
-    {
-      "inputs": [],
-      "name": "AlreadyInitialized",
-      "type": "error"
-    },
     {
       "inputs": [
         {
@@ -140,32 +135,6 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "initialOwner",
-          "type": "address"
-        }
-      ],
-      "name": "initializeOwnerModule",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isOwnerModuleInitialized",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
           "name": "newNominatedOwner",
           "type": "address"
         }
@@ -236,10 +205,11 @@
     }
   ],
   "constructorArgs": [
-    "0xb09e60b1417c5E28a6cE5D442222cc878e37C5ff",
+    "0xa9926406647Cc20F9b76644Ea0569E82641B75bB",
     "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
   ],
-  "deployTxnHash": "0x1643cb86fb0d897b6d78eba2be3de96af3c79874f3f4e2e657cb68a521e6dbc9",
+  "linkedLibraries": {},
+  "deployTxnHash": "0xa85dc65bd0d3210129dffd3955b686585bb8d0c091bf69b455502ead7247a0f9",
   "sourceName": "contracts/Proxy.sol",
   "contractName": "Proxy",
   "deployedOn": "contract.InitialProxy"

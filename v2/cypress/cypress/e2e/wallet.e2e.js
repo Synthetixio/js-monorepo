@@ -1,13 +1,12 @@
 it('walks over wallet sub-pages', () => {
   cy.on('window:before:load', (win) => {
-    win.localStorage.STAKING_V2_ENABLED = 'true';
     win.sessionStorage.TERMS_CONDITIONS_ACCEPTED = 'true';
   });
 
   cy.visit('http://localhost:3000');
 
   cy.get('[data-testid="main menu button"]').click();
-  cy.contains('[data-testid="main menu dropdown"] button', 'Wallet').click();
+  cy.contains('[data-testid="main menu dropdown"] a', 'Wallet').click();
 
   cy.contains('h2', 'My Wallet').should('exist');
 

@@ -11,7 +11,7 @@ import { CryptoCurrency, CurrencyKey } from 'constants/currency';
 
 import { FlexDivCentered } from '@snx-v1/styles';
 import useSynthetixQueries from '@synthetixio/queries';
-import { EXTERNAL_LINKS } from 'constants/links';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 export enum CurrencyIconType {
   SYNTH = 'synth',

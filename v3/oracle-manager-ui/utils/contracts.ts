@@ -1,19 +1,45 @@
-import { Contract, utils } from 'ethers';
-import ProxyAbiOPGoerli from '../deployments/420/Proxy.json';
-import ProxyAbiGoerli from '../deployments/5/Proxy.json';
+import { Contract, providers, utils } from 'ethers';
+import {
+  address as OracleManagerProxyOPGoerliAddress,
+  abi as OracleManagerProxyOPGoerliAbi,
+} from '@synthetixio/v3-contracts/build/optimism-goerli/OracleManagerProxy';
+import { address as OracleManagerProxyOPAddress } from '@synthetixio/v3-contracts/build/optimism-mainnet/OracleManagerProxy';
+import { address as OracleManagerProxyMainnetAddress } from '@synthetixio/v3-contracts/build/mainnet/OracleManagerProxy';
+import { address as OracleManagerProxyGoerliAddress } from '@synthetixio/v3-contracts/build/goerli/OracleManagerProxy';
+import {
+  address as multicallAddressMainnet,
+  abi as multicallAbiMainnet,
+} from '@synthetixio/v3-contracts/build/mainnet/Multicall3';
+import {
+  address as multicallAddressGoerli,
+  abi as multicallAbiGoerli,
+} from '@synthetixio/v3-contracts/build/goerli/Multicall3';
+import {
+  address as multicallAddressOPGoerli,
+  abi as multicallAbiOPGoerli,
+} from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
+import {
+  address as multicallAddressOP,
+  abi as multicallAbiOP,
+} from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
 import { Node } from './types';
 import { ORACLE_NODE_TYPES } from './constants';
 
 function resolveNetworkIdToProxyAddress(networkId: number) {
   switch (networkId) {
+    case 1:
+      return OracleManagerProxyMainnetAddress;
     case 5:
-      return ProxyAbiGoerli.address;
+      return OracleManagerProxyGoerliAddress;
+    case 10:
+      return OracleManagerProxyOPAddress;
     case 420:
-      return ProxyAbiOPGoerli.address;
+      return OracleManagerProxyOPGoerliAddress;
     default:
-      return ProxyAbiGoerli.address;
+      return OracleManagerProxyMainnetAddress;
   }
 }
+
 export function encodeBytesByNodeType(id: number, parameters: any[]) {
   switch (id) {
     case 1:
@@ -23,7 +49,10 @@ export function encodeBytesByNodeType(id: number, parameters: any[]) {
     case 3:
       return utils.defaultAbiCoder.encode(['address', 'uint', 'uint8'], parameters);
     case 4:
-      return utils.defaultAbiCoder.encode(['address', 'address', 'address', 'uint'], parameters);
+      return utils.defaultAbiCoder.encode(
+        ['address', 'address', 'uint', 'uint', 'address', 'uint'],
+        parameters
+      );
     case 5:
       return utils.defaultAbiCoder.encode(['address', 'bytes32', 'bool'], parameters);
     case 6:
@@ -99,10 +128,31 @@ export function hashId(node: Node, parents: string[]) {
   );
 }
 
-export const getNodeModuleContract = (signerOrProvider: any, networkId: number) => {
+export const getNodeModuleContract = (
+  signerOrProvider: providers.JsonRpcSigner,
+  networkId: number
+) => {
   return new Contract(
     resolveNetworkIdToProxyAddress(networkId),
-    ProxyAbiGoerli.abi,
+    OracleManagerProxyOPGoerliAbi,
     signerOrProvider
   );
+};
+
+export const getMultiCallContract = (
+  signerOrProvider: providers.JsonRpcSigner,
+  network: number
+) => {
+  switch (network) {
+    case 1:
+      return new Contract(multicallAddressMainnet, multicallAbiMainnet, signerOrProvider);
+    case 5:
+      return new Contract(multicallAddressGoerli, multicallAbiGoerli, signerOrProvider);
+    case 10:
+      return new Contract(multicallAddressOP, multicallAbiOP, signerOrProvider);
+    case 420:
+      return new Contract(multicallAddressOPGoerli, multicallAbiOPGoerli, signerOrProvider);
+    default:
+      return new Contract(multicallAddressMainnet, multicallAbiMainnet, signerOrProvider);
+  }
 };

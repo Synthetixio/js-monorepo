@@ -42,22 +42,22 @@ export class PositionLiquidated extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get account(): Bytes {
-    let value = this.get('account');
-    return value!.toBytes();
+  get trader(): string {
+    let value = this.get('trader');
+    return value!.toString();
   }
 
-  set account(value: Bytes) {
-    this.set('account', Value.fromBytes(value));
+  set trader(value: string) {
+    this.set('trader', Value.fromString(value));
   }
 
-  get market(): Bytes {
+  get market(): string {
     let value = this.get('market');
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set market(value: Bytes) {
-    this.set('market', Value.fromBytes(value));
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
   }
 
   get liquidator(): Bytes {
@@ -69,40 +69,125 @@ export class PositionLiquidated extends Entity {
     this.set('liquidator', Value.fromBytes(value));
   }
 
-  get size(): BigDecimal {
+  get size(): BigInt {
     let value = this.get('size');
-    return value!.toBigDecimal();
-  }
-
-  set size(value: BigDecimal) {
-    this.set('size', Value.fromBigDecimal(value));
-  }
-
-  get price(): BigDecimal {
-    let value = this.get('price');
-    return value!.toBigDecimal();
-  }
-
-  set price(value: BigDecimal) {
-    this.set('price', Value.fromBigDecimal(value));
-  }
-
-  get fee(): BigDecimal {
-    let value = this.get('fee');
-    return value!.toBigDecimal();
-  }
-
-  set fee(value: BigDecimal) {
-    this.set('fee', Value.fromBigDecimal(value));
-  }
-
-  get block(): BigInt {
-    let value = this.get('block');
     return value!.toBigInt();
   }
 
-  set block(value: BigInt) {
-    this.set('block', Value.fromBigInt(value));
+  set size(value: BigInt) {
+    this.set('size', Value.fromBigInt(value));
+  }
+
+  get price(): BigInt {
+    let value = this.get('price');
+    return value!.toBigInt();
+  }
+
+  set price(value: BigInt) {
+    this.set('price', Value.fromBigInt(value));
+  }
+
+  get fee(): BigInt {
+    let value = this.get('fee');
+    return value!.toBigInt();
+  }
+
+  set fee(value: BigInt) {
+    this.set('fee', Value.fromBigInt(value));
+  }
+
+  get futuresPosition(): string {
+    let value = this.get('futuresPosition');
+    return value!.toString();
+  }
+
+  set futuresPosition(value: string) {
+    this.set('futuresPosition', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
+  }
+}
+
+export class PositionFlagged extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save PositionFlagged entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PositionFlagged must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('PositionFlagged', id.toString(), this);
+    }
+  }
+
+  static load(id: string): PositionFlagged | null {
+    return changetype<PositionFlagged | null>(store.get('PositionFlagged', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get trader(): string {
+    let value = this.get('trader');
+    return value!.toString();
+  }
+
+  set trader(value: string) {
+    this.set('trader', Value.fromString(value));
+  }
+
+  get flagger(): Bytes {
+    let value = this.get('flagger');
+    return value!.toBytes();
+  }
+
+  set flagger(value: Bytes) {
+    this.set('flagger', Value.fromBytes(value));
+  }
+
+  get price(): BigInt | null {
+    let value = this.get('price');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set price(value: BigInt | null) {
+    if (!value) {
+      this.unset('price');
+    } else {
+      this.set('price', Value.fromBigInt(<BigInt>value));
+    }
   }
 
   get timestamp(): BigInt {
@@ -146,6 +231,41 @@ export class Trader extends Entity {
     this.set('id', Value.fromString(value));
   }
 
+  get createdAt(): BigInt {
+    let value = this.get('createdAt');
+    return value!.toBigInt();
+  }
+
+  set createdAt(value: BigInt) {
+    this.set('createdAt', Value.fromBigInt(value));
+  }
+
+  get lastTradeTimestamp(): BigInt | null {
+    let value = this.get('lastTradeTimestamp');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lastTradeTimestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset('lastTradeTimestamp');
+    } else {
+      this.set('lastTradeTimestamp', Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get margin(): BigInt {
+    let value = this.get('margin');
+    return value!.toBigInt();
+  }
+
+  set margin(value: BigInt) {
+    this.set('margin', Value.fromBigInt(value));
+  }
+
   get totalLiquidations(): BigInt {
     let value = this.get('totalLiquidations');
     return value!.toBigInt();
@@ -155,40 +275,40 @@ export class Trader extends Entity {
     this.set('totalLiquidations', Value.fromBigInt(value));
   }
 
-  get totalMarginLiquidated(): BigDecimal {
+  get totalMarginLiquidated(): BigInt {
     let value = this.get('totalMarginLiquidated');
-    return value!.toBigDecimal();
-  }
-
-  set totalMarginLiquidated(value: BigDecimal) {
-    this.set('totalMarginLiquidated', Value.fromBigDecimal(value));
-  }
-
-  get feesPaidToSynthetix(): BigDecimal {
-    let value = this.get('feesPaidToSynthetix');
-    return value!.toBigDecimal();
-  }
-
-  set feesPaidToSynthetix(value: BigDecimal) {
-    this.set('feesPaidToSynthetix', Value.fromBigDecimal(value));
-  }
-
-  get totalVolume(): BigDecimal {
-    let value = this.get('totalVolume');
-    return value!.toBigDecimal();
-  }
-
-  set totalVolume(value: BigDecimal) {
-    this.set('totalVolume', Value.fromBigDecimal(value));
-  }
-
-  get pnl(): BigInt {
-    let value = this.get('pnl');
     return value!.toBigInt();
   }
 
-  set pnl(value: BigInt) {
-    this.set('pnl', Value.fromBigInt(value));
+  set totalMarginLiquidated(value: BigInt) {
+    this.set('totalMarginLiquidated', Value.fromBigInt(value));
+  }
+
+  get feesPaidToSynthetix(): BigInt {
+    let value = this.get('feesPaidToSynthetix');
+    return value!.toBigInt();
+  }
+
+  set feesPaidToSynthetix(value: BigInt) {
+    this.set('feesPaidToSynthetix', Value.fromBigInt(value));
+  }
+
+  get totalVolume(): BigInt {
+    let value = this.get('totalVolume');
+    return value!.toBigInt();
+  }
+
+  set totalVolume(value: BigInt) {
+    this.set('totalVolume', Value.fromBigInt(value));
+  }
+
+  get realizedPnl(): BigInt {
+    let value = this.get('realizedPnl');
+    return value!.toBigInt();
+  }
+
+  set realizedPnl(value: BigInt) {
+    this.set('realizedPnl', Value.fromBigInt(value));
   }
 
   get trades(): Array<string> {
@@ -241,13 +361,13 @@ export class FuturesTrade extends Entity {
     this.set('timestamp', Value.fromBigInt(value));
   }
 
-  get account(): Bytes {
-    let value = this.get('account');
-    return value!.toBytes();
+  get trader(): string {
+    let value = this.get('trader');
+    return value!.toString();
   }
 
-  set account(value: Bytes) {
-    this.set('account', Value.fromBytes(value));
+  set trader(value: string) {
+    this.set('trader', Value.fromString(value));
   }
 
   get margin(): BigInt {
@@ -259,13 +379,30 @@ export class FuturesTrade extends Entity {
     this.set('margin', Value.fromBigInt(value));
   }
 
-  get positionId(): string {
-    let value = this.get('positionId');
+  get futuresPosition(): string {
+    let value = this.get('futuresPosition');
     return value!.toString();
   }
 
-  set positionId(value: string) {
-    this.set('positionId', Value.fromString(value));
+  set futuresPosition(value: string) {
+    this.set('futuresPosition', Value.fromString(value));
+  }
+
+  get futuresOrder(): string | null {
+    let value = this.get('futuresOrder');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set futuresOrder(value: string | null) {
+    if (!value) {
+      this.unset('futuresOrder');
+    } else {
+      this.set('futuresOrder', Value.fromString(<string>value));
+    }
   }
 
   get size(): BigInt {
@@ -277,13 +414,13 @@ export class FuturesTrade extends Entity {
     this.set('size', Value.fromBigInt(value));
   }
 
-  get market(): Bytes {
+  get market(): string {
     let value = this.get('market');
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set market(value: Bytes) {
-    this.set('market', Value.fromBytes(value));
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
   }
 
   get price(): BigInt {
@@ -313,13 +450,22 @@ export class FuturesTrade extends Entity {
     this.set('positionClosed', Value.fromBoolean(value));
   }
 
-  get pnl(): BigInt {
-    let value = this.get('pnl');
+  get realizedPnl(): BigInt {
+    let value = this.get('realizedPnl');
     return value!.toBigInt();
   }
 
-  set pnl(value: BigInt) {
-    this.set('pnl', Value.fromBigInt(value));
+  set realizedPnl(value: BigInt) {
+    this.set('realizedPnl', Value.fromBigInt(value));
+  }
+
+  get netFunding(): BigInt {
+    let value = this.get('netFunding');
+    return value!.toBigInt();
+  }
+
+  set netFunding(value: BigInt) {
+    this.set('netFunding', Value.fromBigInt(value));
   }
 
   get feesPaidToSynthetix(): BigInt {
@@ -338,6 +484,327 @@ export class FuturesTrade extends Entity {
 
   set type(value: string) {
     this.set('type', Value.fromString(value));
+  }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
+  }
+}
+
+export class DailyMarketStat extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save DailyMarketStat entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type DailyMarketStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('DailyMarketStat', id.toString(), this);
+    }
+  }
+
+  static load(id: string): DailyMarketStat | null {
+    return changetype<DailyMarketStat | null>(store.get('DailyMarketStat', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get market(): string {
+    let value = this.get('market');
+    return value!.toString();
+  }
+
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
+  }
+
+  get day(): string {
+    let value = this.get('day');
+    return value!.toString();
+  }
+
+  set day(value: string) {
+    this.set('day', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get volume(): BigInt {
+    let value = this.get('volume');
+    return value!.toBigInt();
+  }
+
+  set volume(value: BigInt) {
+    this.set('volume', Value.fromBigInt(value));
+  }
+
+  get cumulativeVolume(): BigInt {
+    let value = this.get('cumulativeVolume');
+    return value!.toBigInt();
+  }
+
+  set cumulativeVolume(value: BigInt) {
+    this.set('cumulativeVolume', Value.fromBigInt(value));
+  }
+
+  get fees(): BigInt {
+    let value = this.get('fees');
+    return value!.toBigInt();
+  }
+
+  set fees(value: BigInt) {
+    this.set('fees', Value.fromBigInt(value));
+  }
+
+  get cumulativeFees(): BigInt {
+    let value = this.get('cumulativeFees');
+    return value!.toBigInt();
+  }
+
+  set cumulativeFees(value: BigInt) {
+    this.set('cumulativeFees', Value.fromBigInt(value));
+  }
+
+  get trades(): BigInt {
+    let value = this.get('trades');
+    return value!.toBigInt();
+  }
+
+  set trades(value: BigInt) {
+    this.set('trades', Value.fromBigInt(value));
+  }
+
+  get cumulativeTrades(): BigInt {
+    let value = this.get('cumulativeTrades');
+    return value!.toBigInt();
+  }
+
+  set cumulativeTrades(value: BigInt) {
+    this.set('cumulativeTrades', Value.fromBigInt(value));
+  }
+}
+
+export class DailyStat extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save DailyStat entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type DailyStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('DailyStat', id.toString(), this);
+    }
+  }
+
+  static load(id: string): DailyStat | null {
+    return changetype<DailyStat | null>(store.get('DailyStat', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get day(): string {
+    let value = this.get('day');
+    return value!.toString();
+  }
+
+  set day(value: string) {
+    this.set('day', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get volume(): BigInt {
+    let value = this.get('volume');
+    return value!.toBigInt();
+  }
+
+  set volume(value: BigInt) {
+    this.set('volume', Value.fromBigInt(value));
+  }
+
+  get cumulativeVolume(): BigInt {
+    let value = this.get('cumulativeVolume');
+    return value!.toBigInt();
+  }
+
+  set cumulativeVolume(value: BigInt) {
+    this.set('cumulativeVolume', Value.fromBigInt(value));
+  }
+
+  get fees(): BigInt {
+    let value = this.get('fees');
+    return value!.toBigInt();
+  }
+
+  set fees(value: BigInt) {
+    this.set('fees', Value.fromBigInt(value));
+  }
+
+  get cumulativeFees(): BigInt {
+    let value = this.get('cumulativeFees');
+    return value!.toBigInt();
+  }
+
+  set cumulativeFees(value: BigInt) {
+    this.set('cumulativeFees', Value.fromBigInt(value));
+  }
+
+  get trades(): BigInt {
+    let value = this.get('trades');
+    return value!.toBigInt();
+  }
+
+  set trades(value: BigInt) {
+    this.set('trades', Value.fromBigInt(value));
+  }
+
+  get cumulativeTrades(): BigInt {
+    let value = this.get('cumulativeTrades');
+    return value!.toBigInt();
+  }
+
+  set cumulativeTrades(value: BigInt) {
+    this.set('cumulativeTrades', Value.fromBigInt(value));
+  }
+
+  get newTraders(): BigInt {
+    let value = this.get('newTraders');
+    return value!.toBigInt();
+  }
+
+  set newTraders(value: BigInt) {
+    this.set('newTraders', Value.fromBigInt(value));
+  }
+
+  get existingTraders(): BigInt {
+    let value = this.get('existingTraders');
+    return value!.toBigInt();
+  }
+
+  set existingTraders(value: BigInt) {
+    this.set('existingTraders', Value.fromBigInt(value));
+  }
+
+  get cumulativeTraders(): BigInt {
+    let value = this.get('cumulativeTraders');
+    return value!.toBigInt();
+  }
+
+  set cumulativeTraders(value: BigInt) {
+    this.set('cumulativeTraders', Value.fromBigInt(value));
+  }
+}
+
+export class CumulativeMarketStat extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save CumulativeMarketStat entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type CumulativeMarketStat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('CumulativeMarketStat', id.toString(), this);
+    }
+  }
+
+  static load(id: string): CumulativeMarketStat | null {
+    return changetype<CumulativeMarketStat | null>(store.get('CumulativeMarketStat', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get market(): string {
+    let value = this.get('market');
+    return value!.toString();
+  }
+
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
+  }
+
+  get cumulativeFees(): BigInt {
+    let value = this.get('cumulativeFees');
+    return value!.toBigInt();
+  }
+
+  set cumulativeFees(value: BigInt) {
+    this.set('cumulativeFees', Value.fromBigInt(value));
+  }
+
+  get cumulativeVolume(): BigInt {
+    let value = this.get('cumulativeVolume');
+    return value!.toBigInt();
+  }
+
+  set cumulativeVolume(value: BigInt) {
+    this.set('cumulativeVolume', Value.fromBigInt(value));
+  }
+
+  get cumulativeTrades(): BigInt {
+    let value = this.get('cumulativeTrades');
+    return value!.toBigInt();
+  }
+
+  set cumulativeTrades(value: BigInt) {
+    this.set('cumulativeTrades', Value.fromBigInt(value));
   }
 }
 
@@ -372,22 +839,22 @@ export class Synthetix extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get feesByLiquidations(): BigDecimal {
+  get feesByLiquidations(): BigInt {
     let value = this.get('feesByLiquidations');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set feesByLiquidations(value: BigDecimal) {
-    this.set('feesByLiquidations', Value.fromBigDecimal(value));
+  set feesByLiquidations(value: BigInt) {
+    this.set('feesByLiquidations', Value.fromBigInt(value));
   }
 
-  get feesByPositionModifications(): BigDecimal {
+  get feesByPositionModifications(): BigInt {
     let value = this.get('feesByPositionModifications');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set feesByPositionModifications(value: BigDecimal) {
-    this.set('feesByPositionModifications', Value.fromBigDecimal(value));
+  set feesByPositionModifications(value: BigInt) {
+    this.set('feesByPositionModifications', Value.fromBigInt(value));
   }
 
   get totalLiquidations(): BigInt {
@@ -399,13 +866,13 @@ export class Synthetix extends Entity {
     this.set('totalLiquidations', Value.fromBigInt(value));
   }
 
-  get totalVolume(): BigDecimal {
+  get totalVolume(): BigInt {
     let value = this.get('totalVolume');
-    return value!.toBigDecimal();
+    return value!.toBigInt();
   }
 
-  set totalVolume(value: BigDecimal) {
-    this.set('totalVolume', Value.fromBigDecimal(value));
+  set totalVolume(value: BigInt) {
+    this.set('totalVolume', Value.fromBigInt(value));
   }
 
   get totalTraders(): BigInt {
@@ -416,46 +883,14 @@ export class Synthetix extends Entity {
   set totalTraders(value: BigInt) {
     this.set('totalTraders', Value.fromBigInt(value));
   }
-}
 
-export class Partner extends Entity {
-  constructor(id: string) {
-    super();
-    this.set('id', Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get('id');
-    assert(id != null, 'Cannot save Partner entity without an ID');
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Partner must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set('Partner', id.toString(), this);
-    }
-  }
-
-  static load(id: string): Partner | null {
-    return changetype<Partner | null>(store.get('Partner', id));
-  }
-
-  get id(): string {
-    let value = this.get('id');
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set('id', Value.fromString(value));
-  }
-
-  get tradeCount(): BigInt {
-    let value = this.get('tradeCount');
+  get totalTrades(): BigInt {
+    let value = this.get('totalTrades');
     return value!.toBigInt();
   }
 
-  set tradeCount(value: BigInt) {
-    this.set('tradeCount', Value.fromBigInt(value));
+  set totalTrades(value: BigInt) {
+    this.set('totalTrades', Value.fromBigInt(value));
   }
 }
 
@@ -490,13 +925,13 @@ export class FuturesPosition extends Entity {
     this.set('id', Value.fromString(value));
   }
 
-  get account(): Bytes {
-    let value = this.get('account');
-    return value!.toBytes();
+  get trader(): string {
+    let value = this.get('trader');
+    return value!.toString();
   }
 
-  set account(value: Bytes) {
-    this.set('account', Value.fromBytes(value));
+  set trader(value: string) {
+    this.set('trader', Value.fromString(value));
   }
 
   get openTimestamp(): BigInt {
@@ -534,13 +969,13 @@ export class FuturesPosition extends Entity {
     this.set('long', Value.fromBoolean(value));
   }
 
-  get market(): Bytes {
+  get market(): string {
     let value = this.get('market');
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set market(value: Bytes) {
-    this.set('market', Value.fromBytes(value));
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
   }
 
   get isOpen(): boolean {
@@ -624,13 +1059,22 @@ export class FuturesPosition extends Entity {
     this.set('margin', Value.fromBigInt(value));
   }
 
-  get pnl(): BigInt {
-    let value = this.get('pnl');
+  get realizedPnl(): BigInt {
+    let value = this.get('realizedPnl');
     return value!.toBigInt();
   }
 
-  set pnl(value: BigInt) {
-    this.set('pnl', Value.fromBigInt(value));
+  set realizedPnl(value: BigInt) {
+    this.set('realizedPnl', Value.fromBigInt(value));
+  }
+
+  get unrealizedPnl(): BigInt {
+    let value = this.get('unrealizedPnl');
+    return value!.toBigInt();
+  }
+
+  set unrealizedPnl(value: BigInt) {
+    this.set('unrealizedPnl', Value.fromBigInt(value));
   }
 
   get fundingIndex(): BigInt {
@@ -660,6 +1104,15 @@ export class FuturesPosition extends Entity {
     this.set('entryPrice', Value.fromBigInt(value));
   }
 
+  get netTransfers(): BigInt {
+    let value = this.get('netTransfers');
+    return value!.toBigInt();
+  }
+
+  set netTransfers(value: BigInt) {
+    this.set('netTransfers', Value.fromBigInt(value));
+  }
+
   get lastPrice(): BigInt {
     let value = this.get('lastPrice');
     return value!.toBigInt();
@@ -667,6 +1120,24 @@ export class FuturesPosition extends Entity {
 
   set lastPrice(value: BigInt) {
     this.set('lastPrice', Value.fromBigInt(value));
+  }
+
+  get avgEntryPrice(): BigInt {
+    let value = this.get('avgEntryPrice');
+    return value!.toBigInt();
+  }
+
+  set avgEntryPrice(value: BigInt) {
+    this.set('avgEntryPrice', Value.fromBigInt(value));
+  }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
   }
 
   get exitPrice(): BigInt | null {
@@ -683,6 +1154,23 @@ export class FuturesPosition extends Entity {
       this.unset('exitPrice');
     } else {
       this.set('exitPrice', Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get skew(): BigInt | null {
+    let value = this.get('skew');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set skew(value: BigInt | null) {
+    if (!value) {
+      this.unset('skew');
+    } else {
+      this.set('skew', Value.fromBigInt(<BigInt>value));
     }
   }
 }
@@ -727,22 +1215,22 @@ export class FuturesOrder extends Entity {
     this.set('size', Value.fromBigInt(value));
   }
 
-  get market(): Bytes {
+  get market(): string {
     let value = this.get('market');
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set market(value: Bytes) {
-    this.set('market', Value.fromBytes(value));
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
   }
 
-  get account(): Bytes {
-    let value = this.get('account');
-    return value!.toBytes();
+  get trader(): string {
+    let value = this.get('trader');
+    return value!.toString();
   }
 
-  set account(value: Bytes) {
-    this.set('account', Value.fromBytes(value));
+  set trader(value: string) {
+    this.set('trader', Value.fromString(value));
   }
 
   get orderId(): BigInt {
@@ -825,6 +1313,32 @@ export class FuturesOrder extends Entity {
   set keeper(value: Bytes) {
     this.set('keeper', Value.fromBytes(value));
   }
+
+  get futuresPosition(): string | null {
+    let value = this.get('futuresPosition');
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set futuresPosition(value: string | null) {
+    if (!value) {
+      this.unset('futuresPosition');
+    } else {
+      this.set('futuresPosition', Value.fromString(<string>value));
+    }
+  }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
+  }
 }
 
 export class FundingRateUpdate extends Entity {
@@ -867,22 +1381,22 @@ export class FundingRateUpdate extends Entity {
     this.set('timestamp', Value.fromBigInt(value));
   }
 
-  get market(): Bytes {
+  get market(): string {
     let value = this.get('market');
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set market(value: Bytes) {
-    this.set('market', Value.fromBytes(value));
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
   }
 
-  get sequenceLength(): BigInt {
-    let value = this.get('sequenceLength');
+  get fundingRate(): BigInt {
+    let value = this.get('fundingRate');
     return value!.toBigInt();
   }
 
-  set sequenceLength(value: BigInt) {
-    this.set('sequenceLength', Value.fromBigInt(value));
+  set fundingRate(value: BigInt) {
+    this.set('fundingRate', Value.fromBigInt(value));
   }
 
   get funding(): BigInt {
@@ -892,5 +1406,218 @@ export class FundingRateUpdate extends Entity {
 
   set funding(value: BigInt) {
     this.set('funding', Value.fromBigInt(value));
+  }
+
+  get index(): BigInt {
+    let value = this.get('index');
+    return value!.toBigInt();
+  }
+
+  set index(value: BigInt) {
+    this.set('index', Value.fromBigInt(value));
+  }
+}
+
+export class FuturesMarginTransfer extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save FuturesMarginTransfer entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type FuturesMarginTransfer must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('FuturesMarginTransfer', id.toString(), this);
+    }
+  }
+
+  static load(id: string): FuturesMarginTransfer | null {
+    return changetype<FuturesMarginTransfer | null>(store.get('FuturesMarginTransfer', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get trader(): string {
+    let value = this.get('trader');
+    return value!.toString();
+  }
+
+  set trader(value: string) {
+    this.set('trader', Value.fromString(value));
+  }
+
+  get market(): string {
+    let value = this.get('market');
+    return value!.toString();
+  }
+
+  set market(value: string) {
+    this.set('market', Value.fromString(value));
+  }
+
+  get size(): BigInt {
+    let value = this.get('size');
+    return value!.toBigInt();
+  }
+
+  set size(value: BigInt) {
+    this.set('size', Value.fromBigInt(value));
+  }
+
+  get txHash(): string {
+    let value = this.get('txHash');
+    return value!.toString();
+  }
+
+  set txHash(value: string) {
+    this.set('txHash', Value.fromString(value));
+  }
+}
+
+export class FuturesMarket extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save FuturesMarket entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type FuturesMarket must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('FuturesMarket', id.toString(), this);
+    }
+  }
+
+  static load(id: string): FuturesMarket | null {
+    return changetype<FuturesMarket | null>(store.get('FuturesMarket', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get asset(): Bytes {
+    let value = this.get('asset');
+    return value!.toBytes();
+  }
+
+  set asset(value: Bytes) {
+    this.set('asset', Value.fromBytes(value));
+  }
+
+  get marketKey(): Bytes {
+    let value = this.get('marketKey');
+    return value!.toBytes();
+  }
+
+  set marketKey(value: Bytes) {
+    this.set('marketKey', Value.fromBytes(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get('timestamp');
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set('timestamp', Value.fromBigInt(value));
+  }
+
+  get isActive(): boolean {
+    let value = this.get('isActive');
+    return value!.toBoolean();
+  }
+
+  set isActive(value: boolean) {
+    this.set('isActive', Value.fromBoolean(value));
+  }
+}
+
+export class Frontend extends Entity {
+  constructor(id: string) {
+    super();
+    this.set('id', Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get('id');
+    assert(id != null, 'Cannot save Frontend entity without an ID');
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Frontend must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set('Frontend', id.toString(), this);
+    }
+  }
+
+  static load(id: string): Frontend | null {
+    return changetype<Frontend | null>(store.get('Frontend', id));
+  }
+
+  get id(): string {
+    let value = this.get('id');
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set('id', Value.fromString(value));
+  }
+
+  get markets(): Array<string> {
+    let value = this.get('markets');
+    return value!.toStringArray();
+  }
+
+  set markets(value: Array<string>) {
+    this.set('markets', Value.fromStringArray(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get('amount');
+    return value!.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set('amount', Value.fromBigInt(value));
+  }
+
+  get fees(): BigInt {
+    let value = this.get('fees');
+    return value!.toBigInt();
+  }
+
+  set fees(value: BigInt) {
+    this.set('fees', Value.fromBigInt(value));
   }
 }

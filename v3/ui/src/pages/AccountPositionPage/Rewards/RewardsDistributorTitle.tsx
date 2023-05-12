@@ -1,3 +1,5 @@
+export {};
+/*
 import { Button, Td, Text, Tr } from '@chakra-ui/react';
 import { useCallback, useState } from 'react';
 import { useContractRead, useContractWrite, useToken } from 'wagmi';
@@ -91,3 +93,4 @@ export function RewardsDistributorTitle({ reward }: { reward: Reward }) {
     </Tr>
   );
 }
+*/

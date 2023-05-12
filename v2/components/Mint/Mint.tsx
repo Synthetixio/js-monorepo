@@ -32,6 +32,7 @@ import { MintOrBurnChanges } from '@snx-v2/MintOrBurnChanges';
 import { MintHeader } from './MintHeader';
 import { leftColWidth, rightColWidth } from './layout';
 import { MintLinks } from './MintLinks';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 interface MintProps {
   unstakedSnx?: number;
@@ -46,6 +47,7 @@ interface MintProps {
   gasError: Error | null;
   belowTargetError: boolean;
   isGasEnabledAndNotFetched: boolean;
+  delegatedToMint: boolean;
 }
 const StyledInput: FC<InputProps> = (props) => {
   return (
@@ -83,6 +85,7 @@ export const MintUi = ({
   gasError,
   belowTargetError,
   isGasEnabledAndNotFetched,
+  delegatedToMint,
 }: MintProps) => {
   const { t } = useTranslation();
   const [activeBadge, setActiveBadge] = useState(0);
@@ -200,11 +203,13 @@ export const MintUi = ({
           </Flex>
         </Box>
         <MintOrBurnChanges debtChange={parseFloatWithCommas(mintAmountsUSD)} action="mint" />
-        {gasError || belowTargetError ? (
-          <Center>
+        {gasError || belowTargetError || !delegatedToMint ? (
+          <Center mt={2}>
             <FailedIcon width="40px" height="40px" />
             <Text>
-              {belowTargetError
+              {!delegatedToMint
+                ? t('staking-v2.delegate.missing-permission')
+                : belowTargetError
                 ? t('staking-v2.mint.below-target-error')
                 : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}
             </Text>
@@ -228,6 +233,7 @@ export const MintUi = ({
             onSubmit();
           }}
           isDisabled={
+            !delegatedToMint ||
             stakeAmountSNX === '' ||
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
@@ -241,11 +247,11 @@ export const MintUi = ({
   );
 };
 
-export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAddress }) => {
+export const Mint: FC = () => {
   const [stakeAmountSNX, setStakeAmountSNX] = useState('');
   const [mintAmountSUSD, setMintAmountSUSD] = useState('');
   const queryClient = useQueryClient();
-
+  const { delegateWallet } = useDelegateWallet();
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
@@ -267,7 +273,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
     txnHash,
   } = useMintMutation({
     amount: wei(mintAmountSUSD || 0).toBN(),
-    delegateAddress: delegateWalletAddress,
+    delegateAddress: delegateWallet?.address,
     toMax: wei(stakeAmountSNX || 0).gte(formatNumber(unstakedSnx.toNumber())),
   });
 
@@ -294,6 +300,7 @@ export const Mint: FC<{ delegateWalletAddress?: string }> = ({ delegateWalletAdd
       >
         <Box width={{ base: 'full', md: leftColWidth }}>
           <MintUi
+            delegatedToMint={delegateWallet ? delegateWallet.canMint : true}
             isLoading={isLoading}
             stakeAmountSNX={stakeAmountSNX}
             mintAmountsUSD={mintAmountSUSD}

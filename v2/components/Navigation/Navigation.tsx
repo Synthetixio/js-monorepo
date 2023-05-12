@@ -10,6 +10,7 @@ import {
   Text,
   useBreakpointValue,
   useDisclosure,
+  Link as ChakraLink,
 } from '@chakra-ui/react';
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 import {
@@ -30,7 +31,7 @@ import {
   // InfoOutline,
   InfoOutline,
 } from '@snx-v2/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { formatNumberToUsd, truncateAddress } from '@snx-v2/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
@@ -42,7 +43,8 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { LOCAL_STORAGE_KEYS } from '@snx-v2/Constants';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -86,10 +88,9 @@ export const NavigationUI = ({
   ensName,
 }: NavigationProps) => {
   const { t } = useTranslation();
-
+  const { delegateWallet } = useDelegateWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { name, icon } = activeIcon(currentNetwork);
-  const navigate = useNavigate();
 
   const size = useBreakpointValue(
     {
@@ -111,20 +112,6 @@ export const NavigationUI = ({
     >
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
-        <Button
-          variant="outline"
-          colorScheme="gray"
-          height={10}
-          fontSize="sm"
-          py="6px"
-          px="9.5px"
-          onClick={() => {
-            window.localStorage[LOCAL_STORAGE_KEYS.STAKING_V2_ENABLED] = 'false';
-            window.location.reload();
-          }}
-        >
-          {size === 'mobile' ? 'Old App' : 'Back to old app'}
-        </Button>
         {isWalletConnected && walletAddress && (
           <>
             {size === 'desktop' && (
@@ -138,21 +125,13 @@ export const NavigationUI = ({
             )}
           </>
         )}
-        <Center
-          ml={2}
-          height={10}
-          borderColor="gray.900"
-          borderWidth="1px"
-          borderRadius="4px"
-          _hover={{
-            cursor: 'pointer',
-          }}
-        >
+        <Center>
           <Menu>
             {({ isOpen }) => (
               <>
                 <MenuButton
                   as={Button}
+                  ml={2}
                   variant="outline"
                   colorScheme="gray"
                   sx={{ '> span': { display: 'flex', alignItems: 'center' } }}
@@ -197,8 +176,18 @@ export const NavigationUI = ({
               onClick={onOpen}
             >
               <WalletIcon />
-              <Text ml={1} variant="nav" fontWeight={700} fontSize="sm" userSelect="none">
-                {ensName ? ensName : truncateAddress(walletAddress, 4, 4)}
+              <Text
+                ml={1}
+                variant="nav"
+                fontWeight={700}
+                fontSize={{ base: 'xs', sm: 'sm' }}
+                userSelect="none"
+              >
+                {delegateWallet
+                  ? `On behalf of: ${truncateAddress(delegateWallet.address, 4, 4)}`
+                  : ensName
+                  ? ensName
+                  : truncateAddress(walletAddress, 4, 4)}
               </Text>
             </Button>
           </>
@@ -249,18 +238,7 @@ export const NavigationUI = ({
           </Center>
         </> */}
         <Menu>
-          <Center
-            ml={2}
-            bg="navy.900"
-            height={10}
-            borderColor="gray.900"
-            borderWidth="1px"
-            borderRadius="4px"
-            _hover={{
-              bg: 'blackAlpha.400',
-              cursor: 'pointer',
-            }}
-          >
+          <Center ml={2}>
             <MenuButton
               as={Button}
               variant="outline"
@@ -278,15 +256,26 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.help')}</Text>
               </Center>
             </MenuItem> */}
-            <MenuItem onClick={() => navigate('/loans')}>
-              <Center>
-                <LoansIcon />
-                <Text fontSize="sm" ml={2}>
-                  {t('common.wallet.menu.loans')}
-                </Text>
-              </Center>
-            </MenuItem>
-            <MenuItem onClick={() => window.open('https://governance.synthetix.io/', '_newtab')}>
+            {delegateWallet ? null : (
+              <MenuItem
+                _hover={{ textDecoration: 'none', bg: 'whiteAlpha.400' }}
+                as={Link}
+                to="/loans"
+              >
+                <Center>
+                  <LoansIcon />
+                  <Text fontSize="sm" ml={2}>
+                    {t('common.wallet.menu.loans')}
+                  </Text>
+                </Center>
+              </MenuItem>
+            )}
+            <MenuItem
+              _hover={{ textDecoration: 'none', bg: 'whiteAlpha.400' }}
+              as={ChakraLink}
+              isExternal={true}
+              href={EXTERNAL_LINKS.Synthetix.Governance}
+            >
               <Center>
                 <GovIcon />
                 <Text fontSize="sm" ml={2}>
@@ -294,8 +283,8 @@ export const NavigationUI = ({
                 </Text>
               </Center>
             </MenuItem>
-            {isWalletConnected && (
-              <MenuItem onClick={() => navigate('/wallet')}>
+            {Boolean(isWalletConnected && !delegateWallet) && (
+              <MenuItem as={Link} to="/wallet">
                 <Center>
                   <WalletIcon color="white" />
                   <Text fontSize="sm" ml={2}>
@@ -310,13 +299,18 @@ export const NavigationUI = ({
                 <Text ml={2}>{t('common.wallet.menu.settings')}</Text>
               </Center>
             </MenuItem> */}
-            <MenuItem onClick={() => window.open('https://synthetix.io/guides', '_newtab')}>
+            <MenuItem
+              _hover={{ textDecoration: 'none', bg: 'whiteAlpha.400' }}
+              as={ChakraLink}
+              isExternal={true}
+              href={EXTERNAL_LINKS.Synthetix.Docs}
+            >
               <GuideIcon />
               <Text fontSize="sm" ml={2}>
-                {t('common.wallet.menu.guide')}
+                {t('common.wallet.menu.docs')}
               </Text>
             </MenuItem>
-            <MenuItem onClick={() => navigate('/terms')}>
+            <MenuItem as={Link} to="/terms">
               <InfoOutline width="20px" height="20px" />
               <Text fontSize="sm" ml={2}>
                 {t('common.wallet.menu.terms')}
@@ -345,7 +339,7 @@ export const Navigation = ({
   const { data: exchangeRateData, isLoading: isExchangeRatesLoading } = useExchangeRatesData();
   const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
   const { walletAddress, ensName } = useContext(ContractContext);
-
+  const { delegateWallet, setDelegateWallet } = useDelegateWallet();
   const isLoading = isSynthsLoading || isDebtLoading;
   const isEpochPriceLoading = isExchangeRatesLoading || isFeePoolDataLoading;
 
@@ -358,6 +352,21 @@ export const Navigation = ({
         epochEnd={feePoolData?.nextFeePeriodStartDate}
         snxPrice={snxPrice}
       />
+      {delegateWallet && (
+        <Flex
+          px={[4, 4, 10]}
+          bg="black"
+          justifyContent="space-between"
+          alignItems="center"
+          height="40px"
+          fontSize="xs"
+        >
+          <Text>You are now in delegate mode</Text>
+          <Button fontSize="xs" p={0} variant="ghost" onClick={() => setDelegateWallet(null)}>
+            Stop Delegate Mode
+          </Button>
+        </Flex>
+      )}
       <NavigationUI
         currentNetwork={currentNetwork}
         switchNetwork={switchNetwork}

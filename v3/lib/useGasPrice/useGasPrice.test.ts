@@ -1,4 +1,4 @@
-import { GWEI_DECIMALS } from '@snx-v3/Constants';
+import { GWEI_DECIMALS } from '@snx-v3/constants';
 import { wei } from '@synthetixio/wei';
 
 describe('useGasPrice', () => {
@@ -42,7 +42,7 @@ describe('useGasPrice', () => {
     const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
 
     expect(result.data).toEqual(undefined);
-    expect(queryKey).toEqual(['useGasPrice', 1]);
+    expect(queryKey).toEqual(['mainnet', 'GasPrice']);
     expect(enabled).toEqual(true);
     getBlockMock.mockReturnValue({ baseFeePerGas: wei(2, GWEI_DECIMALS).toBN() });
     const queryResult = await queryFn();
@@ -69,7 +69,7 @@ describe('useGasPrice', () => {
     const result = useGasPrice();
     const { queryKey, queryFn, enabled } = reactQuery.useQuery.mock.lastCall[0];
     expect(result.data).toEqual(undefined);
-    expect(queryKey).toEqual(['useGasPrice', 10]);
+    expect(queryKey).toEqual(['optimism-mainnet', 'GasPrice']);
     expect(enabled).toEqual(true);
     getGasPriceMock.mockReturnValue(wei(2, GWEI_DECIMALS).toBN());
     const queryResult = await queryFn();

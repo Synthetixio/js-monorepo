@@ -1,370 +1,130 @@
-import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
-import { assert, describe, test, clearStore, afterEach } from 'matchstick-as/assembly/index';
+import { Address, BigInt, Bytes, log, store } from '@graphprotocol/graph-ts';
+import {
+  assert,
+  describe,
+  test,
+  clearStore,
+  afterEach,
+  logStore,
+} from 'matchstick-as/assembly/index';
 import {
   createDelayedOrderRemovedEvent,
   createDelayedOrderSubmittedEvent,
+  createFunctionRecomputedEvent,
+  createMarginTransferredEvent,
   createPositionLiquidatedEvent,
   createPositionModifiedEvent,
+  toEth,
+  toGwei,
 } from './perpsV2-utils';
 import {
   handleDelayedOrderRemoved,
   handleDelayedOrderSubmitted,
-  handlePositionLiquidated,
+  handleFundingRecomputed,
+  handleMarginTransferred,
+  handlePositionLiquidatedLegacy,
   handlePositionModified,
 } from '../src/futures';
 
 const trader = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
-function toEth(n: i32): BigInt {
-  return BigInt.fromI32(n).times(BigInt.fromI32(10).pow(18));
-}
-
-/**
- * - check pnl calc
- */
 
 describe('Perps V2', () => {
   afterEach(() => {
     clearStore();
   });
 
-  test('should only create one entity when a position is getting opened', () => {
-    const event = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(200),
-      BigInt.fromI32(20),
-      toEth(100),
-      toEth(1000),
-      BigInt.fromI32(1),
-      toEth(2),
-      10
+  test('net funding works for short position and funding decreasing', () => {
+    // This just tests one case, all the cases are tested seperately in calculation.test.ts
+    const initialFunding = 1000;
+    const initialFundingRecomputedEvent = createFunctionRecomputedEvent(
+      BigInt.fromI32(initialFunding), // funding
+      BigInt.fromI32(10), // fundingRate
+      BigInt.fromI32(1), // index
+      BigInt.fromI32(15), // block timestamp
+      10 // log index
     );
-    handlePositionModified(event);
+    handleFundingRecomputed(initialFundingRecomputedEvent);
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), //margin
+      toEth(-2), // size
+      toEth(-2), // trade size
+      toEth(1000), // last price
+      BigInt.fromI32(1), // funding index
+      toGwei(1), // fee
+      10, //  timestamp
+      BigInt.fromI32(12), // skew
+      1 // log index
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionId = `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`;
+    // Assert funding is 0 when opening
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', '0');
+    assert.fieldEquals('FuturesPosition', positionId, 'fundingIndex', '1');
 
-    // FUTURES POSITION
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'id',
-      `${event.address.toHex() + '-' + '0x1'}`
+    const fundingRecomputedEvent = createFunctionRecomputedEvent(
+      BigInt.fromI32(initialFunding - 100), // funding
+      BigInt.fromI32(10), // fundingRate
+      BigInt.fromI32(5), // index
+      BigInt.fromI32(15), // block timestamp
+      10 // log index
     );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'account',
-      trader.toLowerCase()
+    handleFundingRecomputed(fundingRecomputedEvent);
+    const modifyPositionEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), // margin
+      toEth(-3), //size
+      toEth(-1), // trade size
+      toEth(1200), // last price
+      BigInt.fromI32(5), // funding index
+      toGwei(1), // fee
+      20, // timestamp
+      BigInt.fromI32(12), //skew
+      2 // log index
     );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'margin',
-      toEth(200).toString()
-    );
-    assert.fieldEquals('FuturesPosition', `${event.address.toHex() + '-' + '0x1'}`, 'size', '20');
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'lastPrice',
-      toEth(1000).toString()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'feesPaidToSynthetix',
-      toEth(2).toString()
-    );
-    assert.fieldEquals('FuturesPosition', `${event.address.toHex() + '-' + '0x1'}`, 'trades', '1');
-    assert.fieldEquals('FuturesPosition', `${event.address.toHex() + '-' + '0x1'}`, 'long', 'true');
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'isOpen',
-      'true'
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'isLiquidated',
-      'false'
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'initialMargin',
-      toEth(202).toString()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'pnl',
-      `-${toEth(2).toString()}`
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'totalVolume',
-      toEth(100).times(toEth(1000)).div(BigInt.fromI32(10).pow(18)).toString()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'openTimestamp',
-      '10'
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${event.address.toHex() + '-' + '0x1'}`,
-      'openTimestamp',
-      '10'
-    );
-    assert.entityCount('FuturesPosition', 1);
-
-    // FUTURES TRADE
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'timestamp',
-      '10'
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'account',
-      trader.toLowerCase()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'margin',
-      toEth(202).toString()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'positionId',
-      `${event.address.toHex() + '-' + '0x1'}`
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'size',
-      toEth(100).toString()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'market',
-      event.address.toHex()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'price',
-      toEth(1000).toString()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'positionSize',
-      '20'
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'positionClosed',
-      'false'
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'pnl',
-      `-${toEth(2).toString()}`
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'feesPaidToSynthetix',
-      toEth(2).toString()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${event.transaction.hash.toHex() + '-' + event.logIndex.toString()}`,
-      'type',
-      'PositionOpened'
-    );
-    assert.entityCount('FuturesTrade', 1);
-
-    // SYNTHETIX
-    assert.fieldEquals(
-      'Synthetix',
-      'synthetix',
-      'feesByPositionModifications',
-      toEth(2).toString()
-    );
-    assert.fieldEquals(
-      'Synthetix',
-      'synthetix',
-      'totalVolume',
-      toEth(100)
-        .times(toEth(1000).div(BigInt.fromI32(10).pow(18)))
-        .toString()
-    );
-    assert.entityCount('Synthetix', 1);
+    handlePositionModified(modifyPositionEvent);
+    // The funding has decreased with 100 since we opened the position
+    // When funding decreases and we have a short opened, it means we getting paid.
+    // The initial funding was 10000. The new funding is 9900. So a diff of 100
+    // We have a size of 2 when opening till now, which means we expect to net funding to be 100 * 2 = 200
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', '200');
+    assert.fieldEquals('FuturesPosition', positionId, 'fundingIndex', '5');
   });
 
-  test('should update the existing FuturesPosition entity', () => {
-    const createPositionEvent = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(200),
-      BigInt.fromI32(10),
-      toEth(100),
-      toEth(1000),
-      BigInt.fromI32(1),
-      toEth(2),
-      10,
-      1
+  test('calculate PNL for open short position', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), // margin
+      toEth(-2), // size
+      toEth(-2), // tradeSize
+      toEth(1000), // lastPrice
+      BigInt.fromI32(1), // funding index
+      toGwei(1), // fee
+      10, // timestamp
+      BigInt.fromI32(12), // skew
+      1 // log index
     );
-    handlePositionModified(createPositionEvent);
+    handlePositionModified(positionOpenedEvent);
     const modifyPositionEvent = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(300),
-      BigInt.fromI32(400),
-      toEth(300),
-      toEth(1200),
-      BigInt.fromI32(2),
-      toEth(2),
-      20,
-      2
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), // account
+      toEth(5), // margin
+      toEth(-3), //size
+      toEth(-1), // trade size
+      toEth(1200), // last price
+      BigInt.fromI32(2), // funding index
+      toGwei(1), // fee
+      20, // timestamp
+      BigInt.fromI32(12), //skew
+      2 // log index
     );
     handlePositionModified(modifyPositionEvent);
 
-    // SYNTHETIX
-    assert.fieldEquals(
-      'Synthetix',
-      'synthetix',
-      'totalVolume',
-      toEth(100)
-        .times(toEth(1000).div(BigInt.fromI32(10).pow(18)))
-        .plus(toEth(300).times(toEth(1200).div(BigInt.fromI32(10).pow(18))))
-        .toString()
-    );
-    assert.fieldEquals(
-      'Synthetix',
-      'synthetix',
-      'feesByPositionModifications',
-      toEth(4).toString()
-    );
-    assert.entityCount('Synthetix', 1);
-
-    // FUTURES POSITION
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'trades',
-      '2'
-    );
-
-    // FUTURES TRADE
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'timestamp',
-      '20'
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'account',
-      trader.toLowerCase()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'margin',
-      toEth(302).toString()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'positionId',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'size',
-      toEth(300).toString()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'market',
-      modifyPositionEvent.address.toHex()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'price',
-      toEth(1200).toString()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'positionSize',
-      '400'
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'positionClosed',
-      'false'
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'pnl',
-      `2000`
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'feesPaidToSynthetix',
-      toEth(2).toString()
-    );
-    assert.fieldEquals(
-      'FuturesTrade',
-      `${
-        modifyPositionEvent.transaction.hash.toHex() + '-' + modifyPositionEvent.logIndex.toString()
-      }`,
-      'type',
-      'PositionModified'
-    );
-    assert.entityCount('FuturesTrade', 2);
-
+    log.warning('STARTING ASSERTION', []);
+    log.info('Futures Position', []);
     // FUTURES POSITION
     assert.fieldEquals(
       'FuturesPosition',
@@ -375,44 +135,26 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'account',
+      'trader',
       trader.toLowerCase()
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'margin',
-      toEth(500).toString()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'size',
-      '400'
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'lastPrice',
-      toEth(1200).toString()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'feesPaidToSynthetix',
-      toEth(4).toString()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'trades',
-      '2'
+      'openTimestamp',
+      '10'
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'long',
-      'true'
+      'false'
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'market',
+      positionOpenedEvent.address.toHex()
     );
     assert.fieldEquals(
       'FuturesPosition',
@@ -429,343 +171,304 @@ describe('Perps V2', () => {
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'initialMargin',
-      toEth(202).toString()
+      'trades',
+      '2'
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'pnl',
-      '2000'
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'totalVolume',
-      toEth(100)
-        .times(toEth(1000).div(BigInt.fromI32(10).pow(18)))
-        .plus(toEth(300).times(toEth(1200).div(BigInt.fromI32(10).pow(18))))
-        .toString()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'openTimestamp',
-      '10'
-    );
-    assert.entityCount('FuturesPosition', 1);
-  });
-
-  test('should create a FuturesOrder entity', () => {
-    const delayedOrderSubmittedEvent = createDelayedOrderSubmittedEvent(
-      Address.fromString(trader),
-      true,
-      toEth(1),
-      BigInt.fromI32(2),
-      BigInt.fromI32(500),
-      BigInt.fromI32(600),
-      toEth(2),
-      toEth(1),
-      Bytes.fromHexString('0xKwenta'),
-      10
-    );
-    handleDelayedOrderSubmitted(delayedOrderSubmittedEvent);
-
-    // FUTURES ORDER
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'id',
-      trader.toLowerCase() + '-2'
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'size', toEth(1).toString());
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'market',
-      delayedOrderSubmittedEvent.address.toHex()
-    );
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'account',
-      trader.toLowerCase()
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'orderId', '2');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'targetRoundId', '2');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'targetPrice', '0');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'marginDelta', '0');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'timestamp', '10');
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'orderType',
-      'DelayedOffchainSubmitted'
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'status', 'Pending');
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'keeper',
-      '0x0000000000000000000000000000000000000000'
-    );
-  });
-
-  test('should update a FuturesOrder entity', () => {
-    const delayedOrderSubmittedEvent = createDelayedOrderSubmittedEvent(
-      Address.fromString(trader),
-      true,
-      toEth(1),
-      BigInt.fromI32(2),
-      BigInt.fromI32(500),
-      BigInt.fromI32(600),
-      toEth(2),
-      toEth(1),
-      Bytes.fromHexString('0xKwenta'),
-      10
-    );
-    handleDelayedOrderSubmitted(delayedOrderSubmittedEvent);
-
-    // FUTURES ORDER
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'id',
-      trader.toLowerCase() + '-2'
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'size', toEth(1).toString());
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'market',
-      delayedOrderSubmittedEvent.address.toHex()
-    );
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'account',
-      trader.toLowerCase()
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'orderId', '2');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'targetRoundId', '2');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'targetPrice', '0');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'marginDelta', '0');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'timestamp', '10');
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'orderType',
-      'DelayedOffchainSubmitted'
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'status', 'Pending');
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'keeper',
-      '0x0000000000000000000000000000000000000000'
-    );
-
-    const delayedOrderRemovedEvent = createDelayedOrderRemovedEvent(
-      Address.fromString(trader),
-      true,
-      BigInt.fromI32(2),
-      toEth(1),
-      BigInt.fromI32(2),
-      toEth(2),
-      toEth(1),
-      Bytes.fromHexString('0xKwenta'),
-      20
-    );
-    handleDelayedOrderRemoved(delayedOrderRemovedEvent);
-
-    // FUTURES ORDER
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'id',
-      trader.toLowerCase() + '-2'
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'size', toEth(1).toString());
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'market',
-      delayedOrderSubmittedEvent.address.toHex()
-    );
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'account',
-      trader.toLowerCase()
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'orderId', '2');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'targetRoundId', '2');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'targetPrice', '0');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'marginDelta', '0');
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'timestamp', '10');
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'orderType',
-      'DelayedOffchainSubmitted'
-    );
-    assert.fieldEquals('FuturesOrder', trader.toLowerCase() + '-2', 'status', 'Pending');
-    assert.fieldEquals(
-      'FuturesOrder',
-      trader.toLowerCase() + '-2',
-      'keeper',
-      '0xa16081f360e3847006db660bae1c6d1b2e17ec2a'
-    );
-  });
-
-  test('open, modify and close a position', () => {
-    const positionOpenedEvent = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(10),
-      toEth(1),
-      toEth(1),
-      toEth(1000),
-      BigInt.fromI32(1),
-      toEth(1),
-      10,
-      1
-    );
-    handlePositionModified(positionOpenedEvent);
-    const modifyPositionEvent = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(10),
-      toEth(1),
-      toEth(2),
-      toEth(1200),
-      BigInt.fromI32(2),
-      toEth(1),
-      20,
-      2
-    );
-    handlePositionModified(modifyPositionEvent);
-    const closedPositionEvent = createPositionModifiedEvent(
-      BigInt.fromI32(1),
-      Address.fromString(trader),
-      toEth(10),
-      BigInt.fromI32(0),
-      toEth(1),
-      toEth(1300),
-      BigInt.fromI32(3),
-      toEth(1),
-      30,
-      3
-    );
-    handlePositionModified(closedPositionEvent);
-
-    // FUTURES POSITION
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'id',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'account',
-      trader.toLowerCase()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'margin',
-      toEth(10).toString()
+      'feesPaidToSynthetix',
+      toGwei(2).toString()
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'size',
+      toEth(-3).toString()
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'initialMargin',
+      '4999999999000000000' // margin sent from contract minus fee
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'leverage',
+      toEth(-3).times(toEth(1200)).div(toEth(5)).abs().toString()
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'netFunding',
       '0'
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'lastPrice',
-      toEth(1300).toString()
+      'margin',
+      toEth(5).toString()
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'feesPaidToSynthetix',
-      toEth(3).toString()
+      'realizedPnl',
+      '-2000000000'
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'trades',
-      '3'
+      'unrealizedPnl',
+      '-400000000000000000002'
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'long',
-      'true'
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'isOpen',
-      'false'
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'isLiquidated',
-      'false'
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'initialMargin',
-      toEth(11).toString()
-    );
-    assert.fieldEquals(
-      'FuturesPosition',
-      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'pnl',
-      '100000000000000000000'
+      'fundingIndex',
+      '1'
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
       'totalVolume',
-      '3400000000000000000000'
+      toEth(-2)
+        .times(toEth(1000))
+        .div(BigInt.fromI32(10).pow(18))
+        .abs()
+        .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
+        .toString()
+    );
+
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'entryPrice',
+      toEth(1000).toString()
     );
     assert.fieldEquals(
       'FuturesPosition',
       `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
-      'closeTimestamp',
-      '30'
+      'entryPrice',
+      toEth(1000).toString()
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'lastPrice',
+      toEth(1200).toString()
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`,
+      'avgEntryPrice',
+      '1066666666666666666666'
+    );
+    assert.assertNull(
+      store
+        .get('FuturesPosition', `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`)!
+        .get('exitPrice')
+    );
+    assert.assertNull(
+      store
+        .get('FuturesPosition', `${modifyPositionEvent.address.toHex() + '-' + '0x1'}`)!
+        .get('closeTimestamp')
     );
     assert.entityCount('FuturesPosition', 1);
 
+    log.info('Synthetix', []);
     // SYNTHETIX
     assert.fieldEquals(
       'Synthetix',
       'synthetix',
       'feesByPositionModifications',
-      toEth(3).toString()
+      toGwei(2).toString()
     );
-
+    assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', '0');
+    assert.fieldEquals('Synthetix', 'synthetix', 'totalLiquidations', '0');
     assert.fieldEquals('Synthetix', 'synthetix', 'totalTraders', '1');
 
-    assert.fieldEquals('Synthetix', 'synthetix', 'totalVolume', '3400000000000000000000');
+    assert.fieldEquals(
+      'Synthetix',
+      'synthetix',
+      'totalVolume',
+      toEth(-2)
+        .times(toEth(1000))
+        .div(BigInt.fromI32(10).pow(18))
+        .abs()
+        .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
+        .toString()
+    );
 
+    log.info('Trader', []);
     // TRADER
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'margin', toEth(5).toString());
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'totalLiquidations', '0');
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'feesPaidToSynthetix', toGwei(2).toString());
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'totalMarginLiquidated', '0');
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'createdAt', '10');
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'lastTradeTimestamp', '20');
+    assert.fieldEquals(
+      'Trader',
+      trader.toLowerCase(),
+      'totalVolume',
+      toEth(-2)
+        .times(toEth(1000))
+        .div(BigInt.fromI32(10).pow(18))
+        .abs()
+        .plus(toEth(-1).times(toEth(1200)).div(BigInt.fromI32(10).pow(18)).abs())
+        .toString()
+    );
+    assert.fieldEquals('Trader', trader.toLowerCase(), 'realizedPnl', '-2000000000');
     assert.fieldEquals(
       'Trader',
       trader.toLowerCase(),
       'trades',
       `[${modifyPositionEvent.address.toHex() + '-' + '1'}, ${
         modifyPositionEvent.address.toHex() + '-' + '2'
-      }, ${modifyPositionEvent.address.toHex() + '-' + '3'}]`
+      }]`
+    );
+
+    log.info('Futures Trade', []);
+    // FUTURES TRADE
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'timestamp',
+      '10'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'trader',
+      trader.toLowerCase()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'margin',
+      toEth(5).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'futuresPosition',
+      `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'size',
+      toEth(-2).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'market',
+      positionOpenedEvent.address.toHex()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'price',
+      toEth(1000).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'positionSize',
+      toEth(-2).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'positionClosed',
+      'false'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'realizedPnl',
+      '-1000000000'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'feesPaidToSynthetix',
+      toGwei(1).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'feesPaidToSynthetix',
+      toGwei(1).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'timestamp',
+      '20'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'trader',
+      trader.toLowerCase()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'futuresPosition',
+      `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'futuresPosition',
+      `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'size',
+      toEth(-1).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'market',
+      positionOpenedEvent.address.toHex()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'price',
+      toEth(1200).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'positionSize',
+      toEth(-3).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'positionClosed',
+      'false'
+    );
+
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'feesPaidToSynthetix',
+      toGwei(1).toString()
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'type',
+      'PositionModified'
     );
   });
 
@@ -778,12 +481,26 @@ describe('Perps V2', () => {
       toEth(1),
       toEth(1000),
       BigInt.fromI32(1),
-      toEth(1),
+      toGwei(2),
       10,
+      BigInt.fromI32(12),
       1
     );
     handlePositionModified(positionOpenedEvent);
-
+    const positionModifiedByLiquidationEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(0),
+      toEth(0),
+      toEth(0),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(0),
+      10,
+      BigInt.fromI32(12),
+      2
+    );
+    handlePositionModified(positionModifiedByLiquidationEvent);
     const positionLiquidatedEvent = createPositionLiquidatedEvent(
       BigInt.fromI32(1),
       Address.fromString(trader),
@@ -791,11 +508,365 @@ describe('Perps V2', () => {
       toEth(10),
       toEth(800),
       toEth(1),
-      20
+      20,
+      3
     );
-    handlePositionLiquidated(positionLiquidatedEvent);
-
+    handlePositionLiquidatedLegacy(positionLiquidatedEvent);
+    log.warning('STARTING ASSERTION', []);
     // SYNTHETIX
-    assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', toEth(1).toString());
+    log.info('Synthetix', []);
+    // 90% of the total fee
+    assert.fieldEquals('Synthetix', 'synthetix', 'feesByLiquidations', '849905364703000879');
+    // FUTURES TRADE
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionLiquidatedEvent.transaction.hash.toHex()}-${2}`,
+      'type',
+      'Liquidated'
+    );
+  });
+
+  test('open a short and close it', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      BigInt.fromI32(12),
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const closePositionEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(0),
+      toEth(2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      BigInt.fromI32(12),
+      2
+    );
+    handlePositionModified(closePositionEvent);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'positionClosed',
+      'false'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'positionClosed',
+      'true'
+    );
+  });
+
+  test('open a short and modify it', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      BigInt.fromI32(12),
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-4),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      BigInt.fromI32(12),
+      2
+    );
+    handlePositionModified(positionModifiedEvent);
+    log.warning('STARTING ASSERTION', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'type',
+      'PositionModified'
+    );
+  });
+
+  test('Margin Transferred should update the position and produce an unknown tradeEntity', () => {
+    const initialFunding = 1000;
+    const initialFundingRecomputedEvent = createFunctionRecomputedEvent(
+      toEth(initialFunding), // funding
+      toEth(10), // fundingRate
+      BigInt.fromI32(1), // funding index
+      BigInt.fromI32(15), // block timestamp
+      10 // log index
+    );
+    handleFundingRecomputed(initialFundingRecomputedEvent);
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), //id
+      Address.fromString(trader), //account
+      toEth(500), // margin
+      toEth(-2), // size
+      toEth(-2), //tradeSize
+      toEth(1000), // lastPrice
+      BigInt.fromI32(1), // funding Index
+      toGwei(1000000000), // fee
+      10, // timestamp
+      BigInt.fromI32(12), // skew
+      1 // log index
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionId = `${positionOpenedEvent.address.toHex() + '-' + '0x1'}`;
+    assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', toEth(-1).toString());
+    assert.fieldEquals('FuturesPosition', positionId, 'margin', toEth(500).toString());
+    assert.fieldEquals('FuturesPosition', positionId, 'leverage', toEth(4).toString());
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', toEth(0).toString());
+
+    const FundingRecomputedEvent1 = createFunctionRecomputedEvent(
+      toEth(initialFunding - 10), // funding going down
+      toEth(10), // fundingRate
+      BigInt.fromI32(2), //funding index
+      BigInt.fromI32(16), // block timestamp
+      10 // log index
+    );
+    handleFundingRecomputed(FundingRecomputedEvent1);
+    const marginTransferredEvent = createMarginTransferredEvent(
+      Address.fromString(trader), //sender
+      toEth(100), // marginDelta
+      10, // timestamp
+      1 // log index
+    );
+    handleMarginTransferred(marginTransferredEvent);
+    const positionUpdatedByTransferredMargin = createPositionModifiedEvent(
+      BigInt.fromI32(1), //id
+      Address.fromString(trader), //account
+      toEth(400), // margin
+      toEth(-2), // size
+      toEth(0), // tradeSize
+      toEth(1000), // lastPrice
+      BigInt.fromI32(2), // funding index
+      toGwei(0), // fee
+      10, // timestamp
+      BigInt.fromI32(12), // skew
+      2 // log index
+    );
+    handlePositionModified(positionUpdatedByTransferredMargin);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionUpdatedByTransferredMargin.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.notInStore(
+      'FuturesTrade',
+      `${positionUpdatedByTransferredMargin.address.toHex()}-${BigInt.fromI32(2).toString()}`
+    );
+    assert.entityCount('FuturesTrade', 1);
+
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', toEth(20).toString()); // (10 * 2)
+    assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', toEth(19).toString()); // -1 + (10 * 2)
+    assert.fieldEquals('FuturesPosition', positionId, 'margin', toEth(400).toString());
+    assert.fieldEquals('FuturesPosition', positionId, 'leverage', toEth(5).toString());
+
+    const FundingRecomputedEvent2 = createFunctionRecomputedEvent(
+      toEth(initialFunding + 10), // funding going down
+      toEth(10), // fundingRate
+      BigInt.fromI32(3), //funding index
+      BigInt.fromI32(16), // block timestamp
+      10 // log index
+    );
+    handleFundingRecomputed(FundingRecomputedEvent2);
+    const increasePos = createPositionModifiedEvent(
+      BigInt.fromI32(1), //id
+      Address.fromString(trader), //account
+      toEth(400), // margin
+      toEth(-3), // size
+      toEth(-1), // tradeSize
+      toEth(1000), // lastPrice
+      BigInt.fromI32(3), // funding index
+      toGwei(1000000000), // fee
+      10, // timestamp
+      BigInt.fromI32(12), // skew
+      2 // log index
+    );
+    handlePositionModified(increasePos);
+    assert.fieldEquals('FuturesPosition', positionId, 'netFunding', toEth(-20).toString()); // (10 * 2) + (-20* 2)
+    assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', toEth(-22).toString()); // -1 + (10 * 2) +  (-20 * 2) -1
+  });
+
+  test('funding recomputed', () => {
+    const fundingRecomputedEvent = createFunctionRecomputedEvent(
+      BigInt.fromI32(20),
+      BigInt.fromI32(10),
+      BigInt.fromI32(5),
+      BigInt.fromI32(15),
+      10
+    );
+    handleFundingRecomputed(fundingRecomputedEvent);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Funding Rate Update', []);
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'fundingRate',
+      '10'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'funding',
+      '20'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'index',
+      '5'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'timestamp',
+      '15'
+    );
+    assert.fieldEquals(
+      'FundingRateUpdate',
+      `${fundingRecomputedEvent.address.toHex()}-${5}`,
+      'market',
+      fundingRecomputedEvent.address.toHex()
+    );
+  });
+
+  test('open a short and flip sides', () => {
+    const positionOpenedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(-2),
+      toEth(-2),
+      toEth(1000),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      BigInt.fromI32(200),
+      1
+    );
+    handlePositionModified(positionOpenedEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1),
+      Address.fromString(trader),
+      toEth(5),
+      toEth(2),
+      toEth(4),
+      toEth(1200),
+      BigInt.fromI32(1),
+      toGwei(1),
+      10,
+      BigInt.fromI32(200),
+      2
+    );
+    handlePositionModified(positionModifiedEvent);
+    log.warning('STARTING ASSERTION', []);
+    log.info('Futures Trade', []);
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(1).toString()}`,
+      'type',
+      'PositionOpened'
+    );
+    assert.fieldEquals(
+      'FuturesTrade',
+      `${positionOpenedEvent.address.toHex()}-${BigInt.fromI32(2).toString()}`,
+      'type',
+      'PositionModified'
+    );
+
+    log.info('Futures Position', []);
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
+      'entryPrice',
+      toEth(1200).toString()
+    );
+    assert.fieldEquals(
+      'FuturesPosition',
+      `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`,
+      'avgEntryPrice',
+      toEth(1200).toString()
+    );
+  });
+  test('Keeper fees are added as fees', () => {
+    const createOrderEvent = createDelayedOrderSubmittedEvent(
+      Address.fromString(trader), // account
+      true, // isOffchain
+      toEth(1), //sizeDelta
+      BigInt.fromI32(2), //targetRoundId
+      BigInt.fromI32(1), // intentionTime
+      BigInt.fromI32(10), // executableAtTime
+      toEth(1), //commit Deposit
+      toEth(1), //keeperDeposit:
+      Bytes.fromUTF8('joey'), // trackingCode
+      1, //timestamp
+      2 // logIndex
+    );
+    handleDelayedOrderSubmitted(createOrderEvent);
+    const positionModifiedEvent = createPositionModifiedEvent(
+      BigInt.fromI32(1), // id
+      Address.fromString(trader), //account
+      toEth(5), //margin
+      toEth(1), // size
+      toEth(1), // tradeSize
+      toEth(1200), // lastPrice
+      BigInt.fromI32(1), // fundingIndex
+      toEth(1), // fee
+      10, // skew
+      BigInt.fromI32(200), // timestamp
+      1 // logIndex
+    );
+    handlePositionModified(positionModifiedEvent);
+    const orderRemovedEvent = createDelayedOrderRemovedEvent(
+      Address.fromString(trader), // account
+      true, // isOffchain
+      BigInt.fromI32(2), //currentRoundId
+      toEth(1), //sizeDelta
+      BigInt.fromI32(2), //targetRoundId
+      toEth(1), //commitDeposit
+      toEth(1), //keeperDeposit:
+      Bytes.fromUTF8('joey'), // trackingCode
+      1, //timestamp
+      2 // logIndex
+    );
+    handleDelayedOrderRemoved(orderRemovedEvent);
+
+    const positionId = `${positionModifiedEvent.address.toHex() + '-' + '0x1'}`;
+
+    assert.fieldEquals('FuturesPosition', positionId, 'feesPaidToSynthetix', toEth(2).toString()); // 1 keeper fee, 1 open pos fee
+    assert.fieldEquals('FuturesPosition', positionId, 'realizedPnl', toEth(-2).toString()); // 1 keeper fee, 1 open pos fee
   });
 });

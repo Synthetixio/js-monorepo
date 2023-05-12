@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { Box, Container, Flex, Text, Center, SimpleGrid, Alert, Link } from '@chakra-ui/react';
+import { Box, Container, Flex, Text, Center, SimpleGrid } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
@@ -19,61 +18,48 @@ import {
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
 import { Welcome } from '@snx-v2/Welcome';
-import { ContractContext } from '@snx-v2/ContractContext';
 import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 import Connector from 'containers/Connector';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { useApr } from '@snx-v2/useApr';
+import { StatBox } from '@snx-v2/StatBox';
+import { formatPercent } from '@snx-v2/formatters';
 
 const V2Home = () => {
   const { t } = useTranslation();
-  const { walletAddress } = useContext(ContractContext);
   const { isAppReady, connectWallet } = Connector.useContainer();
+  const { delegateWallet } = useDelegateWallet();
+  const { data: debtData } = useDebtData();
+  const isStaking = debtData?.debtBalance.gt(0);
+  const { data: aprs, isLoading: isAprLoading } = useApr();
 
   return (
     <>
       <Flex minHeight="calc(100vh - 86px)" direction="column">
         <Box sx={{ flex: '1 0 auto' }}>
-          <CRatioBanner />
-          {!window.location.host.includes('.limo') && (
-            <Flex mt={8} justifyContent="center">
-              <Alert width="1170px" px={4} mx={4} as={Flex} flexDir={{ base: 'column', md: 'row' }}>
-                Staking has moved to
-                <Link
-                  color="cyan.500"
-                  textDecoration="underline"
-                  ml={1}
-                  href="https://staking.synthetix.eth.limo/"
-                  target="_blank"
-                >
-                  staking.synthetix.eth.limo
-                </Link>
-              </Alert>
-            </Flex>
-          )}
+          {isStaking && <CRatioBanner />}
           <Container maxW="1200px" py="1" mb={8}>
-            {!walletAddress && isAppReady && <Welcome mt={8} />}
             <Flex
               mt="4"
               flexDirection={['column', 'column', 'column', 'row']}
               py={4}
               justifyContent="space-between"
             >
-              {walletAddress ? (
-                <Box
-                  paddingY="7"
-                  paddingX="4"
-                  bg="navy.900"
-                  flex="1"
-                  border="1px"
-                  borderColor="gray.900"
-                  borderRadius="base"
-                >
-                  <CRatioHealthCard />
-                  <MainActionCardsList connectWallet={connectWallet} />
-                </Box>
-              ) : (
+              <Box
+                paddingY={isStaking ? '7' : undefined}
+                paddingX={isStaking ? '4' : undefined}
+                bg={isStaking ? 'navy.900' : undefined}
+                border={isStaking ? '1px' : undefined}
+                borderColor={isStaking ? 'gray.900' : undefined}
+                borderRadius="base"
+                flex="1"
+              >
+                {!isStaking && isAppReady && <Welcome mb={4} />}
+                {isStaking && <CRatioHealthCard />}
                 <MainActionCardsList connectWallet={connectWallet} />
-              )}
+              </Box>
               <Flex
                 ml={[0, 0, 0, 6]}
                 mt={[8, 8, 8, 0]}
@@ -82,26 +68,41 @@ const V2Home = () => {
                 maxWidth={['none', 'none', 'none', '287px']}
                 flexDirection="column"
               >
-                {walletAddress && <BalanceBox />}
-                <Box mt={walletAddress ? 4 : 0}>
-                  <BoxLink
-                    to="/bridge"
-                    headline={t('staking-v2.v2-home.box-links.bridge.headline')}
-                    subHeadline={t('staking-v2.v2-home.box-links.bridge.subHeadline')}
-                    icon={<BridgeIcon />}
-                  />
-                </Box>
+                <StatBox
+                  isLoading={isAprLoading}
+                  titleToolTip="Staking Rewards + Trading Fees from previous week, extrapolated into an APR"
+                  label="Estimated APR"
+                  alignItems={{ base: 'center', lg: 'end' }}
+                  maxW={{ base: 'initial', lg: '325px' }}
+                  w="100%"
+                  bg="navy.900"
+                  mb={4}
+                  amount={formatPercent(aprs?.combinedApr.toNumber() || 0)}
+                />
+                {isStaking && <BalanceBox />}
+                {delegateWallet ? null : (
+                  <Box mt={isStaking ? 4 : 0}>
+                    <BoxLink
+                      to="/bridge"
+                      headline={t('staking-v2.v2-home.box-links.bridge.headline')}
+                      subHeadline={t('staking-v2.v2-home.box-links.bridge.subHeadline')}
+                      icon={<BridgeIcon />}
+                    />
+                  </Box>
+                )}
+                {delegateWallet ? null : (
+                  <Box mt={4}>
+                    <BoxLink
+                      to="/debt/manage"
+                      headline={t('staking-v2.v2-home.box-links.hedge-debt.headline')}
+                      subHeadline={t('staking-v2.v2-home.box-links.hedge-debt.subHeadline')}
+                      icon={<DebtPoolIcon />}
+                    />
+                  </Box>
+                )}
                 <Box mt={4}>
                   <BoxLink
-                    to="/debt/manage"
-                    headline={t('staking-v2.v2-home.box-links.hedge-debt.headline')}
-                    subHeadline={t('staking-v2.v2-home.box-links.hedge-debt.subHeadline')}
-                    icon={<DebtPoolIcon />}
-                  />
-                </Box>
-                <Box mt={4}>
-                  <BoxLink
-                    href={EXTERNAL_LINKS.CMS.Home}
+                    href={EXTERNAL_LINKS.Synthetix.Docs}
                     headline={t('staking-v2.v2-home.box-links.help.headline')}
                     subHeadline={t('staking-v2.v2-home.box-links.help.subHeadline')}
                     isExternal

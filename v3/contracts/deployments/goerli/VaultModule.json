@@ -1,5 +1,5 @@
 {
-  "address": "0x6ae2597A90C94999566031655b7C388cCF8283C5",
+  "address": "0x94c53500d38f95dEea37Bada599d54D8DabEF776",
   "abi": [
     {
       "inputs": [
@@ -115,6 +115,22 @@
       "type": "error"
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint32",
+          "name": "timeRemaining",
+          "type": "uint32"
+        }
+      ],
+      "name": "MinDelegationTimeoutPending",
+      "type": "error"
+    },
+    {
       "inputs": [],
       "name": "OverflowInt128ToUint128",
       "type": "error"
@@ -194,6 +210,11 @@
     {
       "inputs": [],
       "name": "PositionOutOfBounds",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "RewardDistributorNotFound",
       "type": "error"
     },
     {
@@ -378,7 +399,7 @@
           "type": "address"
         }
       ],
-      "name": "getPositionCollateralizationRatio",
+      "name": "getPositionCollateralRatio",
       "outputs": [
         {
           "internalType": "uint256",
@@ -496,5 +517,10 @@
       "type": "function"
     }
   ],
-  "deployTxnHash": "0xdd421c1a8926595a665664192c957dedf3ac8570205afa3242384014893b4339"
+  "constructorArgs": [],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x0922a5c83df11402e7b9aba493d62e966f455295b9b8cd1a76dab36163ff1f0c",
+  "sourceName": "contracts/modules/core/VaultModule.sol",
+  "contractName": "VaultModule",
+  "deployedOn": "contract.VaultModule"
 }

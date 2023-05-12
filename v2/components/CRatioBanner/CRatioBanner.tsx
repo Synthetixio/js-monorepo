@@ -13,6 +13,7 @@ type UiProps = {
   isFlagged: boolean;
   nextEpochStartDate: Date;
   hasClaimed: boolean;
+  nothingToClaim?: boolean;
 };
 
 const getWrapperStyles = (variant: UiProps['variant']) => {
@@ -33,12 +34,13 @@ export const CRatioBannerUi: FC<UiProps> = ({
   variant,
   nextEpochStartDate,
   hasClaimed,
+  nothingToClaim,
 }) => {
   const { t } = useTranslation();
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
 
-  if (hasClaimed && variant === 'success') {
+  if ((hasClaimed || nothingToClaim) && variant === 'success') {
     return null;
   }
 
@@ -91,6 +93,7 @@ export const CRatioBanner: React.FC = () => {
       variant={variant}
       isFlagged={isFlagged}
       hasClaimed={rewardsData.hasClaimed}
+      nothingToClaim={rewardsData.nothingToClaim}
     />
   );
 };

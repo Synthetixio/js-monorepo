@@ -22,6 +22,7 @@ import { useEscrowBalance } from '@snx-v2/useEscrowBalance';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 const Row = ({
   value,
@@ -59,6 +60,7 @@ export const BalanceBoxUi: React.FC<{
   debtBalance?: number;
   dSNXBalance?: number;
   dSNXBalanceUsd?: number;
+  delegateMode: boolean;
 }> = ({
   collateral,
   snxPrice,
@@ -70,6 +72,7 @@ export const BalanceBoxUi: React.FC<{
   escrowBalance,
   liquidationRewards,
   dSNXBalanceUsd,
+  delegateMode,
 }) => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
@@ -137,9 +140,11 @@ export const BalanceBoxUi: React.FC<{
           <Divider my={4} />
           <Flex justifyContent="space-between">
             <Text fontWeight={700}>{t('staking-v2.balance-box.debt-management')}</Text>
-            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/debt">
-              {t('staking-v2.balance-box.hedged-debt')}
-            </Link>
+            {delegateMode ? null : (
+              <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/debt">
+                {t('staking-v2.balance-box.hedged-debt')}
+              </Link>
+            )}
           </Flex>
           <Row
             value={debtBalance}
@@ -171,6 +176,7 @@ export const BalanceBox: FC = () => {
   const { data: dSNXBalanceData } = useGetDSnxBalance();
   const { data: escrowBalanceData } = useEscrowBalance();
   const { data: liquidationRewardsData } = useGetLiquidationRewards();
+  const { delegateWallet } = useDelegateWallet();
   const { networkId } = useContext(ContractContext);
 
   const stakedSnx = calculateStakedSnx({
@@ -181,6 +187,7 @@ export const BalanceBox: FC = () => {
 
   return (
     <BalanceBoxUi
+      delegateMode={Boolean(delegateWallet)}
       snxPrice={exchangeRateData?.SNX?.toNumber()}
       collateral={debtData?.collateral.toNumber()}
       escrowBalance={escrowBalanceData?.totalEscrowed.toNumber()}
