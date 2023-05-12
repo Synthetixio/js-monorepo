@@ -1,5 +1,4 @@
 import React from 'react';
-import App from './App';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -12,6 +11,7 @@ import {
   PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
+import { Dashboard, Actions } from './pages';
 import { isStaging } from './utils/isStaging';
 
 const client = new ApolloClient({
@@ -27,7 +27,16 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <App />
+        <Dashboard />
+      </>
+    ),
+  },
+  {
+    path: '/actions',
+    element: (
+      <>
+        <Header />
+        <Actions />
       </>
     ),
   },
@@ -40,6 +49,15 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  // {
+  //   path: '/markets',
+  //   element: (
+  //     <>
+  //       <Header />
+  //       <Markets />
+  //     </>
+  //   ),
+  // },
 ]);
 
 const container = document.querySelector('#app');
@@ -55,15 +73,17 @@ const customTheme = extendTheme({
       },
     },
   },
+  breakpoints: {
+    ...theme.breakpoints,
+    c900: '950px',
+  },
 });
 
 root.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <ChakraProvider theme={customTheme}>
-        <Fonts />
-        <RouterProvider router={router} />
-      </ChakraProvider>
-    </ApolloProvider>
-  </React.StrictMode>
+  <ApolloProvider client={client}>
+    <ChakraProvider theme={customTheme}>
+      <Fonts />
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  </ApolloProvider>
 );

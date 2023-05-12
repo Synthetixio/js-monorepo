@@ -42,7 +42,6 @@ module.exports = {
               '@synthetixio/optimism-networks': './packages/optimism-networks/src',
               '@synthetixio/providers': './packages/providers/src',
               '@synthetixio/queries': './packages/queries/src',
-              '@synthetixio/wei': './packages/wei/src',
               '@synthetixio/generate-subgraph-query': './tools/generate-subgraph-query/src',
 
               '@synthetixio/contracts/build': './v2/contracts/src',

@@ -2,7 +2,7 @@
   "name": "@snx-v2/Navigation",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/Constants": "workspace:*",
@@ -19,7 +19,7 @@
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@storybook/react": "^6.5.16",
     "@synthetixio/contracts-interface": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5",
     "react-router-dom": "^6.8.1"

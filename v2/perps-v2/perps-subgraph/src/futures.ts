@@ -1,4 +1,4 @@
-import { Address, BigInt, DataSourceContext, log } from '@graphprotocol/graph-ts';
+import { Address, BigInt, DataSourceContext, ethereum } from '@graphprotocol/graph-ts';
 import { PerpetualFuturesMarket } from '../generated/templates';
 import {
   DelayedOrderRemoved as DelayedOrderRemovedEvent,
@@ -10,7 +10,8 @@ import {
   MarketAdded as MarketAddedEvent,
   MarketRemoved as MarketRemovedEvent,
   PerpsTracking as PerpsTrackingEvent,
-  PositionFlagged1 as PositionFlaggedEvent,
+  PositionFlagged1 as PositionFlaggedEventOld,
+  PositionFlagged as PositionFlaggedEventNew,
 } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 import {
   PositionLiquidated,
@@ -25,6 +26,7 @@ import {
   Frontend,
   PositionFlagged,
 } from '../generated/schema';
+import { updateFeeStats } from './historical-trade-stats';
 export { handlePositionModified } from './position-modified';
 
 export function handleFuturesMarketAdded(event: MarketAddedEvent): void {
@@ -49,13 +51,23 @@ export function handleFuturesMarketRemoved(event: MarketRemovedEvent): void {
   }
 }
 
-export function handlePositionFlagged(event: PositionFlaggedEvent): void {
+export function handlePositionFlagged(event: PositionFlaggedEventNew): void {
   const positionFlaggedEntity = new PositionFlagged(
     event.address.toHex() + '-' + event.params.id.toString()
   );
-  if (event.params.price) {
-    positionFlaggedEntity.price = event.params.price;
-  }
+
+  positionFlaggedEntity.price = event.params.price;
+  positionFlaggedEntity.flagger = event.params.flagger;
+  positionFlaggedEntity.timestamp = event.block.timestamp;
+  positionFlaggedEntity.trader = event.params.account.toHex();
+  positionFlaggedEntity.save();
+}
+
+export function handlePositionFlaggedOld(event: PositionFlaggedEventOld): void {
+  const positionFlaggedEntity = new PositionFlagged(
+    event.address.toHex() + '-' + event.params.id.toString()
+  );
+  positionFlaggedEntity.price = null;
   positionFlaggedEntity.flagger = event.params.flagger;
   positionFlaggedEntity.timestamp = event.block.timestamp;
   positionFlaggedEntity.trader = event.params.account.toHex();
@@ -120,6 +132,7 @@ export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLeg
     tradeEntity.type = 'Liquidated';
     tradeEntity.save();
   }
+  updateFeeStats(feeForSynthetix, event.address, event.block.timestamp);
 
   const synthetix = Synthetix.load('synthetix');
   if (synthetix) {
@@ -176,6 +189,8 @@ export function handlePositionLiquidated(event: PositionLiquidatedEvent): void {
     tradeEntity.type = 'Liquidated';
     tradeEntity.save();
   }
+
+  updateFeeStats(event.params.stakersFee, event.address, event.block.timestamp);
 
   const synthetix = Synthetix.load('synthetix');
   if (synthetix) {
@@ -234,7 +249,7 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
     trader.createdAt = event.block.timestamp;
     trader.feesPaidToSynthetix = BigInt.fromI32(0);
     trader.trades = [];
-    trader.totalVolume = event.params.marginDelta;
+    trader.totalVolume = BigInt.fromI32(0);
     trader.totalLiquidations = BigInt.fromI32(0);
     trader.totalMarginLiquidated = BigInt.fromI32(0);
     trader.margin = event.params.marginDelta;
@@ -263,6 +278,8 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
 
   // Update FuturesOrderEntity
   if (futuresOrderEntity) {
+    updateFeeStats(event.params.keeperDeposit, event.address, event.block.timestamp);
+
     futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
 
@@ -335,7 +352,7 @@ export function handleDelayedOrderSubmitted(event: DelayedOrderSubmittedEvent): 
 }
 
 export function handleFundingRecomputed(event: FundingRecomputedEvent): void {
-  let futuresMarketAddress = event.address as Address;
+  let futuresMarketAddress = event.address;
   let fundingRateUpdateEntity = new FundingRateUpdate(
     futuresMarketAddress.toHex() + '-' + event.params.index.toString()
   );

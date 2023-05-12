@@ -1,0 +1,14 @@
+{
+  "name": "@snx-v3/TermsModal",
+  "private": true,
+  "main": "index.tsx",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.5.0",
+    "@snx-v3/constants": "workspace:*",
+    "@storybook/react": "^6.5.16",
+    "@synthetixio/v3-theme": "workspace:*",
+    "react": "^18.2.0",
+    "react-router-dom": "^6.8.1"
+  }
+}

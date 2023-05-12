@@ -356,7 +356,7 @@ export const Rewards = () => {
                 py={0.5}
                 px={1}
                 fontSize="2xs"
-                variant={!onTarget ? 'warning' : hasClaimed ? 'gray' : 'success'}
+                variant={hasClaimed ? 'gray' : onTarget ? 'success' : 'warning'}
                 mt={0.5}
                 w="fit-content"
                 fontWeight="700"
@@ -365,11 +365,11 @@ export const Rewards = () => {
                   (variant === 'error' && (
                     <InfoOutline color="warning" mb="1.75px" mr="2px" height="12px" width="12px" />
                   ))}
-                {!onTarget
-                  ? t('staking-v2.earn.badges.maintain')
-                  : rewardsData?.hasClaimed
+                {rewardsData?.hasClaimed
                   ? t('staking-v2.earn.badges.claimed')
-                  : t('staking-v2.earn.badges.claimable')}
+                  : onTarget
+                  ? t('staking-v2.earn.badges.claimable')
+                  : t('staking-v2.earn.badges.maintain')}
               </Badge>
             );
           }}

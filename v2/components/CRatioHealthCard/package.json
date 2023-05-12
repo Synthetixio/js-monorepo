@@ -2,7 +2,7 @@
   "name": "@snx-v2/CRatioHealthCard",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/CRatioHealthPercentage": "workspace:^",

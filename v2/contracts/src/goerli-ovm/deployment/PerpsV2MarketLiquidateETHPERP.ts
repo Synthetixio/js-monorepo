@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'PerpsV2MarketLiquidateETHPERP';
-export const address = '0x3dB8F853842320940C46D0D54A00fD8C8EF83810';
+export const address = '0xD9B3239f119D7c12cF0f90F8c424B16D349e8de8';
 export const source = 'PerpsV2MarketLiquidate';
 export const abi = [
   'constructor(address _proxy, address _marketState, address _owner, address _resolver)',
@@ -10,7 +10,7 @@ export const abi = [
   'event OwnerChanged(address oldOwner, address newOwner)',
   'event OwnerNominated(address newOwner)',
   'event PerpsTracking(bytes32 indexed trackingCode, bytes32 baseAsset, bytes32 marketKey, int256 sizeDelta, uint256 fee)',
-  'event PositionFlagged(uint256 id, address account, address flagger, uint256 timestamp)',
+  'event PositionFlagged(uint256 id, address account, address flagger, uint256 price, uint256 timestamp)',
   'event PositionLiquidated(uint256 id, address account, address liquidator, int256 size, uint256 price, uint256 flaggerFee, uint256 liquidatorFee, uint256 stakersFee)',
   'event PositionModified(uint256 indexed id, address indexed account, uint256 margin, int256 size, int256 tradeSize, uint256 lastPrice, uint256 fundingIndex, uint256 fee, int256 skew)',
   'event ProxyUpdated(address proxyAddress)',
@@ -148,7 +148,7 @@ export interface PerpsV2MarketLiquidateETHPERPInterface extends utils.Interface 
     'OwnerChanged(address,address)': EventFragment;
     'OwnerNominated(address)': EventFragment;
     'PerpsTracking(bytes32,bytes32,bytes32,int256,uint256)': EventFragment;
-    'PositionFlagged(uint256,address,address,uint256)': EventFragment;
+    'PositionFlagged(uint256,address,address,uint256,uint256)': EventFragment;
     'PositionLiquidated(uint256,address,address,int256,uint256,uint256,uint256,uint256)': EventFragment;
     'PositionModified(uint256,address,uint256,int256,int256,uint256,uint256,uint256,int256)': EventFragment;
     'ProxyUpdated(address)': EventFragment;
@@ -219,10 +219,11 @@ export interface PositionFlaggedEventObject {
   id: BigNumber;
   account: string;
   flagger: string;
+  price: BigNumber;
   timestamp: BigNumber;
 }
 export type PositionFlaggedEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber],
+  [BigNumber, string, string, BigNumber, BigNumber],
   PositionFlaggedEventObject
 >;
 
@@ -481,16 +482,18 @@ export interface PerpsV2MarketLiquidateETHPERP extends BaseContract {
       fee?: null
     ): PerpsTrackingEventFilter;
 
-    'PositionFlagged(uint256,address,address,uint256)'(
+    'PositionFlagged(uint256,address,address,uint256,uint256)'(
       id?: null,
       account?: null,
       flagger?: null,
+      price?: null,
       timestamp?: null
     ): PositionFlaggedEventFilter;
     PositionFlagged(
       id?: null,
       account?: null,
       flagger?: null,
+      price?: null,
       timestamp?: null
     ): PositionFlaggedEventFilter;
 

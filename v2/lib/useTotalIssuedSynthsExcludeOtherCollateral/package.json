@@ -2,11 +2,11 @@
   "name": "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "dependencies": {
     "@ethersproject/strings": "^5.7.0",
     "@snx-v2/useSynthetixContracts": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query": "^4.24.6"
   }
 }

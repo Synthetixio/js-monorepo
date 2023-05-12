@@ -18,7 +18,7 @@ export const MarketSnapshotByWeekSchema = z
     net_issuance: GraphBigDecimalSchema, // withdrawn - deposited
     reported_debt: GraphBigDecimalSchema,
     updated_at: z.string(),
-    updates_in_period: z.number(),
+    updates_in_period: z.string(),
   })
   .transform((market) => ({
     ...market,

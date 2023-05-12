@@ -52,18 +52,17 @@ const oldEvents = [
     name: 'PositionLiquidated',
     type: 'event',
   },
-  // TODO @DEV uncomment when new snx lib is released
-  // {
-  //   anonymous: false,
-  //   inputs: [
-  //     { indexed: false, internalType: 'uint256', name: 'id', type: 'uint256' },
-  //     { indexed: false, internalType: 'address', name: 'account', type: 'address' },
-  //     { indexed: false, internalType: 'address', name: 'flagger', type: 'address' },
-  //     { indexed: false, internalType: 'uint256', name: 'timestamp', type: 'uint256' },
-  //   ],
-  //   name: 'PositionFlagged',
-  //   type: 'event',
-  // },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: 'uint256', name: 'id', type: 'uint256' },
+      { indexed: false, internalType: 'address', name: 'account', type: 'address' },
+      { indexed: false, internalType: 'address', name: 'flagger', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'timestamp', type: 'uint256' },
+    ],
+    name: 'PositionFlagged',
+    type: 'event',
+  },
 ];
 
 if (!fs.existsSync('./abis')) {
@@ -78,19 +77,6 @@ fs.writeFileSync(
         ...perpsV2MarketLiquidateAAVEPERPNew,
         ...futuresMarketManager,
         ...oldEvents,
-        // TODO @DEV remove when new snx lib is released
-        {
-          anonymous: false,
-          inputs: [
-            { indexed: false, internalType: 'uint256', name: 'id', type: 'uint256' },
-            { indexed: false, internalType: 'address', name: 'account', type: 'address' },
-            { indexed: false, internalType: 'address', name: 'flagger', type: 'address' },
-            { indexed: false, internalType: 'uint256', name: 'price', type: 'uint256' },
-            { indexed: false, internalType: 'uint256', name: 'timestamp', type: 'uint256' },
-          ],
-          name: 'PositionFlagged',
-          type: 'event',
-        },
       ].filter((abi) => abi.type === 'event')
     ),
     {

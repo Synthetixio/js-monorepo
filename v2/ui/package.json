@@ -1,7 +1,7 @@
 {
   "name": "@synthetixio/v2-ui",
   "private": true,
-  "version": "2.45.12",
+  "version": "2.45.13",
   "engines": {
     "node": "16.x"
   },
@@ -20,8 +20,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "standalone-install": "yarn workspaces focus '@synthetixio/v2-ui'",
-    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v2-ui' run build",
-    "deploy": "ipfs-deploy ./out"
+    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v2-ui' run build"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.20.13",
@@ -31,7 +30,6 @@
     "@ethersproject/providers": "^5.7.2",
     "@gnosis.pm/safe-apps-provider": "^0.14.0",
     "@gnosis.pm/safe-apps-sdk": "^7.8.0",
-    "@noisekit/ipfs-deploy": "^1.0.3",
     "@reach/dialog": "^0.15.3",
     "@snx-v1/Card": "workspace:*",
     "@snx-v1/constantsUi": "workspace:*",
@@ -59,7 +57,7 @@
     "@snx-v2/StatBox": "workspace:*",
     "@snx-v2/SwapLinks": "workspace:*",
     "@snx-v2/SwitchNetworkContext": "workspace:*",
-    "@snx-v2/TermsModal": "workspace:^",
+    "@snx-v2/TermsModal": "workspace:*",
     "@snx-v2/UnflagOptions": "workspace:*",
     "@snx-v2/UtilityCard": "workspace:^",
     "@snx-v2/WalletBalances": "workspace:*",
@@ -80,7 +78,7 @@
     "@synthetixio/queries": "workspace:*",
     "@synthetixio/safe-import": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query": "^4.24.6",
     "@tippyjs/react": "^4.2.6",
     "@web3-onboard/coinbase": "^2.2.0",
@@ -115,7 +113,7 @@
     "storybook": "^6.5.16",
     "styled-components": "^5.3.6",
     "styled-media-query": "^2.1.2",
-    "synthetix": "2.86.1",
+    "synthetix": "2.88.1",
     "tippy.js": "^6.3.7",
     "unstated-next": "^1.1.0"
   },
@@ -137,6 +135,8 @@
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
     "@svgr/webpack": "^6.5.1",
+    "@synthetixio/ipfs-deploy": "^1.0.5",
+    "@synthetixio/ipns-deploy": "^1.0.1",
     "@tanstack/react-query-devtools": "^4.24.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -195,7 +195,8 @@
       "tmp"
     ],
     "ignoreMatches": [
-      "@noisekit/ipfs-deploy",
+      "@synthetixio/ipfs-deploy",
+      "@synthetixio/ipns-deploy",
       "assets",
       "components",
       "containers",

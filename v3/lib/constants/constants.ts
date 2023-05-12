@@ -8,3 +8,7 @@ export const ONBOARD_KEY = 'sec_jykTuCK0ZuqXWf3wNYqizxs2';
 
 export const getSubgraphUrl = (networkName = 'optimism-mainnet') =>
   `https://api.thegraph.com/subgraphs/name/snx-v3/${networkName}`;
+
+export const SESSION_STORAGE_KEYS = {
+  TERMS_CONDITIONS_ACCEPTED: 'TERMS_CONDITIONS_ACCEPTED',
+};

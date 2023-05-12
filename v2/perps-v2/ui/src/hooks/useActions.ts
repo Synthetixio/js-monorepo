@@ -49,10 +49,14 @@ type TradeTypeHandler = {
   [key in FuturesTradesQuery['futuresTrades'][number]['type']]: () => string;
 };
 
+interface TradeTypeExtended extends TradeTypeHandler {
+  Unknown: () => string;
+}
+
 export const getTradeLabel = (futuresTrade: FuturesTradesQuery['futuresTrades'][number]) => {
   const size = parseFloat(futuresTrade.size);
   const positionSize = parseFloat(futuresTrade.positionSize);
-  const tradeTypeHandlers: TradeTypeHandler = {
+  const tradeTypeHandlers: TradeTypeExtended = {
     PositionOpened: () => (isLongTrade(size) ? 'Long Opened' : 'Short Opened'),
     Liquidated: () => (isLongTrade(size) ? 'Short Liquidated' : 'Long Liquidated'),
     PositionClosed: () => (isLongTrade(size) ? 'Short Closed' : 'Long Closed'),
@@ -117,10 +121,11 @@ const mergeData = (
   return data.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber());
 };
 
-export const useActions = (account?: string) => {
+export const useActions = (account?: string, limit?: number) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('marketAddress') || undefined;
   const accountLower = account?.toLowerCase();
+
   const {
     loading: marginLoading,
     data: marginData,
@@ -128,7 +133,7 @@ export const useActions = (account?: string) => {
   } = useQuery(MARGIN_TRANSFERRED_QUERY, {
     pollInterval: 10000,
     variables: {
-      first: account ? 1000 : 100,
+      first: limit ? limit : 50,
       orderBy: FuturesMarginTransfer_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {
@@ -145,7 +150,7 @@ export const useActions = (account?: string) => {
   } = useQuery(FUTURES_TRADE_QUERY, {
     pollInterval: 10000,
     variables: {
-      first: account ? 1000 : 100,
+      first: limit ? limit : 50,
       orderBy: FuturesTrade_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {

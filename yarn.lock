@@ -6039,19 +6039,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noisekit/ipfs-deploy@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@noisekit/ipfs-deploy@npm:1.0.3"
-  dependencies:
-    debug: ^4.3.4
-    dotenv: ^16.0.3
-    ipfs-http-client: ^60.0.0
-  bin:
-    ipfs-deploy: bin.mjs
-  checksum: 14a871767621560caee1a7882dd42e11f45bb95662aa709bb06b9f141099160457fc43687b489a2a892669b9cada3b077159186c1c4596b50c616624dcc64bc6
-  languageName: node
-  linkType: hard
-
 "@nomiclabs/hardhat-etherscan@npm:^3.1.0":
   version: 3.1.0
   resolution: "@nomiclabs/hardhat-etherscan@npm:3.1.0"
@@ -6750,7 +6737,7 @@ __metadata:
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -6944,7 +6931,7 @@ __metadata:
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -7030,7 +7017,7 @@ __metadata:
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -7073,7 +7060,7 @@ __metadata:
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/contracts-interface": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -7135,7 +7122,7 @@ __metadata:
     "@snx-v2/useSelfLiquidationMutation": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -7215,7 +7202,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/TermsModal@workspace:^, @snx-v2/TermsModal@workspace:v2/components/TermsModal":
+"@snx-v2/TermsModal@workspace:*, @snx-v2/TermsModal@workspace:v2/components/TermsModal":
   version: 0.0.0-use.local
   resolution: "@snx-v2/TermsModal@workspace:v2/components/TermsModal"
   dependencies:
@@ -7265,7 +7252,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/icons": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -7298,7 +7285,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -7357,7 +7344,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/calculateWeeklyRewardsInUsd@workspace:v2/lib/calculateWeeklyRewardsInUsd"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -7411,7 +7398,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/stakingCalculations@workspace:v2/lib/stakingCalculations"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -7536,7 +7523,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7551,7 +7538,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7574,7 +7561,7 @@ __metadata:
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7594,7 +7581,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7606,7 +7593,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7619,7 +7606,7 @@ __metadata:
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7644,7 +7631,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     date-fns: ^2.29.3
     react: ^18.2.0
@@ -7658,7 +7645,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDebtShareDataPeriod": "workspace:*"
     "@snx-v2/useFeePeriodMultiNetwork": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7670,7 +7657,7 @@ __metadata:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7688,7 +7675,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useGasPrice": "workspace:*"
     "@snx-v2/useOptimismLayer1Fee": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7705,7 +7692,7 @@ __metadata:
     "@snx-v2/SignerContext": "workspace:*"
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7728,7 +7715,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7753,7 +7740,7 @@ __metadata:
     "@snx-v2/useFeePeriodMultiNetwork": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useTotalStakedSNX": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7782,7 +7769,7 @@ __metadata:
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7812,7 +7799,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7825,7 +7812,7 @@ __metadata:
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7841,7 +7828,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7854,7 +7841,7 @@ __metadata:
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7871,7 +7858,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7899,7 +7886,7 @@ __metadata:
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     lodash: ^4.17.21
     react: ^18.2.0
@@ -7912,7 +7899,7 @@ __metadata:
   dependencies:
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
@@ -7953,7 +7940,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/format": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7965,7 +7952,7 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/Amount": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -7990,7 +7977,7 @@ __metadata:
     "@snx-v3/useBorrow": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -8024,20 +8011,11 @@ __metadata:
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@xstate/react": ^3.2.1
     react: ^18.2.0
     react-router-dom: ^6.8.1
     xstate: ^4.36.0
-  languageName: unknown
-  linkType: soft
-
-"@snx-v3/ExperimentalModal@workspace:*, @snx-v3/ExperimentalModal@workspace:v3/components/ExperimentalModal":
-  version: 0.0.0-use.local
-  resolution: "@snx-v3/ExperimentalModal@workspace:v3/components/ExperimentalModal"
-  dependencies:
-    "@chakra-ui/react": ^2.5.0
-    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -8056,7 +8034,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/ManagePositionContext@workspace:v3/lib/ManagePositionContext"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -8076,7 +8054,7 @@ __metadata:
   resolution: "@snx-v3/NumberInput@workspace:v3/components/NumberInput"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -8102,7 +8080,7 @@ __metadata:
     "@snx-v3/format": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/usePoolData": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-router-dom: ^6.8.1
   languageName: unknown
@@ -8132,8 +8110,21 @@ __metadata:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/useRepay": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/TermsModal@workspace:*, @snx-v3/TermsModal@workspace:v3/components/TermsModal":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/TermsModal@workspace:v3/components/TermsModal"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@snx-v3/constants": "workspace:*"
+    "@storybook/react": ^6.5.16
+    "@synthetixio/v3-theme": "workspace:*"
+    react: ^18.2.0
+    react-router-dom: ^6.8.1
   languageName: unknown
   linkType: soft
 
@@ -8142,7 +8133,7 @@ __metadata:
   resolution: "@snx-v3/TrendText@workspace:v3/components/TrendText"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -8159,7 +8150,7 @@ __metadata:
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/useWithdraw": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@xstate/react": ^3.2.1
     react: ^18.2.0
     xstate: ^4.36.0
@@ -8177,7 +8168,7 @@ __metadata:
   resolution: "@snx-v3/calculations@workspace:v3/lib/calculations"
   dependencies:
     "@snx-v3/usePoolData": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     zod: ^3.20.6
   languageName: unknown
   linkType: soft
@@ -8229,7 +8220,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/format@workspace:v3/lib/format"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     ethers: ^5.7.2
   languageName: unknown
   linkType: soft
@@ -8256,7 +8247,6 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@noisekit/ipfs-deploy": ^1.0.3
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/format": "workspace:*"
@@ -8266,8 +8256,10 @@ __metadata:
     "@snx-v3/useSpotMarketProxy": "workspace:*"
     "@snx-v3/useSynthTokenModule": "workspace:*"
     "@snx-v3/zod": "workspace:*"
+    "@synthetixio/ipfs-deploy": ^1.0.5
+    "@synthetixio/ipns-deploy": ^1.0.1
     "@synthetixio/v3-theme": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@types/react": ^18.0.28
@@ -8331,7 +8323,6 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.17
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@noisekit/ipfs-deploy": ^1.0.3
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v2/formatters": "workspace:*"
     "@snx-v3/AccountsSelector": "workspace:*"
@@ -8340,13 +8331,13 @@ __metadata:
     "@snx-v3/BorrowModal": "workspace:*"
     "@snx-v3/CollateralTypeSelector": "workspace:*"
     "@snx-v3/DepositModal": "workspace:*"
-    "@snx-v3/ExperimentalModal": "workspace:*"
     "@snx-v3/HomeLink": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/NumberInput": "workspace:*"
     "@snx-v3/PercentBadges": "workspace:*"
     "@snx-v3/PoolBox": "workspace:*"
     "@snx-v3/RepayModal": "workspace:*"
+    "@snx-v3/TermsModal": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/WithdrawModal": "workspace:*"
     "@snx-v3/calculations": "workspace:*"
@@ -8374,10 +8365,12 @@ __metadata:
     "@storybook/builder-webpack5": ^6.5.16
     "@storybook/manager-webpack5": ^6.5.16
     "@storybook/react": ^6.5.16
+    "@synthetixio/ipfs-deploy": ^1.0.5
+    "@synthetixio/ipns-deploy": ^1.0.1
     "@synthetixio/safe-import": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@types/react": ^18.0.28
@@ -8441,7 +8434,7 @@ __metadata:
   dependencies:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
   languageName: unknown
@@ -8485,7 +8478,7 @@ __metadata:
     "@snx-v3/useGasOptions": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8499,7 +8492,7 @@ __metadata:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8528,7 +8521,7 @@ __metadata:
     "@snx-v3/useGasOptions": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8542,7 +8535,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
@@ -8552,7 +8545,7 @@ __metadata:
   resolution: "@snx-v3/useEthPrice@workspace:v3/lib/useEthPrice"
   dependencies:
     "@snx-v3/useCollateralTypes": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -8568,7 +8561,7 @@ __metadata:
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
     "@snx-v3/useOptimismLayer1Fee": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -8582,7 +8575,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -8603,7 +8596,7 @@ __metadata:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     zod: ^3.20.6
   languageName: unknown
@@ -8618,7 +8611,7 @@ __metadata:
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
     "@snx-v3/usePools": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
@@ -8655,7 +8648,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@ethersproject/transactions": ^5.7.0
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -8676,7 +8669,7 @@ __metadata:
   dependencies:
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
     zod: ^3.20.6
@@ -8718,7 +8711,7 @@ __metadata:
     "@snx-v3/useGasOptions": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8755,7 +8748,7 @@ __metadata:
     "@snx-v3/assertAddressType": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
   languageName: unknown
@@ -8780,7 +8773,7 @@ __metadata:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/zod": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     zod: ^3.20.6
   languageName: unknown
@@ -8796,7 +8789,7 @@ __metadata:
     "@snx-v3/useGasOptions": "workspace:*"
     "@snx-v3/useGasPrice": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8811,7 +8804,7 @@ __metadata:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useEthBalance": "workspace:*"
     "@snx-v3/useTokenBalance": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -8822,7 +8815,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v3/validatePosition@workspace:v3/lib/validatePosition"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
   languageName: unknown
   linkType: soft
 
@@ -10390,7 +10383,7 @@ __metadata:
     "@babel/preset-env": ^7.20.2
     "@babel/preset-typescript": ^7.18.6
     "@synthetixio/generate-subgraph-query": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@types/commander": ^2.12.2
     "@types/node": ^18.13.0
@@ -10422,7 +10415,7 @@ __metadata:
     ethers: ^5.7.2
     html-webpack-plugin: ^5.5.0
     jest: ^29.4.2
-    synthetix: 2.86.1
+    synthetix: 2.88.1
     ts-loader: ^9.4.2
     ts-node: ^10.9.1
     typescript: ^4.9.5
@@ -10441,7 +10434,7 @@ __metadata:
     "@typechain/ethers-v5": ^10.2.0
     ethers: ^5.7.2
     prettier: ^2.8.4
-    synthetix: 2.86.1
+    synthetix: 2.88.1
     typechain: ^8.1.1
     typescript: ^4.9.5
   languageName: unknown
@@ -10476,13 +10469,39 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@synthetixio/generate-subgraph-query@workspace:tools/generate-subgraph-query"
   dependencies:
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     eslint: ^8.34.0
     jest: ^29.4.2
     lodash: ^4.17.21
     typescript: ^4.9.5
   languageName: unknown
   linkType: soft
+
+"@synthetixio/ipfs-deploy@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@synthetixio/ipfs-deploy@npm:1.0.5"
+  dependencies:
+    debug: ^4.3.4
+    dotenv: ^16.0.3
+    ipfs-http-client: ^60.0.0
+  bin:
+    ipfs-deploy: bin.mjs
+  checksum: 4086becc72bca6a6e0096d102892812c8a06841e261a77f60dbb51587dba453bcb34648af511b63bde8f47451c43cfe1f6f941f3690d44fc3c2ef260886762ee
+  languageName: node
+  linkType: hard
+
+"@synthetixio/ipns-deploy@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@synthetixio/ipns-deploy@npm:1.0.1"
+  dependencies:
+    debug: ^4.3.4
+    dotenv: ^16.0.3
+    ipfs-http-client: ^60.0.0
+  bin:
+    ipns-deploy: bin.mjs
+  checksum: 22cc547582db1ca2643392d04ae82a73963b031d9a9d3013eb4035e68596545ea46a7c088ac78abd926504ad354f2fb907bd1c5dcb265cfeebd8e4a6ac896915
+  languageName: node
+  linkType: hard
 
 "@synthetixio/optimism-networks@workspace:*, @synthetixio/optimism-networks@workspace:packages/optimism-networks":
   version: 0.0.0-use.local
@@ -10571,9 +10590,11 @@ __metadata:
     "@pythnetwork/pyth-evm-js": ^1.1.0
     "@snx-v2/formatters": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
+    "@synthetixio/ipfs-deploy": ^1.0.5
+    "@synthetixio/ipns-deploy": ^1.0.1
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@types/react": ^18.0.28
     babel-loader: ^9.1.2
     babel-plugin-istanbul: ^6.1.1
@@ -10594,6 +10615,7 @@ __metadata:
     react-hook-form: ^7.41.5
     react-refresh: ^0.14.0
     react-router-dom: ^6.8.1
+    recharts: ^2.5.0
     stream-browserify: ^3.0.0
     style-loader: ^3.3.1
     terser-webpack-plugin: ^5.3.6
@@ -10659,7 +10681,7 @@ __metadata:
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/generate-subgraph-query": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@types/lodash": ^4.14.191
     "@types/react": ^18.0.28
@@ -10707,7 +10729,6 @@ __metadata:
     "@gnosis.pm/safe-apps-provider": ^0.14.0
     "@gnosis.pm/safe-apps-sdk": ^7.8.0
     "@metamask/providers": ^10.2.1
-    "@noisekit/ipfs-deploy": ^1.0.3
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@reach/dialog": ^0.15.3
     "@snx-v1/Card": "workspace:*"
@@ -10736,7 +10757,7 @@ __metadata:
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/SwitchNetworkContext": "workspace:*"
-    "@snx-v2/TermsModal": "workspace:^"
+    "@snx-v2/TermsModal": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/UtilityCard": "workspace:^"
     "@snx-v2/WalletBalances": "workspace:*"
@@ -10762,11 +10783,13 @@ __metadata:
     "@svgr/webpack": ^6.5.1
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/ipfs-deploy": ^1.0.5
+    "@synthetixio/ipns-deploy": ^1.0.1
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/queries": "workspace:*"
     "@synthetixio/safe-import": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
     "@testing-library/jest-dom": ^5.16.5
@@ -10837,7 +10860,7 @@ __metadata:
     stream-browserify: ^3.0.0
     styled-components: ^5.3.6
     styled-media-query: ^2.1.2
-    synthetix: 2.86.1
+    synthetix: 2.88.1
     terser-webpack-plugin: ^5.3.6
     tippy.js: ^6.3.7
     typescript: ^4.9.5
@@ -10856,7 +10879,7 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.7
+    "@usecannon/cli": ^2.4.10
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -10871,7 +10894,7 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.7
+    "@usecannon/cli": ^2.4.10
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -10906,23 +10929,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@synthetixio/wei@^2.74.1, @synthetixio/wei@workspace:*, @synthetixio/wei@workspace:packages/wei":
-  version: 0.0.0-use.local
-  resolution: "@synthetixio/wei@workspace:packages/wei"
+"@synthetixio/wei@npm:^2.74.1, @synthetixio/wei@npm:^2.74.4":
+  version: 2.74.4
+  resolution: "@synthetixio/wei@npm:2.74.4"
   dependencies:
-    "@babel/core": ^7.20.12
-    "@babel/plugin-transform-runtime": ^7.19.6
-    "@babel/preset-env": ^7.20.2
-    "@babel/preset-typescript": ^7.18.6
-    "@ethersproject/bignumber": ^5.7.0
-    "@ethersproject/bytes": ^5.7.0
-    "@types/big.js": ^6.1.6
-    big.js: ^6.2.1
-    eslint: ^8.34.0
-    jest: ^29.4.2
-    typescript: ^4.9.5
-  languageName: unknown
-  linkType: soft
+    "@ethersproject/bignumber": ^5.6.2
+    "@ethersproject/bytes": ^5.6.1
+    big.js: ^6.1.1
+  checksum: 03ff0a17cc5e1cdc8fc67d8240a705dab85da4676c05a92718c6a443bb41b526d7d608a5bb00e27847c0762e3e17ca30bf29ddbb1f70e000671972dada2e29dc
+  languageName: node
+  linkType: hard
 
 "@szmarczak/http-timer@npm:^1.1.2":
   version: 1.1.2
@@ -11254,13 +11270,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/big.js@npm:^6.1.6":
-  version: 6.1.6
-  resolution: "@types/big.js@npm:6.1.6"
-  checksum: 290936fc4e9ebd9883ead8e8278126f43783b3e57bf7736b12ce6d922c62515a83b8c62cd3ef557a043508109d403cb0bd89c7556b221c2c1057fd3a1d03e683
-  languageName: node
-  linkType: hard
-
 "@types/bn.js@npm:^4.11.3":
   version: 4.11.6
   resolution: "@types/bn.js@npm:4.11.6"
@@ -11370,7 +11379,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-array@npm:*":
+"@types/d3-array@npm:*, @types/d3-array@npm:^3.0.3":
   version: 3.0.4
   resolution: "@types/d3-array@npm:3.0.4"
   checksum: b0e398365fc1f638d48442e865e036d671c731b2b18f7a92e5172db1f60f5a38d4cd992693a29ad64b38e7ba981eb8c63a2aef95fbdcfbc4bf8926a9cb9ca978
@@ -11449,7 +11458,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-ease@npm:*":
+"@types/d3-ease@npm:*, @types/d3-ease@npm:^3.0.0":
   version: 3.0.0
   resolution: "@types/d3-ease@npm:3.0.0"
   checksum: 1be7c993643b5a08332e0ee146375a3845545d8deb423db5d152e0b061524385d2345ceccf968f75f605247b940dd3f9a144335fee2e7d935cddaf187afb7095
@@ -11495,7 +11504,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-interpolate@npm:*":
+"@types/d3-interpolate@npm:*, @types/d3-interpolate@npm:^3.0.1":
   version: 3.0.1
   resolution: "@types/d3-interpolate@npm:3.0.1"
   dependencies:
@@ -11539,7 +11548,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-scale@npm:*":
+"@types/d3-scale@npm:*, @types/d3-scale@npm:^4.0.2":
   version: 4.0.3
   resolution: "@types/d3-scale@npm:4.0.3"
   dependencies:
@@ -11555,7 +11564,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-shape@npm:*":
+"@types/d3-shape@npm:*, @types/d3-shape@npm:^3.1.0":
   version: 3.1.1
   resolution: "@types/d3-shape@npm:3.1.1"
   dependencies:
@@ -11571,14 +11580,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-time@npm:*":
+"@types/d3-time@npm:*, @types/d3-time@npm:^3.0.0":
   version: 3.0.0
   resolution: "@types/d3-time@npm:3.0.0"
   checksum: e76adb056daccf80107f4db190ac6deb77e8774f00362bb6c76f178e67f2f217422fe502b654edbc9ac6451f6619045b9f6f5fe0db1ec5520e2ada377af7c72e
   languageName: node
   linkType: hard
 
-"@types/d3-timer@npm:*":
+"@types/d3-timer@npm:*, @types/d3-timer@npm:^3.0.0":
   version: 3.0.0
   resolution: "@types/d3-timer@npm:3.0.0"
   checksum: 1ec86b3808de6ecfa93cfdf34254761069658af0cc1d9540e8353dbcba161cdf1296a0724187bd17433b2ff16563115fd20b85fc89d5e809ff28f9b1ab134b42
@@ -12598,9 +12607,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.4.7":
-  version: 2.4.7
-  resolution: "@usecannon/builder@npm:2.4.7"
+"@usecannon/builder@npm:^2.4.10":
+  version: 2.4.10
+  resolution: "@usecannon/builder@npm:2.4.10"
   dependencies:
     ajv: ^8.11.0
     axios: ^1.2.2
@@ -12612,17 +12621,17 @@ __metadata:
     promise-events: ^0.2.4
   peerDependencies:
     ethers: ">=5.6.0"
-  checksum: eff98f528964a39cd8824f2f0b8735849a6532353a0d26aa6fd109398455bd7713470d47fb77e24f4b50d45ebc4f9d4c606bda9a4e9286ef90fb6f5a9c9a05e9
+  checksum: 5f8890ad526aee7554067f5937b6ff98f0108e5ec69c1909d3196fa77675f2547d3e4d8a1cc7f1c916db1dc8fb0d77a9c24aba4ffe3291d206c0386853b5621a
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^2.4.7":
-  version: 2.4.7
-  resolution: "@usecannon/cli@npm:2.4.7"
+"@usecannon/cli@npm:^2.4.10":
+  version: 2.4.10
+  resolution: "@usecannon/cli@npm:2.4.10"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.4.7
+    "@usecannon/builder": ^2.4.10
     chalk: ^4.1.2
     commander: ^9.3.0
     debug: ^4.3.4
@@ -12637,7 +12646,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: dist/bin/cannon.js
-  checksum: 0a0efe3e8a852e35633f30941f958d16567aaa0ae94500635f840b3f2263b6633d47e8d10b7fb5553574787dab620168973c98bcada6ec1c8dab68b3473976ef
+  checksum: aadc882ab31d8e31f20c60b844ec880d1c7f9e9735ab06d6233413dee2b5acee57a5e1cbf3d7cee7bebea72a9a8ccd5da102ea9ca346ac5adb293843a29610a0
   languageName: node
   linkType: hard
 
@@ -16343,10 +16352,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.6":
-  version: 2.3.1
-  resolution: "classnames@npm:2.3.1"
-  checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
+"classnames@npm:2.3.2":
+  version: 2.3.2
+  resolution: "classnames@npm:2.3.2"
+  checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
   languageName: node
   linkType: hard
 
@@ -17489,6 +17498,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-unit-converter@npm:^1.1.1":
+  version: 1.1.2
+  resolution: "css-unit-converter@npm:1.1.2"
+  checksum: 07888033346a5128f34dbe2f72884c966d24e9f29db24416dcde92860242490617ef9a178ac193a92f730834bbeea026cdc7027701d92ba9bbbe59db7a37eb2a
+  languageName: node
+  linkType: hard
+
 "css-what@npm:^6.0.1, css-what@npm:^6.1.0":
   version: 6.1.0
   resolution: "css-what@npm:6.1.0"
@@ -17696,6 +17712,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:^3.1.6":
+  version: 3.2.3
+  resolution: "d3-array@npm:3.2.3"
+  dependencies:
+    internmap: 1 - 2
+  checksum: 41d6a4989b73e0d2649a880b2f29a7e7cc059db0eba36cd29a79e0118ebdf6b78922a84cde0733cd54cb4072f3442ec44f3563902e00ea42892442d60e99f961
+  languageName: node
+  linkType: hard
+
 "d3-color@npm:1 - 3":
   version: 3.1.0
   resolution: "d3-color@npm:3.1.0"
@@ -17720,19 +17745,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-ease@npm:1 - 3":
+"d3-ease@npm:1 - 3, d3-ease@npm:^3.0.1":
   version: 3.0.1
   resolution: "d3-ease@npm:3.0.1"
   checksum: 06e2ee5326d1e3545eab4e2c0f84046a123dcd3b612e68858219aa034da1160333d9ce3da20a1d3486d98cb5c2a06f7d233eee1bc19ce42d1533458bd85dedcd
   languageName: node
   linkType: hard
 
-"d3-interpolate@npm:1 - 3":
+"d3-format@npm:1 - 3":
+  version: 3.1.0
+  resolution: "d3-format@npm:3.1.0"
+  checksum: f345ec3b8ad3cab19bff5dead395bd9f5590628eb97a389b1dd89f0b204c7c4fc1d9520f13231c2c7cf14b7c9a8cf10f8ef15bde2befbab41454a569bd706ca2
+  languageName: node
+  linkType: hard
+
+"d3-interpolate@npm:1 - 3, d3-interpolate@npm:1.2.0 - 3, d3-interpolate@npm:^3.0.1":
   version: 3.0.1
   resolution: "d3-interpolate@npm:3.0.1"
   dependencies:
     d3-color: 1 - 3
   checksum: a42ba314e295e95e5365eff0f604834e67e4a3b3c7102458781c477bd67e9b24b6bb9d8e41ff5521050a3f2c7c0c4bbbb6e187fd586daa3980943095b267e78b
+  languageName: node
+  linkType: hard
+
+"d3-path@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "d3-path@npm:3.1.0"
+  checksum: 2306f1bd9191e1eac895ec13e3064f732a85f243d6e627d242a313f9777756838a2215ea11562f0c7630c7c3b16a19ec1fe0948b1c82f3317fac55882f6ee5d8
+  languageName: node
+  linkType: hard
+
+"d3-scale@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "d3-scale@npm:4.0.2"
+  dependencies:
+    d3-array: 2.10.0 - 3
+    d3-format: 1 - 3
+    d3-interpolate: 1.2.0 - 3
+    d3-time: 2.1.1 - 3
+    d3-time-format: 2 - 4
+  checksum: a9c770d283162c3bd11477c3d9d485d07f8db2071665f1a4ad23eec3e515e2cefbd369059ec677c9ac849877d1a765494e90e92051d4f21111aa56791c98729e
   languageName: node
   linkType: hard
 
@@ -17743,7 +17795,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-timer@npm:1 - 3":
+"d3-shape@npm:^3.1.0":
+  version: 3.2.0
+  resolution: "d3-shape@npm:3.2.0"
+  dependencies:
+    d3-path: ^3.1.0
+  checksum: de2af5fc9a93036a7b68581ca0bfc4aca2d5a328aa7ba7064c11aedd44d24f310c20c40157cb654359d4c15c3ef369f95ee53d71221017276e34172c7b719cfa
+  languageName: node
+  linkType: hard
+
+"d3-time-format@npm:2 - 4":
+  version: 4.1.0
+  resolution: "d3-time-format@npm:4.1.0"
+  dependencies:
+    d3-time: 1 - 3
+  checksum: 7342bce28355378152bbd4db4e275405439cabba082d9cd01946d40581140481c8328456d91740b0fe513c51ec4a467f4471ffa390c7e0e30ea30e9ec98fcdf4
+  languageName: node
+  linkType: hard
+
+"d3-time@npm:1 - 3, d3-time@npm:2.1.1 - 3, d3-time@npm:^3.0.0":
+  version: 3.1.0
+  resolution: "d3-time@npm:3.1.0"
+  dependencies:
+    d3-array: 2 - 3
+  checksum: 613b435352a78d9f31b7f68540788186d8c331b63feca60ad21c88e9db1989fe888f97f242322ebd6365e45ec3fb206a4324cd4ca0dfffa1d9b5feb856ba00a7
+  languageName: node
+  linkType: hard
+
+"d3-timer@npm:1 - 3, d3-timer@npm:^3.0.1":
   version: 3.0.1
   resolution: "d3-timer@npm:3.0.1"
   checksum: 1cfddf86d7bca22f73f2c427f52dfa35c49f50d64e187eb788dcad6e927625c636aa18ae4edd44d084eb9d1f81d8ca4ec305dae7f733c15846a824575b789d73
@@ -17898,6 +17977,13 @@ __metadata:
   version: 1.2.0
   resolution: "decamelize@npm:1.2.0"
   checksum: ad8c51a7e7e0720c70ec2eeb1163b66da03e7616d7b98c9ef43cce2416395e84c1e9548dd94f5f6ffecfee9f8b94251fc57121a8b021f2ff2469b2bae247b8aa
+  languageName: node
+  linkType: hard
+
+"decimal.js-light@npm:^2.4.1":
+  version: 2.5.1
+  resolution: "decimal.js-light@npm:2.5.1"
+  checksum: f5a2c7eac1c4541c8ab8a5c8abea64fc1761cefc7794bd5f8afd57a8a78d1b51785e0c4e4f85f4895a043eaa90ddca1edc3981d1263eb6ddce60f32bf5fe66c9
   languageName: node
   linkType: hard
 
@@ -18400,6 +18486,15 @@ __metadata:
   dependencies:
     utila: ~0.4
   checksum: ea52fe303f5392e48dea563abef0e6fb3a478b8dbe3c599e99bb5d53981c6c38fc4944e56bb92a8ead6bb989d10b7914722ae11febbd2fd0910e33b9fc4aaa77
+  languageName: node
+  linkType: hard
+
+"dom-helpers@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "dom-helpers@npm:3.4.0"
+  dependencies:
+    "@babel/runtime": ^7.1.2
+  checksum: 58d9f1c4a96daf77eddc63ae1236b826e1cddd6db66bbf39b18d7e21896d99365b376593352d52a60969d67fa4a8dbef26adc1439fa2c1b355efa37cacbaf637
   languageName: node
   linkType: hard
 
@@ -19728,7 +19823,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.7":
+"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.1, eventemitter3@npm:^4.0.7":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374
@@ -20082,6 +20177,13 @@ __metadata:
   version: 3.1.3
   resolution: "fast-deep-equal@npm:3.1.3"
   checksum: e21a9d8d84f53493b6aa15efc9cfd53dd5b714a1f23f67fb5dc8f574af80df889b3bce25dc081887c6d25457cce704e636395333abad896ccdec03abaf1f3f9d
+  languageName: node
+  linkType: hard
+
+"fast-equals@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "fast-equals@npm:4.0.3"
+  checksum: 3d5935b757f9f2993e59b5164a7a9eeda0de149760495375cde14a4ed725186a7e6c1c0d58f7d42d2f91deb97f3fce1e0aad5591916ef0984278199a85c87c87
   languageName: node
   linkType: hard
 
@@ -22596,6 +22698,13 @@ __metadata:
     has: ^1.0.3
     side-channel: ^1.0.4
   checksum: 1944f92e981e47aebc98a88ff0db579fd90543d937806104d0b96557b10c1f170c51fb777b97740a8b6ddeec585fca8c39ae99fd08a8e058dfc8ab70937238bf
+  languageName: node
+  linkType: hard
+
+"internmap@npm:1 - 2":
+  version: 2.0.3
+  resolution: "internmap@npm:2.0.3"
+  checksum: 7ca41ec6aba8f0072fc32fa8a023450a9f44503e2d8e403583c55714b25efd6390c38a87161ec456bf42d7bc83aab62eb28f5aef34876b1ac4e60693d5e1d241
   languageName: node
   linkType: hard
 
@@ -29083,6 +29192,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-value-parser@npm:^3.3.0":
+  version: 3.3.1
+  resolution: "postcss-value-parser@npm:3.3.1"
+  checksum: 62cd26e1cdbcf2dcc6bcedf3d9b409c9027bc57a367ae20d31dd99da4e206f730689471fd70a2abe866332af83f54dc1fa444c589e2381bf7f8054c46209ce16
+  languageName: node
+  linkType: hard
+
 "postcss-value-parser@npm:^4.0.2, postcss-value-parser@npm:^4.1.0, postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
@@ -30152,7 +30268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.13.1, react-is@npm:^16.6.0, react-is@npm:^16.7.0":
+"react-is@npm:^16.10.2, react-is@npm:^16.13.1, react-is@npm:^16.6.0, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
@@ -30321,6 +30437,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-resize-detector@npm:^8.0.4":
+  version: 8.1.0
+  resolution: "react-resize-detector@npm:8.1.0"
+  dependencies:
+    lodash: ^4.17.21
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 45e6b87ea7331406bed2a806d0cea98c1467d53a7cfcdf19c2dd55a3460047917d3b175d9cceea6f314b65eb54858cbb981acffd007d67aa16388e517dafb83e
+  languageName: node
+  linkType: hard
+
 "react-responsive@npm:^8.2.0":
   version: 8.2.0
   resolution: "react-responsive@npm:8.2.0"
@@ -30435,6 +30563,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-smooth@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "react-smooth@npm:2.0.2"
+  dependencies:
+    fast-equals: ^4.0.3
+    react-transition-group: 2.9.0
+  peerDependencies:
+    prop-types: ^15.6.0
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 6b0a40a17314657ac6a187a3ad01fcdaa61d498979b6a07c424e20832110c99b4394c33209a0b39b897c13d113d8cb044e7a691b4965386a11b15bbfbacfba25
+  languageName: node
+  linkType: hard
+
 "react-style-singleton@npm:^2.2.1":
   version: 2.2.1
   resolution: "react-style-singleton@npm:2.2.1"
@@ -30471,6 +30613,21 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 87360d4392276d4e87511a73be9b0634b8bcce8f4f648cf659334d993f25ad3d4062f468f1e1944fc614123acae4299580aad00b760c6a96cec190e076f847f5
+  languageName: node
+  linkType: hard
+
+"react-transition-group@npm:2.9.0":
+  version: 2.9.0
+  resolution: "react-transition-group@npm:2.9.0"
+  dependencies:
+    dom-helpers: ^3.4.0
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.2
+    react-lifecycles-compat: ^3.0.4
+  peerDependencies:
+    react: ">=15.0.0"
+    react-dom: ">=15.0.0"
+  checksum: d8c9e50aabdc2cfc324e5cdb0ad1c6eecb02e1c0cd007b26d5b30ccf49015e900683dd489348c71fba4055858308d9ba7019e0d37d0e8d37bd46ed098788f670
   languageName: node
   linkType: hard
 
@@ -30687,6 +30844,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"recharts-scale@npm:^0.4.4":
+  version: 0.4.5
+  resolution: "recharts-scale@npm:0.4.5"
+  dependencies:
+    decimal.js-light: ^2.4.1
+  checksum: e970377190a610e684a32c7461c7684ac3603c2e0ac0020bbba1eea9d099b38138143a8e80bf769bb49c0b7cecf22a2f5c6854885efed2d56f4540d4aa7052bd
+  languageName: node
+  linkType: hard
+
+"recharts@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "recharts@npm:2.5.0"
+  dependencies:
+    classnames: ^2.2.5
+    eventemitter3: ^4.0.1
+    lodash: ^4.17.19
+    react-is: ^16.10.2
+    react-resize-detector: ^8.0.4
+    react-smooth: ^2.0.2
+    recharts-scale: ^0.4.4
+    reduce-css-calc: ^2.1.8
+    victory-vendor: ^36.6.8
+  peerDependencies:
+    prop-types: ^15.6.0
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: a40d1788589926fa8a5844868a338aae75a2077a2bc2ac57fc5d61ad21fb62660aed6f00ae8d8a94948b9143255c1760db0d386ecb257ed8290dd7f164b5bd5f
+  languageName: node
+  linkType: hard
+
 "rechoir@npm:^0.6.2":
   version: 0.6.2
   resolution: "rechoir@npm:0.6.2"
@@ -30747,6 +30934,16 @@ __metadata:
     indent-string: ^4.0.0
     strip-indent: ^3.0.0
   checksum: fa1ef20404a2d399235e83cc80bd55a956642e37dd197b4b612ba7327bf87fa32745aeb4a1634b2bab25467164ab4ed9c15be2c307923dd08b0fe7c52431ae6b
+  languageName: node
+  linkType: hard
+
+"reduce-css-calc@npm:^2.1.8":
+  version: 2.1.8
+  resolution: "reduce-css-calc@npm:2.1.8"
+  dependencies:
+    css-unit-converter: ^1.1.1
+    postcss-value-parser: ^3.3.0
+  checksum: 8fd27c06c4b443b84749a69a8b97d10e6ec7d142b625b41923a8807abb22b9e37e44df14e26cc606a802957be07bdce5e8ee2976a6952a7b438a7727007101e9
   languageName: node
   linkType: hard
 
@@ -33366,9 +33563,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.86.1":
-  version: 2.86.1
-  resolution: "synthetix@npm:2.86.1"
+"synthetix@npm:2.88.1":
+  version: 2.88.1
+  resolution: "synthetix@npm:2.88.1"
   dependencies:
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     abi-decoder: ^2.3.0
@@ -33382,7 +33579,7 @@ __metadata:
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: d00d03dd07036b43bd2a287702e113cd07f02a25bfa96e884fd91a3c0e9e9514a06f6f4cd5ff6d834a648460d2795c19ed4adac24628ac95518cbcd5ae77a272
+  checksum: da80247ee07fa8338642156ca80a23c19d127afee338c76632f37b0d77dc4b9f8487e03138de6d490ac01ea5ac86eb526d58431aa661be2e93a4eecc0fcc887b
   languageName: node
   linkType: hard
 
@@ -35040,6 +35237,28 @@ __metadata:
     unist-util-stringify-position: ^2.0.0
     vfile-message: ^2.0.0
   checksum: ee5726e10d170472cde778fc22e0f7499caa096eb85babea5d0ce0941455b721037ee1c9e6ae506ca2803250acd313d0f464328ead0b55cfe7cb6315f1b462d6
+  languageName: node
+  linkType: hard
+
+"victory-vendor@npm:^36.6.8":
+  version: 36.6.8
+  resolution: "victory-vendor@npm:36.6.8"
+  dependencies:
+    "@types/d3-array": ^3.0.3
+    "@types/d3-ease": ^3.0.0
+    "@types/d3-interpolate": ^3.0.1
+    "@types/d3-scale": ^4.0.2
+    "@types/d3-shape": ^3.1.0
+    "@types/d3-time": ^3.0.0
+    "@types/d3-timer": ^3.0.0
+    d3-array: ^3.1.6
+    d3-ease: ^3.0.1
+    d3-interpolate: ^3.0.1
+    d3-scale: ^4.0.2
+    d3-shape: ^3.1.0
+    d3-time: ^3.0.0
+    d3-timer: ^3.0.1
+  checksum: 6411f7c19a776cef3919946d429293cfe33c93a6e4dcfdfa2ba1edecad3a28ed2cd6b0d117169b8917ab6a7679e2bade5e7bfc1fed3fc8b464b842f21dac5f49
   languageName: node
   linkType: hard
 

@@ -8,7 +8,7 @@
     "@snx-v3/useCollateralTypes": "workspace:*",
     "@snx-v3/useCoreProxy": "workspace:*",
     "@snx-v3/zod": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query": "^4.24.6",
     "zod": "^3.20.6"
   }

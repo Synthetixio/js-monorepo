@@ -6,6 +6,6 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/icons": "workspace:*",
-    "@synthetixio/wei": "workspace:*"
+    "@synthetixio/wei": "^2.74.4"
   }
 }

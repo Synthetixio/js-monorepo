@@ -2,12 +2,12 @@
   "name": "@snx-v2/useFeesBurnedInPeriod",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useDebtShareDataPeriod": "workspace:*",
     "@snx-v2/useFeePeriodMultiNetwork": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "react": "^18.2.0"
   }
 }
