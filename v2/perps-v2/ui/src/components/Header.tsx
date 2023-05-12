@@ -1,5 +1,14 @@
-import { FC } from 'react';
-import { Flex, Text, Menu, Button, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { FC, useEffect } from 'react';
+import {
+  Flex,
+  Text,
+  Menu,
+  Button,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useColorMode,
+} from '@chakra-ui/react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { SNXIcon } from './Icons/';
 import { PerpsStats } from './PerpsStats';
@@ -7,6 +16,14 @@ import { AddressInput } from './AddressInput';
 import { HamburgerIcon } from '@chakra-ui/icons';
 
 export const Header: FC = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  useEffect(() => {
+    if (colorMode === 'light') {
+      toggleColorMode();
+    }
+  }, [colorMode, toggleColorMode]);
+
   return (
     <Flex
       as="header"
