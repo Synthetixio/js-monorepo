@@ -107,7 +107,7 @@ commands:
             echo "export IPFS_CID=$IPFS_CID" >> $BASH_ENV
       - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/pin/add?recursive=true&progress=true&arg=$IPFS_CID"
       - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/key/list" | jq
-      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/name/publish?key=$IPNS_KEY&arg=$IPFS_CID" | jq
+      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/name/publish?key=<< parameters.ipns-key >>&arg=$IPFS_CID" | jq
 
 jobs:
   yarn-install:
