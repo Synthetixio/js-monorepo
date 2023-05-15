@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, FlexProps, Tooltip as ChakraTooltip } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
@@ -38,6 +38,7 @@ export const Traders = ({ ...props }: FlexProps) => {
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
             Traders
           </Text>
+
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
             {/* <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} /> */}
@@ -46,7 +47,7 @@ export const Traders = ({ ...props }: FlexProps) => {
         <Flex mt={6}>
           <KeyColour label="RETURNING" colour="whiteAlpha.400" />
           <KeyColour ml={4} label="NEW" colour="pink.300" />
-          <KeyColour ml={4} label="CUMULATIVE" colour="cyan.500" />
+          <KeyColour ml={4} label="ALL TIME" colour="cyan.500" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%">
@@ -54,12 +55,20 @@ export const Traders = ({ ...props }: FlexProps) => {
           </Flex>
         ) : (
           <>
-            <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
-              {formatNumber(tradersNumber || 0, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-              })}
-            </Text>
+            <ChakraTooltip
+              placement="top"
+              fontSize="14px"
+              px={2}
+              py={1}
+              label={`New plus returning for the last ${state === 'M' ? 'month' : 'year'}`}
+            >
+              <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
+                {formatNumber(tradersNumber || 0, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                })}
+              </Text>
+            </ChakraTooltip>
             <ResponsiveContainer minWidth="100%" minHeight={200}>
               <ComposedChart
                 data={data || []}

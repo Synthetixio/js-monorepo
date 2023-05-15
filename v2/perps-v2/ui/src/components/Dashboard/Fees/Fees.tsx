@@ -41,7 +41,7 @@ export const Fees = ({ ...props }: FlexProps) => {
         </Flex>
         <Flex mt={6}>
           <KeyColour label="FEES" colour="whiteAlpha.400" />
-          <KeyColour ml={4} label="CUMULATIVE" colour="cyan.500" />
+          <KeyColour ml={4} label="ALL TIME" colour="cyan.500" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%">
