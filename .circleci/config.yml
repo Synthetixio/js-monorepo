@@ -83,6 +83,56 @@ commands:
             echo export PATH="$PATH:$HOME/.foundry/bin" > $BASH_ENV
             foundryup
 
+  ipfs-deploy:
+    parameters:
+      source-dir:
+        type: string
+      ipfs-api:
+        type: string
+      ipns-key:
+        type: string
+      ipfs-cluster-api:
+        type: string
+    steps:
+      - run:
+          name: 'Install IPFS'
+          command: |
+            LATEST_VERSION=$(curl -sSL https://dist.ipfs.tech/go-ipfs/versions | tail -n 1)
+            LATEST_VERSION_NUMBER=${LATEST_VERSION#*v}
+            DOWNLOAD_URL="https://dist.ipfs.tech/go-ipfs/${LATEST_VERSION}/go-ipfs_${LATEST_VERSION}_linux-amd64.tar.gz"
+            echo "DOWNLOAD_URL=$DOWNLOAD_URL"
+            curl -sSL -o ipfs.tar.gz $DOWNLOAD_URL
+            tar -xzf ipfs.tar.gz
+            sudo cp -f ./go-ipfs/ipfs /usr/local/bin/
+            ipfs init
+
+      - run:
+          command: ipfs daemon
+          background: true
+      - run:
+          name: 'Wait for IPFS daemon to start'
+          command: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
+
+      - run: ipfs add --progress=true --pin=true --recursive "<< parameters.source-dir >>"
+      - run:
+          name: 'Save IPFS_CID'
+          command: |
+            export IPFS_CID=$(ipfs add --progress=false --pin=true --recursive --quieter "<< parameters.source-dir >>")
+            echo $IPFS_CID
+            echo "export IPFS_CID=$IPFS_CID" >> $BASH_ENV
+      - run:
+          name: 'Pin to the remote IPFS node'
+          command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/pin/add?recursive=true&progress=true&arg=$IPFS_CID"
+      - run:
+          name: 'List remote IPNS keys'
+          command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/key/list" | jq
+      - run:
+          name: 'Publish IPFS_CID to IPNS key << parameters.ipns-key >>'
+          command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/name/publish?key=<< parameters.ipns-key >>&arg=$IPFS_CID" | jq
+      - run:
+          name: 'Pin to Synthetix IPFS cluster'
+          command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-cluster-api >>/pin/add?arg=$IPFS_CID" | jq
+
 jobs:
   yarn-install:
     working_directory: /tmp/app
@@ -390,54 +440,45 @@ jobs:
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     resource_class: large
-    environment:
-      DEBUG: ipfs-deploy,ipns-deploy
-      IPFS_HOST: ipfs.synthetix.io
-      IPFS_PORT: 5001
-      IPFS_PROTOCOL: https
     steps:
       - checkout
       - yarn-install
       - run: yarn workspace @synthetixio/v2-ui build
-      - run: echo "export IPFS_CID=$(yarn workspace @synthetixio/v2-ui ipfs-deploy ./out)" >> $BASH_ENV
-      - run: echo $IPFS_CID
-      - run: yarn workspace @synthetixio/v2-ui ipns-deploy staking.synthetix.eth $IPFS_CID
+      - ipfs-deploy:
+          source-dir: './v2/ui/out'
+          ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
+          ipns-key: 'staking.synthetix.eth'
 
   v3-ipfs:
     working_directory: /tmp/app
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     resource_class: large
-    environment:
-      DEBUG: ipfs-deploy,ipns-deploy
-      IPFS_HOST: ipfs.synthetix.io
-      IPFS_PORT: 5001
-      IPFS_PROTOCOL: https
     steps:
       - checkout
       - yarn-install
       - run: yarn workspace @snx-v3/ui build
-      - run: echo "export IPFS_CID=$(yarn workspace @snx-v3/ui ipfs-deploy ./dist)" >> $BASH_ENV
-      - run: echo $IPFS_CID
-      - run: yarn workspace @snx-v3/ui ipns-deploy v3.synthetix.eth $IPFS_CID
+      - ipfs-deploy:
+          source-dir: './v3/ui/dist'
+          ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
+          ipns-key: 'v3.synthetix.eth'
 
   perps-watcher-ipfs:
     working_directory: /tmp/app
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     resource_class: large
-    environment:
-      DEBUG: ipfs-deploy,ipns-deploy
-      IPFS_HOST: ipfs.synthetix.io
-      IPFS_PORT: 5001
-      IPFS_PROTOCOL: https
     steps:
       - checkout
       - yarn-install
       - run: yarn workspace @synthetixio/perps-v2-dashboard build
-      - run: echo "export IPFS_CID=$(yarn workspace @synthetixio/perps-v2-dashboard ipfs-deploy ./dist)" >> $BASH_ENV
-      - run: echo $IPFS_CID
-      - run: yarn workspace @synthetixio/perps-v2-dashboard ipns-deploy watcher.synthetix.io $IPFS_CID
+      - ipfs-deploy:
+          source-dir: './v2/perps-v2/ui/dist'
+          ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
+          ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
+          ipns-key: 'watcher.synthetix.io'
 
 workflows:
   version: 2.1
@@ -492,5 +533,6 @@ workflows:
                 - release
                 - master
                 - ipfs-deploy
+
       - combine-coverage:
           requires: [tests, v2-cy, v2-e2e, v3-cy, v3-e2e-optimism-mainnet]
