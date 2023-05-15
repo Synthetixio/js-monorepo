@@ -95,7 +95,7 @@ commands:
         type: string
     steps:
       - run:
-          name: Install IPFS
+          name: 'Install IPFS'
           command: |
             LATEST_VERSION=$(curl -sSL https://dist.ipfs.tech/go-ipfs/versions | tail -n 1)
             LATEST_VERSION_NUMBER=${LATEST_VERSION#*v}
@@ -109,7 +109,9 @@ commands:
       - run:
           command: ipfs daemon
           background: true
-      - run: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
+      - run:
+          name: 'Wait for IPFS daemon to start'
+          command: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
 
       - run: ipfs add --progress=true --pin=true --recursive "<< parameters.source-dir >>"
       - run:
@@ -118,10 +120,18 @@ commands:
             export IPFS_CID=$(ipfs add --progress=false --pin=true --recursive --quieter "<< parameters.source-dir >>")
             echo $IPFS_CID
             echo "export IPFS_CID=$IPFS_CID" >> $BASH_ENV
-      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/pin/add?recursive=true&progress=true&arg=$IPFS_CID"
-      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/key/list" | jq
-      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/name/publish?key=<< parameters.ipns-key >>&arg=$IPFS_CID" | jq
-      - run: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-cluster-api >>/pin/add?arg=$IPFS_CID" | jq
+      - run:
+          name: 'Pin to the remote IPFS node'
+          command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/pin/add?recursive=true&progress=true&arg=$IPFS_CID"
+      - run:
+          name: 'List remote IPNS keys'
+          command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/key/list" | jq
+      - run:
+          name: 'Publish IPFS_CID to IPNS key << parameters.ipns-key >>'
+          command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-api >>/name/publish?key=<< parameters.ipns-key >>&arg=$IPFS_CID" | jq
+      - run:
+          name: 'Pin to Synthetix IPFS cluster'
+          command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-cluster-api >>/pin/add?arg=$IPFS_CID" | jq
 
 jobs:
   yarn-install:
