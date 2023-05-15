@@ -31,13 +31,13 @@ export const VolumeTooltip = ({ payload }: VolumeTooltipProps) => {
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour label="Volume" colour="whiteAlpha.400" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {formatNumber(volumeInfo.volume)}
+          ${formatNumber(volumeInfo.volume)}
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Cumulative" colour="cyan.500" />
+        <KeyColour label="All Time Volume" colour="cyan.500" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {formatNumber(volumeInfo.cumulativeVolume)}
+          ${formatNumber(volumeInfo.cumulativeVolume)}
         </Text>
       </Flex>
     </Flex>

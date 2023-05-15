@@ -1,7 +1,7 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
 import { POSITIONS_QUERY_MARKET } from '../../../queries/positions';
-import { Market, PnL, TableHeaderCell, WalletAddress } from '../../Shared';
+import { Market, PnL, TableHeaderCell, WalletTooltip, EntryExit } from '../../Shared';
 import { FuturesPosition_OrderBy, OrderDirection } from '../../../__generated__/graphql';
 import { getUnixTime, subDays } from 'date-fns';
 import { wei } from '@synthetixio/wei';
@@ -42,7 +42,12 @@ export const LargestWins = () => {
           <Thead>
             <Tr>
               <TableHeaderCell>Market</TableHeaderCell>
-              <TableHeaderCell>Wallet Address</TableHeaderCell>
+              <TableHeaderCell>
+                <Flex flexDirection="column">
+                  <Text>Entry Price</Text>
+                  <Text>Exit Price</Text>
+                </Flex>
+              </TableHeaderCell>
               <TableHeaderCell>Realised PnL</TableHeaderCell>
             </Tr>
           </Thead>
@@ -60,7 +65,9 @@ export const LargestWins = () => {
                 trader,
                 market: { asset },
                 leverage,
+                entryPrice,
                 realizedPnl,
+                exitPrice,
                 long,
               } = item;
 
@@ -71,8 +78,12 @@ export const LargestWins = () => {
                     leverage={wei(leverage, 18, true).toNumber()}
                     direction={long ? 'LONG' : 'SHORT'}
                   />
-                  <WalletAddress account={trader.id} />
+                  <EntryExit
+                    entry={wei(entryPrice, 18, true).toNumber()}
+                    exit={wei(exitPrice, 18, true).toNumber()}
+                  />
                   <PnL pnl={wei(realizedPnl, 18, true).toNumber()} />
+                  <WalletTooltip address={trader.id} />
                 </Tr>
               );
             })}

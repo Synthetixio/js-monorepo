@@ -5,7 +5,7 @@ import {
   Market,
   Size,
   TableHeaderCell,
-  WalletAddress,
+  WalletTooltip,
 } from '../../Shared';
 import { useActions } from '../../../hooks';
 import { Action } from '../../Shared/Action';
@@ -33,7 +33,6 @@ export const DashboardActions = () => {
           <Thead>
             <Tr>
               <TableHeaderCell>Action</TableHeaderCell>
-              <TableHeaderCell>Wallet Address</TableHeaderCell>
               <TableHeaderCell>Market</TableHeaderCell>
               <TableHeaderCell>Price</TableHeaderCell>
               <TableHeaderCell>Size</TableHeaderCell>
@@ -52,7 +51,6 @@ export const DashboardActions = () => {
                 return (
                   <Tr key={id} borderTopWidth="1px">
                     <Action label={label} txHash={txHash} timestamp={timestamp.toNumber()} />
-                    <WalletAddress account={address} />
                     <Market
                       asset={asset}
                       leverage={leverage?.toNumber() || null}
@@ -64,6 +62,7 @@ export const DashboardActions = () => {
                     ) : (
                       <MarginTransfer size={size.toNumber()} />
                     )}
+                    <WalletTooltip address={address} />
                   </Tr>
                 );
               }

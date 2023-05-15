@@ -3,9 +3,10 @@ import { formatNumberToUsd } from '@snx-v2/formatters';
 
 interface FundingProps {
   amount: number;
+  withDollar?: boolean;
 }
 
-export const Funding = ({ amount }: FundingProps) => {
+export const Funding = ({ amount, withDollar = true }: FundingProps) => {
   const isPositive = amount >= 0;
 
   return (
@@ -17,7 +18,7 @@ export const Funding = ({ amount }: FundingProps) => {
       fontWeight={500}
       color={isPositive ? 'green.500' : 'red.500'}
     >
-      <Fade in>{formatNumberToUsd(amount)}</Fade>
+      <Fade in>{withDollar ? formatNumberToUsd(amount) : amount.toFixed(6)}</Fade>
     </Td>
   );
 };

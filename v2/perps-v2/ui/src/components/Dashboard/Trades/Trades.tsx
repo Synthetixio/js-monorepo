@@ -42,7 +42,7 @@ export const Trades = ({ ...props }: FlexProps) => {
         </Flex>
         <Flex mt={6}>
           <KeyColour label="TRADES" colour="whiteAlpha.400" />
-          <KeyColour ml={4} label="CUMULATIVE TRADES" colour="cyan.500" />
+          <KeyColour ml={4} label="ALL TIME" colour="cyan.500" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%" minHeight={200}>
