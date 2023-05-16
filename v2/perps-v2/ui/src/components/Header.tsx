@@ -27,7 +27,7 @@ export const Header: FC = () => {
   return (
     <Flex
       as="header"
-      px="40px"
+      px={{ base: '16px', md: '40px' }}
       py={2}
       bg="navy.900"
       height="65px"
@@ -57,14 +57,25 @@ export const Header: FC = () => {
             </MenuButton>
             <MenuList>
               <MenuItem>
-                <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
-                  Dashboard
-                </Text>
+                <RouterLink to="/">
+                  <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
+                    Dashboard
+                  </Text>
+                </RouterLink>
               </MenuItem>
               <MenuItem>
-                <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
-                  All Actions
-                </Text>
+                <RouterLink to="/actions">
+                  <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
+                    All Actions
+                  </Text>
+                </RouterLink>
+              </MenuItem>
+              <MenuItem>
+                <RouterLink to="/markets">
+                  <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
+                    Markets
+                  </Text>
+                </RouterLink>
               </MenuItem>
             </MenuList>
           </Menu>

@@ -37,20 +37,6 @@ interface StateInterface {
   error: unknown | null;
 }
 
-async function fetchMarketDetails() {
-  // Fetch all market details using multicall
-  const allMarketDetails = await perpsMarketDataContract.allMarketSummaries();
-
-  // Fetch all funding details using multicall
-  const fundingDetails = await Promise.all([
-    ...allMarketDetails.map(({ key }) => {
-      return perpsMarketDataContract.marketDetailsForKey(key);
-    }),
-  ]);
-
-  return { allMarketDetails, fundingDetails };
-}
-
 export function useMarkets() {
   const [state, setState] = useState<StateInterface>({ loading: true, data: null, error: null });
   const client = useApolloClient();
@@ -163,3 +149,17 @@ export function useMarkets() {
 
   return state;
 }
+
+// async function fetchMarketDetails(tokens: string[]) {
+//   // Fetch all market details using multicall
+//   const allMarketDetails = await perpsMarketDataContract.allMarketSummaries();
+
+//   // Fetch all funding details using multicall
+//   const fundingDetails = await Promise.all([
+//     ...allMarketDetails.map(({ key }) => {
+//       return perpsMarketDataContract.marketDetailsForKey(key);
+//     }),
+//   ]);
+
+//   return { allMarketDetails, fundingDetails };
+// }

@@ -15,7 +15,7 @@ export const Dashboard: FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Box px="40px">
+    <Box px={{ base: '16px', md: '40px' }}>
       <Heading mt={16} fontSize="36px">
         Dashboard
       </Heading>
