@@ -13,6 +13,7 @@ import {
   TableHeaderCell,
 } from '../Shared';
 import { wei } from '@synthetixio/wei';
+import { calculateSkew } from '../../utils';
 
 export const MarketsTable = () => {
   const { data, loading } = useMarkets();
@@ -64,8 +65,7 @@ export const MarketsTable = () => {
                 skewPercent,
               } = item;
 
-              const skewValue = long.div(long.add(short)).toNumber();
-
+              const skewValue = calculateSkew(long, short);
               return (
                 <Tr key={marketKey} borderTopWidth="1px">
                   <Market asset={asset} leverage={null} isPosition={false} />

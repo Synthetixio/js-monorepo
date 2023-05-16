@@ -7,7 +7,7 @@ import { DailyMarketStat_OrderBy } from '../__generated__/graphql';
 import { getDateRange } from './useMarketStats';
 import { perpsMarketDataContract } from './usePositions';
 import { utils } from 'ethers';
-import { FuturesMarketKey, MARKETS, pyth, scale } from '../utils';
+import { calculateMarkPrice, FuturesMarketKey, MARKETS, pyth, scale } from '../utils';
 import { PerpsV2MarketData } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import { ZodStringToWei } from './useLargestOpenPosition';
 
@@ -35,6 +35,20 @@ interface StateInterface {
   loading: boolean;
   data: z.infer<typeof DataSchema>[] | null;
   error: unknown | null;
+}
+
+async function fetchMarketDetails() {
+  // Fetch all market details using multicall
+  const allMarketDetails = await perpsMarketDataContract.allMarketSummaries();
+
+  // Fetch all funding details using multicall
+  const fundingDetails = await Promise.all([
+    ...allMarketDetails.map(({ key }) => {
+      return perpsMarketDataContract.marketDetailsForKey(key);
+    }),
+  ]);
+
+  return { allMarketDetails, fundingDetails };
 }
 
 export function useMarkets() {
@@ -116,7 +130,11 @@ export function useMarkets() {
             wei(fundingParameters.skewScale, 18, true)
           );
 
-          const markPrice = indexPrice.mul(wei(1).add(skewWithScale));
+          const markPrice = calculateMarkPrice(indexPrice, {
+            skew: wei(marketDetails?.marketSkew, 18, true),
+            indexPrice,
+            skewScale: wei(fundingParameters.skewScale, 18, true),
+          });
 
           result.push({
             market,

@@ -94,3 +94,17 @@ export const calculatePositionData = (
     address,
   };
 };
+
+export function calculateSkew(long: Wei, short: Wei) {
+  let skewValue = 0.5;
+
+  if (long.toNumber() !== 0 && short.toNumber() !== 0) {
+    skewValue = long.div(long.add(short)).toNumber();
+  } else if (long.toNumber() === 0 && short.toNumber() !== 0) {
+    skewValue = 0;
+  } else if (long.toNumber() !== 0 && short.toNumber() === 0) {
+    skewValue = 1;
+  }
+
+  return skewValue;
+}
