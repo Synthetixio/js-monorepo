@@ -1,4 +1,5 @@
-import { Td, useDisclosure, Flex, Popover, PopoverContent, Button } from '@chakra-ui/react';
+import { Td, useDisclosure, Flex, Popover, PopoverContent, Text, Box } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { WalletIcon } from '../../Icons';
 
@@ -18,28 +19,29 @@ export const WalletTooltip = ({ address }: WalletTooltipProps) => {
       <Popover isOpen={isOpen}>
         <PopoverContent
           position="absolute"
-          left={-300}
+          left={-375}
           top={-5}
           bg="none"
           _focus={{ outline: 'none', boxShadow: 'none' }}
         >
-          <Button
-            onClick={() => navigate(`/${address}`)}
-            borderRadius="4px"
-            bg="gray.900"
-            variant="none"
-            width="fit-content"
-            _focus={{ outline: 'none', boxShadow: 'none' }}
-            p={4}
-            _hover={{
-              textDecoration: 'underline',
-            }}
-            color="gray.50"
-            fontSize="14px"
-            fontWeight={400}
-          >
-            {address}
-          </Button>
+          <RouterLink to={`/${address}`}>
+            <Box
+              onClick={() => navigate(`/${address}`)}
+              borderRadius="4px"
+              bg="gray.900"
+              width="fit-content"
+              _focus={{ outline: 'none', boxShadow: 'none' }}
+              px={4}
+              py={3}
+              _hover={{
+                textDecoration: 'underline',
+              }}
+            >
+              <Text color="gray.50" fontSize="14px" fontWeight={400}>
+                {address}
+              </Text>
+            </Box>
+          </RouterLink>
         </PopoverContent>
       </Popover>
     </Td>
