@@ -89,6 +89,7 @@
     "babel-loader": "^9.1.2",
     "babel-plugin-istanbul": "^6.1.1",
     "bn.js": "^5.2.1",
+    "copy-webpack-plugin": "^11.0.0",
     "core-js": "3",
     "crypto-browserify": "^3.12.0",
     "css-loader": "^6.7.3",
