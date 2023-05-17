@@ -1,6 +1,5 @@
 import { Td, useDisclosure, Flex, Popover, PopoverContent, Text, Box } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { WalletIcon } from '../../Icons';
 
 interface WalletTooltipProps {
@@ -9,7 +8,6 @@ interface WalletTooltipProps {
 
 export const WalletTooltip = ({ address }: WalletTooltipProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
 
   return (
     <Td border="none" onMouseEnter={onOpen} onMouseLeave={onClose} position="relative">
@@ -26,7 +24,6 @@ export const WalletTooltip = ({ address }: WalletTooltipProps) => {
         >
           <RouterLink to={`/${address}`}>
             <Box
-              onClick={() => navigate(`/${address}`)}
               borderRadius="4px"
               bg="gray.900"
               width="fit-content"
