@@ -10265,8 +10265,10 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v3/icons": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useMulticall3": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
     "@types/react": ^18.0.28
     babel-loader: ^9.1.2
     babel-plugin-istanbul: ^6.1.1
