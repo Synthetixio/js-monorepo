@@ -35,7 +35,7 @@ export const App: FC = () => {
   const network = useNetwork();
   const signer = useSigner();
   const isWalletConnected = useIsConnected();
-  const multicall = useMulticall3();
+  const { data: contract } = useMulticall3();
 
   useEffect(() => {
     if (colorMode === 'light') {
@@ -106,7 +106,7 @@ export const App: FC = () => {
                   duration: 9000,
                   isClosable: true,
                 });
-              } else if (signer && network?.id) {
+              } else if (signer && network?.id && !!contract) {
                 const oracleManagerContract = getNodeModuleContract(signer, network.id);
                 const data = nodes
                   .slice()
@@ -117,9 +117,9 @@ export const App: FC = () => {
                     return 0;
                   })
                   .map((node) => {
-                    return [
-                      oracleManagerContract.address,
-                      oracleManagerContract.interface.encodeFunctionData('registerNode', [
+                    return {
+                      target: oracleManagerContract.address,
+                      callData: oracleManagerContract.interface.encodeFunctionData('registerNode', [
                         node.typeId,
                         encodeBytesByNodeType(node.typeId, node.parameters),
                         node.parents.map((parentId: string) => {
@@ -130,9 +130,9 @@ export const App: FC = () => {
                           return '';
                         }),
                       ]),
-                    ];
+                    };
                   });
-                multicall.data.aggregate(data).then((tx: providers.TransactionResponse) =>
+                contract.aggregate(data).then((tx: providers.TransactionResponse) =>
                   tx.wait(1).then(() => {
                     setNodes((state) => {
                       return state.map((n) => ({ ...n, isRegistered: true }));
