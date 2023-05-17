@@ -19,15 +19,11 @@ import { NodeFormModule } from '../components/NodeFormModule';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { onboard } from '@snx-v3/useBlockchain';
-import {
-  encodeBytesByNodeType,
-  getMultiCallContract,
-  getNodeModuleContract,
-  hashId,
-} from '../utils/contracts';
+import { encodeBytesByNodeType, getNodeModuleContract, hashId } from '../utils/contracts';
 import { useIsConnected, useNetwork, useSigner } from '@snx-v3/useBlockchain';
 import { SearchIcon } from '@chakra-ui/icons';
 import { providers } from 'ethers';
+import { useMulticall3 } from '@snx-v3/useMulticall3';
 
 export const App: FC = () => {
   const [nodes, setNodes] = useRecoilState(nodesState);
@@ -39,6 +35,7 @@ export const App: FC = () => {
   const network = useNetwork();
   const signer = useSigner();
   const isWalletConnected = useIsConnected();
+  const multicall = useMulticall3();
 
   useEffect(() => {
     if (colorMode === 'light') {
@@ -110,7 +107,6 @@ export const App: FC = () => {
                   isClosable: true,
                 });
               } else if (signer && network?.id) {
-                const multicallContract = getMultiCallContract(signer, network.id);
                 const oracleManagerContract = getNodeModuleContract(signer, network.id);
                 const data = nodes
                   .slice()
@@ -136,7 +132,7 @@ export const App: FC = () => {
                       ]),
                     ];
                   });
-                multicallContract.aggregate(data).then((tx: providers.TransactionResponse) =>
+                multicall.data.aggregate(data).then((tx: providers.TransactionResponse) =>
                   tx.wait(1).then(() => {
                     setNodes((state) => {
                       return state.map((n) => ({ ...n, isRegistered: true }));
