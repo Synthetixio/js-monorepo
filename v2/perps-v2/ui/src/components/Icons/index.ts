@@ -34,3 +34,5 @@ export * from './Gmx';
 export * from './Lido';
 export * from './Litecoin';
 export * from './Shib';
+export * from './WalletIcon';
+export * from './WreckedIcon';

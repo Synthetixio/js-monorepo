@@ -4,6 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // For depcheck to be happy
 require.resolve('webpack-dev-server');
@@ -133,6 +134,7 @@ module.exports = {
   },
 
   plugins: [htmlPlugin]
+    .concat(isProd ? [new CopyWebpackPlugin({ patterns: ['_redirects'] })] : [])
     .concat([
       new webpack.NormalModuleReplacementPlugin(
         /^@tanstack\/react-query$/,
@@ -149,12 +151,6 @@ module.exports = {
       new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/v3-theme$`),
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
-      ),
-    ])
-    .concat([
-      new webpack.NormalModuleReplacementPlugin(
-        new RegExp(`^@synthetixio/wei$`),
-        path.resolve(path.dirname(require.resolve(`@synthetixio/wei/package.json`)), 'src')
       ),
     ])
 

@@ -1,5 +1,5 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import { Market, Size, TableHeaderCell, WalletAddress } from '../../Shared';
+import { Currency, Market, Size, TableHeaderCell, WalletTooltip } from '../../Shared';
 import { wei } from '@synthetixio/wei';
 import { SmallTableLoading } from './SmallTableLoading';
 import { DataInterface, useLargestOpenPosition } from '../../../hooks';
@@ -36,8 +36,8 @@ export const LargestOpen = () => {
             <Thead>
               <Tr>
                 <TableHeaderCell>Market</TableHeaderCell>
-                <TableHeaderCell>Wallet Address</TableHeaderCell>
                 <TableHeaderCell>Size</TableHeaderCell>
+                <TableHeaderCell>Entry Price</TableHeaderCell>
               </Tr>
             </Thead>
             <Tbody>
@@ -57,6 +57,7 @@ export const LargestOpen = () => {
                   leverage,
                   long,
                   size,
+                  entryPrice,
                 } = item;
 
                 return (
@@ -66,11 +67,12 @@ export const LargestOpen = () => {
                       leverage={wei(leverage, 18, true).toNumber()}
                       direction={long ? 'LONG' : 'SHORT'}
                     />
-                    <WalletAddress account={trader.id} />
                     <Size
                       size={wei(size, 18, true).toNumber()}
                       marketPrice={wei(price, 8, true).toNumber()}
                     />
+                    <Currency amount={wei(entryPrice, 18, true).toNumber()} />
+                    <WalletTooltip address={trader.id} />
                   </Tr>
                 );
               })}

@@ -1,5 +1,5 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import { Currency, TableHeaderCell, Market, Size, WalletAddress, MarginTransfer } from '../Shared';
+import { Currency, TableHeaderCell, Market, Size, MarginTransfer, WalletTooltip } from '../Shared';
 import { AllActionsLoading } from './AllActionsLoading';
 import { useActions } from '../../hooks';
 import { Action } from '../Shared/Action';
@@ -26,7 +26,6 @@ export const AllActionsTable = () => {
           <Thead>
             <Tr>
               <TableHeaderCell>Action</TableHeaderCell>
-              <TableHeaderCell>Wallet Address</TableHeaderCell>
               <TableHeaderCell>Market</TableHeaderCell>
               <TableHeaderCell>Price</TableHeaderCell>
               <TableHeaderCell>Size</TableHeaderCell>
@@ -50,7 +49,6 @@ export const AllActionsTable = () => {
                 return (
                   <Tr key={id} borderTopWidth="1px">
                     <Action label={label} txHash={txHash} timestamp={timestamp.toNumber()} />
-                    <WalletAddress account={address} />
                     <Market
                       asset={asset}
                       leverage={leverage?.toNumber() || null}
@@ -63,6 +61,7 @@ export const AllActionsTable = () => {
                       <MarginTransfer size={size.toNumber()} />
                     )}
                     <Currency amount={fees?.toNumber() || null} />
+                    <WalletTooltip address={address} />
                   </Tr>
                 );
               }

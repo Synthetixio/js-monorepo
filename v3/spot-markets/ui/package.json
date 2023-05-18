@@ -23,7 +23,7 @@
     "@snx-v3/useSynthTokenModule": "workspace:*",
     "@snx-v3/zod": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query-devtools": "^4.24.6",
     "framer-motion": "^7.0.0",
     "react": "^18.2.0",
@@ -40,8 +40,6 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime-corejs3": "^7.20.13",
-    "@noisekit/ipfs-deploy": "^1.0.3",
-    "@noisekit/ipns-deploy": "^1.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@tanstack/react-query": "^4.24.6",
     "@types/react": "^18.0.28",
@@ -75,9 +73,6 @@
       "dist",
       "prototype"
     ],
-    "ignoreMatches": [
-      "@noisekit/ipfs-deploy",
-      "@noisekit/ipns-deploy"
-    ]
+    "ignoreMatches": []
   }
 }

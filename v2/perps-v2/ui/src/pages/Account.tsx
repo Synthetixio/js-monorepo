@@ -5,13 +5,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { optimisticEthercanLink } from '../utils/constants';
 import { PositionsTable } from '../components/Positions';
 import { AccountActionsTable } from '../components/Actions';
+import { useKwentaAccount } from '../hooks/useKwentaAccount';
+import { usePolynomialAccount } from '../hooks/usePolynomialAccount';
+import { SmartWallet } from '../components/Shared';
 
 export const Account: FC = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const { data: kwentaAccount } = useKwentaAccount(params?.walletAddress);
+  const { data: polynomialAccount } = usePolynomialAccount(params?.walletAddress);
 
   return (
-    <Flex flexDir="column" px="40px" py={2}>
+    <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
       <Box mt={12}>
         <Button
           variant="ghost"
@@ -19,7 +24,7 @@ export const Account: FC = () => {
           onClick={() => navigate('/')}
           leftIcon={<ArrowBackIcon />}
         >
-          All Actions
+          Home
         </Button>
       </Box>
       <Link
@@ -28,12 +33,25 @@ export const Account: FC = () => {
         href={optimisticEthercanLink(params?.walletAddress || '')}
         target="_blank"
         display="flex"
+        flexWrap={{ base: 'wrap', md: 'nowrap' }}
       >
-        <Heading fontSize="24px" p={0}>
+        <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
           Account: {params?.walletAddress}
         </Heading>
-        <ExternalLinkIcon ml={2} color="cyan.500" />
+        <ExternalLinkIcon color="cyan.500" />
       </Link>
+      <Flex mt={8} wrap="wrap">
+        {kwentaAccount && (
+          <SmartWallet label="Kwenta Smart Account" account={kwentaAccount.account} />
+        )}
+        {polynomialAccount && (
+          <SmartWallet
+            ml="30px"
+            label="Polynomial Smart Wallet"
+            account={polynomialAccount.account}
+          />
+        )}
+      </Flex>
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
           Positions

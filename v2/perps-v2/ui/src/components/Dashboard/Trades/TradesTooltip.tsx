@@ -37,7 +37,7 @@ export const TradesTooltip = ({ payload }: TradesTooltipProps) => {
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Cumulative trades" colour="cyan.500" />
+        <KeyColour label="All Time Trades" colour="cyan.500" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           {cumulativeTrades}
         </Text>

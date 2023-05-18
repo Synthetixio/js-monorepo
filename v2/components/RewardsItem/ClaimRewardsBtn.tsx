@@ -48,6 +48,7 @@ export const ClaimRewardsBtn: FC<{
   const navigate = useNavigate();
   const haveSomethingToClaim = Boolean(amountSNX);
   const delegatedToMint = delegateWallet ? delegateWallet.canClaim : true;
+  const haveClaimed = amountSNX === 0;
   const canClaim = haveSomethingToClaim && delegatedToMint && variant === 'success';
   const {
     mutate,
@@ -67,7 +68,7 @@ export const ClaimRewardsBtn: FC<{
       },
     });
   };
-  const displayClaimButton = variant === 'success';
+  const displayClaimButton = variant === 'success' || haveClaimed;
   return (
     <>
       {displayClaimButton ? (

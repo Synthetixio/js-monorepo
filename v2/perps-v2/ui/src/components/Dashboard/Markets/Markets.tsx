@@ -3,7 +3,7 @@ import { useMarketStats } from '../../../hooks';
 import { MarketsCard } from './MarketsCard';
 
 export const Markets = () => {
-  const { data, loading } = useMarketStats();
+  const { data, loading } = useMarketStats(3);
 
   return (
     <Flex justifyContent="space-between" width="100%" flexDirection={{ base: 'column', lg: 'row' }}>

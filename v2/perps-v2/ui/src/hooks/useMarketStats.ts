@@ -4,7 +4,7 @@ import { subDays } from 'date-fns';
 import { MARKETS_QUERY } from '../queries/dashboard';
 import { DailyMarketStat_OrderBy, OrderDirection } from '../__generated__/graphql';
 
-function getDateRange(upperDaysAgo = 0, lowerDaysAgo = 1) {
+export function getDateRange(upperDaysAgo = 0, lowerDaysAgo = 1) {
   const now = new Date();
 
   const upper = subDays(now, upperDaysAgo).toISOString().split('T')[0];
@@ -13,7 +13,7 @@ function getDateRange(upperDaysAgo = 0, lowerDaysAgo = 1) {
   return { upper, lower };
 }
 
-export function useMarketStats() {
+export function useMarketStats(first?: number) {
   const { upper, lower } = getDateRange(2, 3); // 1 day ago, 2 days ago UTC
 
   const { data: marketsData, loading } = useQuery(MARKETS_QUERY, {
@@ -24,9 +24,9 @@ export function useMarketStats() {
     },
   });
 
-  // First, we want to get the highest for the current and previous dat
+  // First, we want to get the highest for the current and previous day
   const todaysResults =
-    marketsData?.dailyMarketStats.filter((market) => market.day === upper).slice(0, 3) || [];
+    marketsData?.dailyMarketStats.filter((market) => market.day === upper).slice(0, first) || [];
   const yesterdaysResults =
     marketsData?.dailyMarketStats.filter((market) => market.day === lower) || [];
 

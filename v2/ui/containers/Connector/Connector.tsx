@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useReducer } from 'react';
 import { AppState } from '@web3-onboard/core';
 import { createContainer } from 'unstated-next';
-import { loadProvider, SynthetixProvider } from '@synthetixio/providers';
 
 import { getIsOVM, isSupportedNetworkId } from 'utils/network';
 
-import { NetworkNameById, NetworkIdByName, NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkNameById, NetworkId } from '@synthetixio/contracts-interface';
 import { ethers } from 'ethers';
 
 import { onboard as Web3Onboard } from './config';
@@ -14,28 +13,13 @@ import { AppEvents, initialState, reducer } from './reducer';
 
 import { getChainIdHex, getNetworkIdFromHex } from 'utils/infura';
 import { initializeSynthetix } from '../../utils/contracts';
-
-// Ethereum Mainnet
-const L1DefaultProvider: SynthetixProvider = loadProvider({
-  infuraId: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-    ? process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-    : '0',
-  alchemyId: process.env?.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY || '0',
-  networkId: NetworkIdByName.mainnet,
-});
-
-// Optimism Mainnet
-const L2DefaultProvider: SynthetixProvider = loadProvider({
-  infuraId: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-    ? process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-    : '0',
-  alchemyId: process.env?.NEXT_PUBLIC_ALCHEMY_OVM_KEY || '0',
-  networkId: NetworkIdByName['mainnet-ovm'],
-});
+import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
 
 const useConnector = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const { globalProviders } = useGlobalProvidersWithFallback();
+  const L1DefaultProvider = globalProviders.mainnet;
+  const L2DefaultProvider = globalProviders.optimism;
   const {
     isAppReady,
     provider,
@@ -145,7 +129,7 @@ const useConnector = () => {
         }
       })();
     }
-  }, [walletAddress, ensName, network]);
+  }, [walletAddress, ensName, network, L1DefaultProvider]);
 
   const connectWallet = useCallback(
     async (chainId?: NetworkId) => {

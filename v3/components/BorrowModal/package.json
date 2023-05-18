@@ -12,7 +12,7 @@
     "@snx-v3/useBorrow": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
     "@snx-v3/useParams": "workspace:*",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "react": "^18.2.0"
   }
 }

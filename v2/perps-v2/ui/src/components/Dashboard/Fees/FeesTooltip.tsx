@@ -31,13 +31,13 @@ export const FeesTooltip = ({ payload }: TradersTooltipProps) => {
       <Flex my={2} justifyContent="space-between" w="100%">
         <KeyColour label="Total Fees" colour="whiteAlpha.400" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {formatNumber(feesInfo.fees)}
+          ${formatNumber(feesInfo.fees)}
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Cumulative Fees" colour="cyan.500" />
+        <KeyColour label="All Time Fees" colour="cyan.500" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {formatNumber(feesInfo.cumulativeFees)}
+          ${formatNumber(feesInfo.cumulativeFees)}
         </Text>
       </Flex>
     </Flex>

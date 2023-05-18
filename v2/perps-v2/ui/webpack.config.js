@@ -124,19 +124,11 @@ module.exports = {
 
   plugins: [htmlPlugin]
     .concat([new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js'))])
-    .concat([
-      new CopyWebpackPlugin({
-        patterns: [{ from: 'public', to: 'public' }],
-      }),
-    ])
+    .concat(isProd ? [new CopyWebpackPlugin({ patterns: ['public', '_redirects'] })] : [])
     .concat([
       new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/v3-theme$`),
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
-      ),
-      new webpack.NormalModuleReplacementPlugin(
-        new RegExp(`^@synthetixio/wei$`),
-        path.resolve(path.dirname(require.resolve(`@synthetixio/wei/package.json`)), 'src')
       ),
     ])
     .concat([
@@ -174,7 +166,6 @@ module.exports = {
     alias: {
       '@synthetixio/contracts/build': '@synthetixio/contracts/src',
       '@synthetixio/v3-contracts/build': '@synthetixio/v3-contracts/src',
-      '@synthetixio/wei/build': '@synthetixio/wei/src',
     },
     fallback: {
       buffer: require.resolve('buffer'),
