@@ -5,7 +5,7 @@ import { AllActionsTable } from '../components/Actions';
 export function Actions() {
   return (
     <>
-      <Flex flexDir="column" px="40px" py={2}>
+      <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
         <Heading fontSize="24px" my={2} mt={12}>
           Actions
         </Heading>

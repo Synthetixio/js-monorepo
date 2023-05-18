@@ -6,10 +6,18 @@ import { MARKETS_QUERY } from '../queries/dashboard';
 import { DailyMarketStat_OrderBy } from '../__generated__/graphql';
 import { getDateRange } from './useMarketStats';
 import { perpsMarketDataContract } from './usePositions';
-import { utils } from 'ethers';
-import { FuturesMarketKey, MARKETS, pyth, scale } from '../utils';
+import { BytesLike, Contract, providers, utils } from 'ethers';
+import { calculateMarkPrice, FuturesMarketKey, MARKETS, pyth, scale } from '../utils';
 import { PerpsV2MarketData } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import { ZodStringToWei } from './useLargestOpenPosition';
+import {
+  abi as multiCallAbi,
+  address as multiCallAddressGoerli,
+  Multicall3,
+} from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
+import { address as multicallMainnetAddress } from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
+import { isStaging } from '../utils/isStaging';
+import { infuraId } from '../utils';
 
 const DataSchema = z.object({
   market: z.object({
@@ -36,6 +44,18 @@ interface StateInterface {
   data: z.infer<typeof DataSchema>[] | null;
   error: unknown | null;
 }
+
+const OPTIMISM_GOERLI_NETWORK_ID = 420;
+const OPTIMISM__ID = 10;
+
+const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
+const provider = new providers.InfuraProvider(networkId, infuraId);
+
+const Multicall3Contract = new Contract(
+  isStaging ? multiCallAddressGoerli : multicallMainnetAddress,
+  multiCallAbi,
+  provider
+) as Multicall3;
 
 export function useMarkets() {
   const [state, setState] = useState<StateInterface>({ loading: true, data: null, error: null });
@@ -77,64 +97,7 @@ export function useMarkets() {
           };
         });
 
-        const allMarketDetails = await perpsMarketDataContract.allMarketSummaries();
-
-        const fundingDetails = await Promise.all([
-          ...dataWithPercentageDifference.map(({ market }) => {
-            return perpsMarketDataContract.marketDetailsForKey(market.marketKey);
-          }),
-        ]);
-
-        const dataWithPythId = dataWithPercentageDifference.map((item) => {
-          const id = `${utils.parseBytes32String(item.market.marketKey)}` as FuturesMarketKey;
-          const pythInfo = MARKETS[id];
-          return { pythId: pythInfo.pythIds?.mainnet || '', ...item };
-        });
-
-        const indexPrices = await pyth.getLatestPriceFeeds([
-          ...dataWithPythId.map(({ pythId }) => pythId),
-        ]);
-
-        const result: z.infer<typeof DataSchema>[] = [];
-
-        dataWithPythId.map(({ market, percentageDifference, volume }, index) => {
-          // Find the market details for this market
-          const marketDetails = allMarketDetails?.find((item) => {
-            return item.key === market.marketKey;
-          }) as PerpsV2MarketData.MarketSummaryStructOutput;
-
-          const { fundingParameters, marketSizeDetails } = fundingDetails[index];
-
-          // Get the index price from pyth
-          let indexPrice: Wei = wei(0);
-          if (indexPrices && indexPrices[index]) {
-            const rawPriceInfo = indexPrices[index].getPriceUnchecked();
-            indexPrice = scale(wei(rawPriceInfo?.price), rawPriceInfo?.expo || 1);
-          }
-
-          const skewWithScale = wei(marketDetails?.marketSkew, 18, true).div(
-            wei(fundingParameters.skewScale, 18, true)
-          );
-
-          const markPrice = indexPrice.mul(wei(1).add(skewWithScale));
-
-          result.push({
-            market,
-            percentageDifference,
-            volume,
-            fundingRate: wei(marketDetails?.currentFundingRate, 18, true).div(24),
-            indexPrice,
-            markPrice,
-            skew: wei(marketDetails?.marketSkew, 18, true),
-            long: wei(marketSizeDetails?.sides.long, 18, true),
-            short: wei(marketSizeDetails?.sides.short, 18, true),
-            skewPercent: skewWithScale.mul(100),
-          });
-        });
-
-        const data = result.sort((a, b) => {
-          return wei(b.volume, 18, true).toNumber() - wei(a.volume, 18, true).toNumber();
-        });
+        const data = await fetchMarkets(dataWithPercentageDifference);
 
         setState({ loading: false, data, error: null });
       } catch (error) {
@@ -144,4 +107,106 @@ export function useMarkets() {
   }, [client, upper, lower]);
 
   return state;
+}
+
+interface FetchMarketsInterface {
+  __typename?: 'DailyMarketStat';
+  id: string;
+  day: string;
+  volume: string;
+  market: {
+    __typename?: 'FuturesMarket';
+    id: string;
+    marketKey: string;
+    asset: string;
+    isActive: boolean;
+    timestamp: string;
+  };
+  percentageDifference: Wei;
+}
+
+export async function fetchMarkets(
+  marketsData: FetchMarketsInterface[]
+): Promise<z.infer<typeof DataSchema>[] | null> {
+  try {
+    const allMarketSummaries = {
+      target: perpsMarketDataContract.address,
+      callData: perpsMarketDataContract.interface.encodeFunctionData('allMarketSummaries'),
+    };
+
+    const marketDetailCalls = marketsData.map(({ market }) => ({
+      target: perpsMarketDataContract.address,
+      callData: perpsMarketDataContract.interface.encodeFunctionData('marketDetailsForKey', [
+        market.marketKey,
+      ]),
+    }));
+
+    const dataWithPythId = marketsData.map((item) => {
+      const id = `${utils.parseBytes32String(item.market.marketKey)}` as FuturesMarketKey;
+      const pythInfo = MARKETS[id];
+      return { pythId: pythInfo.pythIds?.mainnet || '', ...item };
+    });
+
+    const [multiCallResponse, indexPrices] = await Promise.all([
+      Multicall3Contract.callStatic.aggregate(marketDetailCalls.concat(allMarketSummaries)),
+      pyth.getLatestPriceFeeds([...dataWithPythId.map(({ pythId }) => pythId)]),
+    ]);
+
+    const marketDetailsData = multiCallResponse.returnData.slice(0, marketDetailCalls.length);
+    const allMarketSummariesData = multiCallResponse.returnData.slice(marketDetailCalls.length);
+
+    const marketDetailsDataDecoded = marketDetailsData.map((item: BytesLike) => {
+      return perpsMarketDataContract.interface.decodeFunctionResult('marketDetailsForKey', item)[0];
+    });
+
+    const allMarketSummariesDataDecoded = perpsMarketDataContract.interface.decodeFunctionResult(
+      'allMarketSummaries',
+      allMarketSummariesData[0]
+    );
+
+    return dataWithPythId
+      .map(({ market, percentageDifference, volume }, index) => {
+        const marketDetails = allMarketSummariesDataDecoded.flat()?.find((item) => {
+          return item.key === market.marketKey;
+        }) as PerpsV2MarketData.MarketSummaryStructOutput;
+
+        const { fundingParameters, marketSizeDetails } = marketDetailsDataDecoded[index];
+
+        // Get the index price from pyth
+        let indexPrice: Wei = wei(0);
+        if (indexPrices && indexPrices[index]) {
+          const rawPriceInfo = indexPrices[index].getPriceUnchecked();
+          indexPrice = scale(wei(rawPriceInfo?.price), rawPriceInfo?.expo || 1);
+        }
+
+        const skewWithScale = wei(marketDetails?.marketSkew, 18, true).div(
+          wei(fundingParameters.skewScale, 18, true)
+        );
+
+        const markPrice = calculateMarkPrice(indexPrice, {
+          skew: wei(marketDetails?.marketSkew, 18, true),
+          indexPrice,
+          skewScale: wei(fundingParameters.skewScale, 18, true),
+        });
+
+        return {
+          market,
+          percentageDifference,
+          volume,
+          fundingRate: wei(marketDetails?.currentFundingRate, 18, true).div(24),
+          indexPrice,
+          markPrice,
+          skew: wei(marketDetails?.marketSkew, 18, true),
+          long: wei(marketSizeDetails?.sides.long, 18, true),
+          short: wei(marketSizeDetails?.sides.short, 18, true),
+          skewPercent: skewWithScale.mul(100),
+        };
+      })
+      .sort((a, b) => {
+        return wei(b.volume, 18, true).toNumber() - wei(a.volume, 18, true).toNumber();
+      });
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
