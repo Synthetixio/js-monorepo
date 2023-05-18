@@ -15,3 +15,4 @@ export * from './OpenInterest';
 export * from './WalletTooltip';
 export * from './EntryExit';
 export * from './EntryLiquidated';
+export * from './SmartWallet';
