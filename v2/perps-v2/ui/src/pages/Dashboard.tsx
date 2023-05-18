@@ -45,9 +45,9 @@ export const Dashboard: FC = () => {
           </Flex>
           <Flex mt={2} justifyContent="space-between">
             <Heading fontSize="30px">Markets</Heading>
-            {/* <Button onClick={() => navigate('/markets')} variant="outline">
+            <Button onClick={() => navigate('/markets')} variant="outline">
               See all markets
-            </Button> */}
+            </Button>
           </Flex>
           <Markets />
           <Flex mt={8} justifyContent="space-between">

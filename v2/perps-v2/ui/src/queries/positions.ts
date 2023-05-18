@@ -20,10 +20,12 @@ export const POSITIONS_QUERY_MARKET = gql(`
       realizedPnl
       unrealizedPnl
       feesPaidToSynthetix
+      exitPrice
       lastPrice
       netFunding
       long
       size
+      isLiquidated
     }
   }
 `);

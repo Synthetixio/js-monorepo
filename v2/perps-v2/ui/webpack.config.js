@@ -134,10 +134,6 @@ module.exports = {
         new RegExp(`^@synthetixio/v3-theme$`),
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
       ),
-      new webpack.NormalModuleReplacementPlugin(
-        new RegExp(`^@synthetixio/wei$`),
-        path.resolve(path.dirname(require.resolve(`@synthetixio/wei/package.json`)), 'src')
-      ),
     ])
     .concat([
       new webpack.DefinePlugin({
@@ -174,7 +170,6 @@ module.exports = {
     alias: {
       '@synthetixio/contracts/build': '@synthetixio/contracts/src',
       '@synthetixio/v3-contracts/build': '@synthetixio/v3-contracts/src',
-      '@synthetixio/wei/build': '@synthetixio/wei/src',
     },
     fallback: {
       buffer: require.resolve('buffer'),

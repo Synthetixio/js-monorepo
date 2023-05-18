@@ -26,7 +26,7 @@
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@snx-v3/txnReducer": "workspace:*",
     "@storybook/react": "^6.5.16",
-    "@synthetixio/wei": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query": "^4.24.6",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5"

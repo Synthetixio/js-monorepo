@@ -1,13 +1,13 @@
 import { FC, useEffect } from 'react';
 import {
   Flex,
-  useColorMode,
   Text,
   Menu,
   Button,
   MenuButton,
   MenuItem,
   MenuList,
+  useColorMode,
 } from '@chakra-ui/react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { SNXIcon } from './Icons/';
@@ -100,7 +100,7 @@ export const Header: FC = () => {
               </Text>
             )}
           </RouterLink>
-          {/* <RouterLink to="/markets">
+          <RouterLink to="/markets">
             {({ isActive }) => (
               <Text
                 ml={10}
@@ -112,7 +112,7 @@ export const Header: FC = () => {
                 Markets
               </Text>
             )}
-          </RouterLink> */}
+          </RouterLink>
         </Flex>
       </Flex>
       <AddressInput />

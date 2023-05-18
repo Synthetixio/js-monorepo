@@ -28,6 +28,8 @@ const torus = torusModule();
 const brave = () => customBrave;
 const trust = customTrust();
 
+// Here we hardcode rpc url.. Not very good if infure is down.. BUT I think thise are juse used as default before the wallets is connected.
+// And our app is not using default from onboard, so it should be fine.
 const supportedChains = [
   // Mainnet
   {

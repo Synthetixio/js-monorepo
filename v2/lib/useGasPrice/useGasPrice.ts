@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { wei } from '@synthetixio/wei';
-import { InfuraProvider } from '@ethersproject/providers';
+import { Provider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { GWEI_DECIMALS } from '@snx-v2/Constants';
+import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { SignerContext } from '@snx-v2/SignerContext';
 
 const MULTIPLIER = wei(2, GWEI_DECIMALS);
 
@@ -20,7 +22,7 @@ export const computeGasFee = (baseFeePerGas: BigNumber, maxPriorityFeePerGas: nu
   };
 };
 
-const getGasPriceFromProvider = async (provider: InfuraProvider) => {
+const getGasPriceFromProvider = async (provider: Provider) => {
   try {
     const gasPrice = await provider.getGasPrice();
     return {
@@ -34,13 +36,17 @@ const getGasPriceFromProvider = async (provider: InfuraProvider) => {
 };
 
 export const useGasPrice = () => {
-  const { networkId } = useContext(ContractContext);
+  const { networkId, walletAddress } = useContext(ContractContext);
+  const signer = useContext(SignerContext);
+  const { globalProviders } = useGlobalProvidersWithFallback();
 
-  return useQuery(
-    ['useGasPrice', networkId],
-    async () => {
+  return useQuery({
+    queryKey: ['useGasPrice', { networkId, walletAddress }],
+    queryFn: async () => {
       if (!networkId) throw Error('Network id required');
-      const provider = new InfuraProvider(networkId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID);
+      const globalProvider =
+        networkId === NetworkIdByName.mainnet ? globalProviders.mainnet : globalProviders.optimism;
+      const provider = signer?.provider || globalProvider;
       try {
         // If network is Mainnet then we use EIP1559
         if (networkId === NetworkIdByName.mainnet) {
@@ -59,8 +65,6 @@ export const useGasPrice = () => {
         throw new Error(`Could not fetch and compute network fee. ${e}`);
       }
     },
-    {
-      enabled: Boolean(networkId),
-    }
-  );
+    enabled: Boolean(networkId),
+  });
 };

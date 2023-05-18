@@ -151,12 +151,6 @@ module.exports = {
         path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
       ),
     ])
-    .concat([
-      new webpack.NormalModuleReplacementPlugin(
-        new RegExp(`^@synthetixio/wei$`),
-        path.resolve(path.dirname(require.resolve(`@synthetixio/wei/package.json`)), 'src')
-      ),
-    ])
 
     .concat([
       new webpack.ProvidePlugin({

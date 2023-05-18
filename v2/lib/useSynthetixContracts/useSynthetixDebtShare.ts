@@ -1,13 +1,14 @@
 import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ethers, providers } from 'ethers';
-import { isSupportedNetworkId, NetworkNameById } from './common';
+import { ethers } from 'ethers';
+import { Provider } from '@ethersproject/providers';
+import { isSupportedNetworkId, NetworkNameById, NetworkIdByName } from './common';
 import { ContractContext } from '@snx-v2/ContractContext';
 
 import type { SynthetixDebtShare } from '@synthetixio/contracts/build/mainnet/deployment/SynthetixDebtShare';
 import type { SynthetixDebtShare as SynthetixDebtShareOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthetixDebtShare';
-import { SynthetixProvider } from '@synthetixio/providers';
 import { SignerContext } from '@snx-v2/SignerContext';
+import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SynthetixDebtShare'),
@@ -25,7 +26,7 @@ export const getSynthetixDebtShare = async ({
 }: {
   networkId: number;
   signer: ethers.Signer | null;
-  provider: SynthetixProvider;
+  provider: Provider;
 }) => {
   const signerOrProvider = signer || provider;
 
@@ -43,20 +44,19 @@ export const getSynthetixDebtShare = async ({
 export const useSynthetixDebtShare = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
-
-  return useQuery(
+  const { globalProviders } = useGlobalProvidersWithFallback();
+  return useQuery({
     // We add walletAddress as a query key to make sure the signer is up to date, we cant use signer directly since it cant be stringified
-    [networkId, 'useSynthetixDebtShare', walletAddress],
-    async () => {
+    queryKey: ['useSynthetixDebtShare', { networkId, walletAddress }],
+    queryFn: async () => {
       if (!networkId) throw Error('Network id required');
 
-      const provider = new providers.InfuraProvider(
-        networkId,
-        process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-      );
-
+      const globalProvider =
+        networkId === NetworkIdByName.mainnet ? globalProviders.mainnet : globalProviders.optimism;
+      const provider = signer?.provider || globalProvider;
       return getSynthetixDebtShare({ networkId, signer, provider });
     },
-    { staleTime: Infinity, enabled: Boolean(networkId) }
-  );
+    staleTime: Infinity,
+    enabled: Boolean(networkId),
+  });
 };
