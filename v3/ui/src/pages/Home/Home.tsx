@@ -1,5 +1,7 @@
 import { Helmet } from 'react-helmet';
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Fade,
@@ -25,6 +27,7 @@ import { BorderBox } from '@snx-v3/BorderBox';
 import { LiquidityPositionType, useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
 import { Welcome } from '../../components/shared/Welcome';
 import { Stats, StatsProps } from './Stats';
+import { CollateralIcon } from '@snx-v3/icons';
 
 const LoadingRow = () => (
   <Tr>
@@ -169,6 +172,47 @@ export function HomeUi({
                   <LoadingRow />
                 </>
               )}
+            </Tbody>
+          </Table>
+        </Box>
+      </BorderBox>
+      <BorderBox p={4} my={8} flexDir="column">
+        {/* only render if there's any 'available collateral' */}
+        <Heading fontSize="2xl" mb="2">
+          Available Collateral
+        </Heading>
+        <Flex alignItems="center" mb="0">
+          <Text color="gray.500">
+            This collateral can be deposited to pools. As a security precaution, this collateral
+            cannot be withdrawn until at least 1 day has elapsed since previous account activity.
+          </Text>
+          <Alert ml="auto" status="error" width="540px">
+            <AlertIcon />
+            <Text fontWeight="bold">Withdrawal available in 3:12</Text>
+          </Alert>
+        </Flex>
+
+        <Box overflowX="auto">
+          <Table mt={8} size="sm" variant="unstyled" mb="9">
+            <Thead sx={{ tr: { borderBottomColor: 'gray.900', borderBottomWidth: '1px' } }}>
+              <Tr />
+            </Thead>
+            <Tbody sx={{ tr: { borderBottomColor: 'gray.900', borderBottomWidth: '1px' } }}>
+              <Tr>
+                <Td>
+                  <Flex flexDir="row" py={4}>
+                    <CollateralIcon width="32px" height="32px" symbol={'SNX'} />
+                    <Flex flexDirection="column" justifyContent="center" ml={2}>
+                      <Text fontSize="lg" color="gray.500">
+                        0 SNX
+                      </Text>
+                    </Flex>
+                  </Flex>
+                </Td>
+                <Td textAlign="end">
+                  <Button isDisabled={true}>Withdraw</Button>
+                </Td>
+              </Tr>
             </Tbody>
           </Table>
         </Box>

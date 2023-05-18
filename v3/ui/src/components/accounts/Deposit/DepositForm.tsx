@@ -161,7 +161,11 @@ export function DepositFormUi({
                     setInputAmount(tokenBalance);
                   }}
                 >
-                  <Text>{collateralType.symbol} Balance:</Text>
+                  {/* Only render if available collateral > 0 */}
+                  <Text>{collateralType.symbol} Available Collateral:</Text>
+                  <Amount value={tokenBalance} />
+                  &nbsp;
+                  <Text>{collateralType.symbol} Wallet Balance:</Text>
                   <Amount value={tokenBalance} />
                 </Flex>
                 {collateralType?.symbol === 'WETH' ? (
@@ -175,7 +179,11 @@ export function DepositFormUi({
                       setInputAmount(ethBalance);
                     }}
                   >
-                    <Text>ETH Balance:</Text>
+                    {/* Only render if available collateral > 0 */}
+                    <Text>ETH Available Collateral:</Text>
+                    <Amount value={ethBalance} />
+                    &nbsp;
+                    <Text>ETH Wallet Balance:</Text>
                     <Amount value={ethBalance} />
                   </Flex>
                 ) : null}
