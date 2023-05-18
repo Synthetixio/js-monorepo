@@ -4,7 +4,7 @@ import { MarketsTable } from '../components/Markets/MarketsTable';
 
 export const Markets: FC = () => {
   return (
-    <Box px="40px">
+    <Box px={{ base: '16px', md: '40px' }}>
       <Heading mt={16} fontSize="36px">
         Markets
       </Heading>

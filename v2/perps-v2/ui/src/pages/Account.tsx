@@ -16,7 +16,7 @@ export const Account: FC = () => {
   const { data: polynomialAccount } = usePolynomialAccount(params?.walletAddress);
 
   return (
-    <Flex flexDir="column" px="40px" py={2}>
+    <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
       <Box mt={12}>
         <Button
           variant="ghost"
@@ -33,11 +33,12 @@ export const Account: FC = () => {
         href={optimisticEthercanLink(params?.walletAddress || '')}
         target="_blank"
         display="flex"
+        flexWrap={{ base: 'wrap', md: 'nowrap' }}
       >
-        <Heading fontSize="24px" p={0}>
+        <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
           Account: {params?.walletAddress}
         </Heading>
-        <ExternalLinkIcon ml={2} color="cyan.500" />
+        <ExternalLinkIcon color="cyan.500" />
       </Link>
       <Flex mt={8} wrap="wrap">
         {kwentaAccount && (
