@@ -124,11 +124,7 @@ module.exports = {
 
   plugins: [htmlPlugin]
     .concat([new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js'))])
-    .concat([
-      new CopyWebpackPlugin({
-        patterns: [{ from: 'public', to: 'public' }],
-      }),
-    ])
+    .concat(isProd ? [new CopyWebpackPlugin({ patterns: ['public', '_redirects'] })] : [])
     .concat([
       new webpack.NormalModuleReplacementPlugin(
         new RegExp(`^@synthetixio/v3-theme$`),
