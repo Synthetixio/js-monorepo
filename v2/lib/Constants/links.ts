@@ -9,7 +9,7 @@ export const EXTERNAL_LINKS = {
     StakingGuide: 'https://blog.synthetix.io/basics-of-staking-snx-2022/',
     SIP148Liquidations: 'https://blog.synthetix.io/new-liquidation-mechanism/',
     Governance: 'https://governance.synthetix.io',
-    RewardsGuide: 'https://docs.synthetix.io/staking/staking-guide/staking-rewards-and-epochs',
+    RewardsGuide: 'https://docs.synthetix.io/staking/staking-guide/steps-for-claiming-rewards',
     CRatioGuide: 'https://docs.synthetix.io/staking/staking-guide/collateralization-ratio',
     SIP255: 'https://sips.synthetix.io/sips/sip-255',
     HedgeStrategies: 'https://docs.synthetix.io/staking/staking-guide/debt-hedging-strategies',
