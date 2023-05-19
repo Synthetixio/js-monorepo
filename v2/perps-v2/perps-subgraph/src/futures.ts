@@ -107,12 +107,7 @@ export function handleMarginTransferred(event: MarginTransferredEvent): void {
     trader.realizedPnl = BigInt.fromI32(0);
     synthetix.totalTraders = synthetix.totalTraders.plus(BigInt.fromI32(0));
   } else {
-    // trader.margin = trader.margin.plus(event.params.marginDelta);
-    if (event.params.marginDelta.gt(BigInt.fromI32(0))) {
-      trader.margin = trader.margin.plus(event.params.marginDelta);
-    } else if (event.params.marginDelta.lt(BigInt.fromI32(0))) {
-      trader.margin = trader.margin.minus(event.params.marginDelta);
-    }
+    trader.margin = trader.margin.plus(event.params.marginDelta);
   }
   marginTransferEntity.save();
   synthetix.save();
