@@ -49,7 +49,7 @@ export const useOptimismLayer1Fee = ({
       const { from: _from, ...txWithoutFrom } = tx;
       const serializedTxn = serialize(txWithoutFrom);
 
-      return await getOptimismLayerOneFees(serializedTxn, networkId, globalProviders.mainnet);
+      return await getOptimismLayerOneFees(serializedTxn, networkId, globalProviders.optimism);
     },
 
     onError: () => (usingInfura ? toggleRpc() : null),
