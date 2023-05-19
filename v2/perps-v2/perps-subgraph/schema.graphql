@@ -49,6 +49,7 @@ type FuturesTrade @entity {
   feesPaidToSynthetix: BigInt!
   type: FuturesTradeType!
   txHash: String!
+  marketOrder: Boolean!
 }
 
 type DailyMarketStat @entity {
