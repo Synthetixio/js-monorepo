@@ -278,15 +278,24 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
 
   // Update FuturesOrderEntity
   if (futuresOrderEntity) {
-    updateFeeStats(event.params.keeperDeposit, event.address, event.block.timestamp);
-
     futuresOrderEntity.fee = event.params.keeperDeposit;
     futuresOrderEntity.keeper = event.transaction.from;
-
     if (tradeEntity) {
-      futuresOrderEntity.futuresPosition = tradeEntity.futuresPosition;
-      futuresOrderEntity.status = 'Filled';
+      // All fee data is based on trade entity, only update keeper fee if trade is created
+      updateFeeStats(event.params.keeperDeposit, event.address, event.block.timestamp);
 
+      // Trade entity updates
+      tradeEntity.futuresOrder = futuresOrderEntity.id;
+      tradeEntity.marketOrder = false;
+      // add fee if not self-executed
+      if (futuresOrderEntity.keeper.toString() != futuresOrderEntity.trader) {
+        tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
+          event.params.keeperDeposit
+        );
+      }
+      tradeEntity.save();
+
+      // Update FuturesPosition
       let positionEntity = FuturesPosition.load(tradeEntity.futuresPosition);
       if (positionEntity) {
         positionEntity.feesPaidToSynthetix = positionEntity.feesPaidToSynthetix.plus(
@@ -294,13 +303,6 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         );
         positionEntity.realizedPnl = positionEntity.realizedPnl.minus(event.params.keeperDeposit);
         positionEntity.save();
-      }
-      // add fee if not self-executed
-      if (futuresOrderEntity.keeper.toString() != futuresOrderEntity.trader) {
-        tradeEntity.feesPaidToSynthetix = tradeEntity.feesPaidToSynthetix.plus(
-          event.params.keeperDeposit
-        );
-        tradeEntity.save();
       }
 
       // Update Synthetix values
@@ -316,6 +318,9 @@ export function handleDelayedOrderRemoved(event: DelayedOrderRemovedEvent): void
         trader.feesPaidToSynthetix = trader.feesPaidToSynthetix.plus(event.params.keeperDeposit);
         trader.save();
       }
+      // Update FuturesOrderEntity
+      futuresOrderEntity.futuresPosition = tradeEntity.futuresPosition;
+      futuresOrderEntity.status = 'Filled';
       futuresOrderEntity.txHash = event.transaction.hash.toHex();
       futuresOrderEntity.save();
     } else {
