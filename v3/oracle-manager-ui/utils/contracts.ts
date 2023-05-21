@@ -6,22 +6,6 @@ import {
 import { address as OracleManagerProxyOPAddress } from '@synthetixio/v3-contracts/build/optimism-mainnet/OracleManagerProxy';
 import { address as OracleManagerProxyMainnetAddress } from '@synthetixio/v3-contracts/build/mainnet/OracleManagerProxy';
 import { address as OracleManagerProxyGoerliAddress } from '@synthetixio/v3-contracts/build/goerli/OracleManagerProxy';
-import {
-  address as multicallAddressMainnet,
-  abi as multicallAbiMainnet,
-} from '@synthetixio/v3-contracts/build/mainnet/Multicall3';
-import {
-  address as multicallAddressGoerli,
-  abi as multicallAbiGoerli,
-} from '@synthetixio/v3-contracts/build/goerli/Multicall3';
-import {
-  address as multicallAddressOPGoerli,
-  abi as multicallAbiOPGoerli,
-} from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
-import {
-  address as multicallAddressOP,
-  abi as multicallAbiOP,
-} from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
 import { Node } from './types';
 import { ORACLE_NODE_TYPES } from './constants';
 
@@ -137,22 +121,4 @@ export const getNodeModuleContract = (
     OracleManagerProxyOPGoerliAbi,
     signerOrProvider
   );
-};
-
-export const getMultiCallContract = (
-  signerOrProvider: providers.JsonRpcSigner,
-  network: number
-) => {
-  switch (network) {
-    case 1:
-      return new Contract(multicallAddressMainnet, multicallAbiMainnet, signerOrProvider);
-    case 5:
-      return new Contract(multicallAddressGoerli, multicallAbiGoerli, signerOrProvider);
-    case 10:
-      return new Contract(multicallAddressOP, multicallAbiOP, signerOrProvider);
-    case 420:
-      return new Contract(multicallAddressOPGoerli, multicallAbiOPGoerli, signerOrProvider);
-    default:
-      return new Contract(multicallAddressMainnet, multicallAbiMainnet, signerOrProvider);
-  }
 };

@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { RegisteredNode } from './RegisteredNode';
 import { BlockchainProvider } from '@snx-v3/useBlockchain';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const Alert: ComponentStyleConfig = {
   variants: {
@@ -43,12 +44,26 @@ const container = document.querySelector('#app');
 const root = createRoot(container!);
 root.render(
   <RecoilRoot>
-    <BlockchainProvider>
-      <ChakraProvider theme={customTheme}>
-        <Fonts />
-        <Header />
-        <RouterProvider router={router} />
-      </ChakraProvider>
-    </BlockchainProvider>
+    <QueryClientProvider
+      client={
+        new QueryClient({
+          defaultOptions: {
+            queries: {
+              refetchInterval: 9999999,
+              refetchOnMount: false,
+              refetchOnWindowFocus: false,
+            },
+          },
+        })
+      }
+    >
+      <BlockchainProvider>
+        <ChakraProvider theme={customTheme}>
+          <Fonts />
+          <Header />
+          <RouterProvider router={router} />
+        </ChakraProvider>
+      </BlockchainProvider>
+    </QueryClientProvider>
   </RecoilRoot>
 );
