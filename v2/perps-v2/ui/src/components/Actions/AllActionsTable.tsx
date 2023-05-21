@@ -68,17 +68,10 @@ export const AllActionsTable = () => {
             )}
           </Tbody>
         </Table>
-        {!loading && data?.length === 0 && (
+        {((!loading && data?.length === 0) || error) && (
           <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
             <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-              No positions
-            </Text>
-          </Flex>
-        )}
-        {error && (
-          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-              No positions
+              No actions
             </Text>
           </Flex>
         )}

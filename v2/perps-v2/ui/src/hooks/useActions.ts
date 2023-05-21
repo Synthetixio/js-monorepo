@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import Wei, { wei } from '@synthetixio/wei';
 import { useSearchParams } from 'react-router-dom';
 import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERRED_QUERY } from '../queries/actions';
+import { MARKETS } from '../utils';
 import {
   FuturesMarginTransferQuery,
   FuturesMarginTransfer_OrderBy,
@@ -121,10 +122,33 @@ const mergeData = (
   return data.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber());
 };
 
+function generateMarketIds(markets: string | null): string[] | undefined {
+  if (!markets) return undefined;
+
+  const marketsList = markets.split(',');
+
+  const result: string[] = [];
+
+  marketsList.forEach((market) => {
+    const marketConfig = Object.entries(MARKETS)
+      .map((item) => item[1])
+      .find((item) => item.asset === market);
+
+    if (marketConfig && marketConfig.id) {
+      result.push(marketConfig.id);
+    }
+  });
+
+  return result;
+}
+
 export const useActions = (account?: string, limit?: number) => {
   const [searchParams] = useSearchParams();
-  const marketAddress = searchParams.get('marketAddress') || undefined;
+
   const accountLower = account?.toLowerCase();
+  const markets = generateMarketIds(searchParams.get('markets'));
+  const min = searchParams.get('min') || undefined;
+  const max = searchParams.get('max') || undefined;
 
   const {
     loading: marginLoading,
@@ -138,7 +162,9 @@ export const useActions = (account?: string, limit?: number) => {
       orderDirection: OrderDirection.Desc,
       where: {
         trader: accountLower,
-        market: marketAddress,
+        market_in: markets,
+        size_gte: min ? wei(min).toBN().toString() : undefined, // Should be divided by current price
+        size_lte: max ? wei(max).toBN().toString() : undefined, // Should be divided by current price
       },
     },
   });
@@ -155,7 +181,9 @@ export const useActions = (account?: string, limit?: number) => {
       orderDirection: OrderDirection.Desc,
       where: {
         trader: accountLower,
-        market: marketAddress,
+        market_in: markets,
+        size_gte: min ? wei(min).toBN().toString() : undefined, // Should be divided by current price
+        size_lte: max ? wei(max).toBN().toString() : undefined, // Should be divided by current price
       },
     },
   });

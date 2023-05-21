@@ -4,16 +4,53 @@ import { Button, Menu, MenuButton, MenuList, Flex } from '@chakra-ui/react';
 import { FuturesMarketAsset } from '../../../utils';
 import { MarketCheckbox } from './MarketCheckbox';
 import { CurrencyIcon } from '../../CurrencyIcon';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface MarketSelectProps {
   markets: FuturesMarketAsset[];
 }
 
 export const MarketSelect = ({ markets }: MarketSelectProps) => {
-  const [activeAssets, setActiveAssets] = useState<FuturesMarketAsset[]>([]);
+  const [searchParams] = useSearchParams();
+  const initialState = (searchParams.get('markets')?.split(',') || []) as FuturesMarketAsset[];
+
+  const [activeAssets, setActiveAssets] = useState<FuturesMarketAsset[]>(initialState);
+
+  const navigate = useNavigate();
+
+  const onClose = () => {
+    if (activeAssets.length !== 0) {
+      const params: string[][] = [];
+      const min = searchParams.get('min') || '';
+      const max = searchParams.get('max') || '';
+
+      const markets = activeAssets.join(',');
+
+      if (min !== '') {
+        params.push(['min', min]);
+      }
+
+      if (max !== '') {
+        params.push(['max', max]);
+      }
+
+      if (markets !== '') {
+        params.push(['markets', markets]);
+      }
+
+      const newParams = new URLSearchParams(params);
+
+      navigate({
+        pathname: `/actions`,
+        search: `?${newParams.toString()}`,
+      });
+    } else {
+      navigate(`/actions`);
+    }
+  };
 
   return (
-    <Menu>
+    <Menu onClose={onClose}>
       <MenuButton
         color="gray.500"
         fontSize="16px"

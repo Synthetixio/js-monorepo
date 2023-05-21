@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Button, Flex, Menu, MenuButton, MenuList, Input, Text } from '@chakra-ui/react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface SizeState {
   min: string;
@@ -9,19 +10,58 @@ interface SizeState {
 
 export const SizeSelect = () => {
   const [size, setSize] = useState<SizeState>({ min: '', max: '' });
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const update = (input: 'min' | 'max', value: number) => {
     const newSize = { ...size, [input]: value };
     setSize(newSize);
   };
 
-  // useEffect(() => {
+  const onClose = () => {
+    if (size.min !== '' || size.max !== '') {
+      const params: string[][] = [];
+      let min = searchParams.get('min') || '';
+      let max = searchParams.get('max') || '';
 
-  //   re
-  // },[size])
+      const markets = searchParams.get('markets') || '';
+
+      if (size.min !== '' || min !== '') {
+        min = size.min !== '' ? size.min : min;
+        params.push(['min', min]);
+      }
+
+      if (size.max !== '' || max !== '') {
+        max = size.max !== '' ? size.max : max;
+        params.push(['max', max]);
+      }
+
+      if (markets !== '') {
+        params.push(['markets', markets]);
+      }
+
+      const newParams = new URLSearchParams(params);
+
+      navigate({
+        pathname: '/actions',
+        search: `?${newParams.toString()}`,
+      });
+    } else {
+      const params: string[][] = [];
+      const markets = searchParams.get('markets') || '';
+      if (markets !== '') {
+        params.push(['markets', markets]);
+      }
+      const newParams = new URLSearchParams(params);
+      navigate({
+        pathname: '/actions',
+        search: `?${newParams.toString()}`,
+      });
+    }
+  };
 
   return (
-    <Menu>
+    <Menu onClose={onClose}>
       <MenuButton
         marginLeft={4}
         color="gray.500"
@@ -63,7 +103,7 @@ export const SizeSelect = () => {
                 lineHeight: '20px',
                 fontFamily: 'heading',
               }}
-              placeholder="$ Min"
+              placeholder="Min"
               type="number"
               onChange={(e) => update('min', e.target.valueAsNumber)}
               value={size.min}
@@ -79,13 +119,18 @@ export const SizeSelect = () => {
                 fontFamily: 'heading',
               }}
               ml={2}
-              placeholder="$ Max"
+              placeholder="Max"
               type="number"
               onChange={(e) => update('max', e.target.valueAsNumber)}
               value={size.max}
             />
           </Flex>
-          <Button mt={2} variant="link" onClick={() => setSize({ min: '', max: '' })}>
+          <Button
+            color="cyan.500"
+            mt={2}
+            variant="link"
+            onClick={() => setSize({ min: '', max: '' })}
+          >
             Clear
           </Button>
         </Flex>
