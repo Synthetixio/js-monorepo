@@ -36,3 +36,4 @@ export * from './Litecoin';
 export * from './Shib';
 export * from './WalletIcon';
 export * from './WreckedIcon';
+export * from './Tick';

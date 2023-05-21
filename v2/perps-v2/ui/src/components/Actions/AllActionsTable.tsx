@@ -1,17 +1,8 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import {
-  Currency,
-  TableHeaderCell,
-  Market,
-  Size,
-  MarginTransfer,
-  WalletTooltip,
-  MarketSelect,
-} from '../Shared';
+import { Currency, TableHeaderCell, Market, Size, MarginTransfer, WalletTooltip } from '../Shared';
 import { AllActionsLoading } from './AllActionsLoading';
 import { useActions } from '../../hooks';
 import { Action } from '../Shared/Action';
-import { FuturesMarketAsset } from '../../utils';
 
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
@@ -20,7 +11,6 @@ export const AllActionsTable = () => {
 
   return (
     <>
-      <MarketSelect markets={Object.values(FuturesMarketAsset)} />
       <TableContainer
         maxW="100%"
         my={5}
