@@ -2,7 +2,6 @@ import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/
 import { MarketsTableLoading } from './MarketsTableLoading';
 import { useMarkets } from '../../hooks';
 import {
-  // Currency,
   DailyVolumeChange,
   Funding,
   Market,
@@ -81,7 +80,6 @@ export const MarketsTable = () => {
                     volume={wei(volume, 18, true).toNumber()}
                     percentage={percentageDifference.toNumber()}
                   />
-                  {/* <Currency amount={wei(volume, 18, true).toNumber()} decimals={2} /> */}
                 </Tr>
               );
             })}

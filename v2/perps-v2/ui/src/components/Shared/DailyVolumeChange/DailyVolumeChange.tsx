@@ -2,13 +2,13 @@ import { Fade, Td, Text } from '@chakra-ui/react';
 import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
 import { expo } from '../../../utils';
 
-interface DailyVolumeChange {
+interface DailyVolumeChangeProps {
   volume: number;
   percentage: number;
   decimals?: number;
 }
 
-export const DailyVolumeChange = ({ volume, percentage, decimals = 2 }: DailyVolumeChange) => {
+export const DailyVolumeChange = ({ volume, percentage, decimals = 2 }: DailyVolumeChangeProps) => {
   const isPositive = percentage >= 0;
   const displayNumber =
     percentage > 1000
