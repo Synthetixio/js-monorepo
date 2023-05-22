@@ -7,7 +7,7 @@ import { Action } from '../Shared/Action';
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
 export const AllActionsTable = () => {
-  const { loading, data, error } = useActions(undefined, 1000);
+  const { loading, data, error } = useActions();
 
   return (
     <>
