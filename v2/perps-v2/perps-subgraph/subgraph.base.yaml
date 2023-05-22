@@ -38,7 +38,6 @@ templates:
           handler: handleDelayedOrderSubmitted
         - event: DelayedOrderRemoved(indexed address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleDelayedOrderRemoved
-          receipt: true
         - event: MarginTransferred(indexed address,int256)
           handler: handleMarginTransferred
         - event: 'FundingRecomputed(int256,int256,uint256,uint256)'
