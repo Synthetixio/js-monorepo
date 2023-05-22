@@ -18,13 +18,11 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
 
   const navigate = useNavigate();
 
-  const onClose = () => {
-    if (activeAssets.length !== 0) {
+  const onClick = (markets: string) => {
+    if (markets.length !== 0) {
       const params: string[][] = [];
       const min = searchParams.get('min') || '';
       const max = searchParams.get('max') || '';
-
-      const markets = activeAssets.join(',');
 
       if (min !== '') {
         params.push(['min', min]);
@@ -50,7 +48,7 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
   };
 
   return (
-    <Menu onClose={onClose}>
+    <Menu>
       <MenuButton
         color="gray.500"
         fontSize="16px"
@@ -70,7 +68,7 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
         as={Button}
         rightIcon={<ChevronDownIcon />}
       >
-        All Markets
+        {activeAssets.length === 0 ? 'All Markets' : activeAssets.join(', ')}
       </MenuButton>
       <MenuList>
         <Flex
@@ -84,7 +82,10 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
           <MarketCheckbox
             label="ALL"
             isChecked={activeAssets.length === 0}
-            onChange={() => setActiveAssets([])}
+            onChange={() => {
+              setActiveAssets([]);
+              onClick('');
+            }}
           />
           {markets.map((market) => (
             <MarketCheckbox
@@ -95,8 +96,11 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
                 if (activeAssets.includes(market) && !e.target.checked) {
                   const newState = activeAssets.filter((asset) => asset !== market);
                   setActiveAssets(newState);
+                  return onClick(newState.join(','));
                 } else {
-                  setActiveAssets([...activeAssets, market]);
+                  const newState = [...activeAssets, market];
+                  setActiveAssets(newState);
+                  return onClick(newState.join(','));
                 }
               }}
               isChecked={activeAssets.includes(market)}

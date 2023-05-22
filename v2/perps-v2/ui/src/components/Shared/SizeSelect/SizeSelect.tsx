@@ -14,26 +14,22 @@ export const SizeSelect = () => {
   const [searchParams] = useSearchParams();
 
   const update = (input: 'min' | 'max', value: number) => {
-    const newSize = { ...size, [input]: value };
+    const newSize = { ...size, [input]: value || '' };
     setSize(newSize);
   };
 
-  const onClose = () => {
-    if (size.min !== '' || size.max !== '') {
+  const onClose = (updateSize: SizeState) => {
+    if (updateSize.min !== '' || updateSize.max !== '') {
       const params: string[][] = [];
-      let min = searchParams.get('min') || '';
-      let max = searchParams.get('max') || '';
 
       const markets = searchParams.get('markets') || '';
 
-      if (size.min !== '' || min !== '') {
-        min = size.min !== '' ? size.min : min;
-        params.push(['min', min]);
+      if (updateSize.min !== '') {
+        params.push(['min', updateSize.min]);
       }
 
-      if (size.max !== '' || max !== '') {
-        max = size.max !== '' ? size.max : max;
-        params.push(['max', max]);
+      if (updateSize.max !== '') {
+        params.push(['max', updateSize.max]);
       }
 
       if (markets !== '') {
@@ -61,7 +57,7 @@ export const SizeSelect = () => {
   };
 
   return (
-    <Menu onClose={onClose}>
+    <Menu>
       <MenuButton
         marginLeft={4}
         color="gray.500"
@@ -107,6 +103,7 @@ export const SizeSelect = () => {
               type="number"
               onChange={(e) => update('min', e.target.valueAsNumber)}
               value={size.min}
+              onBlur={() => onClose(size)}
             />
             <Text fontFamily="heading" fontSize="16px" lineHeight="24px" color="gray.50">
               to
@@ -123,13 +120,17 @@ export const SizeSelect = () => {
               type="number"
               onChange={(e) => update('max', e.target.valueAsNumber)}
               value={size.max}
+              onBlur={() => onClose(size)}
             />
           </Flex>
           <Button
             color="cyan.500"
             mt={2}
             variant="link"
-            onClick={() => setSize({ min: '', max: '' })}
+            onClick={() => {
+              setSize({ min: '', max: '' });
+              onClose({ min: '', max: '' });
+            }}
           >
             Clear
           </Button>
