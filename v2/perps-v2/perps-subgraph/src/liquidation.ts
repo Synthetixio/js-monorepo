@@ -14,7 +14,6 @@ import { updateFeeStats } from './historical-trade-stats';
 export { handlePositionModified } from './position-modified';
 
 export function handlePositionLiquidatedLegacy(event: PositionLiquidatedEventLegacy): void {
-  log.info('handlePositionLiquidatedLegacy', []);
   const futuresPositionId = event.address.toHex() + '-' + event.params.id.toHex();
   const positionLiquidatedEntity = new PositionLiquidated(event.params.id.toString());
   positionLiquidatedEntity.trader = event.params.account.toHex();
