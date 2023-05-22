@@ -86,10 +86,12 @@ export function useMarkets() {
             return yesterdayMarket.market.id === market.market.id;
           });
 
-          // In the off chance there was no volume yesterday we set volume to 0
+          // In the off chance there was no volume yesterday we add a small amount
+          const yesterdayVolume = wei(yesterday?.volume || 1, 18, true).add(wei(1).toBN());
+
           const percentageDifference = wei(market.volume, 18, true)
             .sub(wei(yesterday?.volume || 0, 18, true))
-            .div(wei(yesterday?.volume || 1, 18, true));
+            .div(yesterdayVolume);
 
           return {
             ...market,
