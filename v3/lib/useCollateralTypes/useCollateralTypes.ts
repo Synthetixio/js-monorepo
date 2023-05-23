@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { useMemo } from 'react';
 import { ZodBigNumber } from '@snx-v3/zod';
 import { wei } from '@synthetixio/wei';
-import { Multicall3Type, useMulticall3 } from '../useMulticall3';
+import { Multicall3Type, useMulticall3 } from '@snx-v3/useMulticall3';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
 const CollateralConfigurationSchema = z.object({
