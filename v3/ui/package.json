@@ -37,6 +37,8 @@
     "@snx-v3/constants": "workspace:*",
     "@snx-v3/format": "workspace:*",
     "@snx-v3/icons": "workspace:*",
+    "@snx-v3/useAccountCollateral": "workspace:*",
+    "@snx-v3/useAccountCollateralUnlockDate": "workspace:*",
     "@snx-v3/useAccounts": "workspace:*",
     "@snx-v3/useAllowance": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",

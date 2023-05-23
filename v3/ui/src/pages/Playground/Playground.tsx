@@ -15,7 +15,6 @@ import {
 import { useAccounts } from '@snx-v3/useAccounts';
 import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
-import { useQuery } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 import React from 'react';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
@@ -26,9 +25,10 @@ import format from 'date-fns/format';
 import { useAllowance } from '@snx-v3/useAllowance';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { Amount } from '@snx-v3/Amount';
-import { wei } from '@synthetixio/wei';
 import { createSearchParams, generatePath, useNavigate } from 'react-router-dom';
 import { useParams } from '@snx-v3/useParams';
+import { useAccountCollateral } from '@snx-v3/useAccountCollateral';
+import { useAccountCollateralUnlockDate } from '@snx-v3/useAccountCollateralUnlockDate';
 
 function useContractErrorParser(Contract: any) {
   return React.useCallback(
@@ -156,62 +156,12 @@ export function Playground() {
 
   const { data: preferredPool } = usePreferredPool();
 
-  const accountCollateral = useQuery({
-    queryKey: ['accountCollateral', { accountId, poolId: preferredPool?.id, symbol }],
-    enabled: Boolean(CoreProxy && accountId && preferredPool?.id && tokenAddress),
+  const accountCollateral = useAccountCollateral({ accountId });
+  const accountCollateralData = accountCollateral.data?.find(
+    (collateral) => collateral.tokenAddress === tokenAddress
+  );
 
-    queryFn: async () => {
-      if (!CoreProxy || !preferredPool?.id || !accountId || !tokenAddress) throw 'OMG';
-      console.log({ collateralTypes, tokenAddress, accountId });
-
-      const lastInteraction = await CoreProxy.getAccountLastInteraction(accountId);
-      console.log({ lastInteraction: new Date(lastInteraction.toNumber() * 1000) });
-
-      const availableCollateral = await CoreProxy.getAccountAvailableCollateral(
-        accountId,
-        tokenAddress
-      );
-      console.log({ availableCollateral: ethers.utils.formatEther(availableCollateral) });
-
-      const { totalAssigned, totalDeposited, totalLocked } = await CoreProxy.getAccountCollateral(
-        accountId,
-        tokenAddress
-      );
-      console.log({
-        totalAssigned: ethers.utils.formatEther(totalAssigned),
-        totalDeposited: ethers.utils.formatEther(totalDeposited),
-        totalLocked: ethers.utils.formatEther(totalLocked),
-      });
-
-      // Hardcoded because getting config value from contract is not yet possible
-      const accountTimeoutWithdraw = 24 * 60 * 60; // 1 day.
-      console.log({ accountTimeoutWithdraw });
-
-      // TODO: uncomment when config is available
-      // const accountTimeoutWithdraw = parseInt(
-      //   await CoreProxy.getConfig(ethers.utils.formatBytes32String('accountTimeoutWithdraw')),
-      //   16
-      // );
-
-      const collateralUnlock = lastInteraction.add(accountTimeoutWithdraw);
-      console.log({ collateralUnlock: new Date(collateralUnlock.toNumber() * 1000) });
-
-      return {
-        collateralUnlockDate: new Date(collateralUnlock.toNumber() * 1000),
-        availableCollateral: wei(availableCollateral),
-        totalAssigned: wei(totalAssigned),
-        totalDeposited: wei(totalDeposited),
-        totalLocked: wei(totalLocked),
-      };
-    },
-    placeholderData: {
-      collateralUnlockDate: new Date(),
-      availableCollateral: wei(0),
-      totalAssigned: wei(0),
-      totalDeposited: wei(0),
-      totalLocked: wei(0),
-    },
-  });
+  const accountCollateralUnlockDate = useAccountCollateralUnlockDate({ accountId });
 
   const allowance = useAllowance({ contractAddress: tokenAddress, spender: CoreProxy?.address });
   const tokenBalance = useTokenBalance(tokenAddress);
@@ -226,10 +176,10 @@ export function Playground() {
 
   const formatTimeToUnlock = React.useCallback(
     () =>
-      accountCollateral.data?.collateralUnlockDate
-        ? formatDistanceToNow(accountCollateral.data?.collateralUnlockDate, { addSuffix: true })
+      accountCollateralUnlockDate.data && accountCollateralUnlockDate.data.getTime() > Date.now()
+        ? formatDistanceToNow(accountCollateralUnlockDate.data, { addSuffix: true })
         : '~',
-    [accountCollateral.data?.collateralUnlockDate]
+    [accountCollateralUnlockDate.data]
   );
   const [timeToUnlock, setTimeToUnlock] = React.useState(formatTimeToUnlock());
   React.useEffect(() => {
@@ -385,76 +335,97 @@ export function Playground() {
 
       <Box p={1} verticalAlign="middle">
         <CollateralSelector />
-        <Input
-          disabled
-          type="text"
-          name="accountId"
-          value={allowance.data?.toString() || 'No allowance'}
-          width="20em"
-          mr="1em"
-        />
-        <Button onClick={approve}>Approve {symbol}</Button>
+        {tokenAddress ? (
+          <>
+            <Input
+              disabled
+              type="text"
+              name="accountId"
+              value={allowance.data?.toString() || 'No allowance'}
+              width="20em"
+              mr="1em"
+            />
+            <Button onClick={approve}>Approve {symbol}</Button>
+          </>
+        ) : null}
       </Box>
 
-      <Box mt={10} p={1}>
-        <Text>
-          Wallet Balance: <Amount value={tokenBalance.data} /> {symbol}
-        </Text>
-        <Text>
-          Deposited: <Amount value={accountCollateral.data?.totalDeposited} /> {symbol}
-        </Text>
-      </Box>
-      <Box p={1} verticalAlign="middle">
-        <Input type="number" step={1} min={0} name="deposit" width="20em" mr="1em" />
-        <Button onClick={deposit}>Deposit</Button>
-      </Box>
+      {accountCollateralData ? (
+        <>
+          <Box mt={10} p={1}>
+            <Text>
+              {symbol} address:{' '}
+              <code
+                onClick={() => {
+                  try {
+                    navigator.clipboard.writeText(accountCollateralData.tokenAddress);
+                  } catch (e) {}
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                {tokenAddress}
+              </code>
+            </Text>
+            <Text>
+              Wallet Balance: <Amount value={tokenBalance.data} /> {symbol}
+            </Text>
+            <Text>
+              Deposited: <Amount value={accountCollateralData.totalDeposited} /> {symbol}
+            </Text>
+          </Box>
+          <Box p={1} verticalAlign="middle">
+            <Input type="number" step={1} min={0} name="deposit" width="20em" mr="1em" />
+            <Button onClick={deposit}>Deposit</Button>
+          </Box>
 
-      <Box mt={10} p={1}>
-        <Text>
-          Delegated: <Amount value={accountCollateral.data?.totalAssigned} /> {symbol}
-        </Text>
-      </Box>
-      <Box p={1} verticalAlign="middle">
-        <Input type="number" step={1} min={0} name="delegate" width="20em" mr="1em" />
-        <Button onClick={delegate}>Update delegated</Button>
-      </Box>
+          <Box mt={10} p={1}>
+            <Text>
+              Delegated: <Amount value={accountCollateralData.totalAssigned} /> {symbol}
+            </Text>
+          </Box>
+          <Box p={1} verticalAlign="middle">
+            <Input type="number" step={1} min={0} name="delegate" width="20em" mr="1em" />
+            <Button onClick={delegate}>Update delegated</Button>
+          </Box>
 
-      <Box mt={10} p={1}>
-        <Text>
-          Available collateral: <Amount value={accountCollateral.data?.availableCollateral} />{' '}
-          {symbol}
-        </Text>
-      </Box>
-      <Box p={1}>
-        <Text
-          title={
-            accountCollateral.data?.collateralUnlockDate
-              ? intlFormat(accountCollateral.data?.collateralUnlockDate, {
-                  year: 'numeric',
-                  month: 'numeric',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                })
-              : '~'
-          }
-        >
-          Collateral unlocks: {timeToUnlock}
-        </Text>
-      </Box>
+          <Box mt={10} p={1}>
+            <Text>
+              Available collateral: <Amount value={accountCollateralData.availableCollateral} />{' '}
+              {symbol}
+            </Text>
+          </Box>
+          <Box p={1}>
+            <Text
+              title={
+                accountCollateralUnlockDate.data
+                  ? intlFormat(accountCollateralUnlockDate.data, {
+                      year: 'numeric',
+                      month: 'numeric',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                    })
+                  : '~'
+              }
+            >
+              Collateral unlocks: {timeToUnlock}
+            </Text>
+          </Box>
 
-      <Box p={1} verticalAlign="middle">
-        <Input
-          type="number"
-          step={1}
-          min={0}
-          max={parseFloat(accountCollateral.data?.availableCollateral?.toString() || '0')}
-          name="withdraw"
-          width="20em"
-          mr="1em"
-        />
-        <Button onClick={withdraw}>Withdraw</Button>
-      </Box>
+          <Box p={1} verticalAlign="middle">
+            <Input
+              type="number"
+              step={1}
+              min={0}
+              max={parseFloat(accountCollateralData.availableCollateral?.toString() || '0')}
+              name="withdraw"
+              width="20em"
+              mr="1em"
+            />
+            <Button onClick={withdraw}>Withdraw</Button>
+          </Box>
+        </>
+      ) : null}
     </>
   );
 }
