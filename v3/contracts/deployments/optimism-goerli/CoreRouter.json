@@ -1,5 +1,5 @@
 {
-  "address": "0xa695F30d0172e23F959370D9B99de87C060e70D1",
+  "address": "0x1Caf5be045392011D46351e78b104d6052487Ed9",
   "abi": [
     {
       "inputs": [
@@ -3261,6 +3261,17 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "RecursiveMulticall",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "bytes[]",
           "name": "data",
           "type": "bytes[]"
@@ -3769,6 +3780,19 @@
           "type": "uint128"
         }
       ],
+      "name": "rebalancePool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
       "name": "renouncePoolNomination",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -4225,6 +4249,44 @@
     {
       "inputs": [
         {
+          "internalType": "bytes32",
+          "name": "k",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getConfigAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "v",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "k",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getConfigUint",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "v",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "ccipSend",
           "type": "address"
@@ -4581,7 +4643,7 @@
     }
   ],
   "deployedOn": "router.CoreRouter",
-  "deployTxnHash": "0x60e517989113a2a3a2a18fdcfacb5f8ee8d91491748149804ff22e8a72d219d1",
+  "deployTxnHash": "0xa14db5a7e3f6fd28addd8a145e3eb885c6f2a2b616c4fc07c5eed498c65d1333",
   "contractName": "CoreRouter",
   "sourceName": "CoreRouter.sol"
 }
