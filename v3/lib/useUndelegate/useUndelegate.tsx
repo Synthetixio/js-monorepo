@@ -1,34 +1,40 @@
 import { useReducer } from 'react';
-import { CoreProxyType, useCoreProxy } from '@snx-v3/useCoreProxy';
+import { useCoreProxy, CoreProxyType } from '@snx-v3/useCoreProxy';
 import { formatGasPriceForTransaction } from '@snx-v3/useGasOptions';
 import { useMutation } from '@tanstack/react-query';
 import { useNetwork, useSigner } from '@snx-v3/useBlockchain';
 import { initialState, reducer } from '@snx-v3/txnReducer';
-import Wei from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { BigNumber } from 'ethers';
 import { getGasPrice } from '@snx-v3/useGasPrice';
 import { useGasSpeed } from '@snx-v3/useGasSpeed';
-import { useAccountCollateral } from '@snx-v3/useAccountCollateral';
 
 const createPopulateTransaction = ({
   CoreProxy,
   accountId,
+  poolId,
   collateralTypeAddress,
-  availableCollateral,
+  collateralChange,
+  currentCollateral,
 }: {
   CoreProxy?: CoreProxyType;
   accountId?: string;
+  poolId?: string;
   collateralTypeAddress?: string;
-  availableCollateral?: Wei;
+  collateralChange: Wei;
+  currentCollateral: Wei;
 }) => {
-  if (!(CoreProxy && collateralTypeAddress && availableCollateral)) return;
-  if (availableCollateral.eq(0)) return;
+  if (!(CoreProxy && poolId && collateralTypeAddress)) return;
+  if (collateralChange.eq(0)) return;
+  if (currentCollateral.eq(0)) return;
 
   const calls = [
-    CoreProxy.interface.encodeFunctionData('withdraw', [
+    CoreProxy.interface.encodeFunctionData('delegateCollateral', [
       BigNumber.from(accountId),
+      BigNumber.from(poolId),
       collateralTypeAddress,
-      availableCollateral.toBN(),
+      currentCollateral.add(collateralChange).toBN(),
+      wei(1).toBN(),
     ]),
   ];
 
@@ -37,30 +43,32 @@ const createPopulateTransaction = ({
       gasLimit: CoreProxy.estimateGas.multicall(calls),
     });
 };
-
-export const useWithdraw = (
+export const useUndelegate = (
   {
     accountId,
+    poolId,
     collateralTypeAddress,
+    collateralChange,
+    currentCollateral,
   }: {
     accountId?: string;
+    poolId?: string;
     collateralTypeAddress?: string;
+    currentCollateral: Wei;
+    collateralChange: Wei;
   },
   eventHandlers?: { onSuccess?: () => void; onMutate?: () => void; onError?: (e: Error) => void }
 ) => {
-  const accountCollateral = useAccountCollateral({ accountId });
-  const accountCollateralData = accountCollateral.data?.find(
-    (collateral) => collateral.tokenAddress === collateralTypeAddress
-  );
-
   const [txnState, dispatch] = useReducer(reducer, initialState);
   const { data: CoreProxy } = useCoreProxy();
   const { gasSpeed } = useGasSpeed();
   const populateTransaction = createPopulateTransaction({
     CoreProxy,
     accountId,
+    poolId,
+    currentCollateral,
     collateralTypeAddress,
-    availableCollateral: accountCollateralData?.availableCollateral,
+    collateralChange,
   });
 
   const signer = useSigner();
