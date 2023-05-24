@@ -163,7 +163,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
         []
       );
     } catch (error) {
-      return 'Fill out the form';
+      return false;
     }
   };
 
@@ -201,10 +201,14 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
           </Flex>
         </ModalBody>
         <ModalFooter display="flex" flexDir="column">
-          <Text>Pending Node ID:</Text>
-          <Text fontSize="10px" mb="2">
-            {computeHashId()}
-          </Text>
+          {computeHashId() && (
+            <>
+              <Text>Pending Node ID:</Text>
+              <Text fontSize="10px" mb="4">
+                {computeHashId()}
+              </Text>
+            </>
+          )}
           <Flex justifyContent="center" width="100%">
             {node && (
               <Button
