@@ -145,6 +145,28 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       );
   }, [type, node, setValue]);
 
+  const computeHashId = () => {
+    try {
+      return hashId(
+        {
+          type: watch('oracleNodeType')!,
+          typeId: typeToTypeId(watch('oracleNodeType')!),
+          parents: watch('nodeParents'),
+          parameters: watch('nodeParameters'),
+          data: { label: getValues('nodeLabel') || '' },
+          id: '',
+          isRegistered: false,
+          position: { x: 0, y: 0 },
+          source: '',
+          target: '',
+        },
+        []
+      );
+    } catch (error) {
+      return 'Fill out the form';
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -178,7 +200,11 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
             <Input placeholder="Node name" {...register('nodeLabel')} />
           </Flex>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter display="flex" flexDir="column">
+          <Text>Pending Node ID:</Text>
+          <Text fontSize="10px" mb="2">
+            {computeHashId()}
+          </Text>
           <Flex justifyContent="center" width="100%">
             {node && (
               <Button
