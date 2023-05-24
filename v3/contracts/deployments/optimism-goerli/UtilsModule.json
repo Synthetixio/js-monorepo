@@ -1,5 +1,5 @@
 {
-  "address": "0x39cD044B99681c419Da1C4F1A19e4d849f85847a",
+  "address": "0xFB7108c3a069f5235dc55f427226f0c3127f4FcA",
   "abi": [
     {
       "inputs": [
@@ -39,6 +39,44 @@
           "internalType": "bytes32",
           "name": "v",
           "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "k",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getConfigAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "v",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "k",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getConfigUint",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "v",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -88,7 +126,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x2e820294aaecf9fdc9a5e6b9ed666ed2d32a31b91731351e2b5412f85bddae09",
+  "deployTxnHash": "0xd10770962ea4c8afd327e78284d1705b8a348732ee389ae7e5e410a97495487e",
   "sourceName": "contracts/modules/core/UtilsModule.sol",
   "contractName": "UtilsModule",
   "deployedOn": "contract.UtilsModule"
