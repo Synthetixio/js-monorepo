@@ -1,17 +1,6 @@
 /* eslint-disable no-console */
 
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Button,
-  CloseButton,
-  Input,
-  Select,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Button, Input, Select, Text, useToast } from '@chakra-ui/react';
 import { useAccounts } from '@snx-v3/useAccounts';
 import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { usePreferredPool } from '@snx-v3/usePreferredPool';
@@ -21,7 +10,6 @@ import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { useSigner } from '@snx-v3/useBlockchain';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import intlFormat from 'date-fns/intlFormat';
-import format from 'date-fns/format';
 import { useAllowance } from '@snx-v3/useAllowance';
 import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import { Amount } from '@snx-v3/Amount';
@@ -29,59 +17,8 @@ import { createSearchParams, generatePath, useNavigate } from 'react-router-dom'
 import { useParams } from '@snx-v3/useParams';
 import { useAccountCollateral } from '@snx-v3/useAccountCollateral';
 import { useAccountCollateralUnlockDate } from '@snx-v3/useAccountCollateralUnlockDate';
-
-function useContractErrorParser(Contract: any) {
-  return React.useCallback(
-    (error: any) => {
-      try {
-        const errorParsed = Contract.interface.parseError(error.error.data.data);
-        const errorArgs = Object.fromEntries(
-          Object.entries(errorParsed.args)
-            .filter(([key]) => `${parseInt(key)}` !== key)
-            .map(([key, value]) => {
-              if (value instanceof ethers.BigNumber) {
-                // Guess wei
-                const unwei = parseFloat(ethers.utils.formatEther(value.toString()));
-                if (unwei > 0.0001) {
-                  // must be wei
-                  return [key, unwei];
-                }
-
-                // Guess date
-                if (
-                  value.toNumber() > new Date(2000, 1, 1).getTime() / 1000 &&
-                  value.toNumber() < new Date(2100, 1, 1).getTime() / 1000
-                ) {
-                  return [key, new Date(value.toNumber() * 1000)];
-                }
-
-                // Just a number
-                return [key, parseFloat(value.toString())];
-              }
-
-              // Not a number
-              return [key, value];
-            })
-        );
-
-        return {
-          data: error.error.data.data,
-          name: errorParsed.name,
-          signature: errorParsed.signature,
-          args: errorArgs,
-        };
-      } catch (e) {
-        return {
-          data: '0x00',
-          name: error.name,
-          signature: '',
-          args: {},
-        };
-      }
-    },
-    [Contract]
-  );
-}
+import { useContractErrorParser } from '@snx-v3/useContractErrorParser';
+import { ContractError } from '@snx-v3/ContractError';
 
 function AccountSelector() {
   const params = useParams();
@@ -142,7 +79,6 @@ function CollateralSelector() {
 export function Playground() {
   const signer = useSigner();
   const { data: CoreProxy } = useCoreProxy();
-  const coreProxyErrorParser = useContractErrorParser(CoreProxy);
 
   const params = useParams();
   const { data: accounts = [], refetch: refetchAccounts } = useAccounts();
@@ -165,14 +101,6 @@ export function Playground() {
 
   const allowance = useAllowance({ contractAddress: tokenAddress, spender: CoreProxy?.address });
   const tokenBalance = useTokenBalance(tokenAddress);
-
-  const [error, setError] = React.useState<any>(null);
-  // React.useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setError(null);
-  //   }, 60_000);
-  //   return () => clearTimeout(timeout);
-  // }, [error]);
 
   const formatTimeToUnlock = React.useCallback(
     () =>
@@ -202,6 +130,9 @@ export function Playground() {
     allowance.refetch();
   };
 
+  const toast = useToast({ isClosable: true, duration: 9000 });
+  const errorParserCoreProxy = useContractErrorParser(CoreProxy);
+
   const createAccount = async () => {
     if (accountId || !CoreProxy) throw 'OMG';
     try {
@@ -212,13 +143,20 @@ export function Playground() {
       console.log({ result });
       refetchAccounts();
     } catch (e: any) {
-      if (e?.error?.data?.data) {
-        const errorParsed = coreProxyErrorParser(e);
-        console.log({ errorParsed });
-        setError(errorParsed);
-      } else {
-        console.error(e);
+      const contractError = errorParserCoreProxy(e);
+      if (contractError) {
+        console.error(new Error(contractError.name), contractError);
       }
+      toast.closeAll();
+      toast({
+        title: 'Create account failed',
+        description: contractError ? (
+          <ContractError contractError={contractError} />
+        ) : (
+          'Please try again.'
+        ),
+        status: 'error',
+      });
     }
   };
 
@@ -238,13 +176,20 @@ export function Playground() {
       tokenBalance.refetch();
       accountCollateral.refetch();
     } catch (e: any) {
-      if (e?.error?.data?.data) {
-        const errorParsed = coreProxyErrorParser(e);
-        console.log({ errorParsed });
-        setError(errorParsed);
-      } else {
-        console.error(e);
+      const contractError = errorParserCoreProxy(e);
+      if (contractError) {
+        console.error(new Error(contractError.name), contractError);
       }
+      toast.closeAll();
+      toast({
+        title: 'Deposit failed',
+        description: contractError ? (
+          <ContractError contractError={contractError} />
+        ) : (
+          'Please try again.'
+        ),
+        status: 'error',
+      });
     }
   };
 
@@ -265,13 +210,20 @@ export function Playground() {
       console.log({ result });
       accountCollateral.refetch();
     } catch (e: any) {
-      if (e?.error?.data?.data) {
-        const errorParsed = coreProxyErrorParser(e);
-        console.log({ errorParsed });
-        setError(errorParsed);
-      } else {
-        console.error(e);
+      const contractError = errorParserCoreProxy(e);
+      if (contractError) {
+        console.error(new Error(contractError.name), contractError);
       }
+      toast.closeAll();
+      toast({
+        title: 'Delegate failed',
+        description: contractError ? (
+          <ContractError contractError={contractError} />
+        ) : (
+          'Please try again.'
+        ),
+        status: 'error',
+      });
     }
   };
 
@@ -291,43 +243,25 @@ export function Playground() {
       tokenBalance.refetch();
       accountCollateral.refetch();
     } catch (e: any) {
-      if (e?.error?.data?.data) {
-        const errorParsed = coreProxyErrorParser(e);
-        console.log({ errorParsed });
-        setError(errorParsed);
-      } else {
-        console.error(e);
+      const contractError = errorParserCoreProxy(e);
+      if (contractError) {
+        console.error(new Error(contractError.name), contractError);
       }
+      toast.closeAll();
+      toast({
+        title: 'Withdraw failed',
+        description: contractError ? (
+          <ContractError contractError={contractError} />
+        ) : (
+          'Please try again.'
+        ),
+        status: 'error',
+      });
     }
   };
 
   return (
     <>
-      {error ? (
-        <Alert status="error" marginBottom="2em">
-          <AlertIcon />
-          <Box width="100%">
-            <AlertTitle>{error.name}</AlertTitle>
-            <AlertDescription paddingLeft="1em" display="block">
-              <Text whiteSpace="pre" fontSize="0.8em" fontStyle="italic">
-                {Object.entries(error.args)
-                  .map(
-                    ([key, val]) =>
-                      `${key}: ${val instanceof Date ? format(val, 'yyyy-MM-dd HH:mm:ss') : val}`
-                  )
-                  .join('\n')}
-              </Text>
-            </AlertDescription>
-          </Box>
-          <CloseButton
-            alignSelf="flex-start"
-            position="relative"
-            right={-1}
-            top={-1}
-            onClick={() => setError(null)}
-          />
-        </Alert>
-      ) : null}
       <Box p={1} verticalAlign="middle">
         <AccountSelector />
         <Button onClick={createAccount}>Create account</Button>
