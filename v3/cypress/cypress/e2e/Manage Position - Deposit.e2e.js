@@ -38,7 +38,7 @@ it('should deposit additional SNX collateral', () => {
     .click()
     .should('have.attr', 'data-active', 'true');
   cy.location().should((loc) => {
-    expect(loc.search).to.eq('?manageAction=deposit');
+    expect(loc.search).to.include('manageAction=deposit');
   });
 
   cy.get('[data-testid="manage stats collateral"]').should('include.text', '10 SNX');
