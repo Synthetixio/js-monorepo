@@ -246,11 +246,14 @@ function handleActualPositionModification(
     // check if the position side increases (long or short)
     if (positionIsIncreasing) {
       // calculate the new average price
-      const existingSize = futuresPosition.size.abs();
-      const existingPrice = existingSize.times(futuresPosition.entryPrice);
-      const newSize = event.params.tradeSize.abs();
-      const newPrice = newSize.times(event.params.lastPrice);
-      futuresPosition.avgEntryPrice = existingPrice.plus(newPrice).div(event.params.size.abs());
+      const currentPosSizeAbs = futuresPosition.size.abs();
+      const currentPosValue = currentPosSizeAbs.times(futuresPosition.avgEntryPrice);
+      const incomingTradeSizeAbs = event.params.tradeSize.abs();
+      const incomingTradeValue = incomingTradeSizeAbs.times(event.params.lastPrice);
+      const newPositionSizeAbs = event.params.size.abs();
+      futuresPosition.avgEntryPrice = currentPosValue
+        .plus(incomingTradeValue)
+        .div(newPositionSizeAbs);
       // calculate pnl
       const unrealizedPnl = calculatePnl(
         event.params.lastPrice,
@@ -358,21 +361,28 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
   let trader = getOrCreateTrader(event);
   let accruedFunding = BigInt.fromI32(0);
   updateTrades(event, synthetix, trader);
-  if (!futuresPosition) {
-    futuresPosition = handlePositionOpenUpdates(event, synthetix, trader, positionId);
-    // else position is not new
-  } else {
-    accruedFunding = updateFunding(event, futuresPosition);
 
-    // Position closed & not liquidated
-    if (event.params.size.isZero() && !event.params.tradeSize.isZero()) {
-      handlePositionClosed(event, futuresPosition, trader, synthetix, accruedFunding);
-    }
-    // If tradeSize and size are not zero, position got modified
-    else if (!event.params.tradeSize.isZero() && !event.params.size.isZero()) {
-      handleActualPositionModification(event, futuresPosition, synthetix, trader, accruedFunding);
-    } else {
+  const isMarginTransfer =
+    event.params.tradeSize.isZero() && event.params.margin.gt(BigInt.fromI32(0));
+  // This will only exists it the position modification is a margin transfer
+  // We take the txhash, and subtract 1 from the log index to get the margin transfer event
+  // We need this to be able to update netTransfer on the position
+  const marginTransferEntity = FuturesMarginTransfer.load(
+    event.address.toHex() +
+      '-' +
+      event.transaction.hash.toHex() +
+      '-' +
+      event.logIndex.minus(BigInt.fromI32(1)).toString()
+  );
+
+  if (isMarginTransfer) {
+    // It would be nice to handle this event in the handleMarginTransferred.
+    // But we dont know the position id from the MarginTransferredEvent
+    // So lets do all futures updates related to margin transfer event here.
+    // If no position exists, we can just discard this event
+    if (futuresPosition) {
       // Margin withdrawal/ deposit
+      accruedFunding = updateFunding(event, futuresPosition);
       const accruedRealizedPnl = accruedFunding.minus(event.params.fee);
       futuresPosition.realizedPnl = futuresPosition.realizedPnl.plus(accruedRealizedPnl);
       futuresPosition.margin = event.params.margin;
@@ -388,56 +398,76 @@ export function handlePositionModified(event: PositionModifiedNewEvent): void {
         futuresPosition.avgEntryPrice,
         futuresPosition.size
       );
+
+      if (marginTransferEntity) {
+        futuresPosition.netTransfers = futuresPosition.netTransfers.plus(marginTransferEntity.size);
+      }
+      futuresPosition.save();
     }
+  } else {
+    // This position modification event is a trade,
+    // now lets figure out if it's "PositionOpen", "PositionModified" or "PositionClosed"
+    if (!futuresPosition) {
+      //No current position exists, this is a PositionOpen event
+      futuresPosition = handlePositionOpenUpdates(event, synthetix, trader, positionId);
+    } else {
+      // Current position exists, this is a PositionModified or PositionClosed
+      // Either way we want to update accrued funding
+      accruedFunding = updateFunding(event, futuresPosition);
+
+      // Position closed & not liquidated
+      if (event.params.size.isZero()) {
+        handlePositionClosed(event, futuresPosition, trader, synthetix, accruedFunding);
+      } else {
+        // Position modified, we have a futures position, size and tradeSize is not 0 and
+        handleActualPositionModification(event, futuresPosition, synthetix, trader, accruedFunding);
+      }
+    }
+
+    // this check is here to get around the fact that the sometimes a withdrawalAll margin transfer event
+    // will trigger a trade entity liquidation to be created. guarding against this event for now.
+    if (
+      marginTransferEntity == null &&
+      event.params.size.isZero() &&
+      event.params.margin.isZero()
+    ) {
+      // recalculate pnl to ensure a 100% position loss
+      // this calculation is required since the liquidation price could result in pnl slightly above/below 100%
+      const realizedPnl = futuresPosition.initialMargin
+        .plus(futuresPosition.netTransfers)
+        .times(BigInt.fromI32(-1));
+
+      // temporarily set the pnl to the difference in the position pnl
+      // we will add liquidation fees during the PositionLiquidated handler
+      const tradeEntity = new FuturesTrade(
+        event.transaction.hash.toHex() + '-' + event.logIndex.toString()
+      );
+      tradeEntity.margin = BigInt.fromI32(0);
+      tradeEntity.timestamp = event.block.timestamp;
+      tradeEntity.trader = event.params.account.toHex();
+      tradeEntity.market = event.address.toHex();
+      tradeEntity.size = BigInt.fromI32(0);
+      tradeEntity.price = event.params.lastPrice;
+      tradeEntity.futuresPosition = positionId;
+      tradeEntity.positionSize = BigInt.fromI32(0);
+      tradeEntity.positionClosed = true;
+      tradeEntity.realizedPnl = realizedPnl;
+      tradeEntity.feesPaidToSynthetix = event.params.fee;
+      tradeEntity.type = 'Liquidated';
+      tradeEntity.marketOrder = true;
+      tradeEntity.txHash = event.transaction.hash.toHex();
+      tradeEntity.netFunding = accruedFunding;
+
+      futuresPosition.realizedPnl = realizedPnl;
+      futuresPosition.unrealizedPnl = BigInt.fromI32(0);
+      futuresPosition.isOpen = false;
+      trader.realizedPnl = trader.realizedPnl.plus(realizedPnl);
+      tradeEntity.save();
+      updateFeeStats(event.params.fee, event.address, event.block.timestamp);
+    }
+
+    futuresPosition.save();
+    trader.save();
+    synthetix.save();
   }
-
-  const marginTransferEntity = FuturesMarginTransfer.load(
-    event.address.toHex() +
-      '-' +
-      event.transaction.hash.toHex() +
-      '-' +
-      event.logIndex.minus(BigInt.fromI32(1)).toString()
-  );
-
-  // this check is here to get around the fact that the sometimes a withdrawalAll margin transfer event
-  // will trigger a trade entity liquidation to be created. guarding against this event for now.
-  if (marginTransferEntity == null && event.params.size.isZero() && event.params.margin.isZero()) {
-    // recalculate pnl to ensure a 100% position loss
-    // this calculation is required since the liquidation price could result in pnl slightly above/below 100%
-    const realizedPnl = futuresPosition.initialMargin
-      .plus(futuresPosition.netTransfers)
-      .times(BigInt.fromI32(-1));
-
-    // temporarily set the pnl to the difference in the position pnl
-    // we will add liquidation fees during the PositionLiquidated handler
-    const tradeEntity = new FuturesTrade(
-      event.transaction.hash.toHex() + '-' + event.logIndex.toString()
-    );
-    tradeEntity.margin = BigInt.fromI32(0);
-    tradeEntity.timestamp = event.block.timestamp;
-    tradeEntity.trader = event.params.account.toHex();
-    tradeEntity.market = event.address.toHex();
-    tradeEntity.size = BigInt.fromI32(0);
-    tradeEntity.price = event.params.lastPrice;
-    tradeEntity.futuresPosition = positionId;
-    tradeEntity.positionSize = BigInt.fromI32(0);
-    tradeEntity.positionClosed = true;
-    tradeEntity.realizedPnl = realizedPnl;
-    tradeEntity.feesPaidToSynthetix = event.params.fee;
-    tradeEntity.type = 'Liquidated';
-    tradeEntity.txHash = event.transaction.hash.toHex();
-    tradeEntity.netFunding = accruedFunding;
-
-    futuresPosition.realizedPnl = realizedPnl;
-    futuresPosition.unrealizedPnl = BigInt.fromI32(0);
-    futuresPosition.isOpen = false;
-    trader.realizedPnl = trader.realizedPnl.plus(realizedPnl);
-    tradeEntity.save();
-    updateFeeStats(event.params.fee, event.address, event.block.timestamp);
-  } else if (marginTransferEntity) {
-    futuresPosition.netTransfers = futuresPosition.netTransfers.plus(marginTransferEntity.size);
-  }
-  futuresPosition.save();
-  trader.save();
-  synthetix.save();
 }

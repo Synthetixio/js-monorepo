@@ -494,6 +494,15 @@ export class FuturesTrade extends Entity {
   set txHash(value: string) {
     this.set('txHash', Value.fromString(value));
   }
+
+  get marketOrder(): boolean {
+    let value = this.get('marketOrder');
+    return value!.toBoolean();
+  }
+
+  set marketOrder(value: boolean) {
+    this.set('marketOrder', Value.fromBoolean(value));
+  }
 }
 
 export class DailyMarketStat extends Entity {

@@ -53,8 +53,6 @@ export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp
               <Flex justifyContent="space-between" width="100%">
                 <Flex alignItems="center">
                   <CurrencyIcon
-                    width="30px"
-                    height="30px"
                     currencyKey={utils.parseBytes32String(
                       data?.market?.asset ||
                         '0x7342544300000000000000000000000000000000000000000000000000000000'

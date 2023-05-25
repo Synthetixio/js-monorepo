@@ -1,0 +1,12 @@
+{
+  "name": "@snx-v3/ContractError",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.5.0",
+    "@snx-v3/useContractErrorParser": "workspace:*",
+    "date-fns": "^2.29.3",
+    "react": "^18.2.0"
+  }
+}

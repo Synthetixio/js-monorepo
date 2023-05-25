@@ -100,7 +100,7 @@ export function useLargestOpenPosition() {
           const price = item.getPriceUnchecked();
           return {
             ...price,
-            pythId: marketPyth[index]?.pythId,
+            pythId: marketPyth[index]?.pythId || '',
             marketKey: marketPyth[index]?.marketKey,
           };
         });
@@ -133,6 +133,7 @@ export function useLargestOpenPosition() {
               pythItem,
             };
           })
+          .filter((item) => item !== null)
           .sort((a, b) => {
             return b?.notionalValue?.sub(a?.notionalValue || 0).toNumber();
           })
