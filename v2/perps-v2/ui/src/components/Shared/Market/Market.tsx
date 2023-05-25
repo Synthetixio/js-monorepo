@@ -24,7 +24,7 @@ export const Market = ({ asset, leverage, direction, isPosition = true }: Market
       <Fade in>
         <Flex alignItems="center">
           <Flex alignItems="center">
-            <CurrencyIcon width="30px" height="30px" currencyKey={marketName} />
+            <CurrencyIcon currencyKey={marketName} />
             <Box ml={3}>
               <Text
                 fontFamily="heading"
