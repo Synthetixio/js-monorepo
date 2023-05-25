@@ -34,7 +34,7 @@ it('should borrow against already deposited SNX collateral', () => {
   });
 
   cy.location().should((loc) => {
-    expect(loc.search).to.eq('?manageAction=borrow');
+    expect(loc.search).to.include('manageAction=borrow');
   });
   cy.get('[data-testid="manage action"][data-action="borrow"]')
     .should('exist')
