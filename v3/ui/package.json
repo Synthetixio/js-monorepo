@@ -10,7 +10,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "standalone-install": "yarn workspaces focus '@synthetixio/v3-ui'",
-    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@synthetixio/v3-ui' run build"
+    "standalone-build": "yarn workspaces foreach --topological-dev --recursive --verbose --from '@snx-v3/ui' run build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
@@ -23,6 +23,7 @@
     "@snx-v3/BorderBox": "workspace:*",
     "@snx-v3/BorrowModal": "workspace:*",
     "@snx-v3/CollateralTypeSelector": "workspace:*",
+    "@snx-v3/ContractError": "workspace:*",
     "@snx-v3/DepositModal": "workspace:*",
     "@snx-v3/HomeLink": "workspace:*",
     "@snx-v3/ManagePositionContext": "workspace:*",
@@ -43,6 +44,7 @@
     "@snx-v3/useAllowance": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
+    "@snx-v3/useContractErrorParser": "workspace:*",
     "@snx-v3/useCoreProxy": "workspace:*",
     "@snx-v3/useEthBalance": "workspace:*",
     "@snx-v3/useGasSpeed": "workspace:*",
