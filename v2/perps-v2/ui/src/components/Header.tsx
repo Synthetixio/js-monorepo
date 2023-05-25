@@ -39,7 +39,7 @@ export const Header: FC = () => {
       borderTopColor="transparent"
     >
       <Flex alignItems="center">
-        <RouterLink to="/">
+        <RouterLink to="/" style={{ whiteSpace: 'nowrap' }}>
           <SNXIcon />
           <PerpsStats mt="3px" ml={3} display={{ base: 'none', c900: 'initial' }} />
         </RouterLink>
