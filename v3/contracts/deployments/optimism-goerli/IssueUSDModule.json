@@ -1,5 +1,5 @@
 {
-  "address": "0x9cc1e7311B4298FC5CDf111e299E4EC94914F9ec",
+  "address": "0x99Ce85A3E65C910C670483997d2aBD6f48CD6506",
   "abi": [
     {
       "inputs": [
@@ -329,7 +329,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x6f35bbad92cdd5a97b32cb725ce43b053c9d49c9e2fa37f91770990c14409cda",
+  "deployTxnHash": "0x53359e769514df0d99e0c0342d23509a5564f6c43911e4dc0c3687fc6fa73b06",
   "sourceName": "contracts/modules/core/IssueUSDModule.sol",
   "contractName": "IssueUSDModule",
   "deployedOn": "contract.IssueUSDModule"

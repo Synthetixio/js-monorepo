@@ -8100,9 +8100,13 @@ __metadata:
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/format": "workspace:*"
     "@snx-v3/icons": "workspace:*"
+    "@snx-v3/useAccountCollateral": "workspace:*"
+    "@snx-v3/useAccountCollateralUnlockDate": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
+    "@snx-v3/useAllowance": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useEthBalance": "workspace:*"
     "@snx-v3/useGasSpeed": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
@@ -8137,6 +8141,7 @@ __metadata:
     core-js: 3
     crypto-browserify: ^3.12.0
     css-loader: ^6.7.3
+    date-fns: ^2.29.3
     ethers: ^5.7.2
     framer-motion: ^7.0.0
     html-webpack-plugin: ^5.5.0
@@ -8158,6 +8163,32 @@ __metadata:
     webpack-cli: ^5.0.1
     webpack-dev-server: ^4.11.1
     zod: ^3.20.6
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useAccountCollateral@workspace:*, @snx-v3/useAccountCollateral@workspace:v3/lib/useAccountCollateral":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useAccountCollateral@workspace:v3/lib/useAccountCollateral"
+  dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useMulticall3": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
+    "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v3/useAccountCollateralUnlockDate@workspace:*, @snx-v3/useAccountCollateralUnlockDate@workspace:v3/lib/useAccountCollateralUnlockDate":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useAccountCollateralUnlockDate@workspace:v3/lib/useAccountCollateralUnlockDate"
+  dependencies:
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useMulticall3": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -10266,8 +10297,10 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@snx-v3/icons": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useMulticall3": "workspace:*"
     "@synthetixio/v3-contracts": "workspace:*"
     "@synthetixio/v3-theme": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
     "@types/react": ^18.0.28
     babel-loader: ^9.1.2
     babel-plugin-istanbul: ^6.1.1
@@ -10604,7 +10637,7 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.10
+    "@usecannon/cli": ^2.4.12
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -10619,7 +10652,7 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.10
+    "@usecannon/cli": ^2.4.12
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -12350,9 +12383,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^2.4.10":
-  version: 2.4.10
-  resolution: "@usecannon/cli@npm:2.4.10"
+"@usecannon/cli@npm:^2.4.12":
+  version: 2.4.12
+  resolution: "@usecannon/cli@npm:2.4.12"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
@@ -12371,7 +12404,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: dist/bin/cannon.js
-  checksum: aadc882ab31d8e31f20c60b844ec880d1c7f9e9735ab06d6233413dee2b5acee57a5e1cbf3d7cee7bebea72a9a8ccd5da102ea9ca346ac5adb293843a29610a0
+  checksum: 211705fa80c6895356b88ccd35e417885244b6d2efb4c144c4198b3b43c3b75a961789d1de2df4981cabe2a3768b703959ef3c5fe47c698b84f8ce373ec26c37
   languageName: node
   linkType: hard
 

@@ -16,6 +16,9 @@ function createBaseTradeEntity(event: PositionModifiedNewEvent, positionId: stri
   tradeEntity.price = event.params.lastPrice;
   tradeEntity.feesPaidToSynthetix = event.params.fee;
   tradeEntity.txHash = event.transaction.hash.toHex();
+  // Most of the time it wont be a market order. But at this point we cant tell if it is a market order, delayed or delayed offchain.
+  // So we just set it to true now, and expect this field to be updated when the handleDelayedOrderRemoved is triggered
+  tradeEntity.marketOrder = true;
 
   return tradeEntity;
 }

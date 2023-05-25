@@ -1,5 +1,5 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToCurrencyBasedOnSize } from '@snx-v2/formatters';
 
 interface SizeProps {
   size: number;
@@ -14,7 +14,7 @@ export const Size = ({ size, marketPrice }: SizeProps) => {
     <Td border="none">
       <Fade in>
         <Text fontSize="14px" lineHeight="20px" fontFamily="heading" fontWeight={500}>
-          {formatNumberToUsd(total)}
+          {formatNumberToCurrencyBasedOnSize(total)}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
           {sizeAbs.toFixed(4)}

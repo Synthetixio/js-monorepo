@@ -1,6 +1,17 @@
 {
-  "address": "0xd2966E9b64C05025593Fd5A43bccC3199E8bDC67",
+  "address": "0x3f19354d0478727dA82515Ce594b1f41db3D04d3",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "RecursiveMulticall",
+      "type": "error"
+    },
     {
       "inputs": [
         {
@@ -23,7 +34,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0x20ae6196d3c8afba549ccb76da67d869f4178565833f0f6c0a5d833d0dc6e3f7",
+  "deployTxnHash": "0x690ea105f7554dcbc25c5f01f50acda4dc7325bf34b8c1db36af32ab00cc9b4d",
   "sourceName": "contracts/modules/core/MulticallModule.sol",
   "contractName": "MulticallModule",
   "deployedOn": "contract.MulticallModule"

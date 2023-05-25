@@ -39,7 +39,7 @@ export const NETWORKS: Record<string, Network> = {
     rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
     label: 'Ethereum',
     Icon: () => <EthereumIcon />,
-    isSupported: true,
+    isSupported: false,
   },
   'optimism-mainnet': {
     id: 10,
@@ -59,7 +59,7 @@ export const NETWORKS: Record<string, Network> = {
     rpcUrl: `https://goerli.infura.io/v3/${INFURA_KEY}`,
     label: 'Goerli Testnet',
     Icon: () => <EthereumIcon />,
-    isSupported: true,
+    isSupported: false,
   },
   'optimism-goerli': {
     id: 420,

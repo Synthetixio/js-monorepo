@@ -93,7 +93,7 @@ export const LargestWins = () => {
           (error && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-                No actions
+                No results
               </Text>
             </Flex>
           ))}
