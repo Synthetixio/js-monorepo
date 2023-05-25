@@ -12,7 +12,7 @@ import {
   Select,
   Text,
 } from '@chakra-ui/react';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { nodesState } from '../state/nodes';
 import { ORACLE_NODE_TYPES } from '../utils/constants';
@@ -42,6 +42,7 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
     },
   });
 
+  const [pendingNodeId, setPendingNodeID] = useState('');
   const [nodes, setNodes] = useRecoilState(nodesState);
   const toast = useToast();
   useEffect(() => {
@@ -54,6 +55,8 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
   }, [node?.type, setValue, node?.parents, node?.data.label, node?.parameters]);
 
   const type = watch('oracleNodeType');
+  const parameters = watch('nodeParameters');
+  const parents = watch('nodeParents');
 
   const componentByOracleType = useMemo(() => {
     if (type === 'chainLink')
@@ -145,11 +148,36 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
       );
   }, [type, node, setValue]);
 
+  useEffect(() => {
+    try {
+      setPendingNodeID(
+        hashId(
+          {
+            type: type!,
+            typeId: typeToTypeId(type!),
+            parents: parents,
+            parameters: parameters,
+            data: { label: getValues('nodeLabel') || '' },
+            id: '',
+            isRegistered: false,
+            position: { x: 0, y: 0 },
+            source: '',
+            target: '',
+          },
+          []
+        )
+      );
+    } catch (error) {
+      setPendingNodeID('');
+    }
+  }, [watch, getValues, type, parameters, parents]);
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={() => {
         setValue('nodeLabel', '');
+        setPendingNodeID('');
         onClose();
       }}
     >
@@ -178,7 +206,15 @@ export const NodeFormModule: FC<{ isOpen: boolean; onClose: () => void; node?: N
             <Input placeholder="Node name" {...register('nodeLabel')} />
           </Flex>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter display="flex" flexDir="column">
+          {pendingNodeId && (
+            <>
+              <Text>Pending Node ID:</Text>
+              <Text fontSize="10px" mb="4">
+                {pendingNodeId}
+              </Text>
+            </>
+          )}
           <Flex justifyContent="center" width="100%">
             {node && (
               <Button
