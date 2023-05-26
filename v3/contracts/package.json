@@ -14,14 +14,15 @@
   ],
   "scripts": {
     "codegen": "node ./codegen.js",
-    "build": "yarn codegen && tsc --build --verbose",
+    "build": "yarn codegen && tsc --build --verbose --force",
     "start": "./start.sh mainnet",
     "start:goerli": "./start.sh goerli",
     "start:optimism": "./start.sh optimism-mainnet",
     "start:optimism-goerli": "./start.sh optimism-goerli",
     "fetch": "./fetch.sh",
     "fetch-deployments": "yarn fetch mainnet && yarn fetch goerli && yarn fetch optimism-mainnet && yarn fetch optimism-goerli",
-    "cannon": "cannon"
+    "cannon": "cannon",
+    "upgrade-contracts": "yarn fetch-deployments && yarn build"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
