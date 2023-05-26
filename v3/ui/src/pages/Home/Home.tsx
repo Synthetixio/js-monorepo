@@ -68,7 +68,7 @@ export function HomeUi({
   isLoading: boolean;
   VaultRow: FC<{ collateralType: CollateralType; poolId: string }>;
   Stats: FC<StatsProps>;
-  AvailableCollateral?: React.ElementType;
+  AvailableCollateral: FC;
 }) {
   const { totalCollateral, totalDebt } =
     liquidityPositions?.reduce(
