@@ -10661,7 +10661,7 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.12
+    "@usecannon/cli": ^2.4.14
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -10676,7 +10676,7 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
-    "@usecannon/cli": ^2.4.12
+    "@usecannon/cli": ^2.4.14
     ethers: ^5.7.2
     prettier: ^2.8.4
     typechain: ^8.1.1
@@ -12389,9 +12389,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.4.10":
-  version: 2.4.10
-  resolution: "@usecannon/builder@npm:2.4.10"
+"@usecannon/builder@npm:^2.4.13":
+  version: 2.4.13
+  resolution: "@usecannon/builder@npm:2.4.13"
   dependencies:
     ajv: ^8.11.0
     axios: ^1.2.2
@@ -12403,22 +12403,23 @@ __metadata:
     promise-events: ^0.2.4
   peerDependencies:
     ethers: ">=5.6.0"
-  checksum: 5f8890ad526aee7554067f5937b6ff98f0108e5ec69c1909d3196fa77675f2547d3e4d8a1cc7f1c916db1dc8fb0d77a9c24aba4ffe3291d206c0386853b5621a
+  checksum: a3f4e1a8e27ef239bc59c93dbe46af5f1cca1e1be35e82810babfa1193e8f624479bb22c23fc1e69e1470d702e3a66518fc282965ec7a11c4e341c2e769dd3af
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^2.4.12":
-  version: 2.4.12
-  resolution: "@usecannon/cli@npm:2.4.12"
+"@usecannon/cli@npm:^2.4.14":
+  version: 2.4.14
+  resolution: "@usecannon/cli@npm:2.4.14"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.4.10
+    "@usecannon/builder": ^2.4.13
     chalk: ^4.1.2
     commander: ^9.3.0
     debug: ^4.3.4
     eth-provider: ^0.13.6
     ethers: ^5.7.1
+    fastq: ^1.15.0
     fs-extra: ^10.1.0
     lodash: ^4.17.21
     prompts: ^2.4.2
@@ -12428,7 +12429,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: dist/bin/cannon.js
-  checksum: 211705fa80c6895356b88ccd35e417885244b6d2efb4c144c4198b3b43c3b75a961789d1de2df4981cabe2a3768b703959ef3c5fe47c698b84f8ce373ec26c37
+  checksum: 4e1721b2a0778ccc5ea71f347f9128a330f12dcb238f12025e71fecb0309433607d2a641ceb0b1459444f51ce09bcccaea85fffd77243d722f1ebc6959dafacc
   languageName: node
   linkType: hard
 
@@ -19970,12 +19971,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastq@npm:^1.6.0":
-  version: 1.13.0
-  resolution: "fastq@npm:1.13.0"
+"fastq@npm:^1.15.0, fastq@npm:^1.6.0":
+  version: 1.15.0
+  resolution: "fastq@npm:1.15.0"
   dependencies:
     reusify: ^1.0.4
-  checksum: 32cf15c29afe622af187d12fc9cd93e160a0cb7c31a3bb6ace86b7dea3b28e7b72acde89c882663f307b2184e14782c6c664fa315973c03626c7d4bff070bb0b
+  checksum: 0170e6bfcd5d57a70412440b8ef600da6de3b2a6c5966aeaf0a852d542daff506a0ee92d6de7679d1de82e644bce69d7a574a6c93f0b03964b5337eed75ada1a
   languageName: node
   linkType: hard
 

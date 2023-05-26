@@ -1,5 +1,5 @@
 {
-  "address": "0x21853bBCc6fd7C8963F117A435a0ea67d59de2b6",
+  "address": "0x261287459761D6D2211ab1a3eEb082F308B9e5e9",
   "abi": [
     {
       "inputs": [
@@ -484,6 +484,19 @@
           "type": "uint128"
         }
       ],
+      "name": "rebalancePool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint128",
+          "name": "poolId",
+          "type": "uint128"
+        }
+      ],
       "name": "renouncePoolNomination",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -571,7 +584,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xaf211ad005616b1a491fabfc6a254a06da62e01686b0ef3e3eb6d83e71b8f51f",
+  "deployTxnHash": "0x4c15e0c925e46cc3bd0eae51c84573ba5608da2b840b33be29209a8063c6a33f",
   "sourceName": "contracts/modules/core/PoolModule.sol",
   "contractName": "PoolModule",
   "deployedOn": "contract.PoolModule"

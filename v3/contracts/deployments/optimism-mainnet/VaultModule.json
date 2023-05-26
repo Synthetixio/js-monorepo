@@ -1,5 +1,5 @@
 {
-  "address": "0xc04fC6E37c1071bb5D041744d7469CC45d46b29A",
+  "address": "0x80A10068A95D2334D210a130A96410FAA892229e",
   "abi": [
     {
       "inputs": [
@@ -519,7 +519,7 @@
   ],
   "constructorArgs": [],
   "linkedLibraries": {},
-  "deployTxnHash": "0xc995130392d3e1061078ddfba2e7cb6b72f23297d0e069586affe005a097361f",
+  "deployTxnHash": "0x4ede1447def799f5cf13ada82b89ad0fac9a072930ae4544e451ebc5d7e5f429",
   "sourceName": "contracts/modules/core/VaultModule.sol",
   "contractName": "VaultModule",
   "deployedOn": "contract.VaultModule"
