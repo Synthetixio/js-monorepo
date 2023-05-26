@@ -1,9 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { useNetwork } from '@snx-v3/useBlockchain';
-import { wei } from '@synthetixio/wei';
+import { Wei, wei } from '@synthetixio/wei';
 import { useMulticall3 } from '@snx-v3/useMulticall3';
 import { useCollateralTypes } from '@snx-v3/useCollateralTypes';
+
+export type AccountCollateralType = {
+  symbol: string;
+  tokenAddress: string;
+  availableCollateral: Wei;
+  totalAssigned: Wei;
+  totalDeposited: Wei;
+  totalLocked: Wei;
+};
 
 export function useAccountCollateral({ accountId }: { accountId?: string }) {
   const { data: CoreProxy } = useCoreProxy();
@@ -15,7 +24,7 @@ export function useAccountCollateral({ accountId }: { accountId?: string }) {
   return useQuery({
     queryKey: [network.name, { accountId }, 'AccountCollateral', { tokens: tokenAddresses }],
     enabled: Boolean(CoreProxy && Multicall3 && accountId && tokenAddresses.length > 0),
-    queryFn: async function () {
+    queryFn: async function (): Promise<AccountCollateralType[]> {
       if (!CoreProxy || !Multicall3 || !accountId || tokenAddresses.length < 1) throw 'OMG';
 
       const { returnData } = await Multicall3.callStatic.aggregate(
