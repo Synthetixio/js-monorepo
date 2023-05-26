@@ -154,6 +154,16 @@ export function DepositFormUi({
                 fontSize="xs"
                 color="whiteAlpha.700"
               >
+                {accountCollateral && accountCollateral?.availableCollateral.gt(0) ? (
+                  <Flex
+                    gap="1"
+                    cursor="pointer"
+                    onClick={() => setInputAmount(accountCollateral?.availableCollateral)}
+                  >
+                    <Text>Available {accountCollateral.symbol} Collateral:</Text>
+                    <Amount value={accountCollateral?.availableCollateral} />
+                  </Flex>
+                ) : null}
                 <Flex
                   gap="1"
                   cursor="pointer"
@@ -164,13 +174,6 @@ export function DepositFormUi({
                     setInputAmount(tokenBalance);
                   }}
                 >
-                  {accountCollateral && accountCollateral?.availableCollateral.gt(0) ? (
-                    <>
-                      <Text>Available {accountCollateral.symbol} Collateral:</Text>
-                      <Amount value={accountCollateral?.availableCollateral} />
-                      &nbsp;
-                    </>
-                  ) : null}
                   <Text>{collateralType.symbol} Wallet Balance:</Text>
                   <Amount value={tokenBalance} />
                 </Flex>
@@ -185,13 +188,6 @@ export function DepositFormUi({
                       setInputAmount(ethBalance);
                     }}
                   >
-                    {accountCollateral && accountCollateral?.availableCollateral.gt(0) ? (
-                      <>
-                        <Text>Available ETH Collateral:</Text>
-                        <Amount value={accountCollateral?.availableCollateral} />
-                        &nbsp;
-                      </>
-                    ) : null}
                     <Text>ETH Wallet Balance:</Text>
                     <Amount value={ethBalance} />
                   </Flex>
