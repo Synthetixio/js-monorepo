@@ -12,27 +12,24 @@ import {
   FC,
   FormEvent,
   PropsWithChildren,
+  Suspense,
   useCallback,
   useContext,
   useEffect,
   useState,
-  lazy,
-  Suspense,
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Borrow } from './Borrow';
 import { Repay } from './Repay';
-import { Withdraw } from './Withdraw';
+import { Undelegate } from './Undelegate';
 import { Deposit } from './Deposit';
 import { z } from 'zod';
 import { RepayModal } from '@snx-v3/RepayModal';
 import { BorrowModal } from '@snx-v3/BorrowModal';
-import { safeImport } from '@synthetixio/safe-import';
+import { DepositModal } from '@snx-v3/DepositModal';
+import { UndelegateModal } from '@snx-v3/UndelegateModal';
 
-const DepositModal = lazy(() => safeImport(() => import('@snx-v3/DepositModal')));
-const WithdrawModal = lazy(() => safeImport(() => import('@snx-v3/WithdrawModal')));
-
-const validActions = ['borrow', 'deposit', 'repay', 'withdraw'] as const;
+const validActions = ['borrow', 'deposit', 'repay', 'undelegate'] as const;
 const ManageActionSchema = z.enum(validActions);
 type ManageAction = z.infer<typeof ManageActionSchema>;
 
@@ -75,8 +72,8 @@ const Action: FC<{ manageAction: ManageAction }> = ({ manageAction }) => {
       return <Deposit />;
     case 'repay':
       return <Repay />;
-    case 'withdraw':
-      return <Withdraw />;
+    case 'undelegate':
+      return <Undelegate />;
 
     default:
       return null;
@@ -99,7 +96,7 @@ const ManageActionUi: FC<{
         </ActionButton>
       </Flex>
       <Flex mt={2} gap={2}>
-        <ActionButton onClick={setActiveAction} action="withdraw" activeAction={manageAction}>
+        <ActionButton onClick={setActiveAction} action="undelegate" activeAction={manageAction}>
           <ArrowUpIcon w="15px" h="15px" mr={1} /> Undelegate Collateral
         </ActionButton>
         <ActionButton onClick={setActiveAction} action="borrow" activeAction={manageAction}>
@@ -216,14 +213,14 @@ export const ManageAction = () => {
         ) : null}
       </Suspense>
       <Suspense fallback={null}>
-        <WithdrawModal
+        <UndelegateModal
           onClose={() => {
             liquidityPosition.refetch();
             setCollateralChange(wei(0));
             setDebtChange(wei(0));
             setTxnModalOpen(null);
           }}
-          isOpen={txnModalOpen === 'withdraw'}
+          isOpen={txnModalOpen === 'undelegate'}
         />
       </Suspense>
     </>

@@ -15,7 +15,7 @@ export async function createAccount({ privateKey }) {
   const currentAccountOwner = await coreProxy.getAccountOwner(accountId);
   console.log('createAccount', { accountId, currentAccountOwner });
 
-  const tx = await coreProxy['createAccount(uint128)'](accountId);
+  const tx = await coreProxy['createAccount(uint128)'](accountId, { gasLimit: 10_000_000 });
   await tx.wait();
 
   const newAccountOwner = await coreProxy.getAccountOwner(accountId);
