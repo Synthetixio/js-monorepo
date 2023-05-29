@@ -9,9 +9,11 @@ interface SizeState {
 }
 
 export const SizeSelect = () => {
-  const [size, setSize] = useState<SizeState>({ min: '', max: '' });
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const initialMin = searchParams.get('min') || '';
+  const initialMax = searchParams.get('max') || '';
+  const [size, setSize] = useState<SizeState>({ min: initialMin, max: initialMax });
 
   const update = (input: 'min' | 'max', value: number) => {
     const newSize = { ...size, [input]: value || '' };
