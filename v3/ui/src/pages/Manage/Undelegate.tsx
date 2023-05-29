@@ -13,7 +13,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { FC, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-export const WithdrawUi: FC<{
+export const UndelegateUi: FC<{
   collateralChange: Wei;
   currentCollateral?: Wei;
   currentDebt?: Wei;
@@ -115,7 +115,7 @@ export const Undelegate = () => {
     : newDebt.mul(collateralType.issuanceRatioD18).div(collateralType.price).mul(0.98);
 
   return (
-    <WithdrawUi
+    <UndelegateUi
       displaySymbol={collateralType.displaySymbol}
       symbol={collateralType.symbol}
       setCollateralChange={setCollateralChange}

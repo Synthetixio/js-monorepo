@@ -11,6 +11,7 @@ import { wei } from '@synthetixio/wei';
 import {
   FC,
   FormEvent,
+  lazy,
   PropsWithChildren,
   Suspense,
   useCallback,
@@ -24,10 +25,12 @@ import { Repay } from './Repay';
 import { Undelegate } from './Undelegate';
 import { Deposit } from './Deposit';
 import { z } from 'zod';
-import { RepayModal } from '@snx-v3/RepayModal';
-import { BorrowModal } from '@snx-v3/BorrowModal';
-import { DepositModal } from '@snx-v3/DepositModal';
-import { UndelegateModal } from '@snx-v3/UndelegateModal';
+import { safeImport } from '@synthetixio/safe-import';
+
+const RepayModal = lazy(() => safeImport(() => import('@snx-v3/RepayModal')));
+const BorrowModal = lazy(() => safeImport(() => import('@snx-v3/BorrowModal')));
+const DepositModal = lazy(() => safeImport(() => import('@snx-v3/DepositModal')));
+const UndelegateModal = lazy(() => safeImport(() => import('@snx-v3/UndelegateModal')));
 
 const validActions = ['borrow', 'deposit', 'repay', 'undelegate'] as const;
 const ManageActionSchema = z.enum(validActions);
@@ -180,25 +183,29 @@ export const ManageAction = () => {
         }}
         manageAction={parsedAction || undefined}
       />
-      <RepayModal
-        onClose={() => {
-          liquidityPosition.refetch();
-          setCollateralChange(wei(0));
-          setDebtChange(wei(0));
-          setTxnModalOpen(null);
-        }}
-        isOpen={txnModalOpen === 'repay'}
-      />
-      <BorrowModal
-        onClose={() => {
-          liquidityPosition.refetch();
-          setCollateralChange(wei(0));
-          setDebtChange(wei(0));
-          setTxnModalOpen(null);
-        }}
-        isOpen={txnModalOpen === 'borrow'}
-      />
       <Suspense fallback={null}>
+        {txnModalOpen === 'repay' ? (
+          <RepayModal
+            onClose={() => {
+              liquidityPosition.refetch();
+              setCollateralChange(wei(0));
+              setDebtChange(wei(0));
+              setTxnModalOpen(null);
+            }}
+            isOpen={txnModalOpen === 'repay'}
+          />
+        ) : null}
+        {txnModalOpen === 'borrow' ? (
+          <BorrowModal
+            onClose={() => {
+              liquidityPosition.refetch();
+              setCollateralChange(wei(0));
+              setDebtChange(wei(0));
+              setTxnModalOpen(null);
+            }}
+            isOpen={txnModalOpen === 'borrow'}
+          />
+        ) : null}
         {txnModalOpen === 'deposit' ? (
           <DepositModal
             collateralChange={collateralChange}
@@ -211,17 +218,17 @@ export const ManageAction = () => {
             isOpen={txnModalOpen === 'deposit'}
           />
         ) : null}
-      </Suspense>
-      <Suspense fallback={null}>
-        <UndelegateModal
-          onClose={() => {
-            liquidityPosition.refetch();
-            setCollateralChange(wei(0));
-            setDebtChange(wei(0));
-            setTxnModalOpen(null);
-          }}
-          isOpen={txnModalOpen === 'undelegate'}
-        />
+        {txnModalOpen === 'undelegate' ? (
+          <UndelegateModal
+            onClose={() => {
+              liquidityPosition.refetch();
+              setCollateralChange(wei(0));
+              setDebtChange(wei(0));
+              setTxnModalOpen(null);
+            }}
+            isOpen={txnModalOpen === 'undelegate'}
+          />
+        ) : null}
       </Suspense>
     </>
   );
