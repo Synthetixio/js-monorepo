@@ -13,6 +13,7 @@
   },
   "goerli": {
     "CoreProxy": {
+      "address": "0x76490713314fCEC173f44e99346F54c6e92a8E42",
       "startBlock": 8538140
     }
   },
