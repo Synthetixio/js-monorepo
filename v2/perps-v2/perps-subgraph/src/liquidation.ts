@@ -1,7 +1,7 @@
 import { BigInt, log } from '@graphprotocol/graph-ts';
 import {
-  PositionLiquidated as PositionLiquidatedEventLegacy,
-  PositionLiquidated1 as PositionLiquidatedEvent,
+  PositionLiquidated as PositionLiquidatedEvent,
+  PositionLiquidated1 as PositionLiquidatedEventLegacy,
 } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
 import {
   FuturesPosition,
