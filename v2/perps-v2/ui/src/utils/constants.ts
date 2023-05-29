@@ -482,6 +482,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sSUIPERP]: {
+    id: '0x09f9d7aaa6bef9598c3b676c0e19c9786aa566a8',
     key: FuturesMarketKey.sSUIPERP,
     asset: FuturesMarketAsset.SUI,
     supports: 'both',
@@ -492,6 +493,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sPEPEPERP]: {
+    id: '0x3d3f34416f60f77a0a6cc8e32abe45d32a7497cb',
     key: FuturesMarketKey.sPEPEPERP,
     asset: FuturesMarketAsset.PEPE,
     supports: 'both',
@@ -502,6 +504,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sBLURPERP]: {
+    id: '0xa1ace9ce6862e865937939005b1a6c5ac938a11f',
     key: FuturesMarketKey.sBLURPERP,
     asset: FuturesMarketAsset.BLUR,
     supports: 'both',
@@ -512,6 +515,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sXRPPERP]: {
+    id: '0x6110df298b411a46d6edce72f5caca9ad826c1de',
     key: FuturesMarketKey.sXRPPERP,
     asset: FuturesMarketAsset.XRP,
     supports: 'both',
@@ -522,6 +526,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sDOTPERP]: {
+    id: '0x8b9b5f94aac2316f048025b3cbe442386e85984b',
     key: FuturesMarketKey.sDOTPERP,
     asset: FuturesMarketAsset.DOT,
     supports: 'both',
@@ -532,6 +537,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sTRXPERP]: {
+    id: '0x031a448f59111000b96f016c37e9c71e57845096',
     key: FuturesMarketKey.sTRXPERP,
     asset: FuturesMarketAsset.TRX,
     supports: 'testnet',
@@ -542,6 +548,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sFLOKIPERP]: {
+    id: '0x5ed8d0946b59d015f5a60039922b870537d43689',
     key: FuturesMarketKey.sFLOKIPERP,
     asset: FuturesMarketAsset.FLOKI,
     supports: 'both',
@@ -552,6 +559,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sINJPERP]: {
+    id: '0x852210f0616ac226a486ad3387dbf990e690116a',
     key: FuturesMarketKey.sINJPERP,
     asset: FuturesMarketAsset.INJ,
     supports: 'both',
