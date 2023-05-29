@@ -7917,7 +7917,7 @@ __metadata:
     "@snx-v3/useCollateralTypes": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
-    "@snx-v3/useWithdraw": "workspace:*"
+    "@snx-v3/useUndelegate": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@xstate/react": ^3.2.1
@@ -8131,6 +8131,7 @@ __metadata:
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useUSDProxy": "workspace:*"
     "@snx-v3/useVaultsData": "workspace:*"
+    "@snx-v3/useWithdraw": "workspace:*"
     "@snx-v3/validatePosition": "workspace:*"
     "@storybook/addon-essentials": ^6.5.16
     "@storybook/addon-interactions": ^6.5.16
@@ -8292,6 +8293,7 @@ __metadata:
   dependencies:
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useMulticall3": "workspace:*"
     "@snx-v3/zod": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
@@ -8575,6 +8577,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v3/useUndelegate@workspace:*, @snx-v3/useUndelegate@workspace:v3/lib/useUndelegate":
+  version: 0.0.0-use.local
+  resolution: "@snx-v3/useUndelegate@workspace:v3/lib/useUndelegate"
+  dependencies:
+    "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useBlockchain": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
+    "@snx-v3/useGasOptions": "workspace:*"
+    "@snx-v3/useGasPrice": "workspace:*"
+    "@snx-v3/useGasSpeed": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
+    "@tanstack/react-query": ^4.24.6
+    ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v3/useVaultsData@workspace:*, @snx-v3/useVaultsData@workspace:v3/lib/useVaultsData":
   version: 0.0.0-use.local
   resolution: "@snx-v3/useVaultsData@workspace:v3/lib/useVaultsData"
@@ -8594,6 +8613,7 @@ __metadata:
   resolution: "@snx-v3/useWithdraw@workspace:v3/lib/useWithdraw"
   dependencies:
     "@snx-v3/txnReducer": "workspace:*"
+    "@snx-v3/useAccountCollateral": "workspace:*"
     "@snx-v3/useBlockchain": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useGasOptions": "workspace:*"

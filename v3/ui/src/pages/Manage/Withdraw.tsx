@@ -24,7 +24,7 @@ export const WithdrawUi: FC<{
   return (
     <Flex flexDirection="column" gap={2}>
       <Text fontSize="md" fontWeight="700">
-        Withdraw {displaySymbol}
+        Undelegate {displaySymbol}
       </Text>
       <Text fontSize="sm" color="gray.400">
         Withdraw collateral. The max amount you can withdraw is based on your debt and the issuance
@@ -73,7 +73,7 @@ export const WithdrawUi: FC<{
         </Flex>
       </BorderBox>
       <Button data-testid="withdraw submit" type="submit" isDisabled={!max}>
-        Withdraw {displaySymbol}
+        Undelegate {displaySymbol}
       </Button>
     </Flex>
   );

@@ -14,7 +14,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAccounts } from '@snx-v3/useAccounts';
 import { CollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
@@ -25,6 +25,7 @@ import { BorderBox } from '@snx-v3/BorderBox';
 import { LiquidityPositionType, useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
 import { Welcome } from '../../components/shared/Welcome';
 import { Stats, StatsProps } from './Stats';
+import { AvailableCollateral } from './AvailableCollateral';
 
 const LoadingRow = () => (
   <Tr>
@@ -57,6 +58,7 @@ export function HomeUi({
   isLoading,
   VaultRow,
   Stats,
+  AvailableCollateral,
 }: {
   collateralTypes?: CollateralType[];
   preferredPool?: { name: string; id: string };
@@ -66,6 +68,7 @@ export function HomeUi({
   isLoading: boolean;
   VaultRow: FC<{ collateralType: CollateralType; poolId: string }>;
   Stats: FC<StatsProps>;
+  AvailableCollateral: FC;
 }) {
   const { totalCollateral, totalDebt } =
     liquidityPositions?.reduce(
@@ -173,6 +176,8 @@ export function HomeUi({
           </Table>
         </Box>
       </BorderBox>
+
+      <AvailableCollateral />
     </Flex>
   );
 }
@@ -215,6 +220,7 @@ export function Home() {
         preferredPool={preferredPool}
         navigate={navigate}
         VaultRow={VaultRow}
+        AvailableCollateral={AvailableCollateral}
         Stats={Stats}
       />
     </>
