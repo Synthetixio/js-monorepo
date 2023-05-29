@@ -48,7 +48,5 @@ export function useAccountCollateralUnlockDate({ accountId }: { accountId?: stri
 
       return new Date(collateralUnlock.toNumber() * 1000);
     },
-
-    placeholderData: new Date(),
   });
 }

@@ -51,7 +51,7 @@ export function AvailableCollateralUi({
         </Text>
         <Alert
           ml="auto"
-          status={timeToUnlock ? 'error' : 'success'}
+          status={timeToUnlock === '~' ? 'loading' : timeToUnlock ? 'error' : 'success'}
           width="540px"
           title={unlockDate}
         >
