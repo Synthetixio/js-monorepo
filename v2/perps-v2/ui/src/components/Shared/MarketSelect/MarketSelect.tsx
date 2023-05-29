@@ -90,7 +90,7 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
           {markets.map((market) => (
             <MarketCheckbox
               key={market}
-              icon={<CurrencyIcon width="20px" height="20px" currencyKey={market} />}
+              icon={<CurrencyIcon width={20} height={20} currencyKey={market} />}
               label={market}
               onChange={(e) => {
                 if (activeAssets.includes(market) && !e.target.checked) {
