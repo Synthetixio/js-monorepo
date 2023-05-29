@@ -16,4 +16,6 @@ export * from './WalletTooltip';
 export * from './EntryExit';
 export * from './EntryLiquidated';
 export * from './SmartWallet';
+export * from './MarketSelect';
+export * from './SizeSelect';
 export * from './DailyVolumeChange';

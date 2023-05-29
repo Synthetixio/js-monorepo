@@ -35,6 +35,8 @@ type CurrencyKey =
 
 interface CurrencyIconProps {
   currencyKey: CurrencyKey;
+  width?: number;
+  height?: number;
 }
 
 const parseCurrencyKey = (currencyKey: CurrencyKey) => {
@@ -43,12 +45,12 @@ const parseCurrencyKey = (currencyKey: CurrencyKey) => {
   return currencyKey;
 };
 
-export const CurrencyIcon = ({ currencyKey }: CurrencyIconProps) => {
+export const CurrencyIcon = ({ currencyKey, width = 30, height = 30 }: CurrencyIconProps) => {
   return (
     <img
       src={`/asset-icons/${parseCurrencyKey(currencyKey)}.svg`}
       alt={currencyKey}
-      style={{ width: 30, height: 30 }}
+      style={{ width, height }}
     />
   );
 };
