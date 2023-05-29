@@ -100,7 +100,7 @@ const ManageActionUi: FC<{
       </Flex>
       <Flex mt={2} gap={2}>
         <ActionButton onClick={setActiveAction} action="withdraw" activeAction={manageAction}>
-          <ArrowUpIcon w="15px" h="15px" mr={1} /> Withdraw Collateral
+          <ArrowUpIcon w="15px" h="15px" mr={1} /> Undelegate Collateral
         </ActionButton>
         <ActionButton onClick={setActiveAction} action="borrow" activeAction={manageAction}>
           <BorrowIcon mr={1} /> Borrow snxUSD

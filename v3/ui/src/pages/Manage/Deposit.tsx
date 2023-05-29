@@ -11,8 +11,10 @@ import { useTokenBalance } from '@snx-v3/useTokenBalance';
 import Wei, { wei } from '@synthetixio/wei';
 import { FC, useContext, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { AccountCollateralType, useAccountCollateral } from '@snx-v3/useAccountCollateral';
 
 export const DepositUi: FC<{
+  accountCollateral: AccountCollateralType;
   collateralChange: Wei;
   ethBalance?: Wei;
   tokenBalance?: Wei;
@@ -20,6 +22,7 @@ export const DepositUi: FC<{
   symbol: string;
   setCollateralChange: (val: Wei) => void;
 }> = ({
+  accountCollateral,
   collateralChange,
   setCollateralChange,
   displaySymbol,
@@ -44,8 +47,8 @@ export const DepositUi: FC<{
         Deposit {displaySymbol}
       </Text>
       <Text fontSize="sm" color="gray.400">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, reprehenderit doloribus
-        ullam, in cumque illo deleniti laudantium.
+        Take an interest-free loan against your collateral. This increases your debt and decreases
+        your C-Ratio.
       </Text>
       <BorderBox display="flex" py={1} px={2} flexDirection="column">
         <Flex>
@@ -73,6 +76,16 @@ export const DepositUi: FC<{
                 fontSize="xs"
                 color="whiteAlpha.700"
               >
+                {accountCollateral.availableCollateral.gt(0) ? (
+                  <Flex
+                    gap="1"
+                    cursor="pointer"
+                    onClick={() => setCollateralChange(accountCollateral.availableCollateral)}
+                  >
+                    <Text>Available {accountCollateral.symbol} Collateral:</Text>
+                    <Amount value={accountCollateral?.availableCollateral} />
+                  </Flex>
+                ) : null}
                 <Flex
                   gap="1"
                   cursor="pointer"
@@ -128,6 +141,7 @@ export const DepositUi: FC<{
     </Flex>
   );
 };
+
 export const Deposit = () => {
   const { collateralChange, setCollateralChange } = useContext(ManagePositionContext);
   const params = useParams();
@@ -135,9 +149,16 @@ export const Deposit = () => {
 
   const { data: tokenBalance } = useTokenBalance(collateralType?.tokenAddress);
   const { data: ethBalance } = useEthBalance();
-  if (!collateralType) return null;
+
+  const accountCollaterals = useAccountCollateral({ accountId: params.accountId });
+  const accountCollateral = accountCollaterals.data?.find(
+    (coll) => coll.tokenAddress === collateralType?.tokenAddress
+  );
+
+  if (!collateralType || !accountCollateral) return null;
   return (
     <DepositUi
+      accountCollateral={accountCollateral}
       displaySymbol={collateralType.displaySymbol}
       tokenBalance={tokenBalance}
       ethBalance={ethBalance}

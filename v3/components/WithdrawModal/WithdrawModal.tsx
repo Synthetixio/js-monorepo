@@ -20,7 +20,7 @@ import { FC } from 'react';
 import { useParams } from '@snx-v3/useParams';
 import { WithdrawMachine, State, Events, ServiceNames } from './WithdrawMachine';
 import { useMachine } from '@xstate/react';
-import { useWithdraw } from '@snx-v3/useWithdraw';
+import { useUndelegate } from '@snx-v3/useUndelegate';
 import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
 import type { StateFrom } from 'xstate';
 
@@ -114,7 +114,7 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
 
   const { exec: unwrap } = useUnWrapEth();
   const currentCollateral = liquidityPosition?.collateralAmount || wei(0);
-  const { exec: execWithdraw } = useWithdraw({
+  const { exec: execUndelegate } = useUndelegate({
     accountId: params.accountId,
     poolId: params.poolId,
     collateralTypeAddress: collateralType?.tokenAddress,
@@ -128,7 +128,7 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
     services: {
       [ServiceNames.withdraw]: async () => {
         try {
-          await execWithdraw();
+          await execUndelegate();
           await refetchLiquidityPosition();
         } catch (error) {
           toast.closeAll();

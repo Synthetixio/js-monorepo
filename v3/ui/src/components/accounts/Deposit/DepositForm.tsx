@@ -16,9 +16,11 @@ import { useParams } from '@snx-v3/useParams';
 import { DepositModal, DepositModalProps } from '@snx-v3/DepositModal';
 import { CollateralIcon } from '@snx-v3/icons';
 import { NumberInput } from '@snx-v3/NumberInput';
+import { AccountCollateralType, useAccountCollateral } from '@snx-v3/useAccountCollateral';
 
 export function DepositFormUi({
   collateralType,
+  accountCollateral,
   ethBalance,
   tokenBalance,
   isConnected,
@@ -30,6 +32,7 @@ export function DepositFormUi({
   DepositModal,
   CollateralTypeSelector,
 }: {
+  accountCollateral?: AccountCollateralType;
   staticCollateral?: boolean;
   openConnectModal: (() => void) | undefined;
   isConnected: boolean;
@@ -151,6 +154,16 @@ export function DepositFormUi({
                 fontSize="xs"
                 color="whiteAlpha.700"
               >
+                {accountCollateral && accountCollateral?.availableCollateral.gt(0) ? (
+                  <Flex
+                    gap="1"
+                    cursor="pointer"
+                    onClick={() => setInputAmount(accountCollateral?.availableCollateral)}
+                  >
+                    <Text>Available {accountCollateral.symbol} Collateral:</Text>
+                    <Amount value={accountCollateral?.availableCollateral} />
+                  </Flex>
+                ) : null}
                 <Flex
                   gap="1"
                   cursor="pointer"
@@ -161,7 +174,7 @@ export function DepositFormUi({
                     setInputAmount(tokenBalance);
                   }}
                 >
-                  <Text>{collateralType.symbol} Balance:</Text>
+                  <Text>{collateralType.symbol} Wallet Balance:</Text>
                   <Amount value={tokenBalance} />
                 </Flex>
                 {collateralType?.symbol === 'WETH' ? (
@@ -175,7 +188,7 @@ export function DepositFormUi({
                       setInputAmount(ethBalance);
                     }}
                   >
-                    <Text>ETH Balance:</Text>
+                    <Text>ETH Wallet Balance:</Text>
                     <Amount value={ethBalance} />
                   </Flex>
                 ) : null}
@@ -228,12 +241,18 @@ export const DepositForm = (props: { staticCollateral?: boolean }) => {
   const tokenBalance = useTokenBalance(collateralType?.tokenAddress);
   const ethBalance = useEthBalance();
 
+  const accountCollaterals = useAccountCollateral({ accountId: params.accountId });
+  const accountCollateral = accountCollaterals.data?.find(
+    (coll) => coll.tokenAddress === collateralType?.tokenAddress
+  );
+
   return (
     <DepositFormUi
       staticCollateral={props.staticCollateral}
       isConnected={isConnected}
       openConnectModal={() => onboard.connectWallet()}
       collateralType={collateralType}
+      accountCollateral={accountCollateral}
       tokenBalance={tokenBalance.data}
       ethBalance={ethBalance.data}
       poolId={params.poolId}

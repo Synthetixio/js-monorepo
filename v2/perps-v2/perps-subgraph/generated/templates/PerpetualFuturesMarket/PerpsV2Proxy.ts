@@ -78,56 +78,6 @@ export class DelayedOrderRemoved__Params {
   }
 }
 
-export class DelayedOrderSubmitted extends ethereum.Event {
-  get params(): DelayedOrderSubmitted__Params {
-    return new DelayedOrderSubmitted__Params(this);
-  }
-}
-
-export class DelayedOrderSubmitted__Params {
-  _event: DelayedOrderSubmitted;
-
-  constructor(event: DelayedOrderSubmitted) {
-    this._event = event;
-  }
-
-  get account(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get isOffchain(): boolean {
-    return this._event.parameters[1].value.toBoolean();
-  }
-
-  get sizeDelta(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get targetRoundId(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
-  get intentionTime(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
-  }
-
-  get executableAtTime(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
-  }
-
-  get commitDeposit(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
-  }
-
-  get keeperDeposit(): BigInt {
-    return this._event.parameters[7].value.toBigInt();
-  }
-
-  get trackingCode(): Bytes {
-    return this._event.parameters[8].value.toBytes();
-  }
-}
-
 export class FundingRecomputed extends ethereum.Event {
   get params(): FundingRecomputed__Params {
     return new FundingRecomputed__Params(this);
@@ -155,28 +105,6 @@ export class FundingRecomputed__Params {
 
   get timestamp(): BigInt {
     return this._event.parameters[3].value.toBigInt();
-  }
-}
-
-export class MarginTransferred extends ethereum.Event {
-  get params(): MarginTransferred__Params {
-    return new MarginTransferred__Params(this);
-  }
-}
-
-export class MarginTransferred__Params {
-  _event: MarginTransferred;
-
-  constructor(event: MarginTransferred) {
-    this._event = event;
-  }
-
-  get account(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get marginDelta(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -254,44 +182,6 @@ export class PerpsTracking__Params {
   }
 }
 
-export class PositionLiquidated extends ethereum.Event {
-  get params(): PositionLiquidated__Params {
-    return new PositionLiquidated__Params(this);
-  }
-}
-
-export class PositionLiquidated__Params {
-  _event: PositionLiquidated;
-
-  constructor(event: PositionLiquidated) {
-    this._event = event;
-  }
-
-  get id(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get account(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get liquidator(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get size(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
-  get price(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
-  }
-
-  get fee(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
-  }
-}
-
 export class PositionModified extends ethereum.Event {
   get params(): PositionModified__Params {
     return new PositionModified__Params(this);
@@ -336,6 +226,10 @@ export class PositionModified__Params {
   get fee(): BigInt {
     return this._event.parameters[7].value.toBigInt();
   }
+
+  get skew(): BigInt {
+    return this._event.parameters[8].value.toBigInt();
+  }
 }
 
 export class ProxyUpdated extends ethereum.Event {
@@ -375,6 +269,56 @@ export class CacheUpdated1__Params {
 
   get destination(): Address {
     return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class DelayedOrderSubmitted extends ethereum.Event {
+  get params(): DelayedOrderSubmitted__Params {
+    return new DelayedOrderSubmitted__Params(this);
+  }
+}
+
+export class DelayedOrderSubmitted__Params {
+  _event: DelayedOrderSubmitted;
+
+  constructor(event: DelayedOrderSubmitted) {
+    this._event = event;
+  }
+
+  get account(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get isOffchain(): boolean {
+    return this._event.parameters[1].value.toBoolean();
+  }
+
+  get sizeDelta(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get targetRoundId(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get intentionTime(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get executableAtTime(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get commitDeposit(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get keeperDeposit(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
+  }
+
+  get trackingCode(): Bytes {
+    return this._event.parameters[8].value.toBytes();
   }
 }
 
@@ -482,86 +426,6 @@ export class PerpsTracking1__Params {
   }
 }
 
-export class PositionFlagged extends ethereum.Event {
-  get params(): PositionFlagged__Params {
-    return new PositionFlagged__Params(this);
-  }
-}
-
-export class PositionFlagged__Params {
-  _event: PositionFlagged;
-
-  constructor(event: PositionFlagged) {
-    this._event = event;
-  }
-
-  get id(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get account(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get flagger(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get price(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
-  get timestamp(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
-  }
-}
-
-export class PositionLiquidated1 extends ethereum.Event {
-  get params(): PositionLiquidated1__Params {
-    return new PositionLiquidated1__Params(this);
-  }
-}
-
-export class PositionLiquidated1__Params {
-  _event: PositionLiquidated1;
-
-  constructor(event: PositionLiquidated1) {
-    this._event = event;
-  }
-
-  get id(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get account(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get liquidator(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get size(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
-  get price(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
-  }
-
-  get flaggerFee(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
-  }
-
-  get liquidatorFee(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
-  }
-
-  get stakersFee(): BigInt {
-    return this._event.parameters[7].value.toBigInt();
-  }
-}
-
 export class PositionModified1 extends ethereum.Event {
   get params(): PositionModified1__Params {
     return new PositionModified1__Params(this);
@@ -640,6 +504,280 @@ export class CacheUpdated2__Params {
   _event: CacheUpdated2;
 
   constructor(event: CacheUpdated2) {
+    this._event = event;
+  }
+
+  get name(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+
+  get destination(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class FundingRecomputed2 extends ethereum.Event {
+  get params(): FundingRecomputed2__Params {
+    return new FundingRecomputed2__Params(this);
+  }
+}
+
+export class FundingRecomputed2__Params {
+  _event: FundingRecomputed2;
+
+  constructor(event: FundingRecomputed2) {
+    this._event = event;
+  }
+
+  get funding(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get fundingRate(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get index(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get timestamp(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+}
+
+export class OwnerChanged2 extends ethereum.Event {
+  get params(): OwnerChanged2__Params {
+    return new OwnerChanged2__Params(this);
+  }
+}
+
+export class OwnerChanged2__Params {
+  _event: OwnerChanged2;
+
+  constructor(event: OwnerChanged2) {
+    this._event = event;
+  }
+
+  get oldOwner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get newOwner(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class OwnerNominated2 extends ethereum.Event {
+  get params(): OwnerNominated2__Params {
+    return new OwnerNominated2__Params(this);
+  }
+}
+
+export class OwnerNominated2__Params {
+  _event: OwnerNominated2;
+
+  constructor(event: OwnerNominated2) {
+    this._event = event;
+  }
+
+  get newOwner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class PerpsTracking2 extends ethereum.Event {
+  get params(): PerpsTracking2__Params {
+    return new PerpsTracking2__Params(this);
+  }
+}
+
+export class PerpsTracking2__Params {
+  _event: PerpsTracking2;
+
+  constructor(event: PerpsTracking2) {
+    this._event = event;
+  }
+
+  get trackingCode(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+
+  get baseAsset(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get marketKey(): Bytes {
+    return this._event.parameters[2].value.toBytes();
+  }
+
+  get sizeDelta(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get fee(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+}
+
+export class PositionFlagged extends ethereum.Event {
+  get params(): PositionFlagged__Params {
+    return new PositionFlagged__Params(this);
+  }
+}
+
+export class PositionFlagged__Params {
+  _event: PositionFlagged;
+
+  constructor(event: PositionFlagged) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get account(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get flagger(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+
+  get price(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get timestamp(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+}
+
+export class PositionLiquidated extends ethereum.Event {
+  get params(): PositionLiquidated__Params {
+    return new PositionLiquidated__Params(this);
+  }
+}
+
+export class PositionLiquidated__Params {
+  _event: PositionLiquidated;
+
+  constructor(event: PositionLiquidated) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get account(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get liquidator(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+
+  get size(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get price(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get flaggerFee(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get liquidatorFee(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get stakersFee(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
+  }
+}
+
+export class PositionModified2 extends ethereum.Event {
+  get params(): PositionModified2__Params {
+    return new PositionModified2__Params(this);
+  }
+}
+
+export class PositionModified2__Params {
+  _event: PositionModified2;
+
+  constructor(event: PositionModified2) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get account(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get margin(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get size(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get tradeSize(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get lastPrice(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get fundingIndex(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get fee(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
+  }
+
+  get skew(): BigInt {
+    return this._event.parameters[8].value.toBigInt();
+  }
+}
+
+export class ProxyUpdated2 extends ethereum.Event {
+  get params(): ProxyUpdated2__Params {
+    return new ProxyUpdated2__Params(this);
+  }
+}
+
+export class ProxyUpdated2__Params {
+  _event: ProxyUpdated2;
+
+  constructor(event: ProxyUpdated2) {
+    this._event = event;
+  }
+
+  get proxyAddress(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class CacheUpdated3 extends ethereum.Event {
+  get params(): CacheUpdated3__Params {
+    return new CacheUpdated3__Params(this);
+  }
+}
+
+export class CacheUpdated3__Params {
+  _event: CacheUpdated3;
+
+  constructor(event: CacheUpdated3) {
     this._event = event;
   }
 
@@ -740,16 +878,16 @@ export class MarketRemoved__Params {
   }
 }
 
-export class OwnerChanged2 extends ethereum.Event {
-  get params(): OwnerChanged2__Params {
-    return new OwnerChanged2__Params(this);
+export class OwnerChanged3 extends ethereum.Event {
+  get params(): OwnerChanged3__Params {
+    return new OwnerChanged3__Params(this);
   }
 }
 
-export class OwnerChanged2__Params {
-  _event: OwnerChanged2;
+export class OwnerChanged3__Params {
+  _event: OwnerChanged3;
 
-  constructor(event: OwnerChanged2) {
+  constructor(event: OwnerChanged3) {
     this._event = event;
   }
 
@@ -762,16 +900,16 @@ export class OwnerChanged2__Params {
   }
 }
 
-export class OwnerNominated2 extends ethereum.Event {
-  get params(): OwnerNominated2__Params {
-    return new OwnerNominated2__Params(this);
+export class OwnerNominated3 extends ethereum.Event {
+  get params(): OwnerNominated3__Params {
+    return new OwnerNominated3__Params(this);
   }
 }
 
-export class OwnerNominated2__Params {
-  _event: OwnerNominated2;
+export class OwnerNominated3__Params {
+  _event: OwnerNominated3;
 
-  constructor(event: OwnerNominated2) {
+  constructor(event: OwnerNominated3) {
     this._event = event;
   }
 
@@ -780,16 +918,16 @@ export class OwnerNominated2__Params {
   }
 }
 
-export class PositionModified2 extends ethereum.Event {
-  get params(): PositionModified2__Params {
-    return new PositionModified2__Params(this);
+export class PositionModified3 extends ethereum.Event {
+  get params(): PositionModified3__Params {
+    return new PositionModified3__Params(this);
   }
 }
 
-export class PositionModified2__Params {
-  _event: PositionModified2;
+export class PositionModified3__Params {
+  _event: PositionModified3;
 
-  constructor(event: PositionModified2) {
+  constructor(event: PositionModified3) {
     this._event = event;
   }
 
@@ -826,16 +964,16 @@ export class PositionModified2__Params {
   }
 }
 
-export class PositionLiquidated2 extends ethereum.Event {
-  get params(): PositionLiquidated2__Params {
-    return new PositionLiquidated2__Params(this);
+export class PositionLiquidated1 extends ethereum.Event {
+  get params(): PositionLiquidated1__Params {
+    return new PositionLiquidated1__Params(this);
   }
 }
 
-export class PositionLiquidated2__Params {
-  _event: PositionLiquidated2;
+export class PositionLiquidated1__Params {
+  _event: PositionLiquidated1;
 
-  constructor(event: PositionLiquidated2) {
+  constructor(event: PositionLiquidated1) {
     this._event = event;
   }
 
@@ -891,6 +1029,28 @@ export class PositionFlagged1__Params {
 
   get timestamp(): BigInt {
     return this._event.parameters[3].value.toBigInt();
+  }
+}
+
+export class MarginTransferred extends ethereum.Event {
+  get params(): MarginTransferred__Params {
+    return new MarginTransferred__Params(this);
+  }
+}
+
+export class MarginTransferred__Params {
+  _event: MarginTransferred;
+
+  constructor(event: MarginTransferred) {
+    this._event = event;
+  }
+
+  get account(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get marginDelta(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
   }
 }
 

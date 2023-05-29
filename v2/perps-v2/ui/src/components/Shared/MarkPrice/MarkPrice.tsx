@@ -1,21 +1,20 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToCurrencyBasedOnSize } from '@snx-v2/formatters';
 
 interface MarkPriceProps {
   indexPrice: number;
   markPrice: number;
-  decimals?: number;
 }
 
-export const MarkPrice = ({ markPrice, indexPrice, decimals = 4 }: MarkPriceProps) => {
+export const MarkPrice = ({ markPrice, indexPrice }: MarkPriceProps) => {
   return (
     <Td border="none">
       <Fade in>
         <Text fontFamily="heading" fontWeight={500} fontSize="14px" lineHeight="20px">
-          {formatNumberToUsd(markPrice, { minimumFractionDigits: decimals })}
+          {formatNumberToCurrencyBasedOnSize(markPrice)}
         </Text>
         <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
-          {formatNumberToUsd(indexPrice, { minimumFractionDigits: decimals })}
+          {formatNumberToCurrencyBasedOnSize(indexPrice)}
         </Text>
       </Fade>
     </Td>

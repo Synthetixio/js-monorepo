@@ -13,6 +13,17 @@ export const formatNumberToUsd = (val: number | string, options?: Options) => {
   return new Intl.NumberFormat(optionsWithDefault.locales, optionsWithDefault).format(Number(val));
 };
 
+export const formatNumberToCurrencyBasedOnSize = (val: number | string) => {
+  const num = Number(val);
+  if (num < 0.0001) {
+    return formatNumberToUsd(num, { maximumFractionDigits: 8 });
+  }
+  if (num < 1) {
+    return formatNumberToUsd(num, { maximumFractionDigits: 4 });
+  }
+  return formatNumberToUsd(num, { maximumFractionDigits: 2 });
+};
+
 export const formatNumber = (value: number | string, options?: Options) => {
   const optionsWithDefault = {
     minimumFractionDigits: 2,

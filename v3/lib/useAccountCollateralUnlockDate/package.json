@@ -1,0 +1,13 @@
+{
+  "name": "@snx-v3/useAccountCollateralUnlockDate",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.2",
+  "dependencies": {
+    "@snx-v3/useBlockchain": "workspace:*",
+    "@snx-v3/useCoreProxy": "workspace:*",
+    "@snx-v3/useMulticall3": "workspace:*",
+    "@tanstack/react-query": "^4.24.6",
+    "react": "^18.2.0"
+  }
+}
