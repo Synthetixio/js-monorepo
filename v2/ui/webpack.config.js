@@ -243,6 +243,9 @@ module.exports = {
         'process.env.NEXT_PUBLIC_ALCHEMY_OVM_KEY': JSON.stringify(
           process.env.NEXT_PUBLIC_ALCHEMY_OVM_KEY
         ),
+        'process.env.NEXT_PUBLIC_WC_PROJECT_ID': JSON.stringify(
+          process.env.NEXT_PUBLIC_WC_PROJECT_ID
+        ),
       }),
     ])
     .concat(isProd ? [] : isTest ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })])
