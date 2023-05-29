@@ -35,8 +35,8 @@ type CurrencyKey =
 
 interface CurrencyIconProps {
   currencyKey: CurrencyKey;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
 const parseCurrencyKey = (currencyKey: CurrencyKey) => {
