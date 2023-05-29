@@ -8,6 +8,7 @@
     "@snx-v3/useCoreProxy": "workspace:*",
     "@snx-v3/useMulticall3": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
+    "ethers": "^5.7.2",
     "react": "^18.2.0"
   }
 }

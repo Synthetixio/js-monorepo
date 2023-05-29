@@ -4,7 +4,7 @@ import {
   DelayedOrderRemoved,
   DelayedOrderSubmitted,
   PositionModified1 as positionModifiedEventNew,
-  PositionLiquidated,
+  PositionLiquidated1,
   MarginTransferred,
   FundingRecomputed,
 } from '../generated/FuturesMarketManagerNew/PerpsV2Proxy';
@@ -86,8 +86,8 @@ export function createPositionLiquidatedEvent(
   fee: BigInt,
   timestamp: i64,
   logIndex: i64 = 0
-): PositionLiquidated {
-  let positionLiquidatedEvent = changetype<PositionLiquidated>(newMockEvent());
+): PositionLiquidated1 {
+  let positionLiquidatedEvent = changetype<PositionLiquidated1>(newMockEvent());
   positionLiquidatedEvent.parameters = new Array();
   const block = createBlock(timestamp, 5);
   positionLiquidatedEvent.parameters.push(

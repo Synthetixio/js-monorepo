@@ -6,6 +6,7 @@
   "dependencies": {
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useCoreProxy": "workspace:*",
+    "@snx-v3/useMulticall3": "workspace:*",
     "@snx-v3/zod": "workspace:*",
     "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query": "^4.24.6",

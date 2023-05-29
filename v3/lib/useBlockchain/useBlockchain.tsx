@@ -173,13 +173,17 @@ export function useOnboardWallet(): WalletState | undefined {
 export function useNetwork() {
   const { network } = React.useContext(BlockchainContext);
   const wallet = useOnboardWallet();
-  if (!wallet) {
+  if (
+    !wallet ||
+    !Array.isArray(wallet.chains) ||
+    !wallet.chains[0] ||
+    !wallet.chains[0].id ||
+    wallet.chains[0].id === network.hexId
+  ) {
     return network;
   }
   const connectedChain = Object.values(NETWORKS).find(
-    // chainId does not exist on type, but it does exist on actual wallet
-    // @ts-ignore
-    (network) => network.hexId === wallet.provider.chainId
+    (network) => network.hexId === wallet.chains[0].id
   );
   if (connectedChain) {
     return connectedChain;

@@ -2,9 +2,15 @@ const fs = require('fs');
 const prettier = require('prettier');
 const prettierOptions = JSON.parse(fs.readFileSync('../../../.prettierrc', 'utf8'));
 
-const perpsV2DelayedOrderAAVEPERPOld = JSON.parse(
+const PerpsV2DelayedExecutionAAVEPERP = JSON.parse(
   fs.readFileSync(
-    '../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedOrderAAVEPERP.json',
+    '../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedExecutionAAVEPERP.json',
+    'utf-8'
+  )
+);
+const PerpsV2DelayedIntentAAVEPERP = JSON.parse(
+  fs.readFileSync(
+    '../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedIntentAAVEPERP.json',
     'utf-8'
   )
 );
@@ -63,6 +69,15 @@ const oldEvents = [
     name: 'PositionFlagged',
     type: 'event',
   },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'account', type: 'address' },
+      { indexed: false, internalType: 'int256', name: 'marginDelta', type: 'int256' },
+    ],
+    name: 'MarginTransferred',
+    type: 'event',
+  },
 ];
 
 if (!fs.existsSync('./abis')) {
@@ -73,7 +88,8 @@ fs.writeFileSync(
   prettier.format(
     JSON.stringify(
       [
-        ...perpsV2DelayedOrderAAVEPERPOld,
+        ...PerpsV2DelayedExecutionAAVEPERP,
+        ...PerpsV2DelayedIntentAAVEPERP,
         ...perpsV2MarketLiquidateAAVEPERPNew,
         ...futuresMarketManager,
         ...oldEvents,

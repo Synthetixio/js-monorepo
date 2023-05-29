@@ -14,8 +14,8 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { FC, useEffect } from 'react';
-import { createSearchParams, generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
+import React, { FC } from 'react';
+import { generatePath, NavigateFunction, useNavigate } from 'react-router-dom';
 import { useAccounts } from '@snx-v3/useAccounts';
 import { CollateralType, useCollateralTypes } from '@snx-v3/useCollateralTypes';
 import { VaultRow } from './VaultRow';
@@ -25,6 +25,7 @@ import { BorderBox } from '@snx-v3/BorderBox';
 import { LiquidityPositionType, useLiquidityPositions } from '@snx-v3/useLiquidityPositions';
 import { Welcome } from '../../components/shared/Welcome';
 import { Stats, StatsProps } from './Stats';
+import { AvailableCollateral } from './AvailableCollateral';
 
 const LoadingRow = () => (
   <Tr>
@@ -57,6 +58,7 @@ export function HomeUi({
   isLoading,
   VaultRow,
   Stats,
+  AvailableCollateral,
 }: {
   collateralTypes?: CollateralType[];
   preferredPool?: { name: string; id: string };
@@ -66,6 +68,7 @@ export function HomeUi({
   isLoading: boolean;
   VaultRow: FC<{ collateralType: CollateralType; poolId: string }>;
   Stats: FC<StatsProps>;
+  AvailableCollateral: FC;
 }) {
   const { totalCollateral, totalDebt } =
     liquidityPositions?.reduce(
@@ -173,19 +176,19 @@ export function HomeUi({
           </Table>
         </Box>
       </BorderBox>
+
+      <AvailableCollateral />
     </Flex>
   );
 }
 
 export function Home() {
-  const { data: accounts = [], isLoading: accountsLoading } = useAccounts();
+  const { isLoading: accountsLoading } = useAccounts();
   const { data: collateralTypes = [], isLoading: collateralTypesLoading } = useCollateralTypes();
   const { data: preferredPool, isLoading: preferredPoolLoading } = usePreferredPool();
 
   const params = useParams();
   const navigate = useNavigate();
-
-  const [accountId] = accounts;
 
   const {
     data: liquidityPositionsById,
@@ -194,15 +197,6 @@ export function Home() {
   } = useLiquidityPositions({
     accountId: params.accountId,
   });
-
-  useEffect(() => {
-    if (!params.accountId && accountId) {
-      navigate({
-        pathname: generatePath('/'),
-        search: createSearchParams({ accountId }).toString(),
-      });
-    }
-  }, [navigate, accountId, params.accountId]);
 
   const title = 'Synthetix V3';
   const isLoading =
@@ -226,6 +220,7 @@ export function Home() {
         preferredPool={preferredPool}
         navigate={navigate}
         VaultRow={VaultRow}
+        AvailableCollateral={AvailableCollateral}
         Stats={Stats}
       />
     </>

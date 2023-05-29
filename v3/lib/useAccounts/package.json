@@ -6,7 +6,9 @@
   "dependencies": {
     "@snx-v3/useAccountProxy": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
+    "@snx-v3/useParams": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-router-dom": "^6.8.1"
   }
 }

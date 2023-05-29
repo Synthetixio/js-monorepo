@@ -104,6 +104,7 @@ export enum FuturesMarketKey {
 }
 
 export interface FuturesMarketConfig {
+  id: string;
   key: FuturesMarketKey;
   asset: FuturesMarketAsset;
   supports: 'mainnet' | 'testnet' | 'both';
@@ -118,6 +119,7 @@ export interface FuturesMarketConfig {
 export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
   // perps v2
   [FuturesMarketKey.sETHPERP]: {
+    id: '0x2b3bb4c683bfc5239b029131eef3b1d214478d93',
     key: FuturesMarketKey.sETHPERP,
     asset: FuturesMarketAsset.sETH,
     supports: 'both',
@@ -128,6 +130,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sBTCPERP]: {
+    id: '0x59b007e9ea8f89b069c43f8f45834d30853e3699',
     key: FuturesMarketKey.sBTCPERP,
     asset: FuturesMarketAsset.sBTC,
     supports: 'both',
@@ -138,6 +141,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sLINKPERP]: {
+    id: '0x31a1659ca00f617e86dc765b6494afe70a5a9c1a',
     key: FuturesMarketKey.sLINKPERP,
     asset: FuturesMarketAsset.LINK,
     supports: 'both',
@@ -148,6 +152,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sSOLPERP]: {
+    id: '0x0ea09d97b4084d859328ec4bf8ebcf9ecca26f1d',
     key: FuturesMarketKey.sSOLPERP,
     asset: FuturesMarketAsset.SOL,
     supports: 'both',
@@ -158,6 +163,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sAVAXPERP]: {
+    id: '0xc203a12f298ce73e44f7d45a4f59a43dbffe204d',
     key: FuturesMarketKey.sAVAXPERP,
     asset: FuturesMarketAsset.AVAX,
     supports: 'both',
@@ -168,6 +174,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sAAVEPERP]: {
+    id: '0x5374761526175b59f1e583246e20639909e189ce',
     key: FuturesMarketKey.sAAVEPERP,
     asset: FuturesMarketAsset.AAVE,
     supports: 'both',
@@ -178,6 +185,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sUNIPERP]: {
+    id: '0x4308427c463caeaab50fff98a9dec569c31e4e87',
     key: FuturesMarketKey.sUNIPERP,
     asset: FuturesMarketAsset.UNI,
     supports: 'both',
@@ -188,6 +196,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sMATICPERP]: {
+    id: '0x074b8f19fc91d6b2eb51143e1f186ca0ddb88042',
     key: FuturesMarketKey.sMATICPERP,
     asset: FuturesMarketAsset.MATIC,
     supports: 'both',
@@ -198,6 +207,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sXAUPERP]: {
+    id: '0x549dbdffbd47bd5639f9348ebe82e63e2f9f777a',
     key: FuturesMarketKey.sXAUPERP,
     asset: FuturesMarketAsset.XAU,
     supports: 'both',
@@ -208,6 +218,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sXAGPERP]: {
+    id: '0xdcb8438c979fa030581314e5a5df42bbfed744a0',
     key: FuturesMarketKey.sXAGPERP,
     asset: FuturesMarketAsset.XAG,
     supports: 'both',
@@ -218,6 +229,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sEURPERP]: {
+    id: '0x87ae62c5720dab812bdacba66cc24839440048d1',
     key: FuturesMarketKey.sEURPERP,
     asset: FuturesMarketAsset.EUR,
     supports: 'both',
@@ -228,6 +240,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sAPEPERP]: {
+    id: '0x5b6beb79e959aac2659bee60fe0d0885468bf886',
     key: FuturesMarketKey.sAPEPERP,
     asset: FuturesMarketAsset.APE,
     supports: 'both',
@@ -238,6 +251,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sDYDXPERP]: {
+    id: '0x139f94e4f0e1101c1464a321cba815c34d58b5d9',
     key: FuturesMarketKey.sDYDXPERP,
     asset: FuturesMarketAsset.DYDX,
     supports: 'both',
@@ -248,6 +262,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sBNBPERP]: {
+    id: '0x0940b0a96c5e1ba33aee331a9f950bb2a6f2fb25',
     key: FuturesMarketKey.sBNBPERP,
     asset: FuturesMarketAsset.BNB,
     supports: 'both',
@@ -258,6 +273,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sDOGEPERP]: {
+    id: '0x98ccbc721cc05e28a125943d69039b39be6a21e9',
     key: FuturesMarketKey.sDOGEPERP,
     asset: FuturesMarketAsset.DOGE,
     supports: 'both',
@@ -268,6 +284,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sOPPERP]: {
+    id: '0x442b69937a0daf9d46439a71567fabe6cb69fbaf',
     key: FuturesMarketKey.sOPPERP,
     asset: FuturesMarketAsset.OP,
     supports: 'both',
@@ -278,6 +295,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sATOMPERP]: {
+    id: '0xbb16c7b3244dfa1a6bf83fcce3ee4560837763cd',
     key: FuturesMarketKey.sATOMPERP,
     asset: FuturesMarketAsset.ATOM,
     supports: 'both',
@@ -288,6 +306,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sFTMPERP]: {
+    id: '0xc18f85a6dd3bcd0516a1ca08d3b1f0a4e191a2c4',
     key: FuturesMarketKey.sFTMPERP,
     asset: FuturesMarketAsset.FTM,
     supports: 'both',
@@ -298,6 +317,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sNEARPERP]: {
+    id: '0xc8fcd6fb4d15dd7c455373297def375a08942ece',
     key: FuturesMarketKey.sNEARPERP,
     asset: FuturesMarketAsset.NEAR,
     supports: 'both',
@@ -308,6 +328,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sFLOWPERP]: {
+    id: '0x27665271210acff4fab08ad9bb657e91866471f0',
     key: FuturesMarketKey.sFLOWPERP,
     asset: FuturesMarketAsset.FLOW,
     supports: 'both',
@@ -318,6 +339,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sAXSPERP]: {
+    id: '0x3a52b21816168dfe35be99b7c5fc209f17a0adb1',
     key: FuturesMarketKey.sAXSPERP,
     asset: FuturesMarketAsset.AXS,
     supports: 'both',
@@ -328,6 +350,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sAUDPERP]: {
+    id: '0x9de146b5663b82f44e5052dede2aa3fd4cbcdc99',
     key: FuturesMarketKey.sAUDPERP,
     asset: FuturesMarketAsset.AUD,
     supports: 'both',
@@ -338,6 +361,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sGBPPERP]: {
+    id: '0x1dad8808d8ac58a0df912adc4b215ca3b93d6c49',
     key: FuturesMarketKey.sGBPPERP,
     asset: FuturesMarketAsset.GBP,
     supports: 'both',
@@ -348,6 +372,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sARBPERP]: {
+    id: '0x509072a5ae4a87ac89fc8d64d94adcb44bd4b88e',
     key: FuturesMarketKey.sARBPERP,
     asset: FuturesMarketAsset.ARB,
     supports: 'mainnet',
@@ -358,6 +383,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sAPTPERP]: {
+    id: '0x9615b6bfff240c44d3e33d0cd9a11f563a2e8d8b',
     key: FuturesMarketKey.sAPTPERP,
     asset: FuturesMarketAsset.APT,
     supports: 'both',
@@ -368,6 +394,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sLDOPERP]: {
+    id: '0xaa94c874b91ef16c8b56a1c5b2f34e39366bd484',
     key: FuturesMarketKey.sLDOPERP,
     asset: FuturesMarketAsset.LDO,
     supports: 'both',
@@ -378,6 +405,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sADAPERP]: {
+    id: '0xf9dd29d2fd9b38cd90e390c797f1b7e0523f43a9',
     key: FuturesMarketKey.sADAPERP,
     asset: FuturesMarketAsset.ADA,
     supports: 'both',
@@ -388,6 +416,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sGMXPERP]: {
+    id: '0x33d4613639603c845e61a02cd3d2a78be7d513dc',
     key: FuturesMarketKey.sGMXPERP,
     asset: FuturesMarketAsset.GMX,
     supports: 'both',
@@ -398,6 +427,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sFILPERP]: {
+    id: '0x2c5e2148bf3409659967fe3684fd999a76171235',
     key: FuturesMarketKey.sFILPERP,
     asset: FuturesMarketAsset.FIL,
     supports: 'both',
@@ -408,6 +438,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sLTCPERP]: {
+    id: '0xb25529266d9677e9171beaf333a0dea506c5f99a',
     key: FuturesMarketKey.sLTCPERP,
     asset: FuturesMarketAsset.LTC,
     supports: 'both',
@@ -418,6 +449,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sBCHPERP]: {
+    id: '0x96690aae7cb7c4a9b5be5695e94d72827decc33f',
     key: FuturesMarketKey.sBCHPERP,
     asset: FuturesMarketAsset.BCH,
     supports: 'both',
@@ -428,6 +460,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sSHIBPERP]: {
+    id: '0x69f5f465a46f324fb7bf3fd7c0d5c00f7165c7ea',
     key: FuturesMarketKey.sSHIBPERP,
     asset: FuturesMarketAsset.SHIB,
     supports: 'both',
@@ -438,6 +471,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sCRVPERP]: {
+    id: '0xd5fbf7136b86021ef9d0be5d798f948dce9c0dea',
     key: FuturesMarketKey.sCRVPERP,
     asset: FuturesMarketAsset.CRV,
     supports: 'both',
@@ -448,6 +482,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sSUIPERP]: {
+    id: '0x09f9d7aaa6bef9598c3b676c0e19c9786aa566a8',
     key: FuturesMarketKey.sSUIPERP,
     asset: FuturesMarketAsset.SUI,
     supports: 'both',
@@ -458,6 +493,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sPEPEPERP]: {
+    id: '0x3d3f34416f60f77a0a6cc8e32abe45d32a7497cb',
     key: FuturesMarketKey.sPEPEPERP,
     asset: FuturesMarketAsset.PEPE,
     supports: 'both',
@@ -468,6 +504,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sBLURPERP]: {
+    id: '0xa1ace9ce6862e865937939005b1a6c5ac938a11f',
     key: FuturesMarketKey.sBLURPERP,
     asset: FuturesMarketAsset.BLUR,
     supports: 'both',
@@ -478,6 +515,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sXRPPERP]: {
+    id: '0x6110df298b411a46d6edce72f5caca9ad826c1de',
     key: FuturesMarketKey.sXRPPERP,
     asset: FuturesMarketAsset.XRP,
     supports: 'both',
@@ -488,6 +526,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sDOTPERP]: {
+    id: '0x8b9b5f94aac2316f048025b3cbe442386e85984b',
     key: FuturesMarketKey.sDOTPERP,
     asset: FuturesMarketAsset.DOT,
     supports: 'both',
@@ -498,6 +537,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sTRXPERP]: {
+    id: '0x031a448f59111000b96f016c37e9c71e57845096',
     key: FuturesMarketKey.sTRXPERP,
     asset: FuturesMarketAsset.TRX,
     supports: 'testnet',
@@ -508,6 +548,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sFLOKIPERP]: {
+    id: '0x5ed8d0946b59d015f5a60039922b870537d43689',
     key: FuturesMarketKey.sFLOKIPERP,
     asset: FuturesMarketAsset.FLOKI,
     supports: 'both',
@@ -518,6 +559,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sINJPERP]: {
+    id: '0x852210f0616ac226a486ad3387dbf990e690116a',
     key: FuturesMarketKey.sINJPERP,
     asset: FuturesMarketAsset.INJ,
     supports: 'both',

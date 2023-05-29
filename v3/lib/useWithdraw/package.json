@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@snx-v3/txnReducer": "workspace:*",
+    "@snx-v3/useAccountCollateral": "workspace:*",
     "@snx-v3/useBlockchain": "workspace:*",
     "@snx-v3/useCoreProxy": "workspace:*",
     "@snx-v3/useGasOptions": "workspace:*",

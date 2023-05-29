@@ -9,6 +9,7 @@ import { GasSpeedProvider } from '@snx-v3/useGasSpeed';
 import { BlockchainProvider } from '@snx-v3/useBlockchain';
 import { TermsModal } from '@snx-v3/TermsModal';
 import { SESSION_STORAGE_KEYS } from '@snx-v3/constants';
+import { useAccountUrlSync } from '@snx-v3/useAccounts';
 import { Router } from './Router';
 import './i18n';
 
@@ -21,6 +22,11 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+function Sync() {
+  useAccountUrlSync();
+  return null;
+}
 
 export const App = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -43,6 +49,7 @@ export const App = () => {
             <BrowserRouter>
               <TermsModal defaultOpen={!TERMS_CONDITIONS_ACCEPTED} />
               <Router />
+              <Sync />
             </BrowserRouter>
           </GasSpeedProvider>
           <ReactQueryDevtools />

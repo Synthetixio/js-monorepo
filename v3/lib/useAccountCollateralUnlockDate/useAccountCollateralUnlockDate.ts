@@ -1,3 +1,4 @@
+import { ethers } from 'ethers';
 import { useQuery } from '@tanstack/react-query';
 import { useCoreProxy } from '@snx-v3/useCoreProxy';
 import { useNetwork } from '@snx-v3/useBlockchain';
@@ -15,12 +16,19 @@ export function useAccountCollateralUnlockDate({ accountId }: { accountId?: stri
       if (!CoreProxy || !Multicall3 || !accountId) throw 'OMG';
 
       const {
-        returnData: [getAccountLastInteraction],
+        returnData: [getAccountLastInteraction, getConfigUintAccountTimeoutWithdraw],
       } = await Multicall3.callStatic.aggregate([
         {
           target: CoreProxy.address,
           callData: CoreProxy.interface.encodeFunctionData('getAccountLastInteraction', [
             accountId,
+          ]),
+        },
+        {
+          target: CoreProxy.address,
+          // @ts-ignore TODO: remove when mainnet and goerli have getConfigUint
+          callData: CoreProxy.interface.encodeFunctionData('getConfigUint', [
+            ethers.utils.formatBytes32String('accountTimeoutWithdraw'),
           ]),
         },
         // TODO: add getConfig call when config is available
@@ -30,14 +38,11 @@ export function useAccountCollateralUnlockDate({ accountId }: { accountId?: stri
         'getAccountLastInteraction',
         getAccountLastInteraction
       );
-      // Hardcoded because getting config value from contract is not yet possible
-      const accountTimeoutWithdraw = 24 * 60 * 60; // 1 day.
-
-      // TODO: uncomment when config is available
-      // const accountTimeoutWithdraw = parseInt(
-      //   await CoreProxy.getConfig(ethers.utils.formatBytes32String('accountTimeoutWithdraw')),
-      //   16
-      // );
+      const [accountTimeoutWithdraw] = CoreProxy.interface.decodeFunctionResult(
+        // @ts-ignore TODO: remove when mainnet and goerli have getConfigUint
+        'getConfigUint',
+        getConfigUintAccountTimeoutWithdraw
+      );
 
       const collateralUnlock = lastInteraction.add(accountTimeoutWithdraw);
 

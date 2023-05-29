@@ -41,7 +41,7 @@ it('should withdraw borrowed snxUSD and get back SNX collateral', () => {
     .click()
     .should('have.attr', 'data-active', 'true');
   cy.location().should((loc) => {
-    expect(loc.search).to.eq('?manageAction=withdraw');
+    expect(loc.search).to.include('manageAction=withdraw');
   });
 
   cy.get('[data-testid="available to withdraw"]').should('not.have.text', '-');

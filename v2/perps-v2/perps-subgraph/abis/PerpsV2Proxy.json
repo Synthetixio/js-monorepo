@@ -26,42 +26,12 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
-      { "indexed": false, "internalType": "bool", "name": "isOffchain", "type": "bool" },
-      { "indexed": false, "internalType": "int256", "name": "sizeDelta", "type": "int256" },
-      { "indexed": false, "internalType": "uint256", "name": "targetRoundId", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "intentionTime", "type": "uint256" },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "executableAtTime",
-        "type": "uint256"
-      },
-      { "indexed": false, "internalType": "uint256", "name": "commitDeposit", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "keeperDeposit", "type": "uint256" },
-      { "indexed": false, "internalType": "bytes32", "name": "trackingCode", "type": "bytes32" }
-    ],
-    "name": "DelayedOrderSubmitted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
       { "indexed": false, "internalType": "int256", "name": "funding", "type": "int256" },
       { "indexed": false, "internalType": "int256", "name": "fundingRate", "type": "int256" },
       { "indexed": false, "internalType": "uint256", "name": "index", "type": "uint256" },
       { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
     ],
     "name": "FundingRecomputed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
-      { "indexed": false, "internalType": "int256", "name": "marginDelta", "type": "int256" }
-    ],
-    "name": "MarginTransferred",
     "type": "event"
   },
   {
@@ -96,14 +66,95 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "id", "type": "uint256" },
-      { "indexed": false, "internalType": "address", "name": "account", "type": "address" },
-      { "indexed": false, "internalType": "address", "name": "liquidator", "type": "address" },
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "margin", "type": "uint256" },
       { "indexed": false, "internalType": "int256", "name": "size", "type": "int256" },
-      { "indexed": false, "internalType": "uint256", "name": "price", "type": "uint256" },
+      { "indexed": false, "internalType": "int256", "name": "tradeSize", "type": "int256" },
+      { "indexed": false, "internalType": "uint256", "name": "lastPrice", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "fundingIndex", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "fee", "type": "uint256" },
+      { "indexed": false, "internalType": "int256", "name": "skew", "type": "int256" }
+    ],
+    "name": "PositionModified",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address", "name": "proxyAddress", "type": "address" }
+    ],
+    "name": "ProxyUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "bytes32", "name": "name", "type": "bytes32" },
+      { "indexed": false, "internalType": "address", "name": "destination", "type": "address" }
+    ],
+    "name": "CacheUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+      { "indexed": false, "internalType": "bool", "name": "isOffchain", "type": "bool" },
+      { "indexed": false, "internalType": "int256", "name": "sizeDelta", "type": "int256" },
+      { "indexed": false, "internalType": "uint256", "name": "targetRoundId", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "intentionTime", "type": "uint256" },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "executableAtTime",
+        "type": "uint256"
+      },
+      { "indexed": false, "internalType": "uint256", "name": "commitDeposit", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "keeperDeposit", "type": "uint256" },
+      { "indexed": false, "internalType": "bytes32", "name": "trackingCode", "type": "bytes32" }
+    ],
+    "name": "DelayedOrderSubmitted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "int256", "name": "funding", "type": "int256" },
+      { "indexed": false, "internalType": "int256", "name": "fundingRate", "type": "int256" },
+      { "indexed": false, "internalType": "uint256", "name": "index", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "FundingRecomputed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address", "name": "oldOwner", "type": "address" },
+      { "indexed": false, "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnerChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnerNominated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "bytes32", "name": "trackingCode", "type": "bytes32" },
+      { "indexed": false, "internalType": "bytes32", "name": "baseAsset", "type": "bytes32" },
+      { "indexed": false, "internalType": "bytes32", "name": "marketKey", "type": "bytes32" },
+      { "indexed": false, "internalType": "int256", "name": "sizeDelta", "type": "int256" },
       { "indexed": false, "internalType": "uint256", "name": "fee", "type": "uint256" }
     ],
-    "name": "PositionLiquidated",
+    "name": "PerpsTracking",
     "type": "event"
   },
   {
@@ -116,7 +167,8 @@
       { "indexed": false, "internalType": "int256", "name": "tradeSize", "type": "int256" },
       { "indexed": false, "internalType": "uint256", "name": "lastPrice", "type": "uint256" },
       { "indexed": false, "internalType": "uint256", "name": "fundingIndex", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "fee", "type": "uint256" }
+      { "indexed": false, "internalType": "uint256", "name": "fee", "type": "uint256" },
+      { "indexed": false, "internalType": "int256", "name": "skew", "type": "int256" }
     ],
     "name": "PositionModified",
     "type": "event"
@@ -328,6 +380,15 @@
       { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
     ],
     "name": "PositionFlagged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+      { "indexed": false, "internalType": "int256", "name": "marginDelta", "type": "int256" }
+    ],
+    "name": "MarginTransferred",
     "type": "event"
   }
 ]

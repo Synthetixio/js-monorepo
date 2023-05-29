@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Contract, providers } from 'ethers';
+import { BytesLike, Contract, providers } from 'ethers';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 import { infuraId } from '../utils';
 import { FuturesPosition_OrderBy, OrderDirection } from '../__generated__/graphql';
@@ -129,7 +129,7 @@ export async function fetchPositions(
 
   // The result from decodeFunctionResult isn't typed, we could use zod to validate but doing a type assertion for now..
   const dataToReturn: ContractData[] = positionsDetailsMulticallResult.map(
-    (positionDetailsBytes, index) => {
+    (positionDetailsBytes: BytesLike, index: number) => {
       const positionDetails = perpsMarketDataContract.interface.decodeFunctionResult(
         'positionDetailsForMarketKey',
         positionDetailsBytes

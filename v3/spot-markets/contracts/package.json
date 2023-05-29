@@ -28,7 +28,7 @@
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@typechain/ethers-v5": "^10.2.0",
-    "@usecannon/cli": "^2.4.12",
+    "@usecannon/cli": "^2.4.14",
     "ethers": "^5.7.2",
     "prettier": "^2.8.4",
     "typechain": "^8.1.1",

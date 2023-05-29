@@ -158,6 +158,7 @@ export const abi = [
   'function setMarketMinDelegateTime(uint128 marketId, uint32 minDelegateTime)',
   'function setMinLiquidityRatio(uint128 marketId, uint256 minLiquidityRatio)',
   'function withdrawMarketUsd(uint128 marketId, address target, uint256 amount) returns (uint256 feeAmount)',
+  'error RecursiveMulticall(address)',
   'function multicall(bytes[] data) payable returns (bytes[] results)',
   'event PoolApprovedAdded(uint256 poolId)',
   'event PoolApprovedRemoved(uint256 poolId)',
@@ -186,6 +187,7 @@ export const abi = [
   'function getPoolName(uint128 poolId) view returns (string poolName)',
   'function getPoolOwner(uint128 poolId) view returns (address)',
   'function nominatePoolOwner(address nominatedOwner, uint128 poolId)',
+  'function rebalancePool(uint128 poolId)',
   'function renouncePoolNomination(uint128 poolId)',
   'function revokePoolNomination(uint128 poolId)',
   'function setMinLiquidityRatio(uint256 minLiquidityRatio)',
@@ -208,6 +210,8 @@ export const abi = [
   'function updateRewards(uint128 poolId, address collateralType, uint128 accountId) returns (uint256[], address[])',
   'function configureOracleManager(address oracleManagerAddress)',
   'function getConfig(bytes32 k) view returns (bytes32 v)',
+  'function getConfigAddress(bytes32 k) view returns (address v)',
+  'function getConfigUint(bytes32 k) view returns (uint256 v)',
   'function registerCcip(address ccipSend, address ccipReceive, address ccipTokenPool)',
   'function setConfig(bytes32 k, bytes32 v)',
   'error InsufficientDelegation(uint256 minDelegation)',
@@ -424,6 +428,7 @@ export interface CoreProxyInterface extends utils.Interface {
     'getPoolName(uint128)': FunctionFragment;
     'getPoolOwner(uint128)': FunctionFragment;
     'nominatePoolOwner(address,uint128)': FunctionFragment;
+    'rebalancePool(uint128)': FunctionFragment;
     'renouncePoolNomination(uint128)': FunctionFragment;
     'revokePoolNomination(uint128)': FunctionFragment;
     'setPoolConfiguration(uint128,(uint128,uint128,int128)[])': FunctionFragment;
@@ -436,6 +441,8 @@ export interface CoreProxyInterface extends utils.Interface {
     'updateRewards(uint128,address,uint128)': FunctionFragment;
     'configureOracleManager(address)': FunctionFragment;
     'getConfig(bytes32)': FunctionFragment;
+    'getConfigAddress(bytes32)': FunctionFragment;
+    'getConfigUint(bytes32)': FunctionFragment;
     'registerCcip(address,address,address)': FunctionFragment;
     'setConfig(bytes32,bytes32)': FunctionFragment;
     'delegateCollateral(uint128,uint128,address,uint256,uint256)': FunctionFragment;
@@ -541,6 +548,7 @@ export interface CoreProxyInterface extends utils.Interface {
       | 'getPoolName'
       | 'getPoolOwner'
       | 'nominatePoolOwner'
+      | 'rebalancePool'
       | 'renouncePoolNomination'
       | 'revokePoolNomination'
       | 'setPoolConfiguration'
@@ -553,6 +561,8 @@ export interface CoreProxyInterface extends utils.Interface {
       | 'updateRewards'
       | 'configureOracleManager'
       | 'getConfig'
+      | 'getConfigAddress'
+      | 'getConfigUint'
       | 'registerCcip'
       | 'setConfig'
       | 'delegateCollateral'
@@ -935,6 +945,10 @@ export interface CoreProxyInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: 'rebalancePool',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: 'renouncePoolNomination',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -990,6 +1004,14 @@ export interface CoreProxyInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: 'getConfig', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'getConfigAddress',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getConfigUint',
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(
     functionFragment: 'registerCcip',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
@@ -1134,6 +1156,7 @@ export interface CoreProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'getPoolName', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getPoolOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominatePoolOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rebalancePool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renouncePoolNomination', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'revokePoolNomination', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setPoolConfiguration', data: BytesLike): Result;
@@ -1146,6 +1169,8 @@ export interface CoreProxyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'updateRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'configureOracleManager', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getConfig', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getConfigAddress', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getConfigUint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'registerCcip', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setConfig', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'delegateCollateral', data: BytesLike): Result;
@@ -2355,6 +2380,11 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    rebalancePool(
+      poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     renouncePoolNomination(
       poolId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -2431,6 +2461,16 @@ export interface CoreProxy extends BaseContract {
       k: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[string] & { v: string }>;
+
+    getConfigAddress(
+      k: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[string] & { v: string }>;
+
+    getConfigUint(
+      k: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { v: BigNumber }>;
 
     registerCcip(
       ccipSend: PromiseOrValue<string>,
@@ -3002,6 +3042,11 @@ export interface CoreProxy extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  rebalancePool(
+    poolId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   renouncePoolNomination(
     poolId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -3075,6 +3120,10 @@ export interface CoreProxy extends BaseContract {
   ): Promise<ContractTransaction>;
 
   getConfig(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+  getConfigAddress(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+  getConfigUint(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   registerCcip(
     ccipSend: PromiseOrValue<string>,
@@ -3628,6 +3677,8 @@ export interface CoreProxy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    rebalancePool(poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     renouncePoolNomination(
       poolId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -3701,6 +3752,10 @@ export interface CoreProxy extends BaseContract {
     ): Promise<void>;
 
     getConfig(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+    getConfigAddress(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+    getConfigUint(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     registerCcip(
       ccipSend: PromiseOrValue<string>,
@@ -4793,6 +4848,11 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    rebalancePool(
+      poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     renouncePoolNomination(
       poolId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -4866,6 +4926,10 @@ export interface CoreProxy extends BaseContract {
     ): Promise<BigNumber>;
 
     getConfig(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getConfigAddress(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getConfigUint(k: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     registerCcip(
       ccipSend: PromiseOrValue<string>,
@@ -5439,6 +5503,11 @@ export interface CoreProxy extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    rebalancePool(
+      poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     renouncePoolNomination(
       poolId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -5512,6 +5581,16 @@ export interface CoreProxy extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getConfig(
+      k: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getConfigAddress(
+      k: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getConfigUint(
       k: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
