@@ -75,9 +75,15 @@ const LoadingRow = () => (
 interface TotalValueProps extends TextProps {
   value?: Wei;
   isLoading: boolean;
+  formatter?: (val: string | number) => string;
 }
 
-const TotalValue: FC<TotalValueProps> = ({ value, isLoading, ...props }) => {
+const TotalValue: FC<TotalValueProps> = ({
+  value,
+  isLoading,
+  formatter = formatNumberToUsd,
+  ...props
+}) => {
   if (isLoading) return <Skeleton w={16} h={8} mt={1} />;
   if (!value) return <>-</>;
   return (
@@ -89,7 +95,7 @@ const TotalValue: FC<TotalValueProps> = ({ value, isLoading, ...props }) => {
       fontWeight="800"
       {...props}
     >
-      {formatNumberToUsd(value.toNumber())}{' '}
+      {formatter(value.toNumber())}{' '}
     </TrendText>
   );
 };
@@ -143,6 +149,7 @@ export function MarketSectionUi({
             value={sevenDaysPerformance?.growthPercentage}
             isLoading={!poolDataFetched}
             fontSize="md"
+            formatter={formatPercent}
           />
         </BorderBox>
         <BorderBox paddingY={2} paddingX={4} flexGrow="1" flexDirection="column">
