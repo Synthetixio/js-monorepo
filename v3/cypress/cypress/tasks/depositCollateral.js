@@ -14,7 +14,8 @@ export async function depositCollateral({ privateKey, accountId, symbol, amount 
   const tx = await coreProxy.deposit(
     ethers.BigNumber.from(accountId),
     config.tokenAddress,
-    ethers.utils.parseEther(`${amount}`)
+    ethers.utils.parseEther(`${amount}`),
+    { gasLimit: 10_000_000 }
   );
   await tx.wait();
 

@@ -28,7 +28,11 @@ export async function setConfig({ key, value }) {
 
   const tx = await coreProxy
     .connect(signer)
-    .setConfig(ethers.utils.formatBytes32String(key), ethers.utils.formatBytes32String(`${value}`));
+    .setConfig(
+      ethers.utils.formatBytes32String(key),
+      ethers.utils.formatBytes32String(`${value}`),
+      { gasLimit: 10_000_000 }
+    );
   await tx.wait();
 
   const newValue = parseInt(

@@ -30,7 +30,8 @@ export async function borrowUsd({ privateKey, accountId, symbol, amount, poolId 
     ethers.BigNumber.from(accountId),
     ethers.BigNumber.from(poolId),
     config.tokenAddress,
-    ethers.utils.parseEther(`${debt}`)
+    ethers.utils.parseEther(`${debt}`),
+    { gasLimit: 10_000_000 }
   );
   await tx.wait();
   return debt;
