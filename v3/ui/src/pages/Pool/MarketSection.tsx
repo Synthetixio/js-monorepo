@@ -228,6 +228,7 @@ export function MarketSectionUi({
                         {growth ? (
                           <>
                             <Tooltip
+                              hasArrow
                               label={
                                 <Flex
                                   flexDirection="column"
@@ -274,6 +275,7 @@ export function MarketSectionUi({
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
                         <Tooltip
+                          hasArrow
                           label={
                             <Flex flexDirection="column" alignItems="flex-start" textAlign="left">
                               <Text color="gray.50">
