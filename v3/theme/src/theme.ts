@@ -401,6 +401,7 @@ const Tooltip: ComponentStyleConfig = {
     textAlign: 'center',
     bg: 'gray.900',
     color: 'white.500',
+    '--popper-arrow-bg': 'var(--chakra-colors-gray-900)',
   },
 };
 

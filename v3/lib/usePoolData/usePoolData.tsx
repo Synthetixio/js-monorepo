@@ -4,8 +4,8 @@ import { z } from 'zod';
 import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
-const GraphBigIntSchema = z.string().transform((src) => wei(src));
-const GraphBigDecimalSchema = z.string().transform((src) => wei(src));
+const GraphBigIntSchema = z.string().transform((src) => wei(src, 18, true));
+const GraphBigDecimalSchema = z.string().transform((src) => wei(src, 18, true));
 
 const calculateMarketPnl = (netIssuance: Wei, reportedDebt: Wei) =>
   reportedDebt.add(netIssuance).mul(-1);

@@ -227,9 +227,37 @@ export function MarketSectionUi({
                       <StyledTd isLastItem={isLastItem} data-testid="market growth">
                         {growth ? (
                           <>
-                            <Text fontSize="sm" display="block" color="gray.50">
-                              {formatNumberToUsd(growth.value.toNumber())}
-                            </Text>
+                            <Tooltip
+                              hasArrow
+                              label={
+                                <Flex
+                                  flexDirection="column"
+                                  alignItems="flex-start"
+                                  textAlign="left"
+                                >
+                                  <Text>
+                                    Last 7 days calculated by <br /> &quot;this week&apos;s
+                                    pnl&quot; - &quot;last week&apos;s pnl&quot;
+                                  </Text>
+                                  <Text>
+                                    Last Week PnL:{' '}
+                                    {formatNumberToUsd(
+                                      market.market_snapshots_by_week[1]?.pnl.toNumber() || 0
+                                    )}
+                                  </Text>
+                                  <Text>
+                                    This Week PnL:{' '}
+                                    {formatNumberToUsd(
+                                      market.market_snapshots_by_week[0]?.pnl.toNumber() || 0
+                                    )}
+                                  </Text>
+                                </Flex>
+                              }
+                            >
+                              <Text fontSize="sm" display="block" color="gray.50">
+                                {formatNumberToUsd(growth.value.toNumber())}
+                              </Text>
+                            </Tooltip>
                             {growth.percentage ? (
                               <TrendText
                                 fontSize="xs"
@@ -246,9 +274,35 @@ export function MarketSectionUi({
                         )}
                       </StyledTd>
                       <StyledTd isLastItem={isLastItem}>
-                        <Text color="gray.50" data-testid="market pnl">
-                          {formatNumberToUsd(market.pnl.toNumber())}
-                        </Text>
+                        <Tooltip
+                          hasArrow
+                          label={
+                            <Flex flexDirection="column" alignItems="flex-start" textAlign="left">
+                              <Text color="gray.50">
+                                Withdrawn: {formatNumberToUsd(market.usd_withdrawn.toNumber())}
+                              </Text>
+                              <Text color="gray.50">
+                                Deposited: {formatNumberToUsd(market.usd_deposited.toNumber())}{' '}
+                              </Text>
+                              <Text color="gray.50">
+                                Reported Debt: {formatNumberToUsd(market.reported_debt.toNumber())}
+                              </Text>
+                              <Text color="gray.50">
+                                Net Issuance <br /> (withdrawn - deposited):{' '}
+                                {formatNumberToUsd(market.net_issuance.toNumber())}
+                              </Text>
+
+                              <Text color="gray.50">
+                                PnL <br /> (reported debt + net issuance) * -1:{' '}
+                                {formatNumberToUsd(market.pnl.toNumber())}
+                              </Text>
+                            </Flex>
+                          }
+                        >
+                          <Text color="gray.50" data-testid="market pnl">
+                            {formatNumberToUsd(market.pnl.toNumber())}
+                          </Text>
+                        </Tooltip>
                       </StyledTd>
                     </Tr>
                   );
