@@ -17,6 +17,7 @@ export type Network = {
   label: string;
   Icon: React.FC;
   isSupported: boolean;
+  publicRpcUrl: string;
 };
 
 export const UNSUPPORTED_NETWORK: Network = {
@@ -25,6 +26,7 @@ export const UNSUPPORTED_NETWORK: Network = {
   token: 'ETH',
   name: 'unsupported',
   rpcUrl: '',
+  publicRpcUrl: '',
   label: 'Unsupported',
   Icon: () => <FailedIcon width="24px" height="24px" />,
   isSupported: false,
@@ -40,6 +42,7 @@ export const NETWORKS: Record<string, Network> = {
     label: 'Ethereum',
     Icon: () => <EthereumIcon />,
     isSupported: false,
+    publicRpcUrl: 'https://ethereum.publicnode.com',
   },
   'optimism-mainnet': {
     id: 10,
@@ -50,6 +53,7 @@ export const NETWORKS: Record<string, Network> = {
     label: 'Optimism',
     Icon: () => <OptimismIcon />,
     isSupported: true,
+    publicRpcUrl: 'https://mainnet.optimism.io',
   },
   goerli: {
     id: 5,
@@ -60,6 +64,7 @@ export const NETWORKS: Record<string, Network> = {
     label: 'Goerli Testnet',
     Icon: () => <EthereumIcon />,
     isSupported: false,
+    publicRpcUrl: 'https://ethereum-goerli.publicnode.com',
   },
   'optimism-goerli': {
     id: 420,
@@ -70,6 +75,7 @@ export const NETWORKS: Record<string, Network> = {
     label: 'Optimistic Goerli',
     Icon: () => <OptimismIcon />,
     isSupported: true,
+    publicRpcUrl: 'https://goerli.optimism.io',
   },
 };
 
@@ -87,6 +93,7 @@ const chains = Object.values(NETWORKS).map((network) => ({
   token: network.token,
   label: network.label,
   rpcUrl: network.rpcUrl,
+  publicRpcUrl: network.publicRpcUrl,
 }));
 
 const appMetadata = {
@@ -133,6 +140,15 @@ export const BlockchainContext = React.createContext<{
 export const BlockchainProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [onboardState, setOnboardState] = React.useState(onboard.state.get());
   const [network, setNetwork] = React.useState(DEFAULT_NETWORK);
+
+  const isMounted = React.useRef(false);
+  React.useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   React.useEffect(() => {
     const { unsubscribe } = onboard.state.select().subscribe((nextState) => {
       setOnboardState(nextState);
@@ -151,8 +167,13 @@ export const BlockchainProvider: React.FC<React.PropsWithChildren> = ({ children
         }
       }
     });
-    return unsubscribe;
+    return () => {
+      if (isMounted.current) {
+        unsubscribe();
+      }
+    };
   }, []);
+
   return (
     <BlockchainContext.Provider value={{ onboardState, network, setNetwork }}>
       {children}

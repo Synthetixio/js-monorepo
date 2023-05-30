@@ -16,7 +16,8 @@ export async function delegateCollateral({ privateKey, accountId, symbol, amount
     ethers.BigNumber.from(poolId),
     config.tokenAddress,
     ethers.utils.parseEther(`${amount}`),
-    ethers.utils.parseEther(`1`)
+    ethers.utils.parseEther(`1`),
+    { gasLimit: 10_000_000 }
   );
   await tx.wait();
 

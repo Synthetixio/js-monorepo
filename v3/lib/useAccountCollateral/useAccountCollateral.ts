@@ -63,7 +63,5 @@ export function useAccountCollateral({ accountId }: { accountId?: string }) {
         };
       });
     },
-
-    placeholderData: [],
   });
 }

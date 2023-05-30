@@ -37,6 +37,7 @@ const supportedChains = [
     token: 'ETH',
     label: 'Ethereum Mainnet',
     rpcUrl: getInfuraRpcURL(NetworkIdByName.mainnet),
+    publicRpcUrl: 'https://ethereum.publicnode.com',
   },
   // Mainnet Ovm
   {
@@ -44,6 +45,7 @@ const supportedChains = [
     token: 'ETH',
     label: 'Optimism Mainnet',
     rpcUrl: getInfuraRpcURL(NetworkIdByName['mainnet-ovm']),
+    publicRpcUrl: 'https://mainnet.optimism.io',
   },
   // goerli
   {
@@ -51,6 +53,7 @@ const supportedChains = [
     token: 'ETH',
     label: 'Goerli',
     rpcUrl: getInfuraRpcURL(NetworkIdByName.goerli),
+    publicRpcUrl: 'https://ethereum-goerli.publicnode.com',
   },
   // goerli Ovm
   {
@@ -58,6 +61,7 @@ const supportedChains = [
     token: 'ETH',
     label: 'Optimism Goerli',
     rpcUrl: getInfuraRpcURL(NetworkIdByName['goerli-ovm']),
+    publicRpcUrl: 'https://goerli.optimism.io',
   },
 ];
 

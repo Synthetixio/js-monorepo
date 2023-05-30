@@ -27,6 +27,8 @@ import { useParams } from '@snx-v3/useParams';
 import { DepositMachine, Events, ServiceNames, State } from './DepositMachine';
 import { useMachine } from '@xstate/react';
 import type { StateFrom } from 'xstate';
+import { useContractErrorParser } from '@snx-v3/useContractErrorParser';
+import { ContractError } from '@snx-v3/ContractError';
 
 export const DepositModalUi: FC<{
   collateralChange: Wei;
@@ -185,16 +187,27 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
     collateralChange,
     currentCollateral: currentCollateral,
   });
+
+  const errorParserCoreProxy = useContractErrorParser(CoreProxy);
+
   const [state, send] = useMachine(DepositMachine, {
     services: {
       [ServiceNames.wrapEth]: async () => {
         try {
           await wrapEth(state.context.wrapAmount);
-        } catch (error) {
+        } catch (error: any) {
+          const contractError = errorParserCoreProxy(error);
+          if (contractError) {
+            console.error(new Error(contractError.name), contractError);
+          }
           toast.closeAll();
           toast({
             title: 'Wrapping ETH failed',
-            description: 'Please try again.',
+            description: contractError ? (
+              <ContractError contractError={contractError} />
+            ) : (
+              'Please try again.'
+            ),
             status: 'error',
           });
           throw Error('Wrapping failed', { cause: error });
@@ -212,10 +225,22 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
 
           await approve(Boolean(state.context.infiniteApproval));
           await refetchAllowance();
-        } catch (e) {
+        } catch (error: any) {
+          const contractError = errorParserCoreProxy(error);
+          if (contractError) {
+            console.error(new Error(contractError.name), contractError);
+          }
           toast.closeAll();
-          toast({ title: 'Approval failed', description: 'Please try again.', status: 'error' });
-          throw Error('Approve failed', { cause: e });
+          toast({
+            title: 'Approval failed',
+            description: contractError ? (
+              <ContractError contractError={contractError} />
+            ) : (
+              'Please try again.'
+            ),
+            status: 'error',
+          });
+          throw Error('Approve failed', { cause: error });
         }
       },
       [ServiceNames.executeDeposit]: async () => {
@@ -242,13 +267,21 @@ export const DepositModal: DepositModalProps = ({ onClose, isOpen, collateralCha
             status: 'success',
             duration: 5000,
           });
-        } catch (e) {
+        } catch (error: any) {
+          const contractError = errorParserCoreProxy(error);
+          if (contractError) {
+            console.error(new Error(contractError.name), contractError);
+          }
           toast({
             title: 'Could not complete account creation',
-            description: 'Please try again.',
+            description: contractError ? (
+              <ContractError contractError={contractError} />
+            ) : (
+              'Please try again.'
+            ),
             status: 'error',
           });
-          throw Error('Deposit failed', { cause: e });
+          throw Error('Deposit failed', { cause: error });
         }
       },
     },

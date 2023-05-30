@@ -5,9 +5,6 @@ it('should withdraw borrowed snxUSD and get back SNX collateral', () => {
     win.sessionStorage.TERMS_CONDITIONS_ACCEPTED = 'true';
   });
   cy.connectWallet().then(({ address, privateKey }) => {
-    // Disable collateral withdrawal timeout
-    cy.task('setConfig', { key: 'accountTimeoutWithdraw', value: '' });
-
     cy.task('setEthBalance', { address, balance: 100 });
     cy.task('getSnx', { address, amount: 500 });
     cy.task('approveCollateral', { privateKey, symbol: 'SNX' });
@@ -36,42 +33,42 @@ it('should withdraw borrowed snxUSD and get back SNX collateral', () => {
     );
   });
 
-  cy.get('[data-testid="manage action"][data-action="withdraw"]')
+  cy.get('[data-testid="manage action"][data-action="undelegate"]')
     .should('exist')
     .click()
     .should('have.attr', 'data-active', 'true');
   cy.location().should((loc) => {
-    expect(loc.search).to.include('manageAction=withdraw');
+    expect(loc.search).to.include('manageAction=undelegate');
   });
 
-  cy.get('[data-testid="available to withdraw"]').should('not.have.text', '-');
+  cy.get('[data-testid="available to undelegate"]').should('not.have.text', '-');
 
-  // withdraw only half of the collateral provided
-  cy.get('[data-testid="withdraw amount input"]').type('5');
+  // undelegate only half of the collateral provided
+  cy.get('[data-testid="undelegate amount input"]').type('5');
 
-  cy.get('[data-testid="withdraw submit"]').should('be.enabled').click();
+  cy.get('[data-testid="undelegate submit"]').should('be.enabled').click();
 
-  cy.get('[data-testid="withdraw modal"]')
+  cy.get('[data-testid="undelegate modal"]')
     .should('exist')
     .and('include.text', 'Complete this action');
 
-  cy.get('[data-testid="withdraw modal"]')
-    .should('include.text', `Withdraw`)
-    .and('include.text', `5 SNX will be withdrawn`);
+  cy.get('[data-testid="undelegate modal"]')
+    .should('include.text', `Undelegate`)
+    .and('include.text', `5 SNX will be undelegated`);
 
-  cy.get('[data-testid="withdraw confirm button"]').should('include.text', 'Start').click();
+  cy.get('[data-testid="undelegate confirm button"]').should('include.text', 'Start').click();
 
-  cy.get('[data-testid="withdraw confirm button"]')
+  cy.get('[data-testid="undelegate confirm button"]')
     .should('include.text', 'Processing...')
     .and('be.disabled');
 
-  cy.get('[data-testid="withdraw confirm button"]')
+  cy.get('[data-testid="undelegate confirm button"]')
     .should('include.text', 'Done')
     .and('be.enabled')
     .click();
 
-  cy.get('[data-testid="withdraw modal"]').should('not.exist');
+  cy.get('[data-testid="undelegate modal"]').should('not.exist');
 
   cy.get('[data-testid="manage stats collateral"]').should('include.text', `195 SNX`);
-  cy.get('[data-testid="available to withdraw"]').should('have.text', '195');
+  cy.get('[data-testid="available to undelegate"]').should('have.text', '195');
 });

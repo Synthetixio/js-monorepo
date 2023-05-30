@@ -6,10 +6,12 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v3/Amount": "workspace:*",
+    "@snx-v3/ContractError": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
     "@snx-v3/useAccounts": "workspace:*",
     "@snx-v3/useApprove": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
+    "@snx-v3/useContractErrorParser": "workspace:*",
     "@snx-v3/useCoreProxy": "workspace:*",
     "@snx-v3/useDeposit": "workspace:*",
     "@snx-v3/useEthBalance": "workspace:*",

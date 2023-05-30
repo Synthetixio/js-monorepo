@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 import { useQuery } from '@tanstack/react-query';
 import { getSubgraphUrl } from '@snx-v3/constants';
 import { z } from 'zod';
 import Wei, { wei } from '@synthetixio/wei';
 import { useNetwork } from '@snx-v3/useBlockchain';
 
-const GraphBigIntSchema = z.string().transform((src) => wei(src));
-const GraphBigDecimalSchema = z.string().transform((src) => wei(src));
+const GraphBigIntSchema = z.string().transform((src) => wei(src, 18, true));
+const GraphBigDecimalSchema = z.string().transform((src) => wei(src, 18, true));
 
 const calculateMarketPnl = (netIssuance: Wei, reportedDebt: Wei) =>
   reportedDebt.add(netIssuance).mul(-1);
@@ -83,7 +84,7 @@ const PoolsDataDocument = gql`
           net_issuance
           reported_debt
           updated_at
-          market_snapshots_by_week(first: 2) {
+          market_snapshots_by_week(first: 2, orderBy: updated_at, orderDirection: desc) {
             id
             usd_deposited
             usd_withdrawn
@@ -97,6 +98,30 @@ const PoolsDataDocument = gql`
     }
   }
 `;
+export const logMarket = (market: z.infer<typeof MarketSchema>) => {
+  console.log('Market:');
+  console.table({
+    market: market.id,
+    usd_deposited: market.usd_deposited.toNumber(),
+    usd_withdrawn: market.usd_withdrawn.toNumber(),
+    net_issuance: market.net_issuance.toNumber(),
+    reported_debt: market.reported_debt.toNumber(),
+    pnl: market.pnl.toNumber(),
+    updated_at: new Date(Number(market.updated_at) * 1000),
+  });
+  console.log('Snapshots:');
+  console.table(
+    market.market_snapshots_by_week.map((s) => ({
+      ...s,
+      pnl: s.pnl.toNumber(),
+      usd_deposited: s.usd_deposited.toNumber(),
+      usd_withdrawn: s.usd_withdrawn.toNumber(),
+      net_issuance: s.net_issuance.toNumber(),
+      reported_debt: s.reported_debt.toNumber(),
+      updated_at: new Date(Number(s.updated_at) * 1000),
+    }))
+  );
+};
 
 const getPoolData = async (chainName: string, id: string) => {
   const res = await fetch(getSubgraphUrl(chainName), {
