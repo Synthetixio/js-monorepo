@@ -132,7 +132,7 @@ export const CollateralSectionUi: FC<{
                           : '-'}
                       </Text>
                     </Flex>
-                    <Flex justifyContent="space-between">
+                    <Flex gap={2} justifyContent="space-between">
                       <Flex flexBasis="50%" flexDirection="column">
                         <Text mt={2} fontSize="sm" color="gray.500" textTransform="uppercase">
                           Total Value Locked
