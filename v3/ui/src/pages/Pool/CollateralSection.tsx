@@ -134,8 +134,14 @@ export const CollateralSectionUi: FC<{
                     </Flex>
                     <Flex gap={2} justifyContent="space-between">
                       <Flex flexBasis="50%" flexDirection="column">
-                        <Text mt={2} fontSize="sm" color="gray.500" textTransform="uppercase">
-                          Total Value Locked
+                        <Text
+                          mt={2}
+                          fontSize="sm"
+                          color="gray.500"
+                          textTransform="uppercase"
+                          whiteSpace="nowrap"
+                        >
+                          TVL
                         </Text>
                         <Text
                           fontSize="md"
@@ -156,7 +162,13 @@ export const CollateralSectionUi: FC<{
                         </Text>
                       </Flex>
                       <Flex flexBasis="30%" flexDirection="column">
-                        <Text mt={2} fontSize="sm" color="gray.500" textTransform="uppercase">
+                        <Text
+                          mt={2}
+                          fontSize="sm"
+                          color="gray.500"
+                          textTransform="uppercase"
+                          whiteSpace="nowrap"
+                        >
                           Vault Debt
                         </Text>
                         <Text
@@ -169,7 +181,13 @@ export const CollateralSectionUi: FC<{
                         </Text>
                       </Flex>
                       <Flex flexBasis="20%" flexDirection="column">
-                        <Text mt={2} fontSize="sm" color="gray.500" textTransform="uppercase">
+                        <Text
+                          mt={2}
+                          fontSize="sm"
+                          color="gray.500"
+                          textTransform="uppercase"
+                          whiteSpace="nowrap"
+                        >
                           C-Ratio
                         </Text>
                         <Text
