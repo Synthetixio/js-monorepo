@@ -10,16 +10,20 @@ import {
   ModalOverlay,
   Spinner,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { Amount } from '@snx-v3/Amount';
 import Wei from '@synthetixio/wei';
 import { TransactionStatus } from '@snx-v3/txnReducer';
 import { CheckIcon, CloseIcon } from '@snx-v3/Multistep';
-import { PropsWithChildren, useContext } from 'react';
+import { PropsWithChildren, useCallback, useContext } from 'react';
 import { useParams } from '@snx-v3/useParams';
 import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
 import { useCollateralType } from '@snx-v3/useCollateralTypes';
 import { useBorrow } from '@snx-v3/useBorrow';
+import { useCoreProxy } from '@snx-v3/useCoreProxy';
+import { useContractErrorParser } from '@snx-v3/useContractErrorParser';
+import { ContractError } from '@snx-v3/ContractError';
 
 function StepIcon({ txnStatus, children }: PropsWithChildren<{ txnStatus: TransactionStatus }>) {
   switch (txnStatus) {
@@ -140,11 +144,37 @@ export const BorrowModal: React.FC<{
     collateralTypeAddress: collateralType?.tokenAddress,
     debtChange,
   });
+
+  const toast = useToast({ isClosable: true, duration: 9000 });
+  const { data: CoreProxy } = useCoreProxy();
+  const errorParserCoreProxy = useContractErrorParser(CoreProxy);
+  const execBorrowWithErrorParser = useCallback(async () => {
+    try {
+      await execBorrow();
+    } catch (error: any) {
+      const contractError = errorParserCoreProxy(error);
+      if (contractError) {
+        console.error(new Error(contractError.name), contractError);
+      }
+      toast.closeAll();
+      toast({
+        title: 'Borrow failed',
+        description: contractError ? (
+          <ContractError contractError={contractError} />
+        ) : (
+          'Please try again.'
+        ),
+        status: 'error',
+      });
+      throw Error('Borrow failed', { cause: error });
+    }
+  }, [errorParserCoreProxy, execBorrow, toast]);
+
   const { txnStatus } = txnState;
   if (!params.poolId || !params.accountId || !collateralType) return null;
   return (
     <BorrowModalUi
-      execBorrow={execBorrow}
+      execBorrow={execBorrowWithErrorParser}
       debtChange={debtChange}
       txnStatus={txnStatus}
       onClose={() => {

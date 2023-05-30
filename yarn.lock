@@ -7729,11 +7729,14 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/ContractError": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@snx-v3/useBorrow": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useContractErrorParser": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
@@ -7769,10 +7772,12 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/ContractError": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/useAccounts": "workspace:*"
     "@snx-v3/useApprove": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useContractErrorParser": "workspace:*"
     "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useDeposit": "workspace:*"
     "@snx-v3/useEthBalance": "workspace:*"
@@ -7873,10 +7878,13 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/ContractError": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/txnReducer": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useContractErrorParser": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/useRepay": "workspace:*"
     "@synthetixio/wei": ^2.74.4
@@ -7912,9 +7920,12 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/Amount": "workspace:*"
+    "@snx-v3/ContractError": "workspace:*"
     "@snx-v3/ManagePositionContext": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
     "@snx-v3/useCollateralTypes": "workspace:*"
+    "@snx-v3/useContractErrorParser": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useLiquidityPosition": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
     "@snx-v3/useUndelegate": "workspace:*"

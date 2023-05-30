@@ -21,6 +21,9 @@ import { useMachine } from '@xstate/react';
 import { useUndelegate } from '@snx-v3/useUndelegate';
 import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
 import type { StateFrom } from 'xstate';
+import { useCoreProxy } from '@snx-v3/useCoreProxy';
+import { useContractErrorParser } from '@snx-v3/useContractErrorParser';
+import { ContractError } from '@snx-v3/ContractError';
 
 export const UndelegateModalUi: FC<{
   amount: Wei;
@@ -106,6 +109,10 @@ export const UndelegateModal: UndelegateModalProps = ({ onClose, isOpen }) => {
     collateralChange,
     currentCollateral: currentCollateral,
   });
+
+  const { data: CoreProxy } = useCoreProxy();
+  const errorParserCoreProxy = useContractErrorParser(CoreProxy);
+
   const [state, send] = useMachine(UndelegateMachine, {
     context: {
       amount: collateralChange.abs(),
@@ -115,11 +122,19 @@ export const UndelegateModal: UndelegateModalProps = ({ onClose, isOpen }) => {
         try {
           await execUndelegate();
           await refetchLiquidityPosition();
-        } catch (error) {
+        } catch (error: any) {
+          const contractError = errorParserCoreProxy(error);
+          if (contractError) {
+            console.error(new Error(contractError.name), contractError);
+          }
           toast.closeAll();
           toast({
             title: 'Undelegate failed',
-            description: 'Please try again.',
+            description: contractError ? (
+              <ContractError contractError={contractError} />
+            ) : (
+              'Please try again.'
+            ),
             status: 'error',
           });
           throw Error('Undelegate failed', { cause: error });
