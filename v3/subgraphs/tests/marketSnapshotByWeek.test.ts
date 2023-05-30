@@ -41,7 +41,7 @@ describe('MarketSnapshotByWeek', () => {
 
   test('Handles deposit and withdrawals', () => {
     // @ts-ignore
-    const nowSeconds = <i64>Date.parse('2022-01-01T00:00:00.000Z').getTime() / 1000;
+    const nowSeconds = <i64>Math.floor(Date.parse('2022-01-01T00:00:00.000Z').getTime() / 1000);
     // @ts-ignore
     const oneHour = <i64>60 * 60; // Number of seconds in one hour
     // @ts-ignore
