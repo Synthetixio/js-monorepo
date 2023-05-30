@@ -17,6 +17,8 @@
     "@chakra-ui/react": "^2.5.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
     "@graphql-typed-document-node/core": "^3.1.2",
     "@pythnetwork/pyth-evm-js": "^1.1.0",
     "@snx-v2/formatters": "workspace:*",
