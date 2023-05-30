@@ -15,7 +15,7 @@ import {
   Skeleton,
   TextProps,
 } from '@chakra-ui/react';
-import { PoolType, usePoolData } from '@snx-v3/usePoolData';
+import { logMarket, PoolType, usePoolData } from '@snx-v3/usePoolData';
 import {
   calculateSevenDaysPnlGrowth,
   calculatePoolPerformanceSevenDays,
@@ -195,7 +195,13 @@ export function MarketSectionUi({
                   const isLastItem = i + 1 === poolData.configurations.length;
                   const growth = calculateSevenDaysPnlGrowth(market.market_snapshots_by_week);
                   return (
-                    <Tr key={id} color="gray.500" data-testid="pool market" data-market={id}>
+                    <Tr
+                      onClick={() => logMarket(market)}
+                      key={id}
+                      color="gray.500"
+                      data-testid="pool market"
+                      data-market={id}
+                    >
                       <StyledTd isLastItem={isLastItem}>
                         <Text
                           fontSize="sm"
