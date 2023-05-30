@@ -83,7 +83,7 @@ const PoolsDataDocument = gql`
           net_issuance
           reported_debt
           updated_at
-          market_snapshots_by_week(first: 2) {
+          market_snapshots_by_week(first: 2, orderBy: updated_at, orderDirection: desc) {
             id
             usd_deposited
             usd_withdrawn
