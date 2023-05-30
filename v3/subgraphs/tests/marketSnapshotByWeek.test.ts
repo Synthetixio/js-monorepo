@@ -40,14 +40,10 @@ describe('MarketSnapshotByWeek', () => {
   });
 
   test('Handles deposit and withdrawals', () => {
-    // @ts-ignore
-    const nowSeconds = <i64>Math.floor(Date.parse('2022-01-01T00:00:00.000Z').getTime() / 1000);
-    // @ts-ignore
-    const oneHour = <i64>60 * 60; // Number of seconds in one hour
-    // @ts-ignore
-    const oneDay = <i64>24 * oneHour; // Number of seconds in one day
-    // @ts-ignore
-    const oneWeek = <i64>oneDay * 7; // Number of seconds in one day
+    const nowSeconds = 1640995200; //2022-01-01T00:00:00.000Z
+    const oneHour = 60 * 60; // Number of seconds in one hour
+    const oneDay = 24 * oneHour; // Number of seconds in one day
+    const oneWeek = oneDay * 7; // Number of seconds in one day
     const newMarketRegisteredEvent = createMarketCreatedEvent(
       1,
       address,
