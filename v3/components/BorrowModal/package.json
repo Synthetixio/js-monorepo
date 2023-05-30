@@ -6,11 +6,14 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v3/Amount": "workspace:*",
+    "@snx-v3/ContractError": "workspace:*",
     "@snx-v3/ManagePositionContext": "workspace:*",
     "@snx-v3/Multistep": "workspace:*",
     "@snx-v3/txnReducer": "workspace:*",
     "@snx-v3/useBorrow": "workspace:*",
     "@snx-v3/useCollateralTypes": "workspace:*",
+    "@snx-v3/useContractErrorParser": "workspace:*",
+    "@snx-v3/useCoreProxy": "workspace:*",
     "@snx-v3/useParams": "workspace:*",
     "@synthetixio/wei": "^2.74.4",
     "react": "^18.2.0"
