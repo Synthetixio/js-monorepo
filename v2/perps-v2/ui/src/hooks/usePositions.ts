@@ -17,8 +17,8 @@ import {
   abi as multiCallAbi,
   address as multiCallAddressGoerli,
   Multicall3,
-} from '@synthetixio/v3-contracts/build/optimism-goerli/Multicall3';
-import { address as multicallMainnetAddress } from '@synthetixio/v3-contracts/build/optimism-mainnet/Multicall3';
+} from './contracts/optimism-goerli/Multicall3';
+import { address as multicallMainnetAddress } from './contracts/optimism-mainnet/Multicall3';
 import { wei } from '@synthetixio/wei';
 import { ContractData, SubgraphPositionData, PositionsDataSchema } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';

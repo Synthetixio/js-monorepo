@@ -21,7 +21,6 @@
     "@pythnetwork/pyth-evm-js": "^1.1.0",
     "@snx-v2/formatters": "workspace:*",
     "@synthetixio/contracts": "workspace:*",
-    "@synthetixio/v3-contracts": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "@synthetixio/wei": "^2.74.4",
     "date-fns": "^2.29.3",
