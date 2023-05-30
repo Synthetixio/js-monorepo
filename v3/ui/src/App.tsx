@@ -28,7 +28,7 @@ function Sync() {
   return null;
 }
 
-export const App = () => {
+function ColorMode() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
@@ -36,13 +36,17 @@ export const App = () => {
       toggleColorMode();
     }
   }, [colorMode, toggleColorMode]);
+  return null;
+}
 
+export const App = () => {
   const TERMS_CONDITIONS_ACCEPTED =
     sessionStorage.getItem(SESSION_STORAGE_KEYS.TERMS_CONDITIONS_ACCEPTED) === 'true';
 
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
+        <ColorMode />
         <Fonts />
         <BlockchainProvider>
           <GasSpeedProvider>
