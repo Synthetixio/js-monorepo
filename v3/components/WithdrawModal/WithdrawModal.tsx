@@ -9,30 +9,30 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useCallback, useContext, useEffect } from 'react';
-import { CollateralType, useCollateralType } from '@snx-v3/useCollateralTypes';
+import React, { FC, useCallback } from 'react';
 import { Amount } from '@snx-v3/Amount';
-import { useLiquidityPosition } from '@snx-v3/useLiquidityPosition';
 import { useUnWrapEth } from '@snx-v3/useWrapEth';
 import { Multistep } from '@snx-v3/Multistep';
-import { Wei, wei } from '@synthetixio/wei';
-import { FC } from 'react';
+import { Wei } from '@synthetixio/wei';
 import { useParams } from '@snx-v3/useParams';
-import { WithdrawMachine, State, Events, ServiceNames } from './WithdrawMachine';
+import { Events, ServiceNames, State, WithdrawMachine } from './WithdrawMachine';
 import { useMachine } from '@xstate/react';
-import { useUndelegate } from '@snx-v3/useUndelegate';
-import { ManagePositionContext } from '@snx-v3/ManagePositionContext';
+import { useWithdraw } from '@snx-v3/useWithdraw';
 import type { StateFrom } from 'xstate';
+import { AccountCollateralType, useAccountCollateral } from '@snx-v3/useAccountCollateral';
+import { useContractErrorParser } from '@snx-v3/useContractErrorParser';
+import { useCoreProxy } from '@snx-v3/useCoreProxy';
+import { ContractError } from '@snx-v3/ContractError';
 
 export const WithdrawModalUi: FC<{
   amount: Wei;
   isOpen: boolean;
   onClose: () => void;
-  collateralType?: CollateralType;
+  accountCollateral?: AccountCollateralType;
   state: StateFrom<typeof WithdrawMachine>;
   error: { error: Error; step: string } | null;
   onSubmit: () => void;
-}> = ({ amount, isOpen, onClose, collateralType, onSubmit, state, error }) => {
+}> = ({ amount, isOpen, onClose, accountCollateral, onSubmit, state, error }) => {
   const isProcessing = state.matches(State.withdraw) || state.matches(State.unwrap);
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
@@ -48,7 +48,7 @@ export const WithdrawModalUi: FC<{
             title="Withdraw"
             subtitle={
               <Text as="div">
-                <Amount value={amount} suffix={` ${collateralType?.symbol}`} /> will be withdrawn
+                <Amount value={amount} suffix={` ${accountCollateral?.symbol}`} /> will be withdrawn
               </Text>
             }
             status={{
@@ -58,14 +58,14 @@ export const WithdrawModalUi: FC<{
               loading: state.matches(State.withdraw) && !error,
             }}
           />
-          {collateralType?.symbol === 'WETH' ? (
+          {accountCollateral?.symbol === 'WETH' ? (
             <Multistep
               step={2}
-              title={`Unwrap ${collateralType?.symbol}`}
+              title={`Unwrap ${accountCollateral?.symbol}`}
               subtitle="This will unwrap your WETH to ETH"
               status={{
                 failed: Boolean(error?.step === State.unwrap),
-                disabled: collateralType?.symbol !== 'WETH',
+                disabled: accountCollateral?.symbol !== 'WETH',
                 success: state.matches(State.success),
                 loading: state.matches(State.unwrap),
               }}
@@ -97,47 +97,57 @@ export const WithdrawModalUi: FC<{
     </Modal>
   );
 };
-export type WithdrawModalProps = FC<{
+
+export function WithdrawModal({
+  accountCollateral,
+  onClose,
+  isOpen,
+}: {
+  accountCollateral: AccountCollateralType;
   isOpen: boolean;
   onClose: () => void;
-}>;
-export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
+}) {
   const params = useParams();
-  const collateralType = useCollateralType(params.collateralSymbol);
-  const { collateralChange } = useContext(ManagePositionContext);
-  const { data: liquidityPosition, refetch: refetchLiquidityPosition } = useLiquidityPosition({
-    accountId: params.accountId,
-    tokenAddress: collateralType?.tokenAddress,
-    poolId: params.poolId,
-  });
   const toast = useToast({ isClosable: true, duration: 9000 });
 
   const { exec: unwrap } = useUnWrapEth();
-  const currentCollateral = liquidityPosition?.collateralAmount || wei(0);
-  const { exec: execUndelegate } = useUndelegate({
+  const { exec: execWithdraw } = useWithdraw({
     accountId: params.accountId,
-    poolId: params.poolId,
-    collateralTypeAddress: collateralType?.tokenAddress,
-    collateralChange,
-    currentCollateral: currentCollateral,
+    collateralTypeAddress: accountCollateral?.tokenAddress,
   });
+
+  const { refetch: refetchAccountCollateral } = useAccountCollateral({
+    accountId: params.accountId,
+  });
+
+  const { data: CoreProxy } = useCoreProxy();
+  const errorParserCoreProxy = useContractErrorParser(CoreProxy);
+
   const [state, send] = useMachine(WithdrawMachine, {
     context: {
-      amount: collateralChange.abs(),
+      amount: accountCollateral?.availableCollateral,
     },
     services: {
       [ServiceNames.withdraw]: async () => {
         try {
-          await execUndelegate();
-          await refetchLiquidityPosition();
-        } catch (error) {
+          await execWithdraw();
+          await refetchAccountCollateral();
+        } catch (error: any) {
+          const contractError = errorParserCoreProxy(error);
+          if (contractError) {
+            console.error(new Error(contractError.name), contractError);
+          }
           toast.closeAll();
           toast({
             title: 'Withdraw failed',
-            description: 'Please try again.',
+            description: contractError ? (
+              <ContractError contractError={contractError} />
+            ) : (
+              'Please try again.'
+            ),
             status: 'error',
           });
-          throw Error('Wrapping failed', { cause: error });
+          throw Error('Withdraw failed', { cause: error });
         }
       },
       [ServiceNames.unwrap]: async () => {
@@ -157,14 +167,6 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
       },
     },
   });
-  const collateralChangeString = collateralChange.toString();
-  useEffect(() => {
-    send(Events.SET_AMOUNT, { amount: wei(collateralChangeString).abs() });
-  }, [collateralChangeString, send]);
-
-  useEffect(() => {
-    send(Events.SET_COLLATERAL_SYMBOL, { symbol: wei(collateralChangeString).abs() });
-  }, [collateralChangeString, send]);
 
   const onSubmit = useCallback(async () => {
     if (state.matches(State.success)) {
@@ -184,10 +186,10 @@ export const WithdrawModal: WithdrawModalProps = ({ onClose, isOpen }) => {
       amount={state.context.amount}
       isOpen={isOpen}
       onClose={onClose}
-      collateralType={collateralType}
+      accountCollateral={accountCollateral}
       state={state}
       error={state.context.error}
       onSubmit={onSubmit}
     />
   );
-};
+}

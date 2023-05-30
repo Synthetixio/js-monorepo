@@ -1,22 +1,23 @@
 import { Amount } from '@snx-v3/Amount';
-import { Button, Flex, Td, Text, Tr, useToast } from '@chakra-ui/react';
+import { Button, Flex, Td, Text, Tr } from '@chakra-ui/react';
 import { CollateralIcon } from '@snx-v3/icons';
-import { useWithdraw } from '@snx-v3/useWithdraw';
 import { useParams } from '@snx-v3/useParams';
-import { useCollateralType } from '@snx-v3/useCollateralTypes';
-import { useContractErrorParser } from '@snx-v3/useContractErrorParser';
-import { useCoreProxy } from '@snx-v3/useCoreProxy';
-import { ContractError } from '@snx-v3/ContractError';
+import { AccountCollateralType } from '@snx-v3/useAccountCollateral';
+import React from 'react';
+import { useAccountCollateralUnlockDate } from '@snx-v3/useAccountCollateralUnlockDate';
+import { safeImport } from '@synthetixio/safe-import';
+
+const WithdrawModal = React.lazy(() => safeImport(() => import('@snx-v3/WithdrawModal')));
 
 function AvailableCollateralRowUi({
   accountCollateral,
-  isWithdrawLoading,
-  onWithdraw,
+  isDisabled,
 }: {
-  accountCollateral: any;
-  isWithdrawLoading: boolean;
-  onWithdraw: () => void;
+  accountCollateral: AccountCollateralType;
+  isDisabled: boolean;
 }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
     <Tr>
       <Td>
@@ -30,52 +31,39 @@ function AvailableCollateralRowUi({
         </Flex>
       </Td>
       <Td textAlign="end">
-        <Button isDisabled={isWithdrawLoading} onClick={onWithdraw}>
+        <Button isDisabled={isDisabled} onClick={() => setIsOpen(true)}>
           Withdraw
         </Button>
+        <React.Suspense fallback={null}>
+          {isOpen ? (
+            <WithdrawModal
+              accountCollateral={accountCollateral}
+              onClose={() => setIsOpen(false)}
+              isOpen={isOpen}
+            />
+          ) : null}
+        </React.Suspense>
       </Td>
     </Tr>
   );
 }
 
-export function AvailableCollateralRow({ accountCollateral }: { accountCollateral: any }) {
-  const params = useParams();
-  const collateralType = useCollateralType(params.collateralSymbol);
-
-  const { data: CoreProxy } = useCoreProxy();
-  const errorParserCoreProxy = useContractErrorParser(CoreProxy);
-  const toast = useToast({ isClosable: true, duration: 9000 });
-
-  const withdraw = useWithdraw({
-    accountId: params.accountId,
-    collateralTypeAddress: collateralType?.tokenAddress,
-  });
-  const onWithdraw = async () => {
-    try {
-      await withdraw.exec();
-    } catch (error: any) {
-      const contractError = errorParserCoreProxy(error);
-      if (contractError) {
-        console.error(new Error(contractError.name), contractError);
-      }
-      toast.closeAll();
-      toast({
-        title: 'Withdraw failed',
-        description: contractError ? (
-          <ContractError contractError={contractError} />
-        ) : (
-          'Please try again.'
-        ),
-        status: 'error',
-      });
-    }
-  };
+export function AvailableCollateralRow({
+  accountCollateral,
+}: {
+  accountCollateral: AccountCollateralType;
+}) {
+  const { accountId } = useParams();
+  const accountCollateralUnlockDate = useAccountCollateralUnlockDate({ accountId });
 
   return (
     <AvailableCollateralRowUi
       accountCollateral={accountCollateral}
-      onWithdraw={onWithdraw}
-      isWithdrawLoading={withdraw.isLoading}
+      isDisabled={
+        !accountCollateralUnlockDate.data ||
+        accountCollateralUnlockDate.data.getTime() > Date.now() ||
+        accountCollateral.availableCollateral.eq(0)
+      }
     />
   );
 }

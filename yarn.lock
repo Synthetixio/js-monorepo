@@ -7925,18 +7925,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/WithdrawModal@workspace:v3/components/WithdrawModal":
+"@snx-v3/WithdrawModal@workspace:*, @snx-v3/WithdrawModal@workspace:v3/components/WithdrawModal":
   version: 0.0.0-use.local
   resolution: "@snx-v3/WithdrawModal@workspace:v3/components/WithdrawModal"
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v3/Amount": "workspace:*"
-    "@snx-v3/ManagePositionContext": "workspace:*"
+    "@snx-v3/ContractError": "workspace:*"
     "@snx-v3/Multistep": "workspace:*"
-    "@snx-v3/useCollateralTypes": "workspace:*"
-    "@snx-v3/useLiquidityPosition": "workspace:*"
+    "@snx-v3/useAccountCollateral": "workspace:*"
+    "@snx-v3/useContractErrorParser": "workspace:*"
+    "@snx-v3/useCoreProxy": "workspace:*"
     "@snx-v3/useParams": "workspace:*"
-    "@snx-v3/useUndelegate": "workspace:*"
+    "@snx-v3/useWithdraw": "workspace:*"
     "@snx-v3/useWrapEth": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@xstate/react": ^3.2.1
@@ -8127,6 +8128,7 @@ __metadata:
     "@snx-v3/TermsModal": "workspace:*"
     "@snx-v3/TrendText": "workspace:*"
     "@snx-v3/UndelegateModal": "workspace:*"
+    "@snx-v3/WithdrawModal": "workspace:*"
     "@snx-v3/calculations": "workspace:*"
     "@snx-v3/constants": "workspace:*"
     "@snx-v3/format": "workspace:*"
@@ -8150,7 +8152,6 @@ __metadata:
     "@snx-v3/useTokenBalance": "workspace:*"
     "@snx-v3/useUSDProxy": "workspace:*"
     "@snx-v3/useVaultsData": "workspace:*"
-    "@snx-v3/useWithdraw": "workspace:*"
     "@snx-v3/validatePosition": "workspace:*"
     "@storybook/addon-essentials": ^6.5.16
     "@storybook/addon-interactions": ^6.5.16

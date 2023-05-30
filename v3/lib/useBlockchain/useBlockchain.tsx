@@ -133,6 +133,15 @@ export const BlockchainContext = React.createContext<{
 export const BlockchainProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [onboardState, setOnboardState] = React.useState(onboard.state.get());
   const [network, setNetwork] = React.useState(DEFAULT_NETWORK);
+
+  const isMounted = React.useRef(false);
+  React.useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   React.useEffect(() => {
     const { unsubscribe } = onboard.state.select().subscribe((nextState) => {
       setOnboardState(nextState);
@@ -151,8 +160,13 @@ export const BlockchainProvider: React.FC<React.PropsWithChildren> = ({ children
         }
       }
     });
-    return unsubscribe;
+    return () => {
+      if (isMounted.current) {
+        unsubscribe();
+      }
+    };
   }, []);
+
   return (
     <BlockchainContext.Provider value={{ onboardState, network, setNetwork }}>
       {children}
