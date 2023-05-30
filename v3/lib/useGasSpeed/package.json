@@ -1,9 +1,0 @@
-{
-  "name": "@snx-v3/useGasSpeed",
-  "private": true,
-  "main": "index.ts",
-  "version": "0.0.0",
-  "dependencies": {
-    "react": "^18.2.0"
-  }
-}
