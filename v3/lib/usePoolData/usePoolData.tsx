@@ -122,9 +122,7 @@ export const usePoolData = (poolId?: string) => {
       if (!poolData.data.pool) {
         throw Error(`Pool ${poolId} not found`);
       }
-      const ret = poolData.data.pool;
-      console.log('hook', ret);
-      return ret;
+      return poolData.data.pool;
     },
     enabled: Boolean(poolId && parseInt(poolId) > 0),
   });
