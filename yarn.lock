@@ -5633,7 +5633,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sideway/formula@npm:^3.0.0, @sideway/formula@npm:^3.0.1":
+"@sideway/formula@npm:^3.0.1":
   version: 3.0.1
   resolution: "@sideway/formula@npm:3.0.1"
   checksum: e4beeebc9dbe2ff4ef0def15cec0165e00d1612e3d7cea0bc9ce5175c3263fc2c818b679bd558957f49400ee7be9d4e5ac90487e1625b4932e15c4aa7919c57a
@@ -9094,8 +9094,8 @@ __metadata:
     "@types/react-table": ^7.7.14
     "@types/styled-components": ^5.1.26
     "@web3-onboard/coinbase": ^2.2.0
-    "@web3-onboard/common": ^2.2.3
-    "@web3-onboard/core": ^2.15.2
+    "@web3-onboard/common": ^2.3.3
+    "@web3-onboard/core": ^2.19.2
     "@web3-onboard/gnosis": ^2.1.6
     "@web3-onboard/injected-wallets": ^2.8.0
     "@web3-onboard/ledger": ^2.4.2
@@ -10563,19 +10563,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unstoppabledomains/resolution@npm:^8.0":
-  version: 8.5.0
-  resolution: "@unstoppabledomains/resolution@npm:8.5.0"
-  dependencies:
-    "@ethersproject/abi": ^5.0.1
-    bn.js: ^4.4.0
-    cross-fetch: ^3.1.4
-    crypto-js: ^4.1.1
-    elliptic: ^6.5.4
-  checksum: 3deaae15c0ff9699a30306a5c2a4ff09a5fc9bd9f2c4e9ab22621e85bad7109cff5bfe8bebe2f334cf7b76e602e25b9af659a4d5f5dab44738b41a0b60d8d608
-  languageName: node
-  linkType: hard
-
 "@vue/compiler-core@npm:3.2.36":
   version: 3.2.36
   resolution: "@vue/compiler-core@npm:3.2.36"
@@ -11118,25 +11105,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web3-onboard/core@npm:^2.15.2":
-  version: 2.15.2
-  resolution: "@web3-onboard/core@npm:2.15.2"
+"@web3-onboard/core@npm:^2.19.2":
+  version: 2.19.2
+  resolution: "@web3-onboard/core@npm:2.19.2"
   dependencies:
-    "@unstoppabledomains/resolution": ^8.0
-    "@web3-onboard/common": ^2.2.3
+    "@web3-onboard/common": ^2.3.3
     bignumber.js: ^9.0.0
     bnc-sdk: ^4.6.7
     bowser: ^2.11.0
     ethers: 5.5.3
     eventemitter3: ^4.0.7
-    joi: ^17.6.1
+    joi: 17.9.1
     lodash.merge: ^4.6.2
     lodash.partition: ^4.6.0
     nanoid: ^4.0.0
     rxjs: ^7.5.5
     svelte: ^3.49.0
     svelte-i18n: ^3.3.13
-  checksum: bc108214609193ada1a00f743c44e8e3287786b9a5f45c8fcd13244b398c5b9621c2fcfcff9741b5c8efe3da35d1dfdc9b9fd6def48be6f601c627663bd79635
+  checksum: 8084e736fcc1857a65999403cf5fb8868a48685cb9eb43bae933fbef3b51927b43337abf389119b695a4bf44e6def8d33c79d1541d3bc89ac26e58010dfd0b72
   languageName: node
   linkType: hard
 
@@ -15283,13 +15269,6 @@ __metadata:
   version: 1.2.7
   resolution: "crypto-es@npm:1.2.7"
   checksum: e2c215f3524e40fa756ffabb0d7fd190306a70c9210b8333a446677ac596bc0ab04bc5315d6bb967aab157867edada7bdcf8a4f18e35a2a4b78285f13440037b
-  languageName: node
-  linkType: hard
-
-"crypto-js@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "crypto-js@npm:4.1.1"
-  checksum: b3747c12ee3a7632fab3b3e171ea50f78b182545f0714f6d3e7e2858385f0f4101a15f2517e033802ce9d12ba50a391575ff4638c9de3dd9b2c4bc47768d5425
   languageName: node
   linkType: hard
 
@@ -22030,7 +22009,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:17.9.1":
+"joi@npm:17.9.1, joi@npm:^17.6.1":
   version: 17.9.1
   resolution: "joi@npm:17.9.1"
   dependencies:
@@ -22040,19 +22019,6 @@ __metadata:
     "@sideway/formula": ^3.0.1
     "@sideway/pinpoint": ^2.0.0
   checksum: 055df3841e00d7ed065ef1cc3330cf69097ab2ffec3083d8b1d6edfd2e25504bf2983f5249d6f0459bcad99fe21bb0c9f6f1cc03569713af27cd5eb00ee7bb7d
-  languageName: node
-  linkType: hard
-
-"joi@npm:^17.6.1":
-  version: 17.6.3
-  resolution: "joi@npm:17.6.3"
-  dependencies:
-    "@hapi/hoek": ^9.0.0
-    "@hapi/topo": ^5.0.0
-    "@sideway/address": ^4.1.3
-    "@sideway/formula": ^3.0.0
-    "@sideway/pinpoint": ^2.0.0
-  checksum: a4cd53a83e68de7727ba48daa79047183d65a9bb6c2ad4f3028cb56a7526d113860c8189e95371d8d3a8315c344a478547f875daf3856f2d9477a995ca1ef05a
   languageName: node
   linkType: hard
 
