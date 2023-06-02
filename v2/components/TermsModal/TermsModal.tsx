@@ -13,7 +13,7 @@ import {
   UnorderedList,
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { theme } from '@synthetixio/v3-theme';
+import { theme } from '@snx-v2/v3Theme';
 import { SESSION_STORAGE_KEYS } from '@snx-v2/Constants';
 
 interface TermsModalProps {

@@ -1,1 +1,0 @@
-export { EthereumIcon } from './EthereumIcon';

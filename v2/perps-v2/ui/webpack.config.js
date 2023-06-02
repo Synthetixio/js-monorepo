@@ -125,12 +125,7 @@ module.exports = {
   plugins: [htmlPlugin]
     .concat([new webpack.NormalModuleReplacementPlugin(/^bn.js$/, require.resolve('bn.js'))])
     .concat(isProd ? [new CopyWebpackPlugin({ patterns: ['public', '_redirects'] })] : [])
-    .concat([
-      new webpack.NormalModuleReplacementPlugin(
-        new RegExp(`^@synthetixio/v3-theme$`),
-        path.resolve(path.dirname(require.resolve(`@synthetixio/v3-theme/package.json`)), 'src')
-      ),
-    ])
+
     .concat([
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
@@ -165,7 +160,6 @@ module.exports = {
   resolve: {
     alias: {
       '@synthetixio/contracts/build': '@synthetixio/contracts/src',
-      '@synthetixio/v3-contracts/build': '@synthetixio/v3-contracts/src',
     },
     fallback: {
       buffer: require.resolve('buffer'),

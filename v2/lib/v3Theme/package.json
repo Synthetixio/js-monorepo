@@ -1,0 +1,11 @@
+{
+  "name": "@snx-v2/v3Theme",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.1",
+  "dependencies": {
+    "@chakra-ui/react": "^2.5.0",
+    "@chakra-ui/theme-tools": "^2.0.18",
+    "@emotion/react": "^11.10.5"
+  }
+}

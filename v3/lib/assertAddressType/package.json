@@ -1,6 +1,0 @@
-{
-  "name": "@snx-v3/assertAddressType",
-  "private": true,
-  "main": "index.ts",
-  "version": "0.0.1"
-}

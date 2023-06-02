@@ -1,4 +1,4 @@
-import { theme as chakraTheme } from '@synthetixio/v3-theme';
+import { theme as chakraTheme } from '@snx-v2/v3Theme';
 
 export default {
   // primary

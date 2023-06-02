@@ -46,7 +46,7 @@ commands:
   checksum:
     steps:
       - run: |-
-          git ls-files -s contracts packages tools v1 v2 v3 > "/tmp/checksum.txt"
+          git ls-files -s contracts packages tools v1 v2 > "/tmp/checksum.txt"
           cat "/tmp/checksum.txt"
 
   build-save:
@@ -60,7 +60,6 @@ commands:
             - './tools'
             - './v1'
             - './v2'
-            - './v3'
             - '/tmp/build-cache.txt'
 
   build-restore:
@@ -217,8 +216,6 @@ jobs:
       - store_artifacts:
           path: 'coverage'
 
-      - run: yarn workspace @snx-v3/subgraphs test
-      - run: yarn workspace @snx-v3/subgraphs test --coverage
       - run: yarn workspace @synthetixio/perps-v2-subgraph test
       - run: yarn workspace @synthetixio/perps-v2-subgraph test --coverage
 
@@ -327,92 +324,6 @@ jobs:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
 
-  v3-e2e:
-    parameters:
-      chain:
-        type: string
-    working_directory: /tmp/app
-    docker:
-      - image: cypress/included:<< pipeline.parameters.cypress-version >>
-    resource_class: large
-    environment:
-      NODE_ENV: test
-    steps:
-      - checkout
-      - install-foundry
-      - yarn-install
-
-      - run:
-          name: Run server localhost:3000
-          working_directory: /tmp/app/v3/ui
-          command: yarn start
-          background: true
-
-      - run:
-          name: Run anvil localhost:8545
-          command: anvil --fork-url https://<< parameters.chain >>.infura.io/v3/$INFURA_KEY
-          background: true
-
-      - run:
-          name: Wait for server localhost:3000
-          command: wget --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000
-
-      - run:
-          name: Wait for anvil localhost:8545
-          command: wget -q -O - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data='{"method":"eth_chainId","params":[],"id":1,"jsonrpc":"2.0"}' --header='Content-Type:application/json' http://localhost:8545
-
-      - run:
-          working_directory: /tmp/app/v3/cypress
-          command: cypress run --e2e --browser chrome
-
-      - store_test_results:
-          path: 'v3/cypress/cypress/reports'
-
-      - store_artifacts:
-          path: 'v3/cypress/.nyc_output'
-          destination: 'coverage'
-
-      - store_artifacts:
-          path: 'v3/cypress/cypress/screenshots'
-          destination: 'screenshots'
-
-      - store_artifacts:
-          path: 'v3/cypress/cypress/videos'
-          destination: 'videos'
-
-      - store_artifacts:
-          path: 'v3/cypress/cypress/forks'
-          destination: 'forks'
-
-  v3-cy:
-    working_directory: /tmp/app
-    docker:
-      - image: cypress/included:<< pipeline.parameters.cypress-version >>
-    environment:
-      NODE_ENV: test
-    steps:
-      - checkout
-      - yarn-install
-
-      - run:
-          working_directory: /tmp/app/v3/cypress
-          command: cypress run --component --browser chrome
-
-      - store_test_results:
-          path: 'v3/cypress/cypress/reports'
-
-      - store_artifacts:
-          path: 'v3/cypress/.nyc_output'
-          destination: 'coverage'
-
-      - store_artifacts:
-          path: 'v3/cypress/cypress/screenshots'
-          destination: 'screenshots'
-
-      - store_artifacts:
-          path: 'v3/cypress/cypress/videos'
-          destination: 'videos'
-
   combine-coverage:
     working_directory: /tmp/app
     docker:
@@ -424,8 +335,6 @@ jobs:
       - run: yarn download-cci-coverage tests /tmp/cov || true
       - run: yarn download-cci-coverage v2-cy /tmp/cov || true
       - run: yarn download-cci-coverage v2-e2e /tmp/cov || true
-      - run: yarn download-cci-coverage v3-cy /tmp/cov || true
-      - run: yarn download-cci-coverage v3-e2e-optimism-mainnet /tmp/cov || true
       - run: mkdir -p /tmp/cov
       - run: ls -alR /tmp/cov
       - run: mkdir -p /tmp/cov/combined
@@ -449,21 +358,6 @@ jobs:
           ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
           ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
           ipns-key: 'staking.synthetix.eth'
-
-  v3-ipfs:
-    working_directory: /tmp/app
-    docker:
-      - image: cimg/node:<< pipeline.parameters.node-version >>
-    resource_class: large
-    steps:
-      - checkout
-      - yarn-install
-      - run: yarn workspace @snx-v3/ui build
-      - ipfs-deploy:
-          source-dir: './v3/ui/dist'
-          ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
-          ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
-          ipns-key: 'v3.synthetix.eth'
 
   perps-watcher-ipfs:
     working_directory: /tmp/app
@@ -515,24 +409,5 @@ workflows:
                 - master
                 - ipfs-deploy
 
-      - v3-cy:
-          requires: [yarn-install]
-      - v3-e2e:
-          chain: optimism-mainnet
-          name: v3-e2e-optimism-mainnet
-          requires: [yarn-install]
-      - v3-e2e:
-          chain: optimism-goerli
-          name: v3-e2e-optimism-goerli
-          requires: [yarn-install]
-      - v3-ipfs:
-          requires: [tests, typecheck, v3-cy, v3-e2e-optimism-mainnet]
-          filters:
-            branches:
-              only:
-                - release
-                - master
-                - ipfs-deploy
-
       - combine-coverage:
-          requires: [tests, v2-cy, v2-e2e, v3-cy, v3-e2e-optimism-mainnet]
+          requires: [tests, v2-cy, v2-e2e]

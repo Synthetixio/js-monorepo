@@ -47,14 +47,7 @@ module.exports = {
 
   overrides: [
     {
-      files: [
-        'v3/ui/**/*',
-        'v3/components/**/*',
-        'v3/lib/**/*',
-        'v3/theme/**/*',
-        'v3/oracle-manager-ui/**/*',
-        'v3/spot-markets/ui/**/*',
-      ],
+      files: ['v3/lib/**/*', 'v3/theme/**/*'],
 
       env: {
         browser: true,
@@ -147,7 +140,6 @@ module.exports = {
         '**/*.e2e.js',
         '**/*.e2e.ts',
         '**/*.e2e.tsx',
-        'v3/synpress/tests/e2e/**/*',
       ],
       env: {
         mocha: true,
@@ -160,22 +152,6 @@ module.exports = {
       rules: {},
     },
 
-    {
-      files: ['v3/subgraphs/**/*'],
-      env: {},
-      globals: {
-        changetype: true,
-        i32: true,
-        i64: true,
-        assert: true,
-      },
-      rules: {
-        'prefer-const': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
-        '@typescript-eslint/ban-types': 'off',
-        '@typescript-eslint/no-array-constructor': 'off',
-      },
-    },
     {
       files: ['v2/perps-v2/perps-subgraph/**/*'],
       env: {},
