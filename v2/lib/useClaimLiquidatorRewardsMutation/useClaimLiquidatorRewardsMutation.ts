@@ -2,7 +2,7 @@ import { useContext, useReducer } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useLiquidatorRewards } from '@snx-v2/useSynthetixContracts';
 import { useGasOptions } from '@snx-v2/useGasOptions';
-import { initialState, reducer } from '@snx-v3/txnReducer';
+import { initialState, reducer } from '@snx-v2/txnReducer';
 import { ContractContext } from '@snx-v2/ContractContext';
 
 const createPopulateTransaction = (

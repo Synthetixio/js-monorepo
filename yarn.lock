@@ -2810,7 +2810,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/theme-tools@npm:2.0.17, @chakra-ui/theme-tools@npm:^2.0.17":
+"@chakra-ui/theme-tools@npm:2.0.17":
   version: 2.0.17
   resolution: "@chakra-ui/theme-tools@npm:2.0.17"
   dependencies:
@@ -2820,6 +2820,19 @@ __metadata:
   peerDependencies:
     "@chakra-ui/styled-system": ">=2.0.0"
   checksum: 8c57988bcd29d9d8f8c51f45af36bab95930460e3dab460b4841084eb587e7ad2b34e4e246dc75e84e91a1c7eb2b47cac187528d2145677479de3b966c01d734
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/theme-tools@npm:^2.0.18":
+  version: 2.0.18
+  resolution: "@chakra-ui/theme-tools@npm:2.0.18"
+  dependencies:
+    "@chakra-ui/anatomy": 2.1.2
+    "@chakra-ui/shared-utils": 2.0.5
+    color2k: ^2.0.0
+  peerDependencies:
+    "@chakra-ui/styled-system": ">=2.0.0"
+  checksum: 47d1c3edd1c5d5a9528d063cdd5d1b78baecbbcd721fdee65088efdbad8b1312031b1ac279f4f77f48f0087494c15b4072d871478c9b7d989b8c31ef01444da5
   languageName: node
   linkType: hard
 
@@ -5683,12 +5696,12 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useBurnMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
@@ -5723,8 +5736,8 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -5962,13 +5975,13 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useMintMutation": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
@@ -6034,6 +6047,7 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useClaimRewardsMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
@@ -6044,7 +6058,6 @@ __metadata:
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
     "@tanstack/react-query": ^4.24.6
     date-fns: ^2.29.3
@@ -6069,11 +6082,11 @@ __metadata:
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSelfLiquidationData": "workspace:*"
     "@snx-v2/useSelfLiquidationMutation": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
@@ -6161,8 +6174,8 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-router-dom: ^6.8.1
   languageName: unknown
@@ -6174,9 +6187,9 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/client-api": ^6.5.16
     "@storybook/react": ^6.5.16
-    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -6273,8 +6286,8 @@ __metadata:
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -6396,6 +6409,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/txnReducer@workspace:*, @snx-v2/txnReducer@workspace:v2/lib/txnReducer":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/txnReducer@workspace:v2/lib/txnReducer"
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useApr@workspace:*, @snx-v2/useApr@workspace:v2/lib/useApr":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useApr@workspace:v2/lib/useApr"
@@ -6422,9 +6441,9 @@ __metadata:
   resolution: "@snx-v2/useBurnMutation@workspace:v2/lib/useBurnMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -6435,9 +6454,9 @@ __metadata:
   resolution: "@snx-v2/useClaimLiquidatorRewardsMutation@workspace:v2/lib/useClaimLiquidatorRewardsMutation"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -6447,10 +6466,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useClaimRewardsMutation@workspace:v2/lib/useClaimRewardsMutation"
   dependencies:
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -6733,9 +6752,9 @@ __metadata:
   resolution: "@snx-v2/useMintMutation@workspace:v2/lib/useMintMutation"
   dependencies:
     "@ethersproject/bignumber": ^5.7.0
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -6791,9 +6810,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSelfLiquidationMutation@workspace:v2/lib/useSelfLiquidationMutation"
   dependencies:
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useGasOptions": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@snx-v3/txnReducer": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
@@ -6865,9 +6884,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v3/txnReducer@workspace:*, @snx-v3/txnReducer@workspace:v3/lib/txnReducer":
+"@snx-v2/v3Theme@workspace:*, @snx-v2/v3Theme@workspace:v2/lib/v3Theme":
   version: 0.0.0-use.local
-  resolution: "@snx-v3/txnReducer@workspace:v3/lib/txnReducer"
+  resolution: "@snx-v2/v3Theme@workspace:v2/lib/v3Theme"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@chakra-ui/theme-tools": ^2.0.18
+    "@emotion/react": ^11.10.5
   languageName: unknown
   linkType: soft
 
@@ -8560,8 +8583,8 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@pythnetwork/pyth-evm-js": ^1.1.0
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
-    "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@types/react": ^18.0.28
     babel-loader: ^9.1.2
@@ -8578,6 +8601,7 @@ __metadata:
     graphql: ^16.6.0
     html-webpack-plugin: ^5.5.0
     jest: ^29.4.2
+    process: ^0.11.10
     react: ^18.2.0
     react-dom: ^18.2.0
     react-hook-form: ^7.41.5
@@ -8739,6 +8763,7 @@ __metadata:
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@socket.tech/plugin": ^1.0.3
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
@@ -8754,7 +8779,6 @@ __metadata:
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/queries": "workspace:*"
     "@synthetixio/safe-import": "workspace:*"
-    "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
@@ -8835,33 +8859,6 @@ __metadata:
     webpack-bundle-analyzer: ^4.8.0
     webpack-cli: ^5.0.1
     webpack-dev-server: ^4.11.1
-  languageName: unknown
-  linkType: soft
-
-"@synthetixio/v3-theme@workspace:*, @synthetixio/v3-theme@workspace:v3/theme":
-  version: 0.0.0-use.local
-  resolution: "@synthetixio/v3-theme@workspace:v3/theme"
-  dependencies:
-    "@babel/core": ^7.20.12
-    "@chakra-ui/icons": ^2.0.17
-    "@chakra-ui/react": ^2.5.0
-    "@chakra-ui/theme-tools": ^2.0.17
-    "@emotion/react": ^11.10.5
-    "@emotion/styled": ^11.10.5
-    "@storybook/react": ^6.5.16
-    eslint: ^8.34.0
-    framer-motion: ^7.0.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.9.5
-  peerDependencies:
-    "@chakra-ui/icons": ^2.0.9
-    "@chakra-ui/react": ^2.2.8
-    "@emotion/react": ^11.10.0
-    "@emotion/styled": ^11.10.0
-    framer-motion: ^7.0.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 

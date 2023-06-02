@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { FailedIcon, TransactionCompleted, TransactionPending } from '@snx-v2/icons';
 import { TransactionModal } from '@snx-v2/TransactionModal';
-import { TransactionStatus } from '@snx-v3/txnReducer';
+import { TransactionStatus } from '@snx-v2/txnReducer';
 import { Button, Center, Divider, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { parseTxnError } from '@snx-v2/parseTxnError';
