@@ -2810,7 +2810,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/theme-tools@npm:2.0.17, @chakra-ui/theme-tools@npm:^2.0.17":
+"@chakra-ui/theme-tools@npm:2.0.17":
   version: 2.0.17
   resolution: "@chakra-ui/theme-tools@npm:2.0.17"
   dependencies:
@@ -5723,8 +5723,8 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -6161,8 +6161,8 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-router-dom: ^6.8.1
   languageName: unknown
@@ -6174,9 +6174,9 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/client-api": ^6.5.16
     "@storybook/react": ^6.5.16
-    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -6273,8 +6273,8 @@ __metadata:
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
-    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -6862,6 +6862,15 @@ __metadata:
   resolution: "@snx-v2/useTotalStakedSNX@workspace:v2/lib/useTotalStakedSNX"
   dependencies:
     "@tanstack/react-query": ^4.24.6
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/v3Theme@workspace:*, @snx-v2/v3Theme@workspace:v2/lib/v3Theme":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/v3Theme@workspace:v2/lib/v3Theme"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@emotion/react": ^11.10.5
   languageName: unknown
   linkType: soft
 
@@ -8560,8 +8569,8 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@pythnetwork/pyth-evm-js": ^1.1.0
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
-    "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@types/react": ^18.0.28
     babel-loader: ^9.1.2
@@ -8739,6 +8748,7 @@ __metadata:
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
+    "@snx-v2/v3Theme": "workspace:*"
     "@socket.tech/plugin": ^1.0.3
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
@@ -8754,7 +8764,6 @@ __metadata:
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/queries": "workspace:*"
     "@synthetixio/safe-import": "workspace:*"
-    "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
@@ -8835,33 +8844,6 @@ __metadata:
     webpack-bundle-analyzer: ^4.8.0
     webpack-cli: ^5.0.1
     webpack-dev-server: ^4.11.1
-  languageName: unknown
-  linkType: soft
-
-"@synthetixio/v3-theme@workspace:*, @synthetixio/v3-theme@workspace:v3/theme":
-  version: 0.0.0-use.local
-  resolution: "@synthetixio/v3-theme@workspace:v3/theme"
-  dependencies:
-    "@babel/core": ^7.20.12
-    "@chakra-ui/icons": ^2.0.17
-    "@chakra-ui/react": ^2.5.0
-    "@chakra-ui/theme-tools": ^2.0.17
-    "@emotion/react": ^11.10.5
-    "@emotion/styled": ^11.10.5
-    "@storybook/react": ^6.5.16
-    eslint: ^8.34.0
-    framer-motion: ^7.0.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.9.5
-  peerDependencies:
-    "@chakra-ui/icons": ^2.0.9
-    "@chakra-ui/react": ^2.2.8
-    "@emotion/react": ^11.10.0
-    "@emotion/styled": ^11.10.0
-    framer-motion: ^7.0.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
