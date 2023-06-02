@@ -2823,6 +2823,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/theme-tools@npm:^2.0.18":
+  version: 2.0.18
+  resolution: "@chakra-ui/theme-tools@npm:2.0.18"
+  dependencies:
+    "@chakra-ui/anatomy": 2.1.2
+    "@chakra-ui/shared-utils": 2.0.5
+    color2k: ^2.0.0
+  peerDependencies:
+    "@chakra-ui/styled-system": ">=2.0.0"
+  checksum: 47d1c3edd1c5d5a9528d063cdd5d1b78baecbbcd721fdee65088efdbad8b1312031b1ac279f4f77f48f0087494c15b4072d871478c9b7d989b8c31ef01444da5
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/theme-utils@npm:2.0.10":
   version: 2.0.10
   resolution: "@chakra-ui/theme-utils@npm:2.0.10"
@@ -6870,6 +6883,7 @@ __metadata:
   resolution: "@snx-v2/v3Theme@workspace:v2/lib/v3Theme"
   dependencies:
     "@chakra-ui/react": ^2.5.0
+    "@chakra-ui/theme-tools": ^2.0.18
     "@emotion/react": ^11.10.5
   languageName: unknown
   linkType: soft
