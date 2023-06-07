@@ -23,9 +23,9 @@ type GasPrice = {
 
 const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
   if (!gasPrice) return wei(0);
-  const { gasPrice: ovmGasPrice, baseFeePerGas, maxPriorityFeePerGas } = gasPrice;
-  if (ovmGasPrice) {
-    return wei(ovmGasPrice, GWEI_DECIMALS);
+  const { gasPrice: nonEIP1559Gas, baseFeePerGas, maxPriorityFeePerGas } = gasPrice;
+  if (nonEIP1559Gas) {
+    return wei(nonEIP1559Gas, GWEI_DECIMALS);
   }
   return wei(baseFeePerGas || 0, GWEI_DECIMALS).add(wei(maxPriorityFeePerGas || 0, GWEI_DECIMALS));
 };
