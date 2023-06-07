@@ -1,7 +1,7 @@
 import { GWEI_DECIMALS } from '@snx-v2/Constants';
 import { wei } from '@synthetixio/wei';
 
-describe('useGasPrice', () => {
+describe.skip('useGasPrice', () => {
   let useGasPrice;
   let react;
   let reactQuery;

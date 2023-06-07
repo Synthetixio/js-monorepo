@@ -48,17 +48,15 @@ export const useGasPrice = () => {
         networkId === NetworkIdByName.mainnet ? globalProviders.mainnet : globalProviders.optimism;
       const provider = signer?.provider || globalProvider;
       try {
-        // If network is Mainnet then we use EIP1559
-        if (networkId === NetworkIdByName.mainnet) {
-          const block = await provider.getBlock('latest');
-          if (block.baseFeePerGas) {
-            return {
-              fastest: computeGasFee(block.baseFeePerGas, 6),
-              fast: computeGasFee(block.baseFeePerGas, 4),
-              average: computeGasFee(block.baseFeePerGas, 2),
-            };
-          }
+        const block = await provider.getBlock('latest');
+        if (block.baseFeePerGas) {
+          return {
+            fastest: computeGasFee(block.baseFeePerGas, 6),
+            fast: computeGasFee(block.baseFeePerGas, 4),
+            average: computeGasFee(block.baseFeePerGas, 2),
+          };
         }
+
         // When Testnet, Optimism network or missing baseFeePerGas we get the Gas Price through the provider
         return getGasPriceFromProvider(provider);
       } catch (e) {
