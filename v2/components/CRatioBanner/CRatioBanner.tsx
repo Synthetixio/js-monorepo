@@ -87,8 +87,6 @@ export const CRatioBanner: React.FC = () => {
 
   const isFlagged = debtData.liquidationDeadlineForAccount.gt(0);
 
-  console.log(rewardsData);
-
   return (
     <CRatioBannerUi
       nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
