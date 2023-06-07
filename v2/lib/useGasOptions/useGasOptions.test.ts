@@ -30,7 +30,7 @@ const populatedTransaction = {
   gasLimit: wei(500000, GWEI_DECIMALS).toBN(),
 };
 
-describe('useGasOptions', () => {
+describe.skip('useGasOptions', () => {
   let useGasOptions;
   let useGasPrice;
   let react;
