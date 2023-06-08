@@ -5803,7 +5803,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/ContractContext@workspace:*, @snx-v2/ContractContext@workspace:v2/lib/ContractContext":
+"@snx-v2/ContractContext@workspace:*, @snx-v2/ContractContext@workspace:^, @snx-v2/ContractContext@workspace:v2/lib/ContractContext":
   version: 0.0.0-use.local
   resolution: "@snx-v2/ContractContext@workspace:v2/lib/ContractContext"
   dependencies:
@@ -5894,6 +5894,7 @@ __metadata:
   resolution: "@snx-v2/EthGasPriceEstimator@workspace:v2/components/EthGasPriceEstimator"
   dependencies:
     "@chakra-ui/react": ^2.5.0
+    "@snx-v2/ContractContext": "workspace:^"
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
