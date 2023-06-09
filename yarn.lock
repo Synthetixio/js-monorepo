@@ -6331,6 +6331,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/feeSuggestion@workspace:*, @snx-v2/feeSuggestion@workspace:v2/lib/feeSuggestion":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/feeSuggestion@workspace:v2/lib/feeSuggestion"
+  dependencies:
+    "@snx-v2/Constants": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
+    ethers: ^5.7.2
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/formatters@workspace:*, @snx-v2/formatters@workspace:v2/lib/formatters":
   version: 0.0.0-use.local
   resolution: "@snx-v2/formatters@workspace:v2/lib/formatters"
@@ -6658,11 +6669,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useGasPrice@workspace:v2/lib/useGasPrice"
   dependencies:
-    "@ethersproject/bignumber": ^5.7.0
-    "@ethersproject/providers": ^5.7.2
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/SignerContext": "workspace:*"
+    "@snx-v2/feeSuggestion": "workspace:*"
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": ^2.74.4
