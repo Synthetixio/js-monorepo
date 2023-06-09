@@ -17,7 +17,6 @@ import { formatNumberToUsd } from '@snx-v2/formatters';
 
 import { GasSpeedContext, GasSpeed } from '@snx-v2/GasSpeedContext';
 import { ChevronDown, InfoIcon } from '@snx-v2/icons';
-import { ContractContext } from '@snx-v2/ContractContext';
 
 interface EthGasPriceEstimatorUiProps extends FlexProps {
   transactionFee?: Wei | null;
@@ -92,14 +91,6 @@ export const EthGasPriceEstimator: FC<EthGasPriceEstimatorProps> = ({
   ...props
 }) => {
   const { setGasSpeed, gasSpeed } = useContext(GasSpeedContext);
-  const { networkId } = useContext(ContractContext);
-
-  const isMainnet = networkId === 1;
-  const isGoerli = networkId === 5;
-
-  const showGas = isMainnet || isGoerli;
-
-  if (!showGas) return null;
 
   return (
     <EthGasPriceEstimatorUi
