@@ -17,7 +17,6 @@ import { formatNumberToUsd } from '@snx-v2/formatters';
 
 import { GasSpeedContext, GasSpeed } from '@snx-v2/GasSpeedContext';
 import { ChevronDown, InfoIcon } from '@snx-v2/icons';
-import { ContractContext } from '@snx-v2/ContractContext';
 
 interface EthGasPriceEstimatorUiProps extends FlexProps {
   transactionFee?: Wei | null;

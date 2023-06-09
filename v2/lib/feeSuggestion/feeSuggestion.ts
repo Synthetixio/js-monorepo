@@ -5,7 +5,7 @@
  * So I changed min max a bit
  *
  * That library is also a bit overkill in how it calculates maxFeePerGas per gas. It's using linear regression and sampling curves.
- * Instead of doing that, this module calculates max by taking previous (baseFeePerGas * 2) + maxPriorityFeePerGas.
+ * Instead of doing that, this module calculates max by taking  (previous baseFeePerGas * 2) + maxPriorityFeePerGas.
  *
  * The calculation for maxPriorityFeePerGas I kept quite complex since that will affect what the user actually pay..
  * It's calculated based on the Exponential Moving Average (EMA) of the block rewards at the 15th, 30th, and 45th percentiles, after removing the outliers.
