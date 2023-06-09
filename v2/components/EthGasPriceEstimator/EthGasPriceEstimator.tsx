@@ -92,14 +92,6 @@ export const EthGasPriceEstimator: FC<EthGasPriceEstimatorProps> = ({
   ...props
 }) => {
   const { setGasSpeed, gasSpeed } = useContext(GasSpeedContext);
-  const { networkId } = useContext(ContractContext);
-
-  const isMainnet = networkId === 1;
-  const isGoerli = networkId === 5;
-
-  const showGas = isMainnet || isGoerli;
-
-  if (!showGas) return null;
 
   return (
     <EthGasPriceEstimatorUi
