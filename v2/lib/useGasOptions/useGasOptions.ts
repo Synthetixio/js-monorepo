@@ -22,8 +22,7 @@ type GasPrice = {
 
 const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
   const { baseFeePerGas, maxPriorityFeePerGas } = gasPrice || {};
-  if (!baseFeePerGas || maxPriorityFeePerGas) return wei(0);
-
+  if (!baseFeePerGas || !maxPriorityFeePerGas) return wei(0);
   return baseFeePerGas.add(maxPriorityFeePerGas || 0);
 };
 
