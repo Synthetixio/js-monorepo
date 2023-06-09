@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext } from 'react';
+import { Dispatch, FC, SetStateAction, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import Wei from '@synthetixio/wei';
 import {
@@ -11,21 +11,29 @@ import {
   MenuList,
   MenuButton,
   Tooltip,
+  FlexProps,
 } from '@chakra-ui/react';
 import { formatNumberToUsd } from '@snx-v2/formatters';
 
 import { GasSpeedContext, GasSpeed } from '@snx-v2/GasSpeedContext';
 import { ChevronDown, InfoIcon } from '@snx-v2/icons';
 
-export const EthGasPriceEstimatorUi: React.FC<{
-  gasSpeed: GasSpeed;
+interface EthGasPriceEstimatorUiProps extends FlexProps {
   transactionFee?: Wei | null;
   setGasSpeed: Dispatch<SetStateAction<GasSpeed>>;
-}> = ({ transactionFee, setGasSpeed, gasSpeed }) => {
+  gasSpeed: GasSpeed;
+}
+
+export const EthGasPriceEstimatorUi: FC<EthGasPriceEstimatorUiProps> = ({
+  transactionFee,
+  setGasSpeed,
+  gasSpeed,
+  ...props
+}) => {
   const { t } = useTranslation();
 
   return (
-    <Flex width="full" justifyContent="space-between" alignItems="center">
+    <Flex width="full" justifyContent="space-between" alignItems="center" {...props}>
       <Flex>
         <Text mr={1}>{t('staking-v2.eth-gas-price-estimator.gas-price-label')}</Text>
         <Tooltip label={t('staking-v2.eth-gas-price-estimator.gas-price-tooltip')} hasArrow>
@@ -74,13 +82,19 @@ export const EthGasPriceEstimatorUi: React.FC<{
   );
 };
 
-export const EthGasPriceEstimator: React.FC<{
+interface EthGasPriceEstimatorProps extends FlexProps {
   transactionFee?: Wei | null;
-}> = ({ transactionFee }) => {
+}
+
+export const EthGasPriceEstimator: FC<EthGasPriceEstimatorProps> = ({
+  transactionFee,
+  ...props
+}) => {
   const { setGasSpeed, gasSpeed } = useContext(GasSpeedContext);
 
   return (
     <EthGasPriceEstimatorUi
+      {...props}
       transactionFee={transactionFee}
       gasSpeed={gasSpeed}
       setGasSpeed={setGasSpeed}

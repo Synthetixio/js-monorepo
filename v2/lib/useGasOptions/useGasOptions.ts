@@ -15,19 +15,15 @@ import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 const GAS_LIMIT_BUFFER = wei(1.2, GWEI_DECIMALS);
 
 type GasPrice = {
-  baseFeePerGas?: BigNumber; // Note that this is used for estimating price and should not be included in the transaction
-  maxPriorityFeePerGas?: BigNumber;
-  maxFeePerGas?: BigNumber;
-  gasPrice?: BigNumber;
+  baseFeePerGas?: Wei; // Note that this is used for estimating price and should not be included in the transaction
+  maxPriorityFeePerGas?: Wei;
+  maxFeePerGas?: Wei;
 };
 
 const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
-  if (!gasPrice) return wei(0);
-  const { gasPrice: nonEIP1559Gas, baseFeePerGas, maxPriorityFeePerGas } = gasPrice;
-  if (nonEIP1559Gas) {
-    return wei(nonEIP1559Gas, GWEI_DECIMALS);
-  }
-  return wei(baseFeePerGas || 0, GWEI_DECIMALS).add(wei(maxPriorityFeePerGas || 0, GWEI_DECIMALS));
+  const { baseFeePerGas, maxPriorityFeePerGas } = gasPrice || {};
+  if (!baseFeePerGas || !maxPriorityFeePerGas) return wei(0);
+  return baseFeePerGas.add(maxPriorityFeePerGas || 0);
 };
 
 const getTransactionPrice = (
@@ -76,11 +72,12 @@ export const useGasOptions = ({
       const formatGasPriceForTransaction = () => {
         if (!gasPrices) return undefined;
         const gasPrice = gasPrices[gasSpeed];
-        if ('baseFeePerGas' in gasPrice) {
-          const { baseFeePerGas: _baseFeePerGas, ...gasPriceToReturn } = gasPrice;
-          return { ...gasPriceToReturn, gasLimit };
-        }
-        return { ...gasPrice, gasLimit };
+        const { baseFeePerGas: _baseFeePerGas, maxFeePerGas, maxPriorityFeePerGas } = gasPrice;
+        return {
+          maxFeePerGas: maxFeePerGas.toBN(),
+          maxPriorityFeePerGas: maxPriorityFeePerGas.toBN(),
+          gasLimit,
+        };
       };
       return {
         populatedTransaction,

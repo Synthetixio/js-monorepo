@@ -403,8 +403,9 @@ export const BurnUi = ({
             </Text>
           </Center>
         ) : (
-          <Flex mt={3} alignItems="center" justifyContent="space-between">
+          <Flex alignItems="center" justifyContent="space-between">
             <EthGasPriceEstimator
+              mt={3}
               transactionFee={burnAmountSusd === '' ? wei(0) : transactionFee}
             />
           </Flex>
