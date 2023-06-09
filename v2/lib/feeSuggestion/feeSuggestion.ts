@@ -1,14 +1,16 @@
 /**
  * This module is heavily inspired by https://github.com/rainbow-me/fee-suggestions
  * That library have some hardcoded min and max that doesn't make sense for optimism. See: https://github.com/rainbow-me/fee-suggestions/blob/main/src/index.ts#L165
- * It also a bit overkill in how it calculates maxFeePerGas per gas. It's using linear regression and sampling curves.
- * Instead of doing that, this module calculates max by taking previous (baseFeePerGat * 2) + maxPriorityFeePerGas.
+ *
+ * So I changed min max a bit
+ *
+ * That library is also a bit overkill in how it calculates maxFeePerGas per gas. It's using linear regression and sampling curves.
+ * Instead of doing that, this module calculates max by taking previous (baseFeePerGas * 2) + maxPriorityFeePerGas.
  *
  * The calculation for maxPriorityFeePerGas I kept quite complex since that will affect what the user actually pay..
  * It's calculated based on the Exponential Moving Average (EMA) of the block rewards at the 15th, 30th, and 45th percentiles, after removing the outliers.
  *
- * The other differences is that I rely on our Wei library.
- *
+ * The other differences is that I also rely on our Wei library.
  *
  */
 import { utils, providers } from 'ethers';
