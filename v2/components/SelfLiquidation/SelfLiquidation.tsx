@@ -201,8 +201,11 @@ export const SelfLiquidationUi: FC<{
             </Text>
           </Center>
         ) : (
-          <Flex mt={3} alignItems="center" justifyContent="space-between">
-            <EthGasPriceEstimator transactionFee={transactionFee ? transactionFee : wei(0)} />
+          <Flex alignItems="center" justifyContent="space-between">
+            <EthGasPriceEstimator
+              mt={3}
+              transactionFee={transactionFee ? transactionFee : wei(0)}
+            />
           </Flex>
         )}
         <Button
