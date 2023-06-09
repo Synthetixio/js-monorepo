@@ -23,5 +23,6 @@ export const useGasPrice = () => {
       }
     },
     enabled: Boolean(networkId),
+    staleTime: 3000,
   });
 };
