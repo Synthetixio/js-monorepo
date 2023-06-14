@@ -21,6 +21,7 @@ const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 const walletConnect = walletConnectModule({
   version: 2,
   projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
+  requiredChains: [NetworkIdByName.mainnet, NetworkIdByName['mainnet-ovm']],
 });
 const ledger = ledgerModule();
 // The trezor module have a bug, we can enable it when this has been merged and released: https://github.com/blocknative/web3-onboard/pull/1165
@@ -31,7 +32,7 @@ const torus = torusModule();
 const brave = () => customBrave;
 const trust = customTrust();
 
-// Here we hardcode rpc url.. Not very good if infure is down.. BUT I think thise are juse used as default before the wallets is connected.
+// Here we hardcode rpc urls... Not very good if infura is down. BUT I think these are just used as default before the wallets is connected.
 // And our app is not using default from onboard, so it should be fine.
 const supportedChains = [
   // Mainnet
