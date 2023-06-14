@@ -97,7 +97,7 @@ export function useLargestOpenPosition() {
 
         // Attribute the pyth result to the market
         const hydratedPythResult = result?.map((item, index) => {
-          const price = item.getPriceUnchecked();
+          const price = item?.getPriceUnchecked();
           return {
             ...price,
             pythId: marketPyth[index]?.pythId || '',
@@ -141,6 +141,7 @@ export function useLargestOpenPosition() {
 
         setState({ loading: false, data: sizeResult, error: null });
       } catch (error: unknown) {
+        console.log(error);
         setState({ loading: false, data: null, error });
       }
     })();
