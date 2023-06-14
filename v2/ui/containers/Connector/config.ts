@@ -11,9 +11,10 @@ import gnosisModule from './customGnosis';
 // import trezorModule from '@web3-onboard/trezor';
 import portisModule from '@web3-onboard/portis';
 import torusModule from '@web3-onboard/torus';
+import trustModule from '@web3-onboard/trust';
 
 import { SynthetixIcon, SynthetixLogo } from 'components/WalletComponents';
-import { customBrave, customMetaMask, customDetected, customTrust } from './customInjected';
+import { customBrave, customMetaMask, customDetected } from './customInjected';
 
 const injected = injectedModule({ custom: [customMetaMask, customBrave, customDetected] });
 
@@ -30,7 +31,7 @@ const gnosis = gnosisModule();
 const portis = portisModule({ apiKey: `${process.env.NEXT_PUBLIC_PORTIS_APP_ID}` });
 const torus = torusModule();
 const brave = () => customBrave;
-const trust = customTrust();
+const trust = trustModule();
 
 // Here we hardcode rpc urls... Not very good if infura is down. BUT I think these are just used as default before the wallets is connected.
 // And our app is not using default from onboard, so it should be fine.

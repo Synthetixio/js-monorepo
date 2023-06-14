@@ -9101,6 +9101,7 @@ __metadata:
     "@web3-onboard/ledger": ^2.4.2
     "@web3-onboard/portis": ^2.1.3
     "@web3-onboard/torus": ^2.2.1
+    "@web3-onboard/trust": ^2.0.4
     "@web3-onboard/walletconnect": ^2.3.8
     axios: ^1.3.3
     babel-jest: ^29.4.2
@@ -11178,6 +11179,15 @@ __metadata:
     "@toruslabs/torus-embed": 1.38.2
     "@web3-onboard/common": ^2.2.3
   checksum: bd4ec2e27406f66234092ce85621440d0c76dffcd3583077313e0556c5185ec3b5933b0745b0fdb03d4b3336b479e09d779053856ebf7f2f9302ef1f52c4d23a
+  languageName: node
+  linkType: hard
+
+"@web3-onboard/trust@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@web3-onboard/trust@npm:2.0.4"
+  dependencies:
+    "@web3-onboard/common": ^2.3.3
+  checksum: 953ce61d65e0d40f4f946f29543d297c6fee31d5de24b9374d8e41d03dd2f6ad25c429c6f8f2293192ff0e34f1ee0ffa338a74778c14b8fc6ee269220d807b0c
   languageName: node
   linkType: hard
 
