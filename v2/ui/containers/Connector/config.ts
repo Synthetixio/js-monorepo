@@ -11,13 +11,20 @@ import gnosisModule from './customGnosis';
 // import trezorModule from '@web3-onboard/trezor';
 import portisModule from '@web3-onboard/portis';
 import torusModule from '@web3-onboard/torus';
+import trustModule from '@web3-onboard/trust';
 
 import { SynthetixIcon, SynthetixLogo } from 'components/WalletComponents';
-import { customBrave, customMetaMask, customDetected, customTrust } from './customInjected';
+import { customBrave, customMetaMask, customDetected } from './customInjected';
 
 const injected = injectedModule({ custom: [customMetaMask, customBrave, customDetected] });
 
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
+// TODO re enable after release
+// const walletConnect = walletConnectModule({
+//   version: 2,
+//   projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
+//   requiredChains: [NetworkIdByName.mainnet, NetworkIdByName['mainnet-ovm']],
+// });
 const walletConnect = walletConnectModule();
 const ledger = ledgerModule();
 // The trezor module have a bug, we can enable it when this has been merged and released: https://github.com/blocknative/web3-onboard/pull/1165
@@ -26,9 +33,9 @@ const gnosis = gnosisModule();
 const portis = portisModule({ apiKey: `${process.env.NEXT_PUBLIC_PORTIS_APP_ID}` });
 const torus = torusModule();
 const brave = () => customBrave;
-const trust = customTrust();
+const trust = trustModule();
 
-// Here we hardcode rpc url.. Not very good if infure is down.. BUT I think thise are juse used as default before the wallets is connected.
+// Here we hardcode rpc urls... Not very good if infura is down. BUT I think these are just used as default before the wallets is connected.
 // And our app is not using default from onboard, so it should be fine.
 const supportedChains = [
   // Mainnet

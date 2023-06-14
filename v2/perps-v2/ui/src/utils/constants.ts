@@ -57,6 +57,7 @@ export enum FuturesMarketAsset {
   TRX = 'TRX',
   FLOKI = 'FLOKI',
   INJ = 'INJ',
+  STETH = 'STETH',
 }
 
 export enum FuturesMarketKey {
@@ -101,6 +102,7 @@ export enum FuturesMarketKey {
   sTRXPERP = 'sTRXPERP',
   sFLOKIPERP = 'sFLOKIPERP',
   sINJPERP = 'sINJPERP',
+  sSTETHPERP = 'sSTETHPERP',
 }
 
 export interface FuturesMarketConfig {
@@ -567,6 +569,17 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     pythIds: {
       mainnet: '0x7a5bc1d2b56ad029048cd63964b3ad2776eadf812edc1a43a31406cb54bff592',
       testnet: '0x2d9315a88f3019f8efa88dfe9c0f0843712da0bac814461e27733f6b83eb51b3',
+    },
+  },
+  [FuturesMarketKey.sSTETHPERP]: {
+    id: '0xD91Db82733987513286B81e7115091d96730b62A',
+    key: FuturesMarketKey.sSTETHPERP,
+    asset: FuturesMarketAsset.STETH,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x846ae1bdb6300b817cee5fdee2a6da192775030db5615b94a465f53bd40850b5',
+      testnet: '0xb7abd25a76ddaffdf847224f03198ccb92723f90b2429cf33f0eecb96e352a86',
     },
   },
 };
