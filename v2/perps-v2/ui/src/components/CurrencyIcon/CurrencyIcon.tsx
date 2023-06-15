@@ -48,7 +48,9 @@ const parseCurrencyKey = (currencyKey: CurrencyKey) => {
 export const CurrencyIcon = ({ currencyKey, width = 30, height = 30 }: CurrencyIconProps) => {
   return (
     <img
-      src={`/asset-icons/${parseCurrencyKey(currencyKey)}.svg`}
+      src={`https://raw.githubusercontent.com/Synthetixio/synthetix-assets/master/markets/${parseCurrencyKey(
+        currencyKey
+      )}.svg`}
       alt={currencyKey}
       style={{ width, height }}
     />
