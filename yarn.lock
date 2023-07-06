@@ -7025,14 +7025,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@socket.tech/ll-core@npm:^0.1.10":
-  version: 0.1.20
-  resolution: "@socket.tech/ll-core@npm:0.1.20"
-  checksum: 30015187bb131227dbb04c3a84f1519fe3a818314e033e6d75352968853d912afa59a276b8f8b9d22f0dc9ce8c54267e394200818e5e5ccd57b0112f6450ef18
-  languageName: node
-  linkType: hard
-
-"@socket.tech/ll-core@npm:^0.1.36":
+"@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.36":
   version: 0.1.44
   resolution: "@socket.tech/ll-core@npm:0.1.44"
   checksum: 049bee1050ea9fcf7e91a8848d5aeceb21a0a9aa6cf79dc901016f8e8a7f6690c0c7a89e3fa4e2a2785c475faa9d21d853c951bb0a9b70625f648f1a581e1f10
