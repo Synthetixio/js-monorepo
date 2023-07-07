@@ -440,7 +440,8 @@ export const BurnUi = ({
             burnAmountSusd === '0.00' ||
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
-            notEnoughBalance
+            notEnoughBalance ||
+            burningBlockedByMinStakeTime
           }
         >
           Burn
