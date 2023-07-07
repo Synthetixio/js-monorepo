@@ -72,7 +72,7 @@
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*",
     "@snx-v2/useLiquidationData": "workspace:*",
     "@snx-v2/v3Theme": "workspace:*",
-    "@socket.tech/plugin": "^1.0.3",
+    "@socket.tech/plugin": "^1.0.15",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/contracts-interface": "workspace:*",
     "@synthetixio/optimism-networks": "workspace:*",

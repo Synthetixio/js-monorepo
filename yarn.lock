@@ -5816,6 +5816,7 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useMinStakeTime": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/wei": ^2.74.4
@@ -6459,6 +6460,8 @@ __metadata:
 "@snx-v2/formatters@workspace:*, @snx-v2/formatters@workspace:v2/lib/formatters":
   version: 0.0.0-use.local
   resolution: "@snx-v2/formatters@workspace:v2/lib/formatters"
+  dependencies:
+    date-fns: ^2.29.3
   languageName: unknown
   linkType: soft
 
@@ -6871,6 +6874,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useMinStakeTime@workspace:*, @snx-v2/useMinStakeTime@workspace:v2/lib/useMinStakeTime":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useMinStakeTime@workspace:v2/lib/useMinStakeTime"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
+    "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useMintMutation@workspace:*, @snx-v2/useMintMutation@workspace:v2/lib/useMintMutation":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useMintMutation@workspace:v2/lib/useMintMutation"
@@ -7018,21 +7034,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.14":
-  version: 0.1.20
-  resolution: "@socket.tech/ll-core@npm:0.1.20"
-  checksum: 30015187bb131227dbb04c3a84f1519fe3a818314e033e6d75352968853d912afa59a276b8f8b9d22f0dc9ce8c54267e394200818e5e5ccd57b0112f6450ef18
+"@socket.tech/ll-core-v2@npm:^0.0.32":
+  version: 0.0.32
+  resolution: "@socket.tech/ll-core-v2@npm:0.0.32"
+  checksum: 0b4684ead2698fda9eca3777857d617857620fbac1113e28a4be12124eb6fefd21d8320aa79dbe97572cbe9332138538431b27ccb53f772b65a2012e747a0a95
   languageName: node
   linkType: hard
 
-"@socket.tech/plugin@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@socket.tech/plugin@npm:1.0.3"
+"@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.36":
+  version: 0.1.44
+  resolution: "@socket.tech/ll-core@npm:0.1.44"
+  checksum: 049bee1050ea9fcf7e91a8848d5aeceb21a0a9aa6cf79dc901016f8e8a7f6690c0c7a89e3fa4e2a2785c475faa9d21d853c951bb0a9b70625f648f1a581e1f10
+  languageName: node
+  linkType: hard
+
+"@socket.tech/plugin@npm:^1.0.15":
+  version: 1.0.15
+  resolution: "@socket.tech/plugin@npm:1.0.15"
   dependencies:
     "@react-spring/web": ^9.5.0
     "@reduxjs/toolkit": ^1.8.2
     "@socket.tech/ll-core": ^0.1.10
-    "@socket.tech/socket-v2-sdk": ^1.21.3
+    "@socket.tech/socket-v2-sdk": 1.23.0
     ethers: ^5.6.9
     react-feather: ^2.0.10
     react-redux: ^8.0.2
@@ -7040,20 +7063,21 @@ __metadata:
   peerDependencies:
     react: ">=17.0.1"
     react-dom: ">=17.0.1"
-  checksum: dbd1966c109ca7edd0af50ed5b5341012fb464c3dcea7881bcae449d6d19550c8caef583f0874db8220e00bae354660373dbbd9d837d37d9b88fff85137286b7
+  checksum: 6edae9325c763f68ab32325296eee2e2c07c9b0664f329a9a50a563e144ec85ef8921c36d5a2795cefd9a37cfb0cf37ff2534d2d01e12d815115b8cd52d8aa5e
   languageName: node
   linkType: hard
 
-"@socket.tech/socket-v2-sdk@npm:^1.21.3":
-  version: 1.21.3
-  resolution: "@socket.tech/socket-v2-sdk@npm:1.21.3"
+"@socket.tech/socket-v2-sdk@npm:1.23.0":
+  version: 1.23.0
+  resolution: "@socket.tech/socket-v2-sdk@npm:1.23.0"
   dependencies:
-    "@socket.tech/ll-core": ^0.1.14
+    "@socket.tech/ll-core": ^0.1.36
+    "@socket.tech/ll-core-v2": ^0.0.32
     axios: ^0.27.2
     ethers: ^5.6.5
     form-data: ^4.0.0
     tslib: ^2.4.0
-  checksum: 48c792a44f6686bdf73819dc1ccecb6bff0c650511ff7b497a5eef3882ad4a26d3d2ec2f3ab06387d22e8532f98f211e80405fa4b3a00c9dc362434ca28d4424
+  checksum: dbc3bdf841825b7cfd00cdd5cda910e64388e9cb50bfdc78fe6dfbfba57194b063925518b2a900360de3d808e1babb44ab45cd9f7f7df4e250e01c75053b4a16
   languageName: node
   linkType: hard
 
@@ -9058,7 +9082,7 @@ __metadata:
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/v3Theme": "workspace:*"
-    "@socket.tech/plugin": ^1.0.3
+    "@socket.tech/plugin": ^1.0.15
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
     "@storybook/addon-essentials": ^6.5.16
