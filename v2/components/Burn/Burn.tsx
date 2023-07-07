@@ -127,7 +127,12 @@ export const BurnUi = ({
     onPresetClick(badgeType);
   };
   const notEnoughBalance = burnAmountForCalculations > susdBalance;
-  const burningBlockedByMinStakeTime = dateAllowedToBurn && dateAllowedToBurn > new Date();
+
+  const burningBlockedByMinStakeTime =
+    activePreset !== 'toTarget' &&
+    burnAmountForCalculations &&
+    dateAllowedToBurn &&
+    dateAllowedToBurn > new Date();
 
   return (
     <>
@@ -410,8 +415,12 @@ export const BurnUi = ({
               ) : notEnoughBalance ? (
                 t('staking-v2.burn.balance-error')
               ) : burningBlockedByMinStakeTime ? (
-                <Tooltip label="Min stake time not reached">
-                  <span>Burning enabled {formatShortDateWithTime(dateAllowedToBurn)}</span>
+                <Tooltip
+                  label={`Min stake time not reached, custom burning enabled ${formatShortDateWithTime(
+                    dateAllowedToBurn
+                  )}`}
+                >
+                  <span>Only burn to target enabled</span>
                 </Tooltip>
               ) : (
                 `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`
@@ -696,7 +705,7 @@ export const Burn: FC = () => {
             }}
             onPresetClick={handlePresetClick}
             gasError={gasError}
-            dateAllowedToBurn={stakeTimeDate?.dateAllowedToBurn}
+            dateAllowedToBurn={new Date('2023-07-08T04:24:25.846Z')}
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
             transactionFee={transactionFee}
             onSubmit={handleSubmit}
