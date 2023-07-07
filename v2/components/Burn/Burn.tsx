@@ -705,7 +705,7 @@ export const Burn: FC = () => {
             }}
             onPresetClick={handlePresetClick}
             gasError={gasError}
-            dateAllowedToBurn={new Date('2023-07-08T04:24:25.846Z')}
+            dateAllowedToBurn={stakeTimeDate?.dateAllowedToBurn}
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
             transactionFee={transactionFee}
             onSubmit={handleSubmit}
