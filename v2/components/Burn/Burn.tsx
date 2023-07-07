@@ -127,7 +127,13 @@ export const BurnUi = ({
     onPresetClick(badgeType);
   };
   const notEnoughBalance = burnAmountForCalculations > susdBalance;
-  const burningBlockedByMinStakeTime = dateAllowedToBurn && dateAllowedToBurn > new Date();
+
+  const burningBlockedByMinStakeTime = Boolean(
+    activePreset !== 'toTarget' &&
+      burnAmountForCalculations > 0 &&
+      dateAllowedToBurn &&
+      dateAllowedToBurn > new Date()
+  );
 
   return (
     <>
@@ -409,9 +415,13 @@ export const BurnUi = ({
                 t('staking-v2.delegate.missing-permission')
               ) : notEnoughBalance ? (
                 t('staking-v2.burn.balance-error')
-              ) : burningBlockedByMinStakeTime ? (
-                <Tooltip label="Min stake time not reached">
-                  <span>Burning enabled {formatShortDateWithTime(dateAllowedToBurn)}</span>
+              ) : burningBlockedByMinStakeTime && dateAllowedToBurn ? (
+                <Tooltip
+                  label={`Min stake time not reached, custom burning enabled ${formatShortDateWithTime(
+                    dateAllowedToBurn
+                  )}`}
+                >
+                  <span>Only burn to target enabled</span>
                 </Tooltip>
               ) : (
                 `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`
