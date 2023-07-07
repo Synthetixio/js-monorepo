@@ -18,7 +18,12 @@ import {
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { FailedIcon, InfoIcon, SNXIconWithBorder, TokensIcon } from '@snx-v2/icons';
-import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
+import {
+  formatNumber,
+  numberWithCommas,
+  parseFloatWithCommas,
+  formatShortDateWithTime,
+} from '@snx-v2/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
@@ -37,6 +42,7 @@ import { BurnHeader } from './BurnHeader';
 import { leftColWidth, rightColWidth } from './layout';
 import { BurnLinks } from './BurnLinks';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { useMinStakeTime } from '@snx-v2/useMinStakeTime';
 
 type ActivePreset = 'max' | 'toTarget' | 'sUSDBalance' | 'debtBalance';
 
@@ -60,6 +66,7 @@ interface BurnProps {
   burnAmountForCalculations: number;
   activePreset: ActivePreset | null;
   delegatedToBurn: boolean;
+  dateAllowedToBurn?: Date;
 }
 
 const StyledInput: FC<InputProps> = (props) => {
@@ -104,6 +111,7 @@ export const BurnUi = ({
   burnAmountForCalculations,
   activePreset,
   delegatedToBurn,
+  dateAllowedToBurn,
 }: BurnProps) => {
   const { t } = useTranslation();
 
@@ -119,6 +127,8 @@ export const BurnUi = ({
     onPresetClick(badgeType);
   };
   const notEnoughBalance = burnAmountForCalculations > susdBalance;
+  const burningBlockedByMinStakeTime = dateAllowedToBurn && dateAllowedToBurn > new Date();
+
   return (
     <>
       <Box bg="navy.900" borderWidth="1px" borderColor="gray.900" borderRadius="base" p={5}>
@@ -391,15 +401,21 @@ export const BurnUi = ({
           </Flex>
         </Box>
         <MintOrBurnChanges debtChange={burnAmountForCalculations} action="burn" />
-        {gasError || notEnoughBalance || !delegatedToBurn ? (
+        {gasError || notEnoughBalance || !delegatedToBurn || burningBlockedByMinStakeTime ? (
           <Center mt={2}>
             <FailedIcon width="40px" height="40px" />
             <Text>
-              {!delegatedToBurn
-                ? t('staking-v2.delegate.missing-permission')
-                : notEnoughBalance
-                ? t('staking-v2.burn.balance-error')
-                : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`}
+              {!delegatedToBurn ? (
+                t('staking-v2.delegate.missing-permission')
+              ) : notEnoughBalance ? (
+                t('staking-v2.burn.balance-error')
+              ) : burningBlockedByMinStakeTime ? (
+                <Tooltip label="Min stake time not reached">
+                  <span>Burning enabled {formatShortDateWithTime(dateAllowedToBurn)}</span>
+                </Tooltip>
+              ) : (
+                `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(gasError)}`
+              )}
             </Text>
           </Center>
         ) : (
@@ -424,7 +440,8 @@ export const BurnUi = ({
             burnAmountSusd === '0.00' ||
             Boolean(gasError) ||
             isGasEnabledAndNotFetched ||
-            notEnoughBalance
+            notEnoughBalance ||
+            burningBlockedByMinStakeTime
           }
         >
           Burn
@@ -461,6 +478,7 @@ export const Burn: FC = () => {
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const { data: synthsData, isLoading: isSynthsLoading } = useSynthsBalances();
+  const { data: stakeTimeDate } = useMinStakeTime();
   const stakedSnx = calculateStakedSnx({
     targetCRatio: debtData?.targetCRatio,
     currentCRatio: debtData?.currentCRatio,
@@ -678,6 +696,7 @@ export const Burn: FC = () => {
             }}
             onPresetClick={handlePresetClick}
             gasError={gasError}
+            dateAllowedToBurn={stakeTimeDate?.dateAllowedToBurn}
             isGasEnabledAndNotFetched={isGasEnabledAndNotFetched}
             transactionFee={transactionFee}
             onSubmit={handleSubmit}

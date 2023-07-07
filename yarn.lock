@@ -5816,6 +5816,7 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
+    "@snx-v2/useMinStakeTime": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/wei": ^2.74.4
@@ -6459,6 +6460,8 @@ __metadata:
 "@snx-v2/formatters@workspace:*, @snx-v2/formatters@workspace:v2/lib/formatters":
   version: 0.0.0-use.local
   resolution: "@snx-v2/formatters@workspace:v2/lib/formatters"
+  dependencies:
+    date-fns: ^2.29.3
   languageName: unknown
   linkType: soft
 
@@ -6864,6 +6867,19 @@ __metadata:
   resolution: "@snx-v2/useLiquidationData@workspace:v2/lib/useLiquidationData"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
+    "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useMinStakeTime@workspace:*, @snx-v2/useMinStakeTime@workspace:v2/lib/useMinStakeTime":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useMinStakeTime@workspace:v2/lib/useMinStakeTime"
+  dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6

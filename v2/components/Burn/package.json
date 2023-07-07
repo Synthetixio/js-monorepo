@@ -22,6 +22,7 @@
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
+    "@snx-v2/useMinStakeTime": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@storybook/react": "^6.5.16",
     "@synthetixio/wei": "^2.74.4",
