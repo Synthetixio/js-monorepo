@@ -2,11 +2,8 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
 
 export const AddressInput = () => {
-  const { globalProviders } = useGlobalProvidersWithFallback();
-  const L1DefaultProvider = globalProviders.mainnet;
   const navigate = useNavigate();
 
   const { register, getValues } = useForm({
@@ -15,16 +12,7 @@ export const AddressInput = () => {
 
   const onSubmit = () => {
     if (getValues('address')) {
-      (async () => {
-        const addressFromEns: string | null = await L1DefaultProvider.resolveName(
-          getValues('address')
-        );
-        if (addressFromEns) {
-          navigate(`/${addressFromEns}`);
-        } else {
-          navigate(`/${getValues('address')}`);
-        }
-      })();
+      navigate(`/${getValues('address')}`);
     }
   };
 
