@@ -58,6 +58,14 @@ export enum FuturesMarketAsset {
   FLOKI = 'FLOKI',
   INJ = 'INJ',
   STETH = 'STETH',
+  ETHBTC = 'ETHBTC',
+  XMR = 'XMR',
+  MAV = 'MAV',
+  ETC = 'ETC',
+  COMP = 'COMP',
+  YFI = 'YFI',
+  MKR = 'MKR',
+  RPL = 'RPL',
 }
 
 export enum FuturesMarketKey {
@@ -103,6 +111,14 @@ export enum FuturesMarketKey {
   sFLOKIPERP = 'sFLOKIPERP',
   sINJPERP = 'sINJPERP',
   sSTETHPERP = 'sSTETHPERP',
+  sETHBTCPERP = 'sETHBTCPERP',
+  sXMRPERP = 'sXMRPERP',
+  sMAVPERP = 'sMAVPERP',
+  sETCPERP = 'sETCPERP',
+  sCOMPPERP = 'sCOMPPERP',
+  sYFIPERP = 'sYFIPERP',
+  sMKRPERP = 'sMKRPERP',
+  sRPLPERP = 'sRPLPERP',
 }
 
 export interface FuturesMarketConfig {
@@ -580,6 +596,94 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     pythIds: {
       mainnet: '0x846ae1bdb6300b817cee5fdee2a6da192775030db5615b94a465f53bd40850b5',
       testnet: '0xb7abd25a76ddaffdf847224f03198ccb92723f90b2429cf33f0eecb96e352a86',
+    },
+  },
+  [FuturesMarketKey.sETHBTCPERP]: {
+    id: '0xd5fccd43205cef11fbaf9b38df15adbe1b186869',
+    key: FuturesMarketKey.sETHBTCPERP,
+    asset: FuturesMarketAsset.ETHBTC,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0xc96458d393fe9deb7a7d63a0ac41e2898a67a7750dbd166673279e06c868df0a',
+      testnet: '0x754a0a0800247d77751e35efb91638c828046103be3bb3d26989e65bf4010859',
+    },
+  },
+  [FuturesMarketKey.sXMRPERP]: {
+    id: '0x2ea06e73083f1b3314fa090eae4a5f70eb058f2e',
+    key: FuturesMarketKey.sXMRPERP,
+    asset: FuturesMarketAsset.XMR,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x46b8cc9347f04391764a0361e0b17c3ba394b001e7c304f7650f6376e37c321d',
+      testnet: '0xa7e2e2f7d47b17d18e6d49c427f21fb30c0a85e621a8502c3c4e486f3ab543c8',
+    },
+  },
+  [FuturesMarketKey.sMAVPERP]: {
+    id: '0x572f816f21f56d47e4c4fa577837bd3f58088676',
+    key: FuturesMarketKey.sMAVPERP,
+    asset: FuturesMarketAsset.MAV,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x5b131ede5d017511cf5280b9ebf20708af299266a033752b64180c4201363b11',
+      testnet: '0x01a33b54c2911e1f58fdc02bc03e3778508bb9a84571afca33e2757791eb1269',
+    },
+  },
+  [FuturesMarketKey.sETCPERP]: {
+    id: '0x4bf3c1af0faa689e3a808e6ad7a8d89d07bb9ec7',
+    key: FuturesMarketKey.sETCPERP,
+    asset: FuturesMarketAsset.ETC,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x7f5cc8d963fc5b3d2ae41fe5685ada89fd4f14b435f8050f28c7fd409f40c2d8',
+      testnet: '0xd77bfe9814f5a4718e1420881093efa8c0fe1a783472899f27ad4c7a58ef4d27',
+    },
+  },
+  [FuturesMarketKey.sCOMPPERP]: {
+    id: '0xb7059ed9950f2d9fdc0155fc0d79e63d4441e806',
+    key: FuturesMarketKey.sCOMPPERP,
+    asset: FuturesMarketAsset.COMP,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x4a8e42861cabc5ecb50996f92e7cfa2bce3fd0a2423b0c44c9b423fb2bd25478',
+      testnet: '0x4e149083ba3766e716b77c1a6f7744709a075bed2ac08dc485543616454a6404',
+    },
+  },
+  [FuturesMarketKey.sYFIPERP]: {
+    id: '0x6940e7c6125a177b052c662189bb27692e88e9cb',
+    key: FuturesMarketKey.sYFIPERP,
+    asset: FuturesMarketAsset.YFI,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb213846022f',
+      testnet: '0xc9c8430ee6c26e218abe9f1c9cb88a664f7096d4934d8dfda17bc5d79e918848',
+    },
+  },
+  [FuturesMarketKey.sMKRPERP]: {
+    id: '0xf7d9bd13f877171f6c7f93f71bdf8e380335dc12',
+    key: FuturesMarketKey.sMKRPERP,
+    asset: FuturesMarketAsset.MKR,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x9375299e31c0deb9c6bc378e6329aab44cb48ec655552a70d4b9050346a30378',
+      testnet: '0xc4d994230a6db7909135e4673287fb672f45ea92fb40b1bc9adf101ecf877ab7',
+    },
+  },
+  [FuturesMarketKey.sRPLPERP]: {
+    id: '0xfad0835dad2985b25ddab17eace356237589e5c7',
+    key: FuturesMarketKey.sRPLPERP,
+    asset: FuturesMarketAsset.RPL,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x24f94ac0fd8638e3fc41aab2e4df933e63f763351b640bf336a6ec70651c4503',
+      testnet: '0x9c48c155a80410aaa3699f6257d2255f6c95d0879766db1a187a249096ed2e94',
     },
   },
 };
