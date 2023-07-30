@@ -2725,6 +2725,9 @@ enum FuturesMarket_orderBy {
   id
 }
 
+"8 bytes signed integer\n"
+scalar Int8
+
 """
 we dont query this entity but only use it to store aggregate data we need during syncing
 """

@@ -457,6 +457,9 @@ enum FeesClaimed_orderBy {
   value
 }
 
+"8 bytes signed integer\n"
+scalar Int8
+
 """
 Tracks this event from various Synth.sol instances
 """
