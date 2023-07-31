@@ -2,7 +2,7 @@
   "name": "@snx-v2/useMinStakeTime",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "dependencies": {
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useDelegateWallet": "workspace:*",

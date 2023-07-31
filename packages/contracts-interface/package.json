@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.77.4",
+  "version": "2.77.5",
   "description": "A library for interacting with Synthetix smart contracts",
   "source": "./src/index.ts",
   "main": "./build/index.js",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@synthetixio/contracts": "workspace:*",
     "ethers": "^5.7.2",
-    "synthetix": "2.89.1"
+    "synthetix": "2.91.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

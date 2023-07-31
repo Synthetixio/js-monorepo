@@ -89,8 +89,8 @@ export const SynthsByName: Partial<
   sETHBTC: {
     asset: 'ETHBTC',
     category: 'crypto',
-    sign: '',
-    description: 'ETH / BTC',
+    sign: 'Ξ/₿',
+    description: 'Ether/Bitcoin Ratio',
     name: 'sETHBTC',
     subclass: 'MultiCollateralSynth',
   },
