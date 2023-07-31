@@ -220,6 +220,7 @@ jobs:
       - run: yarn workspace @synthetixio/perps-v2-subgraph test --coverage
 
   typecheck:
+    resource_class: large
     working_directory: /tmp/app
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
