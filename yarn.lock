@@ -7048,14 +7048,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@socket.tech/plugin@npm:^1.0.15":
-  version: 1.0.15
-  resolution: "@socket.tech/plugin@npm:1.0.15"
+"@socket.tech/plugin@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@socket.tech/plugin@npm:1.1.3"
   dependencies:
     "@react-spring/web": ^9.5.0
     "@reduxjs/toolkit": ^1.8.2
     "@socket.tech/ll-core": ^0.1.10
-    "@socket.tech/socket-v2-sdk": 1.23.0
+    "@socket.tech/socket-v2-sdk": ^1.23.1
+    "@tippyjs/react": ^4.2.6
     ethers: ^5.6.9
     react-feather: ^2.0.10
     react-redux: ^8.0.2
@@ -7063,13 +7064,13 @@ __metadata:
   peerDependencies:
     react: ">=17.0.1"
     react-dom: ">=17.0.1"
-  checksum: 6edae9325c763f68ab32325296eee2e2c07c9b0664f329a9a50a563e144ec85ef8921c36d5a2795cefd9a37cfb0cf37ff2534d2d01e12d815115b8cd52d8aa5e
+  checksum: 70f4e94d9da44b5c3a575d531938f2580dc38bbca2421b75b3c0c28b0cd92e49cccb8b0a1ebb3fcb5c1bf6e5b7863a1d97473dfa5925472bc00f470462a1a6d2
   languageName: node
   linkType: hard
 
-"@socket.tech/socket-v2-sdk@npm:1.23.0":
-  version: 1.23.0
-  resolution: "@socket.tech/socket-v2-sdk@npm:1.23.0"
+"@socket.tech/socket-v2-sdk@npm:^1.23.1":
+  version: 1.23.1
+  resolution: "@socket.tech/socket-v2-sdk@npm:1.23.1"
   dependencies:
     "@socket.tech/ll-core": ^0.1.36
     "@socket.tech/ll-core-v2": ^0.0.32
@@ -7077,7 +7078,7 @@ __metadata:
     ethers: ^5.6.5
     form-data: ^4.0.0
     tslib: ^2.4.0
-  checksum: dbc3bdf841825b7cfd00cdd5cda910e64388e9cb50bfdc78fe6dfbfba57194b063925518b2a900360de3d808e1babb44ab45cd9f7f7df4e250e01c75053b4a16
+  checksum: c1ba52cbca646f9d8c013ed212501462d220a03dc579b53c520e5b80a09cc2ed9968ebaffb40f131b5450f2dd246c65c1d6c9c6d9a67e2bf0ada823a54fdd271
   languageName: node
   linkType: hard
 
@@ -9082,7 +9083,7 @@ __metadata:
     "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/v3Theme": "workspace:*"
-    "@socket.tech/plugin": ^1.0.15
+    "@socket.tech/plugin": ^1.1.3
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
     "@storybook/addon-essentials": ^6.5.16
