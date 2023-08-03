@@ -66,6 +66,7 @@ export enum FuturesMarketAsset {
   YFI = 'YFI',
   MKR = 'MKR',
   RPL = 'RPL',
+  WLD = 'WLD',
 }
 
 export enum FuturesMarketKey {
@@ -119,6 +120,7 @@ export enum FuturesMarketKey {
   sYFIPERP = 'sYFIPERP',
   sMKRPERP = 'sMKRPERP',
   sRPLPERP = 'sRPLPERP',
+  sWLDPERP = 'sWLDPERP',
 }
 
 export interface FuturesMarketConfig {
@@ -684,6 +686,16 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     pythIds: {
       mainnet: '0x24f94ac0fd8638e3fc41aab2e4df933e63f763351b640bf336a6ec70651c4503',
       testnet: '0x9c48c155a80410aaa3699f6257d2255f6c95d0879766db1a187a249096ed2e94',
+    },
+  },
+  [FuturesMarketKey.sWLDPERP]: {
+    key: FuturesMarketKey.sWLDPERP,
+    asset: FuturesMarketAsset.WLD,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0xd6835ad1f773de4a378115eb6824bd0c0e42d84d1c84d9750e853fb6b6c7794a',
+      testnet: '0x69c5297fa967a51372d56174fcf7225b21263559bfbdb5cf03eff4af6c2212ea',
     },
   },
 };
