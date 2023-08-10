@@ -67,6 +67,7 @@ export enum FuturesMarketAsset {
   MKR = 'MKR',
   RPL = 'RPL',
   WLD = 'WLD',
+  USDT = 'USDT',
 }
 
 export enum FuturesMarketKey {
@@ -121,6 +122,7 @@ export enum FuturesMarketKey {
   sMKRPERP = 'sMKRPERP',
   sRPLPERP = 'sRPLPERP',
   sWLDPERP = 'sWLDPERP',
+  sUSDTPERP = 'sUSDTPERP',
 }
 
 export interface FuturesMarketConfig {
@@ -689,6 +691,7 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     },
   },
   [FuturesMarketKey.sWLDPERP]: {
+    id: '0x77da808032dcdd48077fa7c57afbf088713e09ad',
     key: FuturesMarketKey.sWLDPERP,
     asset: FuturesMarketAsset.WLD,
     supports: 'both',
@@ -696,6 +699,17 @@ export const MARKETS: Record<FuturesMarketKey, FuturesMarketConfig> = {
     pythIds: {
       mainnet: '0xd6835ad1f773de4a378115eb6824bd0c0e42d84d1c84d9750e853fb6b6c7794a',
       testnet: '0x69c5297fa967a51372d56174fcf7225b21263559bfbdb5cf03eff4af6c2212ea',
+    },
+  },
+  [FuturesMarketKey.sUSDTPERP]: {
+    id: '0x1681212a0edaf314496b489ab57cb3a5ad7a833f',
+    key: FuturesMarketKey.sUSDTPERP,
+    asset: FuturesMarketAsset.USDT,
+    supports: 'both',
+    version: 2,
+    pythIds: {
+      mainnet: '0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b',
+      testnet: '0x1fc18861232290221461220bd4e2acd1dcdfbc89c84092c93c18bdc7756c1588',
     },
   },
 };
