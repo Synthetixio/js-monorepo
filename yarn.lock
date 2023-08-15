@@ -6861,7 +6861,6 @@ __metadata:
   resolution: "@snx-v2/useIntegratorSorting@workspace:v2/lib/useIntegratorSorting"
   dependencies:
     "@tanstack/react-query": ^4.24.6
-    zod: ^3.20.6
   languageName: unknown
   linkType: soft
 
