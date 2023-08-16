@@ -6049,6 +6049,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/Integrators@workspace:*, @snx-v2/Integrators@workspace:v2/components/Integrators":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Integrators@workspace:v2/components/Integrators"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@snx-v2/UtilityCard": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
+    react: ^18.2.0
+    react-i18next: ^12.1.5
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/MainActionCards@workspace:*, @snx-v2/MainActionCards@workspace:v2/components/MainActionCards":
   version: 0.0.0-use.local
   resolution: "@snx-v2/MainActionCards@workspace:v2/components/MainActionCards"
@@ -6338,7 +6350,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/UtilityCard@workspace:^, @snx-v2/UtilityCard@workspace:v2/components/UtilityCard":
+"@snx-v2/UtilityCard@workspace:*, @snx-v2/UtilityCard@workspace:v2/components/UtilityCard":
   version: 0.0.0-use.local
   resolution: "@snx-v2/UtilityCard@workspace:v2/components/UtilityCard"
   dependencies:
@@ -6841,6 +6853,14 @@ __metadata:
     "@snx-v2/useTotalStakedSNX": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useIntegratorSorting@workspace:v2/lib/useIntegratorSorting":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useIntegratorSorting@workspace:v2/lib/useIntegratorSorting"
+  dependencies:
+    "@tanstack/react-query": ^4.24.6
   languageName: unknown
   linkType: soft
 
@@ -9059,6 +9079,7 @@ __metadata:
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/HomeButton": "workspace:*"
+    "@snx-v2/Integrators": "workspace:*"
     "@snx-v2/MainActionCards": "workspace:*"
     "@snx-v2/Mint": "workspace:*"
     "@snx-v2/Navigation": "workspace:*"
@@ -9070,7 +9091,6 @@ __metadata:
     "@snx-v2/SwitchNetworkContext": "workspace:*"
     "@snx-v2/TermsModal": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
-    "@snx-v2/UtilityCard": "workspace:^"
     "@snx-v2/WalletBalances": "workspace:*"
     "@snx-v2/WalletLayout": "workspace:*"
     "@snx-v2/Welcome": "workspace:^"

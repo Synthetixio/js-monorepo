@@ -1,24 +1,13 @@
-import { Box, Container, Flex, Text, Center, SimpleGrid } from '@chakra-ui/react';
+import { Box, Container, Flex, Text, Center } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
 import { MainActionCardsList } from '@snx-v2/MainActionCards';
-import { UtilityCard } from '@snx-v2/UtilityCard';
-import {
-  DHedgeIcon,
-  KwentaIcon,
-  LyraIcon,
-  ThalesIcon,
-  BridgeIcon,
-  DebtPoolIcon,
-  OvertimeIcon,
-  PolynomialIcon,
-  TorosIcon,
-} from '@snx-v2/icons';
+
+import { BridgeIcon, DebtPoolIcon } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
 import { Welcome } from '@snx-v2/Welcome';
-import CurveLogo from '../../ui/assets/svg/app/curve.svg';
 import Connector from 'containers/Connector';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
@@ -26,6 +15,7 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useApr } from '@snx-v2/useApr';
 import { StatBox } from '@snx-v2/StatBox';
 import { formatPercent } from '@snx-v2/formatters';
+import { Integrators } from '@snx-v2/Integrators';
 
 const V2Home = () => {
   const { t } = useTranslation();
@@ -147,67 +137,7 @@ const V2Home = () => {
             </Container>
           </Box>
           <Box pb={10} width="100%" px={[2, 0, 0, 0]} bg="navy.900">
-            <Container maxW="1200px" bg="transparent" mt={0}>
-              <SimpleGrid width="100%" minChildWidth="260px" spacingX="4">
-                <UtilityCard
-                  mt={6}
-                  title="Kwenta"
-                  description={t('staking-v2.home.utilities.kwentaDescription')}
-                  link="https://kwenta.io"
-                  Icon={KwentaIcon}
-                />
-                <UtilityCard
-                  title="dHedge"
-                  description={t('staking-v2.home.utilities.dHedgeDescription')}
-                  link="https://www.dhedge.org/"
-                  Icon={DHedgeIcon}
-                  mt={[4, 6, 6]}
-                />
-                <UtilityCard
-                  title="Lyra"
-                  description={t('staking-v2.home.utilities.lyraDescription')}
-                  link="https://www.lyra.finance/"
-                  Icon={LyraIcon}
-                  mt={[4, 6, 6]}
-                />
-                <UtilityCard
-                  title="Thales"
-                  description={t('staking-v2.home.utilities.thalesDescription')}
-                  link="https://thalesmarket.io/"
-                  Icon={ThalesIcon}
-                  mt={[4, 6, 6]}
-                />
-
-                <UtilityCard
-                  title="Curve"
-                  description={t('staking-v2.home.utilities.curveDescription')}
-                  link="https://curve.fi/"
-                  Icon={() => <CurveLogo />}
-                  mt={[4, 6, 6]}
-                />
-                <UtilityCard
-                  title="Overtime Markets"
-                  description={t('staking-v2.home.utilities.overtimeDescription')}
-                  link="https://overtimemarkets.xyz/"
-                  Icon={OvertimeIcon}
-                  mt={[4, 6, 6]}
-                />
-                <UtilityCard
-                  title="Polynomial"
-                  description={t('staking-v2.home.utilities.polynomialDescription')}
-                  link="https://www.polynomial.fi/"
-                  Icon={PolynomialIcon}
-                  mt={[4, 6, 6]}
-                />
-                <UtilityCard
-                  title="Toros"
-                  description={t('staking-v2.home.utilities.torosDescription')}
-                  link="https://toros.finance/"
-                  Icon={() => <TorosIcon height="40px" />}
-                  mt={[4, 6, 6]}
-                />
-              </SimpleGrid>
-            </Container>
+            <Integrators />
           </Box>
         </Box>
       </Flex>
