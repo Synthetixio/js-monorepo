@@ -22,7 +22,7 @@ const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 const walletConnect = walletConnectModule({
   version: 2,
   projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
-  requiredChains: [NetworkIdByName.mainnet, NetworkIdByName['mainnet-ovm']],
+  requiredChains: [],
 });
 const ledger = ledgerModule();
 // The trezor module have a bug, we can enable it when this has been merged and released: https://github.com/blocknative/web3-onboard/pull/1165
