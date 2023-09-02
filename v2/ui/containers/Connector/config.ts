@@ -22,7 +22,6 @@ const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 const walletConnect = walletConnectModule({
   version: 2,
   projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
-  requiredChains: [],
 });
 const ledger = ledgerModule();
 // The trezor module have a bug, we can enable it when this has been merged and released: https://github.com/blocknative/web3-onboard/pull/1165
@@ -32,6 +31,9 @@ const portis = portisModule({ apiKey: `${process.env.NEXT_PUBLIC_PORTIS_APP_ID}`
 const torus = torusModule();
 const brave = () => customBrave;
 const trust = trustModule();
+
+const isDev = process.env.NODE_ENV !== 'production';
+const isTestnetEnabled = isDev || window?.localStorage?.TESTNET === 'true';
 
 // Here we hardcode rpc urls... Not very good if infura is down. BUT I think these are just used as default before the wallets is connected.
 // And our app is not using default from onboard, so it should be fine.
@@ -52,23 +54,28 @@ const supportedChains = [
     rpcUrl: getInfuraRpcURL(NetworkIdByName['mainnet-ovm']),
     publicRpcUrl: 'https://mainnet.optimism.io',
   },
-  // goerli
-  {
-    id: getChainIdHex(NetworkIdByName.goerli),
-    token: 'ETH',
-    label: 'Goerli',
-    rpcUrl: getInfuraRpcURL(NetworkIdByName.goerli),
-    publicRpcUrl: 'https://ethereum-goerli.publicnode.com',
-  },
-  // goerli Ovm
-  {
-    id: getChainIdHex(NetworkIdByName['goerli-ovm']),
-    token: 'ETH',
-    label: 'Optimism Goerli',
-    rpcUrl: getInfuraRpcURL(NetworkIdByName['goerli-ovm']),
-    publicRpcUrl: 'https://goerli.optimism.io',
-  },
-];
+].concat(
+  isTestnetEnabled
+    ? [
+        // goerli
+        {
+          id: getChainIdHex(NetworkIdByName.goerli),
+          token: 'ETH',
+          label: 'Goerli',
+          rpcUrl: getInfuraRpcURL(NetworkIdByName.goerli),
+          publicRpcUrl: 'https://ethereum-goerli.publicnode.com',
+        },
+        // goerli Ovm
+        {
+          id: getChainIdHex(NetworkIdByName['goerli-ovm']),
+          token: 'ETH',
+          label: 'Optimism Goerli',
+          rpcUrl: getInfuraRpcURL(NetworkIdByName['goerli-ovm']),
+          publicRpcUrl: 'https://goerli.optimism.io',
+        },
+      ]
+    : []
+);
 
 export const isSupportedWalletChain = (networkId: number) => {
   return !!supportedChains.find((chain) => chain.id === `0x${networkId.toString(16)}`);
