@@ -7,6 +7,7 @@ import { PositionsTable } from '../components/Positions';
 import { AccountActionsTable } from '../components/Actions';
 import { useKwentaAccount } from '../hooks/useKwentaAccount';
 import { usePolynomialAccount } from '../hooks/usePolynomialAccount';
+import { useKwentaOwnerBySmartId } from '../hooks/useKwentaOwnerBySmartId';
 import { SmartWallet } from '../components/Shared';
 
 export const Account: FC = () => {
@@ -14,7 +15,7 @@ export const Account: FC = () => {
   const navigate = useNavigate();
   const { data: kwentaAccount } = useKwentaAccount(params?.walletAddress);
   const { data: polynomialAccount } = usePolynomialAccount(params?.walletAddress);
-
+  const { kwentaOwner, addressEnsName } = useKwentaOwnerBySmartId(params?.walletAddress);
   return (
     <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
       <Box mt={12}>
@@ -43,6 +44,12 @@ export const Account: FC = () => {
       <Flex mt={8} wrap="wrap">
         {kwentaAccount && (
           <SmartWallet label="Kwenta Smart Account" account={kwentaAccount.account} />
+        )}
+        {kwentaOwner && (
+          <SmartWallet
+            label={addressEnsName ? addressEnsName : 'EOA Account'}
+            account={kwentaOwner}
+          />
         )}
         {polynomialAccount && (
           <SmartWallet
