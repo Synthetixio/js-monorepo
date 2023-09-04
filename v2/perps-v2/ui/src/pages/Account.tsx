@@ -7,15 +7,24 @@ import { PositionsTable } from '../components/Positions';
 import { AccountActionsTable } from '../components/Actions';
 import { useKwentaAccount } from '../hooks/useKwentaAccount';
 import { usePolynomialAccount } from '../hooks/usePolynomialAccount';
-import { useKwentaOwnerBySmartId } from '../hooks/useKwentaOwnerBySmartId';
+import { useOwnerKwenta, useOwnerPolynomial } from '../hooks/useOwnerBySmartId';
+import { useENSName } from '../hooks/useENSName';
 import { SmartWallet } from '../components/Shared';
 
 export const Account: FC = () => {
   const params = useParams();
   const navigate = useNavigate();
+
   const { data: kwentaAccount } = useKwentaAccount(params?.walletAddress);
   const { data: polynomialAccount } = usePolynomialAccount(params?.walletAddress);
-  const { kwentaOwner, addressEnsName } = useKwentaOwnerBySmartId(params?.walletAddress);
+  
+  const { kwentaOwner } = useOwnerKwenta(params?.walletAddress);
+  const { polynomialOwner } = useOwnerPolynomial(params?.walletAddress);
+
+  const { addressEnsName: addressENSName } = useENSName(params?.walletAddress);
+  const { addressEnsName: kwentaENSName } = useENSName(kwentaOwner);
+  const { addressEnsName: polynomialENSName } = useENSName(polynomialOwner);
+
   return (
     <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
       <Box mt={12}>
@@ -37,7 +46,7 @@ export const Account: FC = () => {
         flexWrap={{ base: 'wrap', md: 'nowrap' }}
       >
         <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
-          Account: {params?.walletAddress}
+          Account: {addressENSName ? addressENSName : params?.walletAddress}
         </Heading>
         <ExternalLinkIcon color="cyan.500" />
       </Link>
@@ -47,8 +56,14 @@ export const Account: FC = () => {
         )}
         {kwentaOwner && (
           <SmartWallet
-            label={addressEnsName ? addressEnsName : 'EOA Account'}
+            label={kwentaENSName ? kwentaENSName : 'EOA Account'}
             account={kwentaOwner}
+          />
+        )}
+        {polynomialOwner && (
+          <SmartWallet
+            label={polynomialENSName ? polynomialENSName : 'EOA Account'}
+            account={polynomialOwner}
           />
         )}
         {polynomialAccount && (
