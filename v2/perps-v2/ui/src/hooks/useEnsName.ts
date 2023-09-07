@@ -1,28 +1,22 @@
-import { ethers } from 'ethers';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
-
-const fetchEnsNameForAddress = async (
-  address: string | null | undefined,
-  provider: ethers.providers.JsonRpcProvider
-): Promise<string | null> => {
-  if (!address || !provider) return null;
-  return await provider.lookupAddress(address);
-};
 
 export const useEnsName = (address?: string | null) => {
   const { globalProviders } = useGlobalProvidersWithFallback();
-  const L1DefaultProvider = globalProviders.mainnet;
 
   const [addressEnsName, setAddressEnsName] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchEns = async () => {
-      const name = await fetchEnsNameForAddress(address, L1DefaultProvider);
+    async function resolve() {
+      if (!address || !globalProviders.mainnet) {
+        setAddressEnsName(null);
+        return;
+      }
+      const name = await globalProviders.mainnet.lookupAddress(address);
       setAddressEnsName(name);
-    };
-    fetchEns();
-  }, [address, L1DefaultProvider]);
+    }
+    resolve();
+  }, [address, globalProviders]);
 
   return { addressEnsName };
 };
