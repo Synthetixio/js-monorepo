@@ -1,9 +1,6 @@
 import { z } from 'zod';
-import { useState, useEffect } from 'react';
-import { KWENTA_SUBGRAPH_URL } from '../utils';
-import { ApolloClient, InMemoryCache, useQuery, gql } from '@apollo/client';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
-import { POLYNOMIAL_SUBGRAPH_URL } from '../utils';
+import { KWENTA_SUBGRAPH_URL, POLYNOMIAL_SUBGRAPH_URL } from '../utils';
+import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client';
 
 const kwentaClient = new ApolloClient({
   uri: KWENTA_SUBGRAPH_URL,
