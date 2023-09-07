@@ -1,3 +1,4 @@
+import { ethers } from 'ethers';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
@@ -13,18 +14,18 @@ export const AddressInput = () => {
     defaultValues: { address: '' },
   });
 
-  const onSubmit = () => {
-    if (getValues('address')) {
-      (async () => {
-        const addressFromEns: string | null = await L1DefaultProvider.resolveName(
-          getValues('address')
-        );
-        if (addressFromEns) {
-          navigate(`/${addressFromEns}`);
-        } else {
-          navigate(`/${getValues('address')}`);
+  const onSubmit = async () => {
+    const address = getValues('address');
+    if (address) {
+      // Try to resolve ENS
+      if (!ethers.utils.isAddress(address)) {
+        const ens: string | null = await L1DefaultProvider.resolveName(address);
+        if (ens) {
+          navigate(`/${ens}`);
+          return;
         }
-      })();
+      }
+      navigate(`/${address}`);
     }
   };
 
