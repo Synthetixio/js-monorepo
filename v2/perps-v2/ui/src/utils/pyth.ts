@@ -12,7 +12,7 @@ const OffchainFeedSchema = z.array(
     feedId: z.string(),
   })
 );
-export type MarketsByKey = Record<
+export type PythConfigByMarketKey = Record<
   string,
   {
     key: string;
