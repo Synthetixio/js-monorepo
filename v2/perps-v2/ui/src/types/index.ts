@@ -45,3 +45,11 @@ export const PositionDataSchema = z.object({
   address: z.string(),
 });
 export const PositionsDataSchema = z.array(PositionDataSchema);
+
+export interface MarketsByKey {
+  [key: string]: {
+    key: string;
+    pythId: string;
+    asset: string;
+  };
+}

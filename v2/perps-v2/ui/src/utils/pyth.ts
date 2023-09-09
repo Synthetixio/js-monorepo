@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { isStaging } from './isStaging';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
+import { MarketsByKey } from '../types';
 
 export const pyth = new EvmPriceServiceConnection('https://xc-mainnet.pyth.network');
 
