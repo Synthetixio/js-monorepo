@@ -1,5 +1,3 @@
-
-
 export const PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL =
   'https://api.thegraph.com/subgraphs/name/synthetix-perps/perps-op-goerli';
 export const PERPS_V2_DASHBOARD_GRAPH_URL =
