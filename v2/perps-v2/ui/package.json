@@ -25,6 +25,7 @@
     "@snx-v2/v3Theme": "workspace:*",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/wei": "^2.74.4",
+    "axios": "^1.4.0",
     "date-fns": "^2.29.3",
     "ethers": "^5.7.2",
     "framer-motion": "^7.0.0",
