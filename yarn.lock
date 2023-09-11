@@ -8974,6 +8974,7 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@pythnetwork/pyth-evm-js": ^1.1.0
     "@snx-v2/formatters": "workspace:*"
+    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/v3Theme": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/wei": ^2.74.4
