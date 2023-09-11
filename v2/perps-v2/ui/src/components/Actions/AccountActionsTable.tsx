@@ -1,16 +1,16 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useActions } from '../../hooks';
 import { Currency, TableHeaderCell, Market, Size, MarginTransfer } from '../Shared';
 import { Action } from '../Shared/Action';
 import { AccountActionsLoading } from './AccountActionsLoading';
+import { useMergedActions } from '../../hooks/useMergedActions';
+import { useActions } from '../../hooks';
 
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
 export const AccountActionsTable = () => {
   const { walletAddress } = useParams();
-
-  const { data, loading, error } = useActions(walletAddress);
+  const { data, loading, error } = useMergedActions(walletAddress);
 
   return (
     <>
@@ -44,7 +44,7 @@ export const AccountActionsTable = () => {
               </>
             )}
             {data?.map((item) => {
-              const { label, asset, price, leverage, size, fees, id, txHash, timestamp } = item;
+              const { label, asset, price, leverage, size, fees, id, txHash, timestamp, protocol } = item;
               return (
                 <Tr key={id} borderTopWidth="1px">
                   <Action label={label} timestamp={timestamp.toNumber()} txHash={txHash} />
@@ -52,6 +52,7 @@ export const AccountActionsTable = () => {
                     asset={asset}
                     leverage={leverage?.toNumber() || null}
                     isPosition={isPosition(label)}
+                    protocol={protocol}
                   />
                   <Currency amount={price?.toNumber() || null} />
                   {isPosition(label) ? (
