@@ -7,6 +7,8 @@ export const KWENTA_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/kwen
 export const POLYNOMIAL_SUBGRAPH_URL =
   'https://api.thegraph.com/subgraphs/name/synthetix-perps/polynomial';
 
+export const DUNE_API_KEY = 'IRdMBz8n8CzLbjH33EHuRHe0lJifJab9';
+
 export const optimisticEthercanLink = (address: string) =>
   `https://optimistic.etherscan.io/address/${address}`;
 
