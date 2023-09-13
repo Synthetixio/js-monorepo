@@ -74,6 +74,7 @@ export function useMarkets() {
         const { data: marketData } = await client.query({
           query: MARKETS_QUERY,
           variables: {
+            first: 1000, // Make sure we fetch enough to get all markets (default is 100)
             where: { day_gte: lower, day_lte: upper },
             orderBy: DailyMarketStat_OrderBy.Volume,
           },
