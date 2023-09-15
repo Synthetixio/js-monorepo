@@ -7,6 +7,9 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
   Text,
   useBreakpointValue,
   useDisclosure,
@@ -22,7 +25,7 @@ import {
   GuideIcon,
   NineDots,
   LoansIcon,
-  // NotificationsIcon,
+  NotificationsIcon,
   OptimismIcon,
   // SettingsIcon,
   StakingIcon,
@@ -45,6 +48,7 @@ import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
+import { NotifiCard } from '@snx-v2/Notifi';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -112,6 +116,34 @@ export const NavigationUI = ({
     >
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
+        {isWalletConnected && walletAddress && (
+          <>
+            {size === 'desktop' && (
+              <Popover>
+                <PopoverTrigger>
+                  <Button
+                    ml={2}
+                    height={10}
+                    width={10}
+                    bg="navy.900"
+                    borderColor="gray.900"
+                    borderWidth="1px"
+                    borderRadius="4px"
+                    _hover={{
+                      bg: 'blackAlpha.400',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <NotificationsIcon color="white" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent border='none' width='333px'>
+                  <NotifiCard />
+                </PopoverContent>
+              </Popover>
+            )}
+          </>
+        )}
         {isWalletConnected && walletAddress && (
           <>
             {size === 'desktop' && (

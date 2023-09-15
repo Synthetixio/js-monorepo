@@ -5348,6 +5348,88 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notifi-network/notifi-axios-adapter@npm:^0.83.0":
+  version: 0.83.0
+  resolution: "@notifi-network/notifi-axios-adapter@npm:0.83.0"
+  dependencies:
+    "@notifi-network/notifi-axios-utils": ^0.83.0
+  peerDependencies:
+    axios: ^0.26.0
+  checksum: 3ed2ac30bed928f0842d7054057a81ed30ff983f678655d8ca6bb613701e78cbe0caeca7ba0cdbe1c008b121021974a78ed30690dedca285fb637f19b0acde90
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-axios-utils@npm:^0.83.0":
+  version: 0.83.0
+  resolution: "@notifi-network/notifi-axios-utils@npm:0.83.0"
+  peerDependencies:
+    axios: ^0.26.1
+  checksum: 9198e742eab3126800ae4397e8ac3a7eb1ebdbadecc24168b0b453a95f72d53866643900ac686de401be69154fc65b7386216df23d30171c0ab23498aaa6b4d1
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-core@npm:^0.83.0":
+  version: 0.83.0
+  resolution: "@notifi-network/notifi-core@npm:0.83.0"
+  dependencies:
+    "@notifi-network/notifi-graphql": ^0.83.0
+  checksum: 67d09258294ef51ded28139f9ba31f49905488bf9d0198f7cf6e3b2c9533a08a77b106517f1907e902b682219d1a773e0a278104b044b8febdfb66af5165c7b6
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-frontend-client@npm:^0.83.0":
+  version: 0.83.0
+  resolution: "@notifi-network/notifi-frontend-client@npm:0.83.0"
+  dependencies:
+    "@notifi-network/notifi-graphql": ^0.83.0
+    graphql-request: 5.1.0
+    localforage: ^1.10.0
+  checksum: 6d16d31b7f67bd79a8381214fc4063191c649d5aaf02b84879de35d0514296947cec72885c52c2f1f9f5c878211aa616b23d30a55dce3406caa409ea849c7f7f
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-graphql@npm:^0.83.0":
+  version: 0.83.0
+  resolution: "@notifi-network/notifi-graphql@npm:0.83.0"
+  dependencies:
+    graphql: ^16.6.0
+    graphql-request: 5.1.0
+    uuid: ^8.3.2
+  checksum: bc26986c4339ab155c207b13348314879e24a53b44e72bb82e06cc45956134cb1b7a199a761396c0db2706b85f37973654b3148cf692c8dc706868bcd50e49e1
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-react-card@npm:^0.83.0":
+  version: 0.83.0
+  resolution: "@notifi-network/notifi-react-card@npm:0.83.0"
+  dependencies:
+    "@notifi-network/notifi-frontend-client": ^0.83.0
+    "@notifi-network/notifi-react-hooks": ^0.83.0
+    clsx: ^1.2.1
+    date-fns: ^2.29.3
+    libphonenumber-js: ^1.10.13
+    react-virtuoso: ^3.1.1
+  checksum: 9256009aab1fc11ef1a69f3ce4a3dec30470ce103ce848e45093ffc7207e862231710b26a5015c49508cb9d85f0450f46b08357c2e75870f8619c03903ade6ca
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-react-hooks@npm:^0.83.0":
+  version: 0.83.0
+  resolution: "@notifi-network/notifi-react-hooks@npm:0.83.0"
+  dependencies:
+    "@notifi-network/notifi-axios-adapter": ^0.83.0
+    "@notifi-network/notifi-axios-utils": ^0.83.0
+    "@notifi-network/notifi-core": ^0.83.0
+    axios: ^0.26.0
+    localforage: ^1.10.0
+    typescript: ^4.5.5
+  peerDependencies:
+    react: ^17.0.2 || ^18.0
+    react-dom: ^17.0.2 || ^18.0
+  checksum: 4f2fd36df2fafb2dba29c2b322fca6a095e010c01bcaabade284944e888ee4c967243302ce76a3fcdca3e91bab9499291000497f7054ed4265ca8cc84e5a7fe7
+  languageName: node
+  linkType: hard
+
 "@npmcli/fs@npm:^1.0.0":
   version: 1.1.1
   resolution: "@npmcli/fs@npm:1.1.1"
@@ -6195,6 +6277,7 @@ __metadata:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/EpochPrice": "workspace:^"
+    "@snx-v2/Notifi": "workspace:*"
     "@snx-v2/UserBalances": "workspace:*"
     "@snx-v2/WalletModal": "workspace:*"
     "@snx-v2/formatters": "workspace:*"
@@ -6207,6 +6290,18 @@ __metadata:
     "@storybook/react": ^6.5.16
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/wei": ^2.74.4
+    react: ^18.2.0
+    react-i18next: ^12.1.5
+    react-router-dom: ^6.8.1
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/Notifi@workspace:*, @snx-v2/Notifi@workspace:v2/components/Notifi":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/Notifi@workspace:v2/components/Notifi"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@notifi-network/notifi-react-card": ^0.83.0
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -10661,6 +10756,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@virtuoso.dev/react-urx@npm:^0.2.12":
+  version: 0.2.13
+  resolution: "@virtuoso.dev/react-urx@npm:0.2.13"
+  dependencies:
+    "@virtuoso.dev/urx": ^0.2.13
+  peerDependencies:
+    react: ">=16"
+  checksum: 173e91c21f6a8cd506ad3b72af10656897fe1951124ed9eeb1fd85575534993bea2f97cba3f81c08ae1e88a2613df348e2c80d0ceecb3021f8c8c8fe0e053ee2
+  languageName: node
+  linkType: hard
+
+"@virtuoso.dev/urx@npm:^0.2.12, @virtuoso.dev/urx@npm:^0.2.13":
+  version: 0.2.13
+  resolution: "@virtuoso.dev/urx@npm:0.2.13"
+  checksum: 682a99cf40ccc429241268dd37495cd1ed4695ae58b5a1169c75df1630d5dc3fd8eb3aaa655f71c37f39ba9c23c0aaf4401b76d8a986986d1a38a422d596a6ba
+  languageName: node
+  linkType: hard
+
 "@vue/compiler-core@npm:3.2.36":
   version: 3.2.36
   resolution: "@vue/compiler-core@npm:3.2.36"
@@ -12861,7 +12974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.26.1":
+"axios@npm:^0.26.0, axios@npm:^0.26.1":
   version: 0.26.1
   resolution: "axios@npm:0.26.1"
   dependencies:
@@ -14671,7 +14784,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.0.4, clsx@npm:^1.1.0":
+"clsx@npm:^1.0.4, clsx@npm:^1.1.0, clsx@npm:^1.2.1":
   version: 1.2.1
   resolution: "clsx@npm:1.2.1"
   checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
@@ -19260,7 +19373,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-request@npm:^5.0.0, graphql-request@npm:^5.1.0":
+"graphql-request@npm:5.1.0, graphql-request@npm:^5.0.0, graphql-request@npm:^5.1.0":
   version: 5.1.0
   resolution: "graphql-request@npm:5.1.0"
   dependencies:
@@ -20071,6 +20184,13 @@ __metadata:
   version: 3.3.0
   resolution: "immediate@npm:3.3.0"
   checksum: 634b4305101e2452eba6c07d485bf3e415995e533c94b9c3ffbc37026fa1be34def6e4f2276b0dc2162a3f91628564a4bfb26280278b89d3ee54624e854d2f5f
+  languageName: node
+  linkType: hard
+
+"immediate@npm:~3.0.5":
+  version: 3.0.6
+  resolution: "immediate@npm:3.0.6"
+  checksum: f9b3486477555997657f70318cc8d3416159f208bec4cca3ff3442fd266bc23f50f0c9bd8547e1371a6b5e82b821ec9a7044a4f7b944798b25aa3cc6d5e63e62
   languageName: node
   linkType: hard
 
@@ -22839,6 +22959,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"libphonenumber-js@npm:^1.10.13":
+  version: 1.10.44
+  resolution: "libphonenumber-js@npm:1.10.44"
+  checksum: ada1bc135ce4b77eaa859a2c39d5b64cf142a76d203cb52f8f0e3097c30acba8a8faa4c6d975968333216d48448c589eb640b829ae5e95de706415684791cad9
+  languageName: node
+  linkType: hard
+
+"lie@npm:3.1.1":
+  version: 3.1.1
+  resolution: "lie@npm:3.1.1"
+  dependencies:
+    immediate: ~3.0.5
+  checksum: 6da9f2121d2dbd15f1eca44c0c7e211e66a99c7b326ec8312645f3648935bc3a658cf0e9fa7b5f10144d9e2641500b4f55bd32754607c3de945b5f443e50ddd1
+  languageName: node
+  linkType: hard
+
 "lilconfig@npm:2.0.6":
   version: 2.0.6
   resolution: "lilconfig@npm:2.0.6"
@@ -23016,6 +23152,15 @@ __metadata:
     emojis-list: ^3.0.0
     json5: ^2.1.2
   checksum: a5281f5fff1eaa310ad5e1164095689443630f3411e927f95031ab4fb83b4a98f388185bb1fe949e8ab8d4247004336a625e9255c22122b815bb9a4c5d8fc3b7
+  languageName: node
+  linkType: hard
+
+"localforage@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "localforage@npm:1.10.0"
+  dependencies:
+    lie: 3.1.1
+  checksum: f2978b434dafff9bcb0d9498de57d97eba165402419939c944412e179cab1854782830b5ec196212560b22712d1dd03918939f59cf1d4fc1d756fca7950086cf
   languageName: node
   linkType: hard
 
@@ -27331,6 +27476,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-virtuoso@npm:^3.1.1":
+  version: 3.1.5
+  resolution: "react-virtuoso@npm:3.1.5"
+  dependencies:
+    "@virtuoso.dev/react-urx": ^0.2.12
+    "@virtuoso.dev/urx": ^0.2.12
+  peerDependencies:
+    react: ">=16 || >=17 || >= 18"
+    react-dom: ">=16 || >=17 || >= 18"
+  checksum: c6dd6921e73ec1f88ae99c0eb002df24cdd73eb9154d71be43ea957b613ca9e976d6b0625b78f25a4dafc415ac680c6de576466847887d1da57bb3313cce7ec8
+  languageName: node
+  linkType: hard
+
 "react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -30931,7 +31089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.9.5":
+"typescript@npm:^4.5.5, typescript@npm:^4.9.5":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
   bin:
@@ -30941,7 +31099,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.9.5#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.5.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.9.5#~builtin<compat/typescript>":
   version: 4.9.5
   resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"
   bin:
