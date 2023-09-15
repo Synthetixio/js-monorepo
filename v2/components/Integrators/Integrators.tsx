@@ -41,10 +41,12 @@ const sortIntegrators = (integrators: Integrator[], order: string[]) => {
     return indexA - indexB;
   });
 };
+
 const IntegratorsUi = ({ integratorOrder }: { integratorOrder?: string[] }) => {
   const { t } = useTranslation();
 
   if (!integratorOrder) return null;
+
   const integrators = [
     {
       key: 'kwenta',
@@ -111,6 +113,7 @@ const IntegratorsUi = ({ integratorOrder }: { integratorOrder?: string[] }) => {
       mt: [4, 6, 6],
     },
   ];
+
   const sortedIntegrators = sortIntegrators(integrators, integratorOrder);
 
   return (

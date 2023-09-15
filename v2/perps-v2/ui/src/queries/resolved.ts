@@ -4,7 +4,7 @@ import Wei, { wei } from '@synthetixio/wei';
 import { utils } from 'ethers';
 import { fetchPositions } from '../hooks';
 import { notNill } from '../utils/notNil';
-import { FuturesMarketKey, MARKETS, scale, calculatePositionData } from '../utils';
+import { scale, calculatePositionData, getMarketsPythConfig } from '../utils';
 
 export const POSITIONS_CONTRACT_QUERY = gql(`
   query ($walletAddress: String!, $openPositions: PositionsMarketQuery) {
@@ -31,13 +31,13 @@ export const resolvers: Resolvers | Resolvers[] = {
     ) => {
       const positionsData = await fetchPositions(openPositions, walletAddress || '');
       const offchainPrices: { asset: string; price: Wei }[] = [];
-
+      const pythConfigByMarketKey = await getMarketsPythConfig();
       await Promise.all(
         openPositions.map(async ({ market, asset }: { market: string; asset: string }) => {
-          const marketId = utils.parseBytes32String(market) as FuturesMarketKey;
+          const marketId = utils.parseBytes32String(market);
 
           const feedData = await pyth.getLatestPriceFeeds([
-            `${MARKETS[marketId].pythIds?.mainnet}`,
+            `${pythConfigByMarketKey[marketId].pythId}`,
           ]);
 
           if (feedData && feedData.length > 0) {

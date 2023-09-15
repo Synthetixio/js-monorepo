@@ -246,9 +246,6 @@ module.exports = {
         'process.env.NEXT_PUBLIC_WC_PROJECT_ID': JSON.stringify(
           process.env.NEXT_PUBLIC_WC_PROJECT_ID
         ),
-        'process.env.NEXT_PUBLIC_DUNE_API_KEY': JSON.stringify(
-          process.env.NEXT_PUBLIC_DUNE_API_KEY
-        ),
       }),
     ])
     .concat(isProd ? [] : isTest ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })])

@@ -7,7 +7,13 @@ import { DailyMarketStat_OrderBy } from '../__generated__/graphql';
 import { getDateRange } from './useMarketStats';
 import { perpsMarketDataContract } from './usePositions';
 import { BytesLike, Contract, providers, utils } from 'ethers';
-import { calculateMarkPrice, FuturesMarketKey, MARKETS, pyth, scale } from '../utils';
+import {
+  calculateMarkPrice,
+  getMarketsPythConfig,
+  PythConfigByMarketKey,
+  pyth,
+  scale,
+} from '../utils';
 import { PerpsV2MarketData } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import { ZodStringToWei } from './useLargestOpenPosition';
 import {
@@ -68,6 +74,7 @@ export function useMarkets() {
         const { data: marketData } = await client.query({
           query: MARKETS_QUERY,
           variables: {
+            first: 1000, // Make sure we fetch enough to get all markets (default is 100)
             where: { day_gte: lower, day_lte: upper },
             orderBy: DailyMarketStat_OrderBy.Volume,
           },
@@ -98,8 +105,8 @@ export function useMarkets() {
             percentageDifference,
           };
         });
-
-        const data = await fetchMarkets(dataWithPercentageDifference);
+        const pythConfigByMarketKey = await getMarketsPythConfig();
+        const data = await fetchMarkets(dataWithPercentageDifference, pythConfigByMarketKey);
 
         setState({ loading: false, data, error: null });
       } catch (error) {
@@ -128,7 +135,8 @@ interface FetchMarketsInterface {
 }
 
 export async function fetchMarkets(
-  marketsData: FetchMarketsInterface[]
+  marketsData: FetchMarketsInterface[],
+  pythConfigByMarketKey: PythConfigByMarketKey
 ): Promise<z.infer<typeof DataSchema>[] | null> {
   try {
     const allMarketSummaries = {
@@ -144,9 +152,9 @@ export async function fetchMarkets(
     }));
 
     const dataWithPythId = marketsData.map((item) => {
-      const id = `${utils.parseBytes32String(item.market.marketKey)}` as FuturesMarketKey;
-      const pythInfo = MARKETS[id];
-      return { pythId: pythInfo.pythIds?.mainnet || '', ...item };
+      const marketKey = `${utils.parseBytes32String(item.market.marketKey)}`;
+      const pythInfo = pythConfigByMarketKey[marketKey];
+      return { pythId: pythInfo.pythId, ...item };
     });
 
     const [multiCallResponse, indexPrices] = await Promise.all([

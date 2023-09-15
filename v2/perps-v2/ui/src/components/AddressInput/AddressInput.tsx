@@ -1,25 +1,38 @@
+import { ethers } from 'ethers';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
 
 export const AddressInput = () => {
+  const { globalProviders } = useGlobalProvidersWithFallback();
+  const L1DefaultProvider = globalProviders.mainnet;
   const navigate = useNavigate();
 
   const { register, getValues } = useForm({
     defaultValues: { address: '' },
   });
 
-  const onSubmit = () => {
-    if (getValues('address')) {
-      navigate(`/${getValues('address')}`);
+  const onSubmit = async () => {
+    const address = getValues('address');
+    if (address) {
+      // Try to resolve ENS
+      if (!ethers.utils.isAddress(address)) {
+        const ens: string | null = await L1DefaultProvider.resolveName(address);
+        if (ens) {
+          navigate(`/${ens}`);
+          return;
+        }
+      }
+      navigate(`/${address}`);
     }
   };
 
   return (
     <Flex alignSelf="end" width="50%" justifyContent="flex-end" alignItems="center" mb="3px">
       <Input
-        placeholder="Search by address"
+        placeholder="Search by ENS / address"
         w="38%"
         minW={{ base: '180px', md: '250px' }}
         {...register('address')}
