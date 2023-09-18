@@ -8,7 +8,7 @@ a {
   --notifi-toggle-handle: #fff;
   --notifi-toggle-inactive: #b6b8d5;
   --notifi-toggle-active: #82F7C5;
-  --notifi-tooltip-background: rgba(60, 60, 60, 1);
+  --notifi-tooltip-background: #2A2A3B;
   --notifi-alert-color: #F37884;
   --notifi-link-color: #82F7C5;
   --notifi-checkmark-color: #82F7C5;
@@ -797,7 +797,7 @@ input::-webkit-inner-spin-button {
 .NotifiUserInfoPanel__smsLabel,
 .NotifiUserInfoPanel__smsLabel,
 .NotifiUserInfoPanel__telegramLabel,
-.otifiUserInfoPanel__discordLabel {
+.NotifiUserInfoPanel__discordLabel {
   margin-bottom: 0 !important;
   font-size: 12px;
   line-height: normal;
@@ -849,6 +849,7 @@ input::-webkit-inner-spin-button {
   color: var(--notifi-font-color);
   text-align: left;
   background-color: var(--notifi-tooltip-background);
+  border: 1px solid #303036;;
   border-radius: 8px;
   white-space: pre-line;
   line-height: 15px;
@@ -1578,6 +1579,9 @@ input::-webkit-inner-spin-button {
 }
 
 .FusionMultiThresholdSettingsRow__saveButton {
+  visibility: hidden;
+}
+.FusionMultiThresholdSettingsRow__saveButton::after {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.07px;
@@ -1590,6 +1594,11 @@ input::-webkit-inner-spin-button {
   background-color: #5FCEFA;
   cursor: pointer;
   height: 30px;
+  content: 'Add';
+  visibility: visible;
+  display: block;
+  position: absolute;
+  margin-top: -25px;
 }
 
 .FusionMultiThresholdSettingsRow__saveButton:disabled {
