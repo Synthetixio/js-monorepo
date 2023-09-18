@@ -3,10 +3,10 @@ import { gql, useApolloClient } from '@apollo/client';
 
 import { MARKETS_ID_QUERY } from '../queries/dashboard';
 import * as z from 'zod';
-import { FuturesMarketKey, MARKETS, scale } from '../utils';
+import { scale } from '../utils';
 import { utils } from 'ethers';
 import { wei } from '@synthetixio/wei';
-import { pyth } from '../utils/pyth';
+import { pyth, getMarketsPythConfig } from '../utils/pyth';
 
 const pythItemSchema = z.object({
   pythId: z.union([z.string(), z.undefined()]),
@@ -25,28 +25,21 @@ const NumberStringSchema = z.string().refine((value) => !isNaN(parseFloat(value)
 export const ZodStringToWei = NumberStringSchema.transform((value) => wei(value, 18, true));
 
 export const DataSchema = z.object({
-  averageEntryPrice: z.string(),
   entryPrice: z.string(),
-  feesPaidToSynthetix: z.string(),
   id: z.string(),
   isOpen: z.boolean(),
-  lastPrice: z.string(),
   leverage: z.string(),
   long: z.boolean(),
   market: z.object({
-    id: z.string(),
     marketKey: z.string(),
     asset: z.string(),
   }),
-  netFunding: z.string(),
   notionalValue: ZodStringToWei,
   pythItem: pythItemSchema,
-  realisedPnl: z.string(),
   size: z.string(),
   trader: z.object({
     id: z.string(),
   }),
-  unrealisedPnl: z.string(),
 });
 
 export type DataInterface = z.infer<typeof DataSchema>;
@@ -67,6 +60,7 @@ export function useLargestOpenPosition() {
         const { data: marketsData } = await client.query({
           query: MARKETS_ID_QUERY,
         });
+        const markets = await getMarketsPythConfig();
 
         const marketIds = marketsData?.futuresMarkets.map((market) => market.id) || [];
 
@@ -76,11 +70,11 @@ export function useLargestOpenPosition() {
               return utils.parseBytes32String(marketKey).includes('PERP');
             })
             .map(({ marketKey }) => {
-              const id = `${utils.parseBytes32String(marketKey)}` as FuturesMarketKey;
-              const pythInfo = MARKETS[id];
+              const id = `${utils.parseBytes32String(marketKey)}`;
+              const pythInfo = markets[id];
 
-              if (pythInfo.pythIds?.mainnet) {
-                return { pythId: pythInfo.pythIds?.mainnet || '', marketKey } || null;
+              if (pythInfo?.pythId) {
+                return { pythId: pythInfo.pythId || '', marketKey } || null;
               }
 
               return null;
@@ -163,7 +157,6 @@ export function generateOpenPositionsQuery(marketIds: string[]) {
     return `
       Long${marketId}: futuresPositions(where: { market: "${marketId}", isOpen: true }, first: 3, orderBy: size, orderDirection: desc) {
         market {
-          id
           marketKey
           asset
         }
@@ -172,21 +165,13 @@ export function generateOpenPositionsQuery(marketIds: string[]) {
         }
         isOpen
         entryPrice
-        avgEntryPrice
         leverage
-        feesPaidToSynthetix
         id
-        realizedPnl
-        unrealizedPnl
-        feesPaidToSynthetix
-        lastPrice
-        netFunding
         long
         size
       }
       Short${marketId}: futuresPositions(where: { market: "${marketId}", isOpen: true }, first: 3, orderBy: size, orderDirection: asc) {
         market {
-          id
           marketKey
           asset
         }
@@ -195,15 +180,8 @@ export function generateOpenPositionsQuery(marketIds: string[]) {
         }
         isOpen
         entryPrice
-        avgEntryPrice
         leverage
-        feesPaidToSynthetix
         id
-        realizedPnl
-        unrealizedPnl
-        feesPaidToSynthetix
-        lastPrice
-        netFunding
         long
         size
       }

@@ -2,9 +2,10 @@ import React from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
 import { AllActionsTable } from '../components/Actions';
 import { MarketSelect, SizeSelect } from '../components';
-import { FuturesMarketAsset } from '../utils';
+import { useMarketSummaries } from '../hooks/useMarketSummaries';
 
 export function Actions() {
+  const markets = useMarketSummaries();
   return (
     <>
       <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
@@ -12,7 +13,7 @@ export function Actions() {
           Actions
         </Heading>
         <Flex>
-          <MarketSelect markets={Object.values(FuturesMarketAsset)} />
+          <MarketSelect markets={markets.data?.map((x) => x.asset)} />
           <SizeSelect />
         </Flex>
         <AllActionsTable />

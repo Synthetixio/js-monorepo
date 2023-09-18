@@ -1,20 +1,19 @@
 import { useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Button, Menu, MenuButton, MenuList, Flex } from '@chakra-ui/react';
-import { FuturesMarketAsset } from '../../../utils';
 import { MarketCheckbox } from './MarketCheckbox';
 import { CurrencyIcon } from '../../CurrencyIcon';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface MarketSelectProps {
-  markets: FuturesMarketAsset[];
+  markets?: string[];
 }
 
 export const MarketSelect = ({ markets }: MarketSelectProps) => {
   const [searchParams] = useSearchParams();
-  const initialState = (searchParams.get('markets')?.split(',') || []) as FuturesMarketAsset[];
+  const initialState = searchParams.get('markets')?.split(',') || [];
 
-  const [activeAssets, setActiveAssets] = useState<FuturesMarketAsset[]>(initialState);
+  const [activeAssets, setActiveAssets] = useState<string[]>(initialState);
 
   const navigate = useNavigate();
 
@@ -87,7 +86,7 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
               onClick('');
             }}
           />
-          {markets.map((market) => (
+          {markets?.map((market) => (
             <MarketCheckbox
               key={market}
               icon={<CurrencyIcon width={20} height={20} currencyKey={market} />}
