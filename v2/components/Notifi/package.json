@@ -4,10 +4,8 @@
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@chakra-ui/react": "^2.5.0",
+    "@ethersproject/bytes": "^5.7.0",
     "@notifi-network/notifi-react-card": "^0.83.0",
-    "react": "^18.2.0",
-    "react-i18next": "^12.1.5",
-    "react-router-dom": "^6.8.1"
+    "react": "^18.2.0"
   }
 }
