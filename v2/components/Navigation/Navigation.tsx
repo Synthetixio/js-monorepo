@@ -94,6 +94,7 @@ export const NavigationUI = ({
   const { t } = useTranslation();
   const { delegateWallet } = useDelegateWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const notifiModal = useDisclosure();
   const { name, icon } = activeIcon(currentNetwork);
 
   const size = useBreakpointValue(
@@ -119,7 +120,11 @@ export const NavigationUI = ({
         {isWalletConnected && walletAddress && (
           <>
             {size === 'desktop' && (
-              <Popover>
+              <Popover 
+                closeOnBlur={false} 
+                onClose={notifiModal.onClose} 
+                isOpen={notifiModal.isOpen}
+              >
                 <PopoverTrigger>
                   <Button
                     ml={2}
@@ -133,12 +138,13 @@ export const NavigationUI = ({
                       bg: 'blackAlpha.400',
                       cursor: 'pointer',
                     }}
+                    onClick={notifiModal.onOpen}
                   >
                     <NotificationsIcon color="white" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent border='none' width='333px'>
-                  <NotifiCard />
+                  <NotifiCard onClose={notifiModal.onClose} />
                 </PopoverContent>
               </Popover>
             )}

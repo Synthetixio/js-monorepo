@@ -207,18 +207,17 @@ input::-webkit-inner-spin-button {
 }
 
 .NotifiAlertBox__btn--right {
-  width: 40px;
-  height: 40px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   margin-bottom: 0 !important;
-  border: 2px solid rgba(119, 126, 144, 0.20);
-  border-radius: 48px;
+  margin-left: 12px;
 }
 .NotifiAlertBox__btn--right svg {
-  color: var(--notifi-placeholder-color);
+  color: var(--notifi-font-color);
 }
 .NotifiAlertBox__btn--spacer:empty {
   width: 24px;
@@ -328,7 +327,7 @@ input::-webkit-inner-spin-button {
   font-weight: 400;
   color: var(--notifi-placeholder-color);
   overflow: hidden;
-  white-space: pre-line;
+  white-space: pre-wrap;
   word-wrap: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -891,16 +890,25 @@ input::-webkit-inner-spin-button {
 .NotifiAlertDetails__topContent {
   text-align: start;
   font-weight: 700;
-  font-size: 16px;
-  overflow-wrap: break-word;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .NotifiAlertDetails__bottomContent {
   text-align: start;
-  font-size: 14px;
+  font-size: 12px;
   overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .NotifiAlertDetails__timestamp {
   font-size: 12px;
+  text-align: right;
+  margin-top: 2px;
 }
 .NotifiAlertListContainer__container {
   display: flex;
@@ -1613,9 +1621,7 @@ input::-webkit-inner-spin-button {
   flex-grow: 1;
   visibility: visible;
   margin: 0px 20px;
-  padding: 16px;
   border-radius: 12px;
-  /* background: rgba(35, 38, 47, 0.50); */
 }
 .NotifiAlertHistory__container.NotifiAlertHistory__container--hidden {
   visibility: hidden;

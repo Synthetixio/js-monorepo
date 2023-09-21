@@ -9,13 +9,13 @@ import './notifi.css';
 import React from 'react';
 import Connector from '../../ui/containers/Connector';
 
-export const NotifiCard: React.FC = () => {
+export const NotifiCard: React.FC<{onClose: () => void}> = ({onClose}) => {
   const connector = Connector.useContainer();
   const signer = connector.signer;
   const walletAddress = connector.walletAddress;
   const walletBlockchain = connector.isL2 ? "OPTIMISM" : "ETHEREUM";
   const env = connector.isMainnet ? "Production" : "Development";
-  const cardId = connector.isMainnet ? "7aa4348b9cf7487bbb9a85a628ebd25b" : "8a569abd38974f76837960bd9bf36049";
+  const cardId = connector.isMainnet ? "283fa53b4b8e4ed1a2234615bf01d240" : "8a569abd38974f76837960bd9bf36049";
 
   if (signer === null || walletAddress === null) {
     // account is required
@@ -65,6 +65,7 @@ export const NotifiCard: React.FC = () => {
           },
         }}
         darkMode
+        onClose={onClose}
       />
     </NotifiContext>
   );
