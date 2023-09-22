@@ -19,7 +19,7 @@ interface ShortLoss {
   absoluteValue: number;
 }
 
-const UseOiStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
+const useOiStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [error, setError] = useState<AxiosError | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -127,4 +127,4 @@ const UseOiStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
   return { data, error, loading, totalShortLoss, lastRow };
 };
 
-export default UseOiStats;
+export default useOiStats;
