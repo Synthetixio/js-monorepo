@@ -2,32 +2,32 @@ a {
   text-decoration: none;
 }
 .notifi__dark {
-  --notifi-card-secondary-background: #2A2A3B;
-  --notifi-placeholder-color: rgba(255,255,255,0.2);
+  --notifi-card-secondary-background: #2a2a3b;
+  --notifi-placeholder-color: rgba(255, 255, 255, 0.2);
   --notifi-focus-color: #fff;
   --notifi-toggle-handle: #fff;
   --notifi-toggle-inactive: #b6b8d5;
-  --notifi-toggle-active: #82F7C5;
-  --notifi-tooltip-background: #2A2A3B;
-  --notifi-alert-color: #F37884;
-  --notifi-link-color: #82F7C5;
-  --notifi-checkmark-color: #82F7C5;
+  --notifi-toggle-active: #82f7c5;
+  --notifi-tooltip-background: #2a2a3b;
+  --notifi-alert-color: #f37884;
+  --notifi-link-color: #82f7c5;
+  --notifi-checkmark-color: #82f7c5;
   --notifi-font-color: #fff;
   --notifi-secondary-font-color: #fff;
-  --notifi-card-background: #06061A;
+  --notifi-card-background: #06061a;
   --notifi-intro-color: #b6b8d5;
-  --notifi-input-background: #2E2E3F;
-  --notifi-input-border: #23262F;
-  --notifi-button-color: #82F7C5;
-  --notifi-button-disabled-color: #385F58;
+  --notifi-input-background: #2e2e3f;
+  --notifi-input-border: #23262f;
+  --notifi-button-color: #82f7c5;
+  --notifi-button-disabled-color: #385f58;
   --notifi-button-text-color: #000000;
   --notifi-incoming-message: #474858;
   --notifi-outgoing-message: #678afc;
   --notifi-settings-icon-color: #fff;
-  --notifi-confirmation-color: #82F7C5;
+  --notifi-confirmation-color: #82f7c5;
   --notifi-banner-background: #222222;
   --notifi-banner-icon-color: #262949;
-  --notifi-divider-line: rgba(119, 126, 144, 0.10);
+  --notifi-divider-line: rgba(119, 126, 144, 0.1);
 }
 input:autofill,
 input:-webkit-autofill {
@@ -246,7 +246,7 @@ input::-webkit-inner-spin-button {
   color: var(--notifi-font-color);
   font-weight: 600;
   font-size: 14px;
-  line-height: 133.187%;;
+  line-height: 133.187%;
   text-align: center;
   /* margin: 0 auto !important; */
 }
@@ -284,7 +284,7 @@ input::-webkit-inner-spin-button {
   /* background-color: var(--notifi-card-secondary-background); */
   /* border-radius: 16px; */
 }
-.DividerLine.history{
+.DividerLine.history {
   height: 1px;
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -355,7 +355,7 @@ input::-webkit-inner-spin-button {
 }
 .NotifiEmailInput::after,
 .NotifiSmsInput::after {
-  content: "OR";
+  content: 'OR';
 }
 .NotifiEmailInput__container:focus-within,
 .NotifiSmsInput__container:focus-within,
@@ -406,7 +406,7 @@ input::-webkit-inner-spin-button {
 .NotifiToggle__container {
   --notifi-toggle-size: 14px;
   --notifi-toggle-padding: 1px;
-  --notifi-toggle-container: calc( var(--notifi-toggle-size) + 2 * var(--notifi-toggle-padding) );
+  --notifi-toggle-container: calc(var(--notifi-toggle-size) + 2 * var(--notifi-toggle-padding));
   position: relative;
   display: inline-block;
   width: calc(var(--notifi-toggle-container) + var(--notifi-toggle-size));
@@ -441,7 +441,7 @@ input::-webkit-inner-spin-button {
 }
 .NotifiToggle__slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: var(--notifi-toggle-size);
   width: var(--notifi-toggle-size);
   left: var(--notifi-toggle-padding);
@@ -547,7 +547,7 @@ input::-webkit-inner-spin-button {
 }
 .NotifiCardButton__button,
 .NotifiSubscribeButton__button {
-  background: linear-gradient(87deg, #73E6BE 1.24%, #5FCFF7 80.94%);
+  background: linear-gradient(87deg, #73e6be 1.24%, #5fcff7 80.94%);
   border: none;
   cursor: pointer;
   color: var(--notifi-button-text-color);
@@ -641,9 +641,7 @@ input::-webkit-inner-spin-button {
   height: 270px;
   overflow-y: scroll;
   z-index: 99;
-  box-shadow:
-    rgb(0 0 0 / 20%) 0px 5px 5px -3px,
-    rgb(0 0 0 / 14%) 0px 8px 10px 1px,
+  box-shadow: rgb(0 0 0 / 20%) 0px 5px 5px -3px, rgb(0 0 0 / 14%) 0px 8px 10px 1px,
     rgb(0 0 0 / 12%) 0px 3px 14px 2px;
 }
 .NotifiSmsInput__dropdownOptionList::-webkit-scrollbar {
@@ -698,8 +696,8 @@ input::-webkit-inner-spin-button {
 .NotifiInputSeparator__container:after,
 .NotifiPreviewCardSeparator:before,
 .NotifiPreviewCardSeparator::after {
-  background-color: rgba(119, 126, 144, 0.10);
-  content: "";
+  background-color: rgba(119, 126, 144, 0.1);
+  content: '';
   display: inline-block;
   height: 1px;
   position: relative;
@@ -738,7 +736,7 @@ input::-webkit-inner-spin-button {
   padding: 8px 0px;
   background-color: transparent;
   font-weight: 500;
-  border: none; 
+  border: none;
   font-size: 12px;
   line-height: normal;
   cursor: pointer;
@@ -824,7 +822,7 @@ input::-webkit-inner-spin-button {
   z-index: 1;
 }
 .NotifiTooltip__body::before {
-  content: "";
+  content: '';
   display: block;
   width: var(--notifi-tooltip-arrow-size);
   height: var(--notifi-tooltip-arrow-size);
@@ -848,7 +846,7 @@ input::-webkit-inner-spin-button {
   color: var(--notifi-font-color);
   text-align: left;
   background-color: var(--notifi-tooltip-background);
-  border: 1px solid #303036;;
+  border: 1px solid #303036;
   border-radius: 8px;
   white-space: pre-line;
   line-height: 15px;
@@ -1254,7 +1252,7 @@ input::-webkit-inner-spin-button {
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: #24272E;
+  background-color: #24272e;
   color: var(--notifi-font-color);
   height: 47px;
   overflow: auto;
@@ -1264,7 +1262,7 @@ input::-webkit-inner-spin-button {
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
-  border: 1px solid #24272E;
+  border: 1px solid #24272e;
   cursor: pointer;
 }
 .EventTypeHealthCheckRow__buttonSelected {
@@ -1319,7 +1317,7 @@ input::-webkit-inner-spin-button {
   color: var(--notifi-secondary-font-color);
 }
 .EventTypeTradingPairsRow__addPair::before {
-  content: "+ ";
+  content: '+ ';
 }
 .TradingPairSettingsRow__container {
   display: flex;
@@ -1335,7 +1333,7 @@ input::-webkit-inner-spin-button {
   border-radius: 5px;
 }
 .TradingPairSettingsRow__dropdownContainer::after {
-  content: "";
+  content: '';
   width: 1em;
   height: 1em;
   margin-right: 10px;
@@ -1510,8 +1508,8 @@ input::-webkit-inner-spin-button {
 }
 
 .FusionMultiThresholdSettingsRow__radioSelected {
-  color: #82F7C5;
-  border: 1px solid #82F7C5;
+  color: #82f7c5;
+  border: 1px solid #82f7c5;
 }
 
 .FusionMultiThresholdAlertRow__container {
@@ -1551,7 +1549,7 @@ input::-webkit-inner-spin-button {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  fill: #80829D;
+  fill: #80829d;
   cursor: pointer;
 }
 
@@ -1599,7 +1597,7 @@ input::-webkit-inner-spin-button {
   border-radius: 6px;
   border: none;
   color: var(--notifi-button-text-color);
-  background-color: #5FCEFA;
+  background-color: #5fcefa;
   cursor: pointer;
   height: 30px;
   content: 'Add';
