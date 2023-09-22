@@ -117,12 +117,12 @@ export const NavigationUI = ({
     >
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
-        {isWalletConnected && walletAddress && (
+        {isWalletConnected && walletAddress && !delegateWallet && (
           <>
             {size === 'desktop' && (
-              <Popover 
-                closeOnBlur={false} 
-                onClose={notifiModal.onClose} 
+              <Popover
+                closeOnBlur={false}
+                onClose={notifiModal.onClose}
                 isOpen={notifiModal.isOpen}
               >
                 <PopoverTrigger>
@@ -143,7 +143,7 @@ export const NavigationUI = ({
                     <NotificationsIcon color="white" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent border='none' width='333px'>
+                <PopoverContent border="none" width="333px">
                   <NotifiCard onClose={notifiModal.onClose} />
                 </PopoverContent>
               </Popover>
