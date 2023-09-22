@@ -1,6 +1,21 @@
 import { usePolynomialAccount } from './usePolynomialAccount';
 import { useKwentaAccount } from './useKwentaAccount';
 import { useActions } from './useActions';
+import Wei from '@synthetixio/wei';
+
+interface MergedAction {
+  address: string;
+  asset: string;
+  fees: Wei | null;
+  id: string;
+  label: string;
+  leverage: Wei | null;
+  price: Wei | null;
+  size: Wei;
+  timestamp: Wei;
+  txHash: string;
+  protocol?: string;
+}
 
 export const useMergedActions = (account?: string) => {
   const { data: kwentaAccount } = useKwentaAccount(account);
@@ -20,7 +35,7 @@ export const useMergedActions = (account?: string) => {
 
   const isDataLoading = loading || loadingKwenta || loadingPolynomial;
 
-  let mergedArray: { [key: string]: any }[] = [];
+  let mergedArray: MergedAction[] = [];
 
   if (!isDataLoading) {
     mergedArray = [...(Array.isArray(data) ? data : [])];
