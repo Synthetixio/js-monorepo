@@ -6,28 +6,38 @@ import {
   NotifiSubscriptionCard,
 } from '@notifi-network/notifi-react-card';
 import './notifi.css';
-import React from 'react';
-import Connector from '../../ui/containers/Connector';
+import React, { useContext } from 'react';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { SignerContext } from '@snx-v2/SignerContext';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
-export const NotifiCard: React.FC<{onClose: () => void}> = ({onClose}) => {
-  const connector = Connector.useContainer();
-  const signer = connector.signer;
-  const walletAddress = connector.walletAddress;
-  const walletBlockchain = connector.isL2 ? "OPTIMISM" : "ETHEREUM";
-  const env = connector.isMainnet ? "Production" : "Development";
-  const cardId = connector.isMainnet ? "283fa53b4b8e4ed1a2234615bf01d240" : "8a569abd38974f76837960bd9bf36049";
-
-  if (signer === null || walletAddress === null) {
+const isTestnet = (networkId: null | number) => {
+  if (networkId === NetworkIdByName['mainnet-ovm'] || networkId === NetworkIdByName['mainnet']) {
+    return false;
+  }
+  return true;
+};
+export const NotifiCard: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const { networkId, walletAddress } = useContext(ContractContext);
+  const signer = useContext(SignerContext);
+  if (signer === null || walletAddress === null || networkId === null) {
     // account is required
     return null;
   }
+  const isL2 = networkId === NetworkIdByName['mainnet-ovm'];
+  const isMainnet = !isTestnet(networkId);
+  const walletBlockchain = isL2 ? 'OPTIMISM' : 'ETHEREUM';
+
+  const env = isMainnet ? 'Production' : 'Development';
+  const cardId = isMainnet
+    ? '283fa53b4b8e4ed1a2234615bf01d240'
+    : '8a569abd38974f76837960bd9bf36049';
 
   const inputLabels: NotifiInputFieldsText = {
-    label: {
-    },
+    label: {},
     placeholderText: {
       email: 'Email address',
-      telegram: 'Telegram ID'
+      telegram: 'Telegram ID',
     },
   };
 
@@ -46,13 +56,13 @@ export const NotifiCard: React.FC<{onClose: () => void}> = ({onClose}) => {
         return arrayify(result);
       }}
       walletPublicKey={walletAddress}
-      walletBlockchain={walletBlockchain} 
+      walletBlockchain={walletBlockchain}
     >
       <NotifiSubscriptionCard
         cardId={cardId}
         inputLabels={inputLabels}
         inputSeparators={inputSeparators}
-        inputs={{userWallet: walletAddress}}
+        inputs={{ userWallet: walletAddress }}
         copy={{
           FetchedStateCard: {
             SubscriptionCardV1: {
