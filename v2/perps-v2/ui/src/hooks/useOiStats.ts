@@ -24,7 +24,7 @@ const UseOiStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
   const [error, setError] = useState<AxiosError | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [totalShortLoss, setTotalShortLoss] = useState<ShortLoss | null>(null);
-  const [lastRow, setLastRow] = useState<Row | null>(null);
+  const [lastRow] = useState<Row | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +104,7 @@ const UseOiStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
         };
 
         setTotalShortLoss(totalLongShortAbsoluteValue);
-        setLastRow(lastRow);
+
         setData({
           ...sortedData,
           result: {
