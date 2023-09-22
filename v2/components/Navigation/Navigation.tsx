@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, lazy, Suspense } from 'react';
 import {
   Button,
   Center,
@@ -48,7 +48,9 @@ import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
-import { NotifiCard } from '@snx-v2/Notifi';
+import { safeImport } from '@synthetixio/safe-import';
+
+const NotifiCard = lazy(() => safeImport(() => import('@snx-v2/Notifi')));
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -144,7 +146,9 @@ export const NavigationUI = ({
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent border="none" width="333px">
-                  <NotifiCard onClose={notifiModal.onClose} />
+                  <Suspense fallback={null}>
+                    <NotifiCard onClose={notifiModal.onClose} />
+                  </Suspense>
                 </PopoverContent>
               </Popover>
             )}
