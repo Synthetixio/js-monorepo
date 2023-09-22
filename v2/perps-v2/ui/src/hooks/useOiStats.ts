@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import UseDateFormat from './useDateFormat';
 interface ApiResponse {
   result: {
     rows: Row[];
@@ -74,27 +74,7 @@ const useOiStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
         );
 
         const transformedRowsFormatted: Row[] = filteredRows.map((row: Row) => {
-          const date = new Date(row.day);
-
-          let formattedDate = '';
-          switch (period) {
-            case 'M':
-            case 'W':
-              formattedDate = date.toLocaleString('en-EN', {
-                month: '2-digit',
-                day: '2-digit',
-                timeZone: 'UTC',
-              });
-              break;
-            case 'Y':
-            default:
-              formattedDate = date.toLocaleString('en-EN', {
-                month: 'short',
-                timeZone: 'UTC',
-              });
-              break;
-          }
-
+          const formattedDate = UseDateFormat(row.day, period);
           return {
             ...row,
             dayFormatted: formattedDate,
