@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Flex, Text, FlexProps, Spinner } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
@@ -21,15 +21,6 @@ import {
 export const Pnl = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'W' | 'M' | 'Y'>('Y');
   const { data, loading, lastStakers, error } = UsePnlStats(DUNE_API_KEY, state);
-  const [dataRows, setDataRows] = useState<any>([]);
-
-  useEffect(() => {
-    setDataRows(data?.result.rows);
-  }, [data]);
-
-  // useEffect(() => {
-  //    console.log('DATA ROWS ===>', dataRows);
-  // }, [dataRows]);
 
   return (
     <>
