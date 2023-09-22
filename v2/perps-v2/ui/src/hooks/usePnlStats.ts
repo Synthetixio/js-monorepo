@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import UseDateFormat from './useDateFormat';
 interface ApiResponse {
   result: {
     rows: Row[];
@@ -82,47 +82,15 @@ const UsePnlStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
                 return true;
             }
           });
+
         const transformedRows: Row[] = filteredRows.map((row: Row) => {
-          const date = new Date(row.day);
-          let formattedDate;
-
-          switch (period) {
-            case 'W':
-              formattedDate = date.toLocaleString('en-EN', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric',
-                timeZone: 'UTC',
-              });
-              break;
-            case 'M':
-              formattedDate = date.toLocaleString('en-EN', {
-                month: 'short',
-                year: 'numeric',
-                timeZone: 'UTC',
-              });
-              break;
-            case 'Y':
-              formattedDate = date.toLocaleString('en-EN', {
-                month: 'short',
-                year: '2-digit',
-                timeZone: 'UTC',
-              });
-              break;
-            default:
-              formattedDate = date.toLocaleString('en-EN', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric',
-                timeZone: 'UTC',
-              });
-          }
-
+          const formattedDate = UseDateFormat(row.day, period);
           return {
             ...row,
             dayFormatted: formattedDate,
           };
         });
+        
         const lastRow = transformedRows[transformedRows.length - 1];
         if (lastRow) {
           const lastStakers = lastRow.total_pnl;
