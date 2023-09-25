@@ -10,7 +10,7 @@ import {
   ClosestToLiquidation,
   DashboardActions,
 } from '../components';
-import { Fees, Traders, Trades, Volume, Pnl, OpenInterests } from '../components/Dashboard';
+import { Fees, Traders, Trades, Volume } from '../components/Dashboard';
 import { Markets } from '../components/Dashboard/Markets';
 
 export const Dashboard: FC = () => {
@@ -43,8 +43,6 @@ export const Dashboard: FC = () => {
             flexDirection={{ base: 'column', md: 'row' }}
           >
             <Traders width={{ base: '100%', md: '32%' }} />
-            <Pnl width={{ base: '100%', md: '32%' }} />
-            <OpenInterests width={{ base: '100%', md: '32%' }} />
           </Flex>
           <Flex mt={8} flexDir="column" width={{ base: '100%', lg: '100%' }}>
             <Flex mt={2} justifyContent="space-between">

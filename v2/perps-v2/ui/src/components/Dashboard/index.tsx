@@ -4,5 +4,3 @@ export * from './KeyColour';
 export * from './Volume/Volume';
 export * from './Fees/Fees';
 export * from './Markets';
-export * from './Pnl';
-export * from './OpenInterests';
