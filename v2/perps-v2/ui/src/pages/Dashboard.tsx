@@ -87,7 +87,7 @@ export const Dashboard: FC = () => {
             </Flex>
           </Flex>
         </Flex>
-        <Box >
+        <Box>
           <Flex mt={[0, 8]} justifyContent="space-between">
             <Heading color="#00D1FF" fontSize="24px">
               Latest Actions
