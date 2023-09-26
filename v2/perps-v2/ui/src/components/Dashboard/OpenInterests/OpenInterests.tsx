@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Box, Flex, Text, FlexProps, Spinner } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
-import { OITooltips } from './OITooltips';
-import { DUNE_API_KEY } from '../../../utils/constants';
+import { OITooltips } from './OItooltips';
 import UseOiStats from '../../../hooks/useOiStats';
 import {
   Bar,
@@ -17,7 +16,7 @@ import {
 
 export const OpenInterests = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'W' | 'M' | 'Y'>('Y');
-  const { data, loading, totalShortLoss } = UseOiStats(DUNE_API_KEY, state);
+  const { data, loading, totalShortLoss } = UseOiStats(state);
 
   return (
     <>
