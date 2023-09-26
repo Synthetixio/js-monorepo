@@ -18,7 +18,7 @@ interface Row {
   total_pnl: number;
 }
 
-const UsePnlStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
+const UsePnlStats = (period: 'W' | 'M' | 'Y') => {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,23 +28,21 @@ const UsePnlStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          `https://api.dune.com/api/v1/query/2429954/results?api_key=${DUNE_API_KEY}`
-        );
+        const response = await fetch(`https://synthetix.io/api/pnl`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const responseData = await response.json();
+        const {
+          result: { result },
+        } = await response.json();
 
         const sortedData: ApiResponse = {
-          ...responseData,
+          ...result,
           result: {
-            ...responseData.result,
-            rows: [...responseData.result.rows].sort(
-              (a, b) => Date.parse(a.day) - Date.parse(b.day)
-            ),
+            ...result,
+            rows: [...result.rows].sort((a, b) => Date.parse(a.day) - Date.parse(b.day)),
           },
         };
 
@@ -90,7 +88,7 @@ const UsePnlStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
             dayFormatted: formattedDate,
           };
         });
-        
+
         const lastRow = transformedRows[transformedRows.length - 1];
         if (lastRow) {
           const lastStakers = lastRow.total_pnl;
@@ -113,7 +111,7 @@ const UsePnlStats = (DUNE_API_KEY: string, period: 'W' | 'M' | 'Y') => {
       }
     };
     fetchData();
-  }, [DUNE_API_KEY, period]);
+  }, [period]);
   return { data, error, loading, lastStakers };
 };
 

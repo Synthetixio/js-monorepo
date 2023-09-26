@@ -4,7 +4,6 @@ import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { PnlTooltip } from './PnlTooltip';
 import UsePnlStats from '../../../hooks/usePnlStats';
-import { DUNE_API_KEY } from '../../../utils/constants';
 
 import {
   ComposedChart,
@@ -20,7 +19,7 @@ import {
 
 export const Pnl = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'W' | 'M' | 'Y'>('Y');
-  const { data, loading, lastStakers, error } = UsePnlStats(DUNE_API_KEY, state);
+  const { data, loading, lastStakers, error } = UsePnlStats(state);
 
   return (
     <>
