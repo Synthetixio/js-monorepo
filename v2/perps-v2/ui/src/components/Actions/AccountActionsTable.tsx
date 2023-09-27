@@ -4,7 +4,6 @@ import { Currency, TableHeaderCell, Market, Size, MarginTransfer } from '../Shar
 import { Action } from '../Shared/Action';
 import { AccountActionsLoading } from './AccountActionsLoading';
 import { useMergedActions } from '../../hooks/useMergedActions';
-import { useActions } from '../../hooks';
 
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
