@@ -44,7 +44,8 @@ export const AccountActionsTable = () => {
               </>
             )}
             {data?.map((item) => {
-              const { label, asset, price, leverage, size, fees, id, txHash, timestamp, protocol } = item;
+              const { label, asset, price, leverage, size, fees, id, txHash, timestamp, protocol } =
+                item;
               return (
                 <Tr key={id} borderTopWidth="1px">
                   <Action label={label} timestamp={timestamp.toNumber()} txHash={txHash} />
