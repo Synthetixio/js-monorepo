@@ -2,17 +2,25 @@ import { Box, Fade, Flex, Td, Text } from '@chakra-ui/react';
 import { formatNumber } from '@snx-v2/formatters';
 import { utils } from 'ethers';
 import { CurrencyIcon } from '../../CurrencyIcon';
+import { KwentaIcon, PolynomialIcon } from '../../Icons';
 
 interface MarketProps {
   asset: string;
   leverage: number | null;
   direction?: 'LONG' | 'SHORT';
   isPosition?: boolean;
+  protocol?: string;
 }
 
 const replace = ['sETH', 'sBTC'];
 
-export const Market = ({ asset, leverage, direction, isPosition = true }: MarketProps) => {
+export const Market = ({
+  asset,
+  leverage,
+  direction,
+  isPosition = true,
+  protocol,
+}: MarketProps) => {
   const marketName = utils.parseBytes32String(asset);
   const assetDisplayName = replace.includes(marketName) ? marketName.substring(1) : marketName;
 
@@ -24,7 +32,14 @@ export const Market = ({ asset, leverage, direction, isPosition = true }: Market
       <Fade in>
         <Flex alignItems="center">
           <Flex alignItems="center">
-            <CurrencyIcon currencyKey={marketName} />
+            <Box style={{ position: 'relative' }} mr={2}>
+              <CurrencyIcon currencyKey={marketName} />
+              <Box style={{ position: 'absolute', bottom: '-15px', right: '-15px' }}>
+                {protocol === 'kwenta' && <KwentaIcon />}
+                {protocol === 'polynomial' && <PolynomialIcon />}
+              </Box>
+            </Box>
+
             <Box ml={3}>
               <Text
                 fontFamily="heading"
