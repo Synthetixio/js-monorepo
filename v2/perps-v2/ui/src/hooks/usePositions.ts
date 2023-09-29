@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { BytesLike, Contract, providers } from 'ethers';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
+import Wei from '@synthetixio/wei';
 import { infuraId } from '../utils';
 import { FuturesPosition_OrderBy, OrderDirection } from '../__generated__/graphql';
 import {
@@ -20,7 +21,7 @@ import {
 } from './contracts/optimism-goerli/Multicall3';
 import { address as multicallMainnetAddress } from './contracts/optimism-mainnet/Multicall3';
 import { wei } from '@synthetixio/wei';
-import { ContractData, SubgraphPositionData, PositionsDataSchema } from '../types';
+import { ContractData, SubgraphPositionData } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 import { useSearchParams } from 'react-router-dom';
 import { isStaging } from '../utils/isStaging';
@@ -44,6 +45,26 @@ const Multicall3Contract = new Contract(
   multiCallAbi,
   provider
 ) as Multicall3;
+
+interface PositionType {
+  accountType: string;
+  address: string;
+  asset: string;
+  avgEntryPrice: Wei;
+  fees: Wei;
+  funding: Wei;
+  indexPrice: Wei;
+  leverage: Wei;
+  liquidationPrice: Wei;
+  long: boolean;
+  marketPrice: Wei;
+  notionalValue: Wei;
+  realizedPnl: Wei;
+  remainingMargin: Wei;
+  size: Wei;
+  unrealizedPnl: Wei;
+  unrealizedPnlPercentage: Wei;
+}
 
 export const usePositions = (accountAddress?: string, accountType?: string) => {
   const [searchParams] = useSearchParams();
@@ -90,9 +111,10 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
   });
 
   const positionsData = data?.positionsFromContract
-    ? PositionsDataSchema.parse(data.positionsFromContract)
+    ? data.positionsFromContract.map((position: PositionType) => ({ ...position, accountType }))
     : undefined;
 
+  console.log(positionsData, 'positionData');
   return {
     data: positionsData,
     loading: loading || marketLoading,
