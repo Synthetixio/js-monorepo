@@ -4,10 +4,36 @@ import { Currency, TableHeaderCell, PnL, Market, Size, Funding, MarkPrice } from
 import { PositionsLoading } from './PositionsLoading';
 import { usePositions } from '../../hooks';
 
-export const PositionsTable = () => {
+interface PositionsProps {
+  kwentaAccount?: string;
+  polynomialAccount?: string;
+}
+
+export const PositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsProps) => {
   const { walletAddress } = useParams();
-  const { data, error, loading } = usePositions(walletAddress);
-  const noData = !data?.length;
+
+  const {
+    data: walletData,
+    error: walletError,
+    loading: walletLoading,
+  } = usePositions(walletAddress, 'wallet');
+  const {
+    data: kwentaData,
+    error: kwentaError,
+    loading: kwentaLoading,
+  } = usePositions(kwentaAccount, 'kwenta');
+  const {
+    data: polyData,
+    error: polyError,
+    loading: polyLoading,
+  } = usePositions(polynomialAccount, 'poly');
+
+  const loading = walletLoading || kwentaLoading || polyLoading;
+  const error = walletError || kwentaError || polyError;
+  const data = [...(walletData || []), ...(kwentaData || []), ...(polyData || [])];
+
+  console.log('data', data);
+  const noData = !data.length;
 
   return (
     <>

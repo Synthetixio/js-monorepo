@@ -78,7 +78,10 @@ export const Account: FC = () => {
         <Heading fontSize="18px" lineHeight="28px">
           Positions
         </Heading>
-        <PositionsTable />
+        <PositionsTable
+          kwentaAccount={kwentaAccount?.account ? kwentaAccount.account : ''}
+          polynomialAccount={polynomialAccount?.account ? polynomialAccount.account : ''}
+        />
       </Box>
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">

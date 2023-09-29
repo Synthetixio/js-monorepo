@@ -45,10 +45,11 @@ const Multicall3Contract = new Contract(
   provider
 ) as Multicall3;
 
-export const usePositions = (walletAddress?: string) => {
+export const usePositions = (accountAddress?: string, accountType?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('marketAddress') || undefined;
-  const walletAddressLowerCase = walletAddress?.toLowerCase();
+  const accountAddressLowerCase = accountAddress?.toLowerCase();
+
   // Initial query to give a list of markets
   const {
     data: marketData,
@@ -58,7 +59,7 @@ export const usePositions = (walletAddress?: string) => {
     variables: {
       where: {
         isOpen: true,
-        trader: walletAddressLowerCase,
+        trader: accountAddressLowerCase,
         market: marketAddress,
       },
       orderBy: FuturesPosition_OrderBy.Size,
@@ -69,6 +70,8 @@ export const usePositions = (walletAddress?: string) => {
   });
 
   const openPositions = marketData?.futuresPositions.map((item) => ({
+    ...item,
+    accountType,
     market: item.market.marketKey,
     asset: item.market.asset,
     avgEntryPrice: wei(item.avgEntryPrice, 18, true),
@@ -81,7 +84,7 @@ export const usePositions = (walletAddress?: string) => {
   }));
 
   const { data, loading, error } = useQuery(POSITIONS_CONTRACT_QUERY, {
-    variables: { walletAddress: walletAddressLowerCase, openPositions },
+    variables: { walletAddress: accountAddressLowerCase, openPositions },
     skip: marketData?.futuresPositions ? false : true,
     pollInterval: 1000,
   });
