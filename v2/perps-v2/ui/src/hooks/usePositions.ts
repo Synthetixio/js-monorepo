@@ -114,7 +114,6 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
     ? data.positionsFromContract.map((position: PositionType) => ({ ...position, accountType }))
     : undefined;
 
-  console.log(positionsData, 'positionData');
   return {
     data: positionsData,
     loading: loading || marketLoading,
