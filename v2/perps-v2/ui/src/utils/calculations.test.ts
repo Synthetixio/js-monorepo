@@ -31,7 +31,6 @@ describe('calculateNewPnl', () => {
   });
 });
 
-
 describe('calculatePnlPercentage', () => {
   test('calculates PnL percentage correctly long profit', () => {
     const subgraphPositionData = { avgEntryPrice: wei(50), leverage: 2 } as any;
