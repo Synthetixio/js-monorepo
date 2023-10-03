@@ -31,6 +31,7 @@ describe('calculateNewPnl', () => {
   });
 });
 
+
 describe('calculatePnlPercentage', () => {
   test('calculates PnL percentage correctly long profit', () => {
     const subgraphPositionData = { avgEntryPrice: wei(50), leverage: 2 } as any;
@@ -77,6 +78,7 @@ describe('calculatePositionData', () => {
     const subgraphPositionData = {
       asset: 'BTC',
       market: '0xxxx',
+      walletAddress: '0xxxxx',
       fillPriceAtLastInteraction: wei(150),
       unrealizedPnlAtLastModification: wei(150),
       realizedPnlAtLastModification: wei(-31.1),
@@ -98,7 +100,7 @@ describe('calculatePositionData', () => {
 
     const pythPrice = wei(120);
 
-    const result = calculatePositionData(subgraphPositionData, pythPrice, contractData, '0xxxxx');
+    const result = calculatePositionData(subgraphPositionData, pythPrice, contractData);
 
     expect(result).toEqual({
       address: '0xxxxx',
