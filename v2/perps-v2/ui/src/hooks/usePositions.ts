@@ -48,7 +48,7 @@ const Multicall3Contract = new Contract(
   provider
 ) as Multicall3;
 
-interface PositionType {
+export interface PositionType {
   accountType: string;
   address: string;
   asset: string;

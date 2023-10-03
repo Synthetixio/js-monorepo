@@ -2,44 +2,14 @@ import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/
 import { useSearchParams } from 'react-router-dom';
 import { TableHeaderCell, PnL, Market, Size, MarkPrice, PercentageChange, WalletTooltip } from '../Shared';
 import { OpenPositionsLoading } from './OpenPositionsLoading';
-import { usePositions } from '../../hooks';
-import { useMarketSummaries } from '../../hooks/useMarketSummaries';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { PositionsLoading } from '../Positions/PositionsLoading';
+import { usePositions, PositionType } from '../../hooks';
+import { useState, useEffect, useMemo } from 'react';
 
 export const OpenPositionsTable = () => {
 
-  /*
-  const [previousParams, setPreviousParams] = useState(null);
-  const [showLoading, setShowLoading] = useState(true);
-
-  const isInitialRender = useRef(true);
-  const [searchParams] = useSearchParams();
-  const currentParams = useMemo(() => searchParams.toString(), [searchParams]);
-
-  const { data, error, loading } = usePositions();
-  const noData = !data?.length;
-
-
-  useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
-    } else if (previousParams !== currentParams) {
-      setShowLoading(true);
-    }
-    // Update previousParams for the next render
-    setPreviousParams(currentParams);
-  }, [currentParams, previousParams]);
-
-  useEffect(() => {
-    if (data) {
-      // Data has loaded, hide loading
-      setShowLoading(false);
-    }
-  }, [data]);
-  */
-
-  const [storedParams, setStoredParams] = useState(null);
-  const [showLoading, setShowLoading] = useState(true);
+  const [storedParams, setStoredParams] = useState<string>('');
+  const [showLoading, setShowLoading] = useState<boolean>(true);
 
   const [searchParams] = useSearchParams();
   const currentParams = useMemo(() => searchParams.toString(), [searchParams]);
@@ -47,16 +17,16 @@ export const OpenPositionsTable = () => {
   const { data, error, loading } = usePositions();
   const noData = !data?.length;
 
+  // we are loading lots of data, only show loading component on inital render or when params have changed
   useEffect(() => {
     if (storedParams !== currentParams) {
       setShowLoading(true);
-      setStoredParams(currentParams);  // Update storedParams if they have changed
+      setStoredParams(currentParams);
     }
   }, [currentParams, storedParams]);
 
   useEffect(() => {
     if (data) {
-      // Data has loaded, hide loading
       setShowLoading(false);
     }
   }, [data]);
@@ -82,8 +52,8 @@ export const OpenPositionsTable = () => {
                 <TableHeaderCell>Mark Price</TableHeaderCell>
                 <TableHeaderCell>Size</TableHeaderCell>
                 <TableHeaderCell>Unrealized PNL</TableHeaderCell>
-                <TableHeaderCell>Realized PNL</TableHeaderCell>
                 <TableHeaderCell>ROI</TableHeaderCell>
+                <TableHeaderCell>Realized PNL</TableHeaderCell>
                 <TableHeaderCell>Address</TableHeaderCell>
 
               </Tr>
@@ -100,22 +70,17 @@ export const OpenPositionsTable = () => {
                 (
                   {
                     asset,
-                    avgEntryPrice,
                     indexPrice,
                     leverage,
                     unrealizedPnl,
                     realizedPnl,
-                    remainingMargin,
                     size,
                     long,
                     address,
-                    funding,
-                    liquidationPrice,
                     marketPrice,
-                    fees,
                     unrealizedPnlPercentage,
-                  },
-                  index
+                  }: PositionType,
+                  index: number
                 ) => {
                   return (
                     <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
@@ -131,17 +96,17 @@ export const OpenPositionsTable = () => {
                         markPrice={marketPrice.toNumber()}
                       />
                       <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
-
+                        {/* PNL */}
                       <PnL
                         pnl={unrealizedPnl.toNumber()}
                         pnlPercentage={unrealizedPnlPercentage.toNumber()} //
                       />
-                      <PnL pnl={realizedPnl.toNumber()} />
-
+                      {/* Unrealized ROI */}
                       <PercentageChange amount={unrealizedPnlPercentage.toNumber()} />
-
+                      {/* Realized PNL */}
+                      <PnL pnl={realizedPnl.toNumber()} />
+                      {/* Address */}
                       <WalletTooltip address={address} />
-
                     </Tr>
                   );
                 }

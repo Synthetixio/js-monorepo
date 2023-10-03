@@ -34,7 +34,7 @@ interface PositionData {
 // TODO: Figure out return type
 export const typeDefs = gql(`
   extend type Query {
-    positionsFromContract(penPositions: PositionsMarketQuery): String!
+    positionsFromContract(openPositions: PositionsMarketQuery): String!
   }
 `);
 
@@ -48,7 +48,7 @@ export const resolvers: Resolvers | Resolvers[] = {
       _contextValue,
       _info
     ): Promise<PositionData[]> => {
-      const positionsData = await fetchPositions(openPositions || '');
+      const positionsData = await fetchPositions(openPositions);
       const offchainPrices: { asset: string; price: Wei }[] = [];
       const pythConfigByMarketKey = await getMarketsPythConfig();
       await Promise.all(
