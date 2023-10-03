@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@ethersproject/bytes": "^5.7.0",
-    "@notifi-network/notifi-react-card": "^0.83.0",
+    "@notifi-network/notifi-react-card": "^0.85.0",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/SignerContext": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
