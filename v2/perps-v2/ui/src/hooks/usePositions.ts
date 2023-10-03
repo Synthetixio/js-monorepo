@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { BytesLike, Contract, providers } from 'ethers';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
+import Wei from '@synthetixio/wei';
 import { infuraId } from '../utils';
 import { FuturesPosition_OrderBy, OrderDirection } from '../__generated__/graphql';
 import {
@@ -20,7 +21,7 @@ import {
 } from './contracts/optimism-goerli/Multicall3';
 import { address as multicallMainnetAddress } from './contracts/optimism-mainnet/Multicall3';
 import { wei } from '@synthetixio/wei';
-import { ContractData, SubgraphPositionData, PositionsDataSchema } from '../types';
+import { ContractData, SubgraphPositionData } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 import { useSearchParams } from 'react-router-dom';
 import { isStaging } from '../utils/isStaging';
@@ -45,10 +46,31 @@ const Multicall3Contract = new Contract(
   provider
 ) as Multicall3;
 
-export const usePositions = (walletAddress?: string) => {
+interface PositionType {
+  accountType: string;
+  address: string;
+  asset: string;
+  avgEntryPrice: Wei;
+  fees: Wei;
+  funding: Wei;
+  indexPrice: Wei;
+  leverage: Wei;
+  liquidationPrice: Wei;
+  long: boolean;
+  marketPrice: Wei;
+  notionalValue: Wei;
+  realizedPnl: Wei;
+  remainingMargin: Wei;
+  size: Wei;
+  unrealizedPnl: Wei;
+  unrealizedPnlPercentage: Wei;
+}
+
+export const usePositions = (accountAddress?: string, accountType?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('marketAddress') || undefined;
-  const walletAddressLowerCase = walletAddress?.toLowerCase();
+  const accountAddressLowerCase = accountAddress?.toLowerCase();
+
   // Initial query to give a list of markets
   const {
     data: marketData,
@@ -58,7 +80,7 @@ export const usePositions = (walletAddress?: string) => {
     variables: {
       where: {
         isOpen: true,
-        trader: walletAddressLowerCase,
+        trader: accountAddressLowerCase,
         market: marketAddress,
       },
       orderBy: FuturesPosition_OrderBy.Size,
@@ -69,6 +91,8 @@ export const usePositions = (walletAddress?: string) => {
   });
 
   const openPositions = marketData?.futuresPositions.map((item) => ({
+    ...item,
+    accountType,
     market: item.market.marketKey,
     asset: item.market.asset,
     avgEntryPrice: wei(item.avgEntryPrice, 18, true),
@@ -81,13 +105,13 @@ export const usePositions = (walletAddress?: string) => {
   }));
 
   const { data, loading, error } = useQuery(POSITIONS_CONTRACT_QUERY, {
-    variables: { walletAddress: walletAddressLowerCase, openPositions },
+    variables: { walletAddress: accountAddressLowerCase, openPositions },
     skip: marketData?.futuresPositions ? false : true,
     pollInterval: 1000,
   });
 
   const positionsData = data?.positionsFromContract
-    ? PositionsDataSchema.parse(data.positionsFromContract)
+    ? data.positionsFromContract.map((position: PositionType) => ({ ...position, accountType }))
     : undefined;
 
   return {
