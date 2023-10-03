@@ -11,7 +11,7 @@ export function Positions() {
           Open Positions
         </Heading>
         <Flex>
-          <OpenPositionsFilter route='positions' />
+          <OpenPositionsFilter route="positions" />
         </Flex>
         <OpenPositionsTable />
       </Flex>

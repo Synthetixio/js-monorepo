@@ -1,1 +1,1 @@
-export * from './OpenPositionsFilter'
+export * from './OpenPositionsFilter';

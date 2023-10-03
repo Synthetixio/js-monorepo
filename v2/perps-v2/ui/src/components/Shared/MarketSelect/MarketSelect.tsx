@@ -19,22 +19,21 @@ export const MarketSelect = ({ markets, route }: MarketSelectProps) => {
   const navigate = useNavigate();
 
   const onClick = (markets: string) => {
-
     const newParams = new URLSearchParams(searchParams.toString());
 
     if (markets.length !== 0) {
-        newParams.set('markets', markets);
+      newParams.set('markets', markets);
     } else {
-        newParams.delete('markets');
+      newParams.delete('markets');
     }
 
     newParams.delete('page');
 
     navigate({
-        pathname: `/${route}`,
-        search: `?${newParams.toString()}`,
+      pathname: `/${route}`,
+      search: `?${newParams.toString()}`,
     });
-};
+  };
 
   return (
     <Menu>

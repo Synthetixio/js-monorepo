@@ -7,13 +7,7 @@ interface CheckboxProps extends UseCheckboxProps {
 }
 
 export const DropdownCheckbox = ({ label, icon, ...props }: CheckboxProps) => {
-  const { 
-    state, 
-    getCheckboxProps, 
-    getInputProps, 
-    getLabelProps, 
-    htmlProps,
-  } = useCheckbox(props);
+  const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } = useCheckbox(props);
 
   return (
     <chakra.label

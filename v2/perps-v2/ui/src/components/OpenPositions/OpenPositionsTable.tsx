@@ -1,13 +1,19 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
-import { TableHeaderCell, PnL, Market, Size, MarkPrice, PercentageChange, WalletTooltip } from '../Shared';
+import {
+  TableHeaderCell,
+  PnL,
+  Market,
+  Size,
+  MarkPrice,
+  PercentageChange,
+  WalletTooltip,
+} from '../Shared';
 import { OpenPositionsLoading } from './OpenPositionsLoading';
-import { PositionsLoading } from '../Positions/PositionsLoading';
 import { usePositions, PositionType } from '../../hooks';
 import { useState, useEffect, useMemo } from 'react';
 
 export const OpenPositionsTable = () => {
-
   const [storedParams, setStoredParams] = useState<string>('');
   const [showLoading, setShowLoading] = useState<boolean>(true);
 
@@ -55,7 +61,6 @@ export const OpenPositionsTable = () => {
                 <TableHeaderCell>ROI</TableHeaderCell>
                 <TableHeaderCell>Realized PNL</TableHeaderCell>
                 <TableHeaderCell>Address</TableHeaderCell>
-
               </Tr>
             </Thead>
             <Tbody>
@@ -96,7 +101,7 @@ export const OpenPositionsTable = () => {
                         markPrice={marketPrice.toNumber()}
                       />
                       <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
-                        {/* PNL */}
+                      {/* PNL */}
                       <PnL
                         pnl={unrealizedPnl.toNumber()}
                         pnlPercentage={unrealizedPnlPercentage.toNumber()} //
@@ -129,7 +134,6 @@ export const OpenPositionsTable = () => {
               </Text>
             </Flex>
           )}
-
         </>
       </TableContainer>
     </>
