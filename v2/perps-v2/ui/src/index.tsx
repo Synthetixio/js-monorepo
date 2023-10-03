@@ -11,7 +11,7 @@ import {
   PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
-import { Dashboard, Actions, Markets } from './pages';
+import { Dashboard, Actions, Markets, Positions } from './pages';
 import { isStaging } from './utils/isStaging';
 
 const client = new ApolloClient({
@@ -55,6 +55,15 @@ const router = createBrowserRouter([
       <>
         <Header />
         <Markets />
+      </>
+    ),
+  },
+  {
+    path: '/positions',
+    element: (
+      <>
+        <Header />
+        <Positions />
       </>
     ),
   },

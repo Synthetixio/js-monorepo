@@ -25,6 +25,8 @@ import { ContractData, SubgraphPositionData } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 import { useSearchParams } from 'react-router-dom';
 import { isStaging } from '../utils/isStaging';
+import { useMarketSummaries } from './useMarketSummaries';
+import { generateMarketIds } from './useActions';
 
 const OPTIMISM_GOERLI_NETWORK_ID = 420;
 const OPTIMISM__ID = 10;
@@ -66,10 +68,22 @@ interface PositionType {
   unrealizedPnlPercentage: Wei;
 }
 
+type OrderByKeys = 'realizedPnl' | 'unrealizedPnl' | 'margin';
+type OrderByDirection = 'asc' | 'desc';
+
 export const usePositions = (accountAddress?: string, accountType?: string) => {
   const [searchParams] = useSearchParams();
-  const marketAddress = searchParams.get('marketAddress') || undefined;
+  const marketAddress = searchParams.get('markets') || null;
   const accountAddressLowerCase = accountAddress?.toLowerCase();
+
+  const direction = searchParams.get('direction') || 'desc';
+  const orderBy =
+    searchParams.get('orderby') === 'size' ? 'margin' : searchParams.get('orderby') || 'margin';
+  const page = Number(searchParams.get('page')) || 1;
+
+  // get market ids from asset name
+  const { data: marketConfigs } = useMarketSummaries();
+  const marketsFilter = generateMarketIds(marketConfigs, marketAddress);
 
   // Initial query to give a list of markets
   const {
@@ -81,13 +95,14 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
       where: {
         isOpen: true,
         trader: accountAddressLowerCase,
-        market: marketAddress,
+        market_in: marketsFilter,
       },
-      orderBy: FuturesPosition_OrderBy.Size,
-      orderDirection: OrderDirection.Desc,
+      orderBy: orderBy as FuturesPosition_OrderBy,
+      orderDirection: direction as OrderDirection,
       first: 50,
+      skip: (page - 1) * 50,
     },
-    pollInterval: 5000,
+    pollInterval: 10000,
   });
 
   const openPositions = marketData?.futuresPositions.map((item) => ({
@@ -95,6 +110,7 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
     accountType,
     market: item.market.marketKey,
     asset: item.market.asset,
+    walletAddress: item.trader.id,
     avgEntryPrice: wei(item.avgEntryPrice, 18, true),
     leverage: wei(item.leverage, 18, true),
     fees: wei(item.feesPaidToSynthetix, 18, true),
@@ -105,7 +121,9 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
   }));
 
   const { data, loading, error } = useQuery(POSITIONS_CONTRACT_QUERY, {
-    variables: { walletAddress: accountAddressLowerCase, openPositions },
+    variables: {
+      openPositions,
+    },
     skip: marketData?.futuresPositions ? false : true,
     pollInterval: 1000,
   });
@@ -114,22 +132,40 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
     ? data.positionsFromContract.map((position: PositionType) => ({ ...position, accountType }))
     : undefined;
 
+  const sortedData =
+    positionsData && sortData(positionsData, orderBy as OrderByKeys, direction as OrderByDirection);
+
   return {
-    data: positionsData,
+    data: sortedData,
     loading: loading || marketLoading,
     error: error || marketError,
   };
 };
 
+function sortData(data: PositionType[], orderBy: OrderByKeys, direction: OrderByDirection) {
+  return data.slice().sort((a, b) => {
+    let aValue: number, bValue: number;
+
+    if (orderBy === 'margin') {
+      aValue = Math.abs(a.size.toNumber()) * a.marketPrice.toNumber();
+      bValue = Math.abs(b.size.toNumber()) * b.marketPrice.toNumber();
+    } else {
+      aValue = a[orderBy].toNumber();
+      bValue = b[orderBy].toNumber();
+    }
+
+    return direction === 'asc' ? aValue - bValue : bValue - aValue;
+  });
+}
+
 export async function fetchPositions(
-  positionData: SubgraphPositionData[],
-  address: string
+  positionData: SubgraphPositionData[]
 ): Promise<ContractData[]> {
-  const positionDetailCalls = positionData.map(({ market }) => ({
+  const positionDetailCalls = positionData.map(({ market }, i) => ({
     target: perpsMarketDataContract.address,
     callData: perpsMarketDataContract.interface.encodeFunctionData('positionDetailsForMarketKey', [
       market,
-      address,
+      positionData[i].walletAddress,
     ]),
   }));
 
