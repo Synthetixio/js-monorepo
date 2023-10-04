@@ -32,7 +32,7 @@ export const Market = ({
       <Fade in>
         <Flex alignItems="center">
           <Flex alignItems="center">
-            <Box style={{ position: 'relative' }} mr={2}>
+            <Box style={{ position: 'relative', width: '30px' }} mr={2}>
               <CurrencyIcon currencyKey={marketName} />
               <Box style={{ position: 'absolute', bottom: '-15px', right: '-15px' }}>
                 {protocol === 'kwenta' && <KwentaIcon />}
