@@ -23,7 +23,7 @@ export const ClosestToLiquidation = () => {
   return (
     <>
       <TableContainer
-        maxW="100%"
+        width="100%"
         my={5}
         borderColor="gray.900"
         borderWidth="1px"
@@ -41,7 +41,10 @@ export const ClosestToLiquidation = () => {
           <Thead>
             <Tr>
               <TableHeaderCell>Market</TableHeaderCell>
-              <TableHeaderCell>Size</TableHeaderCell>
+              <TableHeaderCell>
+                <Text>Size</Text>
+                <Text>&nbsp;</Text>
+              </TableHeaderCell>
               <TableHeaderCell>Realised PnL</TableHeaderCell>
             </Tr>
           </Thead>
