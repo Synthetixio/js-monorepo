@@ -7,15 +7,34 @@ import { notNill } from '../utils/notNil';
 import { scale, calculatePositionData, getMarketsPythConfig } from '../utils';
 
 export const POSITIONS_CONTRACT_QUERY = gql(`
-  query ($walletAddress: String!, $openPositions: PositionsMarketQuery) {
-    positionsFromContract(walletAddress: $walletAddress, openPositions: $openPositions) @client
+  query ($openPositions: PositionsMarketQuery) {
+    positionsFromContract(openPositions: $openPositions) @client
   }
 `);
+
+interface PositionData {
+  asset: string;
+  indexPrice: Wei;
+  liquidationPrice: Wei;
+  unrealizedPnl: Wei;
+  realizedPnl: Wei;
+  unrealizedPnlPercentage: Wei;
+  remainingMargin: Wei;
+  size: Wei;
+  long: boolean;
+  avgEntryPrice: Wei;
+  leverage: Wei;
+  funding: Wei;
+  marketPrice: Wei;
+  notionalValue: Wei;
+  fees: Wei;
+  address: string;
+}
 
 // TODO: Figure out return type
 export const typeDefs = gql(`
   extend type Query {
-    positionsFromContract(walletAddress: String!, openPositions: PositionsMarketQuery): String!
+    positionsFromContract(openPositions: PositionsMarketQuery): String!
   }
 `);
 
@@ -25,11 +44,11 @@ export const resolvers: Resolvers | Resolvers[] = {
   Query: {
     positionsFromContract: async (
       _parent,
-      { walletAddress, openPositions },
+      { openPositions },
       _contextValue,
       _info
-    ) => {
-      const positionsData = await fetchPositions(openPositions, walletAddress || '');
+    ): Promise<PositionData[]> => {
+      const positionsData = await fetchPositions(openPositions);
       const offchainPrices: { asset: string; price: Wei }[] = [];
       const pythConfigByMarketKey = await getMarketsPythConfig();
       await Promise.all(
@@ -56,8 +75,7 @@ export const resolvers: Resolvers | Resolvers[] = {
           const calculatedPositionData = calculatePositionData(
             subgraphData,
             pythPrice?.price,
-            contractData,
-            walletAddress
+            contractData
           );
 
           return calculatedPositionData;

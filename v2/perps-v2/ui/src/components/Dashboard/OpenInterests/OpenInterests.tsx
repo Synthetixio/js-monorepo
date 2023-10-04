@@ -37,7 +37,7 @@ export const OpenInterests = ({ ...props }: FlexProps) => {
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            Open Interests
+            Open Interest
           </Text>
           {/* FILTERS | de-comment lines for filters */}
           <Box>
