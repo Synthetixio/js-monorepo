@@ -96,13 +96,20 @@ export const Header: FC = () => {
                     </Text>
                   </RouterLink>
                 </MenuItem>
+                <MenuItem>
+                  <RouterLink to="/positions">
+                    <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
+                      Positions
+                    </Text>
+                  </RouterLink>
+                </MenuItem>
               </MenuList>
             </Menu>
           </Flex>
         </Flex>
         <AddressInput />
       </Flex>
-      {['/', '/trades', '/actions', '/markets'].includes(location.pathname) && (
+      {['/', '/trades', '/actions', '/markets', '/positions'].includes(location.pathname) && (
         <Box px={{ base: '16px', md: '40px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
           <Flex as="nav" mt={16}>
             <Box style={isActive('/') ? activeStyle : inactiveStyle} pr={7} mr={16} width={120}>
@@ -123,6 +130,14 @@ export const Header: FC = () => {
               width={120}
             >
               <RouterLink to="/markets">Markets</RouterLink>
+            </Box>
+            <Box
+              style={isActive('/positions') ? activeStyle : inactiveStyle}
+              pr={7}
+              mr={16}
+              width={120}
+            >
+              <RouterLink to="/positions">Positions</RouterLink>
             </Box>
           </Flex>
         </Box>

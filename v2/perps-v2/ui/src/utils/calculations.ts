@@ -54,8 +54,7 @@ export const calculatePnlPercentage = (
 export const calculatePositionData = (
   subgraphPositionData: SubgraphPositionData,
   pythPrice: Wei | undefined,
-  contractData: ContractData,
-  address?: string
+  contractData: ContractData
 ) => {
   if (contractData.size.eq(0)) return null;
   const marketPrice = calculateMarkPrice(pythPrice, contractData);
@@ -91,7 +90,7 @@ export const calculatePositionData = (
     marketPrice,
     notionalValue: notionalValue,
     fees: subgraphPositionData.fees,
-    address,
+    address: subgraphPositionData.walletAddress,
   };
 };
 

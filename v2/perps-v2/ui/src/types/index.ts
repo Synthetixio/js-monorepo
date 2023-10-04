@@ -4,6 +4,7 @@ import { z } from 'zod';
 export interface SubgraphPositionData {
   market: string;
   asset: string;
+  walletAddress: string;
   avgEntryPrice: Wei;
   leverage: Wei;
   fees: Wei;

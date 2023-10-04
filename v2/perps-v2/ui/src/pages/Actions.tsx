@@ -13,7 +13,7 @@ export function Actions() {
           Actions
         </Heading>
         <Flex>
-          <MarketSelect markets={markets.data?.map((x) => x.asset)} />
+          <MarketSelect markets={markets.data?.map((x) => x.asset)} route="actions" />
           <SizeSelect />
         </Flex>
         <AllActionsTable />
