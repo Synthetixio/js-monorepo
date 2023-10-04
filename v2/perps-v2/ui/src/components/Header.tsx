@@ -96,6 +96,7 @@ export const Header: FC = () => {
                     </Text>
                   </RouterLink>
                 </MenuItem>
+                {/* Add positions */}
                 <MenuItem>
                   <RouterLink to="/positions">
                     <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">

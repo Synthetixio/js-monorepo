@@ -36,6 +36,7 @@ export const OpenInterests = ({ ...props }: FlexProps) => {
         {...props}
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
+          {/* Current change */}
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
             Open Interest
           </Text>
