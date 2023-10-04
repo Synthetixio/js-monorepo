@@ -19,3 +19,4 @@ export * from './SmartWallet';
 export * from './MarketSelect';
 export * from './SizeSelect';
 export * from './DailyVolumeChange';
+export * from './DropdownFilter';

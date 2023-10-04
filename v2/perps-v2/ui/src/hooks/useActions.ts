@@ -122,7 +122,7 @@ const mergeData = (
   return data.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber());
 };
 
-function generateMarketIds(
+export function generateMarketIds(
   marketSummaries: { asset: string; address: string }[],
   markets: string | null
 ): string[] | undefined {

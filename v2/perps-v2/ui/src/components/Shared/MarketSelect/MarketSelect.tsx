@@ -7,9 +7,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface MarketSelectProps {
   markets?: string[];
+  route: string;
 }
 
-export const MarketSelect = ({ markets }: MarketSelectProps) => {
+export const MarketSelect = ({ markets, route }: MarketSelectProps) => {
   const [searchParams] = useSearchParams();
   const initialState = searchParams.get('markets')?.split(',') || [];
 
@@ -18,32 +19,20 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
   const navigate = useNavigate();
 
   const onClick = (markets: string) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+
     if (markets.length !== 0) {
-      const params: string[][] = [];
-      const min = searchParams.get('min') || '';
-      const max = searchParams.get('max') || '';
-
-      if (min !== '') {
-        params.push(['min', min]);
-      }
-
-      if (max !== '') {
-        params.push(['max', max]);
-      }
-
-      if (markets !== '') {
-        params.push(['markets', markets]);
-      }
-
-      const newParams = new URLSearchParams(params);
-
-      navigate({
-        pathname: `/actions`,
-        search: `?${newParams.toString()}`,
-      });
+      newParams.set('markets', markets);
     } else {
-      navigate(`/actions`);
+      newParams.delete('markets');
     }
+
+    newParams.delete('page');
+
+    navigate({
+      pathname: `/${route}`,
+      search: `?${newParams.toString()}`,
+    });
   };
 
   return (
@@ -53,7 +42,8 @@ export const MarketSelect = ({ markets }: MarketSelectProps) => {
         fontSize="16px"
         lineHeight="24px"
         fontWeight={400}
-        width="25%"
+        width={{ base: '225px', md: '25%' }}
+        minWidth="225px"
         _hover={{
           background: 'none',
         }}
