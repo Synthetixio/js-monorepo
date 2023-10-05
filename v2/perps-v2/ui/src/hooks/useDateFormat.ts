@@ -1,17 +1,17 @@
 const useDateFormat = (day: string, period: 'W' | 'M' | 'Y') => {
-  const isoFormattedDay = day.split(' ')[0] + 'T' + day.split(' ')[1].split('.')[0] + 'Z';
-  const date = new Date(isoFormattedDay);
+  const [date, time] = day.split(' ');
+  const maybeDate = new Date(`${date}T${time}Z`);
 
-  if (isNaN(date.getTime())) {
-    console.error('Invalid date derived from string: ', day);
+  if (`${maybeDate}` === 'Invalid Date') {
     return '';
   }
 
   let formattedDate = '';
+
   switch (period) {
     case 'W':
     case 'M':
-      formattedDate = date.toLocaleString('en-EN', {
+      formattedDate = maybeDate.toLocaleString('en-EN', {
         month: '2-digit',
         day: '2-digit',
         timeZone: 'UTC',
@@ -19,7 +19,7 @@ const useDateFormat = (day: string, period: 'W' | 'M' | 'Y') => {
       break;
     case 'Y':
     default:
-      formattedDate = date.toLocaleString('en-EN', {
+      formattedDate = maybeDate.toLocaleString('en-EN', {
         month: 'short',
         timeZone: 'UTC',
       });
