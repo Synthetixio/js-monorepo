@@ -1,3 +1,0 @@
-# Perps Dashboard
-
-UI & Subgraph
