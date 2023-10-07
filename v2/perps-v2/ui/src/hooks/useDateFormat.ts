@@ -1,11 +1,17 @@
 const useDateFormat = (day: string, period: 'W' | 'M' | 'Y') => {
-  const date = new Date(day);
+  const [date, time] = day.split(' ');
+  const maybeDate = new Date(`${date}T${time}Z`);
+
+  if (`${maybeDate}` === 'Invalid Date') {
+    return '';
+  }
+
   let formattedDate = '';
 
   switch (period) {
     case 'W':
     case 'M':
-      formattedDate = date.toLocaleString('en-EN', {
+      formattedDate = maybeDate.toLocaleString('en-EN', {
         month: '2-digit',
         day: '2-digit',
         timeZone: 'UTC',
@@ -13,7 +19,7 @@ const useDateFormat = (day: string, period: 'W' | 'M' | 'Y') => {
       break;
     case 'Y':
     default:
-      formattedDate = date.toLocaleString('en-EN', {
+      formattedDate = maybeDate.toLocaleString('en-EN', {
         month: 'short',
         timeZone: 'UTC',
       });
