@@ -1,13 +1,13 @@
 {
-  "name": "@snx-v2/Notifi",
+  "name": "@snx-v2/NotifiButton",
   "private": true,
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@ethersproject/bytes": "^5.7.0",
+    "@chakra-ui/react": "^2.5.0",
     "@notifi-network/notifi-react-card": "^0.85.2",
-    "@snx-v2/ContractContext": "workspace:*",
-    "@snx-v2/useSynthetixContracts": "workspace:*",
+    "@snx-v2/icons": "workspace:*",
+    "@synthetixio/safe-import": "workspace:*",
     "react": "^18.2.0"
   }
 }

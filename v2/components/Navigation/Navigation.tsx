@@ -49,8 +49,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { safeImport } from '@synthetixio/safe-import';
-
-const NotifiCard = lazy(() => safeImport(() => import('@snx-v2/Notifi')));
+import { NotifiButton, NotifiContextWrapper } from '@snx-v2/notifiButton';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -122,35 +121,9 @@ export const NavigationUI = ({
         {isWalletConnected && walletAddress && !delegateWallet && (
           <>
             {size === 'desktop' && (
-              <Popover
-                closeOnBlur={false}
-                onClose={notifiModal.onClose}
-                isOpen={notifiModal.isOpen}
-              >
-                <PopoverTrigger>
-                  <Button
-                    ml={2}
-                    height={10}
-                    width={10}
-                    bg="navy.900"
-                    borderColor="gray.900"
-                    borderWidth="1px"
-                    borderRadius="4px"
-                    _hover={{
-                      bg: 'blackAlpha.400',
-                      cursor: 'pointer',
-                    }}
-                    onClick={notifiModal.onOpen}
-                  >
-                    <NotificationsIcon color="white" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent border="none" width="333px">
-                  <Suspense fallback={null}>
-                    <NotifiCard onClose={notifiModal.onClose} />
-                  </Suspense>
-                </PopoverContent>
-              </Popover>
+              <NotifiContextWrapper>
+                <NotifiButton />
+              </NotifiContextWrapper>
             )}
           </>
         )}
