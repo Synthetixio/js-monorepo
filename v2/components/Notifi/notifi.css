@@ -312,6 +312,7 @@ input::-webkit-inner-spin-button {
   height: 18px;
   margin-right: 10px;
   color: var(--notifi-settings-icon-color);
+  margin-top: -3px;
 }
 .NotifiAlertHistory_noAlertDescription {
   font-size: 14px;
