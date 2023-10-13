@@ -1,11 +1,11 @@
 import { QUERY_KEYS } from '../utils';
 
 import { useQuery } from 'react-query';
-import { DuneSNXSupply, getSNXusdSupply } from '../dune/synthetixV3';
-import { DuneListResponse } from '../dune/types';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
+import { getMintBurns } from '../api/synthetixV3';
+import { DuneMintBurn } from '../api/types';
 
-export interface SNXusdSupply {
+export interface MintBurn {
   day: string;
   ethSNXSupply: number;
   ethMints: number;
@@ -19,14 +19,10 @@ export interface SNXusdSupply {
   labelType?: 'M' | 'Y' | 'ALL';
 }
 
-export const useSNXusdSupply = (queryInterval: 'M' | 'Y' | 'ALL') => {
-  const { data, isLoading, error } = useQuery(
-    [QUERY_KEYS.GET_SNX_SUPPLY],
-    () => getSNXusdSupply(),
-    {
-      retry: 0,
-    }
-  );
+export const useMintBurn = (queryInterval: 'M' | 'Y' | 'ALL') => {
+  const { data, isLoading, error } = useQuery([QUERY_KEYS.GET_MINT_BURN], () => getMintBurns(), {
+    retry: 0,
+  });
   const formattedData = formatData(data, queryInterval);
 
   return {
@@ -36,7 +32,7 @@ export const useSNXusdSupply = (queryInterval: 'M' | 'Y' | 'ALL') => {
   };
 };
 
-function formatData(data?: DuneListResponse<DuneSNXSupply>, queryInterval?: 'M' | 'Y' | 'ALL') {
+function formatData(data?: DuneMintBurn[], queryInterval?: 'M' | 'Y' | 'ALL') {
   if (typeof data === 'undefined') return data;
   let startDate: Date;
   const endDate = new Date();
@@ -49,11 +45,7 @@ function formatData(data?: DuneListResponse<DuneSNXSupply>, queryInterval?: 'M' 
       break;
   }
 
-  return (
-    queryInterval === 'ALL'
-      ? data.rows
-      : data.rows.filter((e) => isAfter(parseISO(e.day), startDate))
-  )
+  return (queryInterval === 'ALL' ? data : data.filter((e) => isAfter(parseISO(e.day), startDate)))
     .map((stat) => {
       const totalSNXSupply = stat.eth_snxUSD_supply + stat.op_snxUSD_supply;
       const totalMintBurn = stat.eth_mints + stat.eth_burns + stat.op_mints + stat.op_burns;
@@ -69,7 +61,7 @@ function formatData(data?: DuneListResponse<DuneSNXSupply>, queryInterval?: 'M' 
         labelType: queryInterval,
         totalSNXSupply,
         totalMintBurn,
-      } as SNXusdSupply;
+      } as MintBurn;
     })
     .sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
 }

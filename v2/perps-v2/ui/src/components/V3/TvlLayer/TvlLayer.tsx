@@ -1,27 +1,18 @@
 import { Flex, Text, Spinner, FlexProps, Box } from '@chakra-ui/react';
 
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  XAxis,
-  Tooltip,
-  YAxis,
-  Area,
-  Bar,
-  Cell,
-} from 'recharts';
+import { ResponsiveContainer, ComposedChart, XAxis, Tooltip, YAxis, Area } from 'recharts';
 import { KeyColour } from '../../Dashboard';
-import { SNXusdSupplyTooltip } from './SNXusdSupplyTooltip';
+import { TvlLayerTooltip } from './TvlLayerTooltip';
 import { useState } from 'react';
 import { TimeBadge } from '../../TimeBadge';
 import { formatNumber } from '@snx-v2/formatters';
-import { useSNXusdSupply } from '../../../hooks/useSNXusdSupply';
+import { useTvlLayers } from '../../../hooks/useTvlLayers';
 
-export const SNXusdSupply = ({ ...props }: FlexProps) => {
+export const TvlLayer = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'M' | 'Y' | 'ALL'>('ALL');
-  const { data, loading } = useSNXusdSupply(state);
+  const { data, loading } = useTvlLayers(state);
 
-  const totalSupplyNumber = data?.reduce((acc, { totalSNXSupply }) => acc + totalSNXSupply, 0);
+  const tvlNumber = data?.reduce((acc, { totalSNX }) => acc + totalSNX, 0);
 
   return (
     <>
@@ -47,7 +38,7 @@ export const SNXusdSupply = ({ ...props }: FlexProps) => {
           sx={{ gap: '16px' }}
         >
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            Synthetix V3 - SNXusd Supply Daily Mint & Burn
+            TVL Layer
           </Text>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
@@ -56,8 +47,8 @@ export const SNXusdSupply = ({ ...props }: FlexProps) => {
           </Box>
         </Flex>
         <Flex mt={6} sx={{ gap: '12px' }}>
-          <KeyColour label="ethSNXSupply" colour="#522ED1" />
-          <KeyColour label="opSNXSupply" colour="#FC8738" />
+          <KeyColour label="ethSNX" colour="#522ED1" />
+          <KeyColour label="opSNX" colour="#FC8738" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%">
@@ -67,7 +58,7 @@ export const SNXusdSupply = ({ ...props }: FlexProps) => {
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               $
-              {formatNumber(totalSupplyNumber ?? 0, {
+              {formatNumber(tvlNumber ?? 0, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
               })}
@@ -84,40 +75,11 @@ export const SNXusdSupply = ({ ...props }: FlexProps) => {
               >
                 <Tooltip
                   cursor={false}
-                  content={SNXusdSupplyTooltip}
+                  content={TvlLayerTooltip}
                   wrapperStyle={{ outline: 'none' }}
-                  offset={0}
                 />
-                <Area
-                  dataKey="ethSNXSupply"
-                  stackId="1"
-                  fill="#522ED1"
-                  stroke="#522ED1"
-                  yAxisId="left"
-                />
-                <Area
-                  dataKey="opSNXSupply"
-                  stackId="1"
-                  fill="#FC8738"
-                  stroke="#FC8738"
-                  yAxisId="left"
-                />
-                <Bar type="monotone" dataKey="totalMintBurn" fill="#00D1FF" yAxisId="left">
-                  {data?.map((item, i) => {
-                    return (
-                      <Cell
-                        key={`cell-${i}`}
-                        fill={
-                          item.totalMintBurn > 0
-                            ? '#11946B'
-                            : item.totalMintBurn < 0
-                            ? '#FF4A60'
-                            : '#00D1FF'
-                        }
-                      />
-                    );
-                  })}
-                </Bar>
+                <Area dataKey="ethSNX" stackId="1" fill="#522ED1" stroke="#522ED1" yAxisId="left" />
+                <Area dataKey="opSNX" stackId="1" fill="#FC8738" stroke="#FC8738" yAxisId="left" />
                 <XAxis
                   dataKey="label"
                   minTickGap={10}

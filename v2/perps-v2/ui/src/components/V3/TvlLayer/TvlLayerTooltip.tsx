@@ -9,10 +9,10 @@ type TvlSNXTooltipProps = {
   label?: string;
 };
 
-export const TvlSNXTooltip = ({ payload }: TvlSNXTooltipProps) => {
-  const tvlSNX = payload?.[0]?.payload as any;
+export const TvlLayerTooltip = ({ payload }: TvlSNXTooltipProps) => {
+  const tvlLayer = payload?.[0]?.payload as any;
 
-  if (!tvlSNX) {
+  if (!tvlLayer) {
     return null;
   }
 
@@ -27,24 +27,24 @@ export const TvlSNXTooltip = ({ payload }: TvlSNXTooltipProps) => {
       borderWidth="1px"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {tvlSNX.labelType === 'M' ? tvlSNX.label : format(new Date(tvlSNX.day), 'yyyy-MM-dd')}
+        {tvlLayer.labelType === 'M' ? tvlLayer.label : format(new Date(tvlLayer.day), 'yyyy-MM-dd')}
       </Text>
       <Flex mb={2} justifyContent="space-between" w="100%">
         <KeyColour label="ethSNX" colour="#522ED1" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(tvlSNX.opSNX)}
+          ${formatNumber(tvlLayer.opSNX)}
         </Text>
       </Flex>
       <Flex mb={2} justifyContent="space-between" w="100%">
         <KeyColour label="opSNX" colour="#FC8738" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(tvlSNX.ethSNX)}
+          ${formatNumber(tvlLayer.ethSNX)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Total" colour="cyan.500" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(tvlSNX.totalSNX)}
+          ${formatNumber(tvlLayer.totalSNX)}
         </Text>
       </Flex>
     </Flex>

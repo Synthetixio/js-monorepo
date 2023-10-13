@@ -1,27 +1,27 @@
 import { QUERY_KEYS } from '../utils';
 
 import { useQuery } from 'react-query';
-import { DuneDailyDelegation, getDailyDelegations } from '../dune/synthetixV3';
-import { DuneListResponse } from '../dune/types';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
+import { getDelegations } from '../api/synthetixV3';
+import { DuneDelegation } from '../api/types';
 
-export interface DailyDelegation {
+export interface Delegation {
   day: string;
   label?: string;
   labelType?: 'M' | 'Y' | 'ALL';
   [blockchain: string]: any;
 }
 
-export const useDailyDelegations = (queryInterval: 'M' | 'Y' | 'ALL') => {
+export const useDelegations = (queryInterval: 'M' | 'Y' | 'ALL') => {
   const { data, isLoading, error } = useQuery(
-    [QUERY_KEYS.GET_DAILY_DELEGATIONS],
-    () => getDailyDelegations(),
+    [QUERY_KEYS.GET_DELEGATIONS],
+    () => getDelegations(),
     {
       retry: 0,
     }
   );
-  const blockchains = getUniqueBlockchains(data?.rows);
-  const ids = getUniqueId(data?.rows);
+  const blockchains = getUniqueBlockchains(data);
+  const ids = getUniqueId(data);
   const formattedData = formatData(data, queryInterval);
 
   return {
@@ -33,10 +33,7 @@ export const useDailyDelegations = (queryInterval: 'M' | 'Y' | 'ALL') => {
   };
 };
 
-function formatData(
-  data?: DuneListResponse<DuneDailyDelegation>,
-  queryInterval?: 'M' | 'Y' | 'ALL'
-) {
+function formatData(data?: DuneDelegation[], queryInterval?: 'M' | 'Y' | 'ALL') {
   if (typeof data === 'undefined') return data;
   let startDate: Date;
   const endDate = new Date();
@@ -49,7 +46,7 @@ function formatData(
       break;
   }
 
-  const transformedData: Record<string, DailyDelegation> = data.rows.reduce((prev, item) => {
+  const transformedData: Record<string, Delegation> = data.reduce((prev, item) => {
     const { day, blockchain, cumDelegation, daily_delegations_USD, ID } = item;
 
     if (!prev[day]) {
@@ -57,7 +54,7 @@ function formatData(
         day,
         label: format(new Date(parseISO(day)), 'dd/MM'),
         labelType: queryInterval,
-      } as DailyDelegation;
+      } as Delegation;
     }
 
     prev[day][blockchain] = {
@@ -67,14 +64,14 @@ function formatData(
     };
 
     return prev;
-  }, {} as Record<string, DailyDelegation>);
+  }, {} as Record<string, Delegation>);
 
   return Object.values(transformedData)
     .filter((e) => (queryInterval === 'ALL' ? !!e.day : isAfter(parseISO(e.day), startDate)))
     .sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
 }
 
-function getUniqueBlockchains(data?: DuneDailyDelegation[]): string[] {
+function getUniqueBlockchains(data?: DuneDelegation[]): string[] {
   if (!data) return [];
   return data.reduce((uniqueBlockchains: string[], item) => {
     if (!uniqueBlockchains.includes(item.blockchain)) {
@@ -84,7 +81,7 @@ function getUniqueBlockchains(data?: DuneDailyDelegation[]): string[] {
   }, []);
 }
 
-function getUniqueId(data?: DuneDailyDelegation[]): string[] {
+function getUniqueId(data?: DuneDelegation[]): string[] {
   if (!data) return [];
   return data.reduce((uniqueId: string[], item) => {
     if (!uniqueId.includes(item.ID)) {

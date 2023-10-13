@@ -5,18 +5,18 @@ import { DailyDelegations } from './DailyDelegations';
 
 export const BLOCKCHAIN_COLORS = ['#522ED1', '#FC8738'];
 
-export const DailyDelegationsBase = ({ ...props }: FlexProps) => {
+export const Delegation = ({ ...props }: FlexProps) => {
   return (
     <Flex
-      flexDirection="row"
+      width="100%"
+      flexDirection={{ base: 'column', md: 'row' }}
       my={5}
       alignItems="center"
       justifyContent="space-between"
       sx={{ gap: 5 }}
-      flexWrap="wrap"
     >
-      <HistoricalDelegations {...props} />
-      <DailyDelegations {...props} />
+      <HistoricalDelegations {...props} width={{ base: '100%', md: '49%' }} />
+      <DailyDelegations {...props} width={{ base: '100%', md: '49%' }} />
     </Flex>
   );
 };

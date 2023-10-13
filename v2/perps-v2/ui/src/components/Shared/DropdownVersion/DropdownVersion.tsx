@@ -33,11 +33,12 @@ export const DropdownVersion = () => {
   return (
     <Menu>
       <MenuButton
+        padding="8x 8px"
         color="white"
         fontSize="16px"
         lineHeight="24px"
         fontWeight={700}
-        width="80px"
+        width={{ base: '75px', md: '80px' }}
         _hover={{ background: 'none' }}
         _active={{ background: 'none' }}
         textAlign="start"

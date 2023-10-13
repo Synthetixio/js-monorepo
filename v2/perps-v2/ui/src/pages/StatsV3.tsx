@@ -1,9 +1,9 @@
 import React from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
 import { TvlProtocols } from '../components/V3/TvlProtocols';
-import { TvlSNX } from '../components/V3/TvlSNX';
-import { SNXusdSupply } from '../components/V3/SNXusdSupply';
-import { DailyDelegationsBase } from '../components/V3/DailyDelegationsBase';
+import { TvlLayer } from '../components/V3/TvlLayer';
+import { MintBurn } from '../components/V3/MintBurn';
+import { Delegation } from '../components/V3/Delegation';
 
 export function StatsV3() {
   return (
@@ -13,9 +13,9 @@ export function StatsV3() {
           Dashboard
         </Heading>
         <TvlProtocols />
-        <TvlSNX />
-        <DailyDelegationsBase />
-        <SNXusdSupply />
+        <TvlLayer />
+        <Delegation />
+        <MintBurn />
       </Flex>
     </>
   );

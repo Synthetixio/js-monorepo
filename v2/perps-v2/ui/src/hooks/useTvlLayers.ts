@@ -1,11 +1,11 @@
 import { QUERY_KEYS } from '../utils';
 
 import { useQuery } from 'react-query';
-import { DuneTvlSNX, getTvlSNX } from '../dune/synthetixV3';
-import { DuneListResponse } from '../dune/types';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
+import { getTVLs } from '../api/synthetixV3';
+import { DuneTvlLayer } from '../api/types';
 
-export interface TvlSNX {
+export interface TvlLayer {
   day: string;
   opSNX: number;
   ethSNX: number;
@@ -14,11 +14,11 @@ export interface TvlSNX {
   labelType?: 'M' | 'Y' | 'ALL';
 }
 
-export const useTvlSNX = (queryInterval: 'M' | 'Y' | 'ALL') => {
-  const { data, isLoading, error } = useQuery([QUERY_KEYS.GET_TVL_SNX], () => getTvlSNX(), {
+export const useTvlLayers = (queryInterval: 'M' | 'Y' | 'ALL') => {
+  const { data, isLoading, error } = useQuery([QUERY_KEYS.GET_TVL], () => getTVLs(), {
     retry: 0,
   });
-  const formattedData = formatData(data, queryInterval);
+  const formattedData = formatData(data?.tvlByLayer, queryInterval);
 
   return {
     data: formattedData,
@@ -27,7 +27,7 @@ export const useTvlSNX = (queryInterval: 'M' | 'Y' | 'ALL') => {
   };
 };
 
-function formatData(data?: DuneListResponse<DuneTvlSNX>, queryInterval?: 'M' | 'Y' | 'ALL') {
+function formatData(data?: DuneTvlLayer[], queryInterval?: 'M' | 'Y' | 'ALL') {
   if (typeof data === 'undefined') return data;
   let startDate: Date;
   const endDate = new Date();
@@ -40,11 +40,7 @@ function formatData(data?: DuneListResponse<DuneTvlSNX>, queryInterval?: 'M' | '
       break;
   }
 
-  return (
-    queryInterval === 'ALL'
-      ? data.rows
-      : data.rows.filter((e) => isAfter(parseISO(e.day), startDate))
-  )
+  return (queryInterval === 'ALL' ? data : data.filter((e) => isAfter(parseISO(e.day), startDate)))
     .map((stat) => {
       const totalSNX = stat.eth_SNX + stat.op_SNX;
       return {
@@ -54,7 +50,7 @@ function formatData(data?: DuneListResponse<DuneTvlSNX>, queryInterval?: 'M' | '
         label: format(new Date(parseISO(stat.day)), 'dd/MM'),
         labelType: queryInterval,
         totalSNX,
-      } as TvlSNX;
+      } as TvlLayer;
     })
     .sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
 }

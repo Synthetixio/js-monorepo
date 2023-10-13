@@ -1,19 +1,27 @@
 import { Flex, Text, Spinner, FlexProps, Box } from '@chakra-ui/react';
 
-import { ResponsiveContainer, ComposedChart, XAxis, Tooltip, YAxis, Area } from 'recharts';
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  XAxis,
+  Tooltip,
+  YAxis,
+  Area,
+  Bar,
+  Cell,
+} from 'recharts';
 import { KeyColour } from '../../Dashboard';
-import { TvlSNXTooltip } from './TvlSNXTooltip';
+import { MintBurnTooltip } from './MintBurnTooltip';
 import { useState } from 'react';
 import { TimeBadge } from '../../TimeBadge';
 import { formatNumber } from '@snx-v2/formatters';
-import { useTvlSNX } from '../../../hooks/useTvlSNX';
+import { useMintBurn } from '../../../hooks/useMintBurn';
 
-export const TvlSNX = ({ ...props }: FlexProps) => {
+export const MintBurn = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'M' | 'Y' | 'ALL'>('ALL');
-  const { data, loading } = useTvlSNX(state);
-  console.log(data);
+  const { data, loading } = useMintBurn(state);
 
-  const tvlNumber = data?.reduce((acc, { totalSNX }) => acc + totalSNX, 0);
+  const totalSupplyNumber = data?.reduce((acc, { totalSNXSupply }) => acc + totalSNXSupply, 0);
 
   return (
     <>
@@ -39,7 +47,7 @@ export const TvlSNX = ({ ...props }: FlexProps) => {
           sx={{ gap: '16px' }}
         >
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            Layer Balances - TVL SNX
+            SNX Supply Daily Mint & Burn
           </Text>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
@@ -48,8 +56,8 @@ export const TvlSNX = ({ ...props }: FlexProps) => {
           </Box>
         </Flex>
         <Flex mt={6} sx={{ gap: '12px' }}>
-          <KeyColour label="ethSNX" colour="#522ED1" />
-          <KeyColour label="opSNX" colour="#FC8738" />
+          <KeyColour label="ethSNXSupply" colour="#522ED1" />
+          <KeyColour label="opSNXSupply" colour="#FC8738" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%">
@@ -59,7 +67,7 @@ export const TvlSNX = ({ ...props }: FlexProps) => {
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               $
-              {formatNumber(tvlNumber ?? 0, {
+              {formatNumber(totalSupplyNumber ?? 0, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
               })}
@@ -76,11 +84,40 @@ export const TvlSNX = ({ ...props }: FlexProps) => {
               >
                 <Tooltip
                   cursor={false}
-                  content={TvlSNXTooltip}
+                  content={MintBurnTooltip}
                   wrapperStyle={{ outline: 'none' }}
+                  offset={0}
                 />
-                <Area dataKey="ethSNX" stackId="1" fill="#522ED1" stroke="#522ED1" yAxisId="left" />
-                <Area dataKey="opSNX" stackId="1" fill="#FC8738" stroke="#FC8738" yAxisId="left" />
+                <Area
+                  dataKey="ethSNXSupply"
+                  stackId="1"
+                  fill="#522ED1"
+                  stroke="#522ED1"
+                  yAxisId="left"
+                />
+                <Area
+                  dataKey="opSNXSupply"
+                  stackId="1"
+                  fill="#FC8738"
+                  stroke="#FC8738"
+                  yAxisId="left"
+                />
+                <Bar type="monotone" dataKey="totalMintBurn" fill="#00D1FF" yAxisId="left">
+                  {data?.map((item, i) => {
+                    return (
+                      <Cell
+                        key={`cell-${i}`}
+                        fill={
+                          item.totalMintBurn > 0
+                            ? '#11946B'
+                            : item.totalMintBurn < 0
+                            ? '#FF4A60'
+                            : '#00D1FF'
+                        }
+                      />
+                    );
+                  })}
+                </Bar>
                 <XAxis
                   dataKey="label"
                   minTickGap={10}

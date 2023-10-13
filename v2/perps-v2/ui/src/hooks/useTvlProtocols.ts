@@ -1,9 +1,9 @@
 import { QUERY_KEYS } from '../utils';
 
 import { useQuery } from 'react-query';
-import { DuneTvlProtocol, getTvlProtocols } from '../dune/synthetixV3';
-import { DuneListResponse } from '../dune/types';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
+import { getTVLs } from '../api/synthetixV3';
+import { DuneTvlProtocol } from '../api/types';
 
 export interface TvlProtocol {
   day: string;
@@ -14,15 +14,11 @@ export interface TvlProtocol {
 }
 
 export const useTvlProtocols = (queryInterval: 'M' | 'Y' | 'ALL') => {
-  const { data, isLoading, error } = useQuery(
-    [QUERY_KEYS.GET_TVL_PROTOCOLS],
-    () => getTvlProtocols(),
-    {
-      retry: 0,
-    }
-  );
-  const formattedData = formatData(data, queryInterval);
-  const blockchains = getUniqueBlockchains(data?.rows);
+  const { data, isLoading, error } = useQuery([QUERY_KEYS.GET_TVL], () => getTVLs(), {
+    retry: 0,
+  });
+  const formattedData = formatData(data?.tvlByProtocol, queryInterval);
+  const blockchains = getUniqueBlockchains(data?.tvlByProtocol);
 
   return {
     data: formattedData,
@@ -32,7 +28,7 @@ export const useTvlProtocols = (queryInterval: 'M' | 'Y' | 'ALL') => {
   };
 };
 
-function formatData(data?: DuneListResponse<DuneTvlProtocol>, queryInterval?: 'M' | 'Y' | 'ALL') {
+function formatData(data?: DuneTvlProtocol[], queryInterval?: 'M' | 'Y' | 'ALL') {
   if (typeof data === 'undefined') return data;
   let startDate: Date;
   const endDate = new Date();
@@ -45,7 +41,7 @@ function formatData(data?: DuneListResponse<DuneTvlProtocol>, queryInterval?: 'M
       break;
   }
 
-  const transformedData: Record<string, TvlProtocol> = data.rows.reduce((prev, item) => {
+  const transformedData: Record<string, TvlProtocol> = data.reduce((prev, item) => {
     const { day, blockchain, layer_usd, total_usd } = item;
 
     if (!prev[day]) {

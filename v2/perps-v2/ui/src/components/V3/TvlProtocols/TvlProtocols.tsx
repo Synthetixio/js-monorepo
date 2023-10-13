@@ -40,7 +40,7 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
           sx={{ gap: '16px' }}
         >
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            Layer Balances - TVL Protocols
+            TVL Protocols
           </Text>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />

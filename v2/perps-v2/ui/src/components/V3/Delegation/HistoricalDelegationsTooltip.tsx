@@ -1,20 +1,20 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { formatNumber } from '@snx-v2/formatters';
 import { KeyColour } from '../../Dashboard';
-import { BLOCKCHAIN_COLORS } from './DailyDelegationsBase';
+import { BLOCKCHAIN_COLORS } from './Delegation';
 import { format } from 'date-fns';
 
-type DailyDelegationsTooltipProps = {
+type HistoricalDelegationsTooltipProps = {
   active?: boolean;
   payload?: any[];
   blockchains?: string[];
   label?: string;
 };
 
-export const DailyDelegationsTooltip = ({ payload, blockchains }: DailyDelegationsTooltipProps) => {
-  const dailyDelegation = payload?.[0]?.payload as any;
+export const HistoricalDelegationsTooltip = ({ payload, blockchains }: HistoricalDelegationsTooltipProps) => {
+  const historicalDelegations = payload?.[0]?.payload as any;
 
-  if (!dailyDelegation) {
+  if (!historicalDelegations) {
     return null;
   }
 
@@ -29,16 +29,16 @@ export const DailyDelegationsTooltip = ({ payload, blockchains }: DailyDelegatio
       borderWidth="1px"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {dailyDelegation.labelType === 'M'
-          ? dailyDelegation.label
-          : format(new Date(dailyDelegation.day), 'yyyy-MM-dd')}
+        {historicalDelegations.labelType === 'M'
+          ? historicalDelegations.label
+          : format(new Date(historicalDelegations.day), 'yyyy-MM-dd')}
       </Text>
       {blockchains?.map((blockchain, index) => {
         return (
           <Flex key={index} mb={2} justifyContent="space-between" w="100%">
-            <KeyColour label={dailyDelegation[blockchain].id} colour={BLOCKCHAIN_COLORS[index]} />
+            <KeyColour label={historicalDelegations[blockchain].id} colour={BLOCKCHAIN_COLORS[index]} />
             <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-              ${formatNumber(dailyDelegation[blockchain].dailyDelegationsUsd)}
+              ${formatNumber(historicalDelegations[blockchain].cumDelegation)}
             </Text>
           </Flex>
         );

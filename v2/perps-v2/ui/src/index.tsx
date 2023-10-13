@@ -9,6 +9,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import {
   PERPS_V2_DASHBOARD_GRAPH_URL,
   PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
+  DEFAULT_REQUEST_REFRESH_INTERVAL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
 import { Dashboard, Actions, Markets, Positions, StatsV3 } from './pages';
@@ -27,6 +28,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       notifyOnChangeProps: 'tracked',
+      refetchInterval: DEFAULT_REQUEST_REFRESH_INTERVAL,
       refetchOnWindowFocus: false,
     },
   },

@@ -3,16 +3,16 @@ import { formatNumber } from '@snx-v2/formatters';
 import { KeyColour } from '../../Dashboard';
 import { format } from 'date-fns';
 
-type SNXSupplyTooltipProps = {
+type MintBurnTooltipProps = {
   active?: boolean;
   payload?: any[];
   label?: string;
 };
 
-export const SNXusdSupplyTooltip = ({ payload }: SNXSupplyTooltipProps) => {
-  const snxSupply = payload?.[0]?.payload as any;
+export const MintBurnTooltip = ({ payload }: MintBurnTooltipProps) => {
+  const mintBurn = payload?.[0]?.payload as any;
 
-  if (!snxSupply) {
+  if (!mintBurn) {
     return null;
   }
 
@@ -28,57 +28,57 @@ export const SNXusdSupplyTooltip = ({ payload }: SNXSupplyTooltipProps) => {
       sx={{ gap: 2 }}
     >
       <Text fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {snxSupply.labelType === 'M'
-          ? snxSupply.label
-          : format(new Date(snxSupply.day), 'yyyy-MM-dd')}
+        {mintBurn.labelType === 'M'
+          ? mintBurn.label
+          : format(new Date(mintBurn.day), 'yyyy-MM-dd')}
       </Text>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="ethSNX" colour="#522ED1" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(snxSupply.opSNXSupply)}
+          ${formatNumber(mintBurn.opSNXSupply)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="opSNX" colour="#FC8738" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(snxSupply.ethSNXSupply)}
+          ${formatNumber(mintBurn.ethSNXSupply)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Total" colour="cyan.500" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(snxSupply.totalSNXSupply)}
+          ${formatNumber(mintBurn.totalSNXSupply)}
         </Text>
       </Flex>
       <Divider />
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="ethMints" colour="#11946B" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(snxSupply.ethMints)}
+          ${formatNumber(mintBurn.ethMints)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="ethBurns" colour="#FF4A60" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(snxSupply.ethBurns)}
+          ${formatNumber(mintBurn.ethBurns)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="opMints" colour="#11946B" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(snxSupply.opMints)}
+          ${formatNumber(mintBurn.opMints)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="opBurns" colour="#FF4A60" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(snxSupply.opBurns)}
+          ${formatNumber(mintBurn.opBurns)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Total" colour="cyan.500" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(snxSupply.totalMintBurn)}
+          ${formatNumber(mintBurn.totalMintBurn)}
         </Text>
       </Flex>
     </Flex>
