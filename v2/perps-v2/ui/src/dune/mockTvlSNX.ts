@@ -1,5 +1,5 @@
 import { DuneListResponse } from './types';
-import { DuneTvlProtocol, DuneTvlSNX } from './synthetixV3';
+import { DuneTvlSNX } from './synthetixV3';
 
 export const MOCK_TVL_SNX: DuneListResponse<DuneTvlSNX> = {
   rows: [

@@ -20,4 +20,5 @@ export const duneApiKey = process.env.DUNE_API_KEY;
 export const QUERY_KEYS = {
     GET_TVL_PROTOCOLS: 'GET_TVL_PROTOCOLS',
     GET_TVL_SNX: 'GET_TVL_SNX',
+    GET_SNX_SUPPLY: 'GET_SNX_SUPPLY',
 };

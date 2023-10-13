@@ -18,7 +18,6 @@ export const useTvlSNX = (queryInterval: 'M' | 'Y' | 'ALL') => {
   const { data, isLoading, error } = useQuery([QUERY_KEYS.GET_TVL_SNX], () => getTvlSNX(), {
     retry: 0,
   });
-  console.log('xx', data);
   const formattedData = formatData(data, queryInterval);
 
   return {

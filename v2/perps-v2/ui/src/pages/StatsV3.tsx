@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
 import { TvlProtocols } from '../components/V3/TvlProtocols';
 import { TvlSNX } from '../components/V3/TvlSNX';
+import { SNXusdSupply } from '../components/V3/SNXusdSupply';
 
 export function StatsV3() {
   return (
@@ -12,6 +13,7 @@ export function StatsV3() {
         </Heading>
         <TvlProtocols />
         <TvlSNX />
+        <SNXusdSupply />
       </Flex>
     </>
   );

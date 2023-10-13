@@ -31,7 +31,13 @@ export const TvlSNX = ({ ...props }: FlexProps) => {
         p={4}
         {...props}
       >
-        <Flex justifyContent="space-between" flexDir="row" w="100%">
+        <Flex
+          justifyContent="space-between"
+          flexDir="row"
+          w="100%"
+          flexWrap="wrap"
+          sx={{ gap: '16px' }}
+        >
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
             Layer Balances - TVL SNX
           </Text>
