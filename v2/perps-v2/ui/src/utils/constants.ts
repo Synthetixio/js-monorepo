@@ -14,3 +14,10 @@ export const optimisticEthercanTx = (txHash: string) =>
   `https://optimistic.etherscan.io/tx/${txHash}`;
 
 export const infuraId = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID;
+
+export const duneApiKey = process.env.DUNE_API_KEY;
+
+export const QUERY_KEYS = {
+    GET_TVL_PROTOCOLS: 'GET_TVL_PROTOCOLS',
+    GET_TVL_SNX: 'GET_TVL_SNX',
+};

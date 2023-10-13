@@ -3,7 +3,7 @@
   "version": "0.0.6",
   "private": true,
   "scripts": {
-    "start": "webpack-cli serve",
+    "start": "webpack-cli serve --port 3002",
     "build": "NODE_ENV=production webpack-cli",
     "compile": "graphql-codegen",
     "test": "NODE_ENV=test jest",
@@ -15,6 +15,7 @@
     "@apollo/client": "^3.7.10",
     "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.5.0",
+    "@cowprotocol/ts-dune-client": "^0.0.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@ethersproject/abi": "^5.7.0",
@@ -33,6 +34,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.5",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.8.1",
     "recharts": "^2.5.0",
     "zod": "^3.20.6"

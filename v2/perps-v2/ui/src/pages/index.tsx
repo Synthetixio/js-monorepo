@@ -3,3 +3,4 @@ export * from './Dashboard';
 export * from './Actions';
 export * from './Markets';
 export * from './Positions';
+export * from './StatsV3';
