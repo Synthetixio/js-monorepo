@@ -38,7 +38,7 @@ export const TvlProtocolsTooltip = ({ payload, blockchains }: TvlProtocolsToolti
           <Flex key={index} mb={2} justifyContent="space-between" w="100%">
             <KeyColour label={blockchain} colour={BLOCKCHAIN_COLORS[index]} />
             <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-              ${formatNumber(tvlProtocols[blockchain + 'LayerUsd'])}
+              ${formatNumber(tvlProtocols[blockchain])}
             </Text>
           </Flex>
         );

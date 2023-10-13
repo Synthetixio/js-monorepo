@@ -10,7 +10,7 @@ export interface TvlProtocol {
   totalUsd: number;
   label?: string;
   labelType?: 'M' | 'Y' | 'ALL';
-  [key: string]: any;
+  [blockchain: string]: any;
 }
 
 export const useTvlProtocols = (queryInterval: 'M' | 'Y' | 'ALL') => {
@@ -34,7 +34,6 @@ export const useTvlProtocols = (queryInterval: 'M' | 'Y' | 'ALL') => {
 
 function formatData(data?: DuneListResponse<DuneTvlProtocol>, queryInterval?: 'M' | 'Y' | 'ALL') {
   if (typeof data === 'undefined') return data;
-  const chartData: TvlProtocol[] = [];
   let startDate: Date;
   const endDate = new Date();
   switch (queryInterval) {
@@ -46,29 +45,26 @@ function formatData(data?: DuneListResponse<DuneTvlProtocol>, queryInterval?: 'M
       break;
   }
 
-  (queryInterval === 'ALL'
-    ? data.rows
-    : data.rows.filter((e) => isAfter(parseISO(e.day), startDate))
-  ).forEach((stat) => {
-    if (!chartData.find((entry) => entry.day === stat.day)) {
-      chartData.push({
-        day: stat.day,
-        totalUsd: stat.total_usd,
-        label: format(new Date(parseISO(stat.day)), 'dd/MM'),
+  const transformedData: Record<string, TvlProtocol> = data.rows.reduce((prev, item) => {
+    const { day, blockchain, layer_usd, total_usd } = item;
+
+    if (!prev[day]) {
+      prev[day] = {
+        day,
+        totalUsd: total_usd,
+        label: format(new Date(parseISO(day)), 'dd/MM'),
         labelType: queryInterval,
-      });
+      } as TvlProtocol;
     }
 
-    chartData.forEach((entry) => {
-      if (entry.day === stat.day) {
-        if (entry[stat.blockchain + 'LayerUsd'] === undefined) {
-          entry[stat.blockchain + 'LayerUsd'] = stat.layer_usd;
-        }
-      }
-    });
-  });
+    prev[day][blockchain] = layer_usd;
 
-  return chartData.sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
+    return prev;
+  }, {} as Record<string, TvlProtocol>);
+
+  return Object.values(transformedData)
+    .filter((e) => (queryInterval === 'ALL' ? !!e.day : isAfter(parseISO(e.day), startDate)))
+    .sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
 }
 
 function getUniqueBlockchains(data?: DuneTvlProtocol[]): string[] {

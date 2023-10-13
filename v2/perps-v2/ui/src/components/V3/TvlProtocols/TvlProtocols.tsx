@@ -92,7 +92,7 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
                   return (
                     <Area
                       key={index}
-                      dataKey={blockchain + 'LayerUsd'}
+                      dataKey={blockchain}
                       stackId="1"
                       fill={BLOCKCHAIN_COLORS[index]}
                       stroke={BLOCKCHAIN_COLORS[index]}
