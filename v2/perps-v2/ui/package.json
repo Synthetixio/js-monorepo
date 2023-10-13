@@ -3,7 +3,7 @@
   "version": "0.0.6",
   "private": true,
   "scripts": {
-    "start": "webpack-cli serve --port 3002",
+    "start": "webpack-cli serve",
     "build": "NODE_ENV=production webpack-cli",
     "compile": "graphql-codegen",
     "test": "NODE_ENV=test jest",
