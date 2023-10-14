@@ -3,7 +3,7 @@ import axios from 'axios';
 import { apiUrl } from '../utils';
 
 const requester = axios.create({
-  baseURL: apiUrl ?? 'http://synthetix.io/api',
+  baseURL: apiUrl ?? 'https://synthetix.io/api',
   timeout: 300000,
 });
 
