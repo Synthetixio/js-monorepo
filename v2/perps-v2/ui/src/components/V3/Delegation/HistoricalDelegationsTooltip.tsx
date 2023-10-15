@@ -11,7 +11,10 @@ type HistoricalDelegationsTooltipProps = {
   label?: string;
 };
 
-export const HistoricalDelegationsTooltip = ({ payload, blockchains }: HistoricalDelegationsTooltipProps) => {
+export const HistoricalDelegationsTooltip = ({
+  payload,
+  blockchains,
+}: HistoricalDelegationsTooltipProps) => {
   const historicalDelegations = payload?.[0]?.payload as any;
 
   if (!historicalDelegations) {
@@ -36,7 +39,11 @@ export const HistoricalDelegationsTooltip = ({ payload, blockchains }: Historica
       {blockchains?.map((blockchain, index) => {
         return (
           <Flex key={index} mb={2} justifyContent="space-between" w="100%">
-            <KeyColour label={historicalDelegations[blockchain].id} colour={BLOCKCHAIN_COLORS[index]} />
+            <KeyColour
+              label={historicalDelegations[blockchain].id}
+              colour={BLOCKCHAIN_COLORS[index]}
+              textTransform="capitalize"
+            />
             <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
               ${formatNumber(historicalDelegations[blockchain].cumDelegation)}
             </Text>

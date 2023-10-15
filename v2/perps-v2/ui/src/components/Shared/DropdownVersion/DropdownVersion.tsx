@@ -33,12 +33,12 @@ export const DropdownVersion = () => {
   return (
     <Menu>
       <MenuButton
-        padding="8x 8px"
+        padding="8px"
         color="white"
         fontSize="16px"
         lineHeight="24px"
         fontWeight={700}
-        width={{ base: '75px', md: '80px' }}
+        width="60px"
         _hover={{ background: 'none' }}
         _active={{ background: 'none' }}
         textAlign="start"
@@ -50,7 +50,7 @@ export const DropdownVersion = () => {
       >
         {VERSION_OPTIONS.find((option) => option.value === activeOptionValue)?.display}
       </MenuButton>
-      <MenuList>
+      <MenuList boxShadow="none">
         <Flex
           bg="navy.900"
           p={1}

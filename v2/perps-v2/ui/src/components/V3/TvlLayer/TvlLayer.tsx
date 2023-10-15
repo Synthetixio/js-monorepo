@@ -47,8 +47,8 @@ export const TvlLayer = ({ ...props }: FlexProps) => {
           </Box>
         </Flex>
         <Flex mt={6} sx={{ gap: '12px' }}>
-          <KeyColour label="ethSNX" colour="#522ED1" />
-          <KeyColour label="opSNX" colour="#FC8738" />
+          <KeyColour label="Ethereum SNX" colour="#522ED1" />
+          <KeyColour label="Optimism SNX" colour="#FC8738" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%">

@@ -45,7 +45,14 @@ export const HistoricalDelegations = ({ ...props }: FlexProps) => {
       </Flex>
       <Flex mt={6} sx={{ gap: '12px' }}>
         {ids.map((id, index) => {
-          return <KeyColour key={index} label={id} colour={BLOCKCHAIN_COLORS[index]} />;
+          return (
+            <KeyColour
+              key={index}
+              label={id}
+              colour={BLOCKCHAIN_COLORS[index]}
+              textTransform="capitalize"
+            />
+          );
         })}
       </Flex>
       {loading ? (

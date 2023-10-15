@@ -56,8 +56,8 @@ export const MintBurn = ({ ...props }: FlexProps) => {
           </Box>
         </Flex>
         <Flex mt={6} sx={{ gap: '12px' }}>
-          <KeyColour label="ethSNXSupply" colour="#522ED1" />
-          <KeyColour label="opSNXSupply" colour="#FC8738" />
+          <KeyColour label="Ethereum SNX Supply" colour="#522ED1" />
+          <KeyColour label="Optimism SNX Supply" colour="#FC8738" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%">

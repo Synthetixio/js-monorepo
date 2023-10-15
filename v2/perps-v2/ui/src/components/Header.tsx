@@ -57,7 +57,7 @@ export const Header: FC = () => {
         borderTopWidth="1px"
         borderTopColor="transparent"
       >
-        <Flex alignItems="center" sx={{ gap: '16px' }}>
+        <Flex alignItems="center" sx={{ gap: { base: '8px', md: '16px' } }}>
           <RouterLink to="/" style={{ whiteSpace: 'nowrap' }}>
             <Flex alignItems="center">
               <SNXIcon />
@@ -68,8 +68,8 @@ export const Header: FC = () => {
           {['/', '/trades', '/actions', '/markets', '/positions, /v3'].includes(
             location.pathname
           ) && (
-            <Box px={{ base: '16px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
-              <Flex as="nav" sx={{ gap: '34px' }}>
+            <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
+              <Flex as="nav" sx={{ gap: '24px' }}>
                 <Box style={isActive('/') ? activeStyle : inactiveStyle}>
                   <RouterLink to="/">Dashboard</RouterLink>
                 </Box>
@@ -95,6 +95,7 @@ export const Header: FC = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  padding={{ base: '8px', md: '8px 16px' }}
                 >
                   <HamburgerIcon width="20px" height="20px" color="white" />
                 </MenuButton>

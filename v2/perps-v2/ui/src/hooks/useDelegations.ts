@@ -22,6 +22,7 @@ export const useDelegations = (queryInterval: 'M' | 'Y' | 'ALL') => {
   );
   const blockchains = getUniqueBlockchains(data);
   const ids = getUniqueId(data);
+  console.log('ids', ids);
   const formattedData = formatData(data, queryInterval);
 
   return {
@@ -58,7 +59,7 @@ function formatData(data?: DuneDelegation[], queryInterval?: 'M' | 'Y' | 'ALL') 
     }
 
     prev[day][blockchain] = {
-      id: ID,
+      id: ID.replaceAll('-', ' '),
       dailyDelegationsUsd: daily_delegations_USD,
       cumDelegation,
     };
@@ -83,10 +84,12 @@ function getUniqueBlockchains(data?: DuneDelegation[]): string[] {
 
 function getUniqueId(data?: DuneDelegation[]): string[] {
   if (!data) return [];
-  return data.reduce((uniqueId: string[], item) => {
-    if (!uniqueId.includes(item.ID)) {
-      uniqueId.push(item.ID);
-    }
-    return uniqueId;
-  }, []);
+  return data
+    .reduce((uniqueId: string[], item) => {
+      if (!uniqueId.includes(item.ID)) {
+        uniqueId.push(item.ID);
+      }
+      return uniqueId;
+    }, [])
+    .map((e) => e.replaceAll('-', ' '));
 }

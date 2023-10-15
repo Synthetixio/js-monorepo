@@ -50,7 +50,7 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
         </Flex>
         <Flex mt={6} sx={{ gap: '12px' }}>
           {blockchains.map((blockchain, index) => {
-            return <KeyColour key={index} label={blockchain} colour={BLOCKCHAIN_COLORS[index]} />;
+            return <KeyColour key={index} label={blockchain} colour={BLOCKCHAIN_COLORS[index]} textTransform="capitalize" />;
           })}
         </Flex>
         {loading ? (
