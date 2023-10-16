@@ -12,7 +12,9 @@ const isTestnet = (networkId: null | number) => {
   return true;
 };
 
-export const NotifiContextWrapper: React.FC<PropsWithChildren<{}>> = ({children}: PropsWithChildren<{}>) => {
+export const NotifiContextWrapper: React.FC<PropsWithChildren<{}>> = ({
+  children,
+}: PropsWithChildren<{}>) => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
   if (signer === null || walletAddress === null || networkId === null) {

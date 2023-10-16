@@ -1,14 +1,6 @@
 import { lazy, Suspense } from 'react';
-import {
-  Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  useDisclosure,
-} from '@chakra-ui/react';
-import {
-  NotificationsIcon,
-} from '@snx-v2/icons';
+import { Button, Popover, PopoverTrigger, PopoverContent, useDisclosure } from '@chakra-ui/react';
+import { NotificationsIcon } from '@snx-v2/icons';
 import { safeImport } from '@synthetixio/safe-import';
 import './notifibutton.css';
 import { useUnreadState } from '@notifi-network/notifi-react-card';
@@ -16,16 +8,11 @@ import { useUnreadState } from '@notifi-network/notifi-react-card';
 const NotifiCard = lazy(() => safeImport(() => import('@snx-v2/Notifi')));
 
 export const NotifiButton: React.FC = () => {
-
   const notifiModal = useDisclosure();
   const { hasUnreadNotification, unreadNotificationCount } = useUnreadState();
 
   return (
-    <Popover
-    closeOnBlur={false}
-    onClose={notifiModal.onClose}
-    isOpen={notifiModal.isOpen}
-    >
+    <Popover closeOnBlur={false} onClose={notifiModal.onClose} isOpen={notifiModal.isOpen}>
       <PopoverTrigger>
         <Button
           ml={2}
@@ -43,10 +30,8 @@ export const NotifiButton: React.FC = () => {
         >
           <NotificationsIcon color="white" />
           {hasUnreadNotification && (
-            <div className='notifi-unread-counter'>
-              <div>
-                {unreadNotificationCount > 99 ? '99' : unreadNotificationCount}
-              </div>
+            <div className="notifi-unread-counter">
+              <div>{unreadNotificationCount > 99 ? '99' : unreadNotificationCount}</div>
             </div>
           )}
         </Button>
@@ -58,5 +43,4 @@ export const NotifiButton: React.FC = () => {
       </PopoverContent>
     </Popover>
   );
-
-  }
+};

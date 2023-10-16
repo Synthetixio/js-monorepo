@@ -24,7 +24,9 @@ export const NotifiCard: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const isMainnet = !isTestnet(networkId);
 
   const cardId = isMainnet
-    ? ( isL2 ? '283fa53b4b8e4ed1a2234615bf01d240' : '5ece3cd3ec504576b10ab396d619dc9b') 
+    ? isL2
+      ? '283fa53b4b8e4ed1a2234615bf01d240'
+      : '5ece3cd3ec504576b10ab396d619dc9b'
     : '8a569abd38974f76837960bd9bf36049';
 
   const inputLabels: NotifiInputFieldsText = {
