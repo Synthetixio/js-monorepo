@@ -4,8 +4,7 @@
   "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
-    "@ethersproject/bytes": "^5.7.0",
-    "@notifi-network/notifi-react-card": "^0.85.5",
+    "@notifi-network/notifi-react-card": "^0.85.2",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "react": "^18.2.0"

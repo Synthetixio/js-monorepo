@@ -49,7 +49,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { safeImport } from '@synthetixio/safe-import';
-import { NotifiButton, NotifiContextWrapper } from '@snx-v2/notifiButton';
+import { NotifiButton, NotifiContextWrapper } from '@snx-v2/NotifiButton';
 
 interface NavigationProps {
   currentNetwork: NetworkId;

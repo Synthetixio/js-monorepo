@@ -5,8 +5,13 @@
   "version": "0.0.1",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
+    "@ethersproject/bytes": "^5.7.0",
     "@notifi-network/notifi-react-card": "^0.85.2",
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/Notifi": "workspace:*",
+    "@snx-v2/SignerContext": "workspace:*",
     "@snx-v2/icons": "workspace:*",
+    "@snx-v2/useSynthetixContracts": "workspace:*",
     "@synthetixio/safe-import": "workspace:*",
     "react": "^18.2.0"
   }
