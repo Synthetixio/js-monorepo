@@ -5359,6 +5359,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notifi-network/notifi-axios-adapter@npm:^0.85.5":
+  version: 0.85.5
+  resolution: "@notifi-network/notifi-axios-adapter@npm:0.85.5"
+  dependencies:
+    "@notifi-network/notifi-axios-utils": ^0.85.5
+  peerDependencies:
+    axios: ^0.26.0
+  checksum: f6e6a808808a07c62fdc6daf2c52ffa357cd733979a4e2dcd1ac2870574e028b2853fd74c4b5c4872bae9da158074a4ee35310cc2e7bb8b6c3a2175a27bd2e54
+  languageName: node
+  linkType: hard
+
 "@notifi-network/notifi-axios-utils@npm:^0.85.1":
   version: 0.85.1
   resolution: "@notifi-network/notifi-axios-utils@npm:0.85.1"
@@ -5368,12 +5379,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notifi-network/notifi-axios-utils@npm:^0.85.5":
+  version: 0.85.5
+  resolution: "@notifi-network/notifi-axios-utils@npm:0.85.5"
+  peerDependencies:
+    axios: ^0.26.1
+  checksum: 467c96c5ffec5ed902bbbbbef0af698805faea117a38df5c9f258701e49abf09687d169abc4d11a2396600fdbdbebcb1fae6728700624f2a491aab27fbf37e81
+  languageName: node
+  linkType: hard
+
 "@notifi-network/notifi-core@npm:^0.85.1":
   version: 0.85.1
   resolution: "@notifi-network/notifi-core@npm:0.85.1"
   dependencies:
     "@notifi-network/notifi-graphql": ^0.85.1
   checksum: 5c873a18359a6551b1519558e729ff501fcfe60e75c879d3ed5c0a3b611c7fe2a7ebd76ccca674577bca17264e3a6775319d3c65437295eaa89663898583e4b8
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-core@npm:^0.85.5":
+  version: 0.85.5
+  resolution: "@notifi-network/notifi-core@npm:0.85.5"
+  dependencies:
+    "@notifi-network/notifi-graphql": ^0.85.5
+  checksum: 36c4414b5e0cf23106248f7585174d9d9e6a7a36e9a4021db3aca1a075b3a25b8fb43922ade13fdd853a373e99f6ae2dd35402ad43386d6e870360047a0a6eb9
   languageName: node
   linkType: hard
 
@@ -5388,6 +5417,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notifi-network/notifi-frontend-client@npm:^0.85.5":
+  version: 0.85.5
+  resolution: "@notifi-network/notifi-frontend-client@npm:0.85.5"
+  dependencies:
+    "@notifi-network/notifi-graphql": ^0.85.5
+    graphql-request: 5.1.0
+    localforage: ^1.10.0
+  checksum: e15482db65e9316622ed75e2e3dd904e23ac0b1757d1adb84f99d88b75c041dd775d2095aa51348e2693b351680c5bc033c610f92b41d612bcb10bbdeca900c3
+  languageName: node
+  linkType: hard
+
 "@notifi-network/notifi-graphql@npm:^0.85.1":
   version: 0.85.1
   resolution: "@notifi-network/notifi-graphql@npm:0.85.1"
@@ -5396,6 +5436,17 @@ __metadata:
     graphql-request: 5.1.0
     uuid: ^8.3.2
   checksum: ecea5c603790fc8cc767c67d999d033e061f809143865ac0f5af97e0c3ee0efa84425284a1c3d96894e1fe6b359734ef0c46de07063ca5339dda755d7320d44a
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-graphql@npm:^0.85.5":
+  version: 0.85.5
+  resolution: "@notifi-network/notifi-graphql@npm:0.85.5"
+  dependencies:
+    graphql: ^16.6.0
+    graphql-request: 5.1.0
+    uuid: ^8.3.2
+  checksum: 6ac33e0802d5ebb17cedf4d66676abc887f6ca63134c0203a51e584d60bd6db1ac86733cf4e802b265aafba42499769d49c03f301863e395505ea71c3a4bb582
   languageName: node
   linkType: hard
 
@@ -5413,6 +5464,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notifi-network/notifi-react-card@npm:^0.85.5":
+  version: 0.85.5
+  resolution: "@notifi-network/notifi-react-card@npm:0.85.5"
+  dependencies:
+    "@notifi-network/notifi-frontend-client": ^0.85.5
+    "@notifi-network/notifi-react-hooks": ^0.85.5
+    clsx: ^1.2.1
+    date-fns: ^2.29.3
+    libphonenumber-js: ^1.10.13
+    react-virtuoso: ^3.1.1
+  checksum: d493fb60040a19f44dd33ea192ffa47b826106249a43221dcd91bd6ea4e3cad0a9c8bee0a2f96c9131e79df988a67c898d762effc5143f55b58028ed73e370e1
+  languageName: node
+  linkType: hard
+
 "@notifi-network/notifi-react-hooks@npm:^0.85.1":
   version: 0.85.1
   resolution: "@notifi-network/notifi-react-hooks@npm:0.85.1"
@@ -5427,6 +5492,23 @@ __metadata:
     react: ^17.0.2 || ^18.0
     react-dom: ^17.0.2 || ^18.0
   checksum: f2d95e15defbeb8495889cd939c3f27e97275c946b1e1b33682a18dd8cabd4157787fbc29500bb127f47fab35e111aabf5f4ca112758ef40aebf22f908f164f5
+  languageName: node
+  linkType: hard
+
+"@notifi-network/notifi-react-hooks@npm:^0.85.5":
+  version: 0.85.5
+  resolution: "@notifi-network/notifi-react-hooks@npm:0.85.5"
+  dependencies:
+    "@notifi-network/notifi-axios-adapter": ^0.85.5
+    "@notifi-network/notifi-axios-utils": ^0.85.5
+    "@notifi-network/notifi-core": ^0.85.5
+    axios: ^0.26.0
+    localforage: ^1.10.0
+    typescript: ^4.5.5
+  peerDependencies:
+    react: ^17.0.2 || ^18.0
+    react-dom: ^17.0.2 || ^18.0
+  checksum: 59903a51a73d65dad0faa38d5e0759242798f586df8bc05ac712fa120df7ab1672a0f6499ed5dac3a260db7f421e1fb2ba011e177147fea857d5791a091eee90
   languageName: node
   linkType: hard
 
@@ -6302,7 +6384,7 @@ __metadata:
   resolution: "@snx-v2/Notifi@workspace:v2/components/Notifi"
   dependencies:
     "@ethersproject/bytes": ^5.7.0
-    "@notifi-network/notifi-react-card": ^0.85.2
+    "@notifi-network/notifi-react-card": ^0.85.5
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     react: ^18.2.0
