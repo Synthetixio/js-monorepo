@@ -41,6 +41,9 @@ export const NotifiCard: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     emailSeparator: {
       content: 'OR',
     },
+    telegramSeparator: {
+      content: 'OR',
+    },
   };
 
   return (
