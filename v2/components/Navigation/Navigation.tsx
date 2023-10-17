@@ -1,4 +1,4 @@
-import { useContext, lazy, Suspense } from 'react';
+import { useContext } from 'react';
 import {
   Button,
   Center,
@@ -7,9 +7,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   Text,
   useBreakpointValue,
   useDisclosure,
@@ -25,7 +22,6 @@ import {
   GuideIcon,
   NineDots,
   LoansIcon,
-  NotificationsIcon,
   OptimismIcon,
   // SettingsIcon,
   StakingIcon,
@@ -48,7 +44,6 @@ import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
-import { safeImport } from '@synthetixio/safe-import';
 import { NotifiButton, NotifiContextWrapper } from '@snx-v2/NotifiButton';
 
 interface NavigationProps {
@@ -95,7 +90,6 @@ export const NavigationUI = ({
   const { t } = useTranslation();
   const { delegateWallet } = useDelegateWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const notifiModal = useDisclosure();
   const { name, icon } = activeIcon(currentNetwork);
 
   const size = useBreakpointValue(
