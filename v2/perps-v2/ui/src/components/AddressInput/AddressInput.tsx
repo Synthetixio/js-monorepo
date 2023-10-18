@@ -9,6 +9,7 @@ import { useState } from 'react';
 export const AddressInput = () => {
   const { globalProviders } = useGlobalProvidersWithFallback();
   const L1DefaultProvider = globalProviders.mainnet;
+
   const [inputError, setInputError] = useState<string | null>(null);
   const navigate = useNavigate();
 
