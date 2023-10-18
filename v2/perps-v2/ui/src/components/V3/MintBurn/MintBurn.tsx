@@ -51,7 +51,7 @@ export const MintBurn = ({ ...props }: FlexProps) => {
           >
             <Flex alignItems="center" sx={{ gap: '8px' }}>
               <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-                SNX Supply Daily Mint & Burn
+                snxUSD Supply Daily Mint & Burn
               </Text>
               <InfoIcon />
             </Flex>
@@ -64,8 +64,8 @@ export const MintBurn = ({ ...props }: FlexProps) => {
           </Box>
         </Flex>
         <Flex mt={6} sx={{ gap: '12px' }}>
-          <KeyColour label="Ethereum SNX Supply" colour="#522ED1" />
-          <KeyColour label="Optimism SNX Supply" colour="#FC8738" />
+          <KeyColour label="Ethereum snxUSD Supply" colour="#522ED1" />
+          <KeyColour label="Optimism snxUSD Supply" colour="#FC8738" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%">

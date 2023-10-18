@@ -31,13 +31,13 @@ export const MintBurnTooltip = ({ payload }: MintBurnTooltipProps) => {
         {mintBurn.labelType === 'M' ? mintBurn.label : format(new Date(mintBurn.day), 'yyyy-MM-dd')}
       </Text>
       <Flex justifyContent="space-between" w="100%">
-        <KeyColour label="Ethereum SNX" colour="#522ED1" />
+        <KeyColour label="Ethereum snxUSD Supply" colour="#522ED1" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.opSNXSupply)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
-        <KeyColour label="Optimism SNX" colour="#FC8738" />
+        <KeyColour label="Optimism snxUSD Supply" colour="#FC8738" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.ethSNXSupply)}
         </Text>
