@@ -30,15 +30,15 @@ export const TvlLayerTooltip = ({ payload }: TvlSNXTooltipProps) => {
         {tvlLayer.labelType === 'M' ? tvlLayer.label : format(new Date(tvlLayer.day), 'yyyy-MM-dd')}
       </Text>
       <Flex mb={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Ethereum SNX" colour="#522ED1" />
+        <KeyColour label="Ethereum Optimism SNX" colour="#522ED1" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(tvlLayer.opSNX)}
+          ${formatNumber(tvlLayer.ethSNX)}
         </Text>
       </Flex>
       <Flex mb={2} justifyContent="space-between" w="100%">
         <KeyColour label="Optimism SNX" colour="#FC8738" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${formatNumber(tvlLayer.ethSNX)}
+          ${formatNumber(tvlLayer.opSNX)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">

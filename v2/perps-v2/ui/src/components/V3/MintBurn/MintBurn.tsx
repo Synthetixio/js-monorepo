@@ -1,4 +1,4 @@
-import { Flex, Text, Spinner, FlexProps, Box } from '@chakra-ui/react';
+import { Flex, Text, Spinner, FlexProps, Box, Tooltip as ChakraTooltip } from '@chakra-ui/react';
 
 import {
   ResponsiveContainer,
@@ -16,12 +16,11 @@ import { useState } from 'react';
 import { TimeBadge } from '../../TimeBadge';
 import { formatNumber } from '@snx-v2/formatters';
 import { useMintBurn } from '../../../hooks/useMintBurn';
+import { InfoIcon } from '@chakra-ui/icons';
 
 export const MintBurn = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'M' | 'Y' | 'ALL'>('ALL');
-  const { data, loading } = useMintBurn(state);
-
-  const totalSupplyNumber = data?.reduce((acc, { totalSNXSupply }) => acc + totalSNXSupply, 0);
+  const { data, loading, totalToday } = useMintBurn(state);
 
   return (
     <>
@@ -46,9 +45,18 @@ export const MintBurn = ({ ...props }: FlexProps) => {
           flexWrap="wrap"
           sx={{ gap: '16px' }}
         >
-          <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            SNX Supply Daily Mint & Burn
-          </Text>
+          <ChakraTooltip
+            label="Ethereum/Optimism SNX is the collateral backing the mints / burns"
+            hasArrow
+          >
+            <Flex alignItems="center" sx={{ gap: '8px' }}>
+              <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
+                SNX Supply Daily Mint & Burn
+              </Text>
+              <InfoIcon />
+            </Flex>
+          </ChakraTooltip>
+
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
             <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
@@ -67,7 +75,7 @@ export const MintBurn = ({ ...props }: FlexProps) => {
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               $
-              {formatNumber(totalSupplyNumber ?? 0, {
+              {formatNumber(totalToday ?? 0, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
               })}

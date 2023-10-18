@@ -24,11 +24,13 @@ export const useMintBurn = (queryInterval: 'M' | 'Y' | 'ALL') => {
     retry: 0,
   });
   const formattedData = formatData(data, queryInterval);
+  const totalToday = getTotalToday(formattedData);
 
   return {
     data: formattedData,
     loading: isLoading,
     error,
+    totalToday,
   };
 };
 
@@ -64,4 +66,10 @@ function formatData(data?: DuneMintBurn[], queryInterval?: 'M' | 'Y' | 'ALL') {
       } as MintBurn;
     })
     .sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
+}
+
+function getTotalToday(data?: MintBurn[]): number {
+  if (!data || data.length === 0) return 0;
+  const current = data[data.length - 1];
+  return current.totalSNXSupply;
 }

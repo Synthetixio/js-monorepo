@@ -10,8 +10,8 @@ interface DropdownOption {
 }
 
 const VERSION_OPTIONS: DropdownOption[] = [
-  { value: '', display: 'V2' },
-  { value: 'v3', display: 'V3' },
+  { value: '', display: 'Perps V2' },
+  { value: 'v3', display: 'Core V3' },
 ];
 
 export const DropdownVersion = () => {
@@ -33,12 +33,12 @@ export const DropdownVersion = () => {
   return (
     <Menu>
       <MenuButton
-        padding="8px"
+        padding="8px 12px"
         color="white"
         fontSize="16px"
         lineHeight="24px"
         fontWeight={700}
-        width="60px"
+        width="fit-content"
         _hover={{ background: 'none' }}
         _active={{ background: 'none' }}
         textAlign="start"
@@ -58,7 +58,7 @@ export const DropdownVersion = () => {
           borderWidth="1px"
           borderRadius="md"
           flexDirection="column"
-          width="80px"
+          width="128px"
         >
           {VERSION_OPTIONS.map((option) => (
             <DropdownCheckbox

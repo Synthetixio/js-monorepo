@@ -1,5 +1,5 @@
-import { Flex, Text, Spinner, FlexProps, Box } from '@chakra-ui/react';
-
+import { Flex, Text, Spinner, FlexProps, Box, Tooltip as ChakraTooltip } from '@chakra-ui/react';
+import { InfoIcon } from '@chakra-ui/icons';
 import { ResponsiveContainer, ComposedChart, XAxis, Tooltip, YAxis, Area } from 'recharts';
 import { KeyColour } from '../../Dashboard';
 import { TvlLayerTooltip } from './TvlLayerTooltip';
@@ -10,9 +10,8 @@ import { useTvlLayers } from '../../../hooks/useTvlLayers';
 
 export const TvlLayer = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'M' | 'Y' | 'ALL'>('ALL');
-  const { data, loading } = useTvlLayers(state);
+  const { data, loading, totalToday } = useTvlLayers(state);
 
-  const tvlNumber = data?.reduce((acc, { totalSNX }) => acc + totalSNX, 0);
 
   return (
     <>
@@ -37,9 +36,17 @@ export const TvlLayer = ({ ...props }: FlexProps) => {
           flexWrap="wrap"
           sx={{ gap: '16px' }}
         >
-          <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            TVL Layer
-          </Text>
+          <ChakraTooltip
+            label="All approved collateral value held in the Synthetix V3 Core Contract"
+            hasArrow
+          >
+            <Flex alignItems="center" sx={{ gap: '8px' }}>
+              <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
+                TVL Token Totals
+              </Text>
+              <InfoIcon />
+            </Flex>
+          </ChakraTooltip>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
             <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
@@ -58,7 +65,7 @@ export const TvlLayer = ({ ...props }: FlexProps) => {
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               $
-              {formatNumber(tvlNumber ?? 0, {
+              {formatNumber(totalToday ?? 0, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
               })}

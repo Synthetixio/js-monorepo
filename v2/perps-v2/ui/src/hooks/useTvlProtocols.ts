@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
 import { getTVLs } from '../api/synthetixV3';
 import { DuneTvlProtocol } from '../api/types';
+import { da } from 'date-fns/locale';
 
 export interface TvlProtocol {
   day: string;
@@ -25,6 +26,7 @@ export const useTvlProtocols = (queryInterval: 'M' | 'Y' | 'ALL') => {
     loading: isLoading,
     error,
     blockchains,
+    totalToday: getTotalToday(formattedData),
   };
 };
 
@@ -71,4 +73,10 @@ function getUniqueBlockchains(data?: DuneTvlProtocol[]): string[] {
     }
     return uniqueBlockchains;
   }, []);
+}
+
+function getTotalToday(data?: TvlProtocol[]): number {
+  if (!data || data.length === 0) return 0;
+  const current = data[data.length - 1];
+  return current.totalUsd;
 }

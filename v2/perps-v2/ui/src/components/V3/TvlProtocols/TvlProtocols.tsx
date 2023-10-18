@@ -1,5 +1,5 @@
-import { Flex, Text, Spinner, FlexProps, Box } from '@chakra-ui/react';
-
+import { Flex, Text, Spinner, FlexProps, Box, Tooltip as ChakraTooltip } from '@chakra-ui/react';
+import { InfoIcon } from '@chakra-ui/icons';
 import { ResponsiveContainer, ComposedChart, XAxis, Tooltip, YAxis, Area } from 'recharts';
 import { useTvlProtocols } from '../../../hooks/useTvlProtocols';
 import { KeyColour } from '../../Dashboard';
@@ -12,9 +12,7 @@ export const BLOCKCHAIN_COLORS = ['#522ED1', '#FC8738'];
 
 export const TvlProtocols = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'M' | 'Y' | 'ALL'>('ALL');
-  const { data, loading, blockchains } = useTvlProtocols(state);
-
-  const tvlNumber = data?.reduce((acc, { totalUsd }) => acc + totalUsd, 0);
+  const { data, loading, blockchains, totalToday } = useTvlProtocols(state);
 
   return (
     <>
@@ -39,9 +37,14 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
           flexWrap="wrap"
           sx={{ gap: '16px' }}
         >
-          <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            TVL Protocols
-          </Text>
+          <ChakraTooltip label="All value held in the Synthetix V3 Core Contract" hasArrow>
+            <Flex alignItems="center" sx={{ gap: '8px' }}>
+              <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
+                TVL Network Totals
+              </Text>
+              <InfoIcon />
+            </Flex>
+          </ChakraTooltip>
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
             <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
@@ -50,7 +53,14 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
         </Flex>
         <Flex mt={6} sx={{ gap: '12px' }}>
           {blockchains.map((blockchain, index) => {
-            return <KeyColour key={index} label={blockchain} colour={BLOCKCHAIN_COLORS[index]} textTransform="capitalize" />;
+            return (
+              <KeyColour
+                key={index}
+                label={blockchain}
+                colour={BLOCKCHAIN_COLORS[index]}
+                textTransform="capitalize"
+              />
+            );
           })}
         </Flex>
         {loading ? (
@@ -61,7 +71,7 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               $
-              {formatNumber(tvlNumber ?? 0, {
+              {formatNumber(totalToday ?? 0, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
               })}

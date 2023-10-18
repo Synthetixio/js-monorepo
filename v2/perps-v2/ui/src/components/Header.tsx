@@ -57,11 +57,11 @@ export const Header: FC = () => {
         borderTopWidth="1px"
         borderTopColor="transparent"
       >
-        <Flex alignItems="center" sx={{ gap: { base: '8px', md: '16px' } }}>
+        <Flex alignItems="center" sx={{ gap: { base: '8px', md: '24px' } }}>
           <RouterLink to="/" style={{ whiteSpace: 'nowrap' }}>
             <Flex alignItems="center">
-              <SNXIcon />
-              <PerpsStats mt="2px" ml={3} display={{ base: 'none', c900: 'initial' }} />
+              <SNXIcon fill="cyan.400" />
+              <PerpsStats ml="10px" display={{ base: 'none', c900: 'initial' }} />
             </Flex>
           </RouterLink>
           <DropdownVersion />

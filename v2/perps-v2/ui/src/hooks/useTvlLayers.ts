@@ -4,7 +4,6 @@ import { useQuery } from 'react-query';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
 import { getTVLs } from '../api/synthetixV3';
 import { DuneTvlLayer } from '../api/types';
-
 export interface TvlLayer {
   day: string;
   opSNX: number;
@@ -19,11 +18,13 @@ export const useTvlLayers = (queryInterval: 'M' | 'Y' | 'ALL') => {
     retry: 0,
   });
   const formattedData = formatData(data?.tvlByLayer, queryInterval);
+  const totalToday = getTotalToday(formattedData);
 
   return {
     data: formattedData,
     loading: isLoading,
     error,
+    totalToday,
   };
 };
 
@@ -53,4 +54,10 @@ function formatData(data?: DuneTvlLayer[], queryInterval?: 'M' | 'Y' | 'ALL') {
       } as TvlLayer;
     })
     .sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
+}
+
+function getTotalToday(data?: TvlLayer[]): number {
+  if (!data || data.length === 0) return 0;
+  const current = data[data.length - 1];
+  return current.totalSNX;
 }
