@@ -46,7 +46,7 @@ export const MintBurn = ({ ...props }: FlexProps) => {
           sx={{ gap: '16px' }}
         >
           <ChakraTooltip
-            label="Ethereum/Optimism SNX is the collateral backing the mints / burns"
+            label="Total supply and daily mints/burns of snxUSD by network"
             hasArrow
           >
             <Flex alignItems="center" sx={{ gap: '8px' }}>
