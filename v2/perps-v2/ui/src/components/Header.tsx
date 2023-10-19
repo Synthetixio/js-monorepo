@@ -16,6 +16,7 @@ import { SNXIcon } from './Icons/';
 import { PerpsStats } from './PerpsStats';
 import { AddressInput } from './AddressInput';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { RpcSwitcher } from './RpcSwitcher';
 
 export const Header: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -107,7 +108,10 @@ export const Header: FC = () => {
             </Menu>
           </Flex>
         </Flex>
-        <AddressInput />
+        <Flex justifyContent="flex-end">
+          <AddressInput />
+          <RpcSwitcher />
+        </Flex>
       </Flex>
       {['/', '/trades', '/actions', '/markets', '/positions'].includes(location.pathname) && (
         <Box px={{ base: '16px', md: '40px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>

@@ -1,29 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useApolloClient } from '@apollo/client';
 import Wei, { wei } from '@synthetixio/wei';
 import { z } from 'zod';
 import { MARKETS_QUERY } from '../queries/dashboard';
 import { DailyMarketStat_OrderBy } from '../__generated__/graphql';
 import { getDateRange } from './useMarketStats';
-import { perpsMarketDataContract } from './usePositions';
-import { BytesLike, Contract, providers, utils } from 'ethers';
+import { BytesLike, utils } from 'ethers';
 import {
   calculateMarkPrice,
   getMarketsPythConfig,
   PythConfigByMarketKey,
   pyth,
   scale,
+  initMulticall,
+  initPerpsMarketData,
 } from '../utils';
 import { PerpsV2MarketData } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import { ZodStringToWei } from './useLargestOpenPosition';
-import {
-  abi as multiCallAbi,
-  address as multiCallAddressGoerli,
-  Multicall3,
-} from './contracts/optimism-goerli/Multicall3';
-import { address as multicallMainnetAddress } from './contracts/optimism-mainnet/Multicall3';
-import { isStaging } from '../utils/isStaging';
-import { infuraId } from '../utils';
+import { useEthersProvider } from '../utils/ProviderContext';
+import { Multicall3 } from './contracts/optimism-goerli/Multicall3';
 
 const DataSchema = z.object({
   market: z.object({
@@ -51,22 +46,15 @@ interface StateInterface {
   error: unknown | null;
 }
 
-const OPTIMISM_GOERLI_NETWORK_ID = 420;
-const OPTIMISM__ID = 10;
-
-const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
-const provider = new providers.InfuraProvider(networkId, infuraId);
-
-const Multicall3Contract = new Contract(
-  isStaging ? multiCallAddressGoerli : multicallMainnetAddress,
-  multiCallAbi,
-  provider
-) as Multicall3;
-
 export function useMarkets() {
   const [state, setState] = useState<StateInterface>({ loading: true, data: null, error: null });
   const client = useApolloClient();
   const { upper, lower } = getDateRange(2, 3);
+
+  const { provider } = useEthersProvider();
+
+  const multicall = useMemo(() => initMulticall(provider), [provider]);
+  const perpsV2MarketData = useMemo(() => initPerpsMarketData(provider), [provider]);
 
   useEffect(() => {
     (async () => {
@@ -106,14 +94,19 @@ export function useMarkets() {
           };
         });
         const pythConfigByMarketKey = await getMarketsPythConfig();
-        const data = await fetchMarkets(dataWithPercentageDifference, pythConfigByMarketKey);
+        const data = await fetchMarkets(
+          dataWithPercentageDifference,
+          pythConfigByMarketKey,
+          perpsV2MarketData,
+          multicall
+        );
 
         setState({ loading: false, data, error: null });
       } catch (error) {
         setState({ loading: false, data: null, error });
       }
     })();
-  }, [client, upper, lower]);
+  }, [client, upper, lower, perpsV2MarketData, multicall]);
 
   return state;
 }
@@ -136,7 +129,9 @@ interface FetchMarketsInterface {
 
 export async function fetchMarkets(
   marketsData: FetchMarketsInterface[],
-  pythConfigByMarketKey: PythConfigByMarketKey
+  pythConfigByMarketKey: PythConfigByMarketKey,
+  perpsMarketDataContract: PerpsV2MarketData,
+  multicall: Multicall3
 ): Promise<z.infer<typeof DataSchema>[] | null> {
   try {
     const allMarketSummaries = {
@@ -158,7 +153,7 @@ export async function fetchMarkets(
     });
 
     const [multiCallResponse, indexPrices] = await Promise.all([
-      Multicall3Contract.callStatic.aggregate(marketDetailCalls.concat(allMarketSummaries)),
+      multicall.callStatic.aggregate(marketDetailCalls.concat(allMarketSummaries)),
       pyth.getLatestPriceFeeds([...dataWithPythId.map(({ pythId }) => pythId)]),
     ]);
 
