@@ -6,7 +6,7 @@ import { isStaging } from './isStaging';
 
 type ProviderContextType = {
   provider: ethers.providers.JsonRpcProvider | ethers.providers.InfuraProvider | null;
-  setProvider: (rpcUrl?: string) => void;
+  setProvider: (rpcUrl: string) => void;
 };
 
 const ProviderContext = createContext<ProviderContextType>({
@@ -25,7 +25,7 @@ interface EthersProviderProps {
 const OPTIMISM_GOERLI_NETWORK_ID = 420;
 const OPTIMISM__ID = 10;
 
-const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
+export const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
 
 function getDefaultProvider() {
   const defaultRPC = localStorage.getItem('DEFAULT_RPC');
@@ -40,14 +40,10 @@ export const EthersProvider = ({ children }: EthersProviderProps) => {
     getDefaultProvider()
   );
 
-  const updateProvider = (rpcUrl?: string) => {
-    let newProvider;
-    if (!rpcUrl) {
-      newProvider = new ethers.providers.InfuraProvider();
-    } else {
-      localStorage.setItem('DEFAULT_RPC', rpcUrl);
-      newProvider = new ethers.providers.JsonRpcProvider(rpcUrl);
-    }
+  const updateProvider = (rpcUrl: string) => {
+    localStorage.setItem('DEFAULT_RPC', rpcUrl);
+    const newProvider = new ethers.providers.JsonRpcProvider(rpcUrl);
+
     setProvider(newProvider);
   };
 
