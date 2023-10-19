@@ -1,52 +1,17 @@
 import { useQuery } from '@apollo/client';
-import { BytesLike, Contract, providers } from 'ethers';
+import { BytesLike } from 'ethers';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 import Wei from '@synthetixio/wei';
-import { infuraId } from '../utils';
 import { FuturesPosition_OrderBy, OrderDirection } from '../__generated__/graphql';
-import {
-  abi as perpsMarketDataAbiGoerli,
-  address as perpsMarketDataAddressGoerli,
-  PerpsV2MarketData as PerpsV2MarketDataGoerli,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/PerpsV2MarketData';
-import {
-  abi as abiPerpsMarketData,
-  address as addressPerpsMarketData,
-  PerpsV2MarketData,
-} from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
-import {
-  abi as multiCallAbi,
-  address as multiCallAddressGoerli,
-  Multicall3,
-} from './contracts/optimism-goerli/Multicall3';
-import { address as multicallMainnetAddress } from './contracts/optimism-mainnet/Multicall3';
 import { wei } from '@synthetixio/wei';
 import { ContractData, SubgraphPositionData } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 import { useSearchParams } from 'react-router-dom';
-import { isStaging } from '../utils/isStaging';
 import { useMarketSummaries } from './useMarketSummaries';
 import { generateMarketIds } from './useActions';
-
-const OPTIMISM_GOERLI_NETWORK_ID = 420;
-const OPTIMISM__ID = 10;
-
-const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
-const provider = new providers.InfuraProvider(networkId, infuraId);
-
-export const perpsMarketDataContract = isStaging
-  ? (new Contract(
-      perpsMarketDataAddressGoerli,
-      perpsMarketDataAbiGoerli,
-      provider
-    ) as PerpsV2MarketDataGoerli)
-  : (new Contract(addressPerpsMarketData, abiPerpsMarketData, provider) as PerpsV2MarketData);
-
-const Multicall3Contract = new Contract(
-  isStaging ? multiCallAddressGoerli : multicallMainnetAddress,
-  multiCallAbi,
-  provider
-) as Multicall3;
+import { InfuraProvider, JsonRpcProvider } from '@ethersproject/providers';
+import { useEthersProvider } from '../utils/ProviderContext';
+import { initMulticall, initPerpsMarketData } from '../utils';
 
 export interface PositionType {
   accountType: string;
@@ -75,6 +40,7 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('markets') || null;
   const accountAddressLowerCase = accountAddress?.toLowerCase();
+  const { provider } = useEthersProvider();
 
   const direction = searchParams.get('direction') || 'desc';
   const orderBy =
@@ -124,6 +90,9 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
     variables: {
       openPositions,
     },
+    context: {
+      provider,
+    },
     skip: marketData?.futuresPositions ? false : true,
     pollInterval: 1000,
   });
@@ -159,8 +128,12 @@ function sortData(data: PositionType[], orderBy: OrderByKeys, direction: OrderBy
 }
 
 export async function fetchPositions(
-  positionData: SubgraphPositionData[]
+  positionData: SubgraphPositionData[],
+  provider: InfuraProvider | JsonRpcProvider
 ): Promise<ContractData[]> {
+  const perpsMarketDataContract = initPerpsMarketData(provider);
+  const Multicall3Contract = initMulticall(provider);
+
   const positionDetailCalls = positionData.map(({ market }, i) => ({
     target: perpsMarketDataContract.address,
     callData: perpsMarketDataContract.interface.encodeFunctionData('positionDetailsForMarketKey', [

@@ -45,10 +45,10 @@ export const resolvers: Resolvers | Resolvers[] = {
     positionsFromContract: async (
       _parent,
       { openPositions },
-      _contextValue,
+      { provider },
       _info
     ): Promise<PositionData[]> => {
-      const positionsData = await fetchPositions(openPositions);
+      const positionsData = await fetchPositions(openPositions, provider);
       const offchainPrices: { asset: string; price: Wei }[] = [];
       const pythConfigByMarketKey = await getMarketsPythConfig();
       await Promise.all(
