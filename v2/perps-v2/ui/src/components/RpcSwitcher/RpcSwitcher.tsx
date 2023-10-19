@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   Button,
   Flex,
@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon, SettingsIcon } from '@chakra-ui/icons';
 import { ethers } from 'ethers';
-import { useEthersProvider } from '../../utils/ProviderContext';
+import { useEthersProvider, networkId } from '../../utils/ProviderContext';
 
 export const RpcSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,11 +20,7 @@ export const RpcSwitcher = () => {
   const [loading, setLoading] = useState(false);
   const { setProvider } = useEthersProvider();
 
-  const ref = useRef<HTMLInputElement>(null);
-
-  const switchRpc = async () => {
-    const rpcUrl = ref?.current?.value;
-
+  const switchRpc = async (rpcUrl?: string) => {
     if (!rpcUrl) {
       setError('Please enter a valid RPC');
       return;
@@ -35,6 +31,13 @@ export const RpcSwitcher = () => {
 
     try {
       await testConnection.getBlockNumber();
+      if (testConnection.network.chainId !== networkId) {
+        setError(
+          `Please provide a RPC URL for network ${networkId} instead of ${testConnection.network.chainId}`
+        );
+        setLoading(false);
+        return;
+      }
       setProvider(rpcUrl);
       setLoading(false);
       setError(null);
@@ -69,21 +72,31 @@ export const RpcSwitcher = () => {
             <CloseIcon />
           </Flex>
           <ModalHeader>Update RPC Connection</ModalHeader>
-          <ModalBody>
-            <Flex flexDirection="column">
-              <Input placeholder="Enter RPC" ref={ref} />
-              {error && (
-                <Flex mt={1} fontSize="12px" color="red.500">
-                  {error}
-                </Flex>
-              )}
-            </Flex>
-          </ModalBody>
-          <ModalFooter>
-            <Button variant="outline" onClick={switchRpc} disabled={!loading}>
-              {loading ? 'Switching' : 'Switch'}
-            </Button>
-          </ModalFooter>
+          <form
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+              e.preventDefault();
+              const rpcUrl = (e.currentTarget.elements.namedItem('rpcUrl') as HTMLInputElement)
+                ?.value;
+
+              switchRpc(rpcUrl);
+            }}
+          >
+            <ModalBody>
+              <Flex flexDirection="column">
+                <Input placeholder="Enter RPC URL" type="url" name="rpcUrl" required />
+                {error && (
+                  <Flex mt={1} fontSize="12px" color="red.500">
+                    {error}
+                  </Flex>
+                )}
+              </Flex>
+            </ModalBody>
+            <ModalFooter>
+              <Button variant="outline" type="submit" disabled={!loading}>
+                {loading ? 'Switching' : 'Switch'}
+              </Button>
+            </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
       <Button
