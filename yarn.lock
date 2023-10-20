@@ -5348,85 +5348,85 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@notifi-network/notifi-axios-adapter@npm:^0.85.6":
-  version: 0.85.6
-  resolution: "@notifi-network/notifi-axios-adapter@npm:0.85.6"
+"@notifi-network/notifi-axios-adapter@npm:^0.86.0":
+  version: 0.86.0
+  resolution: "@notifi-network/notifi-axios-adapter@npm:0.86.0"
   dependencies:
-    "@notifi-network/notifi-axios-utils": ^0.85.6
+    "@notifi-network/notifi-axios-utils": ^0.86.0
   peerDependencies:
     axios: ^0.26.0
-  checksum: 4a420b3d3df3b07d6d2442aa775de93efa678408442dbabf8cecf53438f82018ac2046976fa16e487d3f4c58e528d3029ab2fd4bc47f8f8ebae9cc8c46f04b16
+  checksum: 59115912e1667bf899c2b000615fb5310b2c15250b33928ee7e9cda37c909e784a54e419fbdbc6ac0930535b95b01e980bc3d471b089cf2939eb66be282cc765
   languageName: node
   linkType: hard
 
-"@notifi-network/notifi-axios-utils@npm:^0.85.6":
-  version: 0.85.6
-  resolution: "@notifi-network/notifi-axios-utils@npm:0.85.6"
+"@notifi-network/notifi-axios-utils@npm:^0.86.0":
+  version: 0.86.0
+  resolution: "@notifi-network/notifi-axios-utils@npm:0.86.0"
   peerDependencies:
     axios: ^0.26.1
-  checksum: b90bacde5dfeb88e6f1890cf8b9dd090855e82cb340151d5d6df0f445a471ebfdd3626230672e84ee2924e1616f9f6dbfe1878a6d7de84d12c0f406fced35e01
+  checksum: a510d0bb1447d798f9f61290cd9fde03e8c703c037a3646074bf6865782db08a999eab86e80a73355ba72b379a2fa7b81cb4118baa097cf8e2565b2ad7435a32
   languageName: node
   linkType: hard
 
-"@notifi-network/notifi-core@npm:^0.85.6":
-  version: 0.85.6
-  resolution: "@notifi-network/notifi-core@npm:0.85.6"
+"@notifi-network/notifi-core@npm:^0.86.0":
+  version: 0.86.0
+  resolution: "@notifi-network/notifi-core@npm:0.86.0"
   dependencies:
-    "@notifi-network/notifi-graphql": ^0.85.6
-  checksum: 7235b9e6a167f2eaa0d74a14561699efd9a06dfdeb8f9bb00348b2f2a7c382ef3eaa77d5b6dd916b451daa479743997b65f6d313c15b4486dff8ff07c491de66
+    "@notifi-network/notifi-graphql": ^0.86.0
+  checksum: 55263fc6424c3163a2193e0575cd5cb0972e553333a20ac69794c5eca475ab07ba44a949dd4271c3a936d3088f963ec57ed43a105e3e9e83ba223afc3276bb97
   languageName: node
   linkType: hard
 
-"@notifi-network/notifi-frontend-client@npm:^0.85.6":
-  version: 0.85.6
-  resolution: "@notifi-network/notifi-frontend-client@npm:0.85.6"
+"@notifi-network/notifi-frontend-client@npm:^0.86.0":
+  version: 0.86.0
+  resolution: "@notifi-network/notifi-frontend-client@npm:0.86.0"
   dependencies:
-    "@notifi-network/notifi-graphql": ^0.85.6
+    "@notifi-network/notifi-graphql": ^0.86.0
     graphql-request: 5.1.0
     localforage: ^1.10.0
-  checksum: dbae3d58671a7fd41392f6bfd07bd2444cb74bfbd35c560e89fb7da312607877d00f04f9335d882ac1b8cccc83892fd0387d126e4840f5d8288fefec2cd0137e
+  checksum: 3b2943444eab1ad8086efe080f94bff1d65af93745ea4d774bcfe681a4669eb1fa73d807b9698bc8683969250b81aa6214b009bab504a688871de7f04be98047
   languageName: node
   linkType: hard
 
-"@notifi-network/notifi-graphql@npm:^0.85.6":
-  version: 0.85.6
-  resolution: "@notifi-network/notifi-graphql@npm:0.85.6"
+"@notifi-network/notifi-graphql@npm:^0.86.0":
+  version: 0.86.0
+  resolution: "@notifi-network/notifi-graphql@npm:0.86.0"
   dependencies:
     graphql: ^16.6.0
     graphql-request: 5.1.0
     uuid: ^8.3.2
-  checksum: b90772525cc2bdee18936a49d4fa0571fa98d197b7e2c45f53cf1c35dfdd0d33996b8c2913a4b421eae014153e852c506811b59385fe77df386021c7b6d43375
+  checksum: c312a29b928e9cf6094cf01b04047265854217352246e52d15e7f5aefcfc86e6f597a2ab7908adefa8875ededf702faa41b138b9c02609bd54a55defa204ffb6
   languageName: node
   linkType: hard
 
-"@notifi-network/notifi-react-card@npm:^0.85.6":
-  version: 0.85.6
-  resolution: "@notifi-network/notifi-react-card@npm:0.85.6"
+"@notifi-network/notifi-react-card@npm:^0.86.0":
+  version: 0.86.0
+  resolution: "@notifi-network/notifi-react-card@npm:0.86.0"
   dependencies:
-    "@notifi-network/notifi-frontend-client": ^0.85.6
-    "@notifi-network/notifi-react-hooks": ^0.85.6
+    "@notifi-network/notifi-frontend-client": ^0.86.0
+    "@notifi-network/notifi-react-hooks": ^0.86.0
     clsx: ^1.2.1
     date-fns: ^2.29.3
     libphonenumber-js: ^1.10.13
     react-virtuoso: ^3.1.1
-  checksum: f0727a2181cc101aa1e1a8f7df3c8167e65b833e22c2dd6cd020e603ef0626bb6ca34f70a6713ccfd2155a4cd787e17763f653c806d494ccf240b4da1b55c2ee
+  checksum: 996138e5138ce6a0d4bb67f84b2ffc42300686542d407adf10b4a886b8f38ebfad09b519057abe29a70a30f629433ece6ab253bfe555f6e71e87f05438b140d8
   languageName: node
   linkType: hard
 
-"@notifi-network/notifi-react-hooks@npm:^0.85.6":
-  version: 0.85.6
-  resolution: "@notifi-network/notifi-react-hooks@npm:0.85.6"
+"@notifi-network/notifi-react-hooks@npm:^0.86.0":
+  version: 0.86.0
+  resolution: "@notifi-network/notifi-react-hooks@npm:0.86.0"
   dependencies:
-    "@notifi-network/notifi-axios-adapter": ^0.85.6
-    "@notifi-network/notifi-axios-utils": ^0.85.6
-    "@notifi-network/notifi-core": ^0.85.6
+    "@notifi-network/notifi-axios-adapter": ^0.86.0
+    "@notifi-network/notifi-axios-utils": ^0.86.0
+    "@notifi-network/notifi-core": ^0.86.0
     axios: ^0.26.0
     localforage: ^1.10.0
     typescript: ^4.5.5
   peerDependencies:
     react: ^17.0.2 || ^18.0
     react-dom: ^17.0.2 || ^18.0
-  checksum: 095414b6a58ee58a7eae55ccf5c04f0bc6c85794508d3e858895f13fc73bc17912261966e3adae21f27ef2fa06811a9d10812077488391af22adc1fa97627fae
+  checksum: c0aae8315ef9920ba91e19b9baf8e1d82d9c8fa1ffbb0505540f5fb268be64b57abc3a727fecb5a6a545dc0fa49f183a8db86b29886c4bca59b40090d3d19c36
   languageName: node
   linkType: hard
 
@@ -6301,7 +6301,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/Notifi@workspace:v2/components/Notifi"
   dependencies:
-    "@notifi-network/notifi-react-card": ^0.85.6
+    "@notifi-network/notifi-react-card": ^0.86.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     react: ^18.2.0
@@ -6314,7 +6314,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@ethersproject/bytes": ^5.7.0
-    "@notifi-network/notifi-react-card": ^0.85.6
+    "@notifi-network/notifi-react-card": ^0.86.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/Notifi": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
