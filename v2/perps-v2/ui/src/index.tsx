@@ -11,8 +11,9 @@ import {
   PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
-import { Dashboard, Actions, Markets } from './pages';
+import { Dashboard, Actions, Markets, Positions } from './pages';
 import { isStaging } from './utils/isStaging';
+import { EthersProvider } from './utils/ProviderContext';
 
 const client = new ApolloClient({
   uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -58,6 +59,15 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: '/positions',
+    element: (
+      <>
+        <Header />
+        <Positions />
+      </>
+    ),
+  },
 ]);
 
 const container = document.querySelector('#app');
@@ -80,10 +90,12 @@ const customTheme = extendTheme({
 });
 
 root.render(
-  <ApolloProvider client={client}>
-    <ChakraProvider theme={customTheme}>
-      <Fonts />
-      <RouterProvider router={router} />
-    </ChakraProvider>
-  </ApolloProvider>
+  <EthersProvider>
+    <ApolloProvider client={client}>
+      <ChakraProvider theme={customTheme}>
+        <Fonts />
+        <RouterProvider router={router} />
+      </ChakraProvider>
+    </ApolloProvider>
+  </EthersProvider>
 );

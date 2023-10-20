@@ -4,10 +4,13 @@ import { Button, Flex, Input } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useState } from 'react';
 
 export const AddressInput = () => {
   const { globalProviders } = useGlobalProvidersWithFallback();
   const L1DefaultProvider = globalProviders.mainnet;
+
+  const [inputError, setInputError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const { register, getValues } = useForm({
@@ -15,17 +18,28 @@ export const AddressInput = () => {
   });
 
   const onSubmit = async () => {
+    setInputError(null);
     const address = getValues('address');
     if (address) {
-      // Try to resolve ENS
-      if (!ethers.utils.isAddress(address)) {
-        const ens: string | null = await L1DefaultProvider.resolveName(address);
-        if (ens) {
-          navigate(`/${ens}`);
+      if (address.endsWith('.ens') || !ethers.utils.isAddress(address)) {
+        try {
+          const ens: string | null = await L1DefaultProvider.resolveName(address);
+          if (ens) {
+            navigate(`/${ens}`);
+            return;
+          } else {
+            setInputError(`Failed to resolve ENS name: ${address}`);
+            return;
+          }
+        } catch (e) {
+          setInputError('Error resolving ENS name');
           return;
         }
       }
+
       navigate(`/${address}`);
+    } else {
+      setInputError('Please enter an address or ENS name');
     }
   };
 
@@ -37,7 +51,11 @@ export const AddressInput = () => {
         minW={{ base: '180px', md: '250px' }}
         {...register('address')}
         alignSelf="end"
-        borderColor="gray.900"
+        borderColor={inputError ? 'red.500' : 'gray.900'}
+        isInvalid={!!inputError}
+        onChange={(e) => {
+          if (!e.target.value.trim()) setInputError(null);
+        }}
         onKeyDown={({ key }) => {
           if (key === 'Enter') {
             onSubmit();
