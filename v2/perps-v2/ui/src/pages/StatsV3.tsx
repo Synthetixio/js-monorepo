@@ -8,7 +8,7 @@ import { Delegation } from '../components/V3/Delegation';
 export function StatsV3() {
   return (
     <>
-      <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
+      <Flex flexDir="column" px={{ base: '16px', md: '40px' }} pt={2} pb={{ base: '32px', md: '64px' }}>
         <Heading fontSize="24px" my={2} mt={12}>
           Dashboard
         </Heading>
