@@ -14,7 +14,7 @@ import {
 import { resolvers, typeDefs } from './queries/resolved';
 import { Dashboard, Actions, Markets, Positions, StatsV3 } from './pages';
 import { isStaging } from './utils/isStaging';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { EthersProvider } from './utils/ProviderContext';
 
 const client = new ApolloClient({
