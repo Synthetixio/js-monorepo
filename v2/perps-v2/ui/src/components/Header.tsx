@@ -65,9 +65,7 @@ export const Header: FC = () => {
             </Flex>
           </RouterLink>
           <DropdownVersion />
-          {['/', '/trades', '/actions', '/markets', '/positions, /v3'].includes(
-            location.pathname
-          ) && (
+          {['/', '/trades', '/actions', '/markets', '/positions'].includes(location.pathname) && (
             <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
               <Flex as="nav" sx={{ gap: '24px' }}>
                 <Box style={isActive('/') ? activeStyle : inactiveStyle}>
