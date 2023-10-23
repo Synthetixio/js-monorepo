@@ -53,7 +53,15 @@ function formatData(data?: DuneDelegation[], queryInterval?: 'M' | 'Y' | 'ALL') 
   }
 
   const transformedData: Record<string, Delegation> = data.reduce((prev, item) => {
-    const { day, blockchain, tokenPrice, cumDelegation, daily_delegations, daily_delegations_USD, ID } = item;
+    const {
+      day,
+      blockchain,
+      tokenPrice,
+      cumDelegation,
+      daily_delegations,
+      daily_delegations_USD,
+      ID,
+    } = item;
 
     if (!prev[day]) {
       prev[day] = {

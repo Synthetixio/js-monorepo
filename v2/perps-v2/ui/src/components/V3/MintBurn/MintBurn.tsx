@@ -45,10 +45,7 @@ export const MintBurn = ({ ...props }: FlexProps) => {
           flexWrap="wrap"
           sx={{ gap: '16px' }}
         >
-          <ChakraTooltip
-            label="Total supply and daily mints/burns of snxUSD by network"
-            hasArrow
-          >
+          <ChakraTooltip label="Total supply and daily mints/burns of snxUSD by network" hasArrow>
             <Flex alignItems="center" sx={{ gap: '8px' }}>
               <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
                 snxUSD Supply Daily Mint & Burn

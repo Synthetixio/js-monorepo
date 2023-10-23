@@ -36,7 +36,11 @@ export const TvlProtocolsTooltip = ({ payload, blockchains }: TvlProtocolsToolti
       {blockchains?.map((blockchain, index) => {
         return (
           <Flex key={index} mb={2} justifyContent="space-between" w="100%">
-            <KeyColour label={blockchain} colour={BLOCKCHAIN_COLORS[index]} textTransform="capitalize" />
+            <KeyColour
+              label={blockchain}
+              colour={BLOCKCHAIN_COLORS[index]}
+              textTransform="capitalize"
+            />
             <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
               ${formatNumber(tvlProtocols[blockchain])}
             </Text>

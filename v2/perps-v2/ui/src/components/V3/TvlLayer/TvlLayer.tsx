@@ -12,7 +12,6 @@ export const TvlLayer = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'M' | 'Y' | 'ALL'>('ALL');
   const { data, loading, totalToday } = useTvlLayers(state);
 
-
   return (
     <>
       <Flex
