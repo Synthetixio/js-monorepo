@@ -9,10 +9,12 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import {
   PERPS_V2_DASHBOARD_GRAPH_URL,
   PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
+  DEFAULT_REQUEST_REFRESH_INTERVAL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
-import { Dashboard, Actions, Markets, Positions } from './pages';
+import { Dashboard, Actions, Markets, Positions, StatsV3 } from './pages';
 import { isStaging } from './utils/isStaging';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { EthersProvider } from './utils/ProviderContext';
 
 const client = new ApolloClient({
@@ -20,6 +22,16 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   resolvers,
   typeDefs,
+});
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      notifyOnChangeProps: 'tracked',
+      refetchInterval: DEFAULT_REQUEST_REFRESH_INTERVAL,
+      refetchOnWindowFocus: false,
+    },
+  },
 });
 
 const router = createBrowserRouter([
@@ -68,6 +80,15 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: '/v3',
+    element: (
+      <>
+        <Header />
+        <StatsV3 />
+      </>
+    ),
+  },
 ]);
 
 const container = document.querySelector('#app');
@@ -92,10 +113,12 @@ const customTheme = extendTheme({
 root.render(
   <EthersProvider>
     <ApolloProvider client={client}>
-      <ChakraProvider theme={customTheme}>
-        <Fonts />
-        <RouterProvider router={router} />
-      </ChakraProvider>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={customTheme}>
+          <Fonts />
+          <RouterProvider router={router} />
+        </ChakraProvider>
+      </QueryClientProvider>
     </ApolloProvider>
   </EthersProvider>
 );

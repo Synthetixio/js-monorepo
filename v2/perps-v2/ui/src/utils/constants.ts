@@ -14,3 +14,16 @@ export const optimisticEthercanTx = (txHash: string) =>
   `https://optimistic.etherscan.io/tx/${txHash}`;
 
 export const infuraId = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID;
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+export const DEFAULT_REQUEST_REFRESH_INTERVAL = 300000; // 5min
+
+export const QUERY_KEYS = {
+  GET_TVL: 'GET_TVL',
+  GET_MINT_BURN: 'GET_MINT_BURN',
+  GET_DELEGATIONS: 'GET_DELEGATIONS',
+  GET_TVL_PROTOCOLS: 'GET_TVL_PROTOCOLS',
+  GET_TVL_SNX: 'GET_TVL_SNX',
+  GET_SNX_SUPPLY: 'GET_SNX_SUPPLY',
+  GET_DAILY_DELEGATIONS: 'GET_DAILY_DELEGATIONS',
+};
