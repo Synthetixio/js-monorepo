@@ -126,13 +126,6 @@ export const Header: FC = () => {
                       </Text>
                     </RouterLink>
                   </MenuItem>
-                  <MenuItem>
-                    <RouterLink to="/stats-v3">
-                      <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
-                        Stats V3
-                      </Text>
-                    </RouterLink>
-                  </MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
