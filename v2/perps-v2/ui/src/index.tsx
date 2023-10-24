@@ -27,7 +27,7 @@ const client = new ApolloClient({
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      notifyOnChangeProps: 'tracked',
+      notifyOnChangeProps: 'all',
       refetchInterval: DEFAULT_REQUEST_REFRESH_INTERVAL,
       refetchOnWindowFocus: false,
     },
