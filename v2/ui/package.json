@@ -3,7 +3,7 @@
   "private": true,
   "version": "2.45.15",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
     "start": "webpack-cli serve",

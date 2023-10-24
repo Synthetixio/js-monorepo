@@ -22,7 +22,6 @@ import {
   GuideIcon,
   NineDots,
   LoansIcon,
-  // NotificationsIcon,
   OptimismIcon,
   // SettingsIcon,
   StakingIcon,
@@ -45,6 +44,7 @@ import { WalletModal } from '@snx-v2/WalletModal';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
+import { NotifiButton, NotifiContextWrapper } from '@snx-v2/NotifiButton';
 
 interface NavigationProps {
   currentNetwork: NetworkId;
@@ -112,6 +112,15 @@ export const NavigationUI = ({
     >
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
       <Flex alignItems="center">
+        {isWalletConnected && walletAddress && !delegateWallet && (
+          <>
+            {size === 'desktop' && (
+              <NotifiContextWrapper>
+                <NotifiButton />
+              </NotifiContextWrapper>
+            )}
+          </>
+        )}
         {isWalletConnected && walletAddress && (
           <>
             {size === 'desktop' && (
