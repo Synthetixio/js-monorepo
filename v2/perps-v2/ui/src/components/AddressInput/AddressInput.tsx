@@ -47,8 +47,8 @@ export const AddressInput = () => {
     <Flex alignSelf="end" width="50%" justifyContent="flex-end" alignItems="center" mb="3px">
       <Input
         placeholder="Search by ENS / address"
-        w="38%"
-        minW={{ base: '180px', md: '250px' }}
+        w="50%"
+        minW={{ base: 'auto', md: '250px' }}
         {...register('address')}
         alignSelf="end"
         borderColor={inputError ? 'red.500' : 'gray.900'}

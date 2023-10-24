@@ -134,6 +134,7 @@ module.exports = {
         'process.env.NEXT_PUBLIC_INFURA_PROJECT_ID': JSON.stringify(
           process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
         ),
+        'process.env.NEXT_PUBLIC_API_URL': JSON.stringify(process.env.NEXT_PUBLIC_API_URL),
       }),
     ])
     .concat([

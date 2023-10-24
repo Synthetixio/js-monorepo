@@ -26,6 +26,8 @@
     "@snx-v2/v3Theme": "workspace:*",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/wei": "^2.74.4",
+    "@tanstack/react-query": "^4.24.6",
+    "axios": "^1.3.3",
     "date-fns": "^2.29.3",
     "ethers": "^5.7.2",
     "framer-motion": "^7.0.0",
