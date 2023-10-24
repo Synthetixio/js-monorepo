@@ -1,6 +1,6 @@
 import { QUERY_KEYS } from '../utils';
 
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
 import { getMintBurns } from '../api/synthetixV3';
 import { DuneMintBurn } from '../api/types';

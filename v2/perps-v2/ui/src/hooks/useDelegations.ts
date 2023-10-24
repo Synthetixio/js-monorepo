@@ -1,6 +1,6 @@
 import { QUERY_KEYS } from '../utils';
 
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
 import { getDelegations } from '../api/synthetixV3';
 import { DuneDelegation } from '../api/types';
