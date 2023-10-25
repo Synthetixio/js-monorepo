@@ -10,7 +10,6 @@ import {
   calculateMarkPrice,
   getMarketsPythConfig,
   PythConfigByMarketKey,
-  pyth,
   scale,
   initMulticall,
   initPerpsMarketData,
