@@ -8,6 +8,7 @@
     "@snx-v2/Constants": "workspace:*",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/EpochPrice": "workspace:^",
+    "@snx-v2/NotifiButton": "workspace:*",
     "@snx-v2/UserBalances": "workspace:*",
     "@snx-v2/WalletModal": "workspace:*",
     "@snx-v2/formatters": "workspace:*",
