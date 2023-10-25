@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ReactNode, useEffect } from 'react';
 import { isStaging } from './isStaging';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
 import { MarketsByKey } from '../types';
@@ -13,6 +14,7 @@ const OffchainFeedSchema = z.array(
     feedId: z.string(),
   })
 );
+
 export type PythConfigByMarketKey = Record<
   string,
   {
@@ -21,6 +23,7 @@ export type PythConfigByMarketKey = Record<
     asset: string;
   }
 >;
+
 const formatAssetToPerpName = (x: string) => {
   if (x === 'sETH' || x === 'sBTC') {
     return `${x}PERP`;
@@ -50,4 +53,41 @@ export const getMarketsPythConfig = () => {
           return acc;
         }, {});
     });
+};
+
+export interface PythPrice {
+  price: string;
+  conf: string;
+  expo: number;
+  publishTime: number;
+}
+
+export const prices: { [key: string]: PythPrice } = {};
+
+export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
+  useEffect(() => {
+    (async () => {
+      const pythConfigByMarketKey = await getMarketsPythConfig();
+      const pythIds = Object.values(pythConfigByMarketKey).map((x) => x.pythId);
+      await pyth.subscribePriceFeedUpdates(pythIds, (price) => {
+        const { id } = price;
+        const priceData = price.getPriceUnchecked();
+
+        if (priceData) {
+          prices[id] = priceData;
+        }
+      });
+    })();
+
+    return () => {
+      // Clean up WebSocket connection when the component unmounts
+      (async () => {
+        const pythConfigByMarketKey = await getMarketsPythConfig();
+        const pythIds = Object.values(pythConfigByMarketKey).map((x) => x.pythId);
+        pyth.unsubscribePriceFeedUpdates(pythIds);
+      })();
+    };
+  }, []);
+
+  return <>{children}</>;
 };

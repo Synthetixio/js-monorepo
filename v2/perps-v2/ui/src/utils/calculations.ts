@@ -5,6 +5,7 @@ export function calculateLeverage(size: Wei, markPrice: Wei, margin: Wei) {
   if (size.eq(0)) return wei(0);
   return size.mul(markPrice).div(margin).abs();
 }
+
 export const calculateMarkPrice = (
   pythPrice: Wei | undefined,
   {

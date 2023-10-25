@@ -6,7 +6,7 @@ import * as z from 'zod';
 import { scale } from '../utils';
 import { utils } from 'ethers';
 import { wei } from '@synthetixio/wei';
-import { pyth, getMarketsPythConfig } from '../utils/pyth';
+import { getMarketsPythConfig, prices, PythPrice } from '../utils/pyth';
 
 const pythItemSchema = z.object({
   pythId: z.union([z.string(), z.undefined()]),
@@ -84,14 +84,12 @@ export function useLargestOpenPosition() {
         const sizeQuery = generateOpenPositionsQuery(marketIds);
         const pythIds = marketPyth.map((item) => item?.pythId || '').filter((item) => item !== '');
 
-        const [{ data: sizeData }, result] = await Promise.all([
-          await client.query({ query: sizeQuery }),
-          await pyth.getLatestPriceFeeds(pythIds),
-        ]);
+        const { data: sizeData } = await client.query({ query: sizeQuery });
 
         // Attribute the pyth result to the market
-        const hydratedPythResult = result?.map((item, index) => {
-          const price = item?.getPriceUnchecked();
+        const hydratedPythResult = marketPyth?.map((item, index) => {
+          const price: PythPrice = prices[pythIds[index].substring(2)];
+
           return {
             ...price,
             pythId: marketPyth[index]?.pythId || '',
