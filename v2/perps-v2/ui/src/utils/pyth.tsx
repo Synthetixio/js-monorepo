@@ -82,9 +82,7 @@ export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
     return () => {
       // Clean up WebSocket connection when the component unmounts
       (async () => {
-        const pythConfigByMarketKey = await getMarketsPythConfig();
-        const pythIds = Object.values(pythConfigByMarketKey).map((x) => x.pythId);
-        pyth.unsubscribePriceFeedUpdates(pythIds);
+        pyth.unsubscribePriceFeedUpdates(Object.keys(prices));
       })();
     };
   }, []);
