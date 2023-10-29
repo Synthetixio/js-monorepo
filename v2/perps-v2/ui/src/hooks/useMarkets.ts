@@ -10,10 +10,10 @@ import {
   calculateMarkPrice,
   getMarketsPythConfig,
   PythConfigByMarketKey,
-  pyth,
   scale,
   initMulticall,
   initPerpsMarketData,
+  prices,
 } from '../utils';
 import { PerpsV2MarketData } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import { ZodStringToWei } from './useLargestOpenPosition';
@@ -152,10 +152,9 @@ export async function fetchMarkets(
       return { pythId: pythInfo.pythId, ...item };
     });
 
-    const [multiCallResponse, indexPrices] = await Promise.all([
-      multicall.callStatic.aggregate(marketDetailCalls.concat(allMarketSummaries)),
-      pyth.getLatestPriceFeeds([...dataWithPythId.map(({ pythId }) => pythId)]),
-    ]);
+    const multiCallResponse = await multicall.callStatic.aggregate(
+      marketDetailCalls.concat(allMarketSummaries)
+    );
 
     const marketDetailsData = multiCallResponse.returnData.slice(0, marketDetailCalls.length);
     const allMarketSummariesData = multiCallResponse.returnData.slice(marketDetailCalls.length);
@@ -170,7 +169,7 @@ export async function fetchMarkets(
     );
 
     return dataWithPythId
-      .map(({ market, percentageDifference, volume }, index) => {
+      .map(({ market, percentageDifference, volume, pythId }, index) => {
         const marketDetails = allMarketSummariesDataDecoded.flat()?.find((item) => {
           return item.key === market.marketKey;
         }) as PerpsV2MarketData.MarketSummaryStructOutput;
@@ -179,8 +178,8 @@ export async function fetchMarkets(
 
         // Get the index price from pyth
         let indexPrice: Wei = wei(0);
-        if (indexPrices && indexPrices[index]) {
-          const rawPriceInfo = indexPrices[index].getPriceUnchecked();
+        if (prices) {
+          const rawPriceInfo = prices[pythId?.substring(2)];
           indexPrice = scale(wei(rawPriceInfo?.price), rawPriceInfo?.expo || 1);
         }
 
