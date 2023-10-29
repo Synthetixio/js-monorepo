@@ -81,7 +81,7 @@ export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
 
     return () => {
       // Clean up WebSocket connection when the component unmounts
-      (async () => {
+      (() => {
         pyth.unsubscribePriceFeedUpdates(Object.keys(prices));
       })();
     };
