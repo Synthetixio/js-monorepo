@@ -16,6 +16,7 @@ import { Dashboard, Actions, Markets, Positions, StatsV3 } from './pages';
 import { isStaging } from './utils/isStaging';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { EthersProvider } from './utils/ProviderContext';
+import { PythRealtimePrices } from './utils/pyth';
 
 const client = new ApolloClient({
   uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -111,14 +112,16 @@ const customTheme = extendTheme({
 });
 
 root.render(
-  <EthersProvider>
-    <ApolloProvider client={client}>
-      <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={customTheme}>
-          <Fonts />
-          <RouterProvider router={router} />
-        </ChakraProvider>
-      </QueryClientProvider>
-    </ApolloProvider>
-  </EthersProvider>
+  <PythRealtimePrices>
+    <EthersProvider>
+      <ApolloProvider client={client}>
+        <QueryClientProvider client={queryClient}>
+          <ChakraProvider theme={customTheme}>
+            <Fonts />
+            <RouterProvider router={router} />
+          </ChakraProvider>
+        </QueryClientProvider>
+      </ApolloProvider>
+    </EthersProvider>
+  </PythRealtimePrices>
 );
