@@ -8,7 +8,7 @@ import {
   MarkPrice,
   PercentageChange,
   WalletTooltip,
-  NetValue,
+  Currency,
 } from '../Shared';
 import { OpenPositionsLoading } from './OpenPositionsLoading';
 import { usePositions, PositionType } from '../../hooks';
@@ -109,7 +109,8 @@ export const OpenPositionsTable = () => {
                         pnlPercentage={unrealizedPnlPercentage.toNumber()} //
                       />
                       {/* Liquidation Price */}
-                      <NetValue amount={liquidationPrice.toNumber()} />
+                      {/* Liquidation Price */}
+                      <Currency amount={liquidationPrice.toNumber()} />
 
                       <PercentageChange amount={unrealizedPnlPercentage.toNumber()} />
                       {/* Realized PNL */}
