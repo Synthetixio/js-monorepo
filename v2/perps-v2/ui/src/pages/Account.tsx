@@ -31,10 +31,10 @@ export const Account: FC = () => {
         <Button
           variant="ghost"
           fontWeight="700"
-          onClick={() => navigate('/')}
+          onClick={() => navigate(-1)}
           leftIcon={<ArrowBackIcon />}
         >
-          Home
+          Back
         </Button>
       </Box>
       <Link
