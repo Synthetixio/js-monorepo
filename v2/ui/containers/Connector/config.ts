@@ -28,7 +28,7 @@ const walletConnect = walletConnectModule({
 
 const ledger = ledgerModule({
   walletConnectVersion: 2,
-  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+  projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
 });
 
 // The trezor module have a bug, we can enable it when this has been merged and released: https://github.com/blocknative/web3-onboard/pull/1165
