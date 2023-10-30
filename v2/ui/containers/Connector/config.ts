@@ -1,6 +1,5 @@
 import { getChainIdHex, getInfuraRpcURL } from 'utils/infura';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
-
 import Onboard from '@web3-onboard/core';
 import type { OnboardAPI } from '@web3-onboard/core';
 import injectedModule from '@web3-onboard/injected-wallets';
@@ -8,7 +7,7 @@ import coinbaseWalletModule from '@web3-onboard/coinbase';
 import walletConnectModule from '@web3-onboard/walletconnect';
 import ledgerModule from '@web3-onboard/ledger';
 import gnosisModule from './customGnosis';
-// import trezorModule from '@web3-onboard/trezor';
+import trezorModule from '@web3-onboard/trezor';
 import portisModule from '@web3-onboard/portis';
 import torusModule from '@web3-onboard/torus';
 import trustModule from '@web3-onboard/trust';
@@ -19,13 +18,21 @@ import { customBrave, customMetaMask, customDetected } from './customInjected';
 const injected = injectedModule({ custom: [customMetaMask, customBrave, customDetected] });
 
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
+
+console.log('process.env.NEXT_PUBLIC_WC_PROJECT_ID', process.env.NEXT_PUBLIC_WC_PROJECT_ID);
+
 const walletConnect = walletConnectModule({
   version: 2,
-  projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
+  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
 });
-const ledger = ledgerModule();
+
+const ledger = ledgerModule({
+  walletConnectVersion: 2,
+  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+});
+
 // The trezor module have a bug, we can enable it when this has been merged and released: https://github.com/blocknative/web3-onboard/pull/1165
-// const trezor = trezorModule({ email: 'info@synthetix.io', appUrl: 'https://www.synthetix.io' });
+const trezor = trezorModule({ email: 'info@synthetix.io', appUrl: 'https://www.synthetix.io' });
 const gnosis = gnosisModule();
 const portis = portisModule({ apiKey: `${process.env.NEXT_PUBLIC_PORTIS_APP_ID}` });
 const torus = torusModule();
@@ -99,7 +106,8 @@ export const onboard: OnboardAPI = Onboard({
   wallets: [
     injected,
     brave,
-    ledger /*trezor,*/,
+    ledger,
+    trezor,
     coinbaseWalletSdk,
     trust,
     walletConnect,

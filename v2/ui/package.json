@@ -89,6 +89,7 @@
     "@web3-onboard/ledger": "^2.5.2",
     "@web3-onboard/portis": "^2.1.7",
     "@web3-onboard/torus": "^2.2.6",
+    "@web3-onboard/trezor": "^2.4.3",
     "@web3-onboard/trust": "^2.0.4",
     "@web3-onboard/walletconnect": "^2.5.0",
     "axios": "^1.3.3",
