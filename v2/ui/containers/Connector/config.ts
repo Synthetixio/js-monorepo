@@ -19,8 +19,6 @@ const injected = injectedModule({ custom: [customMetaMask, customBrave, customDe
 
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 
-console.log('process.env.NEXT_PUBLIC_WC_PROJECT_ID', process.env.NEXT_PUBLIC_WC_PROJECT_ID);
-
 const walletConnect = walletConnectModule({
   version: 2,
   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
