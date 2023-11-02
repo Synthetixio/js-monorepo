@@ -20,3 +20,5 @@ export * from './MarketSelect';
 export * from './SizeSelect';
 export * from './DailyVolumeChange';
 export * from './DropdownFilter';
+export * from './LiquidatorTooltip';
+export * from './Age';

@@ -1,20 +1,12 @@
 import { z } from 'zod';
 import { KWENTA_SUBGRAPH_URL } from '../utils';
-import { ApolloClient, InMemoryCache, useQuery, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, useQuery } from '@apollo/client';
+import { AccountQuery } from './useOwnerBySmartId';
 
 const kwentaClient = new ApolloClient({
   uri: KWENTA_SUBGRAPH_URL,
   cache: new InMemoryCache(),
 });
-
-const AccountQuery = gql`
-  query Account($owner: String) {
-    smartMarginAccounts(where: { owner: $owner }) {
-      id
-      owner
-    }
-  }
-`;
 
 const SmartMarginAccountSchema = z.array(
   z

@@ -65,7 +65,9 @@ export const Header: FC = () => {
             </Flex>
           </RouterLink>
           <DropdownVersion />
-          {['/', '/trades', '/actions', '/markets', '/positions'].includes(location.pathname) && (
+          {['/', '/trades', '/actions', '/markets', '/positions', '/liquidations'].includes(
+            location.pathname
+          ) && (
             <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
               <Flex as="nav" sx={{ gap: '24px' }}>
                 <Box style={isActive('/') ? activeStyle : inactiveStyle}>
@@ -79,6 +81,9 @@ export const Header: FC = () => {
                 </Box>
                 <Box style={isActive('/positions') ? activeStyle : inactiveStyle}>
                   <RouterLink to="/positions">Positions</RouterLink>
+                </Box>
+                <Box style={isActive('/liquidations') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/liquidations">Liquidations</RouterLink>
                 </Box>
               </Flex>
             </Box>
@@ -123,6 +128,13 @@ export const Header: FC = () => {
                     <RouterLink to="/positions">
                       <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
                         Positions
+                      </Text>
+                    </RouterLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <RouterLink to="/liquidations">
+                      <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
+                        Liquidations
                       </Text>
                     </RouterLink>
                   </MenuItem>
