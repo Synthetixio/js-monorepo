@@ -1,141 +1,115 @@
-import { useState, useEffect } from 'react';
-import { useApolloClient } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { POSITIONS_LIQUIDATED_QUERY } from '../queries/liquidated';
-import { wei } from '@synthetixio/wei';
-import { scale } from '../utils';
-import { utils } from 'ethers';
-import { getMarketsPythConfig, prices, PythPrice } from '../utils/pyth';
+import { useSearchParams } from 'react-router-dom';
+import { useMarketSummaries } from './useMarketSummaries';
+import { generateMarketIds } from './useActions';
+import {
+  PositionLiquidated_OrderBy,
+  OrderDirection,
+  PositionsLiquidatedQuery,
+} from '../__generated__/graphql';
+import Wei, { wei } from '@synthetixio/wei';
 
-// const pythItemSchema = z.object({
-//   pythId: z.union([z.string(), z.undefined()]),
-//   marketKey: z.union([z.string(), z.undefined()]),
-//   conf: z.string(),
-//   expo: z.number(),
-//   price: z.string(),
-//   publishTime: z.number(),
-// });
+interface QueryLiquidation {
+  __typename?: 'PositionLiquidated';
+  id: string;
+  timestamp: string;
+  txHash: string;
+  size: string;
+  price: string;
+  fee: string;
+  liquidator: string;
+  futuresPosition: {
+    __typename?: 'FuturesPosition';
+    leverage: string;
+  };
+  market: {
+    __typename?: 'FuturesMarket';
+    id: string;
+  };
+  trader: {
+    __typename?: 'Trader';
+    id: string;
+    totalLiquidations: string;
+  };
+}
 
-// const NumberStringSchema = z.string().refine((value) => !isNaN(parseFloat(value)), {
-//   message: 'Must be a number in string format',
-//   path: [],
-// });
+interface Liquidation {
+  id: string;
+  timestamp: string;
+  txHash: string;
+  fee: Wei;
+  size: Wei;
+  price: Wei;
+  liquidator: string;
+  futuresPosition: {
+    leverage: Wei;
+  };
+  market: {
+    id: string;
+  };
+  trader: {
+    id: string;
+    totalLiquidations: string;
+  };
+}
 
-// export const ZodStringToWei = NumberStringSchema.transform((value) => wei(value, 18, true));
+function parsedLiquidationData(
+  data: PositionsLiquidatedQuery | undefined
+): Liquidation[] | undefined {
+  if (!data?.positionLiquidateds) return undefined;
+  if (!data.positionLiquidateds.length) return [];
 
-// export const DataSchema = z.object({
-//   entryPrice: z.string(),
-//   id: z.string(),
-//   isOpen: z.boolean(),
-//   leverage: z.string(),
-//   long: z.boolean(),
-//   market: z.object({
-//     marketKey: z.string(),
-//     asset: z.string(),
-//   }),
-//   notionalValue: ZodStringToWei,
-//   pythItem: pythItemSchema,
-//   size: z.string(),
-//   trader: z.object({
-//     id: z.string(),
-//   }),
-// });
-
-// export type DataInterface = z.infer<typeof DataSchema>;
-
-interface State {
-  loading: boolean;
-  // data: DataInterface[] | null;
-  error: unknown | null;
+  return data.positionLiquidateds.map((liquidation: QueryLiquidation) => ({
+    id: liquidation.id,
+    timestamp: liquidation.timestamp,
+    txHash: liquidation.txHash,
+    fee: wei(liquidation.fee, 18, true),
+    size: wei(liquidation.size, 18, true),
+    price: wei(liquidation.price, 18, true),
+    liquidator: liquidation.liquidator,
+    futuresPosition: {
+      leverage: wei(liquidation.futuresPosition.leverage, 18, true),
+    },
+    market: {
+      id: liquidation.market.id,
+    },
+    trader: {
+      id: liquidation.trader.id,
+      totalLiquidations: liquidation.trader.totalLiquidations,
+    },
+  }));
 }
 
 export function useLiquidations() {
-  const client = useApolloClient();
-  const [state, setState] = useState<State>({ loading: true, data: null, error: null });
+  const [searchParams] = useSearchParams();
+  const { data: marketConfigs, isLoading: marketConfigsLoading } = useMarketSummaries();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data: marketsData } = await client.query({
-          query: MARKETS_ID_QUERY,
-        });
-        const markets = await getMarketsPythConfig();
+  const markets = generateMarketIds(marketConfigs, searchParams.get('markets'));
 
-        const marketIds = marketsData?.futuresMarkets.map((market) => market.id) || [];
+  const min = searchParams.get('min') || undefined;
+  const max = searchParams.get('max') || undefined;
 
-        const marketPyth =
-          marketsData?.futuresMarkets
-            .filter(({ marketKey }) => {
-              return utils.parseBytes32String(marketKey).includes('PERP');
-            })
-            .map(({ marketKey }) => {
-              const id = `${utils.parseBytes32String(marketKey)}`;
-              const pythInfo = markets[id];
+  const {
+    loading,
+    error,
+    data: queryData,
+  } = useQuery(POSITIONS_LIQUIDATED_QUERY, {
+    variables: {
+      where: {
+        market_in: markets,
+        size_gt: min,
+        size_lt: max,
+      },
+      orderBy: PositionLiquidated_OrderBy.Timestamp,
+      orderDirection: OrderDirection.Desc,
+    },
+    skip: marketConfigsLoading,
+  });
 
-              if (pythInfo?.pythId) {
-                return { pythId: pythInfo.pythId || '', marketKey } || null;
-              }
-
-              return null;
-            })
-            .filter((item) => item !== null) || [];
-
-        const sizeQuery = generateOpenPositionsQuery(marketIds);
-        const pythIds = marketPyth.map((item) => item?.pythId || '').filter((item) => item !== '');
-
-        const { data: sizeData } = await client.query({ query: sizeQuery });
-
-        // Attribute the pyth result to the market
-        const hydratedPythResult = marketPyth?.map((item, index) => {
-          const price: PythPrice = prices[pythIds[index].substring(2)];
-
-          return {
-            ...price,
-            pythId: marketPyth[index]?.pythId || '',
-            marketKey: marketPyth[index]?.marketKey,
-          };
-        });
-
-        const sizeResult: DataInterface[] = Object.keys(sizeData)
-          .map((key: string) => {
-            const marketData = sizeData[key];
-
-            if (!marketData || marketData.length === 0) return null;
-
-            return marketData;
-          })
-          .filter((item) => item !== null)
-          .flat()
-          .map((item) => {
-            const pythItem = hydratedPythResult?.find(
-              (pythItem) => pythItem?.marketKey === item?.market?.marketKey
-            );
-
-            if (!pythItem) return null;
-
-            const size = wei(item.size, 18, true);
-            const price = scale(wei(pythItem.price), pythItem.expo);
-
-            const notionalValue = size.mul(price).abs();
-
-            return {
-              notionalValue,
-              ...item,
-              pythItem,
-            };
-          })
-          .filter((item) => item !== null)
-          .sort((a, b) => {
-            return b?.notionalValue?.sub(a?.notionalValue || 0).toNumber();
-          })
-          .slice(0, 3);
-
-        setState({ loading: false, data: sizeResult, error: null });
-      } catch (error: unknown) {
-        console.log(error);
-        setState({ loading: false, data: null, error });
-      }
-    })();
-  }, [client]);
-
-  return state;
+  return {
+    data: queryData?.positionLiquidateds ? parsedLiquidationData(queryData) : undefined,
+    loading,
+    error,
+  };
 }

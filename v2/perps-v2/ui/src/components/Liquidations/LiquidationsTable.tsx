@@ -1,12 +1,11 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
 import { Currency, TableHeaderCell, Market, Size, MarginTransfer, WalletTooltip } from '../Shared';
 import { AllActionsLoading } from '../Actions/AllActionsLoading';
-import { useActions } from '../../hooks';
-
-const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
+import { useLiquidations } from '../../hooks';
 
 export const LiquidationsTable = () => {
-  const { loading, data, error } = useActions();
+  const { loading, data, error } = useLiquidations();
+  console.log('data', loading, error, data);
 
   return (
     <>
@@ -43,25 +42,37 @@ export const LiquidationsTable = () => {
               </>
             )}
 
-            {data?.map(({ label, address, asset, price, fees, size, leverage, id }) => {
-              return (
-                <Tr key={id} borderTopWidth="1px">
-                  <Market
-                    asset={asset}
-                    leverage={leverage?.toNumber() || null}
-                    isPosition={isPosition(label)}
-                  />
-                  <Currency amount={price?.toNumber() || null} />
-                  {isPosition(label) ? (
-                    <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
-                  ) : (
-                    <MarginTransfer size={size.toNumber()} />
-                  )}
-                  <Currency amount={fees?.toNumber() || null} />
-                  <WalletTooltip address={address} />
-                </Tr>
-              );
-            })}
+            {data?.map(
+              ({
+                id,
+                market: { id: asset },
+                liquidator,
+                price,
+                size,
+                timestamp,
+                trader,
+                txHash,
+              }) => {
+                return (
+                  <Tr key={id} borderTopWidth="1px">
+                    <Market
+                      asset={asset}
+                      leverage={leverage?.toNumber() || null}
+                      isPosition={false}
+                    />
+                    {/* 
+                    <Currency amount={price?.toNumber() || null} />
+                    {isPosition(label) ? (
+                      <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
+                    ) : (
+                      <MarginTransfer size={size.toNumber()} />
+                    )}
+                    <Currency amount={fees?.toNumber() || null} />
+                    <WalletTooltip address={address} /> */}
+                  </Tr>
+                );
+              }
+            )}
           </Tbody>
         </Table>
         {((!loading && data?.length === 0) || error) && (
