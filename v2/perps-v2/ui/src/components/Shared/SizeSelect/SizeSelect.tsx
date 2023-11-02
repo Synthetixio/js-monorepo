@@ -8,7 +8,7 @@ interface SizeState {
   max: string;
 }
 
-export const SizeSelect = () => {
+export const SizeSelect = ({ route = 'actions' }: { route?: string }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const initialMin = searchParams.get('min') || '';
@@ -41,7 +41,7 @@ export const SizeSelect = () => {
       const newParams = new URLSearchParams(params);
 
       navigate({
-        pathname: '/actions',
+        pathname: `/${route}`,
         search: `?${newParams.toString()}`,
       });
     } else {
@@ -51,8 +51,9 @@ export const SizeSelect = () => {
         params.push(['markets', markets]);
       }
       const newParams = new URLSearchParams(params);
+
       navigate({
-        pathname: '/actions',
+        pathname: `/${route}`,
         search: `?${newParams.toString()}`,
       });
     }
