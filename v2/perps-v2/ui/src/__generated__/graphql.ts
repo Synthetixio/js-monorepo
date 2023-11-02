@@ -15,6 +15,11 @@ export type Scalars = {
   BigDecimal: string;
   BigInt: string;
   Bytes: string;
+  /**
+   * 8 bytes signed integer
+   *
+   */
+  Int8: any;
 };
 
 export type BlockChangedFilter = {
@@ -1328,6 +1333,7 @@ export type FuturesTrade = {
   id: Scalars['ID'];
   margin: Scalars['BigInt'];
   market: FuturesMarket;
+  marketOrder: Scalars['Boolean'];
   netFunding: Scalars['BigInt'];
   positionClosed: Scalars['Boolean'];
   positionSize: Scalars['BigInt'];
@@ -1418,6 +1424,10 @@ export type FuturesTrade_Filter = {
   margin_not?: InputMaybe<Scalars['BigInt']>;
   margin_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   market?: InputMaybe<Scalars['String']>;
+  marketOrder?: InputMaybe<Scalars['Boolean']>;
+  marketOrder_in?: InputMaybe<Array<Scalars['Boolean']>>;
+  marketOrder_not?: InputMaybe<Scalars['Boolean']>;
+  marketOrder_not_in?: InputMaybe<Array<Scalars['Boolean']>>;
   market_?: InputMaybe<FuturesMarket_Filter>;
   market_contains?: InputMaybe<Scalars['String']>;
   market_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -1581,6 +1591,7 @@ export enum FuturesTrade_OrderBy {
   Id = 'id',
   Margin = 'margin',
   Market = 'market',
+  MarketOrder = 'marketOrder',
   MarketAsset = 'market__asset',
   MarketId = 'market__id',
   MarketIsActive = 'market__isActive',

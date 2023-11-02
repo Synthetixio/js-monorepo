@@ -1,20 +1,13 @@
 import { z } from 'zod';
 import { POLYNOMIAL_SUBGRAPH_URL } from '../utils';
-import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client';
+import { ApolloClient, InMemoryCache, useQuery } from '@apollo/client';
+import { AccountQuery } from './useOwnerBySmartId';
 
 const polyClient = new ApolloClient({
   uri: POLYNOMIAL_SUBGRAPH_URL,
   cache: new InMemoryCache(),
 });
 
-const AccountQuery = gql`
-  query SmAccounts($owner: String) {
-    logAccountCreateds(where: { owner: $owner }) {
-      owner
-      account
-    }
-  }
-`;
 const PolySmartMarginAccountsSchema = z.array(
   z.object({
     owner: z.string(),

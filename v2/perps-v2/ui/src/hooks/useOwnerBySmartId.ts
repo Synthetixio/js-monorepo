@@ -12,7 +12,7 @@ const polyClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const AccountBySmartIdQuery = gql`
+export const AccountBySmartIdQuery = gql`
   query Account($id: String!) {
     smartMarginAccount(id: $id) {
       owner
@@ -20,7 +20,7 @@ const AccountBySmartIdQuery = gql`
   }
 `;
 
-const AccountQuery = gql`
+export const AccountQuery = gql`
   query SmAccounts($account: String) {
     logAccountCreateds(where: { account: $account }) {
       owner
