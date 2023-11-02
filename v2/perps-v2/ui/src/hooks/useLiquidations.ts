@@ -25,7 +25,7 @@ interface QueryLiquidation {
   };
   market: {
     __typename?: 'FuturesMarket';
-    id: string;
+    asset: string;
   };
   trader: {
     __typename?: 'Trader';
@@ -46,7 +46,7 @@ interface Liquidation {
     leverage: Wei;
   };
   market: {
-    id: string;
+    asset: string;
   };
   trader: {
     id: string;
@@ -72,7 +72,7 @@ function parsedLiquidationData(
       leverage: wei(liquidation.futuresPosition.leverage, 18, true),
     },
     market: {
-      id: liquidation.market.id,
+      asset: liquidation.market.asset,
     },
     trader: {
       id: liquidation.trader.id,
@@ -87,9 +87,6 @@ export function useLiquidations() {
 
   const markets = generateMarketIds(marketConfigs, searchParams.get('markets'));
 
-  const min = searchParams.get('min') || undefined;
-  const max = searchParams.get('max') || undefined;
-
   const {
     loading,
     error,
@@ -98,13 +95,12 @@ export function useLiquidations() {
     variables: {
       where: {
         market_in: markets,
-        size_gt: min,
-        size_lt: max,
       },
       orderBy: PositionLiquidated_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
     },
     skip: marketConfigsLoading,
+    pollInterval: 10000,
   });
 
   return {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
-import { MarketSelect, SizeSelect } from '../components';
+import { MarketSelect } from '../components';
 import { useMarketSummaries } from '../hooks/useMarketSummaries';
 import { LiquidationsTable } from '../components/Liquidations';
 
@@ -14,7 +14,8 @@ export function Liquidations() {
         </Heading>
         <Flex>
           <MarketSelect markets={markets.data?.map((x) => x.asset)} route="liquidations" />
-          <SizeSelect route="liquidations" />
+          {/* Currently Buggered */}
+          {/* <SizeSelect route="liquidations" /> */}
         </Flex>
         <LiquidationsTable />
       </Flex>

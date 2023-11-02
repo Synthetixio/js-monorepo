@@ -12,7 +12,7 @@ export const POSITIONS_LIQUIDATED_QUERY = gql(`
         leverage
       }
       market {
-        id
+        asset
       }
       fee
       liquidator

@@ -1,11 +1,18 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import { Currency, TableHeaderCell, Market, Size, MarginTransfer, WalletTooltip } from '../Shared';
-import { AllActionsLoading } from '../Actions/AllActionsLoading';
+import {
+  Currency,
+  TableHeaderCell,
+  Market,
+  Size,
+  WalletTooltip,
+  LiquidatorTooltip,
+  Age,
+} from '../Shared';
 import { useLiquidations } from '../../hooks';
+import { LiquidationsLoading } from './LiquidationsLoading';
 
 export const LiquidationsTable = () => {
   const { loading, data, error } = useLiquidations();
-  console.log('data', loading, error, data);
 
   return (
     <>
@@ -24,51 +31,50 @@ export const LiquidationsTable = () => {
           <Thead>
             <Tr>
               <TableHeaderCell>Market</TableHeaderCell>
+              <TableHeaderCell>Age</TableHeaderCell>
               <TableHeaderCell>Price</TableHeaderCell>
               <TableHeaderCell>Size</TableHeaderCell>
               <TableHeaderCell>Fee</TableHeaderCell>
               <TableHeaderCell>Address</TableHeaderCell>
+              <TableHeaderCell>Liquidator</TableHeaderCell>
             </Tr>
           </Thead>
           <Tbody>
             {loading && (
               <>
-                <AllActionsLoading />
-                <AllActionsLoading />
-                <AllActionsLoading />
-                <AllActionsLoading />
-                <AllActionsLoading />
-                <AllActionsLoading />
+                <LiquidationsLoading />
+                <LiquidationsLoading />
+                <LiquidationsLoading />
+                <LiquidationsLoading />
+                <LiquidationsLoading />
               </>
             )}
 
             {data?.map(
               ({
-                id,
-                market: { id: asset },
+                id: liquidationId,
+                market: { asset },
                 liquidator,
+                timestamp,
                 price,
                 size,
-                timestamp,
-                trader,
-                txHash,
+                trader: { id },
+                fee,
+                futuresPosition: { leverage },
               }) => {
                 return (
-                  <Tr key={id} borderTopWidth="1px">
+                  <Tr key={liquidationId} borderTopWidth="1px">
                     <Market
                       asset={asset}
                       leverage={leverage?.toNumber() || null}
                       isPosition={false}
                     />
-                    {/* 
+                    <Age timestamp={timestamp} />
                     <Currency amount={price?.toNumber() || null} />
-                    {isPosition(label) ? (
-                      <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
-                    ) : (
-                      <MarginTransfer size={size.toNumber()} />
-                    )}
-                    <Currency amount={fees?.toNumber() || null} />
-                    <WalletTooltip address={address} /> */}
+                    <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
+                    <Currency amount={fee?.toNumber() || null} />
+                    <WalletTooltip address={id} />
+                    <LiquidatorTooltip address={liquidator} />
                   </Tr>
                 );
               }
