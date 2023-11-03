@@ -4,3 +4,4 @@ export * from './useStats';
 export * from './useMarketStats';
 export * from './useMarkets';
 export * from './useLargestOpenPosition';
+export * from './useLiquidations';

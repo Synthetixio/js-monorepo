@@ -5,7 +5,7 @@
   "scripts": {
     "start": "webpack-cli serve",
     "build": "NODE_ENV=production webpack-cli",
-    "compile": "graphql-codegen",
+    "compile": "graphql-codegen ",
     "test": "NODE_ENV=test jest",
     "typecheck": "tsc --noEmit",
     "standalone-install": "yarn workspaces focus '@synthetixio/perps-v2-dashboard'",

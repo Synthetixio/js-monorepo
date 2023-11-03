@@ -1,11 +1,15 @@
 require('dotenv').config({ path: '.env.local', override: true });
+
 import { CodegenConfig } from '@graphql-codegen/cli';
-import { PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL, PERPS_V2_DASHBOARD_GRAPH_URL } from './src/utils';
 import { isStaging } from './src/utils/isStaging';
+import {
+  PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL,
+  PERPS_V2_DASHBOARD_GRAPH_URL,
+} from './src/utils/constants';
 
 const config: CodegenConfig = {
   schema: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
-  documents: ['src/**/*.ts'],
+  documents: ['src/queries/**/*.ts'],
   generates: {
     './src/__generated__/': {
       preset: 'client',
