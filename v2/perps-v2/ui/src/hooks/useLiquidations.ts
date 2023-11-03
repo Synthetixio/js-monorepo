@@ -103,9 +103,11 @@ export function useLiquidations() {
     pollInterval: 10000,
   });
 
+  const isLoading = loading || marketConfigsLoading;
+
   return {
     data: queryData?.positionLiquidateds ? parsedLiquidationData(queryData) : undefined,
-    loading,
+    loading: isLoading,
     error,
   };
 }
