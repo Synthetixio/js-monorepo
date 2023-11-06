@@ -1,5 +1,5 @@
 import { Flex, FlexProps, Spinner, Text } from '@chakra-ui/react';
-import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import Wei, { wei } from '@synthetixio/wei';
 import { utils } from 'ethers';
 import { DailyMarketStat } from '../../../__generated__/graphql';

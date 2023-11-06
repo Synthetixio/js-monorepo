@@ -23,7 +23,7 @@ import {
   numberWithCommas,
   parseFloatWithCommas,
   formatShortDateWithTime,
-} from '@snx-v2/formatters';
+} from '@synthetixio/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';

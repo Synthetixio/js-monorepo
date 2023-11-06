@@ -6,11 +6,11 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/StatBox": "workspace:*",
-    "@snx-v2/formatters": "workspace:*",
     "@snx-v2/useApr": "workspace:*",
     "@snx-v2/useClaimableRewards": "workspace:*",
     "@snx-v2/useGetLifetimeRewards": "workspace:*",
     "@storybook/react": "^6.5.16",
+    "@synthetixio/formatters": "workspace:*",
     "react": "^18.2.0"
   },
   "stableVersion": "0.0.9"

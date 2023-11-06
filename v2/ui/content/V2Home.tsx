@@ -14,7 +14,7 @@ import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useApr } from '@snx-v2/useApr';
 import { StatBox } from '@snx-v2/StatBox';
-import { formatPercent } from '@snx-v2/formatters';
+import { formatPercent } from '@synthetixio/formatters';
 import { Integrators } from '@snx-v2/Integrators';
 
 const V2Home = () => {

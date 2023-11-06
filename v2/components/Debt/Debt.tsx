@@ -9,7 +9,7 @@ import {
   Tooltip,
   Link,
 } from '@chakra-ui/react';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToUsd } from '@synthetixio/formatters';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { FC, useState } from 'react';
 import { DebtPoolTable } from '@snx-v2/DebtPoolTable';

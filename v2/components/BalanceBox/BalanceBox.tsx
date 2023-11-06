@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, ChevronUp, InfoIcon } from '@snx-v2/icons';
-import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd } from '@synthetixio/formatters';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { Link as ReactRouterLink } from 'react-router-dom';

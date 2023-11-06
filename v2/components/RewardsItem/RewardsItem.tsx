@@ -17,7 +17,7 @@ import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { InfoOutline, SNXIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { formatNumber, formatPercent } from '@snx-v2/formatters';
+import { formatNumber, formatPercent } from '@synthetixio/formatters';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import intervalToDuration from 'date-fns/intervalToDuration';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';

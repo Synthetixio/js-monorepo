@@ -6179,7 +6179,6 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
@@ -6190,6 +6189,7 @@ __metadata:
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -6220,7 +6220,6 @@ __metadata:
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/MintOrBurnChanges": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
@@ -6233,6 +6232,7 @@ __metadata:
     "@snx-v2/useMinStakeTime": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
@@ -6247,11 +6247,11 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/StatBox": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6266,8 +6266,8 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -6278,10 +6278,10 @@ __metadata:
   resolution: "@snx-v2/CRatioBox@workspace:v2/components/CRatioBox"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -6363,12 +6363,12 @@ __metadata:
     "@snx-v2/SwitchNetworkContext": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/TableComponents": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDebtPoolData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6380,11 +6380,11 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/TableComponents": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/synthsByName": "workspace:*"
     "@snx-v2/useDebtPoolData": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     "@tanstack/react-table": ^8.7.9
     react: ^18.2.0
   languageName: unknown
@@ -6396,11 +6396,11 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/StatBox": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useClaimableRewards": "workspace:*"
     "@snx-v2/useGetLifetimeRewards": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -6425,8 +6425,8 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/GasSpeedContext": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -6483,7 +6483,6 @@ __metadata:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/CountDown": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
@@ -6493,6 +6492,7 @@ __metadata:
     "@snx-v2/useRewardsAvailable": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -6512,7 +6512,6 @@ __metadata:
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/MintOrBurnChanges": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
@@ -6525,6 +6524,7 @@ __metadata:
     "@snx-v2/useMintMutation": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
@@ -6537,13 +6537,13 @@ __metadata:
   resolution: "@snx-v2/MintOrBurnChanges@workspace:v2/components/MintOrBurnChanges"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useEscrowBalance": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -6560,7 +6560,6 @@ __metadata:
     "@snx-v2/NotifiButton": "workspace:*"
     "@snx-v2/UserBalances": "workspace:*"
     "@snx-v2/WalletModal": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
@@ -6569,6 +6568,7 @@ __metadata:
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -6612,7 +6612,6 @@ __metadata:
     "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
@@ -6630,6 +6629,7 @@ __metadata:
     "@snx-v2/useRewardsAvailable": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     date-fns: ^2.29.3
     react: ^18.2.0
@@ -6648,7 +6648,6 @@ __metadata:
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/stakingCalculations": "workspace:*"
@@ -6659,6 +6658,7 @@ __metadata:
     "@snx-v2/useSelfLiquidationData": "workspace:*"
     "@snx-v2/useSelfLiquidationMutation": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
@@ -6705,11 +6705,11 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -6745,8 +6745,8 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/Constants": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-router-dom: ^6.8.1
   languageName: unknown
@@ -6758,9 +6758,9 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/icons": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/client-api": ^6.5.16
     "@storybook/react": ^6.5.16
+    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
   languageName: unknown
@@ -6771,13 +6771,13 @@ __metadata:
   resolution: "@snx-v2/UnflagOptions@workspace:v2/components/UnflagOptions"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
   languageName: unknown
@@ -6813,7 +6813,6 @@ __metadata:
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/TableComponents": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/synthsByName": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
@@ -6822,6 +6821,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -6848,7 +6848,6 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/synthsByName": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
@@ -6857,8 +6856,9 @@ __metadata:
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
     "@storybook/react": ^6.5.16
+    "@synthetixio/formatters": "workspace:*"
+    "@synthetixio/v3-theme": "workspace:*"
     react: ^18.2.0
     react-i18next: ^12.1.5
     react-router-dom: ^6.8.1
@@ -6909,15 +6909,6 @@ __metadata:
     "@synthetixio/wei": ^2.74.4
     ethers: ^5.7.2
     react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@snx-v2/formatters@workspace:*, @snx-v2/formatters@workspace:v2/lib/formatters":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/formatters@workspace:v2/lib/formatters"
-  dependencies:
-    date-fns: ^2.29.3
-    typescript: ^4.9.5
   languageName: unknown
   linkType: soft
 
@@ -7078,8 +7069,8 @@ __metadata:
   dependencies:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
@@ -7115,9 +7106,9 @@ __metadata:
   resolution: "@snx-v2/useDebtShareDataPeriod@workspace:v2/lib/useDebtShareDataPeriod"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
@@ -7174,9 +7165,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useFeePeriodMultiNetwork@workspace:v2/lib/useFeePeriodMultiNetwork"
   dependencies:
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
   languageName: unknown
@@ -7245,8 +7236,8 @@ __metadata:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/feeSuggestion": "workspace:*"
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
@@ -7273,16 +7264,6 @@ __metadata:
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@snx-v2/useGlobalProvidersWithFallback@workspace:*, @snx-v2/useGlobalProvidersWithFallback@workspace:v2/lib/useGlobalProvidersWithFallback":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/useGlobalProvidersWithFallback@workspace:v2/lib/useGlobalProvidersWithFallback"
-  dependencies:
-    ethers: ^5.7.2
-    react: ^18.2.0
-    typescript: ^4.9.5
   languageName: unknown
   linkType: soft
 
@@ -7374,8 +7355,8 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@ethersproject/transactions": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     react: ^18.2.0
@@ -7447,8 +7428,8 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/SignerContext": "workspace:*"
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -7486,16 +7467,6 @@ __metadata:
   resolution: "@snx-v2/useTotalStakedSNX@workspace:v2/lib/useTotalStakedSNX"
   dependencies:
     "@tanstack/react-query": ^4.24.6
-  languageName: unknown
-  linkType: soft
-
-"@snx-v2/v3Theme@workspace:*, @snx-v2/v3Theme@workspace:v2/lib/v3Theme":
-  version: 0.0.0-use.local
-  resolution: "@snx-v2/v3Theme@workspace:v2/lib/v3Theme"
-  dependencies:
-    "@chakra-ui/react": ^2.5.0
-    "@chakra-ui/theme-tools": ^2.0.18
-    "@emotion/react": ^11.10.5
   languageName: unknown
   linkType: soft
 
@@ -9315,6 +9286,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@synthetixio/formatters@workspace:*, @synthetixio/formatters@workspace:v2/lib/formatters":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/formatters@workspace:v2/lib/formatters"
+  dependencies:
+    date-fns: ^2.29.3
+    typescript: ^4.9.5
+  languageName: unknown
+  linkType: soft
+
 "@synthetixio/generate-subgraph-query@workspace:*, @synthetixio/generate-subgraph-query@workspace:tools/generate-subgraph-query":
   version: 0.0.0-use.local
   resolution: "@synthetixio/generate-subgraph-query@workspace:tools/generate-subgraph-query"
@@ -9366,10 +9346,10 @@ __metadata:
     "@graphql-typed-document-node/core": ^3.1.2
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@pythnetwork/pyth-evm-js": ^1.1.0
-    "@snx-v2/formatters": "workspace:*"
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
+    "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@types/react": ^18.0.28
@@ -9490,6 +9470,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@synthetixio/use-global-providers@workspace:*, @synthetixio/use-global-providers@workspace:v2/lib/useGlobalProvidersWithFallback":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/use-global-providers@workspace:v2/lib/useGlobalProvidersWithFallback"
+  dependencies:
+    ethers: ^5.7.2
+    react: ^18.2.0
+    typescript: ^4.9.5
+  languageName: unknown
+  linkType: soft
+
 "@synthetixio/v2-ui@workspace:*, @synthetixio/v2-ui@workspace:v2/ui":
   version: 0.0.0-use.local
   resolution: "@synthetixio/v2-ui@workspace:v2/ui"
@@ -9542,15 +9532,12 @@ __metadata:
     "@snx-v2/WalletBalances": "workspace:*"
     "@snx-v2/WalletLayout": "workspace:*"
     "@snx-v2/Welcome": "workspace:^"
-    "@snx-v2/formatters": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesClaimed": "workspace:*"
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
     "@socket.tech/plugin": ^1.2.4
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
@@ -9563,9 +9550,12 @@ __metadata:
     "@svgr/webpack": ^6.5.1
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/formatters": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/queries": "workspace:*"
     "@synthetixio/safe-import": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
+    "@synthetixio/v3-theme": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
@@ -9648,6 +9638,18 @@ __metadata:
     webpack-bundle-analyzer: ^4.8.0
     webpack-cli: ^5.0.1
     webpack-dev-server: ^4.11.1
+  languageName: unknown
+  linkType: soft
+
+"@synthetixio/v3-theme@workspace:*, @synthetixio/v3-theme@workspace:v2/lib/v3Theme":
+  version: 0.0.0-use.local
+  resolution: "@synthetixio/v3-theme@workspace:v2/lib/v3Theme"
+  dependencies:
+    "@chakra-ui/react": ^2.5.0
+    "@chakra-ui/theme-tools": ^2.0.18
+    "@emotion/react": ^11.10.5
+    react: ^18.2.0
+    typescript: ^4.9.5
   languageName: unknown
   linkType: soft
 

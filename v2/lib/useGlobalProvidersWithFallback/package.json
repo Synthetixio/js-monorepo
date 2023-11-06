@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v2/useGlobalProvidersWithFallback",
+  "name": "@synthetixio/use-global-providers",
   "main": "dist/index.js",
   "version": "0.0.1-0",
   "scripts": {

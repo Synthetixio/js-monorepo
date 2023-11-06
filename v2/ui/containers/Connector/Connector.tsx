@@ -13,7 +13,7 @@ import { AppEvents, initialState, reducer } from './reducer';
 
 import { getChainIdHex, getNetworkIdFromHex } from 'utils/infura';
 import { initializeSynthetix } from '../../utils/contracts';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 
 const useConnector = () => {
   const [state, dispatch] = useReducer(reducer, initialState);

@@ -16,7 +16,7 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { CollectIcon, InfoIcon, MaintainIcon, StakeIcon } from '@snx-v2/icons';
 import { CountDown } from '@snx-v2/CountDown';
 import { useNavigate } from 'react-router-dom';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToUsd } from '@synthetixio/formatters';
 import { NetworkId } from '@snx-v2/useSynthetixContracts';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 

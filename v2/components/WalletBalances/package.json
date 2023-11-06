@@ -9,7 +9,6 @@
     "@snx-v2/StatBox": "workspace:*",
     "@snx-v2/SynthIcons": "workspace:*",
     "@snx-v2/TableComponents": "workspace:*",
-    "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/synthsByName": "workspace:*",
     "@snx-v2/useDSnxBalance": "workspace:*",
@@ -18,6 +17,7 @@
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
+    "@synthetixio/formatters": "workspace:*",
     "@synthetixio/wei": "^2.74.4",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5"

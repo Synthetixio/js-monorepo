@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { StatBox } from '@snx-v2/StatBox';
 import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
-import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import { useClaimableRewards } from '@snx-v2/useClaimableRewards';
 import { useApr } from '@snx-v2/useApr';
 

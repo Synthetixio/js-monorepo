@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { Flex, Text, Skeleton, Progress } from '@chakra-ui/react';
-import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import { StyledTd } from '@snx-v2/TableComponents';
 
 export const AssetTd = ({

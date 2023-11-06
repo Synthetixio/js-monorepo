@@ -3,7 +3,7 @@ import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { useStats } from '../../../hooks';
 import { FeesTooltip } from './FeesTooltip';
 

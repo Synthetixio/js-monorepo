@@ -1,5 +1,5 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import { expo } from '../../../utils';
 
 interface DailyVolumeChangeProps {

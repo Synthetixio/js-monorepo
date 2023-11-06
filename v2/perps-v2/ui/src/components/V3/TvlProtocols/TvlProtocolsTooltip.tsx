@@ -1,5 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { KeyColour } from '../../Dashboard';
 import { BLOCKCHAIN_COLORS } from './TvlProtocols';
 import { format } from 'date-fns';

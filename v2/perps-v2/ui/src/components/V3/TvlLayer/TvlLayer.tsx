@@ -5,7 +5,7 @@ import { KeyColour } from '../../Dashboard';
 import { TvlLayerTooltip } from './TvlLayerTooltip';
 import { useState } from 'react';
 import { TimeBadge } from '../../TimeBadge';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { useTvlLayers } from '../../../hooks/useTvlLayers';
 
 export const TvlLayer = ({ ...props }: FlexProps) => {

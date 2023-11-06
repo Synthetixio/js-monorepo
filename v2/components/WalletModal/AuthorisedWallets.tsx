@@ -3,7 +3,7 @@ import { useAuthorisedWallets } from '@snx-v2/useAuthorisedWallets';
 import { FC, PropsWithChildren } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { DelegateWallet } from '@snx-v2/useDelegateWallet';
-import { truncateAddress } from '@snx-v2/formatters';
+import { truncateAddress } from '@synthetixio/formatters';
 
 const StyledBox: FC<PropsWithChildren> = ({ children }) => (
   <Box my={2} px={4} py={3} bg="black" border="1px" borderColor="gray.800" borderRadius="base">

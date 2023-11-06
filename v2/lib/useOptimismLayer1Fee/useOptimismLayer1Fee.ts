@@ -6,7 +6,7 @@ import { wei } from '@synthetixio/wei';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useQuery } from '@tanstack/react-query';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { Provider } from '@ethersproject/providers';
 
 const isNetworkIdOvm = (networkId: number | null) => {
