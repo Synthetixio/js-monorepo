@@ -8,7 +8,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import type { SynthetixDebtShare } from '@synthetixio/contracts/build/mainnet/deployment/SynthetixDebtShare';
 import type { SynthetixDebtShare as SynthetixDebtShareOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthetixDebtShare';
 import { SignerContext } from '@snx-v2/SignerContext';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/useGlobalProvidersWithFallback';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SynthetixDebtShare'),

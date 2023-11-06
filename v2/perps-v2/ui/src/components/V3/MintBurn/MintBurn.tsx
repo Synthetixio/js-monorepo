@@ -14,7 +14,7 @@ import { KeyColour } from '../../Dashboard';
 import { MintBurnTooltip } from './MintBurnTooltip';
 import { useState } from 'react';
 import { TimeBadge } from '../../TimeBadge';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { useMintBurn } from '../../../hooks/useMintBurn';
 import { InfoIcon } from '@chakra-ui/icons';
 

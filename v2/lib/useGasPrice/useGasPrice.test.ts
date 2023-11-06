@@ -48,7 +48,7 @@ describe.skip('useGasPrice', () => {
     jest.doMock('@snx-v2/SignerContext', () => ({ SignerContext }));
     jest.doMock('@snx-v2/useGasPrice', () => ({ useGasPrice }));
     jest.doMock('@snx-v2/useSynthetixContracts', () => synthetixContracts);
-    jest.doMock('@snx-v2/useGlobalProvidersWithFallback', () => ({
+    jest.doMock('@synthetixio/useGlobalProvidersWithFallback', () => ({
       useGlobalProvidersWithFallback,
     }));
 

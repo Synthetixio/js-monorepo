@@ -1,5 +1,5 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { formatNumberToCurrencyBasedOnSize } from '@snx-v2/formatters';
+import { formatNumberToCurrencyBasedOnSize } from '@synthetixio/formatters';
 
 interface MarkPriceProps {
   indexPrice: number;

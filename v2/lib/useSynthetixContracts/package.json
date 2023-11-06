@@ -7,8 +7,8 @@
     "@ethersproject/providers": "^5.7.2",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/SignerContext": "workspace:*",
-    "@snx-v2/useGlobalProvidersWithFallback": "workspace:*",
     "@synthetixio/contracts": "workspace:*",
+    "@synthetixio/useGlobalProvidersWithFallback": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
     "ethers": "^5.7.2",
     "react": "^18.2.0"

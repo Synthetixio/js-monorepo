@@ -13,7 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { FailedIcon, InfoIcon, TokensIcon, SNXIconWithBorder } from '@snx-v2/icons';
-import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@snx-v2/formatters';
+import { formatNumber, numberWithCommas, parseFloatWithCommas } from '@synthetixio/formatters';
 import { PercentBadges } from './PercentBadges';
 import { useMintMutation } from '@snx-v2/useMintMutation';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';

@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Text, Image } from '@chakra-ui/react';
-import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd } from '@synthetixio/formatters';
 import { SNXIcon } from '@snx-v2/icons';
 import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import { useGetSynthsByName } from '@snx-v2/synthsByName';

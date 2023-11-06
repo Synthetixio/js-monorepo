@@ -9,7 +9,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import type { FeePool } from '@synthetixio/contracts/build/mainnet/deployment/FeePool';
 import type { FeePool as FeePoolOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/FeePool';
 import { SignerContext } from '@snx-v2/SignerContext';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/useGlobalProvidersWithFallback';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/FeePool'),

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getFeePool } from '@snx-v2/useSynthetixContracts';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/useGlobalProvidersWithFallback';
 
 export const useFeePeriodMultiNetwork = (period = 1 /* Defaults to previous period*/) => {
   const { globalProviders, usingInfura, toggleRpc } = useGlobalProvidersWithFallback();

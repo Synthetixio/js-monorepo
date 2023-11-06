@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Flex, Box, Heading, Badge, Divider, Text, Tooltip, Skeleton } from '@chakra-ui/react';
 import { ArrowRight, InfoIcon } from '@snx-v2/icons';
-import { formatPercent } from '@snx-v2/formatters';
+import { formatPercent } from '@synthetixio/formatters';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useTranslation } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';

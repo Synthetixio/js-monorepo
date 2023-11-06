@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { FC } from 'react';
 import { useClaimLiquidatorRewardsMutation } from '../../lib/useClaimLiquidatorRewardsMutation';
 import { RewardsTransactionModal } from './RewardsTransactionModal';

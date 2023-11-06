@@ -7,7 +7,7 @@ import {
 } from 'constants/defaults';
 import { CurrencyKey } from 'constants/currency';
 import { isFiatCurrency } from 'utils/currencies';
-import { numberWithCommas } from '@snx-v2/formatters';
+import { numberWithCommas } from '@synthetixio/formatters';
 
 export type FormatNumberOptions = {
   minDecimals?: number;

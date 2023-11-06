@@ -1,4 +1,4 @@
-import { formatNumber, formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import { FC, ReactElement } from 'react';
 import {
   Text,

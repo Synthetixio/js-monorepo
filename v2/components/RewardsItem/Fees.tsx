@@ -3,7 +3,7 @@ import { Box, Text, Flex, Button, Badge, Divider } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { InfoOutline, DollarIcon } from '@snx-v2/icons';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { formatNumber, formatPercent } from '@snx-v2/formatters';
+import { formatNumber, formatPercent } from '@synthetixio/formatters';
 import { useApr } from '@snx-v2/useApr';
 import { TradingFeesModal } from './TradingFeesModal';
 import { RewardsItemUI } from './RewardsItem';

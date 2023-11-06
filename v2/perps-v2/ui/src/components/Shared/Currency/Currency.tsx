@@ -1,5 +1,5 @@
 import { Fade, Td } from '@chakra-ui/react';
-import { formatNumberToCurrencyBasedOnSize } from '@snx-v2/formatters';
+import { formatNumberToCurrencyBasedOnSize } from '@synthetixio/formatters';
 
 interface CurrencyProps {
   amount: number | null;

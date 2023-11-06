@@ -4,7 +4,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import { getFeePool, getSynthetixDebtShare } from '@snx-v2/useSynthetixContracts';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/useGlobalProvidersWithFallback';
 
 export const useDebtShareDataPeriod = (period = 1 /* Defaults to previous period*/) => {
   const { walletAddress, networkId } = useContext(ContractContext);

@@ -7,7 +7,6 @@
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/SynthIcons": "workspace:*",
-    "@snx-v2/formatters": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/synthsByName": "workspace:*",
     "@snx-v2/txnLink": "workspace:*",
@@ -18,6 +17,7 @@
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@snx-v2/v3Theme": "workspace:*",
     "@storybook/react": "^6.5.16",
+    "@synthetixio/formatters": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5",
     "react-router-dom": "^6.8.1"

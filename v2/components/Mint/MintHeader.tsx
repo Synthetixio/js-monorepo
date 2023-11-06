@@ -15,7 +15,7 @@ import { InfoIcon } from '@snx-v2/icons';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useTranslation, Trans } from 'react-i18next';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { CountDown } from '@snx-v2/CountDown';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';

@@ -9,7 +9,7 @@ import type { ExchangeRates } from '@synthetixio/contracts/build/mainnet/deploym
 import type { ExchangeRates as ExchangeRatesOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/ExchangeRates';
 
 import { SignerContext } from '@snx-v2/SignerContext';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/useGlobalProvidersWithFallback';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/ExchangeRates'),

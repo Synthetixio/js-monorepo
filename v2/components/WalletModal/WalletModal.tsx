@@ -17,7 +17,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { truncateAddress } from '@snx-v2/formatters';
+import { truncateAddress } from '@synthetixio/formatters';
 import { CopyIcon, OpenInNew } from '@snx-v2/icons';
 import { getEtherscanBaseUrl } from '@snx-v2/txnLink';
 import { useNavigate } from 'react-router-dom';

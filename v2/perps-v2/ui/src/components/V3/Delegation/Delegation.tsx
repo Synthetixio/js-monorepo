@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDelegations } from '../../../hooks/useDelegations';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../../Dashboard';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { DelegationTooltip } from './DelegationTooltip';
 import { Area, Bar, ComposedChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { InfoIcon } from '@chakra-ui/icons';

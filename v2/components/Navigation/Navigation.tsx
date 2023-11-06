@@ -32,7 +32,7 @@ import {
 } from '@snx-v2/icons';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { formatNumberToUsd, truncateAddress } from '@snx-v2/formatters';
+import { formatNumberToUsd, truncateAddress } from '@synthetixio/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
 import Wei, { wei } from '@synthetixio/wei';
 import { useDebtData } from '@snx-v2/useDebtData';

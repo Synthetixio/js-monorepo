@@ -5,10 +5,10 @@
   "version": "0.0.11-0",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
-    "@snx-v2/formatters": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
+    "@synthetixio/formatters": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5"
   },

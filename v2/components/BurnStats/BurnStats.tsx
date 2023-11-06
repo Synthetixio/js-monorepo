@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 import { Flex, Link } from '@chakra-ui/react';
 import { StatBox } from '@snx-v2/StatBox';
-import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import { useApr } from '@snx-v2/useApr';
 import { useFeesBurnedInPeriod } from '@snx-v2/useFeesBurnedInPeriod';
 import { DelegateWallet, useDelegateWallet } from '@snx-v2/useDelegateWallet';

@@ -1,5 +1,5 @@
 import { Button, ButtonProps, Tooltip } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { FC } from 'react';
 import { RewardsTransactionModal } from './RewardsTransactionModal';
 import { useNavigate } from 'react-router-dom';

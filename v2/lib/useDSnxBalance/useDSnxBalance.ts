@@ -5,7 +5,7 @@ import { dSNXPoolAddressOptimism, dSNXAbi } from '@snx-v2/Constants';
 import { useQuery } from '@tanstack/react-query';
 import { Contract } from 'ethers';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/useGlobalProvidersWithFallback';
 
 export const useGetDSnxBalance = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
