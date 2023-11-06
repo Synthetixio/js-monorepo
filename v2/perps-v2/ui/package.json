@@ -24,7 +24,7 @@
     "@snx-v2/v3-theme": "workspace:*",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/formatters": "workspace:*",
-    "@synthetixio/useGlobalProvidersWithFallback": "workspace:*",
+    "@synthetixio/use-global-providers": "workspace:*",
     "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query": "^4.24.6",
     "axios": "^1.3.3",

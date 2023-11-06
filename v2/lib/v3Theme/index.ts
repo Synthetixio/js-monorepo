@@ -1,2 +1,2 @@
-export * from './v3-theme';
+export * from './v3Theme';
 export * from './Fonts';

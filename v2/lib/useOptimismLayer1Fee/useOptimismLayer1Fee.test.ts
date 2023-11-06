@@ -44,7 +44,7 @@ describe('useOptimismLayer1Fee', () => {
     jest.doMock('@tanstack/react-query', () => reactQuery);
     jest.doMock('@snx-v2/ContractContext', () => ContractContext);
     jest.doMock('@snx-v2/useSynthetixContracts', () => synthetixContracts);
-    jest.doMock('@synthetixio/useGlobalProvidersWithFallback', () => ({
+    jest.doMock('@synthetixio/use-global-providers', () => ({
       useGlobalProvidersWithFallback,
     }));
     jest.doMock('@ethersproject/contracts', () => ({ Contract: EthersContract }));

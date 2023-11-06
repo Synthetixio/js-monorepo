@@ -8,7 +8,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import type { SynthUtil } from '@synthetixio/contracts/build/mainnet/deployment/SynthUtil';
 import type { SynthUtil as SynthUtilOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthUtil';
 import { SignerContext } from '@snx-v2/SignerContext';
-import { useGlobalProvidersWithFallback } from '@synthetixio/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SynthUtil'),

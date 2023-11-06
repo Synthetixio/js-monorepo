@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useGlobalProvidersWithFallback } from '@synthetixio/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 
 export const useEnsName = (address?: string | null) => {
   const { globalProviders } = useGlobalProvidersWithFallback();
