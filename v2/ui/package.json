@@ -69,7 +69,7 @@
     "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useFeesClaimed": "workspace:*",
     "@snx-v2/useLiquidationData": "workspace:*",
-    "@snx-v2/v3Theme": "workspace:*",
+    "@snx-v2/v3-theme": "workspace:*",
     "@socket.tech/plugin": "^1.2.4",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/contracts-interface": "workspace:*",

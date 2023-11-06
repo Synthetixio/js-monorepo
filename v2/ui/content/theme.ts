@@ -1,5 +1,5 @@
 import { ChakraTheme, ComponentMultiStyleConfig, ComponentStyleConfig } from '@chakra-ui/react';
-import { theme as chakraTheme } from '@snx-v2/v3Theme';
+import { theme as chakraTheme } from '@snx-v2/v3-theme';
 import merge from 'lodash/merge';
 import { singleColor, multipleColor } from '../utils/themeUtils';
 

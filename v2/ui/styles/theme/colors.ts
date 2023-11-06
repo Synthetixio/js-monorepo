@@ -1,4 +1,4 @@
-import { theme as chakraTheme } from '@snx-v2/v3Theme';
+import { theme as chakraTheme } from '@snx-v2/v3-theme';
 
 export default {
   // primary

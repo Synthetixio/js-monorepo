@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import styled, { css, useTheme } from 'styled-components';
-import { theme as chakraTheme } from '@snx-v2/v3Theme';
+import { theme as chakraTheme } from '@snx-v2/v3-theme';
 import { resetButtonCSS } from '@snx-v1/styles';
 
 type TabButtonProps = {

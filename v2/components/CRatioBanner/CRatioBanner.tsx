@@ -4,7 +4,7 @@ import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
-import { theme } from '@snx-v2/v3Theme';
+import { theme } from '@snx-v2/v3-theme';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 

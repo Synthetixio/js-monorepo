@@ -6266,7 +6266,7 @@ __metadata:
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
+    "@snx-v2/v3-theme": "workspace:*"
     "@storybook/react": ^6.5.16
     react: ^18.2.0
     react-i18next: ^12.1.5
@@ -6745,7 +6745,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/Constants": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
+    "@snx-v2/v3-theme": "workspace:*"
     "@storybook/react": ^6.5.16
     react: ^18.2.0
     react-router-dom: ^6.8.1
@@ -6758,7 +6758,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/icons": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
+    "@snx-v2/v3-theme": "workspace:*"
     "@storybook/client-api": ^6.5.16
     "@storybook/react": ^6.5.16
     react: ^18.2.0
@@ -6856,7 +6856,7 @@ __metadata:
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
+    "@snx-v2/v3-theme": "workspace:*"
     "@storybook/react": ^6.5.16
     "@synthetixio/formatters": "workspace:*"
     react: ^18.2.0
@@ -7470,9 +7470,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/v3Theme@workspace:*, @snx-v2/v3Theme@workspace:v2/lib/v3Theme":
+"@snx-v2/v3-theme@workspace:*, @snx-v2/v3-theme@workspace:v2/lib/v3Theme":
   version: 0.0.0-use.local
-  resolution: "@snx-v2/v3Theme@workspace:v2/lib/v3Theme"
+  resolution: "@snx-v2/v3-theme@workspace:v2/lib/v3Theme"
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@chakra-ui/theme-tools": ^2.0.18
@@ -9356,7 +9356,7 @@ __metadata:
     "@graphql-typed-document-node/core": ^3.1.2
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@pythnetwork/pyth-evm-js": ^1.1.0
-    "@snx-v2/v3Theme": "workspace:*"
+    "@snx-v2/v3-theme": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/formatters": "workspace:*"
     "@synthetixio/useGlobalProvidersWithFallback": "workspace:*"
@@ -9548,7 +9548,7 @@ __metadata:
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
-    "@snx-v2/v3Theme": "workspace:*"
+    "@snx-v2/v3-theme": "workspace:*"
     "@socket.tech/plugin": ^1.2.4
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
