@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 const mainnetId = 1;
 const optimismId = 10;
+
 export const useGlobalProvidersWithFallback = () => {
   const [useInfura, setUseInfura] = useState(true);
 
