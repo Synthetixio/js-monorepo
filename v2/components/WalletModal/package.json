@@ -15,7 +15,7 @@
     "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
-    "@snx-v2/v3-theme": "workspace:*",
+    "@synthetixio/v3-theme": "workspace:*",
     "@storybook/react": "^6.5.16",
     "@synthetixio/formatters": "workspace:*",
     "react": "^18.2.0",

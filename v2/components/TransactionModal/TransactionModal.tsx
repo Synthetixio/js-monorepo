@@ -8,7 +8,7 @@ import {
   ModalCloseButton,
   Box,
 } from '@chakra-ui/react';
-import { theme } from '@snx-v2/v3-theme';
+import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
 
 type Props = { isOpen: boolean; onClose?: () => void; title: string; icon?: ReactNode };

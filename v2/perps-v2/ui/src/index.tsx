@@ -1,5 +1,5 @@
 import React from 'react';
-import { theme, Fonts } from '@snx-v2/v3-theme';
+import { theme, Fonts } from '@synthetixio/v3-theme';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Account from './pages/Account';

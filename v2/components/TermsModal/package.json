@@ -6,7 +6,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/Constants": "workspace:*",
-    "@snx-v2/v3-theme": "workspace:*",
+    "@synthetixio/v3-theme": "workspace:*",
     "@storybook/react": "^6.5.16",
     "react": "^18.2.0",
     "react-router-dom": "^6.8.1"

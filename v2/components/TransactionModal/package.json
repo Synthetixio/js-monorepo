@@ -6,7 +6,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/icons": "workspace:*",
-    "@snx-v2/v3-theme": "workspace:*",
+    "@synthetixio/v3-theme": "workspace:*",
     "@storybook/client-api": "^6.5.16",
     "@storybook/react": "^6.5.16",
     "react": "^18.2.0",

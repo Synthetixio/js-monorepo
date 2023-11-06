@@ -21,7 +21,7 @@ import { truncateAddress } from '@synthetixio/formatters';
 import { CopyIcon, OpenInNew } from '@snx-v2/icons';
 import { getEtherscanBaseUrl } from '@snx-v2/txnLink';
 import { useNavigate } from 'react-router-dom';
-import { theme } from '@snx-v2/v3-theme';
+import { theme } from '@synthetixio/v3-theme';
 import { useTranslation } from 'react-i18next';
 import { Balances, BalancesProps } from './Balances';
 import { AuthorisedWallets, AuthorisedWalletsProps } from './AuthorisedWallets';

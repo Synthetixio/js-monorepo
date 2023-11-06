@@ -1,5 +1,5 @@
 {
-  "name": "@snx-v2/v3-theme",
+  "name": "@synthetixio/v3-theme",
   "private": true,
   "main": "dist/index.js",
   "version": "0.0.1",
