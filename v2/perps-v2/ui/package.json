@@ -1,6 +1,6 @@
 {
   "name": "@synthetixio/perps-v2-dashboard",
-  "version": "0.0.6",
+  "version": "0.0.7-0",
   "private": true,
   "scripts": {
     "start": "webpack-cli serve",
@@ -88,5 +88,6 @@
       "@graphql-typed-document-node/core",
       "process"
     ]
-  }
+  },
+  "stableVersion": "0.0.6"
 }

@@ -2,7 +2,7 @@
   "name": "@snx-v2/EarnStats",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.9",
+  "version": "0.0.10-0",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/StatBox": "workspace:*",
@@ -12,5 +12,6 @@
     "@snx-v2/useGetLifetimeRewards": "workspace:*",
     "@storybook/react": "^6.5.16",
     "react": "^18.2.0"
-  }
+  },
+  "stableVersion": "0.0.9"
 }
