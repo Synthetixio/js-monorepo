@@ -2,11 +2,12 @@
   "name": "@snx-v2/formatters",
   "private": true,
   "main": "dist/index.js",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "build": "tsc"
   },
   "dependencies": {
     "date-fns": "^2.29.3"
-  }
+  },
+  "stableVersion": "0.0.0"
 }

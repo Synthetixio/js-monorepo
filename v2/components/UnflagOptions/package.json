@@ -2,7 +2,7 @@
   "name": "@snx-v2/UnflagOptions",
   "private": true,
   "main": "index.tsx",
-  "version": "0.0.12",
+  "version": "0.0.13-0",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/formatters": "workspace:*",
@@ -14,5 +14,6 @@
     "@storybook/react": "^6.5.16",
     "react-i18next": "^12.1.5",
     "react-router-dom": "^6.8.1"
-  }
+  },
+  "stableVersion": "0.0.12"
 }
