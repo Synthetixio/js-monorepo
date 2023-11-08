@@ -10,6 +10,7 @@ import {
 } from '../Shared';
 import { useLiquidations } from '../../hooks';
 import { LiquidationsLoading } from './LiquidationsLoading';
+import { Action } from '../Shared/Action';
 
 export const LiquidationsTable = () => {
   const { loading, data, error } = useLiquidations();
@@ -30,6 +31,7 @@ export const LiquidationsTable = () => {
         <Table bg="navy.700">
           <Thead>
             <Tr>
+              <TableHeaderCell>Action</TableHeaderCell>
               <TableHeaderCell>Market</TableHeaderCell>
               <TableHeaderCell>Age</TableHeaderCell>
               <TableHeaderCell>Price</TableHeaderCell>
@@ -42,7 +44,6 @@ export const LiquidationsTable = () => {
           <Tbody>
             {loading && (
               <>
-                <LiquidationsLoading />
                 <LiquidationsLoading />
                 <LiquidationsLoading />
                 <LiquidationsLoading />
@@ -61,9 +62,16 @@ export const LiquidationsTable = () => {
                 trader: { id },
                 fee,
                 futuresPosition: { leverage },
+                txHash,
+                long,
               }) => {
                 return (
                   <Tr key={liquidationId} borderTopWidth="1px">
+                    <Action
+                      label={long ? 'LONG' : 'SHORT'}
+                      txHash={txHash}
+                      sx={{ color: long ? 'green.500' : 'red.500' }}
+                    />
                     <Market
                       asset={asset}
                       leverage={leverage?.toNumber() || null}
