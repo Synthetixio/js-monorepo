@@ -1,4 +1,4 @@
-import { Box, Button, Fade, Flex, Link, Td, Text } from '@chakra-ui/react';
+import { Box, Fade, Flex, Link, Td, Text } from '@chakra-ui/react';
 import { formatNumber } from '@synthetixio/formatters';
 import { utils } from 'ethers';
 import { CurrencyIcon } from '../../CurrencyIcon';
