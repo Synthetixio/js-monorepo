@@ -1,10 +1,17 @@
 {
-  "name": "@snx-v2/useGlobalProvidersWithFallback",
-  "private": true,
-  "main": "index.ts",
-  "version": "0.0.0",
+  "name": "@synthetixio/use-global-providers",
+  "main": "dist/index.js",
+  "version": "0.0.1-0",
+  "scripts": {
+    "build": "tsc"
+  },
   "dependencies": {
     "ethers": "^5.7.2",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "typescript": "^4.9.5"
+  },
+  "stableVersion": "0.0.1-0",
+  "publishConfig": {
+    "access": "public"
   }
 }

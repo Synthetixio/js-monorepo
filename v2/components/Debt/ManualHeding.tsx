@@ -11,7 +11,7 @@ import {
   Tooltip,
   Box,
 } from '@chakra-ui/react';
-import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import { InfoIcon } from '@snx-v2/icons';
 import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import { StyledTd, StyledTh } from '@snx-v2/TableComponents';

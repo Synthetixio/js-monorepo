@@ -16,7 +16,7 @@ import { CollectIcon, InfoIcon, MaintainIcon, WreckedIcon } from '@snx-v2/icons'
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useTranslation } from 'react-i18next';
 import { useLiquidationData } from '@snx-v2/useLiquidationData';
-import { formatPercent } from '@snx-v2/formatters/number';
+import { formatPercent } from '@synthetixio/formatters/number';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';

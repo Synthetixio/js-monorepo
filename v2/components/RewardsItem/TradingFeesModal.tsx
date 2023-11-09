@@ -9,7 +9,7 @@ import {
   Text,
   Tooltip,
 } from '@chakra-ui/react';
-import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd } from '@synthetixio/formatters';
 import { InfoIcon } from '@snx-v2/icons';
 import { calcNewCratioPercentage } from '@snx-v2/stakingCalculations';
 import { useNavigate } from 'react-router-dom';

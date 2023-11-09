@@ -2,13 +2,12 @@
   "name": "@snx-v2/RewardsItem",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.10",
+  "version": "0.0.11-0",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/CountDown": "workspace:*",
     "@snx-v2/ExternalLink": "workspace:*",
     "@snx-v2/TransactionModal": "workspace:*",
-    "@snx-v2/formatters": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/parseTxnError": "workspace:*",
@@ -26,10 +25,12 @@
     "@snx-v2/useRewardsAvailable": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@storybook/react": "^6.5.16",
+    "@synthetixio/formatters": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
     "date-fns": "^2.29.3",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5",
     "react-router-dom": "^6.8.1"
-  }
+  },
+  "stableVersion": "0.0.10"
 }

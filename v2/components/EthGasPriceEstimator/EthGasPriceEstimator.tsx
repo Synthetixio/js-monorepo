@@ -13,7 +13,7 @@ import {
   Tooltip,
   FlexProps,
 } from '@chakra-ui/react';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToUsd } from '@synthetixio/formatters';
 
 import { GasSpeedContext, GasSpeed } from '@snx-v2/GasSpeedContext';
 import { ChevronDown, InfoIcon } from '@snx-v2/icons';

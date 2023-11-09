@@ -8,7 +8,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import type { RewardEscrowV2 } from '@synthetixio/contracts/build/mainnet/deployment/RewardEscrowV2';
 import type { RewardEscrowV2 as RewardEscrowV2Ovm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/RewardEscrowV2';
 import { SignerContext } from '@snx-v2/SignerContext';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/RewardEscrowV2'),

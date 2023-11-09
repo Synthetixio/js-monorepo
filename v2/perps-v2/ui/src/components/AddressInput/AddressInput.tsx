@@ -3,7 +3,7 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { useState } from 'react';
 
 export const AddressInput = () => {

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { feeSuggestion } from '@snx-v2/feeSuggestion';
 
 export const useGasPrice = () => {

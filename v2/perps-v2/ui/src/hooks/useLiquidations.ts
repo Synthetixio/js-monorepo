@@ -52,6 +52,7 @@ interface Liquidation {
     id: string;
     totalLiquidations: string;
   };
+  long: boolean;
 }
 
 function parsedLiquidationData(
@@ -78,6 +79,7 @@ function parsedLiquidationData(
       id: liquidation.trader.id,
       totalLiquidations: liquidation.trader.totalLiquidations,
     },
+    long: wei(liquidation.size, 18, true).gt(0),
   }));
 }
 
@@ -103,9 +105,11 @@ export function useLiquidations() {
     pollInterval: 10000,
   });
 
+  const isLoading = loading || marketConfigsLoading;
+
   return {
     data: queryData?.positionLiquidateds ? parsedLiquidationData(queryData) : undefined,
-    loading,
+    loading: isLoading,
     error,
   };
 }

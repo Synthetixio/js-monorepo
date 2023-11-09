@@ -19,7 +19,7 @@ import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { SynthBalance, useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import Wei from '@synthetixio/wei';
-import { formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumberToUsd } from '@synthetixio/formatters';
 import { StatBox } from '@snx-v2/StatBox';
 import { useTranslation } from 'react-i18next';
 import { ContractContext } from '@snx-v2/ContractContext';

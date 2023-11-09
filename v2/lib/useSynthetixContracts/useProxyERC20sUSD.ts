@@ -7,7 +7,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import type { ProxyERC20sUSD } from '@synthetixio/contracts/build/mainnet/deployment/ProxyERC20sUSD';
 import type { ProxyERC20sUSD as ProxyERC20sUSDOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/ProxyERC20sUSD';
 import { SignerContext } from '@snx-v2/SignerContext';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/ProxyERC20sUSD'),

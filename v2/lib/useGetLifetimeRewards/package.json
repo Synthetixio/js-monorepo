@@ -2,10 +2,11 @@
   "name": "@snx-v2/useGetLifetimeRewards",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.9",
+  "version": "0.0.10-0",
   "dependencies": {
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
     "react": "^18.2.0"
-  }
+  },
+  "stableVersion": "0.0.9"
 }

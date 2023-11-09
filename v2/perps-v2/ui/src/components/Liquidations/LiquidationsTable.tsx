@@ -46,7 +46,6 @@ export const LiquidationsTable = () => {
                 <LiquidationsLoading />
                 <LiquidationsLoading />
                 <LiquidationsLoading />
-                <LiquidationsLoading />
               </>
             )}
 
@@ -61,13 +60,16 @@ export const LiquidationsTable = () => {
                 trader: { id },
                 fee,
                 futuresPosition: { leverage },
+                txHash,
+                long,
               }) => {
                 return (
                   <Tr key={liquidationId} borderTopWidth="1px">
                     <Market
                       asset={asset}
                       leverage={leverage?.toNumber() || null}
-                      isPosition={false}
+                      direction={long ? 'LONG' : 'SHORT'}
+                      txHash={txHash}
                     />
                     <Age timestamp={timestamp} />
                     <Currency amount={price?.toNumber() || null} />

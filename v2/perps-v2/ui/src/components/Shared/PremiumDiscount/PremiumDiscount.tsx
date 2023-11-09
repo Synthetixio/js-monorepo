@@ -1,5 +1,5 @@
 import { Fade, Td, Text } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 
 interface PremiumDiscountProps {
   amount: number;

@@ -1,5 +1,5 @@
 import { Fade, Td } from '@chakra-ui/react';
-import { formatPercent } from '@snx-v2/formatters';
+import { formatPercent } from '@synthetixio/formatters';
 import { expo } from '../../../utils';
 
 interface PercentageChangeProps {

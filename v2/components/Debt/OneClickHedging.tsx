@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { formatNumber, formatNumberToUsd } from '@snx-v2/formatters';
+import { formatNumber, formatNumberToUsd } from '@synthetixio/formatters';
 import { ArrowTopRight, DSNXIcon } from '@snx-v2/icons';
 import { SwitchNetworkContext } from '@snx-v2/SwitchNetworkContext';
 import { StyledTd, StyledTh } from '@snx-v2/TableComponents';

@@ -6,7 +6,7 @@ import { KeyColour } from '../../Dashboard';
 import { TvlProtocolsTooltip } from './TvlProtocolsTooltip';
 import { useState } from 'react';
 import { TimeBadge } from '../../TimeBadge';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 
 export const BLOCKCHAIN_COLORS = ['#522ED1', '#FC8738'];
 

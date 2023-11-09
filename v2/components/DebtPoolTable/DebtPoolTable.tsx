@@ -15,7 +15,7 @@ import {
 import { FC } from 'react';
 import { useDebtPoolData } from '@snx-v2/useDebtPoolData';
 
-import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
+import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import {
   useReactTable,
   getCoreRowModel,

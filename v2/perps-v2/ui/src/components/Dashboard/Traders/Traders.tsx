@@ -4,7 +4,7 @@ import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
 import { TradersTooltip } from './TradersTooltip';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 import { useStats } from '../../../hooks';
 
 export const Traders = ({ ...props }: FlexProps) => {

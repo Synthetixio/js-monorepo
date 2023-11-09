@@ -8,7 +8,7 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import type { LiquidatorRewards } from '@synthetixio/contracts/build/mainnet/deployment/LiquidatorRewards';
 import type { LiquidatorRewards as LiquidatorRewardsOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/LiquidatorRewards';
 import { SignerContext } from '@snx-v2/SignerContext';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/LiquidatorRewards'),

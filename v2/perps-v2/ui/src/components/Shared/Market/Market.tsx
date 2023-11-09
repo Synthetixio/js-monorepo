@@ -1,8 +1,9 @@
-import { Box, Fade, Flex, Td, Text } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
+import { Box, Fade, Flex, Link, Td, Text } from '@chakra-ui/react';
+import { formatNumber } from '@synthetixio/formatters';
 import { utils } from 'ethers';
 import { CurrencyIcon } from '../../CurrencyIcon';
-import { KwentaIcon, PolynomialIcon } from '../../Icons';
+import { KwentaIcon, PolynomialIcon, RightUpIcon } from '../../Icons';
+import { optimisticEthercanTx } from '../../../utils';
 
 interface MarketProps {
   asset: string;
@@ -10,6 +11,7 @@ interface MarketProps {
   direction?: 'LONG' | 'SHORT';
   isPosition?: boolean;
   protocol?: string;
+  txHash?: string;
 }
 
 const replace = ['sETH', 'sBTC'];
@@ -20,6 +22,7 @@ export const Market = ({
   direction,
   isPosition = true,
   protocol,
+  txHash,
 }: MarketProps) => {
   const marketName = utils.parseBytes32String(asset);
   const assetDisplayName = replace.includes(marketName) ? marketName.substring(1) : marketName;
@@ -49,12 +52,27 @@ export const Market = ({
                 color="gray.50"
               >{`${assetDisplayName.toUpperCase()}-PERP`}</Text>
               {Boolean(isPosition && direction) && (
-                <Text fontSize="12px" lineHeight="16px" fontFamily="heading" color="gray.500">
-                  {leverageString}
-                  <Text ml={1} as="span" color={isLong ? 'green.500' : 'red.500'}>
+                <Flex alignItems="center" gap={1}>
+                  {leverageString && (
+                    <Text fontSize="12px" lineHeight="16px" fontFamily="heading" color="gray.500">
+                      {leverageString}
+                    </Text>
+                  )}
+                  <Text
+                    as="span"
+                    fontSize="12px"
+                    lineHeight="16px"
+                    fontFamily="heading"
+                    color={isLong ? 'green.500' : 'red.500'}
+                  >
                     {direction}
                   </Text>
-                </Text>
+                  {txHash && (
+                    <Link href={optimisticEthercanTx(txHash)} target="_blank" rel="noopener">
+                      <RightUpIcon mb={0.5} />
+                    </Link>
+                  )}
+                </Flex>
               )}
             </Box>
           </Flex>

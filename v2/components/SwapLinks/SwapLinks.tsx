@@ -13,7 +13,7 @@ import {
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { formatNumber } from '@snx-v2/formatters';
+import { formatNumber } from '@synthetixio/formatters';
 
 export const SWAP_LINKS = {
   oneInch: (networkId: number) => `https://app.1inch.io/#/${networkId}/unified/swap/ETH/sUSD`,

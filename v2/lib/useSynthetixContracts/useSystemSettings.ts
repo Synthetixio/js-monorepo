@@ -7,7 +7,7 @@ import type { SystemSettings as SystemSettingsOvm } from '@synthetixio/contracts
 import { useContext } from 'react';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { SignerContext } from '@snx-v2/SignerContext';
-import { useGlobalProvidersWithFallback } from '@snx-v2/useGlobalProvidersWithFallback';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SystemSettings'),
