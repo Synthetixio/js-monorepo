@@ -78,7 +78,7 @@ module.exports = {
     },
 
     {
-      files: ['v2/ui/**/*', 'v2/components/**/*', 'v1/components/**/*', 'v2/perps-v2/ui/**/*'],
+      files: ['v2/ui/**/*', 'v2/components/**/*', 'v1/components/**/*'],
 
       extends: ['plugin:react/recommended'],
       plugins: ['react', 'react-hooks'],
@@ -150,26 +150,6 @@ module.exports = {
         expect: true,
       },
       rules: {},
-    },
-
-    {
-      files: ['v2/perps-v2/perps-subgraph/**/*'],
-      env: {},
-      globals: {
-        changetype: true,
-        i32: true,
-        u8: true,
-        i64: true,
-        u32: true,
-        u64: true,
-        assert: true,
-      },
-      rules: {
-        'prefer-const': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
-        '@typescript-eslint/ban-types': 'off',
-        '@typescript-eslint/no-array-constructor': 'off',
-      },
     },
   ],
 };
