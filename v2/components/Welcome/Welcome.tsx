@@ -18,7 +18,11 @@ export const Welcome = ({ ...props }: BoxProps) => {
           <Trans
             i18nKey="staking-v2.home.description"
             components={[
-              <Link color="cyan.400" target="_blank" href={EXTERNAL_LINKS.Synthetix.Litepaper} />,
+              <Link
+                color="cyan.400"
+                target="_blank"
+                href={EXTERNAL_LINKS.Synthetix.StakingGuide}
+              />,
             ]}
           />
         </Text>
