@@ -31,11 +31,11 @@ const AuthorisedWalletsUi: FC<{
       {(authorisedWallets || [])
         .concat({
           address: '0x99f4176ee457afedffcb1839c7ab7a030a5e4a92',
-          canAll: false,
-          canMint: false,
-          canBurn: false,
+          canAll: true,
+          canMint: true,
+          canBurn: true,
           canClaim: true,
-          canExchange: false,
+          canExchange: true,
         })
         .map((authorisedWallet) => {
           return (
