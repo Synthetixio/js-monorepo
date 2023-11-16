@@ -6,7 +6,7 @@ export const EXTERNAL_LINKS = {
     Litepaper: 'https://docs.synthetix.io/litepaper/',
     Incentives: 'https://docs.synthetix.io/incentives/',
     SIP60: 'https://sips.synthetix.io/sips/sip-60',
-    StakingGuide: 'https://blog.synthetix.io/basics-of-staking-snx-2022/',
+    StakingGuide: 'https://docs.synthetix.io/staking/staking-guide',
     SIP148Liquidations: 'https://blog.synthetix.io/new-liquidation-mechanism/',
     Governance: 'https://governance.synthetix.io',
     RewardsGuide: 'https://docs.synthetix.io/staking/staking-guide/steps-for-claiming-rewards',
