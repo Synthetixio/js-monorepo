@@ -9272,7 +9272,7 @@ __metadata:
     "@web3-onboard/common": ^2.3.3
     "@web3-onboard/core": ^2.21.2
     "@web3-onboard/gnosis": ^2.2.0
-    "@web3-onboard/injected-wallets": ^2.10.8
+    "@web3-onboard/injected-wallets": ^2.10.9
     "@web3-onboard/ledger": ^2.5.2
     "@web3-onboard/portis": ^2.1.7
     "@web3-onboard/torus": ^2.2.6
@@ -11634,14 +11634,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web3-onboard/injected-wallets@npm:^2.10.8":
-  version: 2.10.8
-  resolution: "@web3-onboard/injected-wallets@npm:2.10.8"
+"@web3-onboard/injected-wallets@npm:^2.10.9":
+  version: 2.10.9
+  resolution: "@web3-onboard/injected-wallets@npm:2.10.9"
   dependencies:
     "@web3-onboard/common": ^2.3.3
     joi: 17.9.1
     lodash.uniqby: ^4.7.0
-  checksum: 18a632f23cc86ba349454877b9540b306d0439f28f9f0b754a5b7cc0df2d4175f4f5eccb9501355574ad6e064257e83bb3d8260eb83a16f404371b80f7419a1c
+  checksum: 023d99ade5da87ab6e3d25fa25f9509697557f8b9a8c8f250e6859daf5017e84793a7c5e261986d171c00c3ff5fef8a42122165ab94d255c4e27a805467e93d2
   languageName: node
   linkType: hard
 
