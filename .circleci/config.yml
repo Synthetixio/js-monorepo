@@ -216,9 +216,6 @@ jobs:
       - store_artifacts:
           path: 'coverage'
 
-      - run: yarn workspace @synthetixio/perps-v2-subgraph test
-      - run: yarn workspace @synthetixio/perps-v2-subgraph test --coverage
-
   typecheck:
     working_directory: /tmp/app
     docker:
@@ -359,21 +356,6 @@ jobs:
           ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
           ipns-key: 'staking.synthetix.eth'
 
-  perps-watcher-ipfs:
-    working_directory: /tmp/app
-    docker:
-      - image: cimg/node:<< pipeline.parameters.node-version >>
-    resource_class: large
-    steps:
-      - checkout
-      - yarn-install
-      - run: yarn workspace @synthetixio/perps-v2-dashboard build
-      - ipfs-deploy:
-          source-dir: './v2/perps-v2/ui/dist'
-          ipfs-api: 'https://ipfs.synthetix.io:5001/api/v0'
-          ipfs-cluster-api: 'https://ipfs.synthetix.io/api/v0'
-          ipns-key: 'watcher.synthetix.io'
-
 workflows:
   version: 2.1
 
@@ -393,15 +375,6 @@ workflows:
           requires: [yarn-install]
       - v2-ipfs:
           requires: [tests, typecheck, v2-cy, v2-e2e]
-          filters:
-            branches:
-              only:
-                - release
-                - master
-                - ipfs-deploy
-
-      - perps-watcher-ipfs:
-          requires: [tests, typecheck]
           filters:
             branches:
               only:
