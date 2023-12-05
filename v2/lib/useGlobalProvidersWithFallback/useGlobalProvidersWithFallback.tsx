@@ -10,10 +10,10 @@ export const useGlobalProvidersWithFallback = () => {
   const globalProviders = {
     mainnet: useInfura
       ? new providers.InfuraProvider(mainnetId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID)
-      : new providers.AlchemyProvider(mainnetId, process.env?.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY),
+      : new providers.AlchemyProvider(mainnetId, process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY),
     optimism: useInfura
       ? new providers.InfuraProvider(optimismId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID)
-      : new providers.AlchemyProvider(optimismId, process.env?.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY),
+      : new providers.AlchemyProvider(optimismId, process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY),
   };
 
   return {
