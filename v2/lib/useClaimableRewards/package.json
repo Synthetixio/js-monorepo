@@ -4,6 +4,8 @@
   "main": "index.ts",
   "version": "0.0.10-0",
   "dependencies": {
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useGetLiquidationRewards": "workspace:*",
     "@snx-v2/useRewardsAvailable": "workspace:*",
