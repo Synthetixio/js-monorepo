@@ -6821,6 +6821,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useClaimableRewards@workspace:v2/lib/useClaimableRewards"
   dependencies:
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
     "@snx-v2/useRewardsAvailable": "workspace:*"
@@ -6872,6 +6874,7 @@ __metadata:
   resolution: "@snx-v2/useDebtShareDataPeriod@workspace:v2/lib/useDebtShareDataPeriod"
   dependencies:
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
     "@synthetixio/use-global-providers": "workspace:*"
