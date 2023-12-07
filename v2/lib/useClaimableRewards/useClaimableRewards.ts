@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 
 export const useClaimableRewards = () => {
-  // eslint-disable-next-line no-undef
   const { walletAddress: connectedWalletAddress } = useContext(ContractContext);
   const { delegateWallet } = useDelegateWallet();
   const walletAddress = delegateWallet?.address || connectedWalletAddress;
