@@ -154,7 +154,7 @@
     },
     "earn": {
       "title": "Earn Rewards",
-      "description": "Earn Rewards Staking SNX tokens offers weekly rewards in both inflationary SNX and sUSD from trading fees. <0>Learn more<0>",
+      "description": "Earn Rewards Staking SNX tokens offers weekly rewards in sUSD from trading fees. <0>Learn more<0>",
       "apr": "Est. APR",
       "staked": "Staked Balance",
       "remaining": "Time Remaining",
