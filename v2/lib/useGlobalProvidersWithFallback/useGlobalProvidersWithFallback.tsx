@@ -5,15 +5,15 @@ const mainnetId = 1;
 const optimismId = 10;
 
 export const useGlobalProvidersWithFallback = () => {
-  const [useInfura, setUseInfura] = useState(true);
+  const [useInfura, setUseInfura] = useState(false);
 
   const globalProviders = {
     mainnet: useInfura
       ? new providers.InfuraProvider(mainnetId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID)
-      : new providers.AlchemyProvider(mainnetId, process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY),
+      : new providers.AlchemyProvider(mainnetId, 'mgeiWuHQlewkGsw7QP9X-4mXNUo8fvQ5'),
     optimism: useInfura
       ? new providers.InfuraProvider(optimismId, process.env.NEXT_PUBLIC_INFURA_PROJECT_ID)
-      : new providers.AlchemyProvider(optimismId, process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY),
+      : new providers.AlchemyProvider(optimismId, '59pd5v_lvc2xs3lieGwNOT_eqRxC0_lJ'),
   };
 
   return {
