@@ -5,7 +5,7 @@ const mainnetId = 1;
 const optimismId = 10;
 
 export const useGlobalProvidersWithFallback = () => {
-  const [useInfura, setUseInfura] = useState(false);
+  const [useInfura, setUseInfura] = useState(true);
 
   const globalProviders = {
     mainnet: useInfura
