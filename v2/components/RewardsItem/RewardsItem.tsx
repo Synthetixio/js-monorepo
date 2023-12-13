@@ -14,9 +14,16 @@ import {
 import { useTranslation } from 'react-i18next';
 import { CountDown } from '@snx-v2/CountDown';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
-import { SNXIcon } from '@snx-v2/icons';
-import { formatNumber } from '@synthetixio/formatters';
+import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
+import { InfoOutline, SNXIcon } from '@snx-v2/icons';
+import { useDebtData } from '@snx-v2/useDebtData';
+import { formatNumber, formatPercent } from '@synthetixio/formatters';
+import { useFeePoolData } from '@snx-v2/useFeePoolData';
+import intervalToDuration from 'date-fns/intervalToDuration';
+import { getHealthVariant } from '@snx-v2/getHealthVariant';
+import { ClaimRewardsBtn } from './ClaimRewardsBtn';
 import { ClaimLiquidationBtn } from './ClaimLiquidationBtn';
+import { useApr } from '@snx-v2/useApr';
 
 interface RewardsItemProps extends FlexProps {
   isLoading: boolean;
@@ -247,17 +254,47 @@ export const RewardsItemUI = ({
   );
 };
 
+function percentEpochCompleted(nextStartDate?: Date, duration?: number) {
+  const { days, hours, minutes, seconds } = intervalToDuration({
+    start: new Date(),
+    end: nextStartDate || 0,
+  });
+
+  const totalSecondsUntil =
+    (days ? days * 24 * 3600 : 0) +
+    (hours ? hours * 3600 : 0) +
+    (minutes ? minutes * 60 : 0) +
+    (seconds ? seconds : 0);
+
+  const totalDuration = duration || 0;
+
+  return (100 * (totalDuration - totalSecondsUntil)) / totalDuration;
+}
+
 export const Rewards = () => {
   const { t } = useTranslation();
 
-  const { data: liquidationData, isLoading } = useGetLiquidationRewards();
+  const { data: debtData, isLoading: isDebtLoading } = useDebtData();
+  const { data: liquidationData, isLoading: isLiquidationLoading } = useGetLiquidationRewards();
+  const { data: rewardsData, isLoading: isRewardsLoading } = useRewardsAvailable();
+  const { data: feePoolData, isLoading: isFeePoolDataLoading } = useFeePoolData();
+  const { data: aprData } = useApr();
+
+  const variant = getHealthVariant({
+    currentCRatioPercentage: debtData?.currentCRatioPercentage.toNumber(),
+    liquidationCratioPercentage: debtData?.liquidationRatioPercentage.toNumber(),
+    targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
+    targetThreshold: debtData?.targetThreshold.toNumber(),
+  });
+
+  const isLoading =
+    isDebtLoading || isLiquidationLoading || isRewardsLoading || isFeePoolDataLoading;
 
   return (
     <>
       <Box my={8}>
         <Divider my={4} />
-        {/* NOTE: Inflation rewards removed as of SIP2043 https://sips.synthetix.io/sips/sip-2043/ */}
-        {/* <RewardsItemUI
+        <RewardsItemUI
           Icon={() => (
             <Flex
               bg="navy.900"
@@ -339,7 +376,8 @@ export const Rewards = () => {
           claimBtn={
             <ClaimRewardsBtn variant={variant} amountSNX={rewardsData?.snxRewards.toNumber()} />
           }
-        /> */}
+        />
+        <Divider my={4} />
         <RewardsItemUI
           Icon={() => (
             <Flex
