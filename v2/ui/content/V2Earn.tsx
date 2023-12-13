@@ -42,6 +42,22 @@ const V2Earn = () => {
           <Alert variant="solid" my={4}>
             <InfoIcon color="#2ED9FF" width="16px" height="16px" mr={2} />
             <Text color="white" fontSize="16px" fontFamily="heading">
+              Effective Dec 10th, SIP-2043 reduces SNX inflation to zero, ending inflationary
+              rewards.{' '}
+              <Link
+                href="https://blog.synthetix.io/the-end-of-synthetix-token-inflation/"
+                isExternal
+                target="_blank"
+                color="cyan.500"
+                textDecoration="underline"
+              >
+                Read our blog for more details.
+              </Link>
+            </Text>
+          </Alert>
+          <Alert variant="solid" my={4}>
+            <InfoIcon color="#2ED9FF" width="16px" height="16px" mr={2} />
+            <Text color="white" fontSize="16px" fontFamily="heading">
               Fee Burning is now active, which automatically pays down your debt with sUSD rewards,
               you can read more{' '}
               <Link
