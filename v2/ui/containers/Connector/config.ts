@@ -4,7 +4,7 @@ import Onboard from '@web3-onboard/core';
 import type { OnboardAPI } from '@web3-onboard/core';
 import injectedModule from '@web3-onboard/injected-wallets';
 import coinbaseWalletModule from '@web3-onboard/coinbase';
-import walletConnectModule from '@web3-onboard/walletconnect';
+// import walletConnectModule from '@web3-onboard/walletconnect';
 // import ledgerModule from '@web3-onboard/ledger';
 import gnosisModule from './customGnosis';
 import trezorModule from '@web3-onboard/trezor';
@@ -19,10 +19,10 @@ const injected = injectedModule({ custom: [customMetaMask, customBrave, customDe
 
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 
-const walletConnect = walletConnectModule({
-  version: 2,
-  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
-});
+// const walletConnect = walletConnectModule({
+//   version: 2,
+//   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+// });
 
 // const ledger = ledgerModule({
 //   walletConnectVersion: 2,
@@ -108,7 +108,7 @@ export const onboard: OnboardAPI = Onboard({
     trezor,
     coinbaseWalletSdk,
     trust,
-    walletConnect,
+    // walletConnect,
     gnosis,
     portis,
     torus,
