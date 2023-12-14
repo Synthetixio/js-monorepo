@@ -5,7 +5,7 @@ import type { OnboardAPI } from '@web3-onboard/core';
 import injectedModule from '@web3-onboard/injected-wallets';
 import coinbaseWalletModule from '@web3-onboard/coinbase';
 import walletConnectModule from '@web3-onboard/walletconnect';
-import ledgerModule from '@web3-onboard/ledger';
+// import ledgerModule from '@web3-onboard/ledger';
 import gnosisModule from './customGnosis';
 import trezorModule from '@web3-onboard/trezor';
 import portisModule from '@web3-onboard/portis';
@@ -24,10 +24,10 @@ const walletConnect = walletConnectModule({
   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
 });
 
-const ledger = ledgerModule({
-  walletConnectVersion: 2,
-  projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
-});
+// const ledger = ledgerModule({
+//   walletConnectVersion: 2,
+//   projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
+// });
 
 // The trezor module have a bug, we can enable it when this has been merged and released: https://github.com/blocknative/web3-onboard/pull/1165
 const trezor = trezorModule({ email: 'info@synthetix.io', appUrl: 'https://www.synthetix.io' });
@@ -104,7 +104,7 @@ export const onboard: OnboardAPI = Onboard({
   wallets: [
     injected,
     brave,
-    ledger,
+    // ledger,
     trezor,
     coinbaseWalletSdk,
     trust,
