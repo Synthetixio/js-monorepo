@@ -86,7 +86,6 @@
     "@web3-onboard/core": "^2.21.2",
     "@web3-onboard/gnosis": "^2.2.0",
     "@web3-onboard/injected-wallets": "^2.10.9",
-    "@web3-onboard/ledger": "^2.5.2",
     "@web3-onboard/portis": "^2.1.7",
     "@web3-onboard/torus": "^2.2.6",
     "@web3-onboard/trezor": "^2.4.3",
