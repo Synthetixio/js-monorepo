@@ -7205,29 +7205,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@socket.tech/ll-core-v2@npm:^0.0.55":
-  version: 0.0.55
-  resolution: "@socket.tech/ll-core-v2@npm:0.0.55"
-  checksum: a532dfc48b30b49693d78082262a27cf9608cf108bd2cd5e9e9b947e612728141d028f16eaa2de7bc423160e45cd7c01b32b6b86f365c5133ca937865843f5b8
+"@socket.tech/ll-core-v2@npm:^0.0.66":
+  version: 0.0.66
+  resolution: "@socket.tech/ll-core-v2@npm:0.0.66"
+  checksum: 87f50e3cf75e8b65c6ce489cc61d734530d92c2c6fa070deea3d73ca6c8608a98ddfc11400c5e0e4826fd73ff87658ec9051a780cc7ce58db5ed74986ccc1419
   languageName: node
   linkType: hard
 
-"@socket.tech/ll-core@npm:0.1.46, @socket.tech/ll-core@npm:^0.1.10":
-  version: 0.1.46
-  resolution: "@socket.tech/ll-core@npm:0.1.46"
-  checksum: cbf9a9ce5ae4998d3a2fa271970dc904318b03781f56588693aa07dcd84e8ac5f4c5b0f402dd1874db2afbba79ed51a9106c12b30eda8122ea4c9cbfe1689199
+"@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.49":
+  version: 0.1.51
+  resolution: "@socket.tech/ll-core@npm:0.1.51"
+  checksum: 8681639035d651d29edc9835d5424aefb0afaa636d04d065fb30d1f6e10ec335e0d65e2f788c67d3769c1132abe5386b7b7d1345b4f12754cf8e50cadc2729c9
   languageName: node
   linkType: hard
 
-"@socket.tech/plugin@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "@socket.tech/plugin@npm:1.2.4"
+"@socket.tech/plugin@npm:^1.3.4":
+  version: 1.3.4
+  resolution: "@socket.tech/plugin@npm:1.3.4"
   dependencies:
     "@floating-ui/react": ^0.25.0
     "@react-spring/web": ^9.5.0
     "@reduxjs/toolkit": ^1.8.2
     "@socket.tech/ll-core": ^0.1.10
-    "@socket.tech/socket-v2-sdk": ^1.23.3
+    "@socket.tech/socket-v2-sdk": ^1.24.1
     ethers: ^5.6.9
     react-feather: ^2.0.10
     react-redux: ^8.0.2
@@ -7235,21 +7235,21 @@ __metadata:
   peerDependencies:
     react: ">=17.0.1"
     react-dom: ">=17.0.1"
-  checksum: 2a97c95fb41cb6b5cfc2db2ec3416fd7500e1333e9f2abfe3d986ec4046455993a53dcee69a98906e015c474331123c3a7848d116a700c0831aaec3628d351a3
+  checksum: abe5cc2d7d027f09f66584ddcf63d5a49aabaa3fdaed2014f106ad1e28023d0498c82508010282d669de1fcc096ab8bc2a31af7f4140894fbf1614c89ce9dbfc
   languageName: node
   linkType: hard
 
-"@socket.tech/socket-v2-sdk@npm:^1.23.3":
-  version: 1.23.3
-  resolution: "@socket.tech/socket-v2-sdk@npm:1.23.3"
+"@socket.tech/socket-v2-sdk@npm:^1.24.1":
+  version: 1.24.1
+  resolution: "@socket.tech/socket-v2-sdk@npm:1.24.1"
   dependencies:
-    "@socket.tech/ll-core": 0.1.46
-    "@socket.tech/ll-core-v2": ^0.0.55
+    "@socket.tech/ll-core": ^0.1.49
+    "@socket.tech/ll-core-v2": ^0.0.66
     axios: ^0.27.2
     ethers: ^5.6.5
     form-data: ^4.0.0
     tslib: ^2.4.0
-  checksum: 9439ed044829c0bc124d25377ba1ec79fb589855b332322c107fe39a6da3e5b85ad3877aa0095bc0836f6239da1831dba193f48b2900c992025f442f430d8a92
+  checksum: 87fba5cf6b432c7b565333836963f63e81eb60e34b8097b4f07c875f375b6bf687759641290d5f9951cfe045968844c670be1139ea687e0c2852213e4c897962
   languageName: node
   linkType: hard
 
@@ -9199,7 +9199,7 @@ __metadata:
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
-    "@socket.tech/plugin": ^1.2.4
+    "@socket.tech/plugin": ^1.3.4
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
     "@storybook/addon-essentials": ^6.5.16
