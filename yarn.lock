@@ -7212,14 +7212,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@socket.tech/ll-core@npm:^0.1.10":
-  version: 0.1.46
-  resolution: "@socket.tech/ll-core@npm:0.1.46"
-  checksum: cbf9a9ce5ae4998d3a2fa271970dc904318b03781f56588693aa07dcd84e8ac5f4c5b0f402dd1874db2afbba79ed51a9106c12b30eda8122ea4c9cbfe1689199
-  languageName: node
-  linkType: hard
-
-"@socket.tech/ll-core@npm:^0.1.49":
+"@socket.tech/ll-core@npm:^0.1.10, @socket.tech/ll-core@npm:^0.1.49":
   version: 0.1.51
   resolution: "@socket.tech/ll-core@npm:0.1.51"
   checksum: 8681639035d651d29edc9835d5424aefb0afaa636d04d065fb30d1f6e10ec335e0d65e2f788c67d3769c1132abe5386b7b7d1345b4f12754cf8e50cadc2729c9
