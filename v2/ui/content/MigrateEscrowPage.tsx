@@ -3,7 +3,7 @@ import Head from 'react-helmet';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import Main from 'sections/migrate-escrow/migrate';
+import Main from 'sections/migrate/escrow';
 import StatBox from 'components/StatBox';
 import { LineSpacer } from '@snx-v1/styles';
 import StatsSection from 'components/StatsSection';
