@@ -1,20 +1,22 @@
+import { Image } from '@chakra-ui/react';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { formatCurrency } from 'utils/formatters/number';
-import { CryptoCurrency } from 'constants/currency';
+import { CurrencyKey } from 'constants/currency';
 import { GasLimitEstimate } from 'constants/network';
-import { InputContainer, InputBox } from '../../components/common';
+import { InputContainer, InputBox } from './common';
+import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import ROUTES from 'constants/routes';
 
 import GasSelector from 'components/GasSelector';
 import TxConfirmationModal from 'sections/shared/modals/TxConfirmationModal';
-import { ActionCompleted, ActionInProgress } from '../../components/TxSent';
+import { ActionCompleted, ActionInProgress } from './TxSent';
 
 import SNXLogo from 'assets/svg/currencies/crypto/SNX.svg';
-import { StyledCTA } from '../../components/common';
+import { StyledCTA } from './common';
 import {
   ModalContent,
   ModalItem,
@@ -26,7 +28,8 @@ import Wei from '@synthetixio/wei';
 import { GasPrice } from '@synthetixio/queries';
 
 type TabContentProps = {
-  escrowedAmount: Wei;
+  amountToMigrate: Wei;
+  migrateCurrencyKey: CurrencyKey;
   onSubmit: any;
   transactionError: string | null;
   gasEstimateError: string | null;
@@ -39,10 +42,12 @@ type TabContentProps = {
   isVestNeeded: boolean;
   resetTransaction: () => void;
   optimismLayerOneFee: Wei | null;
+  type: 'escrow' | 'debt';
 };
 
 const TabContent: FC<TabContentProps> = ({
-  escrowedAmount,
+  amountToMigrate,
+  migrateCurrencyKey,
   onSubmit,
   transactionError,
   txModalOpen,
@@ -55,10 +60,9 @@ const TabContent: FC<TabContentProps> = ({
   resetTransaction,
   isVestNeeded,
   optimismLayerOneFee,
+  type,
 }) => {
   const { t } = useTranslation();
-  const vestingCurrencyKey = CryptoCurrency['SNX'];
-
   const navigate = useNavigate();
   const renderButton = () => {
     if (isVestNeeded) {
@@ -70,10 +74,10 @@ const TabContent: FC<TabContentProps> = ({
           size="lg"
           disabled={false}
         >
-          {t('migrate-escrow.actions.migrate.action.go-to-escrow-page')}
+          {t(`migrate-${type}.actions.migrate.action.go-to-escrow-page`)}
         </StyledCTA>
       );
-    } else if (escrowedAmount && escrowedAmount.gt(0)) {
+    } else if (amountToMigrate && amountToMigrate.gt(0)) {
       return (
         <StyledCTA
           blue={true}
@@ -82,9 +86,9 @@ const TabContent: FC<TabContentProps> = ({
           size="lg"
           disabled={transactionState !== 'unsent' || !!gasEstimateError}
         >
-          {t('migrate-escrow.actions.migrate.action.migrate-button', {
-            escrowedAmount: formatCurrency(vestingCurrencyKey, escrowedAmount, {
-              currencyKey: vestingCurrencyKey,
+          {t(`migrate-${type}.actions.migrate.action.migrate-button`, {
+            amountToMigrate: formatCurrency(migrateCurrencyKey, amountToMigrate, {
+              currencyKey: migrateCurrencyKey,
               minDecimals: 2,
             }),
           })}
@@ -93,7 +97,7 @@ const TabContent: FC<TabContentProps> = ({
     } else {
       return (
         <StyledCTA blue={true} variant="primary" size="lg" disabled={true}>
-          {t('migrate-escrow.actions.migrate.action.disabled')}
+          {t(`migrate-${type}.actions.migrate.action.disabled`)}
         </StyledCTA>
       );
     }
@@ -103,8 +107,9 @@ const TabContent: FC<TabContentProps> = ({
     return (
       <ActionInProgress
         action="migrate"
-        amount={escrowedAmount.toString()}
-        currencyKey={vestingCurrencyKey}
+        type={type}
+        amount={amountToMigrate.toString()}
+        currencyKey={migrateCurrencyKey}
         hash={txHash as string}
       />
     );
@@ -114,9 +119,10 @@ const TabContent: FC<TabContentProps> = ({
     return (
       <ActionCompleted
         action="migrate"
-        currencyKey={vestingCurrencyKey}
+        type={type}
+        currencyKey={migrateCurrencyKey}
         hash={txHash as string}
-        amount={escrowedAmount.toString()}
+        amount={amountToMigrate.toString()}
         resetTransaction={resetTransaction}
       />
     );
@@ -124,13 +130,17 @@ const TabContent: FC<TabContentProps> = ({
 
   return (
     <>
-      <SubHeadline>{t('migrate-escrow.actions.migrate.subtitle')}</SubHeadline>
+      <SubHeadline>{t(`migrate-${type}.actions.migrate.subtitle`)}</SubHeadline>
       <InputContainer>
         <InputBox>
-          <SNXLogo width="64" />
+          {migrateCurrencyKey === 'SNX' ? (
+            <SNXLogo width="64" />
+          ) : (
+            <Image src={getPngSynthIconUrl('sUSD')} width="52px" height="52px" alt="USD icon" />
+          )}
           <Data>
-            {formatCurrency(vestingCurrencyKey, escrowedAmount, {
-              currencyKey: vestingCurrencyKey,
+            {formatCurrency(migrateCurrencyKey, amountToMigrate, {
+              currencyKey: migrateCurrencyKey,
               minDecimals: 2,
               maxDecimals: 2,
             })}
@@ -146,9 +156,11 @@ const TabContent: FC<TabContentProps> = ({
       </InputContainer>
       {renderButton()}
       {isVestNeeded ? (
-        <ErrorMessage>{t('migrate-escrow.actions.migrate.action.vest-needed')}</ErrorMessage>
+        <SpacedErrorMessage>
+          {t(`migrate-${type}.actions.migrate.action.vest-needed`)}
+        </SpacedErrorMessage>
       ) : (
-        <ErrorMessage>{transactionError || gasEstimateError}</ErrorMessage>
+        <SpacedErrorMessage>{transactionError || gasEstimateError}</SpacedErrorMessage>
       )}
 
       {txModalOpen && (
@@ -161,8 +173,8 @@ const TabContent: FC<TabContentProps> = ({
               <ModalItem>
                 <ModalItemTitle>{t('modals.confirm-transaction.migration.title')}</ModalItemTitle>
                 <ModalItemText>
-                  {formatCurrency(vestingCurrencyKey, escrowedAmount, {
-                    currencyKey: vestingCurrencyKey,
+                  {formatCurrency(migrateCurrencyKey, amountToMigrate, {
+                    currencyKey: migrateCurrencyKey,
                     minDecimals: 4,
                     maxDecimals: 4,
                   })}
@@ -183,6 +195,10 @@ const Data = styled.p`
   color: ${(props) => props.theme.colors.white};
   font-family: ${(props) => props.theme.fonts.extended};
   font-size: 24px;
+`;
+
+const SpacedErrorMessage = styled(ErrorMessage)`
+  margin-top: 16px;
 `;
 
 const SettingsContainer = styled.div`

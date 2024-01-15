@@ -29,13 +29,20 @@ const WalletLayoutUi = ({
   children,
 }: PropsWithChildren<{ networkId: number | null }>) => {
   const { t } = useTranslation();
-  const isMainnet = networkId === NetworkIdByName.mainnet;
+  const isMainnet = networkId === NetworkIdByName.mainnet || networkId === NetworkIdByName.goerli;
   return (
     <Box mt={6}>
       <Heading size="md" textAlign="center">
         {t('staking-v2.wallet.my-wallet')}
       </Heading>
-      <ButtonGroup py={4} display="flex" justifyContent="center" flexWrap="wrap">
+      <ButtonGroup
+        py={4}
+        spacing={1}
+        mx={-10}
+        display="flex"
+        justifyContent="center"
+        flexWrap="wrap"
+      >
         <WalletTab to="/wallet/balances">{t(`staking-v2.wallet.tabs.balances`)}</WalletTab>
         <WalletTab to="/escrow">{t(`staking-v2.wallet.tabs.escrow`)}</WalletTab>
         <WalletTab to="/history">{t(`staking-v2.wallet.tabs.history`)}</WalletTab>
@@ -44,6 +51,9 @@ const WalletLayoutUi = ({
         <WalletTab to="/merge-accounts">{t(`staking-v2.wallet.tabs.merge-accounts`)}</WalletTab>
         {isMainnet ? (
           <WalletTab to="/migrate-escrow">{t(`staking-v2.wallet.tabs.migrate-escrow`)}</WalletTab>
+        ) : null}
+        {isMainnet ? (
+          <WalletTab to="/migrate-debt">{t(`staking-v2.wallet.tabs.migrate-debt`)}</WalletTab>
         ) : null}
       </ButtonGroup>
       {children}
