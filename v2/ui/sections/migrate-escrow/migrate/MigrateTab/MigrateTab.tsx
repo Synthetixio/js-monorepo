@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 
-import { CryptoCurrency } from 'constants/currency';
 import { TabContainer } from '../../components/common';
-import TabContent from '../../components/TabContent';
 
+import TabContent from './TabContent';
 import useSynthetixQueries, { GasPrice } from '@synthetixio/queries';
 import { wei } from '@synthetixio/wei';
 import Connector from 'containers/Connector';
@@ -43,8 +42,7 @@ const MigrateTab = () => {
   return (
     <TabContainer>
       <TabContent
-        amountToMigrate={totalEscrowed}
-        migrateCurrencyKey={CryptoCurrency.SNX}
+        escrowedAmount={totalEscrowed}
         isVestNeeded={isVestNeeded}
         onSubmit={txn.mutate}
         transactionError={txn.errorMessage}
@@ -57,7 +55,6 @@ const MigrateTab = () => {
         transactionState={txn.txnStatus}
         resetTransaction={txn.refresh}
         optimismLayerOneFee={txn.optimismLayerOneFee}
-        type="escrow"
       />
     </TabContainer>
   );

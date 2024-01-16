@@ -47,7 +47,6 @@ export const ROUTES = {
     LIQUIDATION_REWARDS: '/earn/liquidation',
   },
   EscrowMigrate: { Home: '/migrate-escrow' },
-  DebtMigrate: { Home: '/migrate-debt' },
   Gov: {
     Home: '/gov',
     Space: (spaceKey: string) => `/gov/${spaceKey}`,

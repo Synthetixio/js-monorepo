@@ -297,8 +297,7 @@
         "history": "History",
         "delegate": "Delegate",
         "merge-accounts": "Merge Accounts",
-        "migrate-escrow": "Migrate Escrow",
-        "migrate-debt": "Migrate Debt"
+        "migrate-escrow": "Migrate Escrow"
       }
     },
     "wallet-balances": {
@@ -580,35 +579,9 @@
             "verify": "Verify Tx",
             "dismiss": "Dismiss"
           },
-          "migrate-button": "Migrate {{amountToMigrate}}",
+          "migrate-button": "Migrate {{escrowedAmount}}",
           "disabled": "No SNX to migrate",
           "vest-needed": "You need to vest before being able to migrate your escrowed SNX",
-          "go-to-escrow-page": "Go to Escrow page"
-        }
-      }
-    }
-  },
-  "migrate-debt": {
-    "actions": {
-      "migrate": {
-        "title": "Migrate Debt Balance",
-        "subtitle": "Migrate all active debt from L1 to L2",
-        "action": {
-          "in-progress": {
-            "title": "Migration in progress",
-            "subtext": "Waiting for the blockchain to confirm your transaction",
-            "depositing": "Migrating",
-            "etherscan": "View on Etherscan"
-          },
-          "completed": {
-            "title": "Migration complete",
-            "deposited": "Migrated",
-            "verify": "Verify Tx",
-            "dismiss": "Dismiss"
-          },
-          "migrate-button": "Migrate {{amountToMigrate}}",
-          "disabled": "No debt to migrate",
-          "vest-needed": "You need to vest before being able to migrate your debt balance",
           "go-to-escrow-page": "Go to Escrow page"
         }
       }
@@ -689,8 +662,6 @@
       "staked-value": "Staked value",
       "earning": "Earning",
       "active-debt": "Active debt",
-      "collateral-l1": "L1 SNX Collateral",
-      "collateral-l2": "L2 SNX Collateral",
       "c-ratio": "c-ratio",
       "synth-value": "Total synth value",
       "tx-count": "Total transactions",
