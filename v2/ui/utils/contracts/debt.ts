@@ -64,6 +64,30 @@ import {
   abi as SystemSettingsAbiGoerliOvm,
 } from '@synthetixio/contracts/build/goerli-ovm/deployment/SystemSettings';
 
+// DebtMigratorOnEthereum
+import {
+  name as DebtMigratorOnEthereumMainnet,
+  address as DebtMigratorAddressOnEthereumMainnet,
+  abi as DebtMigratorAbiOnEthereumMainnet,
+} from '@synthetixio/contracts/build/mainnet/deployment/DebtMigratorOnEthereum';
+import {
+  name as DebtMigratorOnEthereumGoerli,
+  address as DebtMigratorAddressOnEthereumGoerli,
+  abi as DebtMigratorAbiOnEthereumGoerli,
+} from '@synthetixio/contracts/build/goerli/deployment/DebtMigratorOnEthereum';
+
+// DebtMigratorOnOptimism
+import {
+  name as DebtMigratorOnOptimismMainnetOvm,
+  address as DebtMigratorAddressOnOptimismMainnetOvm,
+  abi as DebtMigratorAbiOnOptimismMainnetOvm,
+} from '@synthetixio/contracts/build/mainnet-ovm/deployment/DebtMigratorOnOptimism';
+import {
+  name as DebtMigratorOnOptimismGoerliOvm,
+  address as DebtMigratorAddressOnOptimismGoerliOvm,
+  abi as DebtMigratorAbiOnOptimismGoerliOvm,
+} from '@synthetixio/contracts/build/goerli-ovm/deployment/DebtMigratorOnOptimism';
+
 export const contracts = {
   ExchangeRates: {
     mainnet: {
@@ -129,6 +153,28 @@ export const contracts = {
       name: SystemSettingsGoerliOvm,
       address: SystemSettingsAddressGoerliOvm,
       abi: SystemSettingsAbiGoerliOvm,
+    },
+  },
+  DebtMigrator: {
+    mainnet: {
+      name: DebtMigratorOnEthereumMainnet,
+      address: DebtMigratorAddressOnEthereumMainnet,
+      abi: DebtMigratorAbiOnEthereumMainnet,
+    },
+    'mainnet-ovm': {
+      name: DebtMigratorOnOptimismMainnetOvm,
+      address: DebtMigratorAddressOnOptimismMainnetOvm,
+      abi: DebtMigratorAbiOnOptimismMainnetOvm,
+    },
+    goerli: {
+      name: DebtMigratorOnEthereumGoerli,
+      address: DebtMigratorAddressOnEthereumGoerli,
+      abi: DebtMigratorAbiOnEthereumGoerli,
+    },
+    'goerli-ovm': {
+      name: DebtMigratorOnOptimismGoerliOvm,
+      address: DebtMigratorAddressOnOptimismGoerliOvm,
+      abi: DebtMigratorAbiOnOptimismGoerliOvm,
     },
   },
 };

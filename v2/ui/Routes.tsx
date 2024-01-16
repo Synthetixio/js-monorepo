@@ -11,6 +11,7 @@ import { WalletLayout } from '@snx-v2/WalletLayout';
 import { WalletBalances } from '@snx-v2/WalletBalances';
 import EscrowPage from './content/EscrowPage';
 import MigrateEscrowPage from './content/MigrateEscrowPage';
+import MigrateDebtPage from './content/MigrateDebtPage';
 import HistoryPage from './content/HistoryPage';
 import DelegatePage from './content/DelegatePage';
 import MergeAccountsPage from './content/MergeAccountsPage';
@@ -115,6 +116,15 @@ export default function AppRoutes() {
             element={
               <WalletWrapper>
                 <MigrateEscrowPage />
+              </WalletWrapper>
+            }
+          />
+
+          <Route
+            path="/migrate-debt"
+            element={
+              <WalletWrapper>
+                <MigrateDebtPage />
               </WalletWrapper>
             }
           />

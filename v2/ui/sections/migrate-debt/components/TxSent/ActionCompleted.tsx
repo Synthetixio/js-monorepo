@@ -29,22 +29,22 @@ const ActionCompleted: FC<ActionCompletedProps> = ({
   const link = blockExplorerInstance != null ? blockExplorerInstance.txLink(hash) : undefined;
   return (
     <Container>
-      <SectionHeader>{t(`migrate-escrow.actions.${action}.action.completed.title`)}</SectionHeader>
+      <SectionHeader>{t(`migrate-debt.actions.${action}.action.completed.title`)}</SectionHeader>
       <Success width="78" />
       <FlexDivCentered>
         <InfoContainer key="one">
-          <InfoTitle>{t(`migrate-escrow.actions.${action}.action.completed.deposited`)}</InfoTitle>
+          <InfoTitle>{t(`migrate-debt.actions.${action}.action.completed.deposited`)}</InfoTitle>
           <InfoData>{formatCurrency(currencyKey, amount, { currencyKey: currencyKey })}</InfoData>
         </InfoContainer>
       </FlexDivCentered>
       <ButtonWrap>
         {link ? (
           <ExternalLink href={link}>
-            <LeftButton>{t(`migrate-escrow.actions.${action}.action.completed.verify`)}</LeftButton>
+            <LeftButton>{t(`migrate-debt.actions.${action}.action.completed.verify`)}</LeftButton>
           </ExternalLink>
         ) : null}
         <RightButton onClick={() => resetTransaction()}>
-          {t('migrate-escrow.actions.migrate.action.completed.dismiss')}
+          {t('migrate-debt.actions.migrate.action.completed.dismiss')}
         </RightButton>
       </ButtonWrap>
     </Container>
