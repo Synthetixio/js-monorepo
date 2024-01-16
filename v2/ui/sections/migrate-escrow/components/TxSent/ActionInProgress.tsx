@@ -19,41 +19,34 @@ import { formatCurrency } from 'utils/formatters/number';
 type ActionInProgressProps = {
   amount: string;
   action: 'migrate';
-  type: 'escrow' | 'debt';
   hash: string;
   currencyKey: string;
 };
 
-const ActionInProgress: FC<ActionInProgressProps> = ({
-  amount,
-  currencyKey,
-  hash,
-  action,
-  type,
-}) => {
+const ActionInProgress: FC<ActionInProgressProps> = ({ amount, currencyKey, hash, action }) => {
   const { t } = useTranslation();
   const { blockExplorerInstance } = Etherscan.useContainer();
   const link = blockExplorerInstance != null ? blockExplorerInstance.txLink(hash) : undefined;
   return (
     <Container>
       <SectionHeader>
-        {t(`migrate-${type}.actions.${action}.action.in-progress.title`)}
+        {t(`migrate-escrow.actions.${action}.action.in-progress.title`)}
       </SectionHeader>
       <PendingConfirmation width="78" />
       <FlexDivCentered>
         <InfoContainer key="one">
           <InfoTitle>
-            {t(`migrate-${type}.actions.${action}.action.in-progress.depositing`)}
+            {t(`migrate-escrow.actions.${action}.action.in-progress.depositing`)}
           </InfoTitle>
           <InfoData>{formatCurrency(currencyKey, amount, { currencyKey: currencyKey })}</InfoData>
         </InfoContainer>
       </FlexDivCentered>
       <SectionSubtext>
-        {t(`migrate-${type}.actions.${action}.action.in-progress.subtext`)}
+        {t(`migrate-escrow.actions.${action}.action.in-progress.subtext`)}
       </SectionSubtext>
       {link ? (
         <StyledExternalLink href={link}>
-          {t(`migrate-${type}.actions.${action}.action.in-progress.etherscan`)}
+          {t(`migrate-escrow.actions.${action}.action.in-progress.etherscan`)}
         </StyledExternalLink>
       ) : null}
     </Container>

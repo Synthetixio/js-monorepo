@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 
-import { Synths } from 'constants/currency';
 import { TabContainer } from '../../components/common';
-import TabContent from '../../components/TabContent';
 
+import TabContent from './TabContent';
 import useSynthetixQueries, { GasPrice } from '@synthetixio/queries';
 import { wei } from '@synthetixio/wei';
 import Connector from 'containers/Connector';
@@ -11,21 +10,22 @@ import Connector from 'containers/Connector';
 const MigrateTab = () => {
   const { walletAddress } = Connector.useContainer();
 
-  const { useGetDebtDataQuery, useEscrowDataQuery, useSynthetixTxn } = useSynthetixQueries();
-
-  const debtQuery = useGetDebtDataQuery(walletAddress);
-  const activeDebt = debtQuery.data?.debtBalance ?? wei(0);
+  const { useEscrowDataQuery, useSynthetixTxn } = useSynthetixQueries();
 
   const escrowDataQuery = useEscrowDataQuery(walletAddress);
   const claimableAmount = escrowDataQuery?.data?.claimableAmount ?? wei(0);
+  const escrowData = escrowDataQuery?.data ?? null;
+  const totalEscrowed = escrowData?.totalEscrowed ?? wei(0);
+  const entryIds =
+    escrowData?.migratableEntryIdsInChunk?.map((entries) =>
+      entries.filter((entry) => entry).map((entry) => entry.toBN())
+    ) ?? [];
 
   const [isVestNeeded, setIsVestNeeded] = useState<boolean>(false);
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
   const [txModalOpen, setTxModalOpen] = useState<boolean>(false);
 
-  const txn = useSynthetixTxn('DebtMigratorOnEthereum', 'migrateDebt', [walletAddress], gasPrice, {
-    enabled: activeDebt?.gt(0),
-  });
+  const txn = useSynthetixTxn('SynthetixBridgeToOptimism', 'migrateEscrow', [entryIds], gasPrice);
 
   useEffect(() => {
     if (claimableAmount.gt(0)) {
@@ -42,8 +42,7 @@ const MigrateTab = () => {
   return (
     <TabContainer>
       <TabContent
-        amountToMigrate={activeDebt}
-        migrateCurrencyKey={Synths.sUSD}
+        escrowedAmount={totalEscrowed}
         isVestNeeded={isVestNeeded}
         onSubmit={txn.mutate}
         transactionError={txn.errorMessage}
@@ -56,7 +55,6 @@ const MigrateTab = () => {
         transactionState={txn.txnStatus}
         resetTransaction={txn.refresh}
         optimismLayerOneFee={txn.optimismLayerOneFee}
-        type="debt"
       />
     </TabContainer>
   );

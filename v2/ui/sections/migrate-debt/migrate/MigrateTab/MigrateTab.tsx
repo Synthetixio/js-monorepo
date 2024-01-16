@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
-import { CryptoCurrency } from 'constants/currency';
 import { TabContainer } from '../../components/common';
-import TabContent from '../../components/TabContent';
 
+import TabContent from './TabContent';
 import useSynthetixQueries, { GasPrice } from '@synthetixio/queries';
+import { useDebtData } from '@snx-v2/useDebtData';
 import { wei } from '@synthetixio/wei';
 import Connector from 'containers/Connector';
 
@@ -13,20 +13,19 @@ const MigrateTab = () => {
 
   const { useEscrowDataQuery, useSynthetixTxn } = useSynthetixQueries();
 
+  const { data: debtData, refetch: refetchDebtData } = useDebtData();
+  const activeDebt = debtData?.debtBalance ?? wei(0);
+
   const escrowDataQuery = useEscrowDataQuery(walletAddress);
   const claimableAmount = escrowDataQuery?.data?.claimableAmount ?? wei(0);
-  const escrowData = escrowDataQuery?.data ?? null;
-  const totalEscrowed = escrowData?.totalEscrowed ?? wei(0);
-  const entryIds =
-    escrowData?.migratableEntryIdsInChunk?.map((entries) =>
-      entries.filter((entry) => entry).map((entry) => entry.toBN())
-    ) ?? [];
 
   const [isVestNeeded, setIsVestNeeded] = useState<boolean>(false);
   const [gasPrice, setGasPrice] = useState<GasPrice | undefined>(undefined);
   const [txModalOpen, setTxModalOpen] = useState<boolean>(false);
 
-  const txn = useSynthetixTxn('SynthetixBridgeToOptimism', 'migrateEscrow', [entryIds], gasPrice);
+  const txn = useSynthetixTxn('DebtMigratorOnEthereum', 'migrateDebt', [walletAddress], gasPrice, {
+    enabled: activeDebt?.gt(0),
+  });
 
   useEffect(() => {
     if (claimableAmount.gt(0)) {
@@ -40,11 +39,15 @@ const MigrateTab = () => {
     }
   }, [txn.txnStatus, escrowDataQuery]);
 
+  const resetTransaction = useCallback(() => {
+    txn.refresh();
+    refetchDebtData();
+  }, [txn, refetchDebtData]);
+
   return (
     <TabContainer>
       <TabContent
-        amountToMigrate={totalEscrowed}
-        migrateCurrencyKey={CryptoCurrency.SNX}
+        amountToMigrate={activeDebt}
         isVestNeeded={isVestNeeded}
         onSubmit={txn.mutate}
         transactionError={txn.errorMessage}
@@ -55,9 +58,8 @@ const MigrateTab = () => {
         setGasPrice={setGasPrice}
         txHash={txn.hash}
         transactionState={txn.txnStatus}
-        resetTransaction={txn.refresh}
+        resetTransaction={resetTransaction}
         optimismLayerOneFee={txn.optimismLayerOneFee}
-        type="escrow"
       />
     </TabContainer>
   );

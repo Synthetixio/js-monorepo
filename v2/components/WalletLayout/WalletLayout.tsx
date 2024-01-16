@@ -29,7 +29,7 @@ const WalletLayoutUi = ({
   children,
 }: PropsWithChildren<{ networkId: number | null }>) => {
   const { t } = useTranslation();
-  const isMainnet = networkId === NetworkIdByName.mainnet || networkId === NetworkIdByName.goerli;
+  const isL1 = networkId === NetworkIdByName.mainnet || networkId === NetworkIdByName.goerli;
   return (
     <Box mt={6}>
       <Heading size="md" textAlign="center">
@@ -49,10 +49,10 @@ const WalletLayoutUi = ({
         <WalletTab to="/delegate">{t(`staking-v2.wallet.tabs.delegate`)}</WalletTab>
         <WalletTab to="/bridge">{t(`staking-v2.wallet.tabs.bridge`)}</WalletTab>
         <WalletTab to="/merge-accounts">{t(`staking-v2.wallet.tabs.merge-accounts`)}</WalletTab>
-        {isMainnet ? (
+        {isL1 ? (
           <WalletTab to="/migrate-escrow">{t(`staking-v2.wallet.tabs.migrate-escrow`)}</WalletTab>
         ) : null}
-        {isMainnet ? (
+        {isL1 ? (
           <WalletTab to="/migrate-debt">{t(`staking-v2.wallet.tabs.migrate-debt`)}</WalletTab>
         ) : null}
       </ButtonGroup>

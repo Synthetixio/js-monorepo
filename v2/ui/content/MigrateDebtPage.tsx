@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import { DEFAULT_SUBGRAPH_ENDPOINTS, useGetSNXHolderById } from '@synthetixio/queries';
-import Main from 'sections/migrate/debt';
+import Main from 'sections/migrate-debt/migrate';
 import StatBox from 'components/StatBox';
 import { LineSpacer } from '@snx-v1/styles';
 import StatsSection from 'components/StatsSection';
