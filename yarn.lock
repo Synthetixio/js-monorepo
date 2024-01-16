@@ -9188,7 +9188,6 @@ __metadata:
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/SwitchNetworkContext": "workspace:*"
-    "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/TermsModal": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/WalletBalances": "workspace:*"
@@ -9200,7 +9199,6 @@ __metadata:
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
-    "@snx-v2/useSynthetixContracts": "workspace:*"
     "@socket.tech/plugin": ^1.3.4
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16

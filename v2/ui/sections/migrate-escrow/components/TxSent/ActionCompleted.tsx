@@ -13,7 +13,6 @@ type ActionCompletedProps = {
   resetTransaction: () => void;
   amount: string;
   action: 'migrate';
-  type: 'escrow' | 'debt';
   currencyKey: string;
   hash: string;
 };
@@ -24,31 +23,28 @@ const ActionCompleted: FC<ActionCompletedProps> = ({
   currencyKey,
   hash,
   action,
-  type,
 }) => {
   const { t } = useTranslation();
   const { blockExplorerInstance } = Etherscan.useContainer();
   const link = blockExplorerInstance != null ? blockExplorerInstance.txLink(hash) : undefined;
   return (
     <Container>
-      <SectionHeader>{t(`migrate-${type}.actions.${action}.action.completed.title`)}</SectionHeader>
+      <SectionHeader>{t(`migrate-escrow.actions.${action}.action.completed.title`)}</SectionHeader>
       <Success width="78" />
       <FlexDivCentered>
         <InfoContainer key="one">
-          <InfoTitle>{t(`migrate-${type}.actions.${action}.action.completed.deposited`)}</InfoTitle>
+          <InfoTitle>{t(`migrate-escrow.actions.${action}.action.completed.deposited`)}</InfoTitle>
           <InfoData>{formatCurrency(currencyKey, amount, { currencyKey: currencyKey })}</InfoData>
         </InfoContainer>
       </FlexDivCentered>
       <ButtonWrap>
         {link ? (
           <ExternalLink href={link}>
-            <LeftButton>
-              {t(`migrate-${type}.actions.${action}.action.completed.verify`)}
-            </LeftButton>
+            <LeftButton>{t(`migrate-escrow.actions.${action}.action.completed.verify`)}</LeftButton>
           </ExternalLink>
         ) : null}
         <RightButton onClick={() => resetTransaction()}>
-          {t(`migrate-${type}.actions.${action}.action.completed.dismiss`)}
+          {t('staking.actions.mint.completed.dismiss')}
         </RightButton>
       </ButtonWrap>
     </Container>
