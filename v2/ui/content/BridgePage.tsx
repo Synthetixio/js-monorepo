@@ -1,14 +1,14 @@
-import SocketBridge from '../components/SocketBridge';
+// import Socket  Bridge from '../components/SocketBridge';
 import Head from 'react-helmet';
 import styled from 'styled-components';
-import Connector from '../containers/Connector';
-import Button from '../components/Button';
+// import Connector from '../containers/Connector';
+// import Button from '../components/Button';
 import { useTranslation } from 'react-i18next';
 import media from '@snx-v1/media';
 
 const BridgePage = () => {
-  const { connectWallet, walletConnectedToUnsupportedNetwork, isWalletConnected } =
-    Connector.useContainer();
+  // const { connectWallet, walletConnectedToUnsupportedNetwork, isWalletConnected } =
+  //   Connector.useContainer();
 
   const { t } = useTranslation();
   return (
@@ -19,8 +19,9 @@ const BridgePage = () => {
       <HeadlineContainer>
         <Headline>{t('bridge.headline')}</Headline>
       </HeadlineContainer>
+      <p>Temporarily disabled</p>
 
-      {Boolean(walletConnectedToUnsupportedNetwork || isWalletConnected) ? (
+      {/* {Boolean(walletConnectedToUnsupportedNetwork || isWalletConnected) ? (
         <>
           <SocketBridge />
         </>
@@ -31,7 +32,7 @@ const BridgePage = () => {
             {t('common.wallet.connect-wallet')}
           </Button>
         </ConnectWalletContainer>
-      )}
+      )} */}
     </Container>
   );
 };
