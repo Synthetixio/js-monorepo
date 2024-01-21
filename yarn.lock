@@ -9126,6 +9126,7 @@ __metadata:
     "@synthetixio/codegen-graph-ts": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
+    "@synthetixio/generate-subgraph-query": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
