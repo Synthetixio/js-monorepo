@@ -13,6 +13,7 @@ export const EXTERNAL_LINKS = {
     CRatioGuide: 'https://docs.synthetix.io/staking/staking-guide/collateralization-ratio',
     SIP255: 'https://sips.synthetix.io/sips/sip-255',
     HedgeStrategies: 'https://docs.synthetix.io/staking/staking-guide/debt-hedging-strategies',
+    NativeBridge: 'https://blog.synthetix.io/susd-bridge-enabled',
   },
   Social: {
     Twitter: 'https://twitter.com/synthetix_io',

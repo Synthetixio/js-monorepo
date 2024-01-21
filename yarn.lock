@@ -6723,6 +6723,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useApproveERC20sUSDMutation@workspace:*, @snx-v2/useApproveERC20sUSDMutation@workspace:v2/lib/useApproveERC20sUSDMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useApproveERC20sUSDMutation@workspace:v2/lib/useApproveERC20sUSDMutation"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useApr@workspace:*, @snx-v2/useApr@workspace:v2/lib/useApr":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useApr@workspace:v2/lib/useApr"
@@ -6740,6 +6753,20 @@ __metadata:
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@tanstack/react-query": ^4.24.6
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@snx-v2/useBridgeMutation@workspace:*, @snx-v2/useBridgeMutation@workspace:v2/lib/useBridgeMutation":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useBridgeMutation@workspace:v2/lib/useBridgeMutation"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v2/useGasOptions": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@tanstack/react-query": ^4.24.6
+    ethers: ^5.7.2
     react: ^18.2.0
   languageName: unknown
   linkType: soft
@@ -9099,7 +9126,6 @@ __metadata:
     "@synthetixio/codegen-graph-ts": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/contracts-interface": "workspace:*"
-    "@synthetixio/generate-subgraph-query": "workspace:*"
     "@synthetixio/optimism-networks": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
@@ -9176,6 +9202,7 @@ __metadata:
     "@snx-v2/Debt": "workspace:*"
     "@snx-v2/EarnStats": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/GasSpeedContext": "workspace:*"
     "@snx-v2/HomeButton": "workspace:*"
     "@snx-v2/Integrators": "workspace:*"
@@ -9189,18 +9216,26 @@ __metadata:
     "@snx-v2/SwapLinks": "workspace:*"
     "@snx-v2/SwitchNetworkContext": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
+    "@snx-v2/TableComponents": "workspace:*"
     "@snx-v2/TermsModal": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/WalletBalances": "workspace:*"
     "@snx-v2/WalletLayout": "workspace:*"
     "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/icons": "workspace:*"
+    "@snx-v2/parseTxnError": "workspace:*"
+    "@snx-v2/txnLink": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
+    "@snx-v2/useApproveERC20sUSDMutation": "workspace:*"
     "@snx-v2/useApr": "workspace:*"
+    "@snx-v2/useBridgeMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
     "@socket.tech/plugin": ^1.3.4
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
@@ -9222,6 +9257,7 @@ __metadata:
     "@synthetixio/wei": ^2.74.4
     "@tanstack/react-query": ^4.24.6
     "@tanstack/react-query-devtools": ^4.24.6
+    "@tanstack/react-table": ^8.7.9
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
     "@testing-library/user-event": ^14.4.3
