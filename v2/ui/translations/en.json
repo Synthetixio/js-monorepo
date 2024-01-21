@@ -650,7 +650,34 @@
   "bridge": {
     "page-title": "Bridge | Synthetix Staking",
     "headline": "Bridge any assets between Layer 1 and Layer 2",
-    "connect-wallet-text": "Connect your wallet to use the bridge"
+    "description": "Bridge any assets between Layer 1 and Layer 2. You can use it to transfer SNX and any other synths between Ethereum Optimism and Ethereum Mainnet.",
+    "available-balance": "sUSD Available for Bridging",
+    "native-bridge-title": "Native Bridge",
+    "native-bridge-desc": "Bridge SUSD tokens natively between networks. This bridge guarantees a transat the exact amount, providing a reiliable and straightforward way to manage your SUSD holdings across different networks. Note transfering SUSD from OP to mainnet involves a waiting period of 7 days.",
+    "instant-bridge-title": "Instant Bridge",
+    "instant-bridge-subtitle": "Powered by Socket",
+    "instant-bridge-desc": "Bridge with instant transactions at the current market price. Utilizing a socket plugin, it ensures you get the best value for your assets, making cross-network transfer efficient and cost-effective.",
+    "no-fees": "No Fees",
+    "no-slippage": "No Slippage",
+    "btn-native-bridge": "Use Native Bridge",
+    "btn-instant-bridge": "Use Instant Bridge",
+    "powered-by": "Powered By",
+    "bridging-history": {
+      "title": "Bridge History",
+      "date": "Date",
+      "amount": "Amount",
+      "status": "Status",
+      "view-tx": "View Tx on Explorer",
+      "no-transactions": "No transactions to show."
+    },
+    "bridge-warning": "Bridging from Optimism to Ethereum Mainnet takes a 7 day delay, read <0>our blog post for more details</0>",
+    "connect-wallet-text": "Connect Wallet",
+    "from": "From",
+    "to": "To",
+    "txn-modal": {
+      "approving": "Approving",
+      "bridging": "Bridging"
+    }
   },
 
   "common": {
