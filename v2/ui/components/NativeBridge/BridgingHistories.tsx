@@ -29,7 +29,6 @@ import React from 'react';
 
 function BridgingHistories({ bridgingHistory }: { bridgingHistory: BridgingHistory[] }) {
   const { t } = useTranslation();
-  console.log('bridgingHistory', bridgingHistory);
 
   const columnHelper = createColumnHelper<BridgingHistory>();
 
