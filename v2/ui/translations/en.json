@@ -650,10 +650,10 @@
   "bridge": {
     "page-title": "Bridge | Synthetix Staking",
     "headline": "Bridge between L1 and L2",
-    "description": "Bridge any assets between Layer 1 and Layer 2. You can use it to transfer SNX and any other synths between Ethereum Optimism and Ethereum Mainnet.",
+    "description": "Bridge assets between layers and networks",
     "available-balance": "sUSD Available for Bridging",
     "native-bridge-title": "Native Bridge",
-    "native-bridge-desc": "Bridge SUSD tokens natively between networks. This bridge guarantees a transat the exact amount, providing a reiliable and straightforward way to manage your SUSD holdings across different networks. Note transfering SUSD from OP to mainnet involves a waiting period of 7 days.",
+    "native-bridge-desc": "Bridge SUSD tokens natively between networks. This bridge guarantees a transfer at the exact amount, providing a reliable and straightforward way to manage your SUSD holdings across different networks. Note transferring SUSD from OP to mainnet involves a waiting period of 7 days.",
     "instant-bridge-title": "Instant Bridge",
     "instant-bridge-subtitle": "Powered by Socket",
     "instant-bridge-desc": "Bridge with instant transactions at the current market price. Utilizing a socket plugin, it ensures you get the best value for your assets, making cross-network transfer efficient and cost-effective.",
