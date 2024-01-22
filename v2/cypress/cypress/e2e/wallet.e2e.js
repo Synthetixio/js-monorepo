@@ -26,6 +26,9 @@ it('walks over wallet sub-pages', () => {
 
   cy.contains('h1', 'Bridge between L1 and L2').should('exist');
 
+  cy.get('[data-testid="main menu button"]').click();
+  cy.contains('[data-testid="main menu dropdown"] a', 'Wallet').click();
+
   cy.contains('a.chakra-button', 'Merge Accounts')
     .click()
     .should('have.attr', 'aria-selected', 'true');
