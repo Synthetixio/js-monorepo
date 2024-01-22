@@ -22,9 +22,6 @@ it('walks over wallet sub-pages', () => {
   cy.contains('a.chakra-button', 'Delegate').click().should('have.attr', 'aria-selected', 'true');
   cy.contains('[role="tab"]', 'Delegate to a new Address').should('exist');
 
-  cy.contains('a.chakra-button', 'Bridge').click().should('have.attr', 'aria-selected', 'true');
-  cy.contains('h1', 'Bridge any assets between Layer 1 and Layer 2').should('exist');
-
   cy.contains('a.chakra-button', 'Merge Accounts')
     .click()
     .should('have.attr', 'aria-selected', 'true');
@@ -34,4 +31,7 @@ it('walks over wallet sub-pages', () => {
     .click()
     .should('have.attr', 'aria-selected', 'true');
   cy.contains('[role="tab"]', 'Migrate Escrowed SNX').should('exist');
+
+  cy.contains('a.chakra-button', 'Bridge Assets').click();
+  cy.contains('h1', 'Bridge between L1 and L2').should('exist');
 });
