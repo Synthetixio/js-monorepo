@@ -47,17 +47,17 @@ const Container = styled.div`
   `}
 `;
 
-const ConnectWalletContainer = styled.div`
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
+// const ConnectWalletContainer = styled.div`
+//   margin-top: 50px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+// `;
 
-const ConnectParagraph = styled.p`
-  margin-bottom: 10px;
-`;
+// const ConnectParagraph = styled.p`
+//   margin-bottom: 10px;
+// `;
 
 const HeadlineContainer = styled.div`
   padding: 20px 0;
