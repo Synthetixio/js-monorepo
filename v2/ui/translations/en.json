@@ -292,7 +292,7 @@
       "no-synths": "You have no Synths",
       "tabs": {
         "balances": "Balances",
-        "bridge": "Bridge",
+        "bridge": "Bridge Assets",
         "escrow": "Escrow",
         "history": "History",
         "delegate": "Delegate",
@@ -649,7 +649,7 @@
 
   "bridge": {
     "page-title": "Bridge | Synthetix Staking",
-    "headline": "Bridge any assets between Layer 1 and Layer 2",
+    "headline": "Bridge between L1 and L2",
     "description": "Bridge any assets between Layer 1 and Layer 2. You can use it to transfer SNX and any other synths between Ethereum Optimism and Ethereum Mainnet.",
     "available-balance": "sUSD Available for Bridging",
     "native-bridge-title": "Native Bridge",

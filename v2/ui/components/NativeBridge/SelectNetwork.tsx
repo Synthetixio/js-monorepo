@@ -6,7 +6,7 @@ import { ChevronDown, ChevronUp, EthereumIcon, FailedIcon, OptimismIcon } from '
 import { IconButton } from '@snx-v1/styles';
 import { Trans } from 'react-i18next';
 
-const activeIcon = (currentNetwork: NetworkId) => {
+const activeIcon = (currentNetwork?: number | NetworkId) => {
   switch (currentNetwork) {
     case 1:
       return { icon: <EthereumIcon />, name: 'Ethereum' };
@@ -32,7 +32,7 @@ function SelectNetwork({
   isMainnet: boolean;
   isL2: boolean;
   isWalletConnected: boolean;
-  networkId: NetworkId;
+  networkId?: number | NetworkId;
   switchNetwork: (networkId: NetworkId) => Promise<boolean | undefined>;
 }) {
   const ethNetworkId = isMainnet ? NetworkIdByName.mainnet : NetworkIdByName.goerli;

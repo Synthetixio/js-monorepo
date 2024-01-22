@@ -138,37 +138,39 @@ function BridgingHistories({ bridgingHistory }: { bridgingHistory: BridgingHisto
           )}
         </Tbody>
       </Table>
-      <Flex p={4} justifyContent="flex-end">
-        <Flex color="gray.700" fontSize="14px" align="center">
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-          </strong>
+      {bridgingHistory.length > 0 && (
+        <Flex p={4} justifyContent="flex-end">
+          <Flex color="gray.700" fontSize="14px" align="center">
+            <strong>
+              {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+            </strong>
+          </Flex>
+          <Button
+            bg="none"
+            height="auto"
+            width="auto"
+            color="white"
+            _hover={{ bg: 'none' }}
+            _disabled={{ bg: 'none', color: 'gray.600', cursor: 'not-allowed' }}
+            onClick={() => table.previousPage()}
+            isDisabled={!table.getCanPreviousPage()}
+          >
+            {'<'}
+          </Button>
+          <Button
+            bg="none"
+            height="auto"
+            width="auto"
+            color="white"
+            _hover={{ bg: 'none' }}
+            _disabled={{ bg: 'none', color: 'gray.600', cursor: 'not-allowed' }}
+            onClick={() => table.nextPage()}
+            isDisabled={!table.getCanNextPage()}
+          >
+            {'>'}
+          </Button>
         </Flex>
-        <Button
-          bg="none"
-          height="auto"
-          width="auto"
-          color="white"
-          _hover={{ bg: 'none' }}
-          _disabled={{ bg: 'none', color: 'gray.600', cursor: 'not-allowed' }}
-          onClick={() => table.previousPage()}
-          isDisabled={!table.getCanPreviousPage()}
-        >
-          {'<'}
-        </Button>
-        <Button
-          bg="none"
-          height="auto"
-          width="auto"
-          color="white"
-          _hover={{ bg: 'none' }}
-          _disabled={{ bg: 'none', color: 'gray.600', cursor: 'not-allowed' }}
-          onClick={() => table.nextPage()}
-          isDisabled={!table.getCanNextPage()}
-        >
-          {'>'}
-        </Button>
-      </Flex>
+      )}
     </Flex>
   );
 }

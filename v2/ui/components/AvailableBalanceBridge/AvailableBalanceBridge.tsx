@@ -3,14 +3,15 @@ import { StatBox } from '@snx-v2/StatBox';
 import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import { wei } from '@synthetixio/wei';
 import { formatFiatCurrency } from '../../utils/formatters/number';
+import { useTranslation } from 'react-i18next';
 
 const AvailableBalanceBridge: FC = () => {
   const { data: synthsBalances, isLoading: isSynthsLoading } = useSynthsBalances();
+  const { t } = useTranslation();
   return (
     <StatBox
       isLoading={isSynthsLoading}
-      titleToolTip="sUSD Available for Bridging"
-      label="sUSD Available for Bridging"
+      label={t('bridge.available-balance')}
       alignItems={{ base: 'center', lg: 'end' }}
       maxW={{ base: 'initial', lg: '282px' }}
       w="100%"

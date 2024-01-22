@@ -32,11 +32,10 @@ import ApproveAction from './ApproveAction';
 import useBridgingHistoryStore from '../../hooks/useBridgingHistoryStore';
 import BridgingHistories from './BridgingHistories';
 
-const isTestnet = (networkId: null | number) => {
-  if (networkId === NetworkIdByName['mainnet-ovm'] || networkId === NetworkIdByName['mainnet']) {
-    return false;
-  }
-  return true;
+const isTestnet = (networkId?: null | number) => {
+  return !(
+    networkId === NetworkIdByName['mainnet-ovm'] || networkId === NetworkIdByName['mainnet']
+  );
 };
 function NativeBridge({ onBack }: { onBack: () => void }) {
   const {
