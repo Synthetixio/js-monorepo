@@ -1,18 +1,17 @@
 import { NetworkIdByName, useProxyERC20sUSD } from '@snx-v2/useSynthetixContracts';
 import Connector from 'containers/Connector';
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Button,
   Center,
+  Checkbox,
   Flex,
   Input,
   InputProps,
   Link,
   Skeleton,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import { ArrowLeft, FailedIcon, SUSDIcon } from '@snx-v2/icons';
 import { Trans, useTranslation } from 'react-i18next';
@@ -73,6 +72,8 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
   const [bridgeAmountsUSD, setBridgeAmountsUSD] = useState('');
   const notEnoughBalance = susdBalance < parseFloatWithCommas(bridgeAmountsUSD);
 
+  const [isCheckedL2, setIsCheckedL2] = useState(false);
+
   const {
     mutate,
     transactionFee,
@@ -97,12 +98,15 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
         amount: parseFloatWithCommas(bridgeAmountsUSD),
         date: new Date().toISOString(),
         status: txnStatus,
-        txHash: txnHash,
+        txnHash,
       });
     }
   }, [bridgeAmountsUSD, network?.id, saveBridgingHistory, txnHash, txnStatus, walletAddress]);
 
   const handleSubmit = () => {
+    if (isL2 && !isCheckedL2) {
+      return;
+    }
     mutate(undefined, {
       onSuccess: () => {
         refetchBalances();
@@ -171,7 +175,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
             </Flex>
             <Flex flexDir="column" alignItems="flex-end">
               <StyledInput
-                data-testid="mint susd amount input"
+                data-testid="bridge susd amount input"
                 placeholder={t('staking-v2.mint.enter-amount')}
                 onChange={(e) => onChange(e)}
                 value={numberWithCommas(bridgeAmountsUSD)}
@@ -193,12 +197,17 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
             </Flex>
           </Flex>
         </Box>
+
         {isL2 && (
-          <Alert mt={5} status="info" variant="left-accent" py={2} px={3}>
-            <AlertIcon width="20px" height="20px" />
-            <AlertDescription pl={2} pr={0} fontSize="sm" fontFamily="heading">
+          <Checkbox
+            mt={5}
+            size="sm"
+            isChecked={isCheckedL2}
+            onChange={(e) => setIsCheckedL2(e.target.checked)}
+          >
+            <Text fontSize="13px" fontWeight={400} lineHeight="16px">
               <Trans
-                i18nKey="bridge.bridge-warning"
+                i18nKey="bridge.confirm-delay"
                 components={[
                   <Link
                     color="cyan.400"
@@ -207,8 +216,8 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
                   />,
                 ]}
               />
-            </AlertDescription>
-          </Alert>
+            </Text>
+          </Checkbox>
         )}
 
         {needsApproval &&
@@ -232,24 +241,27 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
 
         {Boolean(walletConnectedToUnsupportedNetwork || isWalletConnected) ? (
           needsApproval ? (
-            <Button
-              variant="solid"
-              data-testid="bridge submit"
-              fontFamily="heading"
-              fontWeight="black"
-              mt={5}
-              w="100%"
-              onClick={handleSubmit}
-              isDisabled={
-                bridgeAmountsUSD === '' ||
-                bridgeAmountsUSD === '0.00' ||
-                Boolean(gasError) ||
-                isGasEnabledAndNotFetched ||
-                notEnoughBalance
-              }
-            >
-              Bridge
-            </Button>
+            <Tooltip label={isL2 && !isCheckedL2 ? t('bridge.bridge-warning') : undefined} hasArrow>
+              <Button
+                variant="solid"
+                data-testid="bridge submit"
+                fontFamily="heading"
+                fontWeight="black"
+                mt={5}
+                w="100%"
+                onClick={handleSubmit}
+                isDisabled={
+                  bridgeAmountsUSD === '' ||
+                  bridgeAmountsUSD === '0.00' ||
+                  Boolean(gasError) ||
+                  isGasEnabledAndNotFetched ||
+                  notEnoughBalance ||
+                  (isL2 && !isCheckedL2)
+                }
+              >
+                Bridge
+              </Button>
+            </Tooltip>
           ) : (
             <ApproveAction
               bridgeAmountsUSD={bridgeAmountsUSD}

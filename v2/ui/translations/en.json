@@ -659,6 +659,7 @@
     "instant-bridge-desc": "Bridge with instant transactions at the current market price. Utilizing a socket plugin, it ensures you get the best value for your assets, making cross-network transfer efficient and cost-effective.",
     "no-fees": "No Fees",
     "no-slippage": "No Slippage",
+    "delay-note": "7 Days Delay",
     "btn-native-bridge": "Use Native Bridge",
     "btn-instant-bridge": "Use Instant Bridge",
     "powered-by": "Powered By",
@@ -670,7 +671,8 @@
       "view-tx": "View Tx on Explorer",
       "no-transactions": "No transactions to show."
     },
-    "bridge-warning": "Bridging from Optimism to Ethereum Mainnet takes a 7 day delay, read <0>our blog post for more details</0>",
+    "bridge-warning": "Check the box and understand the bridging requirements to proceed",
+    "confirm-delay": "I understand that bridging from Optimism to Ethereum Mainnet takes a 7 days delay. Read this <0>blog post for more details</0>",
     "connect-wallet-text": "Connect Wallet",
     "from": "From",
     "to": "To",

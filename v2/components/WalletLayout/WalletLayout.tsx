@@ -36,8 +36,8 @@ const WalletLayoutUi = ({
       <Heading size="md" textAlign="left">
         {t('staking-v2.wallet.my-wallet')}
       </Heading>
-      <Flex py={5} alignItems="center" justifyContent="space-between" gap={1}>
-        <ButtonGroup spacing={1} display="flex" justifyContent="center" flexWrap="wrap">
+      <ButtonGroup py={5} spacing={1} display="flex" justifyContent="space-between">
+        <Flex alignItems="center" gap={1} flexWrap="wrap">
           <WalletTab to="/wallet/balances">{t(`staking-v2.wallet.tabs.balances`)}</WalletTab>
           <WalletTab to="/escrow">{t(`staking-v2.wallet.tabs.escrow`)}</WalletTab>
           <WalletTab to="/history">{t(`staking-v2.wallet.tabs.history`)}</WalletTab>
@@ -49,9 +49,10 @@ const WalletLayoutUi = ({
           {isL1 ? (
             <WalletTab to="/migrate-debt">{t(`staking-v2.wallet.tabs.migrate-debt`)}</WalletTab>
           ) : null}
-        </ButtonGroup>
+        </Flex>
         <WalletTab to="/bridge">{t(`staking-v2.wallet.tabs.bridge`)}</WalletTab>
-      </Flex>
+      </ButtonGroup>
+
       {children}
     </Box>
   );

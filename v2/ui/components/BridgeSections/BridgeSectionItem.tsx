@@ -1,16 +1,21 @@
 import { FC, ReactNode } from 'react';
 import { Box, Button, Flex, FlexProps, Image, Tag, Text, TextProps } from '@chakra-ui/react';
 
-interface CardBridgeITemProps extends FlexProps {
+interface CardBridgeItemProps extends FlexProps {
   logo: string;
   label: string;
   subtitle?: string;
   description: string;
   btnText: string;
-  tags?: string[];
+  tags?: TagItemProps[];
   handleClick: () => void;
 }
-const BridgeSectionItem: FC<CardBridgeITemProps> = ({
+
+export interface TagItemProps {
+  label: string;
+  bgColor: string;
+}
+const BridgeSectionItem: FC<CardBridgeItemProps> = ({
   logo,
   label,
   subtitle,
@@ -57,12 +62,12 @@ const BridgeSectionItem: FC<CardBridgeITemProps> = ({
                 px={2}
                 py="2px"
                 size="small"
-                key={tag}
+                key={tag.label}
                 variant="solid"
-                bgColor="purple.700"
+                bgColor={tag.bgColor}
                 borderRadius="4px"
               >
-                <Content color="white">{tag}</Content>
+                <Content color="white">{tag.label}</Content>
               </Tag>
             );
           })}
@@ -70,6 +75,7 @@ const BridgeSectionItem: FC<CardBridgeITemProps> = ({
       </Flex>
       <Button
         variant="outline"
+        colorScheme="gray"
         fontFamily="heading"
         fontWeight={700}
         fontSize="14px"

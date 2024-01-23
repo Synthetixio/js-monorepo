@@ -9,7 +9,7 @@ export interface BridgingHistory {
   amount: number;
   status: TransactionStatus;
   date: string;
-  txHash?: string | null;
+  txnHash?: string | null;
 }
 
 const useBridgingHistoryStore = ({
@@ -35,7 +35,7 @@ const useBridgingHistoryStore = ({
       (e) =>
         e.walletAddress === value.walletAddress &&
         e.networkId === value.networkId &&
-        e.txHash === value.txHash
+        e.txnHash === value.txnHash
     );
     if (storedHistory !== -1) {
       storedValue[storedHistory].status = value.status;
