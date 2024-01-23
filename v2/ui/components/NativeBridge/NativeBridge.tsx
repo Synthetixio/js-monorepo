@@ -98,7 +98,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
         amount: parseFloatWithCommas(bridgeAmountsUSD),
         date: new Date().toISOString(),
         status: txnStatus,
-        txHash: txnHash,
+        txnHash,
       });
     }
   }, [bridgeAmountsUSD, network?.id, saveBridgingHistory, txnHash, txnStatus, walletAddress]);
@@ -256,7 +256,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
                   Boolean(gasError) ||
                   isGasEnabledAndNotFetched ||
                   notEnoughBalance ||
-                  !isCheckedL2
+                  (isL2 && !isCheckedL2)
                 }
               >
                 Bridge

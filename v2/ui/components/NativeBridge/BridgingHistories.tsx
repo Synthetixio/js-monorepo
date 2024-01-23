@@ -26,6 +26,8 @@ import { formatShortDate } from '../../utils/formatters/date';
 import { formatNumber } from '../../utils/formatters/number';
 import { getTxnLink } from '@snx-v2/txnLink';
 import React from 'react';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
+import { addDays, isAfter } from 'date-fns';
 
 function BridgingHistories({ bridgingHistory }: { bridgingHistory: BridgingHistory[] }) {
   const { t } = useTranslation();
@@ -52,7 +54,7 @@ function BridgingHistories({ bridgingHistory }: { bridgingHistory: BridgingHisto
       ),
       cell: (info) => formatNumber(info.getValue()),
     }),
-    columnHelper.accessor('txHash', {
+    columnHelper.accessor('txnHash', {
       header: () => (
         <Flex flex={1} p={3} px={4} justifyContent="center" textAlign="right">
           <Trans i18nKey="bridge.bridging-history.status" />
@@ -61,8 +63,19 @@ function BridgingHistories({ bridgingHistory }: { bridgingHistory: BridgingHisto
       cell: (info) => {
         const txHash = info.getValue();
         const networkId = info.row.original.networkId;
-        const status = info.row.original.status;
+        const isL2 =
+          networkId === NetworkIdByName['mainnet-ovm'] ||
+          networkId === NetworkIdByName['goerli-ovm'];
         const txnLink = getTxnLink(networkId, txHash ?? '');
+        let status = info.row.original.status;
+
+        if (isL2) {
+          const now = new Date();
+          const delayTime = addDays(new Date(info.row.original.date), 7);
+          if (isAfter(delayTime, now)) {
+            status = 'pending';
+          }
+        }
 
         return (
           <Popover isLazy trigger="hover">
