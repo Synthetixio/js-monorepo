@@ -14,6 +14,8 @@ export const EXTERNAL_LINKS = {
     SIP255: 'https://sips.synthetix.io/sips/sip-255',
     HedgeStrategies: 'https://docs.synthetix.io/staking/staking-guide/debt-hedging-strategies',
     NativeBridge: 'https://blog.synthetix.io/susd-bridge-enabled',
+    OptimismBridge: 'https://blog.oplabs.co/two-step-withdrawals/',
+    MessageRelayer: 'https://optimistic.etherscan.io/messagerelayer',
   },
   Social: {
     Twitter: 'https://twitter.com/synthetix_io',

@@ -25,12 +25,38 @@ import { TickIcon, ClockIcon, FailedIcon } from '@snx-v2/icons';
 import { formatShortDate } from '../../utils/formatters/date';
 import { formatNumber } from '../../utils/formatters/number';
 import { getTxnLink } from '@snx-v2/txnLink';
-import React from 'react';
+import React, { useState } from 'react';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { addDays, isAfter } from 'date-fns';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
+import { CrossChainMessenger } from '@eth-optimism/sdk';
+import Connector from '../../containers/Connector';
+import { ReviewWithdrawModal } from './ReviewWithdrawModal';
 
-function BridgingHistories({ bridgingHistory }: { bridgingHistory: BridgingHistory[] }) {
+function BridgingHistories({
+  bridgingHistory,
+  isMainnet,
+  isL2,
+}: {
+  bridgingHistory: BridgingHistory[];
+  isMainnet: boolean;
+  isL2: boolean;
+}) {
   const { t } = useTranslation();
+  const { signer } = Connector.useContainer();
+  const { globalProviders } = useGlobalProvidersWithFallback();
+  const crossChainMessenger = new CrossChainMessenger({
+    l1ChainId: isMainnet ? NetworkIdByName['mainnet'] : NetworkIdByName['goerli'],
+    l2ChainId: isMainnet ? NetworkIdByName['mainnet-ovm'] : NetworkIdByName['goerli-ovm'],
+    l1SignerOrProvider: signer ?? globalProviders.mainnet,
+    l2SignerOrProvider: globalProviders.optimism,
+  });
+
+  const [currentHistory, setCurrentHistory] = useState<BridgingHistory | undefined>();
+
+  const bridgingHistories = bridgingHistory.sort((a: BridgingHistory, b: BridgingHistory) =>
+    a.date < b.date ? 1 : -1
+  );
 
   const columnHelper = createColumnHelper<BridgingHistory>();
 
@@ -78,31 +104,43 @@ function BridgingHistories({ bridgingHistory }: { bridgingHistory: BridgingHisto
         }
 
         return (
-          <Popover isLazy trigger="hover">
-            <PopoverTrigger>
-              <Flex alignItems="center" justifyContent="center">
-                {status === 'success' ? (
-                  <TickIcon color="cyan.500" />
-                ) : status === 'error' ? (
-                  <FailedIcon width="16px" height="16px" />
-                ) : (
-                  <ClockIcon color="white" />
-                )}
-              </Flex>
-            </PopoverTrigger>
-            <PopoverContent p={2} color="white" bg="gray.800" width="fit-content" maxWidth={300}>
-              <a href={txnLink ?? ''} target="_blank" rel="noreferrer">
-                {t('bridge.bridging-history.view-tx')}
-              </a>
-            </PopoverContent>
-          </Popover>
+          <Flex alignItems="center" justifyContent="center" gap={2}>
+            <Popover isLazy trigger="hover">
+              <PopoverTrigger>
+                <Flex alignItems="center">
+                  {status === 'success' ? (
+                    <TickIcon color="cyan.500" />
+                  ) : status === 'error' ? (
+                    <FailedIcon width="16px" height="16px" />
+                  ) : (
+                    <ClockIcon color="white" />
+                  )}
+                </Flex>
+              </PopoverTrigger>
+              <PopoverContent p={2} color="white" bg="gray.800" width="fit-content" maxWidth={300}>
+                <a href={txnLink ?? ''} target="_blank" rel="noreferrer">
+                  {t('bridge.bridging-history.view-tx')}
+                </a>
+              </PopoverContent>
+            </Popover>
+            {isL2 && !!txHash && (
+              <Button
+                px={2}
+                size="sx"
+                variant="solid"
+                onClick={() => setCurrentHistory(info.row.original)}
+              >
+                Details
+              </Button>
+            )}
+          </Flex>
         );
       },
     }),
   ];
 
   const table = useReactTable({
-    data: bridgingHistory,
+    data: bridgingHistories,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -183,6 +221,18 @@ function BridgingHistories({ bridgingHistory }: { bridgingHistory: BridgingHisto
             {'>'}
           </Button>
         </Flex>
+      )}
+      {!!currentHistory && !!currentHistory.txnHash && (
+        <ReviewWithdrawModal
+          modalOpen
+          title={t('bridge.txn-modal.withdrawal')}
+          amount={currentHistory.amount}
+          txnHash={currentHistory.txnHash}
+          crossChainMessenger={crossChainMessenger}
+          onClose={() => setCurrentHistory(undefined)}
+          isL2={isL2}
+          isMainnet={isMainnet}
+        />
       )}
     </Flex>
   );

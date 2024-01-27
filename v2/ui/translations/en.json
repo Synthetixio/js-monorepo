@@ -678,8 +678,24 @@
     "to": "To",
     "txn-modal": {
       "approving": "Approving",
-      "bridging": "Bridging"
-    }
+      "bridging": "Bridging",
+      "transaction": "Transaction",
+      "withdrawal": "Withdrawal",
+      "withdraw_amount": "Amount to withdraw",
+      "initiate-withdraw": "Initiate withdrawal",
+      "wait-to-prove": "Wait up to a few minutes",
+      "ready-to-prove": "Prove withdrawal",
+      "proved": "Proved withdrawal",
+      "btn-prove": "Prove withdrawal",
+      "wait-7-days": "Wait 7 days",
+      "ready-to-relay": "Claim withdrawal",
+      "relayed": "Claimed withdrawal",
+      "btn-relay": "Claim withdrawal",
+      "btn-execute": "Execute",
+      "invalid-txn": "Invalid transaction hash",
+      "switch-mainnet": "Switch to Ethereum Mainnet"
+    },
+    "relayer-warning": "Looking to withdraw SNX related tokens or having trouble finding your withdrawal? Use the <0>message relayer</0>"
   },
 
   "common": {
