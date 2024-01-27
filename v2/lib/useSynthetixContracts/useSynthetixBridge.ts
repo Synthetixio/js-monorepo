@@ -41,24 +41,22 @@ export const getSynthetixBridge = async ({
     | SynthetixBridgeToBase;
   return contract;
 };
-export const useSynthetixBridge = (targetNetworkId?: number) => {
+export const useSynthetixBridge = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);
   const { globalProviders } = useGlobalProvidersWithFallback();
   return useQuery({
     // We add walletAddress as a query key to make sure the signer is up to date, we cant use signer directly since it cant be stringified
-    queryKey: ['useSynthetixBridge', { networkId, walletAddress, targetNetworkId }],
+    queryKey: ['useSynthetixBridge', { networkId, walletAddress }],
     queryFn: () => {
-      const currentNetworkId = targetNetworkId || networkId;
-      if (!currentNetworkId) throw Error('Network id required');
+      if (!networkId) throw Error('Network id required');
+
       const globalProvider =
-        currentNetworkId === NetworkIdByName.mainnet
-          ? globalProviders.mainnet
-          : globalProviders.optimism;
+        networkId === NetworkIdByName.mainnet ? globalProviders.mainnet : globalProviders.optimism;
       const provider = signer?.provider || globalProvider;
-      return getSynthetixBridge({ networkId: currentNetworkId, signer, provider });
+      return getSynthetixBridge({ networkId, signer, provider });
     },
     staleTime: Infinity,
-    enabled: Boolean(targetNetworkId || networkId),
+    enabled: Boolean(networkId),
   });
 };
