@@ -12,11 +12,7 @@ export interface BridgingHistory {
   txnHash?: string | null;
 }
 
-const useBridgingHistoryStore = ({
-  walletAddress,
-}: {
-  walletAddress?: string | null;
-}) => {
+const useBridgingHistoryStore = ({ walletAddress }: { walletAddress?: string | null }) => {
   const [storedValue, setValue] = useLocalStorage(
     LOCAL_STORAGE_KEYS.BRIDGING_HISTORY,
     <BridgingHistory[]>[]
