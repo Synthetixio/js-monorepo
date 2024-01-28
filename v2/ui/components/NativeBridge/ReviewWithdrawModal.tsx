@@ -21,6 +21,7 @@ import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import Connector from '../../containers/Connector';
 import { useEstimateFinalizeWithdraw } from '../../hooks/useEstimateFinalizeWithdraw';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
+import useBridgingHistoryStore from '../../hooks/useBridgingHistoryStore';
 
 export const ReviewWithdrawModal: FC<{
   crossChainMessenger: CrossChainMessenger;
@@ -32,8 +33,14 @@ export const ReviewWithdrawModal: FC<{
   isL2: boolean;
   isMainnet: boolean;
 }> = ({ isL2, isMainnet, crossChainMessenger, modalOpen, title, amount, txnHash, onClose }) => {
-  const { isWalletConnected, walletConnectedToUnsupportedNetwork, switchNetwork, connectWallet } =
-    Connector.useContainer();
+  const {
+    walletAddress,
+    isWalletConnected,
+    walletConnectedToUnsupportedNetwork,
+    switchNetwork,
+    connectWallet,
+  } = Connector.useContainer();
+  const { bridgingHistory, saveBridgingHistory } = useBridgingHistoryStore({ walletAddress });
 
   const {
     transactionFee: feeProve,
@@ -74,6 +81,11 @@ export const ReviewWithdrawModal: FC<{
           console.log('Relaying message...');
           await crossChainMessenger.finalizeMessage(txnHash, undefined, index);
           console.log('Message relayed.');
+
+          const currentHistory = bridgingHistory.find((e) => e.txnHash === txnHash);
+          if (currentHistory) {
+            saveBridgingHistory({ ...currentHistory, status: 'success' });
+          }
         }
       }
     } catch (error) {
