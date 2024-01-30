@@ -53,7 +53,6 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
   } = useSynthsBalances();
 
   const { bridgingHistory, saveBridgingHistory } = useBridgingHistoryStore({
-    networkId: network?.id,
     walletAddress,
   });
   const { data: SynthetixBridge } = useSynthetixBridge();
@@ -300,7 +299,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
           />
         )}
       </Flex>
-      <BridgingHistories bridgingHistory={bridgingHistory} />
+      <BridgingHistories bridgingHistory={bridgingHistory} isL2={isL2} isMainnet={isMainnet} />
     </Flex>
   );
 }

@@ -12,22 +12,14 @@ export interface BridgingHistory {
   txnHash?: string | null;
 }
 
-const useBridgingHistoryStore = ({
-  networkId,
-  walletAddress,
-}: {
-  networkId?: number;
-  walletAddress?: string | null;
-}) => {
+const useBridgingHistoryStore = ({ walletAddress }: { walletAddress?: string | null }) => {
   const [storedValue, setValue] = useLocalStorage(
     LOCAL_STORAGE_KEYS.BRIDGING_HISTORY,
     <BridgingHistory[]>[]
   );
   const selectedHistories = useMemo(
-    () =>
-      storedValue.filter((e) => e.walletAddress === walletAddress && e.networkId === networkId) ??
-      [],
-    [networkId, storedValue, walletAddress]
+    () => storedValue.filter((e) => e.walletAddress === walletAddress) ?? [],
+    [storedValue, walletAddress]
   );
 
   const saveBridgingHistory = (value: BridgingHistory) => {
