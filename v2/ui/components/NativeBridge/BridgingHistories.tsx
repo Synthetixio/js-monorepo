@@ -34,11 +34,11 @@ import Connector from '../../containers/Connector';
 import { ReviewWithdrawModal } from './ReviewWithdrawModal';
 
 function BridgingHistories({
-  bridgingHistory,
+  bridgingHistories,
   isMainnet,
   isL2,
 }: {
-  bridgingHistory: BridgingHistory[];
+  bridgingHistories: BridgingHistory[];
   isMainnet: boolean;
   isL2: boolean;
 }) {
@@ -54,8 +54,8 @@ function BridgingHistories({
 
   const [currentHistory, setCurrentHistory] = useState<BridgingHistory | undefined>();
 
-  const bridgingHistories = bridgingHistory.sort((a: BridgingHistory, b: BridgingHistory) =>
-    a.date < b.date ? 1 : -1
+  const sortedBridgingHistories = bridgingHistories.sort((a: BridgingHistory, b: BridgingHistory) =>
+    new Date(a.date).getTime() < new Date(b.date).getTime() ? 1 : -1
   );
 
   const columnHelper = createColumnHelper<BridgingHistory>();
@@ -140,7 +140,7 @@ function BridgingHistories({
   ];
 
   const table = useReactTable({
-    data: bridgingHistories,
+    data: sortedBridgingHistories,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -189,7 +189,7 @@ function BridgingHistories({
           )}
         </Tbody>
       </Table>
-      {bridgingHistory.length > 0 && (
+      {bridgingHistories.length > 0 && (
         <Flex p={4} justifyContent="flex-end">
           <Flex color="gray.700" fontSize="14px" align="center">
             <strong>
@@ -228,6 +228,7 @@ function BridgingHistories({
           title={t('bridge.txn-modal.withdrawal')}
           amount={currentHistory.amount}
           txnHash={currentHistory.txnHash}
+          networkId={currentHistory.networkId}
           crossChainMessenger={crossChainMessenger}
           onClose={() => setCurrentHistory(undefined)}
           isL2={isL2}

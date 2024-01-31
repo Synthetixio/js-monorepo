@@ -45,9 +45,11 @@ const getTransactionPrice = (
 };
 
 export const useCustomGasOptions = ({
+  estimateGas,
   populateTransaction,
   queryKeys = [],
 }: {
+  estimateGas?: () => Promise<BigNumber>;
   populateTransaction?: () => Promise<ethers.providers.TransactionRequest>;
   queryKeys: QueryKey;
 }) => {
@@ -56,6 +58,7 @@ export const useCustomGasOptions = ({
   const gasPriceQuery = useGasPrice();
   const optimismLayerOneFeesQuery = useCustomOptimismLayer1Fee({ populateTransaction });
   const { data: exchangeRatesData } = useExchangeRatesData();
+
   return useQuery(
     [...queryKeys, optimismLayerOneFeesQuery.data, gasPriceQuery.data, networkId, gasSpeed],
     async () => {
@@ -63,7 +66,8 @@ export const useCustomGasOptions = ({
         throw Error('Query should not be enable when getGasLimit is missing');
       }
       const populatedTransaction = await populateTransaction();
-      const gasLimitRaw = populatedTransaction.gasLimit;
+      const estimateGasLimit = await estimateGas?.();
+      const gasLimitRaw = populatedTransaction.gasLimit ?? estimateGasLimit;
       const gasLimit = wei(gasLimitRaw ?? 0, GWEI_DECIMALS)
         .mul(GAS_LIMIT_BUFFER)
         .toBN();
