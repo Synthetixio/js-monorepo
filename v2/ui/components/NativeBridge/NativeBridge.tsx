@@ -52,9 +52,10 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
     refetch: refetchBalances,
   } = useSynthsBalances();
 
-  const { bridgingHistory, saveBridgingHistory } = useBridgingHistoryStore({
+  const { bridgingHistories, saveBridgingHistories } = useBridgingHistoryStore({
     walletAddress,
   });
+
   const { data: SynthetixBridge } = useSynthetixBridge();
   const { data: sUSD } = useProxyERC20sUSD();
   const { data: needsApproval, refetch: refetchApproval } = useGetNeedsApproval(
@@ -91,7 +92,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
 
   useEffect(() => {
     if (!!walletAddress && !!bridgeAmountsUSD && !!network?.id && !!txnHash) {
-      saveBridgingHistory({
+      saveBridgingHistories({
         walletAddress,
         networkId: network.id,
         amount: parseFloatWithCommas(bridgeAmountsUSD),
@@ -100,7 +101,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
         txnHash,
       });
     }
-  }, [bridgeAmountsUSD, network?.id, saveBridgingHistory, txnHash, txnStatus, walletAddress]);
+  }, [bridgeAmountsUSD, network?.id, saveBridgingHistories, txnHash, txnStatus, walletAddress]);
 
   const handleSubmit = () => {
     if (isL2 && !isCheckedL2) {
@@ -142,6 +143,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
         borderWidth="1px"
         borderColor="gray.900"
         bg="navy.700"
+        height="max-content"
       >
         <Flex alignItems="center">
           <Button
@@ -299,7 +301,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
           />
         )}
       </Flex>
-      <BridgingHistories bridgingHistory={bridgingHistory} isL2={isL2} isMainnet={isMainnet} />
+      <BridgingHistories bridgingHistories={bridgingHistories} isL2={isL2} isMainnet={isMainnet} />
     </Flex>
   );
 }

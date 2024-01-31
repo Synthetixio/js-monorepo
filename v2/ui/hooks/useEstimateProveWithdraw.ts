@@ -4,10 +4,11 @@ import { useCustomGasOptions } from './useCustomGasOptions';
 type NativeBridgeArgs = {
   crossChainMessenger: CrossChainMessenger;
   txnHash: string;
+  readyToProve: boolean;
 };
 
 const createPopulateTransaction = (nativeArgs?: NativeBridgeArgs) => {
-  if (!nativeArgs || !nativeArgs.crossChainMessenger) return undefined;
+  if (!nativeArgs || !nativeArgs.crossChainMessenger || !nativeArgs.readyToProve) return undefined;
   const { txnHash, crossChainMessenger } = nativeArgs;
   if (!txnHash) return undefined;
 
@@ -16,8 +17,19 @@ const createPopulateTransaction = (nativeArgs?: NativeBridgeArgs) => {
   };
 };
 
+const createEstimateGas = (nativeArgs?: NativeBridgeArgs) => {
+  if (!nativeArgs || !nativeArgs.crossChainMessenger || !nativeArgs.readyToProve) return undefined;
+  const { txnHash, crossChainMessenger } = nativeArgs;
+  if (!txnHash) return undefined;
+
+  return () => {
+    return crossChainMessenger.estimateGas.proveMessage(txnHash);
+  };
+};
+
 export function useEstimateProveWithdraw(bridgeArgs: NativeBridgeArgs) {
   const populateTransaction = createPopulateTransaction(bridgeArgs);
+  const estimateGas = createEstimateGas(bridgeArgs);
 
   const {
     data,
@@ -26,7 +38,8 @@ export function useEstimateProveWithdraw(bridgeArgs: NativeBridgeArgs) {
     error: gasError,
   } = useCustomGasOptions({
     populateTransaction,
-    queryKeys: [bridgeArgs.txnHash, populateTransaction],
+    estimateGas,
+    queryKeys: [bridgeArgs.txnHash, populateTransaction, estimateGas],
   });
 
   const { transactionPrice } = data || {};
