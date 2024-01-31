@@ -98,14 +98,10 @@ export const ReviewWithdrawModal: FC<{
     if (hasError || loading) return;
     try {
       setSubmitting(true);
-      console.log('Execute button pressed. Current message status:', messageStatus);
       for (const { status, index } of messageStatus) {
-        console.log('Executing message at index:', index);
         if (status === MessageStatus.READY_TO_PROVE) {
-          console.log('Proving message...');
           const transaction = await crossChainMessenger.proveMessage(txnHash, undefined, index);
           const transactionReceipt = await transaction.wait();
-          console.log('Message proved.');
           if (currentHistory) {
             saveBridgingHistories({
               ...currentHistory,
@@ -113,10 +109,8 @@ export const ReviewWithdrawModal: FC<{
             });
           }
         } else if (status === MessageStatus.READY_FOR_RELAY) {
-          console.log('Relaying message...');
           const transaction = await crossChainMessenger.finalizeMessage(txnHash, undefined, index);
           const transactionReceipt = await transaction.wait();
-          console.log('Message relayed.');
           if (currentHistory) {
             saveBridgingHistories({
               ...currentHistory,
