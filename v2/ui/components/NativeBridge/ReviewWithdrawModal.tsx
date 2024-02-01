@@ -22,7 +22,6 @@ import Connector from '../../containers/Connector';
 import { useEstimateFinalizeWithdraw } from '../../hooks/useEstimateFinalizeWithdraw';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import useBridgingHistoryStore, { BridgingHistory } from '../../hooks/useBridgingHistoryStore';
-import { sleep } from '../../utils/promise';
 
 export const ReviewWithdrawModal: FC<{
   crossChainMessenger: CrossChainMessenger;
@@ -119,8 +118,7 @@ export const ReviewWithdrawModal: FC<{
               status: 'success',
             });
           }
-
-          await sleep(10 * 1000); // Delay 10s before closing modal
+        } else {
           onClose();
         }
       }
@@ -291,7 +289,7 @@ export const ReviewWithdrawModal: FC<{
               ? t('bridge.txn-modal.btn-prove')
               : readyToRelay
               ? t('bridge.txn-modal.btn-relay')
-              : t('bridge.txn-modal.btn-execute')}
+              : t('bridge.txn-modal.btn-close')}
           </Button>
         ) : (
           <Button
