@@ -692,6 +692,7 @@
       "relayed": "Claimed withdrawal",
       "btn-relay": "Claim withdrawal",
       "btn-execute": "Execute",
+      "btn-close": "Close",
       "invalid-txn": "Invalid transaction hash",
       "switch-mainnet": "Switch to Ethereum Mainnet"
     },

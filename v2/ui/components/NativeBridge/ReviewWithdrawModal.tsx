@@ -118,10 +118,11 @@ export const ReviewWithdrawModal: FC<{
               status: 'success',
             });
           }
+        } else {
+          onClose();
         }
       }
       setSubmitting(false);
-      onClose();
     } catch (error) {
       console.error(error);
       setSubmitting(false);
@@ -288,7 +289,7 @@ export const ReviewWithdrawModal: FC<{
               ? t('bridge.txn-modal.btn-prove')
               : readyToRelay
               ? t('bridge.txn-modal.btn-relay')
-              : t('bridge.txn-modal.btn-execute')}
+              : t('bridge.txn-modal.btn-close')}
           </Button>
         ) : (
           <Button
