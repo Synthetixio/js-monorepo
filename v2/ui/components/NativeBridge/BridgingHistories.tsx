@@ -27,7 +27,6 @@ import { formatNumber } from '../../utils/formatters/number';
 import { getTxnLink } from '@snx-v2/txnLink';
 import React, { useState } from 'react';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-import { addDays, isAfter } from 'date-fns';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { CrossChainMessenger } from '@eth-optimism/sdk';
 import Connector from '../../containers/Connector';
