@@ -27,7 +27,6 @@ import { formatNumber } from '../../utils/formatters/number';
 import { getTxnLink } from '@snx-v2/txnLink';
 import React, { useState } from 'react';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-import { addDays, isAfter } from 'date-fns';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { CrossChainMessenger } from '@eth-optimism/sdk';
 import Connector from '../../containers/Connector';
@@ -89,18 +88,15 @@ function BridgingHistories({
       cell: (info) => {
         const txHash = info.getValue();
         const networkId = info.row.original.networkId;
+        const finalizedTxnHash = info.row.original.finalizedTxnHash;
         const isL2 =
           networkId === NetworkIdByName['mainnet-ovm'] ||
           networkId === NetworkIdByName['goerli-ovm'];
         const txnLink = getTxnLink(networkId, txHash ?? '');
         let status = info.row.original.status;
 
-        if (isL2) {
-          const now = new Date();
-          const delayTime = addDays(new Date(info.row.original.date), 7);
-          if (isAfter(delayTime, now)) {
-            status = 'pending';
-          }
+        if (isL2 && status !== 'error' && !finalizedTxnHash) {
+          status = 'pending';
         }
 
         return (

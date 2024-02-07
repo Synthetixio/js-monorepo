@@ -687,13 +687,15 @@
       "ready-to-prove": "Prove withdrawal",
       "proved": "Proved withdrawal",
       "btn-prove": "Prove withdrawal",
-      "wait-7-days": "Wait 7 days",
+      "wait-days": "Wait {{num}} days",
+      "remaining": "Remaining",
       "ready-to-relay": "Claim withdrawal",
       "relayed": "Claimed withdrawal",
       "btn-relay": "Claim withdrawal",
       "btn-execute": "Execute",
       "btn-close": "Close",
       "invalid-txn": "Invalid transaction hash",
+      "execute-error": "Execute error",
       "switch-mainnet": "Switch to Ethereum Mainnet"
     },
     "relayer-warning": "Looking to withdraw SNX related tokens or having trouble finding your withdrawal? Use the <0>message relayer</0>"

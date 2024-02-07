@@ -7,7 +7,17 @@ import {
   TransactionPending,
 } from '@snx-v2/icons';
 import { TransactionModal } from '@snx-v2/TransactionModal';
-import { Alert, AlertDescription, AlertIcon, Box, Button, Flex, Text } from '@chakra-ui/react';
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import { Trans, useTranslation } from 'react-i18next';
 import { ExternalLink } from '@snx-v2/ExternalLink';
 import { getTxnLink, useGetTxnLink } from '@snx-v2/txnLink';
@@ -22,6 +32,8 @@ import Connector from '../../containers/Connector';
 import { useEstimateFinalizeWithdraw } from '../../hooks/useEstimateFinalizeWithdraw';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import useBridgingHistoryStore, { BridgingHistory } from '../../hooks/useBridgingHistoryStore';
+import { addSeconds } from 'date-fns';
+import { CountDown } from '@snx-v2/CountDown';
 
 export const ReviewWithdrawModal: FC<{
   crossChainMessenger: CrossChainMessenger;
@@ -57,8 +69,11 @@ export const ReviewWithdrawModal: FC<{
   const [messageStatus, setMessageStatus] = useState<
     { status: MessageStatus; index: number; description: string }[]
   >([]);
+  const [challengePeriodSeconds, setChallengePeriodSeconds] = useState<number | undefined>();
+  const [waitingTimeSeconds, setWaitingTimeSeconds] = useState<number | undefined>();
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [executeError, setExecuteError] = useState<any | undefined>();
   const { t } = useTranslation();
   const txnLink = getTxnLink(networkId, txnHash);
   const provedTxnLink = useGetTxnLink(currentHistory?.provedTxnHash ?? null);
@@ -73,10 +88,16 @@ export const ReviewWithdrawModal: FC<{
   const readyToRelay = messageStatus.some(
     (message) => message.status === MessageStatus.READY_FOR_RELAY
   );
-  const wait7Days =
+  const relayed = messageStatus.every((message) => message.status === MessageStatus.RELAYED);
+  const isWaiting =
     readyToProve ||
     messageStatus.some((message) => message.status === MessageStatus.IN_CHALLENGE_PERIOD);
   const canExecute = readyToProve || readyToRelay;
+  const endDate =
+    !!waitingTimeSeconds && currentHistory?.provedDate
+      ? addSeconds(new Date(currentHistory.provedDate), waitingTimeSeconds)
+      : undefined;
+  const waitDays = challengePeriodSeconds ? challengePeriodSeconds / (60 * 60 * 24) : undefined;
 
   const {
     transactionFee: feeProve,
@@ -97,6 +118,7 @@ export const ReviewWithdrawModal: FC<{
     }
     if (hasError || loading) return;
     try {
+      setExecuteError(undefined);
       setSubmitting(true);
       for (const { status, index } of messageStatus) {
         if (status === MessageStatus.READY_TO_PROVE) {
@@ -105,6 +127,7 @@ export const ReviewWithdrawModal: FC<{
           if (currentHistory) {
             saveBridgingHistories({
               ...currentHistory,
+              provedDate: new Date().toISOString(),
               provedTxnHash: transactionReceipt.transactionHash,
             });
           }
@@ -114,6 +137,7 @@ export const ReviewWithdrawModal: FC<{
           if (currentHistory) {
             saveBridgingHistories({
               ...currentHistory,
+              finalizedDate: new Date().toISOString(),
               finalizedTxnHash: transactionReceipt.transactionHash,
               status: 'success',
             });
@@ -123,8 +147,10 @@ export const ReviewWithdrawModal: FC<{
         }
       }
       setSubmitting(false);
+      setExecuteError(undefined);
     } catch (error) {
       console.error(error);
+      setExecuteError(error);
       setSubmitting(false);
     }
   };
@@ -133,10 +159,19 @@ export const ReviewWithdrawModal: FC<{
     const fetchMessageStatus = async () => {
       try {
         setLoading(true); // Set loading state to true
+        const challengePeriod = await crossChainMessenger.getChallengePeriodSeconds();
+        setChallengePeriodSeconds(challengePeriod);
         const messages = await crossChainMessenger.getMessagesByTransaction(txnHash);
         const statuses = await Promise.all(
           messages.map(async (message, index) => {
             const status = await crossChainMessenger.getMessageStatus(txnHash, index);
+            if (status === MessageStatus.IN_CHALLENGE_PERIOD) {
+              const estimateWaitTime = await crossChainMessenger.estimateMessageWaitTimeSeconds(
+                txnHash,
+                index
+              );
+              setWaitingTimeSeconds(estimateWaitTime);
+            }
             return { status, index, description: getStatusDescription(status) };
           })
         );
@@ -161,9 +196,7 @@ export const ReviewWithdrawModal: FC<{
   return (
     <TransactionModal
       onClose={onClose}
-      icon={
-        !loading && !canExecute && !hasError ? <TransactionCompleted /> : <TransactionPending />
-      }
+      icon={!loading && !hasError && relayed ? <TransactionCompleted /> : <TransactionPending />}
       title={title ?? t('bridge.transaction-modal.withdrawal')}
       isOpen={modalOpen}
     >
@@ -184,19 +217,23 @@ export const ReviewWithdrawModal: FC<{
           </ExternalLink>
         )}
       </Flex>
+      {loading && !messageStatus?.length && (
+        <Center pb={2}>
+          <Spinner />
+        </Center>
+      )}
       {!!messageStatus?.length && !hasError && (
         <Flex flexDirection="column" gap={2}>
           <Flex alignItems="center" justifyContent="space-between" bg="black" p={3}>
             <Flex
               alignItems="center"
               gap={2}
-              color={!canExecute && !wait7Days ? 'white' : 'green.600'}
+              color={!canExecute && !isWaiting ? 'white' : 'green.600'}
             >
-              {!canExecute && !wait7Days ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
+              {!canExecute && !isWaiting ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
               <ExternalLink
                 href="https://blog.oplabs.co/two-step-withdrawals/"
-                fontSize="sm"
-                color={!canExecute && !wait7Days ? 'white' : 'green.600'}
+                color={!canExecute && !isWaiting ? 'white' : 'green.600'}
               >
                 {t('bridge.txn-modal.wait-to-prove')}
               </ExternalLink>
@@ -215,26 +252,36 @@ export const ReviewWithdrawModal: FC<{
               </ExternalLink>
             )}
             {readyToProve && !gasErrorProve && (
-              <Flex alignItems="center">
+              <Flex alignItems="center" fontSize="sm">
                 <EthGasPriceEstimator transactionFee={amount === 0 ? wei(0) : feeProve} />
               </Flex>
             )}
           </Flex>
           <Flex alignItems="center" justifyContent="space-between" bg="black" p={3}>
-            <Flex alignItems="center" gap={2} color={wait7Days ? 'white' : 'green.600'}>
-              {wait7Days ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
-              <Text>{t('bridge.txn-modal.wait-7-days')}</Text>
+            <Flex alignItems="center" gap={2} color={isWaiting ? 'white' : 'green.600'}>
+              {isWaiting ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
+              <Text>
+                {t('bridge.txn-modal.wait-days', {
+                  num: waitDays ?? 7,
+                })}
+              </Text>
             </Flex>
+            {isWaiting && endDate && (
+              <Flex alignItems="center" gap={2} fontSize="sm">
+                <Text>{t('bridge.txn-modal.remaining') + ':'}</Text>
+                <CountDown toDate={endDate} />
+              </Flex>
+            )}
           </Flex>
           <Flex alignItems="center" justifyContent="space-between" bg="black" p={3}>
             <Flex
               alignItems="center"
               gap={2}
-              color={wait7Days || canExecute ? 'white' : 'green.600'}
+              color={isWaiting || canExecute ? 'white' : 'green.600'}
             >
-              {wait7Days || canExecute ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
+              {isWaiting || canExecute ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
               <Text>
-                {wait7Days || canExecute
+                {isWaiting || canExecute
                   ? t('bridge.txn-modal.ready-to-relay')
                   : t('bridge.txn-modal.relayed')}
               </Text>
@@ -245,7 +292,7 @@ export const ReviewWithdrawModal: FC<{
               </ExternalLink>
             )}
             {readyToRelay && !gasErrorFinalize && (
-              <Flex alignItems="center">
+              <Flex alignItems="center" fontSize="sm">
                 <EthGasPriceEstimator transactionFee={amount === 0 ? wei(0) : feeFinalize} />
               </Flex>
             )}
@@ -253,15 +300,17 @@ export const ReviewWithdrawModal: FC<{
         </Flex>
       )}
       <Box>
-        {(gasErrorProve || gasErrorFinalize || hasError) && (
+        {(gasErrorProve || gasErrorFinalize || hasError || executeError) && (
           <Flex alignItems="center" gap={2}>
             <FailedIcon width="40px" height="40px" />
             <Text>
               {hasError
                 ? messageStatus?.[0].description
-                : `${t('staking-v2.mint.gas-estimation-error')}: ${parseTxnError(
-                    gasErrorProve || gasErrorFinalize
-                  )}`}
+                : `${t(
+                    executeError
+                      ? 'bridge.txn-modal.execute-error'
+                      : 'staking-v2.mint.gas-estimation-error'
+                  )}: ${parseTxnError(executeError || gasErrorProve || gasErrorFinalize)}`}
             </Text>
           </Flex>
         )}
