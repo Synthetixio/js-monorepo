@@ -10,7 +10,9 @@ export interface BridgingHistory {
   status: TransactionStatus;
   date: string;
   txnHash?: string | null;
+  provedDate?: string;
   provedTxnHash?: string | null;
+  finalizedDate?: string;
   finalizedTxnHash?: string | null;
 }
 

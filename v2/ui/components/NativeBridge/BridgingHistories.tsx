@@ -89,6 +89,7 @@ function BridgingHistories({
       cell: (info) => {
         const txHash = info.getValue();
         const networkId = info.row.original.networkId;
+        const finalizedTxnHash = info.row.original.finalizedTxnHash;
         const isL2 =
           networkId === NetworkIdByName['mainnet-ovm'] ||
           networkId === NetworkIdByName['goerli-ovm'];
@@ -98,7 +99,7 @@ function BridgingHistories({
         if (isL2) {
           const now = new Date();
           const delayTime = addDays(new Date(info.row.original.date), 7);
-          if (isAfter(delayTime, now)) {
+          if (isAfter(delayTime, now) || (status !== 'error' && !finalizedTxnHash)) {
             status = 'pending';
           }
         }
