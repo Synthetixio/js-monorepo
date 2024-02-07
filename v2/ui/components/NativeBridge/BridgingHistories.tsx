@@ -96,12 +96,8 @@ function BridgingHistories({
         const txnLink = getTxnLink(networkId, txHash ?? '');
         let status = info.row.original.status;
 
-        if (isL2) {
-          const now = new Date();
-          const delayTime = addDays(new Date(info.row.original.date), 7);
-          if (isAfter(delayTime, now) || (status !== 'error' && !finalizedTxnHash)) {
-            status = 'pending';
-          }
+        if (isL2 && status !== 'error' && !finalizedTxnHash) {
+          status = 'pending';
         }
 
         return (

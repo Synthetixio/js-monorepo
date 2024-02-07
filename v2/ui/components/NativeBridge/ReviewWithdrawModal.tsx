@@ -118,6 +118,7 @@ export const ReviewWithdrawModal: FC<{
     }
     if (hasError || loading) return;
     try {
+      setExecuteError(undefined);
       setSubmitting(true);
       for (const { status, index } of messageStatus) {
         if (status === MessageStatus.READY_TO_PROVE) {
