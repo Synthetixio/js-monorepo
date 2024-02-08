@@ -42,11 +42,12 @@ export function useEstimateProveWithdraw(bridgeArgs: NativeBridgeArgs) {
     queryKeys: [bridgeArgs.txnHash, populateTransaction, estimateGas],
   });
 
-  const { transactionPrice } = data || {};
+  const { transactionPrice, gasPrices } = data || {};
 
   return {
     transactionFee: transactionPrice,
     isGasEnabledAndNotFetched: gasFetching && !isGasFetched,
     gasError: gasError as Error | null,
+    gasPrices,
   };
 }
