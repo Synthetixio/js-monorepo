@@ -669,7 +669,9 @@
       "amount": "Amount",
       "status": "Status",
       "view-tx": "View Tx on Explorer",
-      "no-transactions": "No transactions to show."
+      "no-transactions": "No transactions to show.",
+      "switch-mainnet": "Switch to L1",
+      "details": "Details"
     },
     "bridge-warning": "Check the box and understand the bridging requirements to proceed",
     "confirm-delay": "I understand that bridging from Optimism to Ethereum Mainnet takes a 7 days delay. Read this <0>blog post for more details</0>",

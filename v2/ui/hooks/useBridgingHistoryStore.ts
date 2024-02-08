@@ -79,7 +79,9 @@ const useBridgingHistoryStore = ({ walletAddress }: { walletAddress?: string | n
     if (storedHistory !== -1) {
       storedValue[storedHistory].status = value.status;
       storedValue[storedHistory].provedTxnHash = value.provedTxnHash;
+      storedValue[storedHistory].provedDate = value.provedDate;
       storedValue[storedHistory].finalizedTxnHash = value.finalizedTxnHash;
+      storedValue[storedHistory].finalizedDate = value.finalizedDate;
     } else {
       storedValue.push(value);
     }
