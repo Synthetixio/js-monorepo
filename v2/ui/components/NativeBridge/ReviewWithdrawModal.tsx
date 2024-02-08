@@ -71,7 +71,7 @@ export const ReviewWithdrawModal: FC<{
   >([]);
   const [challengePeriodSeconds, setChallengePeriodSeconds] = useState<number | undefined>();
   const [waitingTimeSeconds, setWaitingTimeSeconds] = useState<number | undefined>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [executeError, setExecuteError] = useState<any | undefined>();
   const { t } = useTranslation();
@@ -156,6 +156,7 @@ export const ReviewWithdrawModal: FC<{
   };
 
   useEffect(() => {
+    if (!Boolean(walletConnectedToUnsupportedNetwork || isWalletConnected) || isL2) return;
     const fetchMessageStatus = async () => {
       try {
         setLoading(true); // Set loading state to true
@@ -191,7 +192,14 @@ export const ReviewWithdrawModal: FC<{
     };
 
     fetchMessageStatus();
-  }, [crossChainMessenger, t, txnHash]);
+  }, [
+    crossChainMessenger,
+    isL2,
+    isWalletConnected,
+    t,
+    txnHash,
+    walletConnectedToUnsupportedNetwork,
+  ]);
 
   return (
     <TransactionModal
@@ -324,11 +332,12 @@ export const ReviewWithdrawModal: FC<{
             onClick={executeMessage}
             isDisabled={
               loading ||
-              submitting ||
-              !canExecute ||
-              hasError ||
-              isGasEnableAndNotFetchedFinalize ||
-              isGasEnableAndNotFetchedProve
+              (!isL2 &&
+                (submitting ||
+                  !canExecute ||
+                  hasError ||
+                  isGasEnableAndNotFetchedFinalize ||
+                  isGasEnableAndNotFetchedProve))
             }
             isLoading={submitting}
           >
