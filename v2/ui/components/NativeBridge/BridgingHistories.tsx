@@ -140,6 +140,7 @@ function BridgingHistories({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    initialState: { pagination: { pageSize: 5 } },
   });
 
   return (
