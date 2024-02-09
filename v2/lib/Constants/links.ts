@@ -20,7 +20,7 @@ export const EXTERNAL_LINKS = {
   Social: {
     Twitter: 'https://twitter.com/synthetix_io',
     Blog: 'https://blog.synthetix.io/',
-    Discord: 'https://discord.com/invite/ptfNSByB8P',
+    Discord: 'https://discord.com/invite/KVeCZe6ahW',
     GitHub: 'https://github.com/synthetixio/staking',
   },
   TokenLists: {
