@@ -700,7 +700,8 @@
       "execute-error": "Execute error",
       "switch-mainnet": "Switch to Ethereum Mainnet"
     },
-    "relayer-warning": "Looking to withdraw SNX related tokens or having trouble finding your withdrawal? Use the <0>message relayer</0>"
+    "relayer-warning": "Looking to withdraw SNX related tokens or having trouble finding your withdrawal? Use the <0>message relayer</0>",
+    "gas-warning": "To avoid a failed transaction, it is suggested to include a higher gas limit than necessary. Transactions will not execute at this cost. Typical transaction's cost {{num}} ETH."
   },
 
   "common": {

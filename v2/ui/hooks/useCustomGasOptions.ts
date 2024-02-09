@@ -26,7 +26,7 @@ const getTotalGasPrice = (gasPrice?: GasPrice | null) => {
   return baseFeePerGas.add(maxPriorityFeePerGas || 0);
 };
 
-const getTransactionPrice = (
+export const getTransactionPrice = (
   gasPrice: GasPrice | undefined,
   gasLimit: BigNumber | undefined,
   ethPrice: Wei | undefined,

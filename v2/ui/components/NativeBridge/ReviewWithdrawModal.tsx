@@ -34,6 +34,9 @@ import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import useBridgingHistoryStore, { BridgingHistory } from '../../hooks/useBridgingHistoryStore';
 import { addSeconds } from 'date-fns';
 import { CountDown } from '@snx-v2/CountDown';
+import { BigNumber } from '@ethersproject/bignumber';
+import { getTotalGasPrice } from '../../utils/network';
+import { GWEI_DECIMALS } from '../../utils/infura';
 
 export const ReviewWithdrawModal: FC<{
   crossChainMessenger: CrossChainMessenger;
@@ -109,7 +112,19 @@ export const ReviewWithdrawModal: FC<{
     transactionFee: feeFinalize,
     isGasEnabledAndNotFetched: isGasEnableAndNotFetchedFinalize,
     gasError: gasErrorFinalize,
+    gasPrices: gasPricesFinalize,
   } = useEstimateFinalizeWithdraw({ txnHash, crossChainMessenger, readyToRelay });
+
+  const estimateFinalizeGasPrice =
+    readyToRelay && !finalizedTxnHash && gasPricesFinalize
+      ? getTotalGasPrice({
+          baseFeePerGas: gasPricesFinalize.average?.baseFeePerGas?.toBN(),
+          maxFeePerGas: gasPricesFinalize.average?.maxFeePerGas?.toBN(),
+          maxPriorityFeePerGas: gasPricesFinalize.average?.maxPriorityFeePerGas?.toBN(),
+        })
+          .mul(wei(BigNumber.from(400000), GWEI_DECIMALS))
+          .toNumber()
+      : 0;
 
   const executeMessage = async () => {
     if (isL2) {
@@ -370,6 +385,19 @@ export const ReviewWithdrawModal: FC<{
           >
             {t('bridge.connect-wallet-text')}
           </Button>
+        )}
+
+        {readyToRelay && !finalizedTxnHash && (
+          <Alert mt={5} status="warning" variant="left-accent" py={2} px={3}>
+            <AlertIcon width="20px" height="20px" />
+            <AlertDescription pl={2} pr={0} fontSize="sm" fontFamily="heading">
+              {t('bridge.gas-warning', {
+                num: estimateFinalizeGasPrice
+                  ? formatNumber(estimateFinalizeGasPrice, { maxDecimals: 6, minDecimals: 6 })
+                  : '--',
+              })}
+            </AlertDescription>
+          </Alert>
         )}
 
         <Alert mt={5} status="info" variant="left-accent" py={2} px={3}>
