@@ -186,9 +186,9 @@ export default function AppRoutes() {
           <Route
             path="/bridge"
             element={
-              <WalletWrapper>
+              <Wrapper>
                 <BridgePage />
-              </WalletWrapper>
+              </Wrapper>
             }
           />
 
