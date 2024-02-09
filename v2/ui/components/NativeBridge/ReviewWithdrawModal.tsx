@@ -85,6 +85,9 @@ export const ReviewWithdrawModal: FC<{
   const hasError = messageStatus.some(
     (message) => message.description === 'Invalid transaction hash'
   );
+  const isWaitingState = messageStatus.some(
+    (message) => message.status === MessageStatus.STATE_ROOT_NOT_PUBLISHED
+  );
   const readyToProve = messageStatus.some(
     (message) => message.status === MessageStatus.READY_TO_PROVE
   );
@@ -270,10 +273,20 @@ export const ReviewWithdrawModal: FC<{
             </Flex>
           </Flex>
           <Flex alignItems="center" justifyContent="space-between" bg="black" p={3}>
-            <Flex alignItems="center" gap={2} color={readyToProve ? 'white' : 'green.600'}>
-              {readyToProve ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
+            <Flex
+              alignItems="center"
+              gap={2}
+              color={readyToProve || isWaitingState ? 'white' : 'green.600'}
+            >
+              {readyToProve || isWaitingState ? (
+                <ClockIcon width="20px" height="20px" />
+              ) : (
+                <TickIcon />
+              )}
               <Text>
-                {readyToProve ? t('bridge.txn-modal.ready-to-prove') : t('bridge.txn-modal.proved')}
+                {readyToProve || isWaitingState
+                  ? t('bridge.txn-modal.ready-to-prove')
+                  : t('bridge.txn-modal.proved')}
               </Text>
             </Flex>
             {provedTxnLink && (
@@ -288,8 +301,16 @@ export const ReviewWithdrawModal: FC<{
             )}
           </Flex>
           <Flex alignItems="center" justifyContent="space-between" bg="black" p={3}>
-            <Flex alignItems="center" gap={2} color={isWaiting ? 'white' : 'green.600'}>
-              {isWaiting ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
+            <Flex
+              alignItems="center"
+              gap={2}
+              color={isWaitingState || isWaiting ? 'white' : 'green.600'}
+            >
+              {isWaitingState || isWaiting ? (
+                <ClockIcon width="20px" height="20px" />
+              ) : (
+                <TickIcon />
+              )}
               <Text>
                 {t('bridge.txn-modal.wait-days', {
                   num: waitDays ?? 7,
@@ -307,15 +328,19 @@ export const ReviewWithdrawModal: FC<{
             <Flex
               alignItems="center"
               gap={2}
-              color={(isWaiting || canExecute) && !finalizedTxnHash ? 'white' : 'green.600'}
+              color={
+                (isWaitingState || isWaiting || canExecute) && !finalizedTxnHash
+                  ? 'white'
+                  : 'green.600'
+              }
             >
-              {(isWaiting || canExecute) && !finalizedTxnHash ? (
+              {(isWaitingState || isWaiting || canExecute) && !finalizedTxnHash ? (
                 <ClockIcon width="20px" height="20px" />
               ) : (
                 <TickIcon />
               )}
               <Text>
-                {(isWaiting || canExecute) && !finalizedTxnHash
+                {(isWaitingState || isWaiting || canExecute) && !finalizedTxnHash
                   ? t('bridge.txn-modal.ready-to-relay')
                   : t('bridge.txn-modal.relayed')}
               </Text>
@@ -369,7 +394,7 @@ export const ReviewWithdrawModal: FC<{
           >
             {isL2
               ? t('bridge.txn-modal.switch-mainnet')
-              : readyToProve
+              : isWaitingState || readyToProve
               ? t('bridge.txn-modal.btn-prove')
               : readyToRelay && !finalizedTxnHash
               ? t('bridge.txn-modal.btn-relay')
