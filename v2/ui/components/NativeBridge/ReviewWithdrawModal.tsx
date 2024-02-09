@@ -71,7 +71,7 @@ export const ReviewWithdrawModal: FC<{
   >([]);
   const [challengePeriodSeconds, setChallengePeriodSeconds] = useState<number | undefined>();
   const [waitingTimeSeconds, setWaitingTimeSeconds] = useState<number | undefined>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [executeError, setExecuteError] = useState<any | undefined>();
   const { t } = useTranslation();
@@ -94,8 +94,8 @@ export const ReviewWithdrawModal: FC<{
     messageStatus.some((message) => message.status === MessageStatus.IN_CHALLENGE_PERIOD);
   const canExecute = readyToProve || readyToRelay;
   const endDate =
-    !!waitingTimeSeconds && currentHistory?.provedDate
-      ? addSeconds(new Date(currentHistory.provedDate), waitingTimeSeconds)
+    !!waitingTimeSeconds && currentHistory?.date
+      ? addSeconds(new Date(currentHistory?.provedDate ?? currentHistory.date), waitingTimeSeconds)
       : undefined;
   const waitDays = challengePeriodSeconds ? challengePeriodSeconds / (60 * 60 * 24) : undefined;
 
@@ -117,6 +117,9 @@ export const ReviewWithdrawModal: FC<{
       return;
     }
     if (hasError || loading) return;
+    if (finalizedTxnHash) {
+      onClose();
+    }
     try {
       setExecuteError(undefined);
       setSubmitting(true);
@@ -156,6 +159,7 @@ export const ReviewWithdrawModal: FC<{
   };
 
   useEffect(() => {
+    if (!Boolean(walletConnectedToUnsupportedNetwork || isWalletConnected) || isL2) return;
     const fetchMessageStatus = async () => {
       try {
         setLoading(true); // Set loading state to true
@@ -191,7 +195,14 @@ export const ReviewWithdrawModal: FC<{
     };
 
     fetchMessageStatus();
-  }, [crossChainMessenger, t, txnHash]);
+  }, [
+    crossChainMessenger,
+    isL2,
+    isWalletConnected,
+    t,
+    txnHash,
+    walletConnectedToUnsupportedNetwork,
+  ]);
 
   return (
     <TransactionModal
@@ -228,12 +239,16 @@ export const ReviewWithdrawModal: FC<{
             <Flex
               alignItems="center"
               gap={2}
-              color={!canExecute && !isWaiting ? 'white' : 'green.600'}
+              color={!canExecute && !isWaiting && !finalizedTxnHash ? 'white' : 'green.600'}
             >
-              {!canExecute && !isWaiting ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
+              {!canExecute && !isWaiting && !finalizedTxnHash ? (
+                <ClockIcon width="20px" height="20px" />
+              ) : (
+                <TickIcon />
+              )}
               <ExternalLink
                 href="https://blog.oplabs.co/two-step-withdrawals/"
-                color={!canExecute && !isWaiting ? 'white' : 'green.600'}
+                color={!canExecute && !isWaiting && !finalizedTxnHash ? 'white' : 'green.600'}
               >
                 {t('bridge.txn-modal.wait-to-prove')}
               </ExternalLink>
@@ -277,11 +292,15 @@ export const ReviewWithdrawModal: FC<{
             <Flex
               alignItems="center"
               gap={2}
-              color={isWaiting || canExecute ? 'white' : 'green.600'}
+              color={(isWaiting || canExecute) && !finalizedTxnHash ? 'white' : 'green.600'}
             >
-              {isWaiting || canExecute ? <ClockIcon width="20px" height="20px" /> : <TickIcon />}
+              {(isWaiting || canExecute) && !finalizedTxnHash ? (
+                <ClockIcon width="20px" height="20px" />
+              ) : (
+                <TickIcon />
+              )}
               <Text>
-                {isWaiting || canExecute
+                {(isWaiting || canExecute) && !finalizedTxnHash
                   ? t('bridge.txn-modal.ready-to-relay')
                   : t('bridge.txn-modal.relayed')}
               </Text>
@@ -291,7 +310,7 @@ export const ReviewWithdrawModal: FC<{
                 {t('bridge.txn-modal.transaction')}
               </ExternalLink>
             )}
-            {readyToRelay && !gasErrorFinalize && (
+            {readyToRelay && !finalizedTxnHash && !gasErrorFinalize && (
               <Flex alignItems="center" fontSize="sm">
                 <EthGasPriceEstimator transactionFee={amount === 0 ? wei(0) : feeFinalize} />
               </Flex>
@@ -324,11 +343,12 @@ export const ReviewWithdrawModal: FC<{
             onClick={executeMessage}
             isDisabled={
               loading ||
-              submitting ||
-              !canExecute ||
-              hasError ||
-              isGasEnableAndNotFetchedFinalize ||
-              isGasEnableAndNotFetchedProve
+              (!isL2 &&
+                (submitting ||
+                  (!canExecute && !finalizedTxnHash) ||
+                  hasError ||
+                  isGasEnableAndNotFetchedFinalize ||
+                  isGasEnableAndNotFetchedProve))
             }
             isLoading={submitting}
           >
@@ -336,7 +356,7 @@ export const ReviewWithdrawModal: FC<{
               ? t('bridge.txn-modal.switch-mainnet')
               : readyToProve
               ? t('bridge.txn-modal.btn-prove')
-              : readyToRelay
+              : readyToRelay && !finalizedTxnHash
               ? t('bridge.txn-modal.btn-relay')
               : t('bridge.txn-modal.btn-close')}
           </Button>
