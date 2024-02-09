@@ -32,7 +32,7 @@ import Connector from '../../containers/Connector';
 import { useEstimateFinalizeWithdraw } from '../../hooks/useEstimateFinalizeWithdraw';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import useBridgingHistoryStore, { BridgingHistory } from '../../hooks/useBridgingHistoryStore';
-import { addSeconds } from 'date-fns';
+import { add } from 'date-fns';
 import { CountDown } from '@snx-v2/CountDown';
 import { BigNumber } from '@ethersproject/bignumber';
 import { getTotalGasPrice } from '../../utils/network';
@@ -73,7 +73,7 @@ export const ReviewWithdrawModal: FC<{
     { status: MessageStatus; index: number; description: string }[]
   >([]);
   const [challengePeriodSeconds, setChallengePeriodSeconds] = useState<number | undefined>();
-  const [waitingTimeSeconds, setWaitingTimeSeconds] = useState<number | undefined>();
+  // const [waitingTimeSeconds, setWaitingTimeSeconds] = useState<number | undefined>();
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [executeError, setExecuteError] = useState<any | undefined>();
@@ -99,11 +99,11 @@ export const ReviewWithdrawModal: FC<{
     readyToProve ||
     messageStatus.some((message) => message.status === MessageStatus.IN_CHALLENGE_PERIOD);
   const canExecute = readyToProve || readyToRelay;
-  const endDate =
-    !!waitingTimeSeconds && currentHistory?.date
-      ? addSeconds(new Date(currentHistory?.provedDate ?? currentHistory.date), waitingTimeSeconds)
-      : undefined;
   const waitDays = challengePeriodSeconds ? challengePeriodSeconds / (60 * 60 * 24) : undefined;
+  const endDate =
+    !!waitDays && currentHistory?.provedDate
+      ? add(new Date(currentHistory.provedDate), { days: waitDays })
+      : undefined;
 
   const {
     transactionFee: feeProve,
@@ -187,13 +187,13 @@ export const ReviewWithdrawModal: FC<{
         const statuses = await Promise.all(
           messages.map(async (message, index) => {
             const status = await crossChainMessenger.getMessageStatus(txnHash, index);
-            if (status === MessageStatus.IN_CHALLENGE_PERIOD) {
-              const estimateWaitTime = await crossChainMessenger.estimateMessageWaitTimeSeconds(
-                txnHash,
-                index
-              );
-              setWaitingTimeSeconds(estimateWaitTime);
-            }
+            // if (status === MessageStatus.IN_CHALLENGE_PERIOD) {
+            //   const estimateWaitTime = await crossChainMessenger.estimateMessageWaitTimeSeconds(
+            //     txnHash,
+            //     index
+            //   );
+            //   setWaitingTimeSeconds(estimateWaitTime);
+            // }
             return { status, index, description: getStatusDescription(status) };
           })
         );
@@ -276,7 +276,7 @@ export const ReviewWithdrawModal: FC<{
             <Flex
               alignItems="center"
               gap={2}
-              color={readyToProve || isWaitingState ? 'white' : 'green.600'}
+              color={(readyToProve || isWaitingState) && !provedTxnLink ? 'white' : 'green.600'}
             >
               {readyToProve || isWaitingState ? (
                 <ClockIcon width="20px" height="20px" />
@@ -284,7 +284,7 @@ export const ReviewWithdrawModal: FC<{
                 <TickIcon />
               )}
               <Text>
-                {readyToProve || isWaitingState
+                {(readyToProve || isWaitingState) && !provedTxnLink
                   ? t('bridge.txn-modal.ready-to-prove')
                   : t('bridge.txn-modal.proved')}
               </Text>
@@ -394,7 +394,7 @@ export const ReviewWithdrawModal: FC<{
           >
             {isL2
               ? t('bridge.txn-modal.switch-mainnet')
-              : isWaitingState || readyToProve
+              : (isWaitingState || readyToProve) && !finalizedTxnHash
               ? t('bridge.txn-modal.btn-prove')
               : readyToRelay && !finalizedTxnHash
               ? t('bridge.txn-modal.btn-relay')
