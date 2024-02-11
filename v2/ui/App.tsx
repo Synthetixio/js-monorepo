@@ -12,6 +12,7 @@ import { MediaContextProvider } from '@snx-v1/media';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DEFAULT_REQUEST_REFRESH_INTERVAL } from 'constants/defaults';
+import { Web3OnboardProvider } from '@web3-onboard/react';
 
 import { SynthetixQueryContextProvider, createQueryContext } from '@synthetixio/queries';
 
@@ -28,6 +29,7 @@ import { SwitchNetworkContext } from '@snx-v2/SwitchNetworkContext';
 import { GasSpeedProvider } from '@snx-v2/GasSpeedContext';
 import { DelegateWalletProvider } from '@snx-v2/useDelegateWallet';
 import ChakraProviderWithTheme from './components/ChakraProviderWithTheme';
+import { onboard } from 'containers/Connector/config';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,7 +58,9 @@ function InnerApp() {
       document.querySelector('#global-loader')?.remove();
     } catch (_e) {}
   }, []);
+
   const networkId = network?.id ? Number(network?.id) : -1;
+
   const contractContextData = useMemo(() => {
     return {
       networkId: isSupportedNetworkId(networkId) ? networkId : 1,
@@ -65,6 +69,7 @@ function InnerApp() {
       walletType,
     };
   }, [ensName, networkId, walletAddress, walletType]);
+
   return (
     <>
       <SynthetixQueryContextProvider
@@ -129,18 +134,20 @@ function App() {
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
       <ChakraProviderWithTheme>
-        <ThemeProvider theme={theme}>
-          <RecoilRoot>
-            <QueryClientProvider client={queryClient} contextSharing={true}>
-              <WithAppContainers>
-                {/* @ts-ignore TODO: update styled-media-query */}
-                <MediaContextProvider>
-                  <InnerApp />
-                </MediaContextProvider>
-              </WithAppContainers>
-            </QueryClientProvider>
-          </RecoilRoot>
-        </ThemeProvider>
+        <Web3OnboardProvider web3Onboard={onboard}>
+          <ThemeProvider theme={theme}>
+            <RecoilRoot>
+              <QueryClientProvider client={queryClient} contextSharing={true}>
+                <WithAppContainers>
+                  {/* @ts-ignore TODO: update styled-media-query */}
+                  <MediaContextProvider>
+                    <InnerApp />
+                  </MediaContextProvider>
+                </WithAppContainers>
+              </QueryClientProvider>
+            </RecoilRoot>
+          </ThemeProvider>
+        </Web3OnboardProvider>
       </ChakraProviderWithTheme>
     </>
   );
