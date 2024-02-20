@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   node-version:
     type: string
-    default: '18.19.1'
+    default: '18.19.0'
 
   cypress-version:
     type: string
