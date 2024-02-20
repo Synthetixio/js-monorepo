@@ -54,6 +54,7 @@ export type EnsUpdate = {
 export type ProviderUpdate = {
   provider: Provider;
   network: Network;
+  signer: ethers.Signer | null;
 };
 
 export type Actions =
@@ -100,6 +101,7 @@ export function reducer(state: ConnectorState, action: Actions): ConnectorState 
         ...state,
         provider: action.payload.provider,
         network: action.payload.network,
+        signer: action.payload.signer,
       };
 
     default:

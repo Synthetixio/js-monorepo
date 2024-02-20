@@ -2,11 +2,11 @@ import { useCallback, useEffect, useReducer } from 'react';
 import { WalletState } from '@web3-onboard/core';
 import { createContainer } from 'unstated-next';
 import { getIsOVM, isSupportedNetworkId } from 'utils/network';
-import { NetworkNameById } from '@synthetixio/contracts-interface';
+import { NetworkId, NetworkNameById } from '@synthetixio/contracts-interface';
 import { ethers } from 'ethers';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
 import { AppEvents, initialState, reducer } from './reducer';
-import { getNetworkIdFromHex } from 'utils/infura';
+import { getChainIdHex, getNetworkIdFromHex } from 'utils/infura';
 import { initializeSynthetix } from '../../utils/contracts';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { useConnectWallet, useSetChain } from '@web3-onboard/react';
@@ -14,20 +14,15 @@ import { useConnectWallet, useSetChain } from '@web3-onboard/react';
 const useConnector = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { globalProviders } = useGlobalProvidersWithFallback();
+
   const [{ wallet }, connect, disconnect] = useConnectWallet();
   const [{ connectedChain }, setNetwork] = useSetChain();
-
-  console.log('Connected Chain', connectedChain);
 
   const L1DefaultProvider = globalProviders.mainnet;
   const L2DefaultProvider = globalProviders.optimism;
 
   const { isAppReady, provider, network, signer, synthetixjs, walletAddress, ensName, walletType } =
     state;
-
-  useEffect(() => {
-    console.log('NETWORK SWITCH');
-  }, [connectedChain]);
 
   const updateState = useCallback((update: WalletState) => {
     if (update.accounts.length > 0) {
@@ -73,6 +68,56 @@ const useConnector = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (wallet && wallet?.accounts[0].address !== walletAddress) {
+      updateState(wallet);
+    }
+  }, [wallet, walletAddress, updateState]);
+
+  useEffect(() => {
+    const previouslySelectedWallet = localStorage.getItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
+
+    if (previouslySelectedWallet) {
+      connect({
+        autoSelect: { disableModals: true, label: JSON.parse(previouslySelectedWallet) },
+      }).then(([walletState]) => {
+        updateState(walletState);
+      });
+    }
+  }, [connect, updateState]);
+
+  useEffect(() => {
+    const networkId = getNetworkIdFromHex(connectedChain?.id || '');
+
+    if (connectedChain && networkId !== network?.id) {
+      const networkId = getNetworkIdFromHex(connectedChain.id);
+
+      const network = {
+        id: networkId,
+        name: isSupportedNetworkId(networkId) ? NetworkNameById[networkId] : 'Unsupported Network',
+        useOvm: getIsOVM(networkId),
+      };
+
+      if (wallet?.provider) {
+        const provider = new ethers.providers.Web3Provider(wallet?.provider, {
+          name: network.name,
+          chainId: networkId,
+        });
+
+        const signer = provider.getSigner();
+
+        dispatch({
+          type: AppEvents.UPDATE_PROVIDER,
+          payload: {
+            network,
+            provider,
+            signer,
+          },
+        });
+      }
+    }
+  }, [connectedChain, network, wallet?.provider]);
+
   const connectWallet = useCallback(async () => {
     try {
       const [walletState] = await connect();
@@ -92,34 +137,32 @@ const useConnector = () => {
     }
   }, [disconnect, wallet]);
 
-  const switchNetwork = () => {
+  const switchNetwork = async (id: NetworkId) => {
     try {
-      // dispatch({ type: AppEvents., payload: id });
-      // setNetwork({ chainId: id });
-    } catch (error) {}
-    // return
+      return await setNetwork({ chainId: getChainIdHex(id) });
+    } catch (e) {
+      console.log(e);
+    }
   };
-
-  console.log(state);
 
   return {
     isAppReady,
-    network, // Done
-    provider, // Done
-    signer, // Done
-    walletAddress, // Done
+    network,
+    provider,
+    signer,
+    walletAddress,
     walletType,
     synthetixjs,
     isWalletConnected: Boolean(wallet?.accounts[0] && synthetixjs),
     walletConnectedToUnsupportedNetwork: Boolean(signer && !synthetixjs),
     isL2: network?.useOvm ?? false,
     isMainnet: !network?.useOvm ?? false,
-    connectWallet, // Done
-    disconnectWallet, // Done
-    L1DefaultProvider, // Done
-    L2DefaultProvider, // Done
-    ensName, // Done
-    switchNetwork, // Done
+    connectWallet,
+    disconnectWallet,
+    L1DefaultProvider,
+    L2DefaultProvider,
+    ensName,
+    switchNetwork,
   };
 };
 
