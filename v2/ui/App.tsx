@@ -3,25 +3,18 @@ import Head from 'react-helmet';
 import { RecoilRoot } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from 'styled-components';
-
 import WithAppContainers from 'containers';
 import theme from 'styles/theme';
-
 import Layout from 'sections/shared/Layout';
 import { MediaContextProvider } from '@snx-v1/media';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DEFAULT_REQUEST_REFRESH_INTERVAL } from 'constants/defaults';
 import { Web3OnboardProvider } from '@web3-onboard/react';
-
 import { SynthetixQueryContextProvider, createQueryContext } from '@synthetixio/queries';
-
 import SystemStatus from 'sections/shared/SystemStatus';
-
 import Connector from 'containers/Connector';
-
 import Routes from './Routes';
-
 import { isSupportedNetworkId } from './utils/network';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { SignerContext } from '@snx-v2/SignerContext';
