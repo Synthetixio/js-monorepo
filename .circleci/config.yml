@@ -143,33 +143,33 @@ jobs:
     steps:
       - checkout
 
-      # yarn's state of installation
-      - restore_cache:
-          keys:
-            - yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+      # # yarn's state of installation
+      # - restore_cache:
+      #     keys:
+      #       - yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
 
-      # yarn's own state of node_modules
-      - restore_cache:
-          keys:
-            - yarn-state-node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+      # # yarn's own state of node_modules
+      # - restore_cache:
+      #     keys:
+      #       - yarn-state-node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
 
-      - run:
-          name: Halt if node_modules exist in cache
-          command: |-
-            # Check if we restored cache and have node_modules already
-            if [ -f "node_modules/.yarn-state.yml" ]; then
-              echo "SKIP, no changes detected"
-              circleci-agent step halt
-            fi
+      # - run:
+      #     name: Halt if node_modules exist in cache
+      #     command: |-
+      #       # Check if we restored cache and have node_modules already
+      #       if [ -f "node_modules/.yarn-state.yml" ]; then
+      #         echo "SKIP, no changes detected"
+      #         circleci-agent step halt
+      #       fi
 
-      #
-      # Proceed with installing node modules, but to speed things up, restore caches
-      #
+      # #
+      # # Proceed with installing node modules, but to speed things up, restore caches
+      # #
 
-      # node_modules cache
-      - restore_cache:
-          keys:
-            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+      # # node_modules cache
+      # - restore_cache:
+      #     keys:
+      #       - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
 
       - run: yarn install --immutable --immutable-cache
 
