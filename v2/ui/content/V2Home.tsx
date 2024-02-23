@@ -61,7 +61,7 @@ const V2Home = () => {
               >
                 <StatBox
                   isLoading={isAprLoading}
-                  titleToolTip="Staking Rewards + Trading Fees from previous week, extrapolated into an APR"
+                  titleToolTip="Trading Fees from previous week, extrapolated to APR"
                   label="Estimated APR"
                   alignItems={{ base: 'center', lg: 'end' }}
                   maxW={{ base: 'initial', lg: '325px' }}

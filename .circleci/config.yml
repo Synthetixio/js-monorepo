@@ -30,7 +30,7 @@ commands:
               exit 0
             else
               echo "node_modules could not be restored from cache, activating fallback installation"
-              yarn install --immutable --immutable-cache --verbose
+              yarn install --immutable --immutable-cache
             fi
 
       - save_cache:
