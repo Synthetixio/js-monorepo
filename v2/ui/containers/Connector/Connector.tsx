@@ -61,6 +61,7 @@ const useConnector = () => {
           signer,
           synthetixjs,
           ensName: wallet?.ens?.name || null,
+          isAppReady: true,
         },
       });
 
