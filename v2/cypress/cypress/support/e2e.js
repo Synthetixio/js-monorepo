@@ -23,7 +23,7 @@ beforeEach(() => {
     win.__caches = {};
     win.__timers = {};
     win.localStorage.setItem('UNSAFE_IMPORT', 'true');
-    win.localStorage.setItem('selectedWallet', '["MetaMask"]');
+    win.localStorage.setItem('selectedWallet', '"MetaMask"');
 
     class Signer {
       constructor(provider) {

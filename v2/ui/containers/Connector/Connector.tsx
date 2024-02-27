@@ -1,43 +1,35 @@
 import { useCallback, useEffect, useReducer } from 'react';
-import { AppState } from '@web3-onboard/core';
+import { WalletState } from '@web3-onboard/core';
 import { createContainer } from 'unstated-next';
-
 import { getIsOVM, isSupportedNetworkId } from 'utils/network';
-
-import { NetworkNameById, NetworkId } from '@synthetixio/contracts-interface';
+import { NetworkId, NetworkNameById } from '@synthetixio/contracts-interface';
 import { ethers } from 'ethers';
-
-import { onboard as Web3Onboard } from './config';
 import { LOCAL_STORAGE_KEYS } from 'constants/storage';
 import { AppEvents, initialState, reducer } from './reducer';
-
 import { getChainIdHex, getNetworkIdFromHex } from 'utils/infura';
 import { initializeSynthetix } from '../../utils/contracts';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
+import { useConnectWallet, useSetChain } from '@web3-onboard/react';
 
 const useConnector = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { globalProviders } = useGlobalProvidersWithFallback();
+
+  const [{ wallet }, connect, disconnect] = useConnectWallet();
+  const [{ connectedChain }, setNetwork] = useSetChain();
+
   const L1DefaultProvider = globalProviders.mainnet;
   const L2DefaultProvider = globalProviders.optimism;
-  const {
-    isAppReady,
-    provider,
-    network,
-    signer,
-    synthetixjs,
-    walletAddress,
-    ensName,
-    onboard,
-    walletType,
-  } = state;
 
-  const updateState = useCallback((update: AppState) => {
-    if (update.wallets.length > 0) {
-      const wallet = update.wallets[0].accounts[0];
+  const { isAppReady, provider, network, signer, synthetixjs, walletAddress, ensName, walletType } =
+    state;
 
-      const { label } = update.wallets[0];
-      const { id } = update.wallets[0].chains[0];
+  const updateState = useCallback((update: WalletState) => {
+    if (update.accounts.length > 0) {
+      const wallet = update.accounts[0];
+
+      const { label } = update;
+      const { id } = update.chains[0];
       const networkId = getNetworkIdFromHex(id);
 
       const network = {
@@ -46,15 +38,17 @@ const useConnector = () => {
         useOvm: getIsOVM(networkId),
       };
 
-      const provider = new ethers.providers.Web3Provider(update.wallets[0].provider, {
+      const provider = new ethers.providers.Web3Provider(update.provider, {
         name: network.name,
         chainId: networkId,
       });
 
       const signer = provider.getSigner();
+
       const contracts = isSupportedNetworkId(networkId)
         ? initializeSynthetix(networkId, signer)
         : null;
+
       const synthetixjs = contracts ? { contracts } : null;
 
       dispatch({
@@ -67,101 +61,91 @@ const useConnector = () => {
           signer,
           synthetixjs,
           ensName: wallet?.ens?.name || null,
+          isAppReady: true,
         },
       });
 
-      const connectedWallets = update.wallets.map(({ label }) => label);
-      localStorage.setItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET, JSON.stringify(connectedWallets));
-    } else {
-      dispatch({ type: AppEvents.WALLET_DISCONNECTED });
+      localStorage.setItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET, JSON.stringify(update.label));
     }
   }, []);
 
   useEffect(() => {
-    dispatch({ type: AppEvents.APP_READY, payload: Web3Onboard });
-  }, []);
+    if (wallet && wallet?.accounts[0].address !== walletAddress) {
+      updateState(wallet);
+    }
+  }, [wallet, walletAddress, updateState]);
 
   useEffect(() => {
-    const previousWalletsSerialised = localStorage.getItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
+    const previouslySelectedWallet = localStorage.getItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
 
-    const previousWallets: string[] = previousWalletsSerialised
-      ? JSON.parse(previousWalletsSerialised)
-      : [];
-
-    // If running in an iframe, attempt to connect with Gnosis
-    if (window.self !== window.top) {
-      previousWallets.push('Gnosis Safe');
+    if (previouslySelectedWallet) {
+      connect({
+        autoSelect: { disableModals: true, label: JSON.parse(previouslySelectedWallet) },
+      }).then(([walletState]) => {
+        updateState(walletState);
+      });
     }
+  }, [connect, updateState]);
 
-    if (onboard && previousWallets.length > 0) {
-      (async () => {
-        try {
-          await onboard.connectWallet({
-            autoSelect: {
-              label: previousWallets[0],
-              disableModals: true,
-            },
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }
-    if (onboard) {
-      const state = onboard.state.select();
-      const { unsubscribe } = state.subscribe(updateState);
+  useEffect(() => {
+    const networkId = getNetworkIdFromHex(connectedChain?.id || '');
 
-      return () => {
-        if (process.env.NODE_ENV !== 'development' && unsubscribe) unsubscribe();
+    if (connectedChain && networkId !== network?.id) {
+      const networkId = getNetworkIdFromHex(connectedChain.id);
+
+      const network = {
+        id: networkId,
+        name: isSupportedNetworkId(networkId) ? NetworkNameById[networkId] : 'Unsupported Network',
+        useOvm: getIsOVM(networkId),
       };
-    }
 
-    // Always keep this hook with the single dependency.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onboard]);
+      if (wallet?.provider) {
+        const provider = new ethers.providers.Web3Provider(wallet?.provider, {
+          name: network.name,
+          chainId: networkId,
+        });
 
-  useEffect(() => {
-    if (walletAddress && !ensName) {
-      (async () => {
-        const ensN: string | null = await L1DefaultProvider.lookupAddress(walletAddress);
-        if (ensN) {
-          dispatch({ type: AppEvents.SET_ENS, payload: { ensName: ensN } });
-        }
-      })();
-    }
-  }, [walletAddress, ensName, network, L1DefaultProvider]);
+        const signer = provider.getSigner();
 
-  const connectWallet = useCallback(
-    async (chainId?: NetworkId) => {
-      try {
-        if (onboard) {
-          await onboard.connectWallet();
-          if (chainId) {
-            await onboard.setChain({ chainId });
-          }
-        }
-      } catch (e) {
-        console.log(e);
+        dispatch({
+          type: AppEvents.UPDATE_PROVIDER,
+          payload: {
+            network,
+            provider,
+            signer,
+          },
+        });
       }
-    },
-    [onboard]
-  );
+    }
+  }, [connectedChain, network, wallet?.provider]);
 
-  const disconnectWallet = useCallback(async () => {
+  const connectWallet = useCallback(async () => {
     try {
-      if (onboard) {
-        const [primaryWallet] = onboard.state.get().wallets;
-        onboard.disconnectWallet({ label: primaryWallet?.label });
-        localStorage.removeItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
-      }
+      const [walletState] = await connect();
+      updateState(walletState);
     } catch (e) {
       console.log(e);
     }
-  }, [onboard]);
+  }, [connect, updateState]);
+
+  const disconnectWallet = useCallback(() => {
+    try {
+      if (!wallet) return;
+      disconnect({ label: wallet?.label });
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [disconnect, wallet]);
 
   const switchNetwork = async (id: NetworkId) => {
-    return onboard?.setChain({ chainId: getChainIdHex(id) });
+    try {
+      return await setNetwork({ chainId: getChainIdHex(id) });
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return {
     isAppReady,
     network,
@@ -170,7 +154,7 @@ const useConnector = () => {
     walletAddress,
     walletType,
     synthetixjs,
-    isWalletConnected: Boolean(walletAddress && synthetixjs),
+    isWalletConnected: Boolean(wallet?.accounts[0] && synthetixjs),
     walletConnectedToUnsupportedNetwork: Boolean(signer && !synthetixjs),
     isL2: network?.useOvm ?? false,
     isMainnet: !network?.useOvm ?? false,
