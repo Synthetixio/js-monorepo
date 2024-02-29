@@ -313,7 +313,7 @@ export const ReviewWithdrawModal: FC<{
               )}
               <Text>
                 {t('bridge.txn-modal.wait-days', {
-                  num: waitDays ?? 7,
+                  num: (waitDays ?? 7).toFixed(0),
                 })}
               </Text>
             </Flex>
