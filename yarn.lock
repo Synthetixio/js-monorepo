@@ -3427,10 +3427,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eth-optimism/contracts-bedrock@npm:0.16.2":
-  version: 0.16.2
-  resolution: "@eth-optimism/contracts-bedrock@npm:0.16.2"
-  checksum: 9983cb7f2e5ade73d94ea26fb8bf0c8cb82b9eb09851fa2881e021f2a1d83644f990a9ab35abe0beab2123e4102b32eecdc1fb08400817c176f7ec1031927d5e
+"@eth-optimism/contracts-bedrock@npm:0.17.1":
+  version: 0.17.1
+  resolution: "@eth-optimism/contracts-bedrock@npm:0.17.1"
+  checksum: ae75458ca843dc36d050a484a97226112d1c5a1453cb8a59a1a64e4805052984663b2d83ca1a2764751ea182e09ee53ddc1ab19c6a94885a6e743371498060a2
   languageName: node
   linkType: hard
 
@@ -3493,19 +3493,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eth-optimism/sdk@npm:^3.1.8":
-  version: 3.1.8
-  resolution: "@eth-optimism/sdk@npm:3.1.8"
+"@eth-optimism/sdk@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "@eth-optimism/sdk@npm:3.2.1"
   dependencies:
     "@eth-optimism/contracts": 0.6.0
-    "@eth-optimism/contracts-bedrock": 0.16.2
+    "@eth-optimism/contracts-bedrock": 0.17.1
     "@eth-optimism/core-utils": 0.13.1
     lodash: ^4.17.21
     merkletreejs: ^0.3.11
     rlp: ^2.2.7
+    semver: ^7.6.0
   peerDependencies:
     ethers: ^5
-  checksum: 6847d8d37f8b6037b1682c737a690eaac16aa2d59d243b8462fdc64b3a64c992b448cf2b5d6f26dd20984d1434a1169409f11471a40cc507085fa48ac54bed52
+  checksum: 7ad1ee10689a247053fa03735169a769b7405d0c5a49efbd89d096c342319fa86fe73e0457c3171158b45ea36deda543d66ce38d830b13b170150235e01c618e
   languageName: node
   linkType: hard
 
@@ -9409,7 +9410,7 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.17
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@eth-optimism/sdk": ^3.1.8
+    "@eth-optimism/sdk": ^3.2.1
     "@ethersproject/bignumber": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@gnosis.pm/safe-apps-provider": ^0.14.0
@@ -28093,14 +28094,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4":
-  version: 7.5.4
-  resolution: "semver@npm:7.5.4"
+"semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.0":
+  version: 7.6.0
+  resolution: "semver@npm:7.6.0"
   dependencies:
     lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
+  checksum: 7427f05b70786c696640edc29fdd4bc33b2acf3bbe1740b955029044f80575fc664e1a512e4113c3af21e767154a94b4aa214bf6cd6e42a1f6dba5914e0b208c
   languageName: node
   linkType: hard
 
