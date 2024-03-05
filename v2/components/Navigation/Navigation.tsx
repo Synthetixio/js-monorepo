@@ -55,7 +55,7 @@ interface NavigationProps {
   isLoading: boolean;
   snxBalance: Wei;
   sUSDBalance: Wei;
-  disconnectWallet: () => Promise<void>;
+  disconnectWallet: () => void;
   ensName: string | null;
 }
 
