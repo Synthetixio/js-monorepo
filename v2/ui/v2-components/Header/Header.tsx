@@ -4,8 +4,14 @@ import { Navigation } from '@snx-v2/Navigation';
 import Connector from 'containers/Connector';
 
 export const Header: FC = () => {
-  const { isWalletConnected, connectWallet, switchNetwork, network, disconnectWallet } =
-    Connector.useContainer();
+  const {
+    isWalletConnected,
+    connectWallet,
+    switchNetwork,
+    network,
+    disconnectWallet,
+    walletConnectedToUnsupportedNetwork,
+  } = Connector.useContainer();
 
   const [localNetwork, setLocalNetwork] = useState<NetworkId>(
     network?.id ? (network.id as NetworkId) : (NetworkIdByName.mainnet as NetworkId)
@@ -19,7 +25,7 @@ export const Header: FC = () => {
 
   const switchMenuNetwork = async (networkId: NetworkId) => {
     if (network && networkId === network.id) return;
-    if (isWalletConnected) {
+    if (isWalletConnected || (!isWalletConnected && walletConnectedToUnsupportedNetwork)) {
       const result = await switchNetwork(networkId);
       if (!result) return;
     }
@@ -31,7 +37,7 @@ export const Header: FC = () => {
     <Navigation
       disconnectWallet={disconnectWallet}
       isWalletConnected={isWalletConnected}
-      connectWallet={() => connectWallet(localNetwork)}
+      connectWallet={() => connectWallet()}
       currentNetwork={localNetwork}
       switchNetwork={switchMenuNetwork}
     />
