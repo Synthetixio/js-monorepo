@@ -12,8 +12,12 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 import { useConnectWallet, useSetChain } from '@web3-onboard/react';
 
 const useConnector = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const { globalProviders } = useGlobalProvidersWithFallback();
+
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    provider: globalProviders.mainnet,
+  });
 
   const [{ wallet }, connect, disconnect] = useConnectWallet();
   const [{ connectedChain }, setNetwork] = useSetChain();
@@ -69,12 +73,21 @@ const useConnector = () => {
     }
   }, []);
 
+  // Case wallet or network changes
   useEffect(() => {
-    if (wallet && wallet?.accounts[0].address !== walletAddress) {
+    const walletHasChanged = wallet && wallet?.accounts[0].address !== walletAddress;
+    let networkHasChanged = false;
+
+    if (network?.id && connectedChain) {
+      networkHasChanged = connectedChain.id !== getChainIdHex(network.id as NetworkId);
+    }
+
+    if (wallet && (walletHasChanged || networkHasChanged)) {
       updateState(wallet);
     }
-  }, [wallet, walletAddress, updateState]);
+  }, [wallet, walletAddress, updateState, connectedChain, network]);
 
+  // Auto connect case
   useEffect(() => {
     const previouslySelectedWallet = localStorage.getItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
 
@@ -87,60 +100,39 @@ const useConnector = () => {
     }
   }, [connect, updateState]);
 
-  useEffect(() => {
-    const networkId = getNetworkIdFromHex(connectedChain?.id || '');
+  const connectWallet = useCallback(
+    async (id?: NetworkId) => {
+      try {
+        const [res] = await connect();
 
-    if (connectedChain && networkId !== network?.id) {
-      const networkId = getNetworkIdFromHex(connectedChain.id);
-
-      const network = {
-        id: networkId,
-        name: isSupportedNetworkId(networkId) ? NetworkNameById[networkId] : 'Unsupported Network',
-        useOvm: getIsOVM(networkId),
-      };
-
-      if (wallet?.provider) {
-        const provider = new ethers.providers.Web3Provider(wallet?.provider, {
-          name: network.name,
-          chainId: networkId,
-        });
-
-        const signer = provider.getSigner();
-
-        dispatch({
-          type: AppEvents.UPDATE_PROVIDER,
-          payload: {
-            network,
-            provider,
-            signer,
-          },
-        });
+        if (id && id !== res.chains[0].id) {
+          if (isSupportedNetworkId(id)) {
+            await setNetwork({ chainId: getChainIdHex(id) });
+          } else {
+            await setNetwork({ chainId: '0x1' });
+          }
+        }
+      } catch (e) {
+        console.log(e);
       }
-    }
-  }, [connectedChain, network, wallet?.provider]);
-
-  const connectWallet = useCallback(async () => {
-    try {
-      const [walletState] = await connect();
-      updateState(walletState);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [connect, updateState]);
+    },
+    [connect, setNetwork]
+  );
 
   const disconnectWallet = useCallback(() => {
     try {
-      if (!wallet) return;
+      if (!wallet?.label) return;
+      dispatch({ type: AppEvents.WALLET_DISCONNECTED });
       disconnect({ label: wallet?.label });
       localStorage.removeItem(LOCAL_STORAGE_KEYS.SELECTED_WALLET);
     } catch (e) {
       console.log(e);
     }
-  }, [disconnect, wallet]);
+  }, [disconnect, wallet?.label]);
 
   const switchNetwork = async (id: NetworkId) => {
     try {
-      return await setNetwork({ chainId: getChainIdHex(id) });
+      await setNetwork({ chainId: getChainIdHex(id) });
     } catch (e) {
       console.log(e);
     }
