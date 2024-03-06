@@ -30,7 +30,7 @@ export const Header: FC = () => {
     <Navigation
       disconnectWallet={disconnectWallet}
       isWalletConnected={isWalletConnected}
-      connectWallet={() => connectWallet(localNetwork)}
+      connectWallet={() => connectWallet()}
       currentNetwork={localNetwork}
       switchNetwork={switchMenuNetwork}
     />
