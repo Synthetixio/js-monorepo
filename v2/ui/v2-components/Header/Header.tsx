@@ -12,16 +12,15 @@ export const Header: FC = () => {
   );
 
   useEffect(() => {
-    setLocalNetwork(
-      network?.id ? (network.id as NetworkId) : (NetworkIdByName.mainnet as NetworkId)
-    );
-  }, [network]);
+    if (network?.id && localNetwork !== network.id) {
+      setLocalNetwork(network?.id as NetworkId);
+    }
+  }, [network, localNetwork]);
 
   const switchMenuNetwork = async (networkId: NetworkId) => {
     if (network && networkId === network.id) return;
     if (isWalletConnected) {
-      const result = await switchNetwork(networkId);
-      if (!result) return;
+      await switchNetwork(networkId);
     }
 
     setLocalNetwork(networkId);
