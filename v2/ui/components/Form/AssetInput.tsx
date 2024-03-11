@@ -43,6 +43,7 @@ const Balance: FC<MaxBalanceProps> = ({
   const { t } = useTranslation();
   // @ts-ignore
   const amount = `${t(label)} ${formatNumber(balance)}`;
+
   return (
     <BalanceContainer>
       <BalanceAmount>{amount}</BalanceAmount>

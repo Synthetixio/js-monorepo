@@ -8,9 +8,11 @@ import Deposit from './Deposit';
 import Repay from './Repay';
 import Close from './Close';
 import Connector from 'containers/Connector';
+import Withdraw from './Withdraw';
 
 export const ACTIONS: Record<string, any> = {
   deposit: Deposit,
+  withdraw: Withdraw,
   repay: Repay,
   close: Close,
 };
@@ -32,6 +34,7 @@ const Actions: FC<ActionsProps> = ({ loanId, loanAction }) => {
 
   const loanContract = synthetixjs?.contracts.ethLoanContract;
   const loanStateContract = synthetixjs?.contracts.ethLoanStateContract;
+
   return isLoadingLoans ? (
     <StyledSpinner width="38" />
   ) : !loan ? null : (

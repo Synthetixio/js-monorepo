@@ -550,15 +550,6 @@
           "repaying-fully-error": "CONSIDER CLOSING THE LOAN INSTEAD OF FULL REPAYMENT",
           "repaying": "REPAYING DEBT..."
         }
-      },
-      "draw": {
-        "left-col-label": "INCREASE",
-        "right-col-label": "NEW TOTAL",
-        "low-collateral": "Collateral too low for adding more debt",
-        "button-labels": {
-          "default": "INCREASE DEBT",
-          "drawing": "INCREASING DEBT..."
-        }
       }
     }
   },
