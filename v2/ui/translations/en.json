@@ -454,6 +454,10 @@
     }
   },
   "loans": {
+    "balance": {
+      "input-label": "Balance",
+      "max": "Max"
+    },
     "page-title": "Borrow Synths | Synthetix Staking",
     "interest-rate": "Interest Rate",
     "issuance-fee": "Issuance Fee",

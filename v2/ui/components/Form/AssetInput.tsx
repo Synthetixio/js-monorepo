@@ -47,7 +47,7 @@ const Balance: FC<MaxBalanceProps> = ({
   return (
     <BalanceContainer>
       <BalanceAmount>{amount}</BalanceAmount>
-      <MaxButton onClick={onSetMaxAmount}>{t('balance.max')}</MaxButton>
+      <MaxButton onClick={onSetMaxAmount}>{t('loans.balance.max')}</MaxButton>
     </BalanceContainer>
   );
 };

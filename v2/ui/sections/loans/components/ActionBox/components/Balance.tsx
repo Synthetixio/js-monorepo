@@ -64,7 +64,7 @@ const ETH: React.FC<ETHProps> = ({ onSetMaxAmount }) => {
 
   return balance.gte(0) ? (
     <Container data-testid="loans current eth balance" data-balance={wei(balance).toString(2)}>
-      {t('balance.input-label')} {wei(balance).toString(2)}{' '}
+      {t('loans.balance.input-label')} {wei(balance).toString(2)}{' '}
       {!onSetMaxAmount ? null : <MaxButton onClick={handleSetMaxAmount} />}
     </Container>
   ) : null;
@@ -154,7 +154,7 @@ type MaxButtonProps = {
 
 const MaxButton: React.FC<MaxButtonProps> = ({ onClick }) => {
   const { t } = useTranslation();
-  return <StyleMaxButton {...{ onClick }}>{t('balance.max')}</StyleMaxButton>;
+  return <StyleMaxButton {...{ onClick }}>{t('loans.balance.max')}</StyleMaxButton>;
 };
 
 const Container = styled.div`
