@@ -68,6 +68,7 @@ const Withdraw: React.FC<WithdrawProps> = ({ loan, loanId }) => {
       },
     }
   );
+
   const withdraw = async () => {
     setIsWorking('withdrawing');
     setTxModalOpen(true);
@@ -80,30 +81,25 @@ const Withdraw: React.FC<WithdrawProps> = ({ loan, loanId }) => {
         onGasPriceChange: setGasPrice,
         gasLimit: txn.gasLimit,
         optimismLayerOneFee: txn.optimismLayerOneFee,
-
         loan,
         showCRatio: true,
-
         leftColLabel: 'loans.modify-loan.withdraw.left-col-label',
         leftColAssetName: collateralAsset,
         leftColAmount: withdrawalAmountString,
         onSetLeftColAmount,
         onSetLeftColMaxAmount,
-
         rightColLabel: 'loans.modify-loan.withdraw.right-col-label',
         rightColAssetName: collateralAsset,
         rightColAmount: remainingAmountString,
-
         buttonLabel: `loans.modify-loan.withdraw.button-labels.${
           isWorking ? isWorking : 'default'
         }`,
         buttonIsDisabled: !!isWorking,
         onButtonClick: withdraw,
-
         error: txn.errorMessage,
-
         txModalOpen,
         setTxModalOpen,
+        showInterestAccrued: true,
       }}
     />
   );

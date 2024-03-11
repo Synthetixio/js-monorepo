@@ -49,18 +49,13 @@ type WrapperProps = {
   rightColAmount: string;
   onSetRightColAmount?: (amount: string) => void;
   onSetRightColMaxAmount?: (amount: string) => void;
-
   buttonLabel: string;
   buttonIsDisabled: boolean;
   onButtonClick: () => void;
-
   loan: Loan;
-
   showCRatio?: boolean;
   showInterestAccrued?: boolean;
-
   error: string | null;
-
   txModalOpen: boolean;
   setTxModalOpen: (txModalOpen: boolean) => void;
 };
@@ -68,31 +63,24 @@ type WrapperProps = {
 const Wrapper: FC<WrapperProps> = ({
   gasLimit,
   optimismLayerOneFee,
-
   leftColLabel,
   leftColAssetName,
   leftColAmount,
   onSetLeftColAmount,
   onSetLeftColMaxAmount,
   onGasPriceChange,
-
   rightColLabel,
   rightColAssetName,
   rightColAmount,
   onSetRightColAmount,
   onSetRightColMaxAmount,
-
   buttonLabel,
   buttonIsDisabled,
   onButtonClick,
-
   loan,
-
   showCRatio,
   showInterestAccrued,
-
   error,
-
   txModalOpen,
   setTxModalOpen,
 }) => {
@@ -156,7 +144,6 @@ const Wrapper: FC<WrapperProps> = ({
             <NavigationBack width="16" />
           </IconButton>
         </Header>
-
         <InputsContainer>
           <AssetInput
             label={leftColLabel}
