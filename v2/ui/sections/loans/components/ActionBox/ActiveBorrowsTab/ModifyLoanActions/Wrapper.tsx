@@ -178,7 +178,7 @@ const Wrapper: FC<WrapperProps> = ({
           )}
           {!showInterestAccrued ? null : (
             <SettingContainer>
-              <AccruedInterest loan={loan} />
+              <AccruedInterest />
             </SettingContainer>
           )}
           <SettingContainer>
