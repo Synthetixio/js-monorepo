@@ -45,6 +45,7 @@ export type ConnectionUpdate = {
   synthetixjs: { contracts: SynthetixJS['contracts'] } | null;
   provider: Provider;
   ensName: string | null;
+  isAppReady: boolean;
 };
 
 export type EnsUpdate = {
@@ -54,6 +55,7 @@ export type EnsUpdate = {
 export type ProviderUpdate = {
   provider: Provider;
   network: Network;
+  signer: ethers.Signer | null;
 };
 
 export type Actions =
@@ -78,6 +80,7 @@ export function reducer(state: ConnectorState, action: Actions): ConnectorState 
         provider: action.payload.provider,
         synthetixjs: action.payload.synthetixjs,
         ensName: action.payload.ensName,
+        isAppReady: action.payload.isAppReady,
       };
 
     case AppEvents.SET_ENS:
@@ -100,6 +103,7 @@ export function reducer(state: ConnectorState, action: Actions): ConnectorState 
         ...state,
         provider: action.payload.provider,
         network: action.payload.network,
+        signer: action.payload.signer,
       };
 
     default:

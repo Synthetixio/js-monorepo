@@ -2,14 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { FlexDivRow, FlexDivRowCentered } from '@snx-v1/styles';
-import { Loan } from 'containers/Loans/types';
-import { wei } from '@synthetixio/wei';
+import InfoSVG from './InfoSVG';
 
-type AccruedInterestProps = {
-  loan: Loan;
-};
-
-const AccruedInterest: React.FC<AccruedInterestProps> = ({ loan }) => {
+const AccruedInterest: React.FC = () => {
   const { t } = useTranslation();
 
   return (
@@ -17,9 +12,8 @@ const AccruedInterest: React.FC<AccruedInterestProps> = ({ loan }) => {
       <Header>{t('loans.interest-accrued')}</Header>
       <FlexDivRowCentered>
         <Item>
-          <Text>
-            {wei(loan.accruedInterest).toString(4)} {loan.currency}
-          </Text>
+          <Text>Not calculated</Text>
+          <InfoSVG tip="Accrued interest is not shown for this loan. It is recommended to close this position as interest can lead to liquidation." />
         </Item>
       </FlexDivRowCentered>
     </Container>

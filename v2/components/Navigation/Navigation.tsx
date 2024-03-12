@@ -49,13 +49,13 @@ import { NotifiButton, NotifiContextWrapper } from '@snx-v2/NotifiButton';
 interface NavigationProps {
   currentNetwork: NetworkId;
   switchNetwork: (networkId: NetworkId) => void;
-  connectWallet: () => void;
+  connectWallet: (networkId?: NetworkId) => void;
   isWalletConnected: boolean;
   walletAddress: string | null;
   isLoading: boolean;
   snxBalance: Wei;
   sUSDBalance: Wei;
-  disconnectWallet: () => Promise<void>;
+  disconnectWallet: () => void;
   ensName: string | null;
 }
 
@@ -203,7 +203,7 @@ export const NavigationUI = ({
         ) : (
           <Button
             variant="connect"
-            onClick={() => connectWallet()}
+            onClick={() => connectWallet(currentNetwork)}
             sx={{ textTransform: 'capitalize' }}
             fontSize="sm"
             ml={2}

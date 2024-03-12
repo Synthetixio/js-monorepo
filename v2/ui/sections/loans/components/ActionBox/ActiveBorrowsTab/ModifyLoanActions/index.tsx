@@ -5,17 +5,15 @@ import Spinner from 'assets/svg/app/loader.svg';
 import Loans from 'containers/Loans';
 
 import Deposit from './Deposit';
-import Withdraw from './Withdraw';
 import Repay from './Repay';
-import Draw from './Draw';
 import Close from './Close';
 import Connector from 'containers/Connector';
+import Withdraw from './Withdraw';
 
 export const ACTIONS: Record<string, any> = {
   deposit: Deposit,
   withdraw: Withdraw,
   repay: Repay,
-  draw: Draw,
   close: Close,
 };
 
@@ -36,6 +34,7 @@ const Actions: FC<ActionsProps> = ({ loanId, loanAction }) => {
 
   const loanContract = synthetixjs?.contracts.ethLoanContract;
   const loanStateContract = synthetixjs?.contracts.ethLoanStateContract;
+
   return isLoadingLoans ? (
     <StyledSpinner width="38" />
   ) : !loan ? null : (

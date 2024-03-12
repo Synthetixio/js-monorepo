@@ -4,7 +4,7 @@
   "main": "index.ts",
   "version": "0.0.11-0",
   "scripts": {
-    "start": "yarn cy",
+    "start": "anvil --fork-url https://mainnet.infura.io/v3/$INFURA_KEY",
     "cy": "cypress open --component --browser chrome",
     "cy:check": "cypress run --component --browser chrome",
     "e2e": "cypress open --e2e --browser chrome",

@@ -73,27 +73,23 @@ const Repay: React.FC<RepayProps> = ({ loan, loanId }) => {
         onGasPriceChange: setGasPrice,
         loan,
         showCRatio: true,
-
         leftColLabel: 'loans.modify-loan.repay.left-col-label',
         leftColAssetName: debtAsset,
         leftColAmount: repayAmountString,
         onSetLeftColAmount,
         onSetLeftColMaxAmount,
-
         rightColLabel: 'loans.modify-loan.repay.right-col-label',
         rightColAssetName: debtAsset,
         rightColAmount: remainingAmountString,
-
         buttonLabel: `loans.modify-loan.repay.button-labels.${
           isWorking ? isWorking : isRepayingFully ? 'repaying-fully-error' : 'default'
         }`,
         buttonIsDisabled: !!isWorking || isRepayingFully,
         onButtonClick: repay,
-
         error: txn.errorMessage,
-
         txModalOpen,
         setTxModalOpen,
+        showInterestAccrued: true,
       }}
     />
   );
