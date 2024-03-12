@@ -454,6 +454,10 @@
     }
   },
   "loans": {
+    "balance": {
+      "input-label": "Balance",
+      "max": "Max"
+    },
     "page-title": "Borrow Synths | Synthetix Staking",
     "interest-rate": "Interest Rate",
     "issuance-fee": "Issuance Fee",
@@ -549,15 +553,6 @@
           "default": "REPAY DEBT",
           "repaying-fully-error": "CONSIDER CLOSING THE LOAN INSTEAD OF FULL REPAYMENT",
           "repaying": "REPAYING DEBT..."
-        }
-      },
-      "draw": {
-        "left-col-label": "INCREASE",
-        "right-col-label": "NEW TOTAL",
-        "low-collateral": "Collateral too low for adding more debt",
-        "button-labels": {
-          "default": "INCREASE DEBT",
-          "drawing": "INCREASING DEBT..."
         }
       }
     }
