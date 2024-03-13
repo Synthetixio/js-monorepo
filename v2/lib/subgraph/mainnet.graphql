@@ -38,6 +38,11 @@ enum ActiveStaker_orderBy {
   id
 }
 
+enum Aggregation_interval {
+  day
+  hour
+}
+
 scalar BigDecimal
 
 scalar BigInt
@@ -1833,6 +1838,11 @@ type _Block_ {
   The block number
   """
   number: Int!
+
+  """
+  The hash of the parent block
+  """
+  parentHash: Bytes
 
   """
   Integer representation of the timestamp stored in blocks for the chain
