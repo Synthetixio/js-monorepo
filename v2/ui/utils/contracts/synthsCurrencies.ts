@@ -99,12 +99,6 @@ import {
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthsAVAX';
 
 import {
-  name as SynthsINRMainnetOvm,
-  address as SynthsINRAddressMainnetOvm,
-  abi as SynthsINRAbiMainnetOvm,
-} from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthsINR';
-
-import {
   name as SynthsBTCMainnetOvm,
   address as SynthsBTCAddressMainnetOvm,
   abi as SynthsBTCAbiMainnetOvm,
@@ -375,13 +369,6 @@ export const contracts = {
       name: SynthsAVAXMainnetOvm,
       address: SynthsAVAXAddressMainnetOvm,
       abi: SynthsAVAXAbiMainnetOvm,
-    },
-  },
-  SynthsINR: {
-    'mainnet-ovm': {
-      name: SynthsINRMainnetOvm,
-      address: SynthsINRAddressMainnetOvm,
-      abi: SynthsINRAbiMainnetOvm,
     },
   },
 };
