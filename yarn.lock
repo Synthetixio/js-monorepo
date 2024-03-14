@@ -29502,9 +29502,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.91.1":
-  version: 2.91.1
-  resolution: "synthetix@npm:2.91.1"
+"synthetix@npm:2.100.0":
+  version: 2.100.0
+  resolution: "synthetix@npm:2.100.0"
   dependencies:
     "@nomiclabs/hardhat-etherscan": ^3.1.0
     abi-decoder: ^2.3.0
@@ -29518,7 +29518,7 @@ __metadata:
     web3-utils: ^1.2.2
   bin:
     snx: bin.js
-  checksum: 2a46145994833c893df606350344d97604cf8990a46e280ef11a3c3f15f6ccd5d3904111d92c77e3999b22bd0e5644ac8a6e319efefb46ad205035dd01919a13
+  checksum: 07d01243caf712c7af3ea483cb8156b761a122b30a6e83682d39043401d50edd3760805649abf3be292001d4a45f234df8f7677b29bbc1ada92f9f53c2ea06ef
   languageName: node
   linkType: hard
 
