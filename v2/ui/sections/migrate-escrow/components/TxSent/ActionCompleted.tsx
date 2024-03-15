@@ -44,7 +44,7 @@ const ActionCompleted: FC<ActionCompletedProps> = ({
           </ExternalLink>
         ) : null}
         <RightButton onClick={() => resetTransaction()}>
-          {t('staking.actions.mint.completed.dismiss')}
+          {t('migrate-escrow.actions.migrate.action.completed.dismiss')}
         </RightButton>
       </ButtonWrap>
     </Container>

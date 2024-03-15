@@ -57,6 +57,7 @@ export const useDebtData = () => {
   const { data: SystemSettings } = useSystemSettings();
   const { delegateWallet } = useDelegateWallet();
   const walletAddress = delegateWallet?.address || connectedWalletAddress;
+
   return useQuery(
     ['v2debt', 'data', networkId, walletAddress],
     async () => {

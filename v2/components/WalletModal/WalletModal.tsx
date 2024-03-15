@@ -30,7 +30,7 @@ import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 export const WalletModalUi: FC<{
   isOpen: boolean;
   onClose: () => void;
-  disconnectWallet: () => Promise<void>;
+  disconnectWallet: () => void;
   walletType: string | null;
   ensName: string | null;
   walletAddress: string | null;
@@ -192,7 +192,7 @@ export const WalletModalUi: FC<{
 export const WalletModal: FC<{
   isOpen: boolean;
   onClose: () => void;
-  disconnectWallet: () => Promise<void>;
+  disconnectWallet: () => void;
 }> = (props) => {
   const { walletAddress, networkId, walletType, ensName } = useContext(ContractContext);
 

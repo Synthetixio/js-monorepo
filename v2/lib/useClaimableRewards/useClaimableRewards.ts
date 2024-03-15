@@ -1,9 +1,15 @@
+import { ContractContext } from '@snx-v2/ContractContext';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
 import { useRewardsAvailable } from '@snx-v2/useRewardsAvailable';
 import { useQuery } from '@tanstack/react-query';
+import { useContext } from 'react';
 
 export const useClaimableRewards = () => {
+  const { walletAddress: connectedWalletAddress } = useContext(ContractContext);
+  const { delegateWallet } = useDelegateWallet();
+  const walletAddress = delegateWallet?.address || connectedWalletAddress;
   const { data: exchangeRateData } = useExchangeRatesData();
   const { data: liquidationData } = useGetLiquidationRewards();
   const { data: rewardsData } = useRewardsAvailable();
@@ -12,7 +18,7 @@ export const useClaimableRewards = () => {
 
   const enabled = Boolean(SNXRate && liquidationData && rewardsData);
   return useQuery(
-    ['useClaimableRewards', SNXRate],
+    ['useClaimableRewards', { walletAddress, SNXRate }],
     () => {
       if (!SNXRate || !liquidationData || !rewardsData) throw Error('Missing required data');
       let total = 0;

@@ -35,6 +35,7 @@ const Close: React.FC<CloseProps> = ({ loan, loanId }) => {
     },
     enabled: true,
   });
+
   const close = () => {
     setIsWorking('closing');
     setTxModalOpen(true);
@@ -47,24 +48,18 @@ const Close: React.FC<CloseProps> = ({ loan, loanId }) => {
         gasLimit: txn.gasLimit,
         optimismLayerOneFee: txn.optimismLayerOneFee,
         onGasPriceChange: setGasPrice,
-
         loan,
         showInterestAccrued: true,
-
         leftColLabel: 'loans.modify-loan.close.left-col-label',
         leftColAssetName: loan.currency,
         leftColAmount: wei(loan.amount).toString(1),
-
         rightColLabel: 'loans.modify-loan.close.right-col-label',
         rightColAssetName: 'ETH',
         rightColAmount: wei(loan.collateral).toString(1),
-
         buttonLabel: `loans.modify-loan.close.button-labels.${isWorking ? isWorking : 'default'}`,
         buttonIsDisabled: !!isWorking,
         onButtonClick: close,
-
         error: txn.errorMessage,
-
         txModalOpen,
         setTxModalOpen,
       }}

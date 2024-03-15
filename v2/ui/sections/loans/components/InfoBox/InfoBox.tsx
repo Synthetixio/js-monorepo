@@ -41,6 +41,7 @@ const InfoBox: React.FC = () => {
       },
     }
   );
+
   const claimPendingWithdrawals = () => {
     setIsClaimingPendingWithdrawals(true);
     claimTxn.mutate();

@@ -15,6 +15,15 @@ export const useIntegratorSorting = () => {
     queryFn: async () => {
       const resp: IntegratorsVolumeResponse = await (await fetch(INTEGRATORS_VOLUME_URL)).json();
 
+      // Temp fix as api is rate limited
+
+      if (
+        !resp.result.integratorForLatestDate ||
+        resp.result.integratorForLatestDate.length === 0
+      ) {
+        return defaultOrder;
+      }
+
       return resp.result.integratorForLatestDate.map((integrator: string) =>
         integrator.toLowerCase()
       );
@@ -22,3 +31,14 @@ export const useIntegratorSorting = () => {
     staleTime: ONE_DAY_MS,
   });
 };
+
+const defaultOrder = [
+  'kwenta',
+  'polynomial',
+  'dhedge',
+  'lyra',
+  'thales',
+  'curve',
+  'overtime markets',
+  'toros',
+];

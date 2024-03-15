@@ -5,14 +5,18 @@ import { getFeePool, getSynthetixDebtShare } from '@snx-v2/useSynthetixContracts
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
 import { wei } from '@synthetixio/wei';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
+import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 export const useDebtShareDataPeriod = (period = 1 /* Defaults to previous period*/) => {
+  const { delegateWallet } = useDelegateWallet();
   const { walletAddress, networkId } = useContext(ContractContext);
   const { globalProviders, usingInfura, toggleRpc } = useGlobalProvidersWithFallback();
+  const walletAddressToUse = delegateWallet?.address ?? walletAddress;
+
   return useQuery({
-    queryKey: ['stakingV2', 'useDebtShareDataPeriod', networkId, walletAddress, usingInfura],
+    queryKey: ['DebtShareDataPeriod', { networkId, walletAddressToUse, usingInfura }],
     queryFn: async () => {
-      if (!walletAddress) throw Error('Query should not be enabled');
+      if (!walletAddressToUse) throw Error('useDebtShareDataPeriod should not be enabled');
 
       const [FeePoolOptimism, FeePoolMainnet, DebtShareOptimism, DebtShareMainnet] =
         await Promise.all([
@@ -54,7 +58,7 @@ export const useDebtShareDataPeriod = (period = 1 /* Defaults to previous period
         totalDebtShareSupplyOptimism,
         totalDebtShareSupplyMainnet,
       ] = await Promise.all([
-        DebtShareCurrentNetwork.balanceOfOnPeriod(walletAddress, periodIdCurrentNetwork),
+        DebtShareCurrentNetwork.balanceOfOnPeriod(walletAddressToUse, periodIdCurrentNetwork),
         DebtShareOptimism.totalSupplyOnPeriod(prevFeePeriodOptimism.feePeriodId),
         DebtShareMainnet.totalSupplyOnPeriod(prevFeePeriodMainnet.feePeriodId),
       ]);
@@ -76,7 +80,7 @@ export const useDebtShareDataPeriod = (period = 1 /* Defaults to previous period
       };
     },
 
-    enabled: Boolean(walletAddress),
+    enabled: Boolean(walletAddressToUse),
     staleTime: 10000,
     onError: () => (usingInfura ? toggleRpc() : null),
   });

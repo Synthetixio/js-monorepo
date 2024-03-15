@@ -43,10 +43,11 @@ const Balance: FC<MaxBalanceProps> = ({
   const { t } = useTranslation();
   // @ts-ignore
   const amount = `${t(label)} ${formatNumber(balance)}`;
+
   return (
     <BalanceContainer>
       <BalanceAmount>{amount}</BalanceAmount>
-      <MaxButton onClick={onSetMaxAmount}>{t('balance.max')}</MaxButton>
+      <MaxButton onClick={onSetMaxAmount}>{t('loans.balance.max')}</MaxButton>
     </BalanceContainer>
   );
 };

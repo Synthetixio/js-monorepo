@@ -69,29 +69,24 @@ const Deposit: React.FC<DepositProps> = ({ loan, loanId }) => {
       {...{
         gasLimit: depositTxn.gasLimit,
         optimismLayerOneFee: depositTxn.optimismLayerOneFee,
-
         onGasPriceChange: setGasPrice,
         loan,
         showCRatio: true,
-
         leftColLabel: 'loans.modify-loan.deposit.left-col-label',
         leftColAssetName: collateralAsset,
         leftColAmount: depositAmountString,
         onSetLeftColAmount,
         onSetLeftColMaxAmount,
-
         rightColLabel: 'loans.modify-loan.deposit.right-col-label',
         rightColAssetName: collateralAsset,
         rightColAmount: totalAmountString,
-
         buttonLabel: `loans.modify-loan.deposit.button-labels.${isWorking ? isWorking : 'default'}`,
         buttonIsDisabled: !!isWorking || depositAmount.eq(0),
         onButtonClick: deposit,
-
         error: depositTxn.errorMessage,
-
         txModalOpen,
         setTxModalOpen,
+        showInterestAccrued: true,
       }}
     />
   );
