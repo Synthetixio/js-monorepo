@@ -14,9 +14,6 @@ const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/LiquidatorRewards'),
   'mainnet-ovm': () =>
     import('@synthetixio/contracts/build/mainnet-ovm/deployment/LiquidatorRewards'),
-  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/LiquidatorRewards'),
-  'goerli-ovm': () =>
-    import('@synthetixio/contracts/build/goerli-ovm/deployment/LiquidatorRewards'),
 };
 
 export const getLiquidatorRewards = async ({
