@@ -220,6 +220,7 @@ jobs:
     working_directory: /tmp/app
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    resource_class: xlarge
     steps:
       - checkout
       - yarn-install
@@ -236,7 +237,7 @@ jobs:
               git diff --name-only --exit-code
             fi
       - build-save
-      - run: export NODE_OPTIONS=--max_old_space_size=32768 yarn typecheck
+      - run: yarn typecheck
 
   v2-e2e:
     working_directory: /tmp/app
