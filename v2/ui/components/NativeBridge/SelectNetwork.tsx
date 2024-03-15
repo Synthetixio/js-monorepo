@@ -23,7 +23,6 @@ const activeIcon = (currentNetwork?: number | NetworkId) => {
 };
 
 function SelectNetwork({
-  isMainnet,
   isL2,
   isWalletConnected,
   networkId,
@@ -35,8 +34,9 @@ function SelectNetwork({
   networkId?: number | NetworkId;
   switchNetwork: (id: NetworkId) => Promise<void>;
 }) {
-  const ethNetworkId = isMainnet ? NetworkIdByName.mainnet : NetworkIdByName.goerli;
-  const opNetworkId = isMainnet ? NetworkIdByName['mainnet-ovm'] : NetworkIdByName['goerli-ovm'];
+  const ethNetworkId = NetworkIdByName['mainnet'];
+  const opNetworkId = NetworkIdByName['mainnet-ovm'];
+
   const { name, icon } = activeIcon(networkId);
   const { name: ethName, icon: ethIcon } = activeIcon(ethNetworkId);
   const { name: opName, icon: opIcon } = activeIcon(opNetworkId);

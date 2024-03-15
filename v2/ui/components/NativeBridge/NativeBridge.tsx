@@ -65,8 +65,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
   );
 
   const isMainnet = !isTestnet(network?.id);
-  const isL2 =
-    network?.id === NetworkIdByName['mainnet-ovm'] || network?.id === NetworkIdByName['goerli-ovm'];
+  const isL2 = network?.id === NetworkIdByName['mainnet-ovm'];
 
   const susdBalance = (synthsData?.balancesMap['sUSD']?.balance || wei(0)).toNumber();
   const [bridgeAmountsUSD, setBridgeAmountsUSD] = useState('');
