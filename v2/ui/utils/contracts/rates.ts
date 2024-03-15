@@ -9,16 +9,6 @@ import {
   address as ExchangeRatesAddressMainnetOvm,
   abi as ExchangeRatesAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/ExchangeRates';
-import {
-  name as ExchangeRatesGoerli,
-  address as ExchangeRatesAddressGoerli,
-  abi as ExchangeRatesAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/ExchangeRates';
-import {
-  name as ExchangeRatesGoerliOvm,
-  address as ExchangeRatesAddressGoerliOvm,
-  abi as ExchangeRatesAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/ExchangeRates';
 
 // SynthUtil
 import {
@@ -31,16 +21,6 @@ import {
   address as SynthUtilAddressMainnetOvm,
   abi as SynthUtilAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthUtil';
-import {
-  name as SynthUtilGoerli,
-  address as SynthUtilAddressGoerli,
-  abi as SynthUtilAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SynthUtil';
-import {
-  name as SynthUtilGoerliOvm,
-  address as SynthUtilAddressGoerliOvm,
-  abi as SynthUtilAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/SynthUtil';
 
 // Synths
 import { contracts as SynthsCurrencies } from './synthsCurrencies';
@@ -59,16 +39,6 @@ export const contracts = {
         address: ExchangeRatesAddressMainnetOvm,
         abi: ExchangeRatesAbiMainnetOvm,
       },
-      goerli: {
-        name: ExchangeRatesGoerli,
-        address: ExchangeRatesAddressGoerli,
-        abi: ExchangeRatesAbiGoerli,
-      },
-      'goerli-ovm': {
-        name: ExchangeRatesGoerliOvm,
-        address: ExchangeRatesAddressGoerliOvm,
-        abi: ExchangeRatesAbiGoerliOvm,
-      },
     },
   },
   SynthUtil: {
@@ -81,16 +51,6 @@ export const contracts = {
       name: SynthUtilMainnetOvm,
       address: SynthUtilAddressMainnetOvm,
       abi: SynthUtilAbiMainnetOvm,
-    },
-    goerli: {
-      name: SynthUtilGoerli,
-      address: SynthUtilAddressGoerli,
-      abi: SynthUtilAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SynthUtilGoerliOvm,
-      address: SynthUtilAddressGoerliOvm,
-      abi: SynthUtilAbiGoerliOvm,
     },
   },
 };

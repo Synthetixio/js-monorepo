@@ -13,8 +13,6 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/RewardEscrowV2'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/RewardEscrowV2'),
-  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/RewardEscrowV2'),
-  'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/RewardEscrowV2'),
 };
 
 export const getRewardEscrowV2 = async ({

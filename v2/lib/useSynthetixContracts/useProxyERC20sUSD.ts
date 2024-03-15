@@ -12,8 +12,6 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/ProxyERC20sUSD'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/ProxyERC20sUSD'),
-  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/ProxysUSD'),
-  'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/ProxysUSD'),
 };
 
 export const getProxyERC20sUSD = async ({

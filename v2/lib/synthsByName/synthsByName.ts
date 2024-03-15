@@ -9,10 +9,6 @@ export const loadSynthsByNameFromNetwork = (networkId: number) => {
       return import('@synthetixio/contracts/build/mainnet/synths');
     case NetworkIdByName['mainnet-ovm']:
       return import('@synthetixio/contracts/build/mainnet-ovm/synths');
-    case NetworkIdByName['goerli']:
-      return import('@synthetixio/contracts/build/goerli/synths');
-    case NetworkIdByName['goerli-ovm']:
-      return import('@synthetixio/contracts/build/goerli-ovm/synths');
     default:
       return import('@synthetixio/contracts/build/mainnet/synths');
   }

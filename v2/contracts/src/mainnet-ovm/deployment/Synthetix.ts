@@ -74,7 +74,6 @@ export const abi = [
   'function remainingIssuableSynths(address account) view returns (uint256 maxIssuable, uint256 alreadyIssued, uint256 totalSystemDebt)',
   'function resolver() view returns (address)',
   'function resolverAddressesRequired() view returns (bytes32[] addresses)',
-  'function revokeAllEscrow(address account)',
   'function sUSD() view returns (bytes32)',
   'function setMessageSender(address sender)',
   'function setProxy(address _proxy)',
@@ -175,7 +174,6 @@ export interface SynthetixInterface extends utils.Interface {
     'remainingIssuableSynths(address)': FunctionFragment;
     'resolver()': FunctionFragment;
     'resolverAddressesRequired()': FunctionFragment;
-    'revokeAllEscrow(address)': FunctionFragment;
     'sUSD()': FunctionFragment;
     'setMessageSender(address)': FunctionFragment;
     'setProxy(address)': FunctionFragment;
@@ -252,7 +250,6 @@ export interface SynthetixInterface extends utils.Interface {
       | 'remainingIssuableSynths'
       | 'resolver'
       | 'resolverAddressesRequired'
-      | 'revokeAllEscrow'
       | 'sUSD'
       | 'setMessageSender'
       | 'setProxy'
@@ -473,7 +470,6 @@ export interface SynthetixInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
   encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeAllEscrow', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'sUSD', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setMessageSender',
@@ -571,7 +567,6 @@ export interface SynthetixInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'remainingIssuableSynths', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'revokeAllEscrow', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'sUSD', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setMessageSender', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setProxy', data: BytesLike): Result;
@@ -1045,11 +1040,6 @@ export interface Synthetix extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string[]] & { addresses: string[] }>;
 
-    revokeAllEscrow(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     sUSD(overrides?: CallOverrides): Promise<[string]>;
 
     setMessageSender(
@@ -1384,11 +1374,6 @@ export interface Synthetix extends BaseContract {
 
   resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
-  revokeAllEscrow(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   sUSD(overrides?: CallOverrides): Promise<string>;
 
   setMessageSender(
@@ -1706,8 +1691,6 @@ export interface Synthetix extends BaseContract {
     resolver(overrides?: CallOverrides): Promise<string>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
-
-    revokeAllEscrow(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     sUSD(overrides?: CallOverrides): Promise<string>;
 
@@ -2137,11 +2120,6 @@ export interface Synthetix extends BaseContract {
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
-    revokeAllEscrow(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     sUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
     setMessageSender(
@@ -2482,11 +2460,6 @@ export interface Synthetix extends BaseContract {
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     resolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    revokeAllEscrow(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
 
     sUSD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

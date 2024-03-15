@@ -46,12 +46,4 @@ export const SynthsByName: Partial<
     name: 'sEUR',
     subclass: 'MultiCollateralSynth',
   },
-  sINR: {
-    asset: 'INR',
-    category: 'forex',
-    sign: '₹',
-    description: 'Indian Rupee',
-    name: 'sINR',
-    subclass: 'MultiCollateralSynth',
-  },
 };

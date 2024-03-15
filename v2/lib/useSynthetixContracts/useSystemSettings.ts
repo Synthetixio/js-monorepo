@@ -12,8 +12,6 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SystemSettings'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/SystemSettings'),
-  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/SystemSettings'),
-  'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/SystemSettings'),
 };
 
 export const getSystemSettings = async ({

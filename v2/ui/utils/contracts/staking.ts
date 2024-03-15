@@ -9,16 +9,6 @@ import {
   address as FeePoolAddressMainnetOvm,
   abi as FeePoolAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/FeePool';
-import {
-  name as FeePoolGoerli,
-  address as FeePoolAddressGoerli,
-  abi as FeePoolAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/FeePool';
-import {
-  name as FeePoolGoerliOvm,
-  address as FeePoolAddressGoerliOvm,
-  abi as FeePoolAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/FeePool';
 
 // ExchangeRates
 import {
@@ -31,16 +21,6 @@ import {
   address as ExchangeRatesAddressMainnetOvm,
   abi as ExchangeRatesAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/ExchangeRates';
-import {
-  name as ExchangeRatesGoerli,
-  address as ExchangeRatesAddressGoerli,
-  abi as ExchangeRatesAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/ExchangeRates';
-import {
-  name as ExchangeRatesGoerliOvm,
-  address as ExchangeRatesAddressGoerliOvm,
-  abi as ExchangeRatesAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/ExchangeRates';
 
 // Synthetix
 import {
@@ -53,16 +33,6 @@ import {
   address as SynthetixAddressMainnetOvm,
   abi as SynthetixAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Synthetix';
-import {
-  name as SynthetixGoerli,
-  address as SynthetixAddressGoerli,
-  abi as SynthetixAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/Synthetix';
-import {
-  name as SynthetixGoerliOvm,
-  address as SynthetixAddressGoerliOvm,
-  abi as SynthetixAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/Synthetix';
 
 // SynthetixState
 import {
@@ -75,18 +45,6 @@ import {
   address as SynthetixStateAddressMainnetOvm,
   abi as SynthetixStateAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthetixState';
-import {
-  name as SynthetixStateGoerli,
-  address as SynthetixStateAddressGoerli,
-  abi as SynthetixStateAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SynthetixState';
-
-// TODO: Update - SynthetixState does not currently exist on Goerli Ovm
-import {
-  name as SynthetixStateGoerliOvm,
-  address as SynthetixStateAddressGoerliOvm,
-  abi as SynthetixStateAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/Synthetix';
 
 // Issuer
 import {
@@ -99,17 +57,6 @@ import {
   address as IssuerAddressMainnetOvm,
   abi as IssuerAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Issuer';
-import {
-  name as IssuerGoerli,
-  address as IssuerAddressGoerli,
-  abi as IssuerAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/Issuer';
-
-import {
-  name as IssuerGoerliOvm,
-  address as IssuerAddressGoerliOvm,
-  abi as IssuerAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/Issuer';
 
 // SystemSettings
 import {
@@ -122,16 +69,6 @@ import {
   address as SystemSettingsAddressMainnetOvm,
   abi as SystemSettingsAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SystemSettings';
-import {
-  name as SystemSettingsGoerli,
-  address as SystemSettingsAddressGoerli,
-  abi as SystemSettingsAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SystemSettings';
-import {
-  name as SystemSettingsGoerliOvm,
-  address as SystemSettingsAddressGoerliOvm,
-  abi as SystemSettingsAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/SystemSettings';
 
 // StakingRewardsSNXWETHUniswapV3
 import {
@@ -152,16 +89,6 @@ export const contracts = {
       address: FeePoolAddressMainnetOvm,
       abi: FeePoolAbiMainnetOvm,
     },
-    goerli: {
-      name: FeePoolGoerli,
-      address: FeePoolAddressGoerli,
-      abi: FeePoolAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: FeePoolGoerliOvm,
-      address: FeePoolAddressGoerliOvm,
-      abi: FeePoolAbiGoerliOvm,
-    },
   },
   ExchangeRates: {
     mainnet: {
@@ -173,16 +100,6 @@ export const contracts = {
       name: ExchangeRatesMainnetOvm,
       address: ExchangeRatesAddressMainnetOvm,
       abi: ExchangeRatesAbiMainnetOvm,
-    },
-    goerli: {
-      name: ExchangeRatesGoerli,
-      address: ExchangeRatesAddressGoerli,
-      abi: ExchangeRatesAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: ExchangeRatesGoerliOvm,
-      address: ExchangeRatesAddressGoerliOvm,
-      abi: ExchangeRatesAbiGoerliOvm,
     },
   },
   Synthetix: {
@@ -196,16 +113,6 @@ export const contracts = {
       address: SynthetixAddressMainnetOvm,
       abi: SynthetixAbiMainnetOvm,
     },
-    goerli: {
-      name: SynthetixGoerli,
-      address: SynthetixAddressGoerli,
-      abi: SynthetixAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SynthetixGoerliOvm,
-      address: SynthetixAddressGoerliOvm,
-      abi: SynthetixAbiGoerliOvm,
-    },
   },
   SynthetixState: {
     mainnet: {
@@ -217,16 +124,6 @@ export const contracts = {
       name: SynthetixStateMainnetOvm,
       address: SynthetixStateAddressMainnetOvm,
       abi: SynthetixStateAbiMainnetOvm,
-    },
-    goerli: {
-      name: SynthetixStateGoerli,
-      address: SynthetixStateAddressGoerli,
-      abi: SynthetixStateAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SynthetixStateGoerliOvm,
-      address: SynthetixStateAddressGoerliOvm,
-      abi: SynthetixStateAbiGoerliOvm,
     },
   },
   Issuer: {
@@ -240,16 +137,6 @@ export const contracts = {
       address: IssuerAddressMainnetOvm,
       abi: IssuerAbiMainnetOvm,
     },
-    goerli: {
-      name: IssuerGoerli,
-      address: IssuerAddressGoerli,
-      abi: IssuerAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: IssuerGoerliOvm,
-      address: IssuerAddressGoerliOvm,
-      abi: IssuerAbiGoerliOvm,
-    },
   },
   SystemState: {
     mainnet: {
@@ -261,16 +148,6 @@ export const contracts = {
       name: SystemSettingsMainnetOvm,
       address: SystemSettingsAddressMainnetOvm,
       abi: SystemSettingsAbiMainnetOvm,
-    },
-    goerli: {
-      name: SystemSettingsGoerli,
-      address: SystemSettingsAddressGoerli,
-      abi: SystemSettingsAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SystemSettingsGoerliOvm,
-      address: SystemSettingsAddressGoerliOvm,
-      abi: SystemSettingsAbiGoerliOvm,
     },
   },
   StakingRewardsSNXWETHUniswapV3: {

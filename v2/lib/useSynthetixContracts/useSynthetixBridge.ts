@@ -7,17 +7,14 @@ import { ContractContext } from '@snx-v2/ContractContext';
 
 import { SignerContext } from '@snx-v2/SignerContext';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
-import { SynthetixBridgeToOptimism } from '@synthetixio/contracts/build/goerli/deployment/SynthetixBridgeToOptimism';
-import { SynthetixBridgeToBase } from '@synthetixio/contracts/build/goerli-ovm/deployment/SynthetixBridgeToBase';
+import { SynthetixBridgeToOptimism } from '@synthetixio/contracts/build/mainnet/deployment/SynthetixBridgeToOptimism';
+import { SynthetixBridgeToBase } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthetixBridgeToBase';
 
 const contracts = {
   mainnet: () =>
     import('@synthetixio/contracts/build/mainnet/deployment/SynthetixBridgeToOptimism'),
   'mainnet-ovm': () =>
     import('@synthetixio/contracts/build/mainnet-ovm/deployment/SynthetixBridgeToBase'),
-  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/SynthetixBridgeToOptimism'),
-  'goerli-ovm': () =>
-    import('@synthetixio/contracts/build/goerli-ovm/deployment/SynthetixBridgeToBase'),
 };
 
 export const getSynthetixBridge = async ({

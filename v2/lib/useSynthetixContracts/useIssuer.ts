@@ -12,8 +12,6 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Issuer'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/Issuer'),
-  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/Issuer'),
-  'goerli-ovm': () => import('@synthetixio/contracts/build/goerli-ovm/deployment/Issuer'),
 };
 
 export const getIssuer = async ({

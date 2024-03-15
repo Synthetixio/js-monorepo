@@ -9,16 +9,6 @@ import {
   address as SynthUtilAddressMainnetOvm,
   abi as SynthUtilAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthUtil';
-import {
-  name as SynthUtilGoerli,
-  address as SynthUtilAddressGoerli,
-  abi as SynthUtilAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SynthUtil';
-import {
-  name as SynthUtilGoerliOvm,
-  address as SynthUtilAddressGoerliOvm,
-  abi as SynthUtilAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/SynthUtil';
 
 export const contracts = {
   SynthUtil: {
@@ -31,16 +21,6 @@ export const contracts = {
       name: SynthUtilMainnetOvm,
       address: SynthUtilAddressMainnetOvm,
       abi: SynthUtilAbiMainnetOvm,
-    },
-    goerli: {
-      name: SynthUtilGoerli,
-      address: SynthUtilAddressGoerli,
-      abi: SynthUtilAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SynthUtilGoerliOvm,
-      address: SynthUtilAddressGoerliOvm,
-      abi: SynthUtilAbiGoerliOvm,
     },
   },
 };
