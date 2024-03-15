@@ -33,7 +33,7 @@ function SelectNetwork({
   isL2: boolean;
   isWalletConnected: boolean;
   networkId?: number | NetworkId;
-  switchNetwork: (networkId: NetworkId) => Promise<boolean | undefined>;
+  switchNetwork: (id: NetworkId) => Promise<void>;
 }) {
   const ethNetworkId = isMainnet ? NetworkIdByName.mainnet : NetworkIdByName.goerli;
   const opNetworkId = isMainnet ? NetworkIdByName['mainnet-ovm'] : NetworkIdByName['goerli-ovm'];
@@ -44,8 +44,7 @@ function SelectNetwork({
   const switchMenuNetwork = async (toNetworkId: NetworkId) => {
     if (toNetworkId === networkId) return;
     if (isWalletConnected) {
-      const result = await switchNetwork(toNetworkId);
-      if (!result) return;
+      await switchNetwork(toNetworkId);
     }
   };
 

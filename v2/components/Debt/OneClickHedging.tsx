@@ -24,7 +24,7 @@ const OneClickHedgingUi: FC<{
   isOptimism: boolean;
   dSNXBalance?: number;
   dSNXBalanceUsd?: number;
-  switchNetwork: (networkId: NetworkId) => Promise<boolean | undefined>;
+  switchNetwork: (id: NetworkId) => Promise<void>;
 }> = ({ isOptimism, dSNXBalance, dSNXBalanceUsd, switchNetwork }) => {
   return (
     <Box position="relative">
