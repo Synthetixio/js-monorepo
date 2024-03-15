@@ -9,16 +9,6 @@ import {
   address as ExchangeRatesAddressMainnetOvm,
   abi as ExchangeRatesAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/ExchangeRates';
-import {
-  name as ExchangeRatesGoerli,
-  address as ExchangeRatesAddressGoerli,
-  abi as ExchangeRatesAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/ExchangeRates';
-import {
-  name as ExchangeRatesGoerliOvm,
-  address as ExchangeRatesAddressGoerliOvm,
-  abi as ExchangeRatesAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/ExchangeRates';
 
 // Synthetix
 import {
@@ -31,16 +21,6 @@ import {
   address as SynthetixAddressMainnetOvm,
   abi as SynthetixAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Synthetix';
-import {
-  name as SynthetixGoerli,
-  address as SynthetixAddressGoerli,
-  abi as SynthetixAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/Synthetix';
-import {
-  name as SynthetixGoerliOvm,
-  address as SynthetixAddressGoerliOvm,
-  abi as SynthetixAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/Synthetix';
 
 // SystemSettings
 import {
@@ -53,16 +33,6 @@ import {
   address as SystemSettingsAddressMainnetOvm,
   abi as SystemSettingsAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SystemSettings';
-import {
-  name as SystemSettingsGoerli,
-  address as SystemSettingsAddressGoerli,
-  abi as SystemSettingsAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SystemSettings';
-import {
-  name as SystemSettingsGoerliOvm,
-  address as SystemSettingsAddressGoerliOvm,
-  abi as SystemSettingsAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/SystemSettings';
 
 // DebtMigratorOnEthereum
 import {
@@ -70,11 +40,6 @@ import {
   address as DebtMigratorAddressOnEthereumMainnet,
   abi as DebtMigratorAbiOnEthereumMainnet,
 } from '@synthetixio/contracts/build/mainnet/deployment/DebtMigratorOnEthereum';
-import {
-  name as DebtMigratorOnEthereumGoerli,
-  address as DebtMigratorAddressOnEthereumGoerli,
-  abi as DebtMigratorAbiOnEthereumGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/DebtMigratorOnEthereum';
 
 // DebtMigratorOnOptimism
 import {
@@ -82,11 +47,6 @@ import {
   address as DebtMigratorAddressOnOptimismMainnetOvm,
   abi as DebtMigratorAbiOnOptimismMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/DebtMigratorOnOptimism';
-import {
-  name as DebtMigratorOnOptimismGoerliOvm,
-  address as DebtMigratorAddressOnOptimismGoerliOvm,
-  abi as DebtMigratorAbiOnOptimismGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/DebtMigratorOnOptimism';
 
 export const contracts = {
   ExchangeRates: {
@@ -100,16 +60,6 @@ export const contracts = {
       address: ExchangeRatesAddressMainnetOvm,
       abi: ExchangeRatesAbiMainnetOvm,
     },
-    goerli: {
-      name: ExchangeRatesGoerli,
-      address: ExchangeRatesAddressGoerli,
-      abi: ExchangeRatesAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: ExchangeRatesGoerliOvm,
-      address: ExchangeRatesAddressGoerliOvm,
-      abi: ExchangeRatesAbiGoerliOvm,
-    },
   },
   Synthetix: {
     mainnet: {
@@ -121,16 +71,6 @@ export const contracts = {
       name: SynthetixMainnetOvm,
       address: SynthetixAddressMainnetOvm,
       abi: SynthetixAbiMainnetOvm,
-    },
-    goerli: {
-      name: SynthetixGoerli,
-      address: SynthetixAddressGoerli,
-      abi: SynthetixAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SynthetixGoerliOvm,
-      address: SynthetixAddressGoerliOvm,
-      abi: SynthetixAbiGoerliOvm,
     },
   },
   SystemState: {
@@ -144,16 +84,6 @@ export const contracts = {
       address: SystemSettingsAddressMainnetOvm,
       abi: SystemSettingsAbiMainnetOvm,
     },
-    goerli: {
-      name: SystemSettingsGoerli,
-      address: SystemSettingsAddressGoerli,
-      abi: SystemSettingsAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SystemSettingsGoerliOvm,
-      address: SystemSettingsAddressGoerliOvm,
-      abi: SystemSettingsAbiGoerliOvm,
-    },
   },
   DebtMigrator: {
     mainnet: {
@@ -165,16 +95,6 @@ export const contracts = {
       name: DebtMigratorOnOptimismMainnetOvm,
       address: DebtMigratorAddressOnOptimismMainnetOvm,
       abi: DebtMigratorAbiOnOptimismMainnetOvm,
-    },
-    goerli: {
-      name: DebtMigratorOnEthereumGoerli,
-      address: DebtMigratorAddressOnEthereumGoerli,
-      abi: DebtMigratorAbiOnEthereumGoerli,
-    },
-    'goerli-ovm': {
-      name: DebtMigratorOnOptimismGoerliOvm,
-      address: DebtMigratorAddressOnOptimismGoerliOvm,
-      abi: DebtMigratorAbiOnOptimismGoerliOvm,
     },
   },
 };
