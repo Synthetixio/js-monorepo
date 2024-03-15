@@ -105,7 +105,7 @@ const useConnector = () => {
       try {
         const [res] = await connect();
 
-        if (id && id !== res.chains[0].id) {
+        if (id && id.toString() !== res.chains[0].id) {
           if (isSupportedNetworkId(id)) {
             await setNetwork({ chainId: getChainIdHex(id) });
           } else {

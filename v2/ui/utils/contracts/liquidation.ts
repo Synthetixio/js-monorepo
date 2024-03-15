@@ -9,16 +9,6 @@ import {
   address as LiquidatorAddressMainnetOvm,
   abi as LiquidatorAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/Liquidator';
-import {
-  name as LiquidatorGoerli,
-  address as LiquidatorAddressGoerli,
-  abi as LiquidatorAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/Liquidator';
-import {
-  name as LiquidatorGoerliOvm,
-  address as LiquidatorAddressGoerliOvm,
-  abi as LiquidatorAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/Liquidator';
 
 // LiquidatorRewards
 import {
@@ -31,16 +21,6 @@ import {
   address as LiquidatorRewardsAddressMainnetOvm,
   abi as LiquidatorRewardsAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/LiquidatorRewards';
-import {
-  name as LiquidatorRewardsGoerli,
-  address as LiquidatorRewardsAddressGoerli,
-  abi as LiquidatorRewardsAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/LiquidatorRewards';
-import {
-  name as LiquidatorRewardsGoerliOvm,
-  address as LiquidatorRewardsAddressGoerliOvm,
-  abi as LiquidatorRewardsAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/LiquidatorRewards';
 
 export const contracts = {
   Liquidator: {
@@ -54,16 +34,6 @@ export const contracts = {
       address: LiquidatorAddressMainnetOvm,
       abi: LiquidatorAbiMainnetOvm,
     },
-    goerli: {
-      name: LiquidatorGoerli,
-      address: LiquidatorAddressGoerli,
-      abi: LiquidatorAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: LiquidatorGoerliOvm,
-      address: LiquidatorAddressGoerliOvm,
-      abi: LiquidatorAbiGoerliOvm,
-    },
   },
   LiquidatorRewards: {
     mainnet: {
@@ -75,16 +45,6 @@ export const contracts = {
       name: LiquidatorRewardsMainnetOvm,
       address: LiquidatorRewardsAddressMainnetOvm,
       abi: LiquidatorRewardsAbiMainnetOvm,
-    },
-    goerli: {
-      name: LiquidatorRewardsGoerli,
-      address: LiquidatorRewardsAddressGoerli,
-      abi: LiquidatorRewardsAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: LiquidatorRewardsGoerliOvm,
-      address: LiquidatorRewardsAddressGoerliOvm,
-      abi: LiquidatorRewardsAbiGoerliOvm,
     },
   },
 };

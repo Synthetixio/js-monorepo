@@ -9,16 +9,6 @@ import {
   address as SystemStatusAddressMainnetOvm,
   abi as SystemStatusAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SystemStatus';
-import {
-  name as SystemStatusGoerli,
-  address as SystemStatusAddressGoerli,
-  abi as SystemStatusAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SystemStatus';
-import {
-  name as SystemStatusGoerliOvm,
-  address as SystemStatusAddressGoerliOvm,
-  abi as SystemStatusAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/SystemStatus';
 
 // DappMaintenance
 import {
@@ -31,16 +21,6 @@ import {
   address as DappMaintenanceAddressMainnetOvm,
   abi as DappMaintenanceAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/DappMaintenance';
-import {
-  name as DappMaintenanceGoerli,
-  address as DappMaintenanceAddressGoerli,
-  abi as DappMaintenanceAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/DappMaintenance';
-import {
-  name as DappMaintenanceGoerliOvm,
-  address as DappMaintenanceAddressGoerliOvm,
-  abi as DappMaintenanceAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/DappMaintenance';
 
 export const contracts = {
   SystemStatus: {
@@ -54,16 +34,6 @@ export const contracts = {
       address: SystemStatusAddressMainnetOvm,
       abi: SystemStatusAbiMainnetOvm,
     },
-    goerli: {
-      name: SystemStatusGoerli,
-      address: SystemStatusAddressGoerli,
-      abi: SystemStatusAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SystemStatusGoerliOvm,
-      address: SystemStatusAddressGoerliOvm,
-      abi: SystemStatusAbiGoerliOvm,
-    },
   },
   DappMaintenance: {
     mainnet: {
@@ -75,16 +45,6 @@ export const contracts = {
       name: DappMaintenanceMainnetOvm,
       address: DappMaintenanceAddressMainnetOvm,
       abi: DappMaintenanceAbiMainnetOvm,
-    },
-    goerli: {
-      name: DappMaintenanceGoerli,
-      address: DappMaintenanceAddressGoerli,
-      abi: DappMaintenanceAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: DappMaintenanceGoerliOvm,
-      address: DappMaintenanceAddressGoerliOvm,
-      abi: DappMaintenanceAbiGoerliOvm,
     },
   },
 };

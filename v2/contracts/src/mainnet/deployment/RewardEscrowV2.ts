@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'RewardEscrowV2';
-export const address = '0xAc86855865CbF31c8f9FBB68C749AD5Bd72802e3';
+export const address = '0xFAd53Cc9480634563E8ec71E8e693Ffd07981d38';
 export const source = 'RewardEscrowV2';
 export const abi = [
   'constructor(address _owner, address _resolver)',
@@ -46,6 +46,7 @@ export const abi = [
   'function nominatedReceiver(address) view returns (address)',
   'function numVestingEntries(address account) view returns (uint256)',
   'function owner() view returns (address)',
+  'function permittedEscrowCreators(address) view returns (bool)',
   'function rebuildCache()',
   'function resolver() view returns (address)',
   'function resolverAddressesRequired() view returns (bytes32[] addresses)',
@@ -53,6 +54,7 @@ export const abi = [
   'function setAccountMergingDuration(uint256 duration)',
   'function setMaxAccountMergingWindow(uint256 duration)',
   'function setMaxEscrowDuration(uint256 duration)',
+  'function setPermittedEscrowCreator(address creator, bool permitted)',
   'function setupExpiryTime() view returns (uint256)',
   'function startMergingWindow()',
   'function totalEscrowedAccountBalance(address account) view returns (uint256)',
@@ -140,6 +142,7 @@ export interface RewardEscrowV2Interface extends utils.Interface {
     'nominatedReceiver(address)': FunctionFragment;
     'numVestingEntries(address)': FunctionFragment;
     'owner()': FunctionFragment;
+    'permittedEscrowCreators(address)': FunctionFragment;
     'rebuildCache()': FunctionFragment;
     'resolver()': FunctionFragment;
     'resolverAddressesRequired()': FunctionFragment;
@@ -147,6 +150,7 @@ export interface RewardEscrowV2Interface extends utils.Interface {
     'setAccountMergingDuration(uint256)': FunctionFragment;
     'setMaxAccountMergingWindow(uint256)': FunctionFragment;
     'setMaxEscrowDuration(uint256)': FunctionFragment;
+    'setPermittedEscrowCreator(address,bool)': FunctionFragment;
     'setupExpiryTime()': FunctionFragment;
     'startMergingWindow()': FunctionFragment;
     'totalEscrowedAccountBalance(address)': FunctionFragment;
@@ -186,6 +190,7 @@ export interface RewardEscrowV2Interface extends utils.Interface {
       | 'nominatedReceiver'
       | 'numVestingEntries'
       | 'owner'
+      | 'permittedEscrowCreators'
       | 'rebuildCache'
       | 'resolver'
       | 'resolverAddressesRequired'
@@ -193,6 +198,7 @@ export interface RewardEscrowV2Interface extends utils.Interface {
       | 'setAccountMergingDuration'
       | 'setMaxAccountMergingWindow'
       | 'setMaxEscrowDuration'
+      | 'setPermittedEscrowCreator'
       | 'setupExpiryTime'
       | 'startMergingWindow'
       | 'totalEscrowedAccountBalance'
@@ -289,6 +295,10 @@ export interface RewardEscrowV2Interface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'permittedEscrowCreators',
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(functionFragment: 'rebuildCache', values?: undefined): string;
   encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
   encodeFunctionData(functionFragment: 'resolverAddressesRequired', values?: undefined): string;
@@ -312,6 +322,10 @@ export interface RewardEscrowV2Interface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'setMaxEscrowDuration',
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setPermittedEscrowCreator',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(functionFragment: 'setupExpiryTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startMergingWindow', values?: undefined): string;
@@ -358,6 +372,7 @@ export interface RewardEscrowV2Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'nominatedReceiver', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'numVestingEntries', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'permittedEscrowCreators', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rebuildCache', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'resolverAddressesRequired', data: BytesLike): Result;
@@ -365,6 +380,7 @@ export interface RewardEscrowV2Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'setAccountMergingDuration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setMaxAccountMergingWindow', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setMaxEscrowDuration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPermittedEscrowCreator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setupExpiryTime', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'startMergingWindow', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalEscrowedAccountBalance', data: BytesLike): Result;
@@ -694,6 +710,11 @@ export interface RewardEscrowV2 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    permittedEscrowCreators(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     rebuildCache(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -724,6 +745,12 @@ export interface RewardEscrowV2 extends BaseContract {
 
     setMaxEscrowDuration(
       duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setPermittedEscrowCreator(
+      creator: PromiseOrValue<string>,
+      permitted: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -878,6 +905,11 @@ export interface RewardEscrowV2 extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
+  permittedEscrowCreators(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   rebuildCache(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -906,6 +938,12 @@ export interface RewardEscrowV2 extends BaseContract {
 
   setMaxEscrowDuration(
     duration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setPermittedEscrowCreator(
+    creator: PromiseOrValue<string>,
+    permitted: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1060,6 +1098,11 @@ export interface RewardEscrowV2 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
+    permittedEscrowCreators(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     rebuildCache(overrides?: CallOverrides): Promise<void>;
 
     resolver(overrides?: CallOverrides): Promise<string>;
@@ -1086,6 +1129,12 @@ export interface RewardEscrowV2 extends BaseContract {
 
     setMaxEscrowDuration(
       duration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setPermittedEscrowCreator(
+      creator: PromiseOrValue<string>,
+      permitted: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1347,6 +1396,11 @@ export interface RewardEscrowV2 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    permittedEscrowCreators(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     rebuildCache(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1373,6 +1427,12 @@ export interface RewardEscrowV2 extends BaseContract {
 
     setMaxEscrowDuration(
       duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setPermittedEscrowCreator(
+      creator: PromiseOrValue<string>,
+      permitted: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1537,6 +1597,11 @@ export interface RewardEscrowV2 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    permittedEscrowCreators(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     rebuildCache(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -1565,6 +1630,12 @@ export interface RewardEscrowV2 extends BaseContract {
 
     setMaxEscrowDuration(
       duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setPermittedEscrowCreator(
+      creator: PromiseOrValue<string>,
+      permitted: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

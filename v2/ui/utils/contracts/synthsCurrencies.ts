@@ -99,12 +99,6 @@ import {
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthsAVAX';
 
 import {
-  name as SynthsINRMainnetOvm,
-  address as SynthsINRAddressMainnetOvm,
-  abi as SynthsINRAbiMainnetOvm,
-} from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthsINR';
-
-import {
   name as SynthsBTCMainnetOvm,
   address as SynthsBTCAddressMainnetOvm,
   abi as SynthsBTCAbiMainnetOvm,
@@ -152,44 +146,6 @@ import {
   abi as SynthsUSDAbiMainnetOvm,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/SynthsUSD';
 
-// Goerli
-import {
-  name as SynthsBTCGoerli,
-  address as SynthsBTCAddressGoerli,
-  abi as SynthsBTCAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SynthsBTC';
-
-import {
-  name as SynthsETHGoerli,
-  address as SynthsETHAddressGoerli,
-  abi as SynthsETHAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SynthsETH';
-
-import {
-  name as SynthsUSDGoerli,
-  address as SynthsUSDAddressGoerli,
-  abi as SynthsUSDAbiGoerli,
-} from '@synthetixio/contracts/build/goerli/deployment/SynthsUSD';
-
-// Goerli OVM
-import {
-  name as SynthsBTCGoerliOvm,
-  address as SynthsBTCAddressGoerliOvm,
-  abi as SynthsBTCAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/SynthsBTC';
-
-import {
-  name as SynthsETHGoerliOvm,
-  address as SynthsETHAddressGoerliOvm,
-  abi as SynthsETHAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/SynthsETH';
-
-import {
-  name as SynthsUSDGoerliOvm,
-  address as SynthsUSDAddressGoerliOvm,
-  abi as SynthsUSDAbiGoerliOvm,
-} from '@synthetixio/contracts/build/goerli-ovm/deployment/SynthsUSD';
-
 export const contracts = {
   SynthsAAVE: {
     mainnet: {
@@ -213,16 +169,6 @@ export const contracts = {
       name: SynthsBTCMainnetOvm,
       address: SynthsBTCAddressMainnetOvm,
       abi: SynthsBTCAbiMainnetOvm,
-    },
-    goerli: {
-      name: SynthsBTCGoerli,
-      address: SynthsBTCAddressGoerli,
-      abi: SynthsBTCAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SynthsBTCGoerliOvm,
-      address: SynthsBTCAddressGoerliOvm,
-      abi: SynthsBTCAbiGoerliOvm,
     },
   },
   SynthsEUR: {
@@ -248,16 +194,6 @@ export const contracts = {
       address: SynthsETHAddressMainnetOvm,
       abi: SynthsETHAbiMainnetOvm,
     },
-    goerli: {
-      name: SynthsETHGoerli,
-      address: SynthsETHAddressGoerli,
-      abi: SynthsETHAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SynthsETHGoerliOvm,
-      address: SynthsETHAddressGoerliOvm,
-      abi: SynthsETHAbiGoerliOvm,
-    },
   },
   SynthsUSD: {
     mainnet: {
@@ -269,16 +205,6 @@ export const contracts = {
       name: SynthsUSDMainnetOvm,
       address: SynthsUSDAddressMainnetOvm,
       abi: SynthsUSDAbiMainnetOvm,
-    },
-    goerli: {
-      name: SynthsUSDGoerli,
-      address: SynthsUSDAddressGoerli,
-      abi: SynthsUSDAbiGoerli,
-    },
-    'goerli-ovm': {
-      name: SynthsUSDGoerliOvm,
-      address: SynthsUSDAddressGoerliOvm,
-      abi: SynthsUSDAbiGoerliOvm,
     },
   },
   SynthsAUD: {
@@ -375,13 +301,6 @@ export const contracts = {
       name: SynthsAVAXMainnetOvm,
       address: SynthsAVAXAddressMainnetOvm,
       abi: SynthsAVAXAbiMainnetOvm,
-    },
-  },
-  SynthsINR: {
-    'mainnet-ovm': {
-      name: SynthsINRMainnetOvm,
-      address: SynthsINRAddressMainnetOvm,
-      abi: SynthsINRAbiMainnetOvm,
     },
   },
 };

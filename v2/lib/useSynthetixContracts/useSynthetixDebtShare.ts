@@ -14,9 +14,6 @@ const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SynthetixDebtShare'),
   'mainnet-ovm': () =>
     import('@synthetixio/contracts/build/mainnet-ovm/deployment/SynthetixDebtShare'),
-  goerli: () => import('@synthetixio/contracts/build/goerli/deployment/SynthetixDebtShare'),
-  'goerli-ovm': () =>
-    import('@synthetixio/contracts/build/goerli-ovm/deployment/SynthetixDebtShare'),
 };
 
 export const getSynthetixDebtShare = async ({

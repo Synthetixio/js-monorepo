@@ -11,9 +11,7 @@ import { ethers, UnsignedTransaction } from 'ethers';
 import optimismOracleContract from '@synthetixio/queries/build/contracts/OptimismGasPriceOracle';
 
 const isNetworkIdOvm = (networkId: number | null) => {
-  return (
-    networkId === NetworkIdByName['mainnet-ovm'] || networkId === NetworkIdByName['goerli-ovm']
-  );
+  return networkId === NetworkIdByName['mainnet-ovm'];
 };
 const getOptimismLayerOneFees = async (
   serializedTxn: string,
