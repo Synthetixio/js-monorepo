@@ -3493,9 +3493,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eth-optimism/sdk@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "@eth-optimism/sdk@npm:3.2.1"
+"@eth-optimism/sdk@npm:^3.2.3":
+  version: 3.2.3
+  resolution: "@eth-optimism/sdk@npm:3.2.3"
   dependencies:
     "@eth-optimism/contracts": 0.6.0
     "@eth-optimism/contracts-bedrock": 0.17.1
@@ -3506,7 +3506,7 @@ __metadata:
     semver: ^7.6.0
   peerDependencies:
     ethers: ^5
-  checksum: 7ad1ee10689a247053fa03735169a769b7405d0c5a49efbd89d096c342319fa86fe73e0457c3171158b45ea36deda543d66ce38d830b13b170150235e01c618e
+  checksum: 08c633ac8b131f1d1eb076eeef85dd83e2a7f9e3e3f659c0f565d82706efbbb0f95491fa43ee3107e2ee22cb3b7f04320a83e1007ca14262d2b8620d1e0227a0
   languageName: node
   linkType: hard
 
@@ -9410,7 +9410,7 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.17
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@eth-optimism/sdk": ^3.2.1
+    "@eth-optimism/sdk": ^3.2.3
     "@ethersproject/bignumber": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@gnosis.pm/safe-apps-provider": ^0.14.0
