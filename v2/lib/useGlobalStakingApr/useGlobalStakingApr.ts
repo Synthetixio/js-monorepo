@@ -82,5 +82,6 @@ export const useGlobalStakingApr = () => {
     isL2,
     feePeriodData: { mainnetDistributedRewards, optimismDistributedRewards },
   });
+
   return { data: { combinedApr: feesApr.add(snxApr), feesApr, snxApr }, isLoading: false };
 };
