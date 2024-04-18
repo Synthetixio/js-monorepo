@@ -6770,11 +6770,14 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/StatBox": "workspace:*"
     "@snx-v2/SynthIcons": "workspace:*"
     "@snx-v2/TableComponents": "workspace:*"
+    "@snx-v2/TransactionModal": "workspace:*"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/synthsByName": "workspace:*"
+    "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/useDSnxBalance": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useEthBalance": "workspace:*"
@@ -7445,13 +7448,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthsRedeemer@workspace:v2/lib/useSynthRedeemer"
   dependencies:
-    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/SignerContext": "workspace:*"
+    "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
-    "@synthetixio/wei": ^2.74.4
+    "@synthetixio/contracts": "workspace:*"
+    "@synthetixio/use-global-providers": "workspace:*"
     "@tanstack/react-query": ^4.24.6
-    lodash: ^4.17.21
     react: ^18.2.0
   languageName: unknown
   linkType: soft
