@@ -197,18 +197,20 @@ const WalletBalancesUi: React.FC<{
                 )}
               </Tbody>
             </Table>
-            {networkId === NetworkIdByName.mainnet && (
-              <Flex mt={4} width="100%" justifyContent="flex-end">
-                <Button
-                  onClick={() => {
-                    mutate();
-                  }}
-                  variant="outline"
-                >
-                  Redeem
-                </Button>
-              </Flex>
-            )}
+            {networkId === NetworkIdByName.mainnet &&
+              redeemableSynths &&
+              redeemableSynths?.length > 0 && (
+                <Flex mt={4} width="100%" justifyContent="flex-end">
+                  <Button
+                    onClick={() => {
+                      mutate();
+                    }}
+                    variant="outline"
+                  >
+                    Redeem
+                  </Button>
+                </Flex>
+              )}
           </TableContainer>
         </Box>
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" mt={4} py={4} px={2}>
