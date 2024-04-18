@@ -21,6 +21,7 @@ export const getInfuraRpcURL = (networkId?: NetworkId) => {
 };
 
 export const getChainIdHex = (networkId: NetworkId) => {
+  console.log(networkId);
   return `0x${networkId.toString(16)}`;
 };
 

@@ -14,6 +14,9 @@ const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/LiquidatorRewards'),
   'mainnet-ovm': () =>
     import('@synthetixio/contracts/build/mainnet-ovm/deployment/LiquidatorRewards'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/LiquidatorRewards'),
+  'sepolia-ovm': () =>
+    import('@synthetixio/contracts/build/sepolia-ovm/deployment/LiquidatorRewards'),
 };
 
 export const getLiquidatorRewards = async ({

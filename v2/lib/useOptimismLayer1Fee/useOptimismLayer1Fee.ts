@@ -11,7 +11,7 @@ import { Provider } from '@ethersproject/providers';
 
 const isNetworkIdOvm = (networkId: number | null) => {
   return (
-    networkId === NetworkIdByName['mainnet-ovm'] || networkId === NetworkIdByName['goerli-ovm']
+    networkId === NetworkIdByName['mainnet-ovm'] || networkId === NetworkIdByName['sepolia-ovm']
   );
 };
 const getOptimismLayerOneFees = async (

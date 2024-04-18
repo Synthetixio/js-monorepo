@@ -13,6 +13,8 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Liquidator'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/Liquidator'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/Liquidator'),
+  'sepolia-ovm': () => import('@synthetixio/contracts/build/sepolia-ovm/deployment/Liquidator'),
 };
 
 export const getLiquidator = async ({

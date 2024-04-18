@@ -12,6 +12,8 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SystemSettings'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/SystemSettings'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/SystemSettings'),
+  'sepolia-ovm': () => import('@synthetixio/contracts/build/sepolia-ovm/deployment/SystemSettings'),
 };
 
 export const getSystemSettings = async ({

@@ -64,19 +64,19 @@ const supportedChains = [
     ? [
         // goerli
         {
-          id: getChainIdHex(NetworkIdByName.goerli),
+          id: getChainIdHex(NetworkIdByName.sepolia),
           token: 'ETH',
-          label: 'Goerli',
-          rpcUrl: getInfuraRpcURL(NetworkIdByName.goerli),
-          publicRpcUrl: 'https://ethereum-goerli.publicnode.com',
+          label: 'Sepolia',
+          rpcUrl: getInfuraRpcURL(NetworkIdByName.sepolia),
+          publicRpcUrl: 'https://ethereum-sepolia.publicnode.com',
         },
         // goerli Ovm
         {
-          id: getChainIdHex(NetworkIdByName['goerli-ovm']),
+          id: getChainIdHex(NetworkIdByName['sepolia-ovm']),
           token: 'ETH',
           label: 'Optimism Goerli',
-          rpcUrl: getInfuraRpcURL(NetworkIdByName['goerli-ovm']),
-          publicRpcUrl: 'https://goerli.optimism.io',
+          rpcUrl: getInfuraRpcURL(NetworkIdByName['sepolia-ovm']),
+          publicRpcUrl: 'https://sepolia.optimism.io',
         },
       ]
     : []

@@ -12,6 +12,8 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Issuer'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/Issuer'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/Issuer'),
+  'sepolia-ovm': () => import('@synthetixio/contracts/build/sepolia-ovm/deployment/Issuer'),
 };
 
 export const getIssuer = async ({
@@ -34,6 +36,7 @@ export const getIssuer = async ({
   const contract = new ethers.Contract(address, abi, signerOrProvider) as Issuer | IssuerOvm;
   return contract;
 };
+
 export const useIssuer = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);

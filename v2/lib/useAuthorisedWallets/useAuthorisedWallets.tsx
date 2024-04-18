@@ -15,6 +15,7 @@ type AuthorisedWalletsQueryResult = {
 };
 
 const gql = (data: TemplateStringsArray) => data[0];
+
 const AuthorizedWalletsDocument = gql`
   query delegatedWallets($delegate: Bytes) {
     delegatedWallets(where: { delegate: $delegate }, first: 100) {

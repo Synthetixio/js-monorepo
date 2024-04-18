@@ -15,7 +15,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 
 function optimiseContracts() {
-  const networks = isTest ? ['mainnet'] : ['goerli', 'goerli-ovm', 'mainnet', 'mainnet-ovm'];
+  const networks = isTest ? ['mainnet'] : ['sepolia', 'sepolia-ovm', 'mainnet', 'mainnet-ovm'];
   const out = path.resolve(__dirname, './out');
   generate({ networks, out });
 
@@ -32,7 +32,7 @@ function optimiseContracts() {
     .concat([
       new webpack.NormalModuleReplacementPlugin(
         isTest
-          ? new RegExp('/synthetix/publish/deployed/(kovan|local|goerli|goerli-ovm|mainnet-ovm)')
+          ? new RegExp('/synthetix/publish/deployed/(kovan|local|sepolia|sepolia-ovm|mainnet-ovm)')
           : new RegExp('/synthetix/publish/deployed/(local)'),
         require.resolve('./scripts/noop')
       ),

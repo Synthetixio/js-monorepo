@@ -1,10 +1,10 @@
 import ArrowsSwap from 'assets/svg/app/arrows-swap.svg';
-import { NetworkId, NetworkIdByName } from '@snx-v2/useSynthetixContracts';
+
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { ChevronDown, ChevronUp, EthereumIcon, FailedIcon, OptimismIcon } from '@snx-v2/icons';
-
 import { IconButton } from '@snx-v1/styles';
 import { Trans } from 'react-i18next';
+import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 
 const activeIcon = (currentNetwork?: number | NetworkId) => {
   switch (currentNetwork) {
@@ -12,10 +12,10 @@ const activeIcon = (currentNetwork?: number | NetworkId) => {
       return { icon: <EthereumIcon />, name: 'Ethereum' };
     case 10:
       return { icon: <OptimismIcon />, name: 'Optimism' };
-    case 5:
-      return { icon: <EthereumIcon />, name: 'Goerli Testnet' };
-    case 420:
-      return { icon: <OptimismIcon />, name: 'Optimistic Goerli' };
+    case 11155111:
+      return { icon: <EthereumIcon />, name: 'Sepolia Testnet' };
+    case 11155420:
+      return { icon: <OptimismIcon />, name: 'Optimistic Sepolia' };
 
     default:
       return { icon: <FailedIcon width="24px" height="24px" />, name: 'Unsupported Network' };
@@ -109,7 +109,8 @@ function SelectNetwork({
       </IconButton>
       <Menu>
         {({ isOpen }) => {
-          const toNetwork = activeIcon(isL2 ? ethNetworkId : opNetworkId);
+          const toNetwork = activeIcon(networkId);
+
           return (
             <Flex width={['100%', 'auto']} flexDir="column" gap={2}>
               <Text fontSize="14px" fontWeight={700} lineHeight="20px">

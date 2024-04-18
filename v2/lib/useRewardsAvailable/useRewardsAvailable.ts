@@ -10,6 +10,7 @@ export const useRewardsAvailable = () => {
   const { delegateWallet } = useDelegateWallet();
   const walletAddress = delegateWallet?.address || connectedWalletAddress;
   const { data: FeePool } = useFeePool();
+
   return useQuery(
     ['useRewardsAvailable', networkId, walletAddress],
     async () => {

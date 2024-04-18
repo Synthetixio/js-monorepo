@@ -9,6 +9,10 @@ export const loadSynthsByNameFromNetwork = (networkId: number) => {
       return import('@synthetixio/contracts/build/mainnet/synths');
     case NetworkIdByName['mainnet-ovm']:
       return import('@synthetixio/contracts/build/mainnet-ovm/synths');
+    case NetworkIdByName['sepolia']:
+      return import('@synthetixio/contracts/build/sepolia/synths');
+    case NetworkIdByName['sepolia-ovm']:
+      return import('@synthetixio/contracts/build/sepolia-ovm/synths');
     default:
       return import('@synthetixio/contracts/build/mainnet/synths');
   }
@@ -28,6 +32,7 @@ export type SynthsByName = Partial<
     }
   >
 >;
+
 export const useGetSynthsByName = () => {
   const { networkId } = useContext(ContractContext);
   return useQuery(

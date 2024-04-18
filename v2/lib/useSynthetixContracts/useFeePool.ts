@@ -14,6 +14,8 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/FeePool'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/FeePool'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/FeePool'),
+  'sepolia-ovm': () => import('@synthetixio/contracts/build/sepolia-ovm/deployment/FeePool'),
 };
 
 export const getFeePool = async ({

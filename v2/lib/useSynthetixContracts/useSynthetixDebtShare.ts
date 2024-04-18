@@ -14,6 +14,9 @@ const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/SynthetixDebtShare'),
   'mainnet-ovm': () =>
     import('@synthetixio/contracts/build/mainnet-ovm/deployment/SynthetixDebtShare'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/SynthetixDebtShare'),
+  'sepolia-ovm': () =>
+    import('@synthetixio/contracts/build/sepolia-ovm/deployment/SynthetixDebtShare'),
 };
 
 export const getSynthetixDebtShare = async ({

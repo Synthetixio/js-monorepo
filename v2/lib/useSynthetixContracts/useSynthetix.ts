@@ -13,6 +13,8 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/Synthetix'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/Synthetix'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/Synthetix'),
+  'sepolia-ovm': () => import('@synthetixio/contracts/build/sepolia-ovm/deployment/Synthetix'),
 };
 
 export const getSynthetix = async ({
@@ -34,6 +36,7 @@ export const getSynthetix = async ({
   const contract = new ethers.Contract(address, abi, signerOrProvider) as SynthetixOvm | Synthetix;
   return contract;
 };
+
 export const useSynthetix = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);

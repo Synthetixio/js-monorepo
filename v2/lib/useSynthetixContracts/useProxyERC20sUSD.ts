@@ -12,6 +12,8 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/ProxyERC20sUSD'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/ProxyERC20sUSD'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/ProxysUSD'),
+  'sepolia-ovm': () => import('@synthetixio/contracts/build/sepolia-ovm/deployment/ProxysUSD'),
 };
 
 export const getProxyERC20sUSD = async ({
@@ -30,11 +32,13 @@ export const getProxyERC20sUSD = async ({
   }
   const networkName = NetworkNameById[networkId];
   const { address, abi } = await contracts[networkName]();
+
   const contract = new ethers.Contract(address, abi, signerOrProvider) as
     | ProxyERC20sUSDOvm
     | ProxyERC20sUSD;
   return contract;
 };
+
 export const useProxyERC20sUSD = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);

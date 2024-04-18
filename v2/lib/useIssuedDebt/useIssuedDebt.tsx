@@ -8,6 +8,7 @@ type IssuedsQuery = {
 };
 
 const gql = (data: any) => data[0];
+
 const IssuedsDocument = gql`
   query issueds($account: Bytes) {
     issueds(where: { account: $account }) {

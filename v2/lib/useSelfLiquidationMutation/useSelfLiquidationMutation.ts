@@ -13,6 +13,7 @@ const createPopulateTransaction = (Synthetix: ReturnType<typeof useSynthetix>['d
       gasLimit: Synthetix.estimateGas.liquidateSelf(),
     });
 };
+
 export function useSelfLiquidationMutation(snxToLiquidate?: Wei) {
   const { data: Synthetix } = useSynthetix();
 

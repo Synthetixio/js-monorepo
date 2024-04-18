@@ -58,6 +58,7 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
 
   const { data: SynthetixBridge } = useSynthetixBridge();
   const { data: sUSD } = useProxyERC20sUSD();
+
   const { data: needsApproval, refetch: refetchApproval } = useGetNeedsApproval(
     SynthetixBridge?.address ?? '',
     sUSD,
@@ -197,7 +198,6 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
             </Flex>
           </Flex>
         </Box>
-
         {isL2 && (
           <Checkbox
             mt={5}
@@ -219,7 +219,6 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
             </Text>
           </Checkbox>
         )}
-
         {needsApproval &&
           (gasError || notEnoughBalance ? (
             <Center mt={3}>
@@ -238,7 +237,6 @@ function NativeBridge({ onBack }: { onBack: () => void }) {
               />
             </Flex>
           ))}
-
         {Boolean(walletConnectedToUnsupportedNetwork || isWalletConnected) ? (
           needsApproval ? (
             <Tooltip label={isL2 && !isCheckedL2 ? t('bridge.bridge-warning') : undefined} hasArrow>

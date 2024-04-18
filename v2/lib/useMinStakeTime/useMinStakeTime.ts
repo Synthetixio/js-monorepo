@@ -12,6 +12,7 @@ export const useMinStakeTime = () => {
   const { data: SystemSettings } = useSystemSettings();
   const { delegateWallet } = useDelegateWallet();
   const walletAddress = delegateWallet?.address || connectedWalletAddress;
+
   return useQuery(
     [networkId, 'minStakeTime', { walletAddress }],
     async () => {

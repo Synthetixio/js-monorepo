@@ -36,6 +36,7 @@ const createPopulateTransaction = (
     );
   };
 };
+
 export function useBridgeMutation(bridgeArgs: NativeBridgeArgs) {
   const { data: SynthetixBridge } = useSynthetixBridge();
 

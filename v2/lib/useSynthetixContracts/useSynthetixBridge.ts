@@ -15,6 +15,10 @@ const contracts = {
     import('@synthetixio/contracts/build/mainnet/deployment/SynthetixBridgeToOptimism'),
   'mainnet-ovm': () =>
     import('@synthetixio/contracts/build/mainnet-ovm/deployment/SynthetixBridgeToBase'),
+  sepolia: () =>
+    import('@synthetixio/contracts/build/sepolia/deployment/SynthetixBridgeToOptimism'),
+  'sepolia-ovm': () =>
+    import('@synthetixio/contracts/build/sepolia-ovm/deployment/SynthetixBridgeToBase'),
 };
 
 export const getSynthetixBridge = async ({
@@ -38,6 +42,7 @@ export const getSynthetixBridge = async ({
     | SynthetixBridgeToBase;
   return contract;
 };
+
 export const useSynthetixBridge = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const signer = useContext(SignerContext);

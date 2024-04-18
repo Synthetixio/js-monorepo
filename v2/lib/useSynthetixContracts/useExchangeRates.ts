@@ -14,6 +14,8 @@ import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-provider
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/ExchangeRates'),
   'mainnet-ovm': () => import('@synthetixio/contracts/build/mainnet-ovm/deployment/ExchangeRates'),
+  sepolia: () => import('@synthetixio/contracts/build/sepolia/deployment/ExchangeRates'),
+  'sepolia-ovm': () => import('@synthetixio/contracts/build/sepolia-ovm/deployment/ExchangeRates'),
 };
 
 export const getExchangeRates = async ({
