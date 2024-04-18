@@ -1,35 +1,57 @@
-import { ReactElement } from 'react';
-import { Flex, Text, Skeleton, Progress } from '@chakra-ui/react';
+import { ReactElement, useContext } from 'react';
+import { Flex, Text, Skeleton, Progress, Tag } from '@chakra-ui/react';
 import { formatNumber, formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import { StyledTd } from '@snx-v2/TableComponents';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 
 export const AssetTd = ({
   description,
   currencyKey,
   icon,
   iconUrl,
+  isSynth = false,
 }: {
   currencyKey: string;
   description?: string;
   icon?: ReactElement;
   iconUrl?: string;
-}) => (
-  <StyledTd>
-    <Flex>
-      <Flex alignItems="center">
-        {icon ? icon : <img width="24px" height="24px" src={iconUrl} alt={currencyKey} />}
-      </Flex>
-      <Flex ml={1} flexDirection="column">
-        <Text fontSize="sm">{currencyKey}</Text>
-        {description && (
-          <Text fontSize="xs" color="gray.500">
-            {description}
-          </Text>
+  isSynth?: boolean;
+}) => {
+  const { networkId } = useContext(ContractContext);
+
+  const isL1 = networkId === NetworkIdByName.mainnet;
+  return (
+    <StyledTd>
+      <Flex>
+        <Flex alignItems="center">
+          {icon ? icon : <img width="24px" height="24px" src={iconUrl} alt={currencyKey} />}
+        </Flex>
+        <Flex ml={1} flexDirection="column">
+          <Text fontSize="sm">{currencyKey}</Text>
+          {description && (
+            <Text fontSize="xs" color="gray.500">
+              {description}
+            </Text>
+          )}
+        </Flex>
+        {isL1 && isSynth && currencyKey !== 'sUSD' && (
+          <Flex ml={4} alignItems="center">
+            <Tag
+              fontSize="xs"
+              bg="transparent"
+              color="white"
+              borderColor="cyan.500"
+              borderWidth="1px"
+            >
+              Redeemable
+            </Tag>
+          </Flex>
         )}
       </Flex>
-    </Flex>
-  </StyledTd>
-);
+    </StyledTd>
+  );
+};
 
 export const BalanceTd = ({ balance, usdBalance }: { balance?: number; usdBalance?: number }) => (
   <StyledTd>

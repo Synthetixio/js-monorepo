@@ -7441,6 +7441,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useSynthsRedeemer@workspace:v2/lib/useSynthRedeemer":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useSynthsRedeemer@workspace:v2/lib/useSynthRedeemer"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/strings": ^5.7.0
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
+    "@tanstack/react-query": ^4.24.6
+    lodash: ^4.17.21
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useTotalIssuedSynthsExcludeOtherCollateral@workspace:v2/lib/useTotalIssuedSynthsExcludeOtherCollateral"

@@ -13,7 +13,7 @@ import { Contract } from '@ethersproject/contracts';
 import type { DynamicSynthRedeemer } from '@synthetixio/contracts/build/mainnet/deployment/DynamicSynthRedeemer';
 import type { DynamicSynthRedeemer as DynamicSynthRedeemerOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/DynamicSynthRedeemer';
 import { initialState, reducer } from '@snx-v2/txnReducer';
-import { Bytes } from 'ethers';
+import { formatBytes32String } from '@ethersproject/strings';
 
 const contracts = {
   mainnet: () => import('@synthetixio/contracts/build/mainnet/deployment/DynamicSynthRedeemer'),
@@ -56,17 +56,19 @@ export const useSynthRedeemer = () => {
   });
 };
 
-export function useSynthRedeemerMutation(synthIds: Bytes[]) {
+export function useSynthRedeemerMutation(synthIds?: string[]) {
   const [txnState, dispatch] = useReducer(reducer, initialState);
   const { data: SynthRedeemer } = useSynthRedeemer();
 
+  const encodedSynths = synthIds?.map((id) => formatBytes32String(id));
+
   return {
     ...useMutation(async () => {
-      if (!SynthRedeemer) return;
+      if (!SynthRedeemer || !encodedSynths) return;
 
       try {
         dispatch({ type: 'prompting' });
-        const txn = await SynthRedeemer.redeemAll(synthIds);
+        const txn = await SynthRedeemer.redeemAll(encodedSynths);
         dispatch({ type: 'pending', payload: { txnHash: txn.hash } });
         await txn.wait();
         dispatch({ type: 'success' });
@@ -76,5 +78,6 @@ export function useSynthRedeemerMutation(synthIds: Bytes[]) {
       }
     }),
     ...txnState,
+    settle: () => dispatch({ type: 'settled' }),
   };
 }
