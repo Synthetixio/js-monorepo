@@ -1,0 +1,18 @@
+{
+  "name": "@snx-v2/useSynthRedeemer",
+  "private": true,
+  "main": "index.ts",
+  "version": "0.0.12-0",
+  "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/contracts": "^5.7.0",
+    "@ethersproject/strings": "^5.7.0",
+    "@snx-v2/ContractContext": "workspace:*",
+    "@snx-v2/useSynthetixContracts": "workspace:*",
+    "@synthetixio/wei": "^2.74.4",
+    "@tanstack/react-query": "^4.24.6",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0"
+  },
+  "stableVersion": "0.0.11"
+}

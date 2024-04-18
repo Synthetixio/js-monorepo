@@ -7411,6 +7411,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@snx-v2/useSynthRedeemer@workspace:^, @snx-v2/useSynthRedeemer@workspace:v2/lib/useSynthRedemer":
+  version: 0.0.0-use.local
+  resolution: "@snx-v2/useSynthRedeemer@workspace:v2/lib/useSynthRedemer"
+  dependencies:
+    "@ethersproject/bignumber": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
+    "@ethersproject/strings": ^5.7.0
+    "@snx-v2/ContractContext": "workspace:*"
+    "@snx-v2/useSynthetixContracts": "workspace:*"
+    "@synthetixio/wei": ^2.74.4
+    "@tanstack/react-query": ^4.24.6
+    lodash: ^4.17.21
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@snx-v2/useSynthetixContracts@workspace:*, @snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthetixContracts@workspace:v2/lib/useSynthetixContracts"
@@ -9468,6 +9484,7 @@ __metadata:
     "@snx-v2/useFeesClaimed": "workspace:*"
     "@snx-v2/useGasPrice": "workspace:*"
     "@snx-v2/useLiquidationData": "workspace:*"
+    "@snx-v2/useSynthRedeemer": "workspace:^"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
     "@socket.tech/plugin": ^1.3.4

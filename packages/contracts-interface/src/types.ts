@@ -22,6 +22,8 @@ export const NetworkIdByName = {
   kovan: 42,
   'kovan-ovm': 69,
   'mainnet-fork': 31337,
+  sepolia: 11155111,
+  'sepolia-ovm': 11155420,
 } as const;
 
 export const NetworkNameById = {
@@ -32,6 +34,8 @@ export const NetworkNameById = {
   69: 'kovan-ovm',
   420: 'goerli-ovm',
   31337: 'mainnet-fork',
+  11155111: 'sepolia',
+  11155420: 'sepolia-ovm',
 } as const;
 
 export type NetworkIdByNameType = typeof NetworkIdByName;

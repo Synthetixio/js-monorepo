@@ -65,10 +65,10 @@ const activeIcon = (currentNetwork: NetworkId) => {
       return { icon: <EthereumIcon />, name: 'Ethereum' };
     case 10:
       return { icon: <OptimismIcon />, name: 'Optimism' };
-    case 5:
-      return { icon: <EthereumIcon />, name: 'Goerli Testnet' };
-    case 420:
-      return { icon: <OptimismIcon />, name: 'Optimistic Goerli' };
+    case 11155111:
+      return { icon: <EthereumIcon />, name: 'Sepolia Testnet' };
+    case 11155420:
+      return { icon: <OptimismIcon />, name: 'Optimistic Sepolia' };
 
     default:
       return { icon: <FailedIcon width="24px" height="24px" />, name: 'Unsupported Network' };

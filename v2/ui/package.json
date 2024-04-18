@@ -83,6 +83,7 @@
     "@snx-v2/useFeesClaimed": "workspace:*",
     "@snx-v2/useGasPrice": "workspace:*",
     "@snx-v2/useLiquidationData": "workspace:*",
+    "@snx-v2/useSynthRedeemer": "workspace:^",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
     "@socket.tech/plugin": "^1.3.4",
