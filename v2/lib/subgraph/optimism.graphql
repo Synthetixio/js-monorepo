@@ -9045,6 +9045,9 @@ enum TemporaryExchangePartnerTracker_orderBy {
   usdVolume
 }
 
+"A string representation of microseconds UNIX timestamp (16 digits)\n"
+scalar Timestamp
+
 type Total {
   """
   minimum power of 10 (in from USD value) the trade must be. ex, 2 means $100 or higher)

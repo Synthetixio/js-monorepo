@@ -1730,6 +1730,9 @@ enum Synthetix_orderBy {
   snxHolders
 }
 
+"A string representation of microseconds UNIX timestamp (16 digits)\n"
+scalar Timestamp
+
 type TotalActiveStaker {
   """
   number of stakers seen
