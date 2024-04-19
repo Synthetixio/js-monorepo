@@ -37,14 +37,12 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "token", "type": "address" },
-      { "indexed": true, "internalType": "bytes32", "name": "currencyKey", "type": "bytes32" },
-      { "indexed": false, "internalType": "address", "name": "wrapperAddress", "type": "address" }
+      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "reward", "type": "uint256" }
     ],
-    "name": "WrapperCreated",
+    "name": "RewardPaid",
     "type": "event"
   },
-  { "payable": true, "stateMutability": "payable", "type": "fallback" },
   {
     "constant": true,
     "inputs": [],
@@ -64,22 +62,39 @@
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [
-      { "internalType": "contract IERC20", "name": "token", "type": "address" },
-      { "internalType": "bytes32", "name": "currencyKey", "type": "bytes32" },
-      { "internalType": "bytes32", "name": "synthContractName", "type": "bytes32" }
-    ],
-    "name": "createWrapper",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "constant": true,
+    "inputs": [],
+    "name": "accumulatedRewardsPerShare",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "earned",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "entries",
+    "outputs": [
+      { "internalType": "uint128", "name": "claimable", "type": "uint128" },
+      { "internalType": "uint128", "name": "entryAccumulatedRewards", "type": "uint128" }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": false,
-    "inputs": [],
-    "name": "distributeFees",
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "getReward",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -87,9 +102,9 @@
   },
   {
     "constant": true,
-    "inputs": [],
-    "name": "feesEscrowed",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "initiated",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -98,15 +113,6 @@
     "constant": true,
     "inputs": [],
     "name": "isResolverCached",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [{ "internalType": "address", "name": "possibleWrapper", "type": "address" }],
-    "name": "isWrapper",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "payable": false,
     "stateMutability": "view",
@@ -128,6 +134,15 @@
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{ "internalType": "uint256", "name": "reward", "type": "uint256" }],
+    "name": "notifyRewardAmount",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -164,6 +179,15 @@
     "outputs": [{ "internalType": "bytes32[]", "name": "addresses", "type": "bytes32[]" }],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "updateEntry",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

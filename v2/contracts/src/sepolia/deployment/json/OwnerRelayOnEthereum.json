@@ -37,22 +37,20 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "token", "type": "address" },
-      { "indexed": true, "internalType": "bytes32", "name": "currencyKey", "type": "bytes32" },
-      { "indexed": false, "internalType": "address", "name": "wrapperAddress", "type": "address" }
+      { "indexed": false, "internalType": "address[]", "name": "targets", "type": "address[]" },
+      { "indexed": false, "internalType": "bytes[]", "name": "payloads", "type": "bytes[]" }
     ],
-    "name": "WrapperCreated",
+    "name": "RelayBatchInitiated",
     "type": "event"
   },
-  { "payable": true, "stateMutability": "payable", "type": "fallback" },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "CONTRACT_NAME",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address", "name": "target", "type": "address" },
+      { "indexed": false, "internalType": "bytes", "name": "payload", "type": "bytes" }
+    ],
+    "name": "RelayInitiated",
+    "type": "event"
   },
   {
     "constant": false,
@@ -66,20 +64,24 @@
   {
     "constant": false,
     "inputs": [
-      { "internalType": "contract IERC20", "name": "token", "type": "address" },
-      { "internalType": "bytes32", "name": "currencyKey", "type": "bytes32" },
-      { "internalType": "bytes32", "name": "synthContractName", "type": "bytes32" }
+      { "internalType": "address", "name": "target", "type": "address" },
+      { "internalType": "bytes", "name": "payload", "type": "bytes" },
+      { "internalType": "uint32", "name": "crossDomainGasLimit", "type": "uint32" }
     ],
-    "name": "createWrapper",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "initiateRelay",
+    "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "constant": false,
-    "inputs": [],
-    "name": "distributeFees",
+    "inputs": [
+      { "internalType": "address[]", "name": "targets", "type": "address[]" },
+      { "internalType": "bytes[]", "name": "payloads", "type": "bytes[]" },
+      { "internalType": "uint32", "name": "crossDomainGasLimit", "type": "uint32" }
+    ],
+    "name": "initiateRelayBatch",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -88,25 +90,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "feesEscrowed",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
     "name": "isResolverCached",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [{ "internalType": "address", "name": "possibleWrapper", "type": "address" }],
-    "name": "isWrapper",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "payable": false,
     "stateMutability": "view",

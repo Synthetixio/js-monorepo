@@ -20,6 +20,14 @@
   {
     "anonymous": false,
     "inputs": [
+      { "indexed": false, "internalType": "uint256", "name": "discountRate", "type": "uint256" }
+    ],
+    "name": "DiscountRateUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       { "indexed": false, "internalType": "address", "name": "oldOwner", "type": "address" },
       { "indexed": false, "internalType": "address", "name": "newOwner", "type": "address" }
     ],
@@ -34,17 +42,19 @@
     "name": "OwnerNominated",
     "type": "event"
   },
+  { "anonymous": false, "inputs": [], "name": "RedemptionResumed", "type": "event" },
+  { "anonymous": false, "inputs": [], "name": "RedemptionSuspended", "type": "event" },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "token", "type": "address" },
-      { "indexed": true, "internalType": "bytes32", "name": "currencyKey", "type": "bytes32" },
-      { "indexed": false, "internalType": "address", "name": "wrapperAddress", "type": "address" }
+      { "indexed": false, "internalType": "address", "name": "synth", "type": "address" },
+      { "indexed": false, "internalType": "address", "name": "account", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "amountOfSynth", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "amountInsUSD", "type": "uint256" }
     ],
-    "name": "WrapperCreated",
+    "name": "SynthRedeemed",
     "type": "event"
   },
-  { "payable": true, "stateMutability": "payable", "type": "fallback" },
   {
     "constant": true,
     "inputs": [],
@@ -64,31 +74,18 @@
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [
-      { "internalType": "contract IERC20", "name": "token", "type": "address" },
-      { "internalType": "bytes32", "name": "currencyKey", "type": "bytes32" },
-      { "internalType": "bytes32", "name": "synthContractName", "type": "bytes32" }
-    ],
-    "name": "createWrapper",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
+    "constant": true,
     "inputs": [],
-    "name": "distributeFees",
-    "outputs": [],
+    "name": "discountRate",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
     "inputs": [],
-    "name": "feesEscrowed",
+    "name": "getDiscountRate",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
     "stateMutability": "view",
@@ -98,15 +95,6 @@
     "constant": true,
     "inputs": [],
     "name": "isResolverCached",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [{ "internalType": "address", "name": "possibleWrapper", "type": "address" }],
-    "name": "isWrapper",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "payable": false,
     "stateMutability": "view",
@@ -149,6 +137,45 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [{ "internalType": "bytes32", "name": "currencyKey", "type": "bytes32" }],
+    "name": "redeem",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{ "internalType": "bytes32[]", "name": "currencyKeys", "type": "bytes32[]" }],
+    "name": "redeemAll",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "internalType": "bytes32", "name": "currencyKey", "type": "bytes32" },
+      { "internalType": "uint256", "name": "amountOfSynth", "type": "uint256" }
+    ],
+    "name": "redeemPartial",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "redemptionActive",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [],
     "name": "resolver",
@@ -164,6 +191,33 @@
     "outputs": [{ "internalType": "bytes32[]", "name": "addresses", "type": "bytes32[]" }],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "resumeRedemption",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{ "internalType": "uint256", "name": "_newRate", "type": "uint256" }],
+    "name": "setDiscountRate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "suspendRedemption",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
