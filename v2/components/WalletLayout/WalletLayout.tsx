@@ -30,7 +30,7 @@ const WalletLayoutUi = ({
   children,
 }: PropsWithChildren<{ networkId: number | null }>) => {
   const { t } = useTranslation();
-  const isL1 = networkId === NetworkIdByName.mainnet || networkId === NetworkIdByName.goerli;
+  const isL1 = networkId === NetworkIdByName.mainnet;
   return (
     <Box mt={6}>
       <Heading size="md" textAlign="left">

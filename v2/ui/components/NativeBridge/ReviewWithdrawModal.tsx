@@ -48,17 +48,7 @@ export const ReviewWithdrawModal: FC<{
   onClose: () => void;
   isL2: boolean;
   isMainnet: boolean;
-}> = ({
-  isL2,
-  isMainnet,
-  crossChainMessenger,
-  modalOpen,
-  title,
-  amount,
-  networkId,
-  txnHash,
-  onClose,
-}) => {
+}> = ({ isL2, crossChainMessenger, modalOpen, title, amount, networkId, txnHash, onClose }) => {
   const {
     walletAddress,
     isWalletConnected,
@@ -131,7 +121,7 @@ export const ReviewWithdrawModal: FC<{
 
   const executeMessage = async () => {
     if (isL2) {
-      switchNetwork(isMainnet ? NetworkIdByName['mainnet'] : NetworkIdByName['goerli']);
+      switchNetwork(NetworkIdByName['mainnet']);
       return;
     }
     if (hasError || loading) return;

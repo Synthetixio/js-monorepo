@@ -15,7 +15,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 
 function optimiseContracts() {
-  const networks = isTest ? ['mainnet'] : ['goerli', 'goerli-ovm', 'mainnet', 'mainnet-ovm'];
+  const networks = isTest ? ['mainnet'] : ['mainnet', 'mainnet-ovm'];
   const out = path.resolve(__dirname, './out');
   generate({ networks, out });
 

@@ -27,7 +27,7 @@
     "@chakra-ui/react": "^2.5.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@eth-optimism/sdk": "^3.2.1",
+    "@eth-optimism/sdk": "^3.2.3",
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@gnosis.pm/safe-apps-provider": "^0.14.0",
@@ -133,7 +133,7 @@
     "storybook": "^6.5.16",
     "styled-components": "^5.3.6",
     "styled-media-query": "^2.1.2",
-    "synthetix": "2.100.0",
+    "synthetix": "2.101.2",
     "tippy.js": "^6.3.7",
     "unstated-next": "^1.1.0"
   },

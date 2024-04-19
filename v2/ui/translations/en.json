@@ -204,7 +204,7 @@
       "pending": "Transaction Pending",
       "completed": "Transaction completed",
       "etherscan": "View Etherscan",
-      "metamask-note": "Follow the Metamask prompts to authorize the transaction.",
+      "metamask-note": "Follow your wallet prompts to authorize the transaction.",
       "loading": "Loading",
       "error-headline": "Error",
       "retry": "Retry",

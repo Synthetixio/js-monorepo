@@ -45,8 +45,8 @@ function BridgingHistories({
   const { signer, switchNetwork } = Connector.useContainer();
   const { globalProviders } = useGlobalProvidersWithFallback();
   const crossChainMessenger = new CrossChainMessenger({
-    l1ChainId: isMainnet ? NetworkIdByName['mainnet'] : NetworkIdByName['goerli'],
-    l2ChainId: isMainnet ? NetworkIdByName['mainnet-ovm'] : NetworkIdByName['goerli-ovm'],
+    l1ChainId: NetworkIdByName['mainnet'],
+    l2ChainId: NetworkIdByName['mainnet-ovm'],
     l1SignerOrProvider: signer ?? globalProviders.mainnet,
     l2SignerOrProvider: globalProviders.optimism,
   });
@@ -89,9 +89,7 @@ function BridgingHistories({
         const txHash = info.getValue();
         const networkId = info.row.original.networkId;
         const finalizedTxnHash = info.row.original.finalizedTxnHash;
-        const isFromL2 =
-          networkId === NetworkIdByName['mainnet-ovm'] ||
-          networkId === NetworkIdByName['goerli-ovm'];
+        const isFromL2 = networkId === NetworkIdByName['mainnet-ovm'];
         const txnLink = getTxnLink(networkId, txHash ?? '');
         let status = info.row.original.status;
 
@@ -126,9 +124,7 @@ function BridgingHistories({
                 variant="solid"
                 onClick={() => {
                   if (isL2) {
-                    switchNetwork(
-                      isMainnet ? NetworkIdByName['mainnet'] : NetworkIdByName['goerli']
-                    );
+                    switchNetwork(NetworkIdByName['mainnet']);
                   } else {
                     setCurrentHistory(info.row.original);
                   }
