@@ -1,14 +1,8 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
-<<<<<<<< HEAD:v2/contracts/src/sepolia/deployment/RewardEscrowV2.ts
-export const name = 'RewardEscrowV2';
-export const address = '0xF130DEC302611Ea8Dd671cd9270c406870AC56cd';
-export const source = 'RewardEscrowV2';
-========
 export const name = 'RewardEscrowV2Frozen';
 export const address = '0xbfd66fa5668612afDdAAf48F818665F0b34128C6';
 export const source = 'ImportableRewardEscrowV2Frozen';
->>>>>>>> release:v2/contracts/src/sepolia-ovm/deployment/RewardEscrowV2Frozen.ts
 export const abi = [
   'constructor(address _owner, address _resolver)',
   'event AccountMerged(address indexed accountToMerge, address destinationAddress, uint256 escrowAmountMerged, uint256[] entryIDs, uint256 time)',
