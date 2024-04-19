@@ -56,6 +56,20 @@ export const useSynthRedeemer = () => {
   });
 };
 
+export function useSynthRedeemerActive() {
+  const { data: SynthRedeemer } = useSynthRedeemer();
+  const { networkId } = useContext(ContractContext);
+
+  return useQuery({
+    queryKey: ['useSynthRedeemerActive', { networkId }],
+    queryFn: async () => {
+      if (!SynthRedeemer) return false;
+
+      return SynthRedeemer.redemptionActive();
+    },
+  });
+}
+
 export function useSynthRedeemerMutation(synthIds?: string[]) {
   const [txnState, dispatch] = useReducer(reducer, initialState);
   const { data: SynthRedeemer } = useSynthRedeemer();

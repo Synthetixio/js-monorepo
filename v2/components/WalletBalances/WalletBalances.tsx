@@ -39,7 +39,7 @@ import {
 } from '@snx-v2/icons';
 import { AssetTd, BalanceTd, HoldingTd, PriceTd } from './TableComponents';
 import { StyledTd, StyledTh, TbodyLoading } from '@snx-v2/TableComponents';
-import { useSynthRedeemerMutation } from '../../lib/useSynthRedeemer';
+import { useSynthRedeemerMutation, useSynthRedeemerActive } from '@snx-v2/useSynthsRedeemer';
 import { TransactionModal } from '@snx-v2/TransactionModal';
 import { useGetTxnLink } from '@snx-v2/txnLink';
 import { ExternalLink } from '@snx-v2/ExternalLink';
@@ -65,7 +65,17 @@ const WalletBalancesUi: React.FC<{
     balance?: number;
     usdBalance?: number;
   }[];
-}> = ({ totalSynthUSDBalance, dSNXUSDBalance, debtBalance, synthData, nonSynthData }) => {
+  isLoading: boolean;
+  isRedeemerActive?: boolean;
+}> = ({
+  totalSynthUSDBalance,
+  dSNXUSDBalance,
+  debtBalance,
+  synthData,
+  nonSynthData,
+  isLoading,
+  isRedeemerActive,
+}) => {
   const { t } = useTranslation();
   const { networkId } = useContext(ContractContext);
 
@@ -73,8 +83,14 @@ const WalletBalancesUi: React.FC<{
     ?.filter((x) => x.currencyKey !== 'sUSD')
     .map((x) => x.currencyKey);
 
-  const { mutate, modalOpen, txnHash, error, isLoading, settle } =
-    useSynthRedeemerMutation(redeemableSynths);
+  const {
+    mutate,
+    modalOpen,
+    txnHash,
+    error,
+    isLoading: isMutationLoading,
+    settle,
+  } = useSynthRedeemerMutation(redeemableSynths);
 
   const txnLink = useGetTxnLink(txnHash);
 
@@ -85,11 +101,21 @@ const WalletBalancesUi: React.FC<{
       <TransactionModal
         isOpen={modalOpen}
         title={
-          error ? 'Error Redeeming Synths' : isLoading ? 'Redeeming Synths' : 'Synths Redeemed'
+          error
+            ? 'Error Redeeming Synths'
+            : isMutationLoading
+            ? 'Redeeming Synths'
+            : 'Synths Redeemed'
         }
         onClose={settle}
         icon={
-          error ? <FailedIcon /> : isLoading ? <TransactionPending /> : <TransactionCompleted />
+          error ? (
+            <FailedIcon />
+          ) : isMutationLoading ? (
+            <TransactionPending />
+          ) : (
+            <TransactionCompleted />
+          )
         }
       >
         {txnLink && (
@@ -123,7 +149,7 @@ const WalletBalancesUi: React.FC<{
             alignItems="end"
           />
         </Flex>
-        {isL1 && (
+        {isL1 && !isLoading && (
           <Alert my={4} status="info" variant="left-accent" py={2} px={3}>
             <AlertIcon width="20px" height="20px" />
             <AlertDescription pl={2} pr={0} fontSize="sm" fontFamily="heading">
@@ -139,6 +165,7 @@ const WalletBalancesUi: React.FC<{
                 >
                   Read our blog for more details.
                 </Link>
+                {!isRedeemerActive && ' Redemptions are not currently active.'}
               </Text>
             </AlertDescription>
           </Alert>
@@ -160,9 +187,9 @@ const WalletBalancesUi: React.FC<{
                 </Tr>
               </Thead>
               <Tbody>
-                {synthData === undefined ? (
+                {isLoading ? (
                   <TbodyLoading numberOfCols={4} />
-                ) : synthData.length === 0 ? (
+                ) : synthData?.length === 0 ? (
                   <Tr w="full">
                     <Td colSpan={4} border="none">
                       <Text textAlign="center" mt={4}>
@@ -171,7 +198,7 @@ const WalletBalancesUi: React.FC<{
                     </Td>
                   </Tr>
                 ) : (
-                  synthData.map(
+                  synthData?.map(
                     ({
                       iconUrl,
                       currencyKey,
@@ -197,7 +224,8 @@ const WalletBalancesUi: React.FC<{
                 )}
               </Tbody>
             </Table>
-            {networkId === NetworkIdByName.mainnet &&
+            {isRedeemerActive &&
+              networkId === NetworkIdByName.mainnet &&
               redeemableSynths &&
               redeemableSynths?.length > 0 && (
                 <Flex mt={4} width="100%" justifyContent="flex-end">
@@ -328,13 +356,23 @@ const getNonSynthDataForTable = (
 };
 
 export const WalletBalances = () => {
-  const { data: debtData } = useDebtData();
-  const { data: synthsBalanceData } = useSynthsBalances();
+  const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
+  const { data: synthsBalanceData, isLoading: isSynthBalancesDataLoading } = useSynthsBalances();
   const { data: dSNXBalanceData } = useGetDSnxBalance();
-  const { data: exchangeRateData } = useExchangeRatesData();
-  const { data: synthByNameData } = useGetSynthsByName();
-  const { data: ethBalance } = useEthBalance();
+  const { data: exchangeRateData, isLoading: isExchangeRateDataLoading } = useExchangeRatesData();
+  const { data: synthByNameData, isLoading: isSynthDataByNameLoading } = useGetSynthsByName();
+  const { data: ethBalance, isLoading: isEthBalanceLoading } = useEthBalance();
+  const { data: isRedeemerActive, isLoading: isSynthRedeemerActiveLoading } =
+    useSynthRedeemerActive();
   const { networkId } = useContext(ContractContext);
+
+  const isLoading =
+    isSynthRedeemerActiveLoading ||
+    isDebtDataLoading ||
+    isSynthBalancesDataLoading ||
+    isExchangeRateDataLoading ||
+    isSynthDataByNameLoading ||
+    isEthBalanceLoading;
 
   return (
     <WalletBalancesUi
@@ -355,6 +393,8 @@ export const WalletBalances = () => {
         ethBalance,
         exchangeRateData
       )}
+      isLoading={isLoading}
+      isRedeemerActive={isRedeemerActive}
     />
   );
 };

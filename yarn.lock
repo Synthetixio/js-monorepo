@@ -6784,6 +6784,7 @@ __metadata:
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useSynthetixContracts": "workspace:*"
     "@snx-v2/useSynthsBalances": "workspace:*"
+    "@snx-v2/useSynthsRedeemer": "workspace:*"
     "@synthetixio/formatters": "workspace:*"
     "@synthetixio/wei": ^2.74.4
     react: ^18.2.0
@@ -7444,7 +7445,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/useSynthsRedeemer@workspace:v2/lib/useSynthRedeemer":
+"@snx-v2/useSynthsRedeemer@workspace:*, @snx-v2/useSynthsRedeemer@workspace:v2/lib/useSynthRedeemer":
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthsRedeemer@workspace:v2/lib/useSynthRedeemer"
   dependencies:
