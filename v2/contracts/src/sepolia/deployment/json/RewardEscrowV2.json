@@ -50,22 +50,6 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
-      { "indexed": false, "internalType": "uint256[]", "name": "entryIDs", "type": "uint256[]" },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "escrowedAmountMigrated",
-        "type": "uint256"
-      },
-      { "indexed": false, "internalType": "uint256", "name": "time", "type": "uint256" }
-    ],
-    "name": "BurnedForMigrationToL2",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
       { "indexed": false, "internalType": "bytes32", "name": "name", "type": "bytes32" },
       { "indexed": false, "internalType": "address", "name": "destination", "type": "address" }
     ],
@@ -112,18 +96,6 @@
       { "indexed": false, "internalType": "address", "name": "newOwner", "type": "address" }
     ],
     "name": "OwnerNominated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "recipient", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "targetAmount", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "startIndex", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "endIndex", "type": "uint256" }
-    ],
-    "name": "Revoked",
     "type": "event"
   },
   {
@@ -187,8 +159,8 @@
   {
     "constant": true,
     "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" },
-      { "internalType": "uint256", "name": "index", "type": "uint256" }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "accountVestingEntryIDs",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -221,19 +193,19 @@
   {
     "constant": false,
     "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" },
-      { "internalType": "uint256[]", "name": "entryIDs", "type": "uint256[]" }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
     ],
     "name": "burnForMigration",
     "outputs": [
-      { "internalType": "uint256", "name": "escrowedAccountBalance", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" },
       {
         "components": [
           { "internalType": "uint64", "name": "endTime", "type": "uint64" },
           { "internalType": "uint256", "name": "escrowAmount", "type": "uint256" }
         ],
         "internalType": "struct VestingEntries.VestingEntry[]",
-        "name": "vestingEntries",
+        "name": "",
         "type": "tuple[]"
       }
     ],
@@ -333,15 +305,15 @@
   {
     "constant": false,
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "uint256", "name": "escrowedAmount", "type": "uint256" },
       {
         "components": [
           { "internalType": "uint64", "name": "endTime", "type": "uint64" },
           { "internalType": "uint256", "name": "escrowAmount", "type": "uint256" }
         ],
         "internalType": "struct VestingEntries.VestingEntry[]",
-        "name": "",
+        "name": "vestingEntries",
         "type": "tuple[]"
       }
     ],
@@ -381,7 +353,7 @@
   {
     "constant": false,
     "inputs": [
-      { "internalType": "address", "name": "from", "type": "address" },
+      { "internalType": "address", "name": "accountToMerge", "type": "address" },
       { "internalType": "uint256[]", "name": "entryIDs", "type": "uint256[]" }
     ],
     "name": "mergeAccount",
@@ -513,20 +485,6 @@
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" },
-      { "internalType": "address", "name": "recipient", "type": "address" },
-      { "internalType": "uint256", "name": "targetAmount", "type": "uint256" },
-      { "internalType": "uint256", "name": "startIndex", "type": "uint256" }
-    ],
-    "name": "revokeFrom",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
     "inputs": [{ "internalType": "uint256", "name": "duration", "type": "uint256" }],
     "name": "setAccountMergingDuration",
     "outputs": [],
@@ -584,7 +542,7 @@
   },
   {
     "constant": true,
-    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "totalEscrowedAccountBalance",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
@@ -602,7 +560,7 @@
   },
   {
     "constant": true,
-    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "totalVestedAccountBalance",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
@@ -621,20 +579,13 @@
   {
     "constant": true,
     "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" },
-      { "internalType": "uint256", "name": "entryId", "type": "uint256" }
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
     ],
     "name": "vestingSchedules",
     "outputs": [
-      {
-        "components": [
-          { "internalType": "uint64", "name": "endTime", "type": "uint64" },
-          { "internalType": "uint256", "name": "escrowAmount", "type": "uint256" }
-        ],
-        "internalType": "struct VestingEntries.VestingEntry",
-        "name": "",
-        "type": "tuple"
-      }
+      { "internalType": "uint64", "name": "endTime", "type": "uint64" },
+      { "internalType": "uint256", "name": "escrowAmount", "type": "uint256" }
     ],
     "payable": false,
     "stateMutability": "view",
