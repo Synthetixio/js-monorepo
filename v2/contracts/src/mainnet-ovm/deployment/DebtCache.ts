@@ -1,7 +1,7 @@
 // !!! DO NOT EDIT !!! Automatically generated file
 
 export const name = 'DebtCache';
-export const address = '0x17628A557d1Fc88D1c35989dcBAC3f3e275E2d2B';
+export const address = '0x96bDD51Cd421CD84123577Fe5Ea44A45Dacf01BA';
 export const source = 'DebtCache';
 export const abi = [
   'constructor(address _owner, address _resolver)',

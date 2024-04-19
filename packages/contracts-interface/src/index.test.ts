@@ -8,7 +8,7 @@ describe('@synthetixio/js tests', () => {
   let snxjs: SynthetixJS;
 
   beforeAll(() => {
-    snxjs = synthetix({ network: NetworkNameById[5] });
+    snxjs = synthetix({ network: NetworkNameById[1] });
   });
 
   test('should return contracts', () => {
@@ -16,10 +16,10 @@ describe('@synthetixio/js tests', () => {
   });
 
   test('should return different contracts for the OVM', () => {
-    const snxjsGoerli = synthetix({ network: NetworkNameById[5] });
-    const snxjsGoerliOvm = synthetix({ network: NetworkNameById[420] });
-    const synthetixContractGoerli = snxjsGoerli.contracts['Synthetix'];
-    const synthetixContractGoerliOvm = snxjsGoerliOvm.contracts['Synthetix'];
+    const snxjsMainnet = synthetix({ network: NetworkNameById[1] });
+    const snxjsMainnetOvm = synthetix({ network: NetworkNameById[10] });
+    const synthetixContractGoerli = snxjsMainnet.contracts['Synthetix'];
+    const synthetixContractGoerliOvm = snxjsMainnetOvm.contracts['Synthetix'];
     expect(synthetixContractGoerli.address).not.toEqual(synthetixContractGoerliOvm.address);
   });
 
@@ -33,13 +33,13 @@ describe('@synthetixio/js tests', () => {
   });
 
   test('should have the right mapping with the contracts for the OVM', () => {
-    const snxjsGoerliOvm = synthetix({ network: NetworkNameById[5], useOvm: true });
-    const synthetixContractGoerliOvm = snxjsGoerliOvm.contracts['Synthetix'];
-    const sUSDContractGoerliOvm = snxjsGoerliOvm.contracts['SynthsUSD'];
+    const snxjsMainnetOvm = synthetix({ network: NetworkNameById[10], useOvm: true });
+    const synthetixContractGoerliOvm = snxjsMainnetOvm.contracts['Synthetix'];
+    const sUSDContractGoerliOvm = snxjsMainnetOvm.contracts['SynthsUSD'];
     expect(synthetixContractGoerliOvm.address).toEqual(
-      snxjsGoerliOvm.targets.ProxySynthetix.address
+      snxjsMainnetOvm.targets.ProxySynthetix.address
     );
-    expect(sUSDContractGoerliOvm.address).toEqual(snxjsGoerliOvm.targets.ProxysUSD.address);
+    expect(sUSDContractGoerliOvm.address).toEqual(snxjsMainnetOvm.targets.ProxysUSD.address);
   });
 
   test('should return the ethers object', () => {
@@ -51,16 +51,11 @@ describe('@synthetixio/js tests', () => {
     expect(snxjs.networkToChainId[NetworkNameById[10]]).toBe(
       NetworkIdByName['mainnet-ovm'].toString()
     );
-
-    expect(snxjs.networkToChainId[NetworkNameById[420]]).toBe(
-      NetworkIdByName['goerli-ovm'].toString()
-    );
-    expect(snxjs.networkToChainId[NetworkNameById[5]]).toBe(NetworkIdByName.goerli.toString());
   });
 
   test('should include the current network', () => {
-    expect(snxjs.network.name).toBe(NetworkNameById[5]);
-    expect(snxjs.network.id).toBe(NetworkIdByName.goerli.toString());
+    expect(snxjs.network.name).toBe(NetworkNameById[1]);
+    expect(snxjs.network.id).toBe(NetworkIdByName.mainnet.toString());
   });
 
   test('should return users', () => {
