@@ -6255,6 +6255,7 @@ __metadata:
     "@snx-v2/CRatioHealthPercentage": "workspace:^"
     "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
+    "@snx-v2/icons": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@storybook/react": ^6.5.16
     react: ^18.2.0
