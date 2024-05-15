@@ -3427,10 +3427,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eth-optimism/contracts-bedrock@npm:0.17.1":
-  version: 0.17.1
-  resolution: "@eth-optimism/contracts-bedrock@npm:0.17.1"
-  checksum: ae75458ca843dc36d050a484a97226112d1c5a1453cb8a59a1a64e4805052984663b2d83ca1a2764751ea182e09ee53ddc1ab19c6a94885a6e743371498060a2
+"@eth-optimism/contracts-bedrock@npm:0.17.2":
+  version: 0.17.2
+  resolution: "@eth-optimism/contracts-bedrock@npm:0.17.2"
+  checksum: 9ee73525ad9206ecfcccfb8cac96319f4887268453c10944f0c67268a2ea43807cb62a57f06c9ace4687bb4444fbe05a8f9de5baa9e2ac328abc386cbd926c6b
   languageName: node
   linkType: hard
 
@@ -3471,9 +3471,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eth-optimism/core-utils@npm:0.13.1":
-  version: 0.13.1
-  resolution: "@eth-optimism/core-utils@npm:0.13.1"
+"@eth-optimism/core-utils@npm:0.13.2":
+  version: 0.13.2
+  resolution: "@eth-optimism/core-utils@npm:0.13.2"
   dependencies:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/abstract-provider": ^5.7.0
@@ -3486,27 +3486,27 @@ __metadata:
     "@ethersproject/properties": ^5.7.0
     "@ethersproject/rlp": ^5.7.0
     "@ethersproject/web": ^5.7.1
-    chai: ^4.3.9
+    chai: ^4.3.10
     ethers: ^5.7.2
     node-fetch: ^2.6.7
-  checksum: ed1f1bcec4fd308463c6bd6e6cc8f6c89041dfa5e0c03c67ee487f5b3bef7bb34c59ea1f8039d00cc0e8696ed8ae9a4486c10d86b2db1d9dadb94294fc83b6fc
+  checksum: 4603b4a43b06d4b8117bdfa8175709a7ff8c708d7b439c16997c590fed976ee3b2989362b47aad4ffdbce0c1f9b8f86140d308e55fa553d2daaae1ba054ae927
   languageName: node
   linkType: hard
 
-"@eth-optimism/sdk@npm:^3.2.3":
-  version: 3.2.3
-  resolution: "@eth-optimism/sdk@npm:3.2.3"
+"@eth-optimism/sdk@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@eth-optimism/sdk@npm:3.3.0"
   dependencies:
     "@eth-optimism/contracts": 0.6.0
-    "@eth-optimism/contracts-bedrock": 0.17.1
-    "@eth-optimism/core-utils": 0.13.1
+    "@eth-optimism/contracts-bedrock": 0.17.2
+    "@eth-optimism/core-utils": 0.13.2
     lodash: ^4.17.21
     merkletreejs: ^0.3.11
     rlp: ^2.2.7
     semver: ^7.6.0
   peerDependencies:
     ethers: ^5
-  checksum: 08c633ac8b131f1d1eb076eeef85dd83e2a7f9e3e3f659c0f565d82706efbbb0f95491fa43ee3107e2ee22cb3b7f04320a83e1007ca14262d2b8620d1e0227a0
+  checksum: 4f262e0cae1d8081eb8c3d8dcb676797f6a5903b3643243af74ab8a2a94a7216c73d8e0fac043ea92f01a13648a628c1f57e4346104be49079a2cfe4a82b022c
   languageName: node
   linkType: hard
 
@@ -9432,7 +9432,7 @@ __metadata:
     "@chakra-ui/storybook-addon": ^4.0.17
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@eth-optimism/sdk": ^3.2.3
+    "@eth-optimism/sdk": ^3.3.0
     "@ethersproject/bignumber": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@gnosis.pm/safe-apps-provider": ^0.14.0
@@ -14443,7 +14443,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:^4.3.4, chai@npm:^4.3.9":
+"chai@npm:^4.3.10, chai@npm:^4.3.4":
   version: 4.4.1
   resolution: "chai@npm:4.4.1"
   dependencies:
