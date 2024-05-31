@@ -62,10 +62,9 @@ export const DEFAULT_SUBGRAPH_ENDPOINTS: { [networkId: number]: SubgraphEndpoint
   1: {
     exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanges',
     exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix-exchanger',
-    issuance: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix',
-    subgraph: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/mainnet-main',
+    issuance: 'https://subgraph.satsuma-prod.com/ce5e03f52f3b/synthetix/synthetix/api',
+    subgraph: 'https://subgraph.satsuma-prod.com/ce5e03f52f3b/synthetix/synthetix/api',
   },
-
   10: {
     exchanges: 'https://api.thegraph.com/subgraphs/name/dbeal-eth/optimism-exchanges2',
     exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-exchanger',
@@ -86,7 +85,6 @@ export const DEFAULT_SUBGRAPH_ENDPOINTS: { [networkId: number]: SubgraphEndpoint
     issuance: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
     subgraph: 'https://api.thegraph.com/subgraphs/name/bachstatter/goerli-main',
   },
-
   42: {
     exchanges: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/kovan-exchanges',
     exchanger: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/kovan-exchanger',

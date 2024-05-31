@@ -15,12 +15,12 @@ const config: CodegenConfig = {
   },
   generates: {
     './mainnet.graphql': {
-      schema: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix',
+      schema: 'https://subgraph.satsuma-prod.com/ce5e03f52f3b/synthetix/synthetix/api',
       plugins: ['@graphql-codegen/schema-ast'],
     },
 
     './mainnet.ts': {
-      schema: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix',
+      schema: 'https://subgraph.satsuma-prod.com/ce5e03f52f3b/synthetix/synthetix/api',
       plugins: [
         {
           '@graphql-codegen/add': {
