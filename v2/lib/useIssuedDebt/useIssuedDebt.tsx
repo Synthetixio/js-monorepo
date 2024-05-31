@@ -22,7 +22,7 @@ export const useIssuedDebt = () => {
   const { networkId, walletAddress } = useContext(ContractContext);
   const url =
     networkId === 1
-      ? 'https://api.thegraph.com/subgraphs/name/synthetixio-team/synthetix'
+      ? 'https://subgraph.satsuma-prod.com/ce5e03f52f3b/synthetix/synthetix/api'
       : 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main';
 
   return useQuery(
