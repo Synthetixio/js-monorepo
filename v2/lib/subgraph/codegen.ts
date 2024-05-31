@@ -32,12 +32,14 @@ const config: CodegenConfig = {
     },
 
     './optimism.graphql': {
-      schema: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main',
+      schema:
+        'https://gateway-arbitrum.network.thegraph.com/api/3955c204decac48c529b8105344afb7f/subgraphs/id/39nXvA89wrgSz7vRAq6uxmvYn2CTNDuSfXJue3m7PVKA',
       plugins: ['@graphql-codegen/schema-ast'],
     },
 
     './optimism.ts': {
-      schema: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main',
+      schema:
+        'https://gateway-arbitrum.network.thegraph.com/api/3955c204decac48c529b8105344afb7f/subgraphs/id/39nXvA89wrgSz7vRAq6uxmvYn2CTNDuSfXJue3m7PVKA',
       plugins: [
         {
           '@graphql-codegen/add': {

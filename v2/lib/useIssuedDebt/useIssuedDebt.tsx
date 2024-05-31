@@ -23,7 +23,7 @@ export const useIssuedDebt = () => {
   const url =
     networkId === 1
       ? 'https://subgraph.satsuma-prod.com/ce5e03f52f3b/synthetix/synthetix/api'
-      : 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main';
+      : 'https://gateway-arbitrum.network.thegraph.com/api/3955c204decac48c529b8105344afb7f/subgraphs/id/39nXvA89wrgSz7vRAq6uxmvYn2CTNDuSfXJue3m7PVKA';
 
   return useQuery(
     ['useIssuedDebt', networkId, walletAddress],
