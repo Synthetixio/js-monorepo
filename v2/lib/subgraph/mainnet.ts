@@ -16,7 +16,6 @@ export type Scalars = {
   BigInt: any;
   Bytes: any;
   Int8: any;
-  Timestamp: any;
 };
 
 export type ActiveStaker = {
@@ -41,11 +40,6 @@ export type ActiveStaker_Filter = {
 
 export enum ActiveStaker_OrderBy {
   Id = 'id',
-}
-
-export enum Aggregation_Interval {
-  Day = 'day',
-  Hour = 'hour',
 }
 
 export type BlockChangedFilter = {
@@ -1439,8 +1433,6 @@ export type _Block_ = {
   hash?: Maybe<Scalars['Bytes']>;
   /** The block number */
   number: Scalars['Int'];
-  /** The hash of the parent block */
-  parentHash?: Maybe<Scalars['Bytes']>;
   /** Integer representation of the timestamp stored in blocks for the chain */
   timestamp?: Maybe<Scalars['Int']>;
 };
