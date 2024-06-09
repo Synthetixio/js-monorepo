@@ -102,12 +102,12 @@ export const onboard: OnboardAPI = Onboard({
   },
   apiKey: process.env.NEXT_PUBLIC_BN_ONBOARD_API_KEY,
   wallets: [
+    coinbaseWalletSdk,
     injected,
     brave,
     // ledger,
     walletConnect,
     trezor,
-    coinbaseWalletSdk,
     trust,
     gnosis,
     portis,
