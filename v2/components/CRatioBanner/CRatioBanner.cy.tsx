@@ -17,6 +17,7 @@ describe('CRatioBanner.cy.tsx', () => {
 
     cy.get('[data-testid="c ratio banner wrapper"]').should('not.exist');
   });
+
   it('renders flagged', () => {
     cy.viewport(500, 300);
     cy.mount(
@@ -35,6 +36,7 @@ describe('CRatioBanner.cy.tsx', () => {
 
     cy.get(`[data-testid="text content"]`).should('be.visible').should('include.text', 'Unflag');
   });
+
   it('renders success', () => {
     cy.viewport(500, 300);
     cy.mount(
@@ -53,6 +55,7 @@ describe('CRatioBanner.cy.tsx', () => {
       .should('be.visible')
       .should('include.text', 'now collect');
   });
+
   it('renders warning', () => {
     cy.viewport(500, 300);
     cy.mount(

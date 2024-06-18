@@ -40,7 +40,11 @@ export const CRatioBannerUi: FC<UiProps> = ({
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
 
-  if ((hasClaimed || nothingToClaim) && (variant === 'success' || variant === 'warning')) {
+  if (
+    ((hasClaimed || nothingToClaim) && (variant === 'success' || variant === 'warning')) ||
+    variant === 'warning' ||
+    variant === 'success'
+  ) {
     return null;
   }
 
