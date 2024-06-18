@@ -42,8 +42,7 @@ export const CRatioBannerUi: FC<UiProps> = ({
 
   if (
     ((hasClaimed || nothingToClaim) && (variant === 'success' || variant === 'warning')) ||
-    variant === 'warning' ||
-    variant === 'success'
+    variant === 'warning'
   ) {
     return null;
   }

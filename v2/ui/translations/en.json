@@ -77,7 +77,7 @@
     },
     "cratio-health-card": {
       "heading": "Collateralization Ratio Health",
-      "sub-heading": "In order to claim weekly rewards, your C-Ratio must be at or above the target."
+      "sub-heading": "In order to claim staking rewards, your C-Ratio must be at or above the target."
     },
     "cratio-box": {
       "success": "HEALTHY",
