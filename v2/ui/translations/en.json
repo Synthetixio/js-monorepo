@@ -77,7 +77,7 @@
     },
     "cratio-health-card": {
       "heading": "Collateralization Ratio Health",
-      "sub-heading": "In order to claim weekly rewards, your C-Ratio must be at or above the target."
+      "sub-heading": "In order to claim staking rewards, your C-Ratio must be at or above the target."
     },
     "cratio-box": {
       "success": "HEALTHY",
@@ -226,8 +226,6 @@
       "show-all-balances": "Show all balances"
     },
     "c-ratio-banner": {
-      "success": "You can now collect your weekly rewards",
-      "warning": "You're below target C-Ratio. Fix it now to collect your weekly rewards",
       "error": "You're below the liquidation C-Ratio. Fix it now to avoid getting flagged for liquidation",
       "error-flagged": "Your Account Has Been Flagged. Unflag your account within the time to avoid Liquidation"
     },
