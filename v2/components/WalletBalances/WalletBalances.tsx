@@ -406,7 +406,7 @@ export const WalletBalances = () => {
       )}
       isLoading={isLoading}
       isRedeemerActive={isRedeemerActive?.isActive}
-      discount={wei(isRedeemerActive?.discount)}
+      discount={wei(isRedeemerActive?.discount || 1)}
     />
   );
 };
