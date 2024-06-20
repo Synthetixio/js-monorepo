@@ -1,9 +1,10 @@
 import { ReactElement, useContext } from 'react';
-import { Flex, Text, Skeleton, Progress, Tag } from '@chakra-ui/react';
+import { Flex, Text, Skeleton, Progress, Tag, Tooltip } from '@chakra-ui/react';
 import { formatNumber, formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 import { StyledTd } from '@snx-v2/TableComponents';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
+import Wei from '@synthetixio/wei';
 
 export const AssetTd = ({
   description,
@@ -53,22 +54,42 @@ export const AssetTd = ({
   );
 };
 
-export const BalanceTd = ({ balance, usdBalance }: { balance?: number; usdBalance?: number }) => (
-  <StyledTd>
-    <Flex flexDirection="column">
-      <Text fontSize="sm">
-        {balance ? formatNumber(balance) : <Skeleton as="span" w={8} height={4} />}
-      </Text>
-      <Text fontSize="xs" color="gray.500">
-        {usdBalance ? (
-          formatNumberToUsd(usdBalance)
-        ) : (
-          <Skeleton as="span" mt={2} w={8} height={4} />
-        )}
-      </Text>
-    </Flex>
-  </StyledTd>
-);
+export const BalanceTd = ({
+  balance,
+  usdBalance,
+  isRedemption,
+  discount,
+}: {
+  balance?: number;
+  usdBalance?: number;
+  isRedemption?: boolean;
+  discount?: Wei;
+}) => {
+  return (
+    <StyledTd>
+      <Flex flexDirection="column">
+        <Text fontSize="sm">
+          {balance ? formatNumber(balance) : <Skeleton as="span" w={8} height={4} />}
+        </Text>
+        <Tooltip
+          label={
+            isRedemption && discount
+              ? `Current discount rate for redeemable synths is ${discount?.toNumber() * 100}%`
+              : ''
+          }
+        >
+          <Text fontSize="xs" color={!isRedemption ? 'gray.500' : 'orange.500'}>
+            {usdBalance ? (
+              formatNumberToUsd(usdBalance * (discount ? discount.toNumber() : 1))
+            ) : (
+              <Skeleton as="span" mt={2} w={8} height={4} />
+            )}
+          </Text>
+        </Tooltip>
+      </Flex>
+    </StyledTd>
+  );
+};
 
 export const PriceTd = ({ price }: { price?: number }) => (
   <StyledTd>

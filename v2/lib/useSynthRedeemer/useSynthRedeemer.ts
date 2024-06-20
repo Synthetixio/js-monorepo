@@ -63,9 +63,16 @@ export function useSynthRedeemerActive() {
   return useQuery({
     queryKey: ['useSynthRedeemerActive', { networkId }],
     queryFn: async () => {
-      if (!SynthRedeemer) return false;
+      if (!SynthRedeemer)
+        return {
+          isActive: false,
+          discount: 0,
+        };
 
-      return SynthRedeemer.redemptionActive();
+      return {
+        isActive: await SynthRedeemer.redemptionActive(),
+        discount: await SynthRedeemer.discountRate(),
+      };
     },
   });
 }

@@ -23,7 +23,7 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { SynthBalance, useSynthsBalances } from '@snx-v2/useSynthsBalances';
-import Wei from '@synthetixio/wei';
+import Wei, { wei } from '@synthetixio/wei';
 import { formatNumberToUsd } from '@synthetixio/formatters';
 import { StatBox } from '@snx-v2/StatBox';
 import { useTranslation } from 'react-i18next';
@@ -67,6 +67,7 @@ const WalletBalancesUi: React.FC<{
   }[];
   isLoading: boolean;
   isRedeemerActive?: boolean;
+  discount?: Wei;
 }> = ({
   totalSynthUSDBalance,
   dSNXUSDBalance,
@@ -75,6 +76,7 @@ const WalletBalancesUi: React.FC<{
   nonSynthData,
   isLoading,
   isRedeemerActive,
+  discount,
 }) => {
   const { t } = useTranslation();
   const { networkId } = useContext(ContractContext);
@@ -215,7 +217,12 @@ const WalletBalancesUi: React.FC<{
                           iconUrl={iconUrl}
                           isSynth
                         />
-                        <BalanceTd balance={balance} usdBalance={usdBalance} />
+                        <BalanceTd
+                          balance={balance}
+                          usdBalance={usdBalance}
+                          discount={discount}
+                          isRedemption
+                        />
                         <PriceTd price={price} />
                         <HoldingTd holdingPct={holdingPct} />
                       </Tr>
@@ -224,21 +231,25 @@ const WalletBalancesUi: React.FC<{
                 )}
               </Tbody>
             </Table>
-            {isRedeemerActive &&
-              networkId === NetworkIdByName.mainnet &&
-              redeemableSynths &&
-              redeemableSynths?.length > 0 && (
-                <Flex mt={4} width="100%" justifyContent="flex-end">
-                  <Button
-                    onClick={() => {
-                      mutate();
-                    }}
-                    variant="outline"
-                  >
-                    Redeem
-                  </Button>
-                </Flex>
-              )}
+            {isRedeemerActive && !redeemableSynths && isL1 && !isLoading && (
+              <Flex justifyContent="center">
+                <Text textAlign="center" mt={4}>
+                  {t('staking-v2.wallet.no-synths')}
+                </Text>
+              </Flex>
+            )}
+            {isRedeemerActive && isL1 && redeemableSynths && redeemableSynths?.length > 0 && (
+              <Flex mt={4} width="100%" justifyContent="flex-end">
+                <Button
+                  onClick={() => {
+                    mutate();
+                  }}
+                  variant="outline"
+                >
+                  Redeem
+                </Button>
+              </Flex>
+            )}
           </TableContainer>
         </Box>
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" mt={4} py={4} px={2}>
@@ -394,7 +405,8 @@ export const WalletBalances = () => {
         exchangeRateData
       )}
       isLoading={isLoading}
-      isRedeemerActive={isRedeemerActive}
+      isRedeemerActive={isRedeemerActive?.isActive}
+      discount={wei(isRedeemerActive?.discount)}
     />
   );
 };
