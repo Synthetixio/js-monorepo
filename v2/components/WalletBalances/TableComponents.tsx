@@ -65,6 +65,8 @@ export const BalanceTd = ({
   isRedemption?: boolean;
   discount?: Wei;
 }) => {
+  const showRedemption = isRedemption && discount;
+  console.log('showRedemption', showRedemption, isRedemption, discount);
   return (
     <StyledTd>
       <Flex flexDirection="column">
@@ -73,12 +75,12 @@ export const BalanceTd = ({
         </Text>
         <Tooltip
           label={
-            isRedemption && discount
+            showRedemption
               ? `Current discount rate for redeemable synths is ${discount?.toNumber() * 100}%`
               : ''
           }
         >
-          <Text fontSize="xs" color={!isRedemption ? 'gray.500' : 'orange.500'}>
+          <Text fontSize="xs" color={showRedemption ? 'orange.500' : 'gray.500'}>
             {usdBalance ? (
               formatNumberToUsd(usdBalance * (discount ? discount.toNumber() : 1))
             ) : (

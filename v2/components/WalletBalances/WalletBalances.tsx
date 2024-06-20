@@ -23,7 +23,7 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { SynthBalance, useSynthsBalances } from '@snx-v2/useSynthsBalances';
-import Wei, { wei } from '@synthetixio/wei';
+import Wei from '@synthetixio/wei';
 import { formatNumberToUsd } from '@synthetixio/formatters';
 import { StatBox } from '@snx-v2/StatBox';
 import { useTranslation } from 'react-i18next';
@@ -66,8 +66,10 @@ const WalletBalancesUi: React.FC<{
     usdBalance?: number;
   }[];
   isLoading: boolean;
-  isRedeemerActive?: boolean;
-  discount?: Wei;
+  redemptionInfo?: {
+    isActive: boolean;
+    discount: Wei;
+  };
 }> = ({
   totalSynthUSDBalance,
   dSNXUSDBalance,
@@ -75,8 +77,7 @@ const WalletBalancesUi: React.FC<{
   synthData,
   nonSynthData,
   isLoading,
-  isRedeemerActive,
-  discount,
+  redemptionInfo,
 }) => {
   const { t } = useTranslation();
   const { networkId } = useContext(ContractContext);
@@ -167,7 +168,7 @@ const WalletBalancesUi: React.FC<{
                 >
                   Read our blog for more details.
                 </Link>
-                {!isRedeemerActive && ' Redemptions are not currently active.'}
+                {!redemptionInfo?.isActive && ' Redemptions are not currently active.'}
               </Text>
             </AlertDescription>
           </Alert>
@@ -220,7 +221,7 @@ const WalletBalancesUi: React.FC<{
                         <BalanceTd
                           balance={balance}
                           usdBalance={usdBalance}
-                          discount={discount}
+                          discount={redemptionInfo?.discount}
                           isRedemption
                         />
                         <PriceTd price={price} />
@@ -231,25 +232,28 @@ const WalletBalancesUi: React.FC<{
                 )}
               </Tbody>
             </Table>
-            {isRedeemerActive && !redeemableSynths && isL1 && !isLoading && (
+            {redemptionInfo?.isActive && !redeemableSynths && isL1 && !isLoading && (
               <Flex justifyContent="center">
                 <Text textAlign="center" mt={4}>
                   {t('staking-v2.wallet.no-synths')}
                 </Text>
               </Flex>
             )}
-            {isRedeemerActive && isL1 && redeemableSynths && redeemableSynths?.length > 0 && (
-              <Flex mt={4} width="100%" justifyContent="flex-end">
-                <Button
-                  onClick={() => {
-                    mutate();
-                  }}
-                  variant="outline"
-                >
-                  Redeem
-                </Button>
-              </Flex>
-            )}
+            {redemptionInfo?.isActive &&
+              isL1 &&
+              redeemableSynths &&
+              redeemableSynths?.length > 0 && (
+                <Flex mt={4} width="100%" justifyContent="flex-end">
+                  <Button
+                    onClick={() => {
+                      mutate();
+                    }}
+                    variant="outline"
+                  >
+                    Redeem
+                  </Button>
+                </Flex>
+              )}
           </TableContainer>
         </Box>
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" mt={4} py={4} px={2}>
@@ -373,7 +377,7 @@ export const WalletBalances = () => {
   const { data: exchangeRateData, isLoading: isExchangeRateDataLoading } = useExchangeRatesData();
   const { data: synthByNameData, isLoading: isSynthDataByNameLoading } = useGetSynthsByName();
   const { data: ethBalance, isLoading: isEthBalanceLoading } = useEthBalance();
-  const { data: isRedeemerActive, isLoading: isSynthRedeemerActiveLoading } =
+  const { data: redemptionInfo, isLoading: isSynthRedeemerActiveLoading } =
     useSynthRedeemerActive();
   const { networkId } = useContext(ContractContext);
 
@@ -405,8 +409,7 @@ export const WalletBalances = () => {
         exchangeRateData
       )}
       isLoading={isLoading}
-      isRedeemerActive={isRedeemerActive?.isActive}
-      discount={wei(isRedeemerActive?.discount || 1)}
+      redemptionInfo={redemptionInfo}
     />
   );
 };

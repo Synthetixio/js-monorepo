@@ -7457,6 +7457,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snx-v2/useSynthsRedeemer@workspace:v2/lib/useSynthRedeemer"
   dependencies:
+    "@ethersproject/bignumber": ^5.7.0
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/strings": ^5.7.0
     "@snx-v2/ContractContext": "workspace:*"

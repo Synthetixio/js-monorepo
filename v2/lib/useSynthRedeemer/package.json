@@ -4,6 +4,7 @@
   "main": "index.ts",
   "version": "0.0.12-0",
   "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/strings": "^5.7.0",
     "@snx-v2/ContractContext": "workspace:*",
