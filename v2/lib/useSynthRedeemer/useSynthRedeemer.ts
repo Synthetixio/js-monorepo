@@ -64,11 +64,7 @@ export function useSynthRedeemerActive() {
   return useQuery({
     queryKey: ['useSynthRedeemerActive', { networkId }],
     queryFn: async () => {
-      if (!SynthRedeemer)
-        return {
-          isActive: false,
-          discount: wei(0),
-        };
+      if (!SynthRedeemer || !networkId) throw Error('SynthRedeemer not loaded');
 
       const isActive = await SynthRedeemer.redemptionActive();
       const discount = await SynthRedeemer.discountRate();
@@ -78,6 +74,7 @@ export function useSynthRedeemerActive() {
         discount: wei(discount),
       };
     },
+    enabled: Boolean(SynthRedeemer),
   });
 }
 
