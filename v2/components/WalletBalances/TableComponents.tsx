@@ -82,7 +82,7 @@ export const BalanceTd = ({
         >
           <Text fontSize="xs" color={showRedemption ? 'orange.500' : 'gray.500'}>
             {usdBalance ? (
-              formatNumberToUsd(usdBalance * (discount ? discount.toNumber() : 1))
+              formatNumberToUsd(usdBalance * (showRedemption && discount ? discount.toNumber() : 1))
             ) : (
               <Skeleton as="span" mt={2} w={8} height={4} />
             )}
