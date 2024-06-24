@@ -222,7 +222,7 @@ const WalletBalancesUi: React.FC<{
                           balance={balance}
                           usdBalance={usdBalance}
                           discount={redemptionInfo?.discount}
-                          isRedemption
+                          isRedemption={isL1 && redemptionInfo?.isActive}
                         />
                         <PriceTd price={price} />
                         <HoldingTd holdingPct={holdingPct} />

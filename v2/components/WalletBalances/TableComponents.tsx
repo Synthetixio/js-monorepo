@@ -66,7 +66,7 @@ export const BalanceTd = ({
   discount?: Wei;
 }) => {
   const showRedemption = isRedemption && discount;
-  console.log('showRedemption', showRedemption, isRedemption, discount);
+
   return (
     <StyledTd>
       <Flex flexDirection="column">

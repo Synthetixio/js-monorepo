@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { StatBox } from '@snx-v2/StatBox';
 import { useGetLifetimeRewards } from '@snx-v2/useGetLifetimeRewards';
-import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
+import { formatNumberToUsd } from '@synthetixio/formatters';
 import { useClaimableRewards } from '@snx-v2/useClaimableRewards';
 import { useApr } from '@snx-v2/useApr';
 
@@ -11,24 +11,14 @@ export const EarnStatsUi: FC<{
   earning?: number;
   claimableRewards?: number;
   isLoading: boolean;
-}> = ({ lifetimeRewards, earning, claimableRewards, isLoading }) => {
+}> = ({ lifetimeRewards, claimableRewards, isLoading }) => {
   return (
     <Flex my={1} flexDirection={['column', 'column', 'row', 'row']} justifyContent="space-between">
       <StatBox
         label="Claimable Rewards"
         amount={claimableRewards !== undefined ? formatNumberToUsd(claimableRewards) : undefined}
         mb={[3, 3, 0, 0]}
-        alignItems="start"
-        mr={3}
-        width="100%"
-        maxW={['100%', '100%', 'initial', 'initial']}
-        isLoading={isLoading}
-      />
-      <StatBox
-        label="Earning"
-        amount={earning !== undefined ? formatPercent(earning) : undefined}
-        mb={[3, 3, 0, 0]}
-        alignItems={['start', 'start', 'center', 'center']}
+        alignItems="center"
         mr={3}
         width="100%"
         maxW={['100%', '100%', 'initial', 'initial']}
@@ -38,7 +28,7 @@ export const EarnStatsUi: FC<{
         label="Lifetime Rewards"
         amount={lifetimeRewards !== undefined ? formatNumberToUsd(lifetimeRewards) : undefined}
         mb={[3, 3, 0, 0]}
-        alignItems={['start', 'start', 'end', 'end']}
+        alignItems="center"
         width="100%"
         maxW={['100%', '100%', 'initial', 'initial']}
         isLoading={isLoading}
