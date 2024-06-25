@@ -1,6 +1,6 @@
 import { ReactElement, useContext } from 'react';
 import { Flex, Text, Skeleton, Progress, Tag, Tooltip } from '@chakra-ui/react';
-import { formatNumber, formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
+import { formatNumber, formatPercent } from '@synthetixio/formatters';
 import { StyledTd } from '@snx-v2/TableComponents';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
@@ -60,14 +60,13 @@ export const BalanceTd = ({
   isRedemption,
   discount,
   isLoading,
-  currencyKey,
 }: {
   balance?: number;
   usdBalance?: number;
   isRedemption?: boolean;
   discount?: Wei;
   isLoading: boolean;
-  currencyKey: string;
+  currencyKey?: string;
 }) => {
   const showRedemption = isRedemption && discount;
 
@@ -86,15 +85,7 @@ export const BalanceTd = ({
         >
           <Skeleton isLoaded={!isLoading}>
             <Text fontSize="xs" color={showRedemption ? 'orange.500' : 'gray.500'}>
-              {usdBalance && (
-                <>
-                  {currencyKey !== 'sUSD'
-                    ? formatNumberToUsd(
-                        usdBalance * (showRedemption && discount ? discount.toNumber() : 1)
-                      )
-                    : `${usdBalance.toFixed(2)} sUSD`}
-                </>
-              )}
+              {usdBalance && <>{`${usdBalance.toFixed(2)} sUSD`}</>}
             </Text>
           </Skeleton>
         </Tooltip>
@@ -112,7 +103,11 @@ export const PriceTd = ({ price, discount = 1 }: { price?: number; discount?: nu
         }
       >
         <Text fontSize="sm" color={discount !== 1 ? 'orange.500' : 'unset'}>
-          {price ? formatNumberToUsd(price * discount) : <Skeleton as="span" w={8} height={6} />}
+          {price ? (
+            `${formatNumber((price * discount).toFixed(2))} sUSD`
+          ) : (
+            <Skeleton as="span" w={8} height={6} />
+          )}
         </Text>
       </Tooltip>
     </Flex>
