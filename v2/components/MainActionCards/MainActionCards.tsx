@@ -7,7 +7,6 @@ import {
   Skeleton,
   Stack,
   Text,
-  Badge,
   Tooltip,
   useTheme,
 } from '@chakra-ui/react';
@@ -190,7 +189,6 @@ const MaintainActionCard: React.FC<{
   currentCRatioPercentage,
   targetThreshold,
   isFlagged,
-  hasClaimed,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -217,8 +215,6 @@ const MaintainActionCard: React.FC<{
     if (cRatioAboveOrEqToTarget) return 'ghost';
     return variant;
   };
-  const fadedBg = `${theme.colors[variant]}40`;
-  const rewardsClaimedAndWarning = hasClaimed && variant === 'warning';
 
   return (
     <Card
@@ -228,31 +224,7 @@ const MaintainActionCard: React.FC<{
       headingText={t('staking-v2.main-action-cards.maintain-headline')}
       bodyText={t('staking-v2.main-action-cards.maintain-body')}
       icon={<MaintainIcon height="32px" color={isLoading ? 'gray.500' : '#FF9A54'} />}
-      Content={
-        !isStaking || rewardsClaimedAndWarning ? null : (
-          <Badge
-            data-testid="burn badge"
-            color={variant}
-            bg={fadedBg}
-            border="1px"
-            borderColor={variant}
-            display="flex"
-            alignItems="center"
-            width="fit-content"
-            fontSize="x-small"
-            borderRadius="base"
-            fontWeight="700"
-            py={0.5}
-          >
-            <InfoIcon color={variant} width="10px" height="10px" />
-            <Text ml="0.5" fontWeight="bold" fontSize="2xs">
-              {variant !== 'success'
-                ? 'Adjust to collect weekly rewards'
-                : 'Your ratio is looking healthy!'}
-            </Text>
-          </Badge>
-        )
-      }
+      Content={null}
       isLoading={isLoading}
       disabled={false}
       buttonVariant={getButtonVariant()}

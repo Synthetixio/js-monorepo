@@ -111,9 +111,7 @@ describe('MainActionCards', () => {
       .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
 
-    cy.get('[data-testid="burn badge"]')
-      .should('be.visible')
-      .should('include.text', 'Adjust to collect weekly rewards');
+    cy.get('[data-testid="burn badge"]').should('be.visible');
   });
   it('renders unclaimed rewards with a healthy c-ratio', () => {
     cy.viewport(1000, 1000);
@@ -218,10 +216,7 @@ describe('MainActionCards', () => {
       .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
 
-    cy.get('[data-testid="burn badge"]')
-      .should('be.visible')
-      .should('include.text', 'Adjust to collect weekly rewards')
-      .should('have.css', 'color', redColor);
+    cy.get('[data-testid="burn badge"]').should('be.visible').should('have.css', 'color', redColor);
   });
   it('c-ratio under target but within threshold', () => {
     cy.viewport(1000, 1000);

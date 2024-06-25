@@ -60,6 +60,7 @@ export const useSynthsBalances = () => {
 
   const { data: SynthUtil } = useSynthUtil();
   const walletAddressToUse = delegateWallet?.address || walletAddress;
+
   return useQuery(
     ['synths', 'v2walletBalances', { networkId, walletAddressToUse }],
     async () => {

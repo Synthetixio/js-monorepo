@@ -201,34 +201,50 @@ const WalletBalancesUi: React.FC<{
                     </Td>
                   </Tr>
                 ) : (
-                  synthData?.map(
-                    ({
-                      iconUrl,
-                      currencyKey,
-                      description,
-                      balance,
-                      usdBalance,
-                      price,
-                      holdingPct,
-                    }) => (
-                      <Tr key={currencyKey}>
-                        <AssetTd
-                          currencyKey={currencyKey}
-                          description={description}
-                          iconUrl={iconUrl}
-                          isSynth
-                        />
-                        <BalanceTd
-                          balance={balance}
-                          usdBalance={usdBalance}
-                          discount={redemptionInfo?.discount}
-                          isRedemption={isL1 && redemptionInfo?.isActive && currencyKey !== 'sUSD'}
-                        />
-                        <PriceTd price={price} />
-                        <HoldingTd holdingPct={holdingPct} />
-                      </Tr>
+                  synthData
+                    ?.sort((a, b) => {
+                      if (a.currencyKey === 'sUSD') return 1;
+                      if (b.currencyKey === 'sUSD') return -1;
+                      return 0;
+                    })
+
+                    .map(
+                      ({
+                        iconUrl,
+                        currencyKey,
+                        description,
+                        balance,
+                        usdBalance,
+                        price,
+                        holdingPct,
+                      }) => (
+                        <Tr key={currencyKey}>
+                          <AssetTd
+                            currencyKey={currencyKey}
+                            description={description}
+                            iconUrl={iconUrl}
+                            isSynth
+                          />
+                          <BalanceTd
+                            currencyKey={currencyKey}
+                            isLoading={isLoading}
+                            balance={balance}
+                            usdBalance={usdBalance}
+                            discount={redemptionInfo?.discount}
+                            isRedemption={
+                              isL1 && redemptionInfo?.isActive && currencyKey !== 'sUSD'
+                            }
+                          />
+                          <PriceTd
+                            price={price}
+                            discount={
+                              currencyKey !== 'sUSD' ? redemptionInfo?.discount?.toNumber() || 1 : 1
+                            }
+                          />
+                          <HoldingTd holdingPct={holdingPct} />
+                        </Tr>
+                      )
                     )
-                  )
                 )}
               </Tbody>
             </Table>
@@ -290,8 +306,13 @@ const WalletBalancesUi: React.FC<{
                     ({ icon, currencyKey, description, balance, usdBalance, price }) => (
                       <Tr key={currencyKey}>
                         <AssetTd currencyKey={currencyKey} description={description} icon={icon} />
-                        <BalanceTd balance={balance} usdBalance={usdBalance} />
-                        <PriceTd price={price} />
+                        <BalanceTd
+                          isLoading={isLoading}
+                          currencyKey={currencyKey}
+                          balance={balance}
+                          usdBalance={usdBalance}
+                        />
+                        <PriceTd discount={1} price={price} />
                         <StyledTd />
                       </Tr>
                     )

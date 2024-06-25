@@ -59,20 +59,24 @@ export const BalanceTd = ({
   usdBalance,
   isRedemption,
   discount,
+  isLoading,
+  currencyKey,
 }: {
   balance?: number;
   usdBalance?: number;
   isRedemption?: boolean;
   discount?: Wei;
+  isLoading: boolean;
+  currencyKey: string;
 }) => {
   const showRedemption = isRedemption && discount;
 
   return (
     <StyledTd>
       <Flex flexDirection="column">
-        <Text fontSize="sm">
-          {balance ? formatNumber(balance) : <Skeleton as="span" w={8} height={4} />}
-        </Text>
+        <Skeleton isLoaded={!isLoading}>
+          <Text fontSize="sm">{balance && formatNumber(balance)}</Text>
+        </Skeleton>
         <Tooltip
           label={
             showRedemption
@@ -80,25 +84,37 @@ export const BalanceTd = ({
               : ''
           }
         >
-          <Text fontSize="xs" color={showRedemption ? 'orange.500' : 'gray.500'}>
-            {usdBalance ? (
-              formatNumberToUsd(usdBalance * (showRedemption && discount ? discount.toNumber() : 1))
-            ) : (
-              <Skeleton as="span" mt={2} w={8} height={4} />
-            )}
-          </Text>
+          <Skeleton isLoaded={!isLoading}>
+            <Text fontSize="xs" color={showRedemption ? 'orange.500' : 'gray.500'}>
+              {usdBalance && (
+                <>
+                  {currencyKey !== 'sUSD'
+                    ? formatNumberToUsd(
+                        usdBalance * (showRedemption && discount ? discount.toNumber() : 1)
+                      )
+                    : `${usdBalance.toFixed(2)} sUSD`}
+                </>
+              )}
+            </Text>
+          </Skeleton>
         </Tooltip>
       </Flex>
     </StyledTd>
   );
 };
 
-export const PriceTd = ({ price }: { price?: number }) => (
+export const PriceTd = ({ price, discount = 1 }: { price?: number; discount?: number }) => (
   <StyledTd>
     <Flex flexDirection="column">
-      <Text fontSize="sm">
-        {price ? formatNumberToUsd(price) : <Skeleton as="span" w={8} height={6} />}
-      </Text>
+      <Tooltip
+        label={
+          discount !== 1 ? `Current discount rate for redeemable synths is ${discount * 100}%` : ''
+        }
+      >
+        <Text fontSize="sm" color={discount !== 1 ? 'orange.500' : 'unset'}>
+          {price ? formatNumberToUsd(price * discount) : <Skeleton as="span" w={8} height={6} />}
+        </Text>
+      </Tooltip>
     </Flex>
   </StyledTd>
 );
