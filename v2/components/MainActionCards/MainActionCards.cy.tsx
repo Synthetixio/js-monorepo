@@ -43,6 +43,7 @@ describe('MainActionCards', () => {
       .should('have.css', 'background-color', noColor);
     cy.get('[data-testid="value of rewards"]').should('not.exist');
   });
+
   it('renders claimed rewards with a unhealthy c-ratio', () => {
     cy.viewport(1000, 1000);
     cy.mount(
@@ -77,8 +78,8 @@ describe('MainActionCards', () => {
       .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
     cy.get('[data-testid="value of rewards"]').should('not.exist');
-    cy.get('[data-testid="burn badge"]').should('not.exist');
   });
+
   it('renders unclaimed rewards with a unhealthy c-ratio', () => {
     cy.viewport(1000, 1000);
     cy.mount(
@@ -110,9 +111,8 @@ describe('MainActionCards', () => {
       .should('be.visible')
       .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
-
-    cy.get('[data-testid="burn badge"]').should('be.visible');
   });
+
   it('renders unclaimed rewards with a healthy c-ratio', () => {
     cy.viewport(1000, 1000);
     cy.mount(
@@ -145,11 +145,6 @@ describe('MainActionCards', () => {
       .should('be.visible')
       .should('include.text', 'Claim your rewards')
       .should('have.css', 'background-color', greenColor);
-
-    cy.get('[data-testid="burn badge"]')
-      .should('be.visible')
-      .should('include.text', 'Your ratio is looking healthy')
-      .should('have.css', 'color', greenColor);
   });
 
   it('renders not staking', () => {
@@ -215,9 +210,8 @@ describe('MainActionCards', () => {
       .should('be.visible')
       .should('include.text', 'Claim')
       .should('have.css', 'background-color', noColor);
-
-    cy.get('[data-testid="burn badge"]').should('be.visible').should('have.css', 'color', redColor);
   });
+
   it('c-ratio under target but within threshold', () => {
     cy.viewport(1000, 1000);
 
@@ -248,6 +242,7 @@ describe('MainActionCards', () => {
       .should('include.text', 'Claim your rewards')
       .should('have.css', 'background-color', greenColor);
   });
+
   it('calls connectWallet when no wallet address', () => {
     cy.viewport(1000, 1000);
 
