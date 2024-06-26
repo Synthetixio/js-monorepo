@@ -168,7 +168,18 @@ const WalletBalancesUi: React.FC<{
                 >
                   Read our blog for more details.
                 </Link>
-                {!redemptionInfo?.isActive && ' Redemptions are not currently active.'}
+                {!redemptionInfo?.isActive && ' Redemptions are not currently active.'} Users can
+                opt for redemption at parity, by requesting it from Synthetix Governance. Please
+                reach out{' '}
+                <Link
+                  href="https://discord.com/invite/ptfNSByB8P"
+                  isExternal
+                  target="_blank"
+                  color="cyan.500"
+                  textDecoration="underline"
+                >
+                  on Discord
+                </Link>
               </Text>
             </AlertDescription>
           </Alert>
