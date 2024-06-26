@@ -4,7 +4,6 @@ import { formatNumber, formatPercent } from '@synthetixio/formatters';
 import { StyledTd } from '@snx-v2/TableComponents';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-import Wei from '@synthetixio/wei';
 
 export const AssetTd = ({
   description,
@@ -36,7 +35,7 @@ export const AssetTd = ({
             </Text>
           )}
         </Flex>
-        {isL1 && isSynth && currencyKey !== 'sUSD' && (
+        {isL1 && isSynth && (
           <Flex ml={4} alignItems="center">
             <Tag
               fontSize="xs"
@@ -57,54 +56,48 @@ export const AssetTd = ({
 export const BalanceTd = ({
   balance,
   usdBalance,
-  isRedemption,
-  discount,
+
   isLoading,
 }: {
   balance?: number;
   usdBalance?: number;
-  isRedemption?: boolean;
-  discount?: Wei;
   isLoading: boolean;
   currencyKey?: string;
 }) => {
-  const showRedemption = isRedemption && discount;
-
   return (
     <StyledTd>
       <Flex flexDirection="column">
         <Skeleton isLoaded={!isLoading}>
           <Text fontSize="sm">{balance && formatNumber(balance)}</Text>
         </Skeleton>
-        <Tooltip
-          label={
-            showRedemption
-              ? `Current discount rate for redeemable synths is ${discount?.toNumber() * 100}%`
-              : ''
-          }
-        >
-          <Skeleton isLoaded={!isLoading}>
-            <Text fontSize="xs" color={showRedemption ? 'orange.500' : 'gray.500'}>
-              {usdBalance && <>{`${usdBalance.toFixed(2)} sUSD`}</>}
-            </Text>
-          </Skeleton>
-        </Tooltip>
+
+        <Skeleton isLoaded={!isLoading}>
+          <Text fontSize="xs" color="gray.500">
+            {usdBalance && <>{`${usdBalance.toFixed(2)} sUSD`}</>}
+          </Text>
+        </Skeleton>
       </Flex>
     </StyledTd>
   );
 };
 
-export const PriceTd = ({ price, discount = 1 }: { price?: number; discount?: number }) => (
+export const PriceTd = ({ price }: { price?: number }) => (
   <StyledTd>
     <Flex flexDirection="column">
-      <Tooltip
-        label={
-          discount !== 1 ? `Current discount rate for redeemable synths is ${discount * 100}%` : ''
-        }
-      >
-        <Text fontSize="sm" color={discount !== 1 ? 'orange.500' : 'unset'}>
+      <Text fontSize="sm">
+        {price ? `${formatNumber(price.toFixed(2))} sUSD` : <Skeleton as="span" w={8} height={6} />}
+      </Text>
+    </Flex>
+  </StyledTd>
+);
+
+export const RedemptionPriceTd = ({ price, label }: { price?: number; label?: string }) => (
+  <StyledTd>
+    <Flex flexDirection="column">
+      <Tooltip label={label}>
+        <Text fontSize="sm" color="orange.500">
           {price ? (
-            `${formatNumber((price * discount).toFixed(2))} sUSD`
+            `${formatNumber(price.toFixed(2))} sUSD`
           ) : (
             <Skeleton as="span" w={8} height={6} />
           )}

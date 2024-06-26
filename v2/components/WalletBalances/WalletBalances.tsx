@@ -37,7 +37,7 @@ import {
   TransactionPending,
   FailedIcon,
 } from '@snx-v2/icons';
-import { AssetTd, BalanceTd, HoldingTd, PriceTd } from './TableComponents';
+import { AssetTd, BalanceTd, HoldingTd, PriceTd, RedemptionPriceTd } from './TableComponents';
 import { StyledTd, StyledTh, TbodyLoading } from '@snx-v2/TableComponents';
 import { useSynthRedeemerMutation, useSynthRedeemerActive } from '@snx-v2/useSynthsRedeemer';
 import { TransactionModal } from '@snx-v2/TransactionModal';
@@ -82,9 +82,7 @@ const WalletBalancesUi: React.FC<{
   const { t } = useTranslation();
   const { networkId } = useContext(ContractContext);
 
-  const redeemableSynths = synthData
-    ?.filter((x) => x.currencyKey !== 'sUSD')
-    .map((x) => x.currencyKey);
+  const redeemableSynths = synthData?.filter((x) => x.currencyKey !== 'sUSD');
 
   const {
     mutate,
@@ -93,11 +91,13 @@ const WalletBalancesUi: React.FC<{
     error,
     isLoading: isMutationLoading,
     settle,
-  } = useSynthRedeemerMutation(redeemableSynths);
+  } = useSynthRedeemerMutation(redeemableSynths?.map((x) => x.currencyKey));
 
   const txnLink = useGetTxnLink(txnHash);
 
   const isL1 = networkId === NetworkIdByName.mainnet;
+
+  const sUSDData = synthData?.find((x) => x.currencyKey === 'sUSD');
 
   return (
     <>
@@ -186,7 +186,7 @@ const WalletBalancesUi: React.FC<{
                   </StyledTh>
                   <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
                   <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
-                  <StyledTh>{t('staking-v2.wallet-balances.table-columns.holdings')}</StyledTh>
+                  <StyledTh>Redemption Amount</StyledTh>
                 </Tr>
               </Thead>
               <Tbody>
@@ -201,50 +201,31 @@ const WalletBalancesUi: React.FC<{
                     </Td>
                   </Tr>
                 ) : (
-                  synthData
-                    ?.sort((a, b) => {
-                      if (a.currencyKey === 'sUSD') return 1;
-                      if (b.currencyKey === 'sUSD') return -1;
-                      return 0;
-                    })
-
-                    .map(
-                      ({
-                        iconUrl,
-                        currencyKey,
-                        description,
-                        balance,
-                        usdBalance,
-                        price,
-                        holdingPct,
-                      }) => (
-                        <Tr key={currencyKey}>
-                          <AssetTd
-                            currencyKey={currencyKey}
-                            description={description}
-                            iconUrl={iconUrl}
-                            isSynth
-                          />
-                          <BalanceTd
-                            currencyKey={currencyKey}
-                            isLoading={isLoading}
-                            balance={balance}
-                            usdBalance={usdBalance}
-                            discount={redemptionInfo?.discount}
-                            isRedemption={
-                              isL1 && redemptionInfo?.isActive && currencyKey !== 'sUSD'
-                            }
-                          />
-                          <PriceTd
-                            price={price}
-                            discount={
-                              currencyKey !== 'sUSD' ? redemptionInfo?.discount?.toNumber() || 1 : 1
-                            }
-                          />
-                          <HoldingTd holdingPct={holdingPct} />
-                        </Tr>
-                      )
+                  redeemableSynths?.map(
+                    ({ iconUrl, currencyKey, description, balance, usdBalance, price }) => (
+                      <Tr key={currencyKey}>
+                        <AssetTd
+                          currencyKey={currencyKey}
+                          description={description}
+                          iconUrl={iconUrl}
+                          isSynth
+                        />
+                        <BalanceTd
+                          currencyKey={currencyKey}
+                          isLoading={isLoading}
+                          balance={balance}
+                          usdBalance={usdBalance}
+                        />
+                        <PriceTd price={price} />
+                        <RedemptionPriceTd
+                          price={redemptionInfo?.discount?.mul(usdBalance).toNumber()}
+                          label={`The redeemable amount of sUSD for your ${currencyKey} balance after application of an ${redemptionInfo?.discount
+                            ?.mul(100)
+                            .toNumber()}% discount.`}
+                        />
+                      </Tr>
                     )
+                  )
                 )}
               </Tbody>
             </Table>
@@ -274,6 +255,57 @@ const WalletBalancesUi: React.FC<{
         </Box>
         <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" mt={4} py={4} px={2}>
           <Heading size="md" mb={4}>
+            Stables
+          </Heading>
+          <TableContainer>
+            <Table variant="simple">
+              <Thead>
+                <Tr>
+                  <StyledTh width="40%">
+                    {t('staking-v2.wallet-balances.table-columns.asset')}
+                  </StyledTh>
+                  <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
+                  <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
+                  <StyledTh visibility="hidden">
+                    {t('staking-v2.wallet-balances.table-columns.holdings')}
+                  </StyledTh>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {isLoading ? (
+                  <Tr w="full">
+                    <Td colSpan={4} border="none">
+                      <Text textAlign="center" mt={4}>
+                        {t('staking-v2.wallet.no-synths')}
+                      </Text>
+                    </Td>
+                  </Tr>
+                ) : (
+                  sUSDData && (
+                    <Tr key={sUSDData.currencyKey}>
+                      <AssetTd
+                        currencyKey={sUSDData.currencyKey}
+                        description={sUSDData.description}
+                        iconUrl={sUSDData.iconUrl}
+                      />
+                      <BalanceTd
+                        isLoading={isLoading}
+                        currencyKey={sUSDData.currencyKey}
+                        balance={sUSDData.balance}
+                        usdBalance={sUSDData.usdBalance}
+                      />
+                      <PriceTd price={sUSDData.price} />
+                      <HoldingTd holdingPct={sUSDData.holdingPct} />
+                    </Tr>
+                  )
+                )}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        </Box>
+
+        <Box borderWidth="1px" borderColor="gray.900" borderRadius="base" mt={4} py={4} px={2}>
+          <Heading size="md" mb={4}>
             Non Synths
           </Heading>
           <TableContainer>
@@ -291,7 +323,7 @@ const WalletBalancesUi: React.FC<{
                 </Tr>
               </Thead>
               <Tbody>
-                {nonSynthData === undefined ? (
+                {isLoading ? (
                   <TbodyLoading numberOfCols={3} />
                 ) : nonSynthData.length === 0 ? (
                   <Tr w="full">
@@ -312,7 +344,7 @@ const WalletBalancesUi: React.FC<{
                           balance={balance}
                           usdBalance={usdBalance}
                         />
-                        <PriceTd discount={1} price={price} />
+                        <PriceTd price={price} />
                         <StyledTd />
                       </Tr>
                     )
