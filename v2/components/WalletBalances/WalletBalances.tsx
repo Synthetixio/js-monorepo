@@ -197,7 +197,7 @@ const WalletBalancesUi: React.FC<{
                   </StyledTh>
                   <StyledTh>{t('staking-v2.wallet-balances.table-columns.balance')}</StyledTh>
                   <StyledTh>{t('staking-v2.wallet-balances.table-columns.price')}</StyledTh>
-                  <StyledTh>Redemption Amount</StyledTh>
+                  {redemptionInfo?.isActive && isL1 && <StyledTh>Redemption Amount</StyledTh>}
                 </Tr>
               </Thead>
               <Tbody>
@@ -228,12 +228,15 @@ const WalletBalancesUi: React.FC<{
                           usdBalance={usdBalance}
                         />
                         <PriceTd price={price} />
-                        <RedemptionPriceTd
-                          price={redemptionInfo?.discount?.mul(usdBalance).toNumber()}
-                          label={`The redeemable amount of sUSD for your ${currencyKey} balance after application of an ${redemptionInfo?.discount
-                            ?.mul(100)
-                            .toNumber()}% discount.`}
-                        />
+                        {redemptionInfo?.isActive && isL1 && (
+                          <RedemptionPriceTd
+                            price={redemptionInfo?.discount?.mul(usdBalance).toNumber()}
+                            label={`The redeemable amount of sUSD for your ${currencyKey} balance after application of an ${redemptionInfo?.discount
+                              ?.add(-1)
+                              .mul(100)
+                              .toNumber()}% discount.`}
+                          />
+                        )}
                       </Tr>
                     )
                   )
@@ -282,6 +285,7 @@ const WalletBalancesUi: React.FC<{
                   </StyledTh>
                 </Tr>
               </Thead>
+
               <Tbody>
                 {isLoading ? (
                   <Tr w="full">
@@ -292,23 +296,33 @@ const WalletBalancesUi: React.FC<{
                     </Td>
                   </Tr>
                 ) : (
-                  sUSDData && (
-                    <Tr key={sUSDData.currencyKey}>
-                      <AssetTd
-                        currencyKey={sUSDData.currencyKey}
-                        description={sUSDData.description}
-                        iconUrl={sUSDData.iconUrl}
-                      />
-                      <BalanceTd
-                        isLoading={isLoading}
-                        currencyKey={sUSDData.currencyKey}
-                        balance={sUSDData.balance}
-                        usdBalance={sUSDData.usdBalance}
-                      />
-                      <PriceTd price={sUSDData.price} />
-                      <HoldingTd holdingPct={sUSDData.holdingPct} />
-                    </Tr>
-                  )
+                  <>
+                    {sUSDData ? (
+                      <Tr key={sUSDData.currencyKey}>
+                        <AssetTd
+                          currencyKey={sUSDData.currencyKey}
+                          description={sUSDData.description}
+                          iconUrl={sUSDData.iconUrl}
+                        />
+                        <BalanceTd
+                          isLoading={isLoading}
+                          currencyKey={sUSDData.currencyKey}
+                          balance={sUSDData.balance}
+                          usdBalance={sUSDData.usdBalance}
+                        />
+                        <PriceTd price={sUSDData.price} />
+                        <HoldingTd holdingPct={sUSDData.holdingPct} />
+                      </Tr>
+                    ) : (
+                      <Tr w="full">
+                        <Td colSpan={4} border="none">
+                          <Text textAlign="center" mt={4}>
+                            You have no Stables
+                          </Text>
+                        </Td>
+                      </Tr>
+                    )}
+                  </>
                 )}
               </Tbody>
             </Table>
