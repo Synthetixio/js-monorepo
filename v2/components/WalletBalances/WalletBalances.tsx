@@ -99,8 +99,6 @@ const WalletBalancesUi: React.FC<{
 
   const sUSDData = synthData?.find((x) => x.currencyKey === 'sUSD');
 
-  console.log('sUSDData', sUSDData, synthData);
-
   return (
     <>
       <TransactionModal
