@@ -285,7 +285,6 @@ const WalletBalancesUi: React.FC<{
                   </StyledTh>
                 </Tr>
               </Thead>
-
               <Tbody>
                 {isLoading ? (
                   <Tr w="full">
