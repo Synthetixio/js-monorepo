@@ -1,6 +1,6 @@
 import { ReactElement, useContext } from 'react';
-import { Flex, Text, Skeleton, Progress, Tag } from '@chakra-ui/react';
-import { formatNumber, formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
+import { Flex, Text, Skeleton, Progress, Tag, Tooltip } from '@chakra-ui/react';
+import { formatNumber, formatPercent } from '@synthetixio/formatters';
 import { StyledTd } from '@snx-v2/TableComponents';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
@@ -35,7 +35,7 @@ export const AssetTd = ({
             </Text>
           )}
         </Flex>
-        {isL1 && isSynth && currencyKey !== 'sUSD' && (
+        {isL1 && isSynth && (
           <Flex ml={4} alignItems="center">
             <Tag
               fontSize="xs"
@@ -53,29 +53,56 @@ export const AssetTd = ({
   );
 };
 
-export const BalanceTd = ({ balance, usdBalance }: { balance?: number; usdBalance?: number }) => (
-  <StyledTd>
-    <Flex flexDirection="column">
-      <Text fontSize="sm">
-        {balance ? formatNumber(balance) : <Skeleton as="span" w={8} height={4} />}
-      </Text>
-      <Text fontSize="xs" color="gray.500">
-        {usdBalance ? (
-          formatNumberToUsd(usdBalance)
-        ) : (
-          <Skeleton as="span" mt={2} w={8} height={4} />
-        )}
-      </Text>
-    </Flex>
-  </StyledTd>
-);
+export const BalanceTd = ({
+  balance,
+  usdBalance,
+
+  isLoading,
+}: {
+  balance?: number;
+  usdBalance?: number;
+  isLoading: boolean;
+  currencyKey?: string;
+}) => {
+  return (
+    <StyledTd>
+      <Flex flexDirection="column">
+        <Skeleton isLoaded={!isLoading}>
+          <Text fontSize="sm">{balance && formatNumber(balance)}</Text>
+        </Skeleton>
+
+        <Skeleton isLoaded={!isLoading}>
+          <Text fontSize="xs" color="gray.500">
+            {usdBalance && <>{`${usdBalance.toFixed(2)} sUSD`}</>}
+          </Text>
+        </Skeleton>
+      </Flex>
+    </StyledTd>
+  );
+};
 
 export const PriceTd = ({ price }: { price?: number }) => (
   <StyledTd>
     <Flex flexDirection="column">
       <Text fontSize="sm">
-        {price ? formatNumberToUsd(price) : <Skeleton as="span" w={8} height={6} />}
+        {price ? `${formatNumber(price.toFixed(2))} sUSD` : <Skeleton as="span" w={8} height={6} />}
       </Text>
+    </Flex>
+  </StyledTd>
+);
+
+export const RedemptionPriceTd = ({ price, label }: { price?: number; label?: string }) => (
+  <StyledTd>
+    <Flex flexDirection="column">
+      <Tooltip label={label}>
+        <Text fontSize="sm" color="orange.500">
+          {price ? (
+            `${formatNumber(price.toFixed(2))} sUSD`
+          ) : (
+            <Skeleton as="span" w={8} height={6} />
+          )}
+        </Text>
+      </Tooltip>
     </Flex>
   </StyledTd>
 );

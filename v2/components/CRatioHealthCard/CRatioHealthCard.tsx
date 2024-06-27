@@ -1,11 +1,10 @@
 import React, { ReactElement } from 'react';
-import { Alert, Box, Flex, Heading, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioHealthPercentage } from '@snx-v2/CRatioHealthPercentage';
 import { useTranslation } from 'react-i18next';
 import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
-import { InfoIcon } from '@snx-v2/icons';
 
 type UiProps = {
   liquidationCratioPercentage?: number;
@@ -51,22 +50,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
           isLoading={isLoading}
         />
       </Flex>
-      <Alert colorScheme="cyan" my="6">
-        <InfoIcon w="24px" height="24px" color="cyan.500" mr="2" />
-        <Text>
-          Target C-ratio looking crazy? Don’t worry, this is a temporary measure. Read more about{' '}
-          <Link
-            display="inline"
-            href="https://sips.synthetix.io/sccp/sccp-2101/"
-            rel="noopener"
-            target="_blank"
-            color="cyan.500"
-          >
-            why the target c-ratio was temporary increased{' '}
-          </Link>
-          and make sure that your c-ratio doesn’t fall under the liquidation ratio.
-        </Text>
-      </Alert>
+
       {CRatioProgressBar}
     </Box>
   );
