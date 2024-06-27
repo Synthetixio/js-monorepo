@@ -226,6 +226,7 @@
       "show-all-balances": "Show all balances"
     },
     "c-ratio-banner": {
+      "success": "Your C-Ratio is healthy",
       "error": "You're below the liquidation C-Ratio. Fix it now to avoid getting flagged for liquidation",
       "error-flagged": "Your Account Has Been Flagged. Unflag your account within the time to avoid Liquidation"
     },

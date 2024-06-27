@@ -10,6 +10,7 @@ import {
   NetworkNameById,
 } from '@snx-v2/useSynthetixContracts';
 import { Contract } from '@ethersproject/contracts';
+import { wei } from '@synthetixio/wei';
 import type { DynamicSynthRedeemer } from '@synthetixio/contracts/build/mainnet/deployment/DynamicSynthRedeemer';
 import type { DynamicSynthRedeemer as DynamicSynthRedeemerOvm } from '@synthetixio/contracts/build/mainnet-ovm/deployment/DynamicSynthRedeemer';
 import { initialState, reducer } from '@snx-v2/txnReducer';
@@ -63,10 +64,17 @@ export function useSynthRedeemerActive() {
   return useQuery({
     queryKey: ['useSynthRedeemerActive', { networkId }],
     queryFn: async () => {
-      if (!SynthRedeemer) return false;
+      if (!SynthRedeemer || !networkId) throw Error('SynthRedeemer not loaded');
 
-      return SynthRedeemer.redemptionActive();
+      const isActive = await SynthRedeemer.redemptionActive();
+      const discount = await SynthRedeemer.discountRate();
+
+      return {
+        isActive,
+        discount: wei(discount),
+      };
     },
+    enabled: Boolean(SynthRedeemer),
   });
 }
 
