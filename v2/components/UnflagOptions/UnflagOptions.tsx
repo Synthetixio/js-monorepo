@@ -104,6 +104,7 @@ const optionToLink: Record<string, string | undefined> = {
   swap: '/staking/swap-links',
   'self-liquidate': '/staking/self-liquidation',
 };
+
 export const UnflagOptionsUi: React.FC<{
   sUSDBalance?: number;
   sUSDToGetBackToTarget?: number;
@@ -116,11 +117,8 @@ export const UnflagOptionsUi: React.FC<{
     name: 'UnflagOptions',
   });
   const navigate = useNavigate();
-  if (
-    sUSDBalance === undefined ||
-    sUSDToGetBackToTarget === undefined ||
-    selfLiquidationPenalty === undefined
-  ) {
+
+  if (sUSDToGetBackToTarget === undefined || selfLiquidationPenalty === undefined) {
     return (
       <Box>
         <Skeleton height="50px" mb={4} width="full" />
@@ -131,7 +129,7 @@ export const UnflagOptionsUi: React.FC<{
   }
 
   const group = getRootProps();
-  const enoughSUsd = sUSDBalance >= sUSDToGetBackToTarget;
+  const enoughSUsd = !!sUSDBalance && sUSDBalance >= sUSDToGetBackToTarget;
   const recommended = enoughSUsd ? 'unflag' : 'swap';
   const continueLink = optionToLink[String(value)];
 
