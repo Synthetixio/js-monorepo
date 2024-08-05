@@ -6,6 +6,8 @@ import { useSynthetix, useLiquidator, useSystemSettings } from '@snx-v2/useSynth
 import { BigNumber } from 'ethers';
 import { ContractContext } from '@snx-v2/ContractContext';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
+import { useSynthetixV3 } from '@snx-v2/useSynthetixContracts/useSynthetixV3';
+import { formatUnits } from 'ethers/lib/utils';
 
 const processQueryData = (
   result: [
@@ -45,7 +47,7 @@ const processQueryData = (
     balance,
     targetThreshold,
     liquidationRatio,
-    liquidationRatioPercentage: wei(1).div(liquidationRatio).mul(100),
+    liquidationRatioPercentage: liquidationRatio,
     liquidationDeadlineForAccount: wei(liquidationDeadlineForAccountBN, 0),
   };
 };
@@ -53,6 +55,7 @@ const processQueryData = (
 export const useDebtData = () => {
   const { networkId, walletAddress: connectedWalletAddress } = useContext(ContractContext);
   const { data: Synthetix } = useSynthetix();
+  const { data: SynthetixV3 } = useSynthetixV3();
   const { data: Liquidator } = useLiquidator();
   const { data: SystemSettings } = useSystemSettings();
   const { delegateWallet } = useDelegateWallet();
@@ -65,6 +68,19 @@ export const useDebtData = () => {
         throw Error('Query should not be enabled if contracts are missing');
 
       const sUSDBytes = formatBytes32String('sUSD');
+
+      const getLiqudationRatio = async () => {
+        if (networkId === 1) {
+          const result = await SynthetixV3?.getCollateralConfiguration(
+            '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F'
+          );
+
+          return wei(formatUnits(result?.liquidationRatioD18?.toString() || '0')).mul(100);
+        }
+        const liqudationRatio = await Liquidator.liquidationRatio();
+        return wei(1).div(liqudationRatio).mul(100);
+      };
+
       return Promise.all([
         SystemSettings.issuanceRatio(),
         Synthetix.collateralisationRatio(walletAddress),
@@ -74,7 +90,7 @@ export const useDebtData = () => {
         Synthetix.maxIssuableSynths(walletAddress),
         Synthetix.balanceOf(walletAddress),
         SystemSettings.targetThreshold(),
-        Liquidator.liquidationRatio(),
+        getLiqudationRatio(),
         Liquidator.getLiquidationDeadlineForAccount(walletAddress),
       ]);
     },

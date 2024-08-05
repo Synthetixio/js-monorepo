@@ -7431,6 +7431,7 @@ __metadata:
     "@snx-v2/SignerContext": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
     "@synthetixio/use-global-providers": "workspace:*"
+    "@synthetixio/v3-contracts": ^6.5.0
     "@tanstack/react-query": ^4.24.6
     ethers: ^5.7.2
     react: ^18.2.0
@@ -9570,6 +9571,13 @@ __metadata:
     webpack-dev-server: ^4.11.1
   languageName: unknown
   linkType: soft
+
+"@synthetixio/v3-contracts@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "@synthetixio/v3-contracts@npm:6.5.0"
+  checksum: eca96bb63bfac627ce0537814115127725975a59be0acd4019c0ebef0bf9401da840429119c8c3bf9e31aa808313c47494c2fb407b38fdc69c125b983da43cf8
+  languageName: node
+  linkType: hard
 
 "@synthetixio/v3-theme@workspace:*, @synthetixio/v3-theme@workspace:v2/lib/v3Theme":
   version: 0.0.0-use.local
