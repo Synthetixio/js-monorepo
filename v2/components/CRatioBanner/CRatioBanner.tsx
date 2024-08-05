@@ -14,6 +14,7 @@ type UiProps = {
   nextEpochStartDate: Date;
   hasClaimed: boolean;
   nothingToClaim?: boolean;
+  liquidationDeadline?: string;
 };
 
 const getWrapperStyles = (variant: UiProps['variant']) => {
@@ -35,17 +36,17 @@ export const CRatioBannerUi: FC<UiProps> = ({
   nextEpochStartDate,
   hasClaimed,
   nothingToClaim,
+  liquidationDeadline,
 }) => {
   const { t } = useTranslation();
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
 
-  if (
-    ((hasClaimed || nothingToClaim) && (variant === 'success' || variant === 'warning')) ||
-    variant === 'warning'
-  ) {
+  if ((hasClaimed || nothingToClaim) && (variant === 'success' || variant === 'warning')) {
     return null;
   }
+
+  const liquidationDeadlineDate = new Date(Number(liquidationDeadline) * 1000 || 0);
 
   return (
     <SlideFade in={true} offsetY="-20px">
@@ -63,9 +64,15 @@ export const CRatioBannerUi: FC<UiProps> = ({
           <Text data-testid="text content" fontSize="xs">
             {t(`staking-v2.c-ratio-banner.${translationKey}`)}
           </Text>{' '}
-          <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
-            <CountDown toDate={nextEpochStartDate} />
-          </Text>
+          {isFlagged ? (
+            <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
+              <CountDown toDate={liquidationDeadlineDate} />
+            </Text>
+          ) : (
+            <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
+              <CountDown toDate={nextEpochStartDate} />
+            </Text>
+          )}
         </Flex>
       </Center>
     </SlideFade>
@@ -89,6 +96,7 @@ export const CRatioBanner: React.FC = () => {
   });
 
   const isFlagged = debtData.liquidationDeadlineForAccount.gt(0);
+  const liquidationDeadline = debtData.liquidationDeadlineForAccount.toString();
 
   return (
     <CRatioBannerUi
@@ -97,6 +105,7 @@ export const CRatioBanner: React.FC = () => {
       isFlagged={isFlagged}
       hasClaimed={rewardsData.hasClaimed}
       nothingToClaim={rewardsData.nothingToClaim}
+      liquidationDeadline={liquidationDeadline}
     />
   );
 };

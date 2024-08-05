@@ -30,7 +30,6 @@ const V2Home = () => {
       <Flex minHeight="calc(100vh - 86px)" direction="column">
         <Box sx={{ flex: '1 0 auto' }}>
           {isStaking && <CRatioBanner />}
-
           <Container maxW="1200px" py="1" mb={8}>
             <Flex
               mt="4"

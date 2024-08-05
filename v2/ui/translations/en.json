@@ -227,6 +227,7 @@
     },
     "c-ratio-banner": {
       "success": "Your C-Ratio is healthy",
+      "warning": "Your account is below the target C-Ratio. Burn debt to return to a healthy C-Ratio.",
       "error": "You're below the liquidation C-Ratio. Fix it now to avoid getting flagged for liquidation",
       "error-flagged": "Your Account Has Been Flagged. Unflag your account within the time to avoid Liquidation"
     },
