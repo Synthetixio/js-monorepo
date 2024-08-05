@@ -42,7 +42,10 @@ export const CRatioBannerUi: FC<UiProps> = ({
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
 
-  if ((hasClaimed || nothingToClaim) && (variant === 'success' || variant === 'warning')) {
+  if (
+    ((hasClaimed || nothingToClaim) && (variant === 'success' || variant === 'warning')) ||
+    variant === 'warning'
+  ) {
     return null;
   }
 
@@ -88,14 +91,16 @@ export const CRatioBanner: React.FC = () => {
     return null;
   }
 
+  const isFlagged = debtData.liquidationDeadlineForAccount.gt(0);
+
   const variant = getHealthVariant({
     currentCRatioPercentage: debtData.currentCRatioPercentage.toNumber(),
     targetCratioPercentage: debtData.targetCRatioPercentage.toNumber(),
     liquidationCratioPercentage: debtData.liquidationRatioPercentage.toNumber(),
     targetThreshold: debtData.targetThreshold.toNumber(),
+    isFlagged,
   });
 
-  const isFlagged = debtData.liquidationDeadlineForAccount.gt(0);
   const liquidationDeadline = debtData.liquidationDeadlineForAccount.toString();
 
   return (
