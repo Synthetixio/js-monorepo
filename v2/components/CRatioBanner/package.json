@@ -5,7 +5,6 @@
   "version": "0.0.13-0",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
-    "@snx-v2/CountDown": "workspace:*",
     "@snx-v2/getHealthVariant": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
     "@snx-v2/useFeePoolData": "workspace:*",

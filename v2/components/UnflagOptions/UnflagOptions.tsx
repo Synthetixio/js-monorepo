@@ -193,11 +193,14 @@ export const UnflagOptions = () => {
     ? formatPercent(liquidationData.selfLiquidationPenalty.toNumber())
     : undefined;
 
+  const isFlagged = debtData?.liquidationDeadlineForAccount.gt(0);
+
   const variant = getHealthVariant({
     targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
     liquidationCratioPercentage: debtData?.liquidationRatioPercentage.toNumber(),
     currentCRatioPercentage: debtData?.currentCRatioPercentage.toNumber(),
     targetThreshold: debtData?.targetThreshold.toNumber(),
+    isFlagged,
   });
 
   const canSelfLiquidate = variant !== 'success';

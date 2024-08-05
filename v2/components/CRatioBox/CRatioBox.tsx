@@ -26,6 +26,7 @@ export const CRatioBoxUi: FC<{
     targetCratioPercentage: targetCRatioPercentage,
     liquidationCratioPercentage: liquidationRatioPercentage,
     targetThreshold,
+    isFlagged: undefined,
   });
   const badgeHealthVariant =
     newCratioPercentage === 0
@@ -36,6 +37,7 @@ export const CRatioBoxUi: FC<{
           targetCratioPercentage: targetCRatioPercentage,
           liquidationCratioPercentage: liquidationRatioPercentage,
           targetThreshold,
+          isFlagged: undefined,
         });
 
   return (
