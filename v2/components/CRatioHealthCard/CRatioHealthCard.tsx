@@ -30,6 +30,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
     liquidationCratioPercentage,
     currentCRatioPercentage,
     targetThreshold,
+    isFlagged: undefined,
   });
 
   return (

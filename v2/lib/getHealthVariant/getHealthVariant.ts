@@ -3,7 +3,7 @@ export const getHealthVariant = ({
   liquidationCratioPercentage,
   currentCRatioPercentage,
   targetThreshold = 0.01,
-  isFlagged,
+  isFlagged = undefined,
 }: {
   liquidationCratioPercentage: number | undefined;
   targetCratioPercentage: number | undefined;
