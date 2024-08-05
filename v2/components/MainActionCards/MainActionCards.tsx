@@ -199,6 +199,7 @@ const MaintainActionCard: React.FC<{
     targetCratioPercentage,
     currentCRatioPercentage,
     targetThreshold,
+    isFlagged: undefined,
   });
 
   const isStaking = currentCRatioPercentage && currentCRatioPercentage > 0;
@@ -278,6 +279,7 @@ const CollectActionCard: React.FC<{
     targetCratioPercentage,
     currentCRatioPercentage,
     targetThreshold,
+    isFlagged: undefined,
   });
   const getButtonVariant = () => {
     if (hasClaimed) return 'ghost';

@@ -285,6 +285,7 @@ export const Rewards = () => {
     liquidationCratioPercentage: debtData?.liquidationRatioPercentage.toNumber(),
     targetCratioPercentage: debtData?.targetCRatioPercentage.toNumber(),
     targetThreshold: debtData?.targetThreshold.toNumber(),
+    isFlagged: undefined,
   });
 
   const isLoading =

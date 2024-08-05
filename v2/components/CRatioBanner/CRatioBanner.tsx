@@ -1,5 +1,4 @@
 import { Center, Flex, Text, SlideFade } from '@chakra-ui/react';
-import { CountDown } from '@snx-v2/CountDown';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useFeePoolData } from '@snx-v2/useFeePoolData';
@@ -11,10 +10,8 @@ import { useTranslation } from 'react-i18next';
 type UiProps = {
   variant: 'success' | 'warning' | 'error';
   isFlagged: boolean;
-  nextEpochStartDate: Date;
   hasClaimed: boolean;
   nothingToClaim?: boolean;
-  liquidationDeadline?: string;
 };
 
 const getWrapperStyles = (variant: UiProps['variant']) => {
@@ -30,14 +27,7 @@ const getWrapperStyles = (variant: UiProps['variant']) => {
   return null;
 };
 
-export const CRatioBannerUi: FC<UiProps> = ({
-  isFlagged,
-  variant,
-  nextEpochStartDate,
-  hasClaimed,
-  nothingToClaim,
-  liquidationDeadline,
-}) => {
+export const CRatioBannerUi: FC<UiProps> = ({ isFlagged, variant, hasClaimed, nothingToClaim }) => {
   const { t } = useTranslation();
   const translationKey = isFlagged ? 'error-flagged' : variant;
   const wrapperStyles = getWrapperStyles(variant);
@@ -48,8 +38,6 @@ export const CRatioBannerUi: FC<UiProps> = ({
   ) {
     return null;
   }
-
-  const liquidationDeadlineDate = new Date(Number(liquidationDeadline) * 1000 || 0);
 
   return (
     <SlideFade in={true} offsetY="-20px">
@@ -66,16 +54,7 @@ export const CRatioBannerUi: FC<UiProps> = ({
         >
           <Text data-testid="text content" fontSize="xs">
             {t(`staking-v2.c-ratio-banner.${translationKey}`)}
-          </Text>{' '}
-          {isFlagged ? (
-            <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
-              <CountDown toDate={liquidationDeadlineDate} />
-            </Text>
-          ) : (
-            <Text fontSize="xs" fontFamily="mono" fontWeight="700" marginLeft="2" as="b">
-              <CountDown toDate={nextEpochStartDate} />
-            </Text>
-          )}
+          </Text>
         </Flex>
       </Center>
     </SlideFade>
@@ -101,16 +80,12 @@ export const CRatioBanner: React.FC = () => {
     isFlagged,
   });
 
-  const liquidationDeadline = debtData.liquidationDeadlineForAccount.toString();
-
   return (
     <CRatioBannerUi
-      nextEpochStartDate={feePoolData.nextFeePeriodStartDate}
       variant={variant}
       isFlagged={isFlagged}
       hasClaimed={rewardsData.hasClaimed}
       nothingToClaim={rewardsData.nothingToClaim}
-      liquidationDeadline={liquidationDeadline}
     />
   );
 };
