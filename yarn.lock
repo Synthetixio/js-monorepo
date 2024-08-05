@@ -6228,7 +6228,6 @@ __metadata:
   resolution: "@snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner"
   dependencies:
     "@chakra-ui/react": ^2.5.0
-    "@snx-v2/CountDown": "workspace:*"
     "@snx-v2/getHealthVariant": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useFeePoolData": "workspace:*"
