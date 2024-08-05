@@ -3,14 +3,18 @@ export const getHealthVariant = ({
   liquidationCratioPercentage,
   currentCRatioPercentage,
   targetThreshold = 0.01,
+  isFlagged,
 }: {
   liquidationCratioPercentage: number | undefined;
   targetCratioPercentage: number | undefined;
   currentCRatioPercentage: number | undefined;
   targetThreshold: number | undefined;
+  isFlagged: boolean | undefined;
 }) => {
+  if (isFlagged) return 'error';
   if (!liquidationCratioPercentage || !targetCratioPercentage || !currentCRatioPercentage)
     return 'success';
+
   if (currentCRatioPercentage === 0) return 'success';
   const currentCRatioPercentageWithThresHold = currentCRatioPercentage * (1 + targetThreshold);
   // You can claim rewards when you below target but within the targetThreshold, the threshold does NOT apply to the liquidationRatio
