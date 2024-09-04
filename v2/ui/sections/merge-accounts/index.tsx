@@ -10,6 +10,7 @@ import Connector from 'containers/Connector';
 const Index: FC = () => {
   const { isAppReady } = Connector.useContainer();
   const { action } = useParams();
+
   switch (true) {
     case isAppReady && action === 'burn':
       return <Burn />;

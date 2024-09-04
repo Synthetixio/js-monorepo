@@ -114,7 +114,13 @@ export const CRatioBoxUi: FC<{
             </span>
           </Tooltip>
         </Heading>
-        <Text data-testid="target-ratio text" color="success" fontFamily="mono" fontSize="lg">
+        <Text
+          maxW="200px"
+          data-testid="target-ratio text"
+          color="success"
+          fontFamily="mono"
+          fontSize="lg"
+        >
           {targetCRatioPercentage ? (
             formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
           ) : (

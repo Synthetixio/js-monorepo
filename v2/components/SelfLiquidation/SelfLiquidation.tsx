@@ -26,6 +26,7 @@ import { useNavigate } from 'react-router-dom';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { calcNewCratioPercentage } from '@snx-v2/stakingCalculations';
+import { DeprecationBanner } from '../DeprecationBanner/DeprecationBanner';
 
 const LiquidationDataBox = ({
   headline,
@@ -123,6 +124,7 @@ export const SelfLiquidationUi: FC<{
         noOfLines={2}
         isLoaded={!isLoading}
         mt={2}
+        mb={2}
         lineHeight="20px"
         skeletonHeight="14px"
       >
@@ -145,85 +147,97 @@ export const SelfLiquidationUi: FC<{
           />
         </Text>
       </SkeletonText>
-      <Flex justifyContent="space-between" my={4} flexWrap="wrap">
-        <Flex
-          display="flex"
-          alignItems="center"
-          bg="black"
-          w="58%"
-          pt={3}
-          px={4}
-          borderRadius="base"
-          borderWidth="1px"
-          borderColor="gray.900"
-        >
-          {CRatioProgressBar}
+      <DeprecationBanner action="Self-liquidation" />
+
+      <Box position="relative">
+        <Box
+          background="navy.900"
+          opacity="50%"
+          position="absolute"
+          width="100%"
+          height="100%"
+        />
+        <Flex justifyContent="space-between" my={4} flexWrap="wrap">
+          <Flex
+            display="flex"
+            alignItems="center"
+            bg="black"
+            w="58%"
+            pt={3}
+            px={4}
+            borderRadius="base"
+            borderWidth="1px"
+            borderColor="gray.900"
+          >
+            {CRatioProgressBar}
+          </Flex>
+          <Flex
+            bg="black"
+            w="40%"
+            borderRadius="base"
+            borderWidth="1px"
+            borderColor="gray.900"
+            flexDirection="column"
+            justifyContent="space-between"
+          >
+            {CRatioBox}
+          </Flex>
         </Flex>
-        <Flex
-          bg="black"
-          w="40%"
-          borderRadius="base"
-          borderWidth="1px"
-          borderColor="gray.900"
-          flexDirection="column"
-          justifyContent="space-between"
-        >
-          {CRatioBox}
-        </Flex>
-      </Flex>
-      <Box borderRadius="base" borderWidth="1px" borderColor="gray.900" p={4}>
-        <Text mb={2}>{t('staking-v2.self-liquidation.amounts-headline')}</Text>
-        <Flex flexDirection={['column', 'column', 'row']}>
-          <LiquidationDataBox
-            testId="to target"
-            snxValue={amountToLiquidateToTargetSNX}
-            usdValue={amountToLiquidateToTargetUsd}
-            headline={t('staking-v2.self-liquidation.back-to-target')}
-          />
-          <LiquidationDataBox
-            testId="penalty"
-            snxValue={selfLiquidationPenaltySNX}
-            usdValue={selfLiquidationPenaltyUSD}
-            headline={t('staking-v2.self-liquidation.penalty', { penalty: formattedPenalty })}
-          />
-          <LiquidationDataBox
-            snxValue={totalAmountToLiquidateSNX}
-            usdValue={totalAmountToLiquidateUSD}
-            headline={t('staking-v2.self-liquidation.total')}
-            testId="total"
-          />
-        </Flex>
-        {gasError ? (
-          <Center mt={2}>
-            <FailedIcon width="40px" height="40px" />
-            <Text data-testid="gas error">
-              {t('staking-v2.self-liquidation.gas-estimation-error')}: {parseTxnError(gasError)}
-            </Text>
-          </Center>
-        ) : (
-          <Flex alignItems="center" justifyContent="space-between">
-            <EthGasPriceEstimator
-              mt={3}
-              transactionFee={transactionFee ? transactionFee : wei(0)}
+        <Box borderRadius="base" borderWidth="1px" borderColor="gray.900" p={4}>
+          <Text mb={2}>{t('staking-v2.self-liquidation.amounts-headline')}</Text>
+          <Flex flexDirection={['column', 'column', 'row']}>
+            <LiquidationDataBox
+              testId="to target"
+              snxValue={amountToLiquidateToTargetSNX}
+              usdValue={amountToLiquidateToTargetUsd}
+              headline={t('staking-v2.self-liquidation.back-to-target')}
+            />
+            <LiquidationDataBox
+              testId="penalty"
+              snxValue={selfLiquidationPenaltySNX}
+              usdValue={selfLiquidationPenaltyUSD}
+              headline={t('staking-v2.self-liquidation.penalty', { penalty: formattedPenalty })}
+            />
+            <LiquidationDataBox
+              snxValue={totalAmountToLiquidateSNX}
+              usdValue={totalAmountToLiquidateUSD}
+              headline={t('staking-v2.self-liquidation.total')}
+              testId="total"
             />
           </Flex>
-        )}
-        <Button
-          data-testid="self liq button"
-          isDisabled={
-            Boolean(gasError) ||
-            isGasEnabledAndNotFetched ||
-            Number(currentCRatioPercentage) >= Number(targetCRatioPercentage) ||
-            !totalAmountToLiquidateUSD
-          }
-          onClick={onSelfLiquidation}
-          mt={4}
-          mx="auto"
-          display="block"
-        >
-          {t('staking-v2.self-liquidation.button-text')}
-        </Button>
+          {gasError ? (
+            <Center mt={2}>
+              <FailedIcon width="40px" height="40px" />
+              <Text data-testid="gas error">
+                {t('staking-v2.self-liquidation.gas-estimation-error')}: {parseTxnError(gasError)}
+              </Text>
+            </Center>
+          ) : (
+            <Flex alignItems="center" justifyContent="space-between">
+              <EthGasPriceEstimator
+                mt={3}
+                transactionFee={transactionFee ? transactionFee : wei(0)}
+              />
+            </Flex>
+          )}
+          <Button
+            data-testid="self liq button"
+            isDisabled={
+              Boolean(gasError) ||
+              isGasEnabledAndNotFetched ||
+              Number(currentCRatioPercentage) >= Number(targetCRatioPercentage) ||
+              !totalAmountToLiquidateUSD
+            }
+            onClick={onSelfLiquidation}
+            mt={4}
+            mx="auto"
+            display="block"
+          >
+            {t('staking-v2.self-liquidation.button-text')}
+          </Button>
+        </Box>
       </Box>
+
       <Box>
         <Button variant="outline" onClick={() => navigate(-1)} mt={2}>
           {t('staking-v2.back-btn')}

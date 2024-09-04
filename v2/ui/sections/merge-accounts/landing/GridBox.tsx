@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import media from '@snx-v1/media';
 import { useTranslation } from 'react-i18next';
@@ -7,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 const GridBox: FC<{
   step: 1 | 2;
   name: string;
-}> = ({ step, name }) => {
+}> = ({ step }) => {
   const { t } = useTranslation();
 
   return (
-    <Link to={`/merge-accounts/${name}`}>
+    <div>
       <GridBoxContainer>
         <GridBoxIcon>
           <Icon>{step}</Icon>
@@ -19,7 +18,7 @@ const GridBox: FC<{
         <GridBoxTitle>{t(`merge-accounts.landing.steps.${step}.title`)}</GridBoxTitle>
         <GridBoxCopy>{t(`merge-accounts.landing.steps.${step}.description`)}</GridBoxCopy>
       </GridBoxContainer>
-    </Link>
+    </div>
   );
 };
 
@@ -33,7 +32,7 @@ const GridBoxContainer = styled.div`
   border-radius: 2px;
   transition: transform 0.25s ease-in-out;
   height: 384px;
-  cursor: pointer;
+  opacity: 50%;
 
   &:hover {
     background: ${(props) => props.theme.colors.darkGradient2};
