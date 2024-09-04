@@ -150,13 +150,7 @@ export const SelfLiquidationUi: FC<{
       <DeprecationBanner action="Self-liquidation" />
 
       <Box position="relative">
-        <Box
-          background="navy.900"
-          opacity="50%"
-          position="absolute"
-          width="100%"
-          height="100%"
-        />
+        <Box background="navy.900" opacity="50%" position="absolute" width="100%" height="100%" />
         <Flex justifyContent="space-between" my={4} flexWrap="wrap">
           <Flex
             display="flex"

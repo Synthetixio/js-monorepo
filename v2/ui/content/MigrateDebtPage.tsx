@@ -47,13 +47,7 @@ const L2MigrateDebtPage: FC = () => {
       <DeprecationBanner action="Debt Migration" />
 
       <Box position="relative">
-        <Box
-          background="navy.900"
-          opacity="50%"
-          position="absolute"
-          width="100%"
-          height="100%"
-        />
+        <Box background="navy.900" opacity="50%" position="absolute" width="100%" height="100%" />
         <StatsSection>
           <Collateral
             title={t('common.stat-box.collateral-l1')}
