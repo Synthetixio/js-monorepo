@@ -19,10 +19,10 @@ const injected = injectedModule({ custom: [customMetaMask, customBrave, customDe
 
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 
-// const walletConnect = walletConnectModule({
-//   version: 2,
-//   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
-// });
+const walletConnect = walletConnectModule({
+  version: 2,
+  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+});
 
 // const ledger = ledgerModule({
 //   walletConnectVersion: 2,
@@ -106,7 +106,7 @@ export const onboard: OnboardAPI = Onboard({
     injected,
     brave,
     // ledger,
-    // walletConnect,
+    walletConnect,
     trezor,
     trust,
     gnosis,
