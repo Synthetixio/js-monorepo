@@ -22,6 +22,7 @@ import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { leftColWidth, rightColWidth } from './layout';
 import { CRatioBox } from '../CRatioBox';
 import { calcNewCratioPercentage, calculateNewDebtBalance } from '@snx-v2/stakingCalculations';
+import { DeprecationBanner } from '../DeprecationBanner/DeprecationBanner';
 
 const NewStakerHeader: FC<{ nextEpochStartDate?: Date; SNXRate?: number }> = ({
   nextEpochStartDate,
@@ -144,6 +145,9 @@ export const MintHeaderUi: FC<{
           </Text>
         </SkeletonText>
       </Center>
+
+      <DeprecationBanner action="Staking and Borrowing" />
+
       {isCurrentStaker ? (
         <Box display={{ base: 'none', md: 'block' }}>
           <Fade in={!isLoading}>
