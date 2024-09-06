@@ -47,7 +47,6 @@ const V2Home = () => {
                 borderRadius="base"
                 flex="1"
               >
-                <DeprecationBanner action="Staking and Borrowing" />
                 {!isStaking && isAppReady && <Welcome mb={4} />}
                 {isStaking && <CRatioHealthCard />}
                 <MainActionCardsList connectWallet={connectWallet} />

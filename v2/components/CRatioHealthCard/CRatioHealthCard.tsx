@@ -1,10 +1,12 @@
-import React, { ReactElement } from 'react';
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import React, { ReactElement, useState } from 'react';
+import { Box, Flex, Heading, Text, Alert, AlertIcon } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioHealthPercentage } from '@snx-v2/CRatioHealthPercentage';
 import { useTranslation } from 'react-i18next';
 import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
+import { NetworkIdByName, NetworkId } from '@synthetixio/contracts-interface';
+import Connector from 'containers/Connector';
 
 type UiProps = {
   liquidationCratioPercentage?: number;
@@ -12,6 +14,7 @@ type UiProps = {
   currentCRatioPercentage?: number;
   targetThreshold?: number;
   isLoading: boolean;
+  networkId: number;
   CRatioProgressBar: ReactElement;
 };
 
@@ -21,6 +24,7 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
   currentCRatioPercentage,
   targetThreshold,
   isLoading,
+  networkId,
   CRatioProgressBar,
 }) => {
   const { t } = useTranslation();
@@ -53,12 +57,26 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
       </Flex>
 
       {CRatioProgressBar}
+      {networkId === 1 && (
+        <Alert status="info" fontWeight="300" fontSize="14px" mb="20px">
+          <AlertIcon />
+          Target C-ratio looking crazy\? Don’t worry, this is a temporary measure. Read more about
+          why the target c-ratio was temporarily increased for the migration and make sure that your
+          c-ratio doesn’t fall under the liquidation ratio.
+        </Alert>
+      )}
     </Box>
   );
 };
 
 export const CRatioHealthCard: React.FC = () => {
   const { data: debtData, isLoading } = useDebtData();
+
+  const { network } = Connector.useContainer();
+
+  const [localNetwork] = useState<NetworkId>(
+    network?.id ? (network.id as NetworkId) : (NetworkIdByName.mainnet as NetworkId)
+  );
 
   return (
     <CRatioHealthCardUi
@@ -67,6 +85,7 @@ export const CRatioHealthCard: React.FC = () => {
       targetCratioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       liquidationCratioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
       targetThreshold={debtData?.targetThreshold.toNumber()}
+      networkId={localNetwork}
       isLoading={isLoading}
     />
   );
