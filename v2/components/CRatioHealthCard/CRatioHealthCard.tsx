@@ -5,8 +5,6 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioHealthPercentage } from '@snx-v2/CRatioHealthPercentage';
 import { useTranslation } from 'react-i18next';
 import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
-import { NetworkIdByName, NetworkId } from '@synthetixio/contracts-interface';
-import Connector from 'containers/Connector';
 
 type UiProps = {
   liquidationCratioPercentage?: number;
@@ -77,14 +75,8 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
   );
 };
 
-export const CRatioHealthCard: React.FC = () => {
+export const CRatioHealthCard: React.FC<{ networkId: number }> = ({ networkId }) => {
   const { data: debtData, isLoading } = useDebtData();
-
-  const { network } = Connector.useContainer();
-
-  const [localNetwork] = useState<NetworkId>(
-    network?.id ? (network.id as NetworkId) : (NetworkIdByName.mainnet as NetworkId)
-  );
 
   return (
     <CRatioHealthCardUi
@@ -93,7 +85,7 @@ export const CRatioHealthCard: React.FC = () => {
       targetCratioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       liquidationCratioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
       targetThreshold={debtData?.targetThreshold.toNumber()}
-      networkId={localNetwork}
+      networkId={networkId}
       isLoading={isLoading}
     />
   );
