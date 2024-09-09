@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Box, Flex, Heading, Text, Alert, AlertIcon } from '@chakra-ui/react';
+import { Box, Flex, Link, Heading, Text, Alert, AlertIcon } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioHealthPercentage } from '@snx-v2/CRatioHealthPercentage';
@@ -58,11 +58,19 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
 
       {CRatioProgressBar}
       {networkId === 1 && (
-        <Alert status="info" fontWeight="300" fontSize="14px" mb="20px">
+        <Alert status="info" fontWeight="500" fontSize="14px" mb="20px">
           <AlertIcon />
-          Target C-ratio looking crazy\? Don’t worry, this is a temporary measure. Read more about
-          why the target c-ratio was temporarily increased for the migration and make sure that your
-          c-ratio doesn’t fall under the liquidation ratio.
+          <Text>
+            Target C-ratio looking crazy? Don’t worry, this is a temporary measure. Read more about{' '}
+            <Link
+              href="https://blog.synthetix.io/synthetix-v3-migration/"
+              target="_blank"
+              color="cyan.500"
+            >
+              why the target c-ratio was temporarily increased for the migration
+            </Link>{' '}
+            and make sure that your c-ratio doesn’t fall under the liquidation ratio.
+          </Text>
         </Alert>
       )}
     </Box>
