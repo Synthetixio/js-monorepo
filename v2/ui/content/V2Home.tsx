@@ -16,7 +16,6 @@ import { useApr } from '@snx-v2/useApr';
 import { StatBox } from '@snx-v2/StatBox';
 import { formatPercent } from '@synthetixio/formatters';
 import { Integrators } from '@snx-v2/Integrators';
-import { DeprecationBanner } from '../../components/DeprecationBanner/DeprecationBanner';
 
 const V2Home = () => {
   const { t } = useTranslation();

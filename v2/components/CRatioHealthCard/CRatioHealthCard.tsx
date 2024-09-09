@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { Box, Flex, Link, Heading, Text, Alert, AlertIcon } from '@chakra-ui/react';
 import { getHealthVariant } from '@snx-v2/getHealthVariant';
 import { useDebtData } from '@snx-v2/useDebtData';
