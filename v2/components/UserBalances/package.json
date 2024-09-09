@@ -6,6 +6,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/icons": "workspace:*",
-    "@synthetixio/wei": "^2.74.4"
+    "@synthetixio/wei": "^2.74.4",
+    "react-router-dom": "^6.8.1"
   }
 }
