@@ -20,7 +20,7 @@ import { DeprecationBanner } from '../../components/DeprecationBanner/Deprecatio
 
 const V2Home = () => {
   const { t } = useTranslation();
-  const { isAppReady, connectWallet } = Connector.useContainer();
+  const { isAppReady, connectWallet, network } = Connector.useContainer();
   const { delegateWallet } = useDelegateWallet();
   const { data: debtData } = useDebtData();
   const isStaking = debtData?.debtBalance.gt(0);
@@ -49,7 +49,7 @@ const V2Home = () => {
               >
                 <DeprecationBanner action="Staking and Borrowing" />
                 {!isStaking && isAppReady && <Welcome mb={4} />}
-                {isStaking && <CRatioHealthCard />}
+                {isStaking && <CRatioHealthCard networkId={network?.id || 1} />}
                 <MainActionCardsList connectWallet={connectWallet} />
               </Box>
               <Flex

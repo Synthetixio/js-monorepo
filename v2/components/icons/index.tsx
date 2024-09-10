@@ -57,3 +57,4 @@ export * from './TorosIcon';
 export * from './DollarIcon';
 export * from './TickIcon';
 export * from './ClockIcon';
+export * from './SwitchIcon';

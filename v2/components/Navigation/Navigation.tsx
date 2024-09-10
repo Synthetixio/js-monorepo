@@ -31,6 +31,7 @@ import {
   InfoOutline,
 } from '@snx-v2/icons';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { formatNumberToUsd, truncateAddress } from '@synthetixio/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
@@ -91,6 +92,7 @@ export const NavigationUI = ({
   const { delegateWallet } = useDelegateWallet();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { name, icon } = activeIcon(currentNetwork);
+  const navigate = useNavigate();
 
   const size = useBreakpointValue(
     {
@@ -111,7 +113,15 @@ export const NavigationUI = ({
       borderBottomColor={['transparent', 'transparent', 'gray.900']}
     >
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
+
       <Flex alignItems="center">
+        {currentNetwork === 1 && (
+          <Link target="_blank" to="https://liquidity.synthetix.eth.limo/#/dashboard?migrate=snx">
+            <Button data-testid="domigrate" variant="solid" onClick={() => navigate('')}>
+              Migrate to V3
+            </Button>
+          </Link>
+        )}
         {isWalletConnected && walletAddress && !delegateWallet && (
           <>
             {size === 'desktop' && (
