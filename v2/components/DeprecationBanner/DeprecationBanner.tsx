@@ -1,13 +1,12 @@
 import { Text, Link, Alert, AlertIcon } from '@chakra-ui/react';
 import { ContractContext } from '@snx-v2/ContractContext';
-import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import { useContext } from 'react';
 
 export const DeprecationBanner: React.FC<{
   action: string;
 }> = ({ action }) => {
   const { networkId } = useContext(ContractContext);
-  if (networkId === NetworkIdByName['mainnet-ovm']) {
+  if (networkId !== 1) {
     return null;
   }
   return (
