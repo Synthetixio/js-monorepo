@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import Head from 'react-helmet';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -14,12 +14,14 @@ import { formatCryptoCurrency } from 'utils/formatters/number';
 import Connector from 'containers/Connector';
 import { DeprecationBanner } from '../../components/DeprecationBanner/DeprecationBanner';
 import { Box } from '@chakra-ui/react';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 const TEN_MINUTES_MS = 1000 * 10 * 60;
 const SNX_HEADER_DECIMALS = 2;
 
 const L2MigrateDebtPage: FC = () => {
   const { isL2, walletAddress } = Connector.useContainer();
+  const { networkId } = useContext(ContractContext);
   const subgraphWalletAddress = walletAddress?.toLowerCase() ?? '';
 
   const { t } = useTranslation();
@@ -47,7 +49,9 @@ const L2MigrateDebtPage: FC = () => {
       <DeprecationBanner action="Debt Migration" />
 
       <Box position="relative">
-        <Box background="navy.900" opacity="50%" position="absolute" width="100%" height="100%" />
+        {networkId === 1 && (
+          <Box background="navy.900" opacity="50%" position="absolute" width="100%" height="100%" />
+        )}
         <StatsSection>
           <Collateral
             title={t('common.stat-box.collateral-l1')}

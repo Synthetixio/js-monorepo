@@ -6611,6 +6611,7 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
+    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
@@ -6756,6 +6757,7 @@ __metadata:
     "@chakra-ui/react": ^2.5.0
     "@snx-v2/icons": "workspace:*"
     "@synthetixio/wei": ^2.74.4
+    react-router-dom: ^6.8.1
   languageName: unknown
   linkType: soft
 

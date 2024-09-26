@@ -1,8 +1,14 @@
 import { Text, Link, Alert, AlertIcon } from '@chakra-ui/react';
+import { ContractContext } from '@snx-v2/ContractContext';
+import { useContext } from 'react';
 
 export const DeprecationBanner: React.FC<{
   action: string;
 }> = ({ action }) => {
+  const { networkId } = useContext(ContractContext);
+  if (networkId !== 1) {
+    return null;
+  }
   return (
     <Alert textAlign="left" borderRadius="6px" colorScheme="blue" mb="6">
       <AlertIcon />
