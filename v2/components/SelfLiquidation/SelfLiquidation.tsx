@@ -1,5 +1,5 @@
 import { formatNumber, formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useContext } from 'react';
 import {
   Text,
   Box,
@@ -27,6 +27,7 @@ import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { calcNewCratioPercentage } from '@snx-v2/stakingCalculations';
 import { DeprecationBanner } from '../DeprecationBanner/DeprecationBanner';
+import { ContractContext } from '@snx-v2/ContractContext';
 
 const LiquidationDataBox = ({
   headline,
@@ -88,6 +89,7 @@ export const SelfLiquidationUi: FC<{
   transactionFee?: Wei | null;
   isGasEnabledAndNotFetched: boolean;
   gasError: Error | null;
+  networkId: number | null;
   CRatioProgressBar: ReactElement;
   CRatioBox: ReactElement;
   isLoading: boolean;
@@ -107,6 +109,7 @@ export const SelfLiquidationUi: FC<{
   isGasEnabledAndNotFetched,
   CRatioProgressBar,
   CRatioBox,
+  networkId,
   isLoading,
 }) => {
   const { t } = useTranslation();
@@ -150,7 +153,9 @@ export const SelfLiquidationUi: FC<{
       <DeprecationBanner action="Self-liquidation" />
 
       <Box position="relative">
-        <Box background="navy.900" opacity="50%" position="absolute" width="100%" height="100%" />
+        {networkId === 1 && (
+          <Box background="navy.900" opacity="50%" position="absolute" width="100%" height="100%" />
+        )}
         <Flex justifyContent="space-between" my={4} flexWrap="wrap">
           <Flex
             display="flex"
@@ -246,6 +251,7 @@ export const SelfLiquidation = () => {
     refetch,
     isLoading: isSelfLiquidationDataLoading,
   } = useSelfLiquidationData();
+  const { networkId } = useContext(ContractContext);
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
 
@@ -295,6 +301,7 @@ export const SelfLiquidation = () => {
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
         CRatioProgressBar={<CRatioProgressBar newCratioPercentage={newCratioPercentage} />}
         CRatioBox={<CRatioBox newCratioPercentage={newCratioPercentage} />}
+        networkId={networkId}
         isLoading={isLoading}
       />
       <SelfLiquidationTransactionModal
