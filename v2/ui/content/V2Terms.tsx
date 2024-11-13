@@ -70,11 +70,11 @@ const V2Terms = () => {
             ), govern the User’s access to and use of https://synthetix.io/,
             https://synthetix.eth.limo/ and its sub-pages, including any content or functionality
             offered on or through the website-hosted user interface accessible via
-            https://staking.synthetix.io/ or https://staking.synthetix.eth.limo/ (the{' '}
+            https://staking.synthetix.io/ or https://staking.synthetix.io/ (the{' '}
             <Text as="span" fontWeight="700">
               “Interface,”{' '}
             </Text>{' '}
-            or collectively with other https://synthetix.io/ or https://synthetix.eth.limo/
+            or collectively with other https://synthetix.io/ or https://synthetix.io/
             subpages, the{' '}
             <Text as="span" fontWeight="700">
               “Website”
