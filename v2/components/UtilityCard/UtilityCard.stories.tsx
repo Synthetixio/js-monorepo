@@ -31,7 +31,7 @@ Primary.args = {
   description:
     'Trade commodities, forex, crypto, and more with up to 25x leverage and deep liquidity.',
   Icon: KwentaIcon,
-  link: 'https://kwenta.eth.limo',
+  link: 'https://kwenta.io',
 };
 
 Secondary.args = {
