@@ -39,12 +39,11 @@ const TermsPage = () => {
             conditions, together with any documents they expressly incorporate by reference
             (collectively, these <InlineBold>“Terms of Use” </InlineBold> or this{' '}
             <InlineBold>“Agreement”</InlineBold>
-            ), govern the User’s access to and use of https://synthetix.io/,
-            https://synthetix.eth.limo/ and its sub-pages, including any content or functionality
-            offered on or through the website-hosted user interface accessible via
-            https://staking.synthetix.io/ or https://staking.synthetix.eth.limo/ (the{' '}
+            ), govern the User’s access to and use of https://synthetix.io/ and its sub-pages,
+            including any content or functionality offered on or through the website-hosted user
+            interface accessible via https://staking.synthetix.io/ (the{' '}
             <InlineBold>“Interface,” </InlineBold> or collectively with other https://synthetix.io/
-            or https://synthetix.eth.limo/ subpages, the <InlineBold>“Website”</InlineBold>
+            subpages, the <InlineBold>“Website”</InlineBold>
             ). The User must read these Terms of Use carefully before using the Website (including
             the Interface).{' '}
             <InlineBold style={{ marginTop: '8px', marginBottom: '8px' }}>
