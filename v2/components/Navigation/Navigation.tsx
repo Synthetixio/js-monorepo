@@ -116,7 +116,7 @@ export const NavigationUI = ({
 
       <Flex alignItems="center">
         {currentNetwork === 1 && (
-          <Link target="_blank" to="https://liquidity.synthetix.eth.limo/#/dashboard?migrate=snx">
+          <Link target="_blank" to="https://liquidity.synthetix.io/#/dashboard?migrate=snx">
             <Button data-testid="domigrate" variant="solid" onClick={() => navigate('')}>
               Migrate to V3
             </Button>

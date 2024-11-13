@@ -69,7 +69,7 @@ export const UserBalances = ({
         >
           <Text variant="nav" mr={2}>{`${formatFiatCurrency(sUSDBalance)}`}</Text>
         </Skeleton>
-        <Link target="_blank" to="https://liquidity.synthetix.eth.limo/#/dashboard?convert=snxusd">
+        <Link target="_blank" to="https://liquidity.synthetix.io/#/dashboard?convert=snxusd">
           <SwitchIcon width="20px" height="20px" />
         </Link>
       </Flex>
