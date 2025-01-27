@@ -6,7 +6,7 @@
 - We will no longer republish all `@synthetixio/*` libs together with synthetix release (so versions will no longer match).
 - We will only update and release ones that directly or indirectly depend on it. Example is in the [README.md](README.md).
 - Github actions will have 2 separate publishing flows:
-  - to update all pakcages based on desired `synthetix` version
+  - to update all packages based on desired `synthetix` version
   - to update and publish one single package (and all that depend on it) by name
 
 ## 2022-06-09 Incorporate `codegen-graph-ts`
