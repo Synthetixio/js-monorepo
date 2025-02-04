@@ -47,37 +47,6 @@ module.exports = {
 
   overrides: [
     {
-      files: ['v3/lib/**/*', 'v3/theme/**/*'],
-
-      env: {
-        browser: true,
-      },
-
-      extends: ['plugin:react/recommended'],
-      plugins: ['react', 'react-hooks', '@tanstack/query'],
-
-      settings: {
-        react: {
-          version: '18.2.0',
-        },
-      },
-
-      globals: {
-        React: true,
-      },
-
-      rules: {
-        quotes: 'off',
-        'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
-        'react/prop-types': 'off', // using ts
-        'react-hooks/rules-of-hooks': 'error',
-        'react-hooks/exhaustive-deps': 'error',
-        '@tanstack/query/exhaustive-deps': 'off', // not smart enough, does not take into account `enabled` and global imports
-        '@tanstack/query/prefer-query-object-syntax': 'error',
-      },
-    },
-
-    {
       files: ['v2/ui/**/*', 'v2/components/**/*', 'v1/components/**/*'],
 
       extends: ['plugin:react/recommended'],

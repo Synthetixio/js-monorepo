@@ -1,19 +1,19 @@
 import { getChainIdHex, getInfuraRpcURL } from 'utils/infura';
 import { NetworkIdByName } from '@synthetixio/contracts-interface';
-import Onboard from '@web3-onboard/core';
 import type { OnboardAPI } from '@web3-onboard/core';
 import injectedModule from '@web3-onboard/injected-wallets';
 import coinbaseWalletModule from '@web3-onboard/coinbase';
 import walletConnectModule from '@web3-onboard/walletconnect';
-// import ledgerModule from '@web3-onboard/ledger';
 import gnosisModule from './customGnosis';
 import trezorModule from '@web3-onboard/trezor';
 import portisModule from '@web3-onboard/portis';
 import torusModule from '@web3-onboard/torus';
 import trustModule from '@web3-onboard/trust';
+import { init } from '@web3-onboard/react';
+import ledgerModule from '@web3-onboard/ledger';
 
 import { SynthetixIcon, SynthetixLogo } from 'components/WalletComponents';
-import { customBrave, customMetaMask, customDetected } from './customInjected';
+import { customBrave, customDetected, customMetaMask } from './customInjected';
 
 const injected = injectedModule({ custom: [customMetaMask, customBrave, customDetected] });
 
@@ -21,18 +21,18 @@ const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 
 const walletConnect = walletConnectModule({
   version: 2,
-  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+  projectId: '5075a2da602e17eec34aa77b40b321be',
 });
 
-// const ledger = ledgerModule({
-//   walletConnectVersion: 2,
-//   projectId: `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}`,
-// });
+const ledger = ledgerModule({
+  walletConnectVersion: 2,
+  projectId: '5075a2da602e17eec34aa77b40b321be',
+});
 
 // The trezor module have a bug, we can enable it when this has been merged and released: https://github.com/blocknative/web3-onboard/pull/1165
 const trezor = trezorModule({ email: 'info@synthetix.io', appUrl: 'https://www.synthetix.io' });
 const gnosis = gnosisModule();
-const portis = portisModule({ apiKey: `${process.env.NEXT_PUBLIC_PORTIS_APP_ID}` });
+const portis = portisModule({ apiKey: 'sec_3YAomryY8I9vHV99M1FQ3mms' });
 const torus = torusModule();
 const brave = () => customBrave;
 const trust = trustModule();
@@ -82,11 +82,7 @@ const supportedChains = [
     : []
 );
 
-export const isSupportedWalletChain = (networkId: number) => {
-  return !!supportedChains.find((chain) => chain.id === `0x${networkId.toString(16)}`);
-};
-
-export const onboard: OnboardAPI = Onboard({
+export const onboard: OnboardAPI = init({
   appMetadata: {
     name: 'Synthetix',
     icon: SynthetixIcon,
@@ -100,12 +96,11 @@ export const onboard: OnboardAPI = Onboard({
     gettingStartedGuide: 'https://synthetix.io',
     explore: 'https://blog.synthetix.io/',
   },
-  apiKey: process.env.NEXT_PUBLIC_BN_ONBOARD_API_KEY,
   wallets: [
     coinbaseWalletSdk,
     injected,
     brave,
-    // ledger,
+    ledger,
     walletConnect,
     trezor,
     trust,
@@ -117,11 +112,9 @@ export const onboard: OnboardAPI = Onboard({
   accountCenter: {
     desktop: {
       enabled: false,
-      containerElement: 'body',
     },
     mobile: {
       enabled: false,
-      containerElement: 'body',
     },
   },
   notify: {

@@ -16,7 +16,7 @@ export const getInfuraRpcURL = (networkId?: NetworkId) => {
   const optimismPrefix = networkName.includes(SYNTHETIX_OVM_SUFFIX) ? INFURA_OWN_PREFIX : '';
   const url = `https://${
     optimismPrefix + networkName.replace(SYNTHETIX_OVM_SUFFIX, '')
-  }.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`;
+  }.infura.io/v3/45e567b9a0944c5c8e030d1801965e00`;
   return url;
 };
 

@@ -1,36 +1,12 @@
-import { detectEthereumProvider } from './metamask-detect-provider';
-import { DEFAULT_GAS_BUFFER, DEFAULT_NETWORK_ID } from 'constants/defaults';
 import { NetworkId, NetworkNameById } from '@synthetixio/contracts-interface';
 
 import { GasLimitEstimate } from 'constants/network';
 import Wei, { wei } from '@synthetixio/wei';
-import { GWEI_DECIMALS, GWEI_UNIT } from './infura';
+import { GWEI_DECIMALS } from './infura';
 import { GasPrice } from '@synthetixio/queries';
 
 export function isSupportedNetworkId(id: number | string): id is NetworkId {
   return id in NetworkNameById;
-}
-
-export async function getDefaultNetworkId(): Promise<NetworkId> {
-  try {
-    const provider = await detectEthereumProvider();
-    const id = Number(provider?.chainId || 0);
-    return isSupportedNetworkId(id) ? id : DEFAULT_NETWORK_ID;
-  } catch (e) {
-    console.log(e);
-    return DEFAULT_NETWORK_ID;
-  }
-}
-
-export async function isCurrentNetworkSupported(): Promise<boolean> {
-  try {
-    const provider = await detectEthereumProvider();
-    const id = Number(provider?.chainId || 0);
-    return isSupportedNetworkId(id);
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
 }
 
 export const getTotalGasPrice = (gasPriceObj?: GasPrice | null) => {
@@ -60,12 +36,4 @@ export const getTransactionPrice = (
   return txPrice;
 };
 
-export const normalizeGasLimit = (gasLimit: number) => gasLimit + DEFAULT_GAS_BUFFER;
-
-export const normalizedGasPrice = (gasPrice: number) => gasPrice * GWEI_UNIT;
-
 export const getIsOVM = (networkId: number): boolean => !!~[10, 69, 420].indexOf(networkId);
-export const matchesNetworkErrorString = (error: string) =>
-  error.includes('unsupported network or network id passed');
-
-export const networkErrorMessage = 'Wrong network detected';

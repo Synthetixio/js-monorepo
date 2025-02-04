@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@chakra-ui/react": "^2.5.0",
-    "@cypress/code-coverage": "^3.13.9",
+    "@cypress/code-coverage": "^3.13.11",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/v2-ui": "workspace:*",
     "cypress": "14.0.1",

@@ -10,8 +10,6 @@ installLogsCollector({
 });
 
 beforeEach(() => {
-  cy.on('log:added', onLogAdded);
-
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
 
   // Because we are working with fork, subgraph becomes irrelevant

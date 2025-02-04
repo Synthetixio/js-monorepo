@@ -41,7 +41,7 @@ function SocketBridge({ onBack }: { onBack: () => void }) {
       >
         <Bridge
           provider={provider}
-          API_KEY={process.env.NEXT_PUBLIC_SOCKET_API_KEY!}
+          API_KEY="2da36f83-5f0c-43c9-bb65-bf850ecb6ae1"
           defaultSourceToken={defaultSourceToken}
           defaultDestToken={defaultDestToken}
           defaultSourceNetwork={network?.id}
