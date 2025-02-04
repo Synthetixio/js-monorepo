@@ -5,19 +5,18 @@
   "version": "0.0.11-0",
   "scripts": {
     "start": "anvil --fork-url https://mainnet.infura.io/v3/$INFURA_KEY",
-    "cy": "cypress open --component --browser chrome",
-    "cy:check": "cypress run --component --browser chrome",
-    "e2e": "cypress open --e2e --browser chrome",
-    "e2e:check": "cypress run --e2e --browser chrome"
+    "cy": "cypress open --component",
+    "cy:check": "cypress run --component",
+    "e2e": "cypress open --e2e",
+    "e2e:check": "cypress run --e2e"
   },
   "devDependencies": {
     "@chakra-ui/react": "^2.5.0",
-    "@cypress/code-coverage": "^3.10.0",
-    "@snx-cy/onLogAdded": "workspace:*",
-    "@snx-cy/printBrowserLogs": "workspace:*",
+    "@cypress/code-coverage": "^3.13.9",
     "@synthetixio/contracts": "workspace:*",
     "@synthetixio/v2-ui": "workspace:*",
     "cypress": "14.0.1",
+    "cypress-terminal-report": "^7.1.0",
     "ethers": "^5.7.2",
     "react-router-dom": "^6.8.1"
   },

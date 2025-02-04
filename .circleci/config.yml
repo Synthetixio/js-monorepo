@@ -177,7 +177,7 @@ jobs:
 
       - run:
           working_directory: /tmp/app/v2/cypress
-          command: cypress run --e2e --browser chrome
+          command: yarn cy:check
 
       - store_test_results:
           path: 'v2/cypress/cypress/reports'
@@ -212,7 +212,7 @@ jobs:
 
       - run:
           working_directory: /tmp/app/v2/cypress
-          command: cypress run --component --browser chrome
+          command: yarn e2e:check
 
       - store_test_results:
           path: 'v2/cypress/cypress/reports'

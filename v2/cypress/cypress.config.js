@@ -27,7 +27,12 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
       if (process.env.CI) {
-        on('before:browser:launch', require('@snx-cy/printBrowserLogs').printBrowserLogs);
+        require('cypress-terminal-report/src/installLogsPrinter')(on, {
+          printLogsToConsole: 'always',
+          includeSuccessfulHookLogs: true,
+          defaultTrimLength: 10_000,
+          commandTrimLength: 10_000,
+        });
         require('@cypress/code-coverage/task')(on, config);
       }
       on('task', {
@@ -37,16 +42,21 @@ module.exports = defineConfig({
         ...require('./cypress/tasks/getSnx'),
         ...require('./cypress/tasks/mintSusd'),
       });
-
       return config;
     },
 
+    viewportWidth: 1000,
+    viewportHeight: 1200,
+
+    video: true,
+
     retries: {
-      runMode: 1,
+      runMode: 0,
       openMode: 0,
     },
-    defaultCommandTimeout: 60_000,
-    execTimeout: 120_000,
-    taskTimeout: 300_000, // sometimes Anvil needs quite a bit of time to complete impersonating tx
+
+    defaultCommandTimeout: 30_000,
+    execTimeout: 60_000,
+    taskTimeout: 60_000,
   },
 });
