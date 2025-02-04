@@ -35,6 +35,7 @@ export const StatBox = ({ label, amount, titleToolTip, isLoading, ...props }: St
       {...props}
     >
       <Text
+        as="div"
         fontFamily="heading"
         fontWeight="semibold"
         fontSize={{ base: 'xs', sm: 'sm' }}

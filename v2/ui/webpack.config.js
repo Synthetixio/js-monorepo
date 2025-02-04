@@ -8,6 +8,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const generate = require('./scripts/minify-synthetix-contract');
 
+require('dotenv').config();
+
 // For depcheck to be happy
 require.resolve('webpack-dev-server');
 
@@ -138,7 +140,7 @@ const devServer = {
 };
 
 module.exports = {
-  devtool: isProd ? 'source-map' : isTest ? false : 'eval',
+  devtool: isProd ? 'source-map' : isTest ? false : 'source-map',
   devServer,
   mode: isProd ? 'production' : 'development',
   //  experiments: {
@@ -270,6 +272,7 @@ module.exports = {
       '@synthetixio/queries/build': '@synthetixio/queries/src',
     },
     fallback: {
+      url: require.resolve('url/'),
       buffer: require.resolve('buffer'),
       stream: require.resolve('stream-browserify'),
       crypto: require.resolve('crypto-browserify'),

@@ -236,6 +236,7 @@ export const RewardsItemUI = ({
           >
             <Fade in={!isLoading}>
               <Text
+                as="div"
                 fontFamily="heading"
                 fontSize="sm"
                 fontWeight="700"

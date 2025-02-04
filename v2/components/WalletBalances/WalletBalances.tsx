@@ -20,7 +20,6 @@ import { getPngSynthIconUrl } from '@snx-v2/SynthIcons';
 import { useGetSynthsByName } from '@snx-v2/synthsByName';
 import { useEthBalance } from '@snx-v2/useEthBalance';
 import { useDebtData } from '@snx-v2/useDebtData';
-import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { SynthBalance, useSynthsBalances } from '@snx-v2/useSynthsBalances';
 import Wei from '@synthetixio/wei';
@@ -31,7 +30,6 @@ import { ContractContext } from '@snx-v2/ContractContext';
 import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
 import {
   SNXIcon,
-  DSNXIcon,
   EthereumIcon,
   TransactionCompleted,
   TransactionPending,
@@ -46,7 +44,6 @@ import { ExternalLink } from '@snx-v2/ExternalLink';
 
 const WalletBalancesUi: React.FC<{
   totalSynthUSDBalance?: number;
-  dSNXUSDBalance?: number;
   debtBalance?: number;
   synthData?: {
     currencyKey: string;
@@ -72,7 +69,6 @@ const WalletBalancesUi: React.FC<{
   };
 }> = ({
   totalSynthUSDBalance,
-  dSNXUSDBalance,
   debtBalance,
   synthData,
   nonSynthData,
@@ -135,12 +131,6 @@ const WalletBalancesUi: React.FC<{
             label={t('staking-v2.wallet-balances.active-debt')}
             amount={debtBalance === undefined ? undefined : formatNumberToUsd(debtBalance)}
             alignItems="start"
-          />
-          <StatBox
-            label={t('staking-v2.wallet-balances.d-snx-value')}
-            amount={dSNXUSDBalance === undefined ? undefined : formatNumberToUsd(dSNXUSDBalance)}
-            mx={2}
-            alignItems="center"
           />
           <StatBox
             label={t('staking-v2.wallet-balances.total-synth-value')}
@@ -409,11 +399,6 @@ const getSynthDataForTable = (
 
 const getNonSynthDataForTable = (
   collateral?: Wei,
-  dSNXBalanceData?: {
-    balance: Wei;
-    price: Wei;
-    balanceUsd: Wei;
-  },
   ethBalance?: Wei,
   exchangeRateData?: Record<string, Wei | undefined>
 ) => {
@@ -429,14 +414,6 @@ const getNonSynthDataForTable = (
       usdBalance: snxRate && collateral ? snxRate?.mul(collateral).toNumber() : undefined,
     },
     {
-      icon: <DSNXIcon />,
-      currencyKey: 'dSNX',
-      description: 'dSNX token',
-      balance: dSNXBalanceData?.balance.toNumber(),
-      price: dSNXBalanceData?.price.toNumber(),
-      usdBalance: dSNXBalanceData?.balanceUsd.toNumber(),
-    },
-    {
       icon: <EthereumIcon />,
       currencyKey: 'ETH',
       description: 'Ether',
@@ -450,13 +427,11 @@ const getNonSynthDataForTable = (
 export const WalletBalances = () => {
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const { data: synthsBalanceData, isLoading: isSynthBalancesDataLoading } = useSynthsBalances();
-  const { data: dSNXBalanceData } = useGetDSnxBalance();
   const { data: exchangeRateData, isLoading: isExchangeRateDataLoading } = useExchangeRatesData();
   const { data: synthByNameData, isLoading: isSynthDataByNameLoading } = useGetSynthsByName();
   const { data: ethBalance, isLoading: isEthBalanceLoading } = useEthBalance();
   const { data: redemptionInfo, isLoading: isSynthRedeemerActiveLoading } =
     useSynthRedeemerActive();
-  const { networkId } = useContext(ContractContext);
 
   const isLoading =
     isSynthRedeemerActiveLoading ||
@@ -469,9 +444,6 @@ export const WalletBalances = () => {
   return (
     <WalletBalancesUi
       debtBalance={debtData?.debtBalance.toNumber()}
-      dSNXUSDBalance={
-        networkId !== NetworkIdByName['mainnet-ovm'] ? 0 : dSNXBalanceData?.balanceUsd.toNumber()
-      }
       totalSynthUSDBalance={synthsBalanceData?.totalUSDBalance.toNumber()}
       synthData={getSynthDataForTable(
         synthsBalanceData?.balances,
@@ -479,12 +451,7 @@ export const WalletBalances = () => {
         synthsBalanceData?.totalUSDBalance,
         exchangeRateData
       )}
-      nonSynthData={getNonSynthDataForTable(
-        debtData?.collateral,
-        dSNXBalanceData,
-        ethBalance,
-        exchangeRateData
-      )}
+      nonSynthData={getNonSynthDataForTable(debtData?.collateral, ethBalance, exchangeRateData)}
       isLoading={isLoading}
       redemptionInfo={redemptionInfo}
     />

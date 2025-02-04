@@ -1,10 +1,10 @@
-import { Box, Container, Flex, Text, Center } from '@chakra-ui/react';
+import { Box, Center, Container, Flex } from '@chakra-ui/react';
 import { CRatioBanner } from '@snx-v2/CRatioBanner';
 import { CRatioHealthCard } from '@snx-v2/CRatioHealthCard';
 import { BalanceBox } from '@snx-v2/BalanceBox';
 import { MainActionCardsList } from '@snx-v2/MainActionCards';
 
-import { BridgeIcon, DebtPoolIcon } from '@snx-v2/icons';
+import { BridgeIcon } from '@snx-v2/icons';
 import { BoxLink } from '@snx-v2/BoxLink';
 import { useTranslation } from 'react-i18next';
 import { Welcome } from '@snx-v2/Welcome';
@@ -15,7 +15,6 @@ import { useDebtData } from '@snx-v2/useDebtData';
 import { useApr } from '@snx-v2/useApr';
 import { StatBox } from '@snx-v2/StatBox';
 import { formatPercent } from '@synthetixio/formatters';
-import { Integrators } from '@snx-v2/Integrators';
 import { DeprecationBanner } from '../../components/DeprecationBanner/DeprecationBanner';
 
 const V2Home = () => {
@@ -82,16 +81,6 @@ const V2Home = () => {
                     />
                   </Box>
                 )}
-                {delegateWallet ? null : (
-                  <Box mt={4}>
-                    <BoxLink
-                      to="/debt/manage"
-                      headline={t('staking-v2.v2-home.box-links.hedge-debt.headline')}
-                      subHeadline={t('staking-v2.v2-home.box-links.hedge-debt.subHeadline')}
-                      icon={<DebtPoolIcon />}
-                    />
-                  </Box>
-                )}
                 <Box mt={4}>
                   <BoxLink
                     href={EXTERNAL_LINKS.Synthetix.Docs}
@@ -116,30 +105,6 @@ const V2Home = () => {
               </Flex>
             </Flex>
           </Container>
-        </Box>
-        {/* sUSD Utilities Section */}
-        <Box width="100%">
-          <Box width="100%" borderTopWidth="1px" borderTopColor="gray.900" pt={8} bg="navy.900">
-            <Container maxW="1200px" bg="transparent" mt={2}>
-              <Box>
-                <Text
-                  variant="heading"
-                  color="whiteAlpha.900"
-                  fontSize="md"
-                  lineHeight="lg"
-                  fontWeight="700"
-                >
-                  {t('staking-v2.home.utilities.title')}
-                </Text>
-                <Text variant="heading" color="whiteAlpha.700" fontSize="sm" lineHeight="lg">
-                  {t('staking-v2.home.utilities.description')}
-                </Text>
-              </Box>
-            </Container>
-          </Box>
-          <Box pb={10} width="100%" px={[2, 0, 0, 0]} bg="navy.900">
-            <Integrators />
-          </Box>
         </Box>
       </Flex>
     </>

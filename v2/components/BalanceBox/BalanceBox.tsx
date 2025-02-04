@@ -1,28 +1,13 @@
-import { useState, FC, useContext } from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Progress,
-  Skeleton,
-  Divider,
-  Button,
-  Collapse,
-  Link,
-} from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
-import { ChevronDown, ChevronUp, InfoIcon } from '@snx-v2/icons';
+import React from 'react';
+import { Box, Divider, Flex, Link, Progress, Skeleton, Text } from '@chakra-ui/react';
+import { InfoIcon } from '@snx-v2/icons';
 import { formatNumber, formatNumberToUsd } from '@synthetixio/formatters';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { useGetDSnxBalance } from '@snx-v2/useDSnxBalance';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { useEscrowBalance } from '@snx-v2/useEscrowBalance';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
-import { ContractContext } from '@snx-v2/ContractContext';
-import { NetworkIdByName } from '@snx-v2/useSynthetixContracts';
-import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 
 const Row = ({
   value,
@@ -32,7 +17,7 @@ const Row = ({
   fontWeight,
 }: {
   value?: number;
-  label: string;
+  label: React.ReactNode;
   color?: string;
   formatFn?: (x: number | string) => string;
   fontWeight?: string;
@@ -57,26 +42,15 @@ export const BalanceBoxUi: React.FC<{
   snxPrice?: number;
   transferable?: number;
   stakedSnx?: number;
-  debtBalance?: number;
-  dSNXBalance?: number;
-  dSNXBalanceUsd?: number;
-  delegateMode: boolean;
 }> = ({
   collateral,
   snxPrice,
   transferable,
   stakedSnx,
-  debtBalance,
-  dSNXBalance,
   snxBalance,
   escrowBalance,
   liquidationRewards,
-  dSNXBalanceUsd,
-  delegateMode,
 }) => {
-  const { t } = useTranslation();
-  const [show, setShow] = useState(false);
-
   return (
     <Box fontSize="xs" width="full">
       <Box bg="navy.900" p={3} border="1px" borderColor="gray.900" borderRadius="base">
@@ -87,7 +61,7 @@ export const BalanceBoxUi: React.FC<{
           display="flex"
           alignItems="center"
         >
-          {t('staking-v2.balance-box.box-heading')} <InfoIcon ml={1} />
+          SNX Total <InfoIcon ml={1} />
         </Text>
         {collateral !== undefined ? (
           <Text fontFamily="mono" fontWeight="extrabold" fontSize="sm" lineHeight="5">
@@ -117,67 +91,45 @@ export const BalanceBoxUi: React.FC<{
           <Skeleton my={1} width="full" height={4} />
         )}
 
-        <Row
-          value={stakedSnx}
-          label={t('staking-v2.balance-box.staked')}
-          color="white"
-          fontWeight="700"
-        />
-        <Row value={transferable} label={t('staking-v2.balance-box.transferable')} />
+        <Row value={stakedSnx} label="Staked" color="white" fontWeight="700" />
+        <Row value={transferable} label="Transferable" />
 
         <Divider my={2} />
-        <Collapse in={show}>
-          <Row
-            value={collateral}
-            label={t('staking-v2.balance-box.collateral')}
-            fontWeight="700"
-            color="white"
-          />
-          <Row value={snxBalance} label={t('staking-v2.balance-box.balance')} />
-          <Row value={escrowBalance} label={t('staking-v2.balance-box.escrowed')} />
-          <Row value={liquidationRewards} label={t('staking-v2.balance-box.liq-rewards')} />
-
-          <Divider my={4} />
-          <Flex justifyContent="space-between">
-            <Text fontWeight={700}>{t('staking-v2.balance-box.debt-management')}</Text>
-            {delegateMode ? null : (
-              <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/debt">
-                {t('staking-v2.balance-box.hedged-debt')}
-              </Link>
-            )}
-          </Flex>
-          <Row
-            value={debtBalance}
-            label={t('staking-v2.balance-box.active-debt')}
-            color="white"
-            formatFn={formatNumberToUsd}
-          />
-          <Row value={dSNXBalance} label={t('staking-v2.balance-box.dsnx-balance')} color="white" />
-          <Row value={dSNXBalanceUsd} label="" formatFn={formatNumberToUsd} />
-          <Divider my={2} />
-        </Collapse>
-        <Button
-          margin="0 auto"
-          display="block"
-          variant="link"
-          size="sm"
-          onClick={() => setShow((x) => !x)}
-        >
-          {t('staking-v2.balance-box.show-all-balances')} {show ? <ChevronUp /> : <ChevronDown />}
-        </Button>
+        <Row value={collateral} label="Collateral" fontWeight="700" color="white" />
+        <Row
+          value={snxBalance}
+          label={
+            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/wallet/balances">
+              Balance
+            </Link>
+          }
+        />
+        <Row
+          value={escrowBalance}
+          label={
+            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/escrow">
+              Escrowed
+            </Link>
+          }
+        />
+        <Row
+          value={liquidationRewards}
+          label={
+            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/earn">
+              Liquidation Rewards
+            </Link>
+          }
+        />
       </Box>
     </Box>
   );
 };
 
-export const BalanceBox: FC = () => {
+export function BalanceBox() {
   const { data: debtData } = useDebtData();
   const { data: exchangeRateData } = useExchangeRatesData();
-  const { data: dSNXBalanceData } = useGetDSnxBalance();
   const { data: escrowBalanceData } = useEscrowBalance();
   const { data: liquidationRewardsData } = useGetLiquidationRewards();
-  const { delegateWallet } = useDelegateWallet();
-  const { networkId } = useContext(ContractContext);
 
   const stakedSnx = calculateStakedSnx({
     targetCRatio: debtData?.targetCRatio,
@@ -187,7 +139,6 @@ export const BalanceBox: FC = () => {
 
   return (
     <BalanceBoxUi
-      delegateMode={Boolean(delegateWallet)}
       snxPrice={exchangeRateData?.SNX?.toNumber()}
       collateral={debtData?.collateral.toNumber()}
       escrowBalance={escrowBalanceData?.totalEscrowed.toNumber()}
@@ -195,13 +146,6 @@ export const BalanceBox: FC = () => {
       snxBalance={debtData?.balance.toNumber()}
       stakedSnx={stakedSnx.toNumber()}
       transferable={debtData?.transferable.toNumber()}
-      debtBalance={debtData?.debtBalance.toNumber()}
-      dSNXBalance={
-        networkId === NetworkIdByName['mainnet-ovm'] ? dSNXBalanceData?.balance.toNumber() : 0
-      }
-      dSNXBalanceUsd={
-        networkId === NetworkIdByName['mainnet-ovm'] ? dSNXBalanceData?.balanceUsd.toNumber() : 0
-      }
     />
   );
-};
+}
