@@ -2,7 +2,7 @@
   "name": "@synthetixio/deps",
   "private": true,
   "version": "1.0.0",
-  "author": "Nikita <noisekit@btnk.au>",
+  "author": "Noisekit <noisekit@proton.me>",
   "repository": "github:Synthetixio/js-monorepo",
   "license": "MIT",
   "bin": {

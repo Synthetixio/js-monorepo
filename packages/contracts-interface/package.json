@@ -15,7 +15,8 @@
     "src"
   ],
   "scripts": {
-    "build": "tsc --build --verbose",
+    "build:ts": "tsc --build --verbose",
+    "build": "yarn build:ts",
     "examples": "ts-node ./examples/index.js",
     "start": "webpack-cli serve",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",

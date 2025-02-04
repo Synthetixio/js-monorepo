@@ -10,65 +10,6 @@ parameters:
     default: '13.5.0'
 
 commands:
-  yarn-install:
-    steps:
-      - restore_cache:
-          keys:
-            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-
-      # yarn's state of installation
-      - restore_cache:
-          keys:
-            - yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-
-      - run:
-          name: yarn install
-          command: |-
-            # Check if we restored cache and have node_modules already
-            if [ -f "node_modules/.yarn-state.yml" ] && [ -f ".yarn/install-state.gz" ]; then
-              echo "node_modules restored from cache"
-              exit 0
-            else
-              echo "node_modules could not be restored from cache, activating fallback installation"
-              yarn install --immutable --immutable-cache
-            fi
-
-      - save_cache:
-          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - 'node_modules'
-
-      - save_cache:
-          key: yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - '.yarn/install-state.gz'
-
-  checksum:
-    steps:
-      - run: |-
-          git ls-files -s contracts packages tools v1 v2 > "/tmp/checksum.txt"
-          cat "/tmp/checksum.txt"
-
-  build-save:
-    steps:
-      - checksum
-      - run: cp "/tmp/checksum.txt" "/tmp/build-cache.txt"
-      - save_cache:
-          key: build-no-private-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
-          paths:
-            - './packages'
-            - './tools'
-            - './v1'
-            - './v2'
-            - '/tmp/build-cache.txt'
-
-  build-restore:
-    steps:
-      - checksum
-      - restore_cache:
-          keys:
-            - build-no-private-{{ .Environment.CACHE_VERSION }}-{{ checksum "/tmp/checksum.txt" }}
-
   install-foundry:
     steps:
       - run:
@@ -133,68 +74,13 @@ commands:
           command: curl --silent --request POST --user "$IPFS_USER:$IPFS_PASS" "<< parameters.ipfs-cluster-api >>/pin/add?arg=$IPFS_CID" | jq
 
 jobs:
-  yarn-install:
-    working_directory: /tmp/app
-    docker:
-      - image: cimg/node:<< pipeline.parameters.node-version >>
-    environment:
-      CYPRESS_CRASH_REPORTS: 0
-      CYPRESS_INSTALL_BINARY: 0
-    steps:
-      - checkout
-
-      # yarn's state of installation
-      - restore_cache:
-          keys:
-            - yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-
-      # yarn's own state of node_modules
-      - restore_cache:
-          keys:
-            - yarn-state-node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-
-      - run:
-          name: Halt if node_modules exist in cache
-          command: |-
-            # Check if we restored cache and have node_modules already
-            if [ -f "node_modules/.yarn-state.yml" ]; then
-              echo "SKIP, no changes detected"
-              circleci-agent step halt
-            fi
-
-      #
-      # Proceed with installing node modules, but to speed things up, restore caches
-      #
-
-      # node_modules cache
-      - restore_cache:
-          keys:
-            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-
-      - run: yarn install --immutable --immutable-cache
-
-      - save_cache:
-          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - 'node_modules'
-
-      - save_cache:
-          key: yarn-install-state-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - '.yarn/install-state.gz'
-
-      - save_cache:
-          key: yarn-state-node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - 'node_modules/.yarn-state.yml'
-
   checks:
     working_directory: /tmp/app
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
       - checkout
-      - yarn-install
+      - run: yarn install --immutable
       - run: yarn npm audit --recursive --severity=critical
       - run: yarn dedupe --check
       - run: yarn deps
@@ -202,6 +88,9 @@ jobs:
       - run: yarn deps:circular
       - run: yarn pretty
       - run: yarn lint
+      - run: yarn build:ts
+      - run: export NODE_OPTIONS=--max_old_space_size=8192 yarn typecheck
+      - run: git diff --name-only --exit-code
 
   tests:
     working_directory: /tmp/app
@@ -209,35 +98,12 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
       - checkout
-      - yarn-install
+      - run: yarn install --immutable
       - run: NODE_ENV=test yarn test --coverage --coverageReporters=json --reporters=jest-junit --runInBand
       - store_test_results:
           path: './junit.xml'
       - store_artifacts:
           path: 'coverage'
-
-  typecheck:
-    working_directory: /tmp/app
-    docker:
-      - image: cimg/node:<< pipeline.parameters.node-version >>
-    resource_class: xlarge
-    steps:
-      - checkout
-      - yarn-install
-      - build-restore
-      - run:
-          name: Build
-          command: |-
-            # Check if we restored build cache already
-            if [ -f "/tmp/build-cache.txt" ]; then
-              echo "SKIP, no changes detected"
-            else
-              yarn workspaces foreach --topological-dev --verbose --no-private run build
-              # codegen is part of build, so ensure we have all the autogenerated code committed
-              git diff --name-only --exit-code
-            fi
-      - build-save
-      - run: export NODE_OPTIONS=--max_old_space_size=8192 yarn typecheck
 
   v2-e2e:
     working_directory: /tmp/app
@@ -249,7 +115,7 @@ jobs:
     steps:
       - checkout
       - install-foundry
-      - yarn-install
+      - run: yarn install --immutable
 
       - run:
           name: Run server localhost:3000
@@ -301,7 +167,7 @@ jobs:
       NODE_ENV: test
     steps:
       - checkout
-      - yarn-install
+      - run: yarn install --immutable
 
       - run:
           working_directory: /tmp/app/v2/cypress
@@ -322,26 +188,6 @@ jobs:
           path: 'v2/cypress/cypress/videos'
           destination: 'videos'
 
-  combine-coverage:
-    working_directory: /tmp/app
-    docker:
-      - image: cimg/node:<< pipeline.parameters.node-version >>
-    steps:
-      - checkout
-      - yarn-install
-      - run: rm -rf /tmp/cov
-      - run: yarn download-cci-coverage tests /tmp/cov || true
-      - run: yarn download-cci-coverage v2-cy /tmp/cov || true
-      - run: yarn download-cci-coverage v2-e2e /tmp/cov || true
-      - run: mkdir -p /tmp/cov
-      - run: ls -alR /tmp/cov
-      - run: mkdir -p /tmp/cov/combined
-      - run: yarn nyc merge /tmp/cov /tmp/cov/combined/coverage.json || true
-      - run: |-
-          curl -Os https://uploader.codecov.io/latest/linux/codecov
-          chmod +x codecov
-          ./codecov -t ${CODECOV_TOKEN} --file /tmp/cov/combined/coverage.json
-
   v2-ipfs:
     working_directory: /tmp/app
     docker:
@@ -349,7 +195,7 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - yarn-install
+      - run: yarn workspace @synthetixio/v2-ui focus
       - run: yarn workspace @synthetixio/v2-ui build
       - ipfs-deploy:
           source-dir: './v2/ui/out'
@@ -362,26 +208,15 @@ workflows:
 
   ui:
     jobs:
-      - yarn-install
-      - checks:
-          requires: [yarn-install]
-      - typecheck:
-          requires: [yarn-install]
-      - tests:
-          requires: [yarn-install]
+      - checks
+      - tests
+      - v2-cy
+      - v2-e2e
 
-      - v2-cy:
-          requires: [yarn-install]
-      - v2-e2e:
-          requires: [yarn-install]
       - v2-ipfs:
-          requires: [tests, typecheck, v2-cy, v2-e2e]
+          requires: [tests, v2-cy, v2-e2e]
           filters:
             branches:
               only:
-                - release
                 - master
                 - ipfs-deploy
-
-      - combine-coverage:
-          requires: [tests, v2-cy, v2-e2e]

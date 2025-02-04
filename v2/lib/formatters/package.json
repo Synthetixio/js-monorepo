@@ -3,7 +3,8 @@
   "main": "dist/index.js",
   "version": "0.0.1-0",
   "scripts": {
-    "build": "tsc"
+    "build:ts": "tsc",
+    "build": "yarn build:ts"
   },
   "dependencies": {
     "date-fns": "^2.29.3",
