@@ -9,7 +9,6 @@
     "@snx-v2/useApr": "workspace:*",
     "@snx-v2/useClaimableRewards": "workspace:*",
     "@snx-v2/useGetLifetimeRewards": "workspace:*",
-    "@storybook/react": "^6.5.16",
     "@synthetixio/formatters": "workspace:*",
     "react": "^18.2.0"
   },

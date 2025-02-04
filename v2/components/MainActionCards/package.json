@@ -16,7 +16,6 @@
     "@snx-v2/useFeesBurnedInPeriod": "workspace:*",
     "@snx-v2/useRewardsAvailable": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
-    "@storybook/react": "^6.5.16",
     "@synthetixio/formatters": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5",

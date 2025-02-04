@@ -8,8 +8,5 @@
     "@snx-v2/Constants": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5"
-  },
-  "devDependencies": {
-    "@storybook/react": "^6.5.16"
   }
 }

@@ -24,7 +24,6 @@
     "**/tests/**",
     "**/*.test.ts",
     "**/*.test.tsx",
-    "**/stories/**",
     "**/build/**",
     "**/dist/**"
   ],

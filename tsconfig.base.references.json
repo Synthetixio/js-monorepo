@@ -5,8 +5,6 @@
     "**/tests/**",
     "**/*.test.ts",
     "**/*.test.tsx",
-    "**/*.stories.tsx",
-    "**/stories/**",
     "**/build/**",
     "**/dist/**"
   ],
@@ -15,11 +13,7 @@
     { "path": "./packages/optimism-networks" },
     { "path": "./packages/providers" },
     { "path": "./packages/queries" },
-
     { "path": "./tools/codegen-graph-ts" },
-
-    { "path": "./v2/contracts" },
-
-    { "path": "./v3/synpress/tests/e2e" }
+    { "path": "./v2/contracts" }
   ]
 }
