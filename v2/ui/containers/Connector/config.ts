@@ -10,7 +10,6 @@ import portisModule from '@web3-onboard/portis';
 import torusModule from '@web3-onboard/torus';
 import trustModule from '@web3-onboard/trust';
 import { init } from '@web3-onboard/react';
-import ledgerModule from '@web3-onboard/ledger';
 
 import { SynthetixIcon, SynthetixLogo } from 'components/WalletComponents';
 import { customBrave, customDetected, customMetaMask } from './customInjected';
@@ -21,11 +20,6 @@ const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
 
 const walletConnect = walletConnectModule({
   version: 2,
-  projectId: '5075a2da602e17eec34aa77b40b321be',
-});
-
-const ledger = ledgerModule({
-  walletConnectVersion: 2,
   projectId: '5075a2da602e17eec34aa77b40b321be',
 });
 
@@ -100,7 +94,6 @@ export const onboard: OnboardAPI = init({
     coinbaseWalletSdk,
     injected,
     brave,
-    ledger,
     walletConnect,
     trezor,
     trust,
