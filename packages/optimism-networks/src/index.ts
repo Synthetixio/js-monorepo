@@ -1,15 +1,14 @@
-import type { MetaMaskInpageProvider } from '@metamask/providers';
 import { hexStripZeros } from '@ethersproject/bytes';
-import { BigNumber } from '@ethersproject/bignumber';
+import { ethers } from 'ethers';
 
 import {
-  OPTIMISM_NETWORKS,
+  DEFAULT_LAYER2_NETWORK,
+  DEFAULT_MAINNET_NETWORK,
   L1_TO_L2_NETWORK_MAPPER,
   L2_TO_L1_NETWORK_MAPPER,
   MESSENGER_ADDRESSES,
-  DEFAULT_MAINNET_NETWORK,
-  DEFAULT_LAYER2_NETWORK,
   METAMASK_MISSING_NETWORK_ERROR_CODE,
+  OPTIMISM_NETWORKS,
 } from './constants';
 import { OptimismNetwork } from './types';
 
@@ -25,11 +24,7 @@ const getOptimismNetwork = ({
   return OPTIMISM_NETWORKS[optimismNetwork];
 };
 
-const addOptimismNetworkToMetamask = async ({
-  ethereum,
-}: {
-  ethereum: MetaMaskInpageProvider;
-}): Promise<void> => {
+const addOptimismNetworkToMetamask = async ({ ethereum }: { ethereum: any }): Promise<void> => {
   if (!ethereum || !ethereum.isMetaMask) throw new Error('Metamask is not installed');
   const optimismNetworkConfig = getOptimismNetwork({ layerOneNetworkId: Number(ethereum.chainId) });
 
@@ -38,25 +33,25 @@ const addOptimismNetworkToMetamask = async ({
     params: [optimismNetworkConfig],
   });
 };
-const switchToL1 = async ({ ethereum }: { ethereum: MetaMaskInpageProvider }): Promise<void> => {
+const switchToL1 = async ({ ethereum }: { ethereum: any }): Promise<void> => {
   if (!ethereum || !ethereum.isMetaMask) throw new Error('Metamask is not installed');
   const networkId =
     L2_TO_L1_NETWORK_MAPPER[Number(ethereum.chainId)] ||
     L2_TO_L1_NETWORK_MAPPER[DEFAULT_LAYER2_NETWORK];
-  const formattedChainId = hexStripZeros(BigNumber.from(networkId).toHexString());
+  const formattedChainId = hexStripZeros(ethers.BigNumber.from(networkId).toHexString());
   await ethereum.request({
     method: 'wallet_switchEthereumChain',
     params: [{ chainId: formattedChainId }],
   });
 };
-const switchToL2 = async ({ ethereum }: { ethereum: MetaMaskInpageProvider }): Promise<void> => {
+const switchToL2 = async ({ ethereum }: { ethereum: any }): Promise<void> => {
   if (!ethereum || !ethereum.isMetaMask) throw new Error('Metamask is not installed');
   try {
     const networkId =
       L1_TO_L2_NETWORK_MAPPER[Number(ethereum.chainId)] ||
       L1_TO_L2_NETWORK_MAPPER[DEFAULT_MAINNET_NETWORK];
 
-    const formattedChainId = hexStripZeros(BigNumber.from(networkId).toHexString());
+    const formattedChainId = hexStripZeros(ethers.BigNumber.from(networkId).toHexString());
     await ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: formattedChainId }],

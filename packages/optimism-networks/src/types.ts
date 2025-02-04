@@ -14,7 +14,6 @@ export type OptimismNetwork = {
 
 export enum NetworkId {
   Mainnet = 10,
-  Kovan = 69,
   Goerli = 420,
 }
 

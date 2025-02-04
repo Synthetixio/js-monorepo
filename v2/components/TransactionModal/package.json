@@ -1,7 +1,7 @@
 {
   "name": "@snx-v2/TransactionModal",
   "private": true,
-  "main": "index.tsx",
+  "main": "index.ts",
   "version": "0.0.1",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",

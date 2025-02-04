@@ -5,46 +5,27 @@ export function numberWithCommas(value: string, decimals?: number) {
   return decimals ? joinedParts.substring(0, joinedParts.indexOf('.') + decimals + 1) : joinedParts;
 }
 
-interface Options extends Intl.NumberFormatOptions {
-  locales?: string | string[];
-}
-export const formatNumberToUsd = (val: number | string, options?: Options) => {
-  const optionsWithDefault = { style: 'currency', currency: 'USD', locales: 'en-EN', ...options };
-  return new Intl.NumberFormat(optionsWithDefault.locales, optionsWithDefault).format(Number(val));
+export const formatNumberToUsd = (val: number | string, options?: Intl.NumberFormatOptions) => {
+  return new Intl.NumberFormat('en-EN', {
+    style: 'currency',
+    currency: 'USD',
+    ...options,
+  }).format(Number(val));
 };
 
-export const formatNumberToCurrencyBasedOnSize = (val: number | string) => {
-  const num = Number(val);
-  if (num < 0.0001) {
-    return formatNumberToUsd(num, { maximumFractionDigits: 8 });
-  }
-  if (num < 1) {
-    return formatNumberToUsd(num, { maximumFractionDigits: 4 });
-  }
-  return formatNumberToUsd(num, { maximumFractionDigits: 2 });
-};
-
-export const formatNumber = (value: number | string, options?: Options) => {
-  const optionsWithDefault = {
+export const formatNumber = (value: number | string, options?: Intl.NumberFormatOptions) => {
+  return new Intl.NumberFormat('en-EN', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-    locales: 'en-EN',
     ...options,
-  };
-  return new Intl.NumberFormat(optionsWithDefault.locales, optionsWithDefault).format(
-    Number(value)
-  );
+  }).format(Number(value));
 };
 
-export const formatPercent = (value: number | string, options?: Options) => {
-  const optionsWithDefault = {
+export const formatPercent = (value: number | string, options?: Intl.NumberFormatOptions) => {
+  return new Intl.NumberFormat('en-EN', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
-    locales: 'en-EN',
     style: 'percent',
     ...options,
-  };
-  return new Intl.NumberFormat(optionsWithDefault.locales, optionsWithDefault).format(
-    Number(value)
-  );
+  }).format(Number(value));
 };

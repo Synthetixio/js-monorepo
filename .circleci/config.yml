@@ -5,11 +5,48 @@ parameters:
     type: string
     default: '22.11.0'
 
-  cypress-version:
-    type: string
-    default: '13.5.0'
-
 commands:
+  yarn-install:
+    steps:
+      - run: yarn -v
+
+      - run: date +"%Y-%m" > /tmp/month.txt && cat /tmp/month.txt
+      - restore_cache:
+          keys:
+            - &yarn_cache yarn-{{ .Environment.NODE_MODULES_VERSION }}-{{ checksum "/tmp/month.txt" }}-{{ checksum "yarn.lock" }}
+            - yarn-{{ .Environment.NODE_MODULES_VERSION }}-{{ checksum "/tmp/month.txt" }}-
+
+      # yarn's state of installation
+      - restore_cache:
+          keys:
+            - &yarn_state_cache yarn-install-state-{{ .Environment.NODE_MODULES_VERSION }}-{{ checksum "/tmp/month.txt" }}-{{ checksum "yarn.lock" }}
+            - yarn-install-state-{{ .Environment.NODE_MODULES_VERSION }}-{{ checksum "/tmp/month.txt" }}-
+
+      - run: yarn install --immutable
+
+      #      - run:
+      #          name: Fallback to installing node modules in case of cache corruption
+      #          command: |-
+      #            # Check if we restored cache and have node_modules already
+      #            if [ -f "node_modules/.yarn-state.yml" ] && [ -f ".yarn/instalUSDC_l-state.gz" ]; then
+      #              echo "node_modules restored from cache"
+      #              exit 0
+      #            else
+      #              echo "node_modules could not be restored from cache, activating fallback installation"
+      #              yarn install --immutable
+      #            fi
+
+      - save_cache:
+          key: *yarn_cache
+          paths:
+            - 'node_modules'
+            - '~/.cache/Cypress'
+
+      - save_cache:
+          key: *yarn_state_cache
+          paths:
+            - '.yarn/install-state.gz'
+
   install-foundry:
     steps:
       - run:
@@ -80,7 +117,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
       - checkout
-      - run: yarn install --immutable
+      - yarn-install
       - run: yarn npm audit --recursive --severity=critical
       - run: yarn dedupe --check
       - run: yarn deps
@@ -98,7 +135,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
       - checkout
-      - run: yarn install --immutable
+      - yarn-install
       - run: NODE_ENV=test yarn test --coverage --coverageReporters=json --reporters=jest-junit --runInBand
       - store_test_results:
           path: './junit.xml'
@@ -108,14 +145,16 @@ jobs:
   v2-e2e:
     working_directory: /tmp/app
     docker:
-      - image: cypress/included:<< pipeline.parameters.cypress-version >>
+      - image: cimg/node:<< pipeline.parameters.node-version >>
     resource_class: large
     environment:
       NODE_ENV: test
     steps:
       - checkout
       - install-foundry
-      - run: yarn install --immutable
+      - yarn-install
+      - run: sudo apt update
+      - run: sudo apt install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb lcov
 
       - run:
           name: Run server localhost:3000
@@ -162,12 +201,14 @@ jobs:
   v2-cy:
     working_directory: /tmp/app
     docker:
-      - image: cypress/included:<< pipeline.parameters.cypress-version >>
+      - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       NODE_ENV: test
     steps:
       - checkout
-      - run: yarn install --immutable
+      - yarn-install
+      - run: sudo apt update
+      - run: sudo apt install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb lcov
 
       - run:
           working_directory: /tmp/app/v2/cypress
