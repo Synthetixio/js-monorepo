@@ -1,11 +1,15 @@
 import '@cypress/code-coverage/support';
+import { default as installLogsCollector } from 'cypress-terminal-report/src/installLogsCollector';
+
 import { ethers } from 'ethers';
 import { subgraph } from '../lib/subgraph';
-import { onLogAdded } from '@snx-cy/onLogAdded';
+
+installLogsCollector({
+  enableExtendedCollector: true,
+  enableContinuousLogging: true,
+});
 
 beforeEach(() => {
-  cy.on('log:added', onLogAdded);
-
   cy.intercept('https://analytics.synthetix.io/matomo.js', { statusCode: 204 }).as('matomo');
 
   // Because we are working with fork, subgraph becomes irrelevant

@@ -1,7 +1,7 @@
 {
   "name": "@snx-v2/WalletModal",
   "private": true,
-  "main": "index.tsx",
+  "main": "index.ts",
   "version": "0.0.12-0",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
@@ -15,7 +15,6 @@
     "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
-    "@storybook/react": "^6.5.16",
     "@synthetixio/formatters": "workspace:*",
     "@synthetixio/v3-theme": "workspace:*",
     "react": "^18.2.0",

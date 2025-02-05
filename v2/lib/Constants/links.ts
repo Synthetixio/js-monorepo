@@ -3,16 +3,20 @@ export const PROD_HOSTNAME = 'staking.synthetix.io';
 export const EXTERNAL_LINKS = {
   Synthetix: {
     Docs: 'https://docs.synthetix.io/',
-    Litepaper: 'https://docs.synthetix.io/user-docs/v2-user-docs/synthetix-protocol/the-synthetix-protocol/synthetix-litepaper',
+    Litepaper:
+      'https://docs.synthetix.io/user-docs/v2-user-docs/synthetix-protocol/the-synthetix-protocol/synthetix-litepaper',
     Incentives: 'https://docs.synthetix.io/incentives/',
     SIP60: 'https://sips.synthetix.io/sips/sip-60',
     StakingGuide: 'https://docs.synthetix.io/user-docs/v2-user-docs/staking/staking-guide',
     SIP148Liquidations: 'https://blog.synthetix.io/new-liquidation-mechanism/',
     Governance: 'https://governance.synthetix.io',
-    RewardsGuide: 'https://docs.synthetix.io/user-docs/v2-user-docs/staking/staking-guide/steps-for-claiming-rewards',
-    CRatioGuide: 'https://docs.synthetix.io/user-docs/v2-user-docs/staking/staking-guide/collateralization-ratio',
+    RewardsGuide:
+      'https://docs.synthetix.io/user-docs/v2-user-docs/staking/staking-guide/steps-for-claiming-rewards',
+    CRatioGuide:
+      'https://docs.synthetix.io/user-docs/v2-user-docs/staking/staking-guide/collateralization-ratio',
     SIP255: 'https://sips.synthetix.io/sips/sip-255',
-    HedgeStrategies: 'https://docs.synthetix.io/user-docs/v2-user-docs/staking/staking-guide/debt-hedging-strategies',
+    HedgeStrategies:
+      'https://docs.synthetix.io/user-docs/v2-user-docs/staking/staking-guide/debt-hedging-strategies',
     NativeBridge: 'https://blog.synthetix.io/susd-bridge-enabled',
     OptimismBridge: 'https://blog.oplabs.co/two-step-withdrawals/',
     MessageRelayer: 'https://optimistic.etherscan.io/messagerelayer',
@@ -29,9 +33,5 @@ export const EXTERNAL_LINKS = {
   L2: {
     SynthetixDeposit: 'https://app.optimism.io/bridge',
     SynthetixWithdrawal: 'https://app.optimism.io/bridge/withdraw',
-  },
-  Toros: {
-    dSNXPool: 'https://toros.finance/pool/0x59babc14dd73761e38e5bda171b2298dc14da92d',
-    docs: 'https://docs.toros.finance/dynamic-vaults/synthetix-debt-hedge-index',
   },
 } as const;

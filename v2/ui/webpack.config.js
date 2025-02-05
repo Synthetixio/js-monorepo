@@ -1,5 +1,4 @@
 const path = require('path');
-require('dotenv').config({ path: path.resolve(process.cwd(), '.env.local') });
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -64,8 +63,6 @@ const babelRule = {
     /v2\/components/,
     /v2\/cypress/,
     /v2\/ui/,
-    /v3\/theme/,
-    /v3\/lib/,
 
     /packages\/[^\/]+\/src/,
     /tools\/[^\/]+\/src/,
@@ -138,7 +135,7 @@ const devServer = {
 };
 
 module.exports = {
-  devtool: isProd ? 'source-map' : isTest ? false : 'eval',
+  devtool: isProd ? 'source-map' : isTest ? false : 'source-map',
   devServer,
   mode: isProd ? 'production' : 'development',
   //  experiments: {
@@ -217,35 +214,6 @@ module.exports = {
       }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
-        'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
-        'process.env.NEXT_PUBLIC_PORTIS_APP_ID': JSON.stringify(
-          process.env.NEXT_PUBLIC_PORTIS_APP_ID
-        ),
-        'process.env.NEXT_PUBLIC_BN_NOTIFY_API_KEY': JSON.stringify(
-          process.env.NEXT_PUBLIC_BN_NOTIFY_API_KEY
-        ),
-        'process.env.NEXT_PUBLIC_BN_ONBOARD_API_KEY': JSON.stringify(
-          process.env.NEXT_PUBLIC_BN_ONBOARD_API_KEY
-        ),
-        'process.env.NEXT_PUBLIC_INFURA_PROJECT_ID': JSON.stringify(
-          process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-        ),
-        'process.env.INFURA_ARCHIVE_KEY': JSON.stringify(process.env.INFURA_ARCHIVE_KEY),
-        'process.env.NEXT_PUBLIC_SOCKET_API_KEY': JSON.stringify(
-          process.env.NEXT_PUBLIC_SOCKET_API_KEY
-        ),
-        'process.env.NEXT_PUBLIC_BOARDROOM_KEY': JSON.stringify(
-          process.env.NEXT_PUBLIC_BOARDROOM_KEY
-        ),
-        'process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY': JSON.stringify(
-          process.env.NEXT_PUBLIC_ALCHEMY_MAINNET_KEY
-        ),
-        'process.env.NEXT_PUBLIC_ALCHEMY_OVM_KEY': JSON.stringify(
-          process.env.NEXT_PUBLIC_ALCHEMY_OVM_KEY
-        ),
-        'process.env.NEXT_PUBLIC_WC_PROJECT_ID': JSON.stringify(
-          process.env.NEXT_PUBLIC_WC_PROJECT_ID
-        ),
       }),
     ])
     .concat(isProd ? [] : isTest ? [] : [new ReactRefreshWebpackPlugin({ overlay: false })])
@@ -270,6 +238,7 @@ module.exports = {
       '@synthetixio/queries/build': '@synthetixio/queries/src',
     },
     fallback: {
+      url: require.resolve('url/'),
       buffer: require.resolve('buffer'),
       stream: require.resolve('stream-browserify'),
       crypto: require.resolve('crypto-browserify'),

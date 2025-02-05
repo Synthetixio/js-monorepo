@@ -23,8 +23,7 @@
         "dHedgeDescription": "Use your sUSD to find the best investment managers and automated strategies in DeFi.",
         "curveDescription": "Deposit your synths into curve pools for yield on synth pairs and help provide liquidity to the ecosystem.",
         "polynomialDescription": "Crypto Perps with up to 50x leverage and deep liquidity.",
-        "overtimeDescription": "Sports positional markets, built on Thales.",
-        "torosDescription": "Toros enables a suite of one-click financial tools which simplify complex strategies."
+        "overtimeDescription": "Sports positional markets, built on Thales."
       }
     },
     "epochprice": {
@@ -39,10 +38,6 @@
         "bridge": {
           "headline": "SNX Bridge",
           "subHeadline": "Transfer Asset between blockchains"
-        },
-        "hedge-debt": {
-          "headline": "Hedge Debt",
-          "subHeadline": "Buy dSNX to hedge"
         },
         "help": {
           "headline": "Help",
@@ -144,7 +139,6 @@
       "links": {
         "guide": "Staking Guide",
         "bridge": "Bridge",
-        "sell-dsnx": "Sell dSNX for sUSD",
         "self-liquidate": "Self Liquidate"
       },
       "txn-modal": {
@@ -220,7 +214,6 @@
       "active-debt": "Active Debt",
       "collateral": "Collateral",
       "balance": "Balance",
-      "dsnx-balance": "dSNX Balance",
       "escrowed": "Escrowed",
       "liq-rewards": "Liquidation Rewards",
       "show-all-balances": "Show all balances"
@@ -303,7 +296,6 @@
     },
     "wallet-balances": {
       "active-debt": "Active Debt",
-      "d-snx-value": "dSNX Value",
       "total-synth-value": "Total Synth Value",
       "table-columns": {
         "asset": "Asset",

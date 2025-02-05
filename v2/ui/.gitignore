@@ -4,8 +4,6 @@
 .env.test.local
 .env.production.local
 
-# storybook
-storybook-static
 tmp/
 out/
 

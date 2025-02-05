@@ -61,9 +61,9 @@ export const useDebtData = () => {
   const { delegateWallet } = useDelegateWallet();
   const walletAddress = delegateWallet?.address || connectedWalletAddress;
 
-  return useQuery(
-    ['v2debt', 'data', networkId, walletAddress],
-    async () => {
+  return useQuery({
+    queryKey: ['v2debt', 'data', `${networkId}`, `${walletAddress}`],
+    queryFn: async () => {
       if (!walletAddress || !Synthetix || !Liquidator || !SystemSettings)
         throw Error('Query should not be enabled if contracts are missing');
 
@@ -94,12 +94,10 @@ export const useDebtData = () => {
         Liquidator.getLiquidationDeadlineForAccount(walletAddress),
       ]);
     },
-    {
-      enabled: Boolean(
-        networkId && walletAddress !== null && Synthetix && Liquidator && SystemSettings
-      ),
-      select: processQueryData,
-      staleTime: 10000,
-    }
-  );
+    enabled: Boolean(
+      networkId && walletAddress !== null && Synthetix && Liquidator && SystemSettings
+    ),
+    select: processQueryData,
+    staleTime: 10000,
+  });
 };

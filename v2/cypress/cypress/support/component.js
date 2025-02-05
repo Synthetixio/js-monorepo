@@ -1,5 +1,5 @@
 import '@cypress/code-coverage/support';
-import { mount } from 'cypress/react18';
+import { mount } from 'cypress/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import '@synthetixio/v2-ui/i18n';

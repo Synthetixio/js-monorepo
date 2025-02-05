@@ -24,7 +24,6 @@
     "@snx-v2/useGetLiquidationRewards": "workspace:*",
     "@snx-v2/useRewardsAvailable": "workspace:*",
     "@snx-v2/useSynthsBalances": "workspace:*",
-    "@storybook/react": "^6.5.16",
     "@synthetixio/formatters": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
     "date-fns": "^2.29.3",

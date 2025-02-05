@@ -29,24 +29,10 @@
 yarn install
 ```
 
-### Set up environment variables
-
-Copy the `.env.local.example` file in this directory to `.env.local` (which will be ignored by Git):
-
-```bash
-cp .env.local.example .env.local
-```
-
-Then, open `.env.local` and add the missing environment variables:
-
-- `NEXT_PUBLIC_PORTIS_APP_ID` - Portis app id (get it from [portis.io](https://www.portis.io/))
-- `NEXT_PUBLIC_BN_ONBOARD_API_KEY` - Blocknative Onboard API key (get it from [blocknative.com](https://blocknative.com/))
-- `NEXT_PUBLIC_INFURA_PROJECT_ID` - Infura project id (get it from [infura.io](https://infura.io/))
-
 ### Run
 
 ```bash
-yarn dev
+yarn start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

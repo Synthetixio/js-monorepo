@@ -1,24 +1,18 @@
 {
   "name": "@snx-v2/BalanceBox",
   "private": true,
-  "main": "index.tsx",
+  "main": "index.ts",
   "version": "0.0.12-0",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
-    "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/icons": "workspace:*",
     "@snx-v2/stakingCalculations": "workspace:*",
-    "@snx-v2/useDSnxBalance": "workspace:*",
     "@snx-v2/useDebtData": "workspace:*",
-    "@snx-v2/useDelegateWallet": "workspace:*",
     "@snx-v2/useEscrowBalance": "workspace:*",
     "@snx-v2/useExchangeRatesData": "workspace:*",
     "@snx-v2/useGetLiquidationRewards": "workspace:*",
-    "@snx-v2/useSynthetixContracts": "workspace:*",
-    "@storybook/react": "^6.5.16",
     "@synthetixio/formatters": "workspace:*",
     "react": "^18.2.0",
-    "react-i18next": "^12.1.5",
     "react-router-dom": "^6.8.1"
   },
   "stableVersion": "0.0.11"
