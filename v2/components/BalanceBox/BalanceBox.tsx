@@ -8,8 +8,9 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import { calculateStakedSnx } from '@snx-v2/stakingCalculations';
 import { useEscrowBalance } from '@snx-v2/useEscrowBalance';
 import { useGetLiquidationRewards } from '@snx-v2/useGetLiquidationRewards';
+import { useSynthsBalances } from '@snx-v2/useSynthsBalances';
 
-const Row = ({
+function Row({
   value,
   label,
   color = 'gray.500',
@@ -21,7 +22,7 @@ const Row = ({
   color?: string;
   formatFn?: (x: number | string) => string;
   fontWeight?: string;
-}) => {
+}) {
   return (
     <Flex color={color} justifyContent="space-between">
       <Text fontWeight={fontWeight}>{label}</Text>
@@ -32,25 +33,28 @@ const Row = ({
       )}
     </Flex>
   );
-};
+}
 
-export const BalanceBoxUi: React.FC<{
-  collateral?: number;
-  escrowBalance?: number;
-  liquidationRewards?: number;
-  snxBalance?: number;
-  snxPrice?: number;
-  transferable?: number;
-  stakedSnx?: number;
-}> = ({
-  collateral,
-  snxPrice,
-  transferable,
-  stakedSnx,
-  snxBalance,
-  escrowBalance,
-  liquidationRewards,
-}) => {
+export function BalanceBox() {
+  const { data: debtData } = useDebtData();
+  const { data: exchangeRateData } = useExchangeRatesData();
+  const { data: escrowBalanceData } = useEscrowBalance();
+  const { data: liquidationRewardsData } = useGetLiquidationRewards();
+  const { data: synthsBalanceData } = useSynthsBalances();
+
+  const stakedSnx = calculateStakedSnx({
+    targetCRatio: debtData?.targetCRatio,
+    currentCRatio: debtData?.currentCRatio,
+    collateral: debtData?.collateral,
+  });
+
+  const snxPrice = exchangeRateData?.SNX?.toNumber();
+  const collateral = debtData?.collateral.toNumber();
+  const escrowBalance = escrowBalanceData?.totalEscrowed.toNumber();
+  const liquidationRewards = liquidationRewardsData?.liquidatorRewards.toNumber();
+  const snxBalance = debtData?.balance.toNumber();
+  const transferable = debtData?.transferable.toNumber();
+
   return (
     <Box fontSize="xs" width="full">
       <Box bg="navy.900" p={3} border="1px" borderColor="gray.900" borderRadius="base">
@@ -84,14 +88,14 @@ export const BalanceBoxUi: React.FC<{
             mt="1"
             mb="1"
             height="1"
-            value={(stakedSnx / collateral) * 100}
+            value={(stakedSnx.toNumber() / collateral) * 100}
             variant="white"
           />
         ) : (
           <Skeleton my={1} width="full" height={4} />
         )}
 
-        <Row value={stakedSnx} label="Staked" color="white" fontWeight="700" />
+        <Row value={stakedSnx.toNumber()} label="Staked" color="white" fontWeight="700" />
         <Row value={transferable} label="Transferable" />
 
         <Divider my={2} />
@@ -120,32 +124,22 @@ export const BalanceBoxUi: React.FC<{
             </Link>
           }
         />
+        <Divider my={2} />
+        <Row
+          value={debtData?.debtBalance.toNumber()}
+          formatFn={formatNumberToUsd}
+          label={
+            <Link fontWeight={700} color="cyan.500" as={ReactRouterLink} to="/staking/burn">
+              Active debt
+            </Link>
+          }
+        />
+        <Row
+          value={synthsBalanceData?.totalUSDBalance.toNumber()}
+          formatFn={formatNumberToUsd}
+          label="sUSD Balance"
+        />
       </Box>
     </Box>
-  );
-};
-
-export function BalanceBox() {
-  const { data: debtData } = useDebtData();
-  const { data: exchangeRateData } = useExchangeRatesData();
-  const { data: escrowBalanceData } = useEscrowBalance();
-  const { data: liquidationRewardsData } = useGetLiquidationRewards();
-
-  const stakedSnx = calculateStakedSnx({
-    targetCRatio: debtData?.targetCRatio,
-    currentCRatio: debtData?.currentCRatio,
-    collateral: debtData?.collateral,
-  });
-
-  return (
-    <BalanceBoxUi
-      snxPrice={exchangeRateData?.SNX?.toNumber()}
-      collateral={debtData?.collateral.toNumber()}
-      escrowBalance={escrowBalanceData?.totalEscrowed.toNumber()}
-      liquidationRewards={liquidationRewardsData?.liquidatorRewards.toNumber()}
-      snxBalance={debtData?.balance.toNumber()}
-      stakedSnx={stakedSnx.toNumber()}
-      transferable={debtData?.transferable.toNumber()}
-    />
   );
 }

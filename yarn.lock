@@ -5850,6 +5850,7 @@ __metadata:
     "@snx-v2/useEscrowBalance": "workspace:*"
     "@snx-v2/useExchangeRatesData": "workspace:*"
     "@snx-v2/useGetLiquidationRewards": "workspace:*"
+    "@snx-v2/useSynthsBalances": "workspace:*"
     "@synthetixio/formatters": "workspace:*"
     react: "npm:^18.2.0"
     react-router-dom: "npm:^6.8.1"
