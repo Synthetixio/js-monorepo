@@ -163,7 +163,7 @@ const StakeActionCard: React.FC<{
       headingText={t('staking-v2.main-action-cards.stake-headline')}
       bodyText={t('staking-v2.main-action-cards.stake-body')}
       icon={<StakeIcon disabled={isCardLoading} />}
-      disabled={false}
+      disabled={true}
       isLoading={isCardLoading}
       buttonText={buttonText}
       Content={null}

@@ -1,28 +1,28 @@
-import { ChangeEvent, FC } from 'react';
-import { useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import {
-  Input,
-  Box,
-  Text,
-  Flex,
-  Badge,
-  Tooltip,
-  Button,
-  Skeleton,
-  Center,
   Alert,
   AlertDescription,
   AlertIcon,
+  Badge,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Input,
   InputProps,
+  Link,
+  Skeleton,
+  Text,
+  Tooltip,
 } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Wei, { wei } from '@synthetixio/wei';
 import { FailedIcon, InfoIcon, SNXIconWithBorder, TokensIcon } from '@snx-v2/icons';
 import {
   formatNumber,
+  formatShortDateWithTime,
   numberWithCommas,
   parseFloatWithCommas,
-  formatShortDateWithTime,
 } from '@synthetixio/formatters';
 import { useBurnMutation } from '@snx-v2/useBurnMutation';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -43,6 +43,7 @@ import { leftColWidth, rightColWidth } from './layout';
 import { BurnLinks } from './BurnLinks';
 import { useDelegateWallet } from '@snx-v2/useDelegateWallet';
 import { useMinStakeTime } from '@snx-v2/useMinStakeTime';
+import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 
 type ActivePreset = 'max' | 'toTarget' | 'sUSDBalance' | 'debtBalance';
 
@@ -634,9 +635,31 @@ export const Burn: FC = () => {
     susdBalance?.toNumber(),
     debtData?.debtBalance.toNumber()
   );
+
+  const { t } = useTranslation();
+
   return (
     <>
-      <BurnHeader burnAmountSusd={burnAmountForCalculations} />
+      <Text
+        fontSize="xl"
+        fontFamily="heading"
+        fontWeight={700}
+        textAlign="center"
+        mb={3}
+        lineHeight="base"
+        data-testid="burn header"
+      >
+        {t('staking-v2.burn.title')}
+      </Text>
+      <Text textAlign="center" color="gray.600" mb={4} mx={6}>
+        <Trans
+          i18nKey="staking-v2.burn.description"
+          components={[
+            <Link target="_blank" color="cyan.400" href={EXTERNAL_LINKS.Synthetix.StakingGuide} />,
+          ]}
+        />
+      </Text>
+
       <Flex
         justifyContent="space-between"
         alignItems="flex-start"
@@ -715,6 +738,7 @@ export const Burn: FC = () => {
           />
         </Box>
         <Box width={{ base: 'full', md: rightColWidth }} mt={{ base: 2, md: 0 }}>
+          <BurnHeader burnAmountSusd={burnAmountForCalculations} />
           <BurnLinks />
         </Box>
       </Flex>

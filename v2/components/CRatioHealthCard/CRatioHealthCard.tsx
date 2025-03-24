@@ -12,7 +12,6 @@ type UiProps = {
   currentCRatioPercentage?: number;
   targetThreshold?: number;
   isLoading: boolean;
-  networkId: number;
   CRatioProgressBar: ReactElement;
 };
 
@@ -22,7 +21,6 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
   currentCRatioPercentage,
   targetThreshold,
   isLoading,
-  networkId,
   CRatioProgressBar,
 }) => {
   const { t } = useTranslation();
@@ -55,29 +53,27 @@ export const CRatioHealthCardUi: React.FC<UiProps> = ({
       </Flex>
 
       {CRatioProgressBar}
-      {networkId === 1 && (
-        <Alert status="info" fontWeight="500" fontSize="14px" mb="20px">
-          <AlertIcon />
-          <Text>
-            Target C-ratio looking crazy? Don’t worry, this is a temporary measure. Read more about{' '}
-            <Link
-              href="https://blog.synthetix.io/synthetix-v3-migration/"
-              target="_blank"
-              color="cyan.500"
-            >
-              why the target c-ratio was temporarily increased for the migration
-            </Link>{' '}
-            and make sure that your c-ratio doesn’t fall under the liquidation ratio.
-          </Text>
-        </Alert>
-      )}
+
+      <Alert status="info" fontWeight="500" fontSize="14px" mb="20px">
+        <AlertIcon />
+        <Text>
+          Target C-ratio looking crazy? Don’t worry, this is a temporary measure. Read more about{' '}
+          <Link
+            href="https://blog.synthetix.io/synthetix-v3-migration/"
+            target="_blank"
+            color="cyan.500"
+          >
+            why the target c-ratio was temporarily increased for the migration
+          </Link>{' '}
+          and make sure that your c-ratio doesn’t fall under the liquidation ratio.
+        </Text>
+      </Alert>
     </Box>
   );
 };
 
-export const CRatioHealthCard: React.FC<{ networkId: number }> = ({ networkId }) => {
+export function CRatioHealthCard() {
   const { data: debtData, isLoading } = useDebtData();
-
   return (
     <CRatioHealthCardUi
       CRatioProgressBar={<CRatioProgressBar />}
@@ -85,8 +81,7 @@ export const CRatioHealthCard: React.FC<{ networkId: number }> = ({ networkId })
       targetCratioPercentage={debtData?.targetCRatioPercentage.toNumber()}
       liquidationCratioPercentage={debtData?.liquidationRatioPercentage.toNumber()}
       targetThreshold={debtData?.targetThreshold.toNumber()}
-      networkId={networkId}
       isLoading={isLoading}
     />
   );
-};
+}

@@ -32,7 +32,7 @@ import { SESSION_STORAGE_KEYS } from '@snx-v2/Constants';
 
 const Wrapper: FC<PropsWithChildren> = ({ children }) => (
   <Box bg="navy.900" height="100%" className="v2">
-    <Container pt={8} pb={16} bg="navy.900" maxW="4xl">
+    <Container p={6} bg="navy.900" maxW="1200px">
       <HomeButton />
       {children}
     </Container>
@@ -40,9 +40,12 @@ const Wrapper: FC<PropsWithChildren> = ({ children }) => (
 );
 
 const WalletWrapper: FC<PropsWithChildren> = ({ children }) => (
-  <Wrapper>
-    <WalletLayout>{children}</WalletLayout>
-  </Wrapper>
+  // <Wrapper>
+  <Container pt={6} maxW="1200px" width="100%">
+    <Wrapper>
+      <WalletLayout>{children}</WalletLayout>
+    </Wrapper>
+  </Container>
 );
 
 export default function AppRoutes() {

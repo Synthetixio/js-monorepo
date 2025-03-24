@@ -3,6 +3,7 @@ import {
   Button,
   Center,
   Flex,
+  Link as ChakraLink,
   Menu,
   MenuButton,
   MenuItem,
@@ -10,7 +11,6 @@ import {
   Text,
   useBreakpointValue,
   useDisclosure,
-  Link as ChakraLink,
 } from '@chakra-ui/react';
 import { NetworkId, NetworkIdByName } from '@synthetixio/contracts-interface';
 import {
@@ -20,18 +20,15 @@ import {
   FailedIcon,
   GovIcon,
   GuideIcon,
-  NineDots,
-  LoansIcon,
-  OptimismIcon,
-  // SettingsIcon,
-  StakingIcon,
-  WalletIcon,
-  StakingLogo,
-  // InfoOutline,
   InfoOutline,
+  LoansIcon,
+  NineDots,
+  OptimismIcon,
+  StakingIcon,
+  StakingLogo,
+  WalletIcon,
 } from '@snx-v2/icons';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { formatNumberToUsd, truncateAddress } from '@synthetixio/formatters';
 import { UserBalances } from '@snx-v2/UserBalances';
@@ -115,13 +112,11 @@ export const NavigationUI = ({
       <Link to="/">{size === 'desktop' ? <StakingLogo /> : <StakingIcon />}</Link>
 
       <Flex alignItems="center">
-        {currentNetwork === 1 && (
-          <Link target="_blank" to="https://liquidity.synthetix.io/?page=dashboard&migrate=snx">
-            <Button data-testid="domigrate" variant="solid" onClick={() => navigate('')}>
-              Migrate to V3
-            </Button>
-          </Link>
-        )}
+        <Link target="_blank" to="https://420.synthetix.io">
+          <Button data-testid="domigrate" variant="solid" onClick={() => navigate('')}>
+            Migrate to 420
+          </Button>
+        </Link>
         {isWalletConnected && walletAddress && !delegateWallet && (
           <>
             {size === 'desktop' && (

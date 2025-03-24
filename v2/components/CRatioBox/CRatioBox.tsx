@@ -73,13 +73,25 @@ export const CRatioBoxUi: FC<{
                 <ArrowRight mx={1} color="white" />
                 <Text
                   data-testid="new c-ratio text"
-                  color={badgeHealthVariant === 'gray' ? 'white' : badgeHealthVariant}
+                  color={
+                    getHealthVariant({
+                      currentCRatioPercentage: newCratioPercentage,
+                      targetCratioPercentage: targetCRatioPercentage,
+                      liquidationCratioPercentage: liquidationRatioPercentage,
+                      targetThreshold,
+                      isFlagged: undefined,
+                    })
+
+                    // badgeHealthVariant === 'gray' ? 'white' : badgeHealthVariant
+                  }
                   fontFamily="mono"
                   fontSize="lg"
                   textAlign="end"
                 >
                   {newCratioPercentage === 0
                     ? 'N/A'
+                    : newCratioPercentage > 100_000
+                    ? 'Infinity'
                     : formatPercent(newCratioPercentage / 100, { maximumFractionDigits: 0 })}
                 </Text>
               </>
@@ -105,6 +117,31 @@ export const CRatioBoxUi: FC<{
         ) : null}
       </Flex>
       <Divider />
+      <Flex px={4} pt={2} justifyContent="space-between" alignItems="center" flexWrap="wrap">
+        <Heading fontSize="sm" lineHeight="4">
+          Liquidation C-Ratio
+        </Heading>
+        <Box>
+          <Flex alignItems="center">
+            <Text
+              data-testid="current c-ratio text"
+              color="error"
+              fontFamily="mono"
+              fontSize="lg"
+              textAlign="end"
+            >
+              {liquidationRatioPercentage ? (
+                formatPercent(liquidationRatioPercentage / 100, {
+                  maximumFractionDigits: 0,
+                })
+              ) : (
+                <Skeleton width={12} h={5} />
+              )}
+            </Text>
+          </Flex>
+        </Box>
+      </Flex>
+      <Divider />
       <Flex py={2} px={4} justifyContent="space-between" alignItems="center">
         <Heading fontSize="sm" lineHeight="4">
           {t('staking-v2.cratio-box.target-health')}
@@ -122,7 +159,11 @@ export const CRatioBoxUi: FC<{
           fontSize="lg"
         >
           {targetCRatioPercentage ? (
-            formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
+            targetCRatioPercentage > 100_000 ? (
+              'Full Repayment'
+            ) : (
+              formatPercent(targetCRatioPercentage / 100, { maximumFractionDigits: 0 })
+            )
           ) : (
             <Skeleton width={12} h={5} />
           )}

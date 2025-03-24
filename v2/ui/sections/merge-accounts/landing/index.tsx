@@ -4,23 +4,17 @@ import styled from 'styled-components';
 import media from '@snx-v1/media';
 import useStakingCalculations from 'sections/staking/hooks/useStakingCalculations';
 
-import { Cols as BaseCols, Col } from 'sections/merge-accounts/common';
+import { Col, Cols as BaseCols } from 'sections/merge-accounts/common';
 import GridBox from './GridBox';
 import Connector from 'containers/Connector';
-import { DeprecationBanner } from '../../../../components/DeprecationBanner/DeprecationBanner';
 import { Flex } from '@chakra-ui/react';
 
 const Index: FC = () => {
   const { isAppReady } = Connector.useContainer();
-
   const { debtBalance, isLoading } = useStakingCalculations();
-
   const hasDebt = useMemo(() => debtBalance.gt(0), [debtBalance]);
-
   return !(isAppReady && !isLoading) ? null : (
     <Flex flexDir="column">
-      <DeprecationBanner action="Merging Accounts" />
-
       <Cols>
         <Col>
           <GridBox step={1} name={hasDebt ? 'burn' : 'nominate'} />
