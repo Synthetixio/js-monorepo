@@ -250,14 +250,3 @@ workflows:
   ui:
     jobs:
       - checks
-      - tests
-      - v2-cy
-      - v2-e2e
-
-      - v2-ipfs:
-          requires: [tests, v2-cy, v2-e2e]
-          filters:
-            branches:
-              only:
-                - master
-                - ipfs-deploy
