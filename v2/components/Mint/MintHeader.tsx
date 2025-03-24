@@ -1,19 +1,19 @@
 import { FC } from 'react';
 import {
-  Text,
   Box,
+  Center,
+  Fade,
   Flex,
-  Tooltip,
   Link,
   Skeleton,
   SkeletonText,
-  Center,
-  Fade,
+  Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 import { InfoIcon } from '@snx-v2/icons';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
-import { useTranslation, Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { formatNumber } from '@synthetixio/formatters';
 import { CountDown } from '@snx-v2/CountDown';
@@ -22,7 +22,6 @@ import { useFeePoolData } from '@snx-v2/useFeePoolData';
 import { leftColWidth, rightColWidth } from './layout';
 import { CRatioBox } from '../CRatioBox';
 import { calcNewCratioPercentage, calculateNewDebtBalance } from '@snx-v2/stakingCalculations';
-import { DeprecationBanner } from '../DeprecationBanner/DeprecationBanner';
 
 const NewStakerHeader: FC<{ nextEpochStartDate?: Date; SNXRate?: number }> = ({
   nextEpochStartDate,
@@ -145,8 +144,6 @@ export const MintHeaderUi: FC<{
           </Text>
         </SkeletonText>
       </Center>
-
-      <DeprecationBanner action="Staking and Borrowing" />
 
       {isCurrentStaker ? (
         <Box display={{ base: 'none', md: 'block' }}>

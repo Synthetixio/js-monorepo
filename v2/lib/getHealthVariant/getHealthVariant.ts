@@ -11,6 +11,10 @@ export const getHealthVariant = ({
   targetThreshold: number | undefined;
   isFlagged: boolean | undefined;
 }) => {
+  if (currentCRatioPercentage && currentCRatioPercentage > 100_000) {
+    return 'success';
+  }
+
   if (isFlagged) return 'error';
   if (!liquidationCratioPercentage || !targetCratioPercentage || !currentCRatioPercentage)
     return 'success';

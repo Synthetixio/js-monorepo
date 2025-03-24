@@ -5873,7 +5873,6 @@ __metadata:
   dependencies:
     "@chakra-ui/react": "npm:^2.5.0"
     "@snx-v2/BoxLink": "workspace:*"
-    "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
@@ -5914,7 +5913,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/CRatioBanner@workspace:*, @snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner":
+"@snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner":
   version: 0.0.0-use.local
   resolution: "@snx-v2/CRatioBanner@workspace:v2/components/CRatioBanner"
   dependencies:
@@ -5943,7 +5942,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/CRatioHealthCard@workspace:*, @snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard":
+"@snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard":
   version: 0.0.0-use.local
   resolution: "@snx-v2/CRatioHealthCard@workspace:v2/components/CRatioHealthCard"
   dependencies:
@@ -6240,7 +6239,6 @@ __metadata:
     "@chakra-ui/react": "npm:^2.5.0"
     "@snx-v2/CRatioProgressBar": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
-    "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/EthGasPriceEstimator": "workspace:*"
     "@snx-v2/ExternalLink": "workspace:*"
     "@snx-v2/TransactionModal": "workspace:*"
@@ -6453,7 +6451,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snx-v2/Welcome@workspace:^, @snx-v2/Welcome@workspace:v2/components/Welcome":
+"@snx-v2/Welcome@workspace:v2/components/Welcome":
   version: 0.0.0-use.local
   resolution: "@snx-v2/Welcome@workspace:v2/components/Welcome"
   dependencies:
@@ -7509,8 +7507,6 @@ __metadata:
     "@snx-v2/BoxLink": "workspace:*"
     "@snx-v2/Burn": "workspace:*"
     "@snx-v2/BurnStats": "workspace:*"
-    "@snx-v2/CRatioBanner": "workspace:*"
-    "@snx-v2/CRatioHealthCard": "workspace:*"
     "@snx-v2/Constants": "workspace:*"
     "@snx-v2/ContractContext": "workspace:*"
     "@snx-v2/CountDown": "workspace:*"
@@ -7535,13 +7531,11 @@ __metadata:
     "@snx-v2/UnflagOptions": "workspace:*"
     "@snx-v2/WalletBalances": "workspace:*"
     "@snx-v2/WalletLayout": "workspace:*"
-    "@snx-v2/Welcome": "workspace:^"
     "@snx-v2/icons": "workspace:*"
     "@snx-v2/parseTxnError": "workspace:*"
     "@snx-v2/txnLink": "workspace:*"
     "@snx-v2/txnReducer": "workspace:*"
     "@snx-v2/useApproveERC20sUSDMutation": "workspace:*"
-    "@snx-v2/useApr": "workspace:*"
     "@snx-v2/useBridgeMutation": "workspace:*"
     "@snx-v2/useDebtData": "workspace:*"
     "@snx-v2/useDelegateWallet": "workspace:*"

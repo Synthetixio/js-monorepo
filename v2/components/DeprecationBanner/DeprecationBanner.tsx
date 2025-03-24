@@ -1,27 +1,15 @@
-import { Text, Link, Alert, AlertIcon } from '@chakra-ui/react';
-import { ContractContext } from '@snx-v2/ContractContext';
-import { useContext } from 'react';
+import { Alert, AlertIcon, Link, Text } from '@chakra-ui/react';
 
-export const DeprecationBanner: React.FC<{
-  action: string;
-}> = ({ action }) => {
-  const { networkId } = useContext(ContractContext);
-  if (networkId !== 1) {
-    return null;
-  }
+export function DeprecationBanner() {
   return (
-    <Alert textAlign="left" borderRadius="6px" colorScheme="blue" mb="6">
+    <Alert status="warning" mb="6">
       <AlertIcon />
       <Text>
-        {action} is being deprecated as part of the migration to Synthetix V3.{' '}
-        <Link
-          color="cyan.400"
-          target="_blank"
-          href="https://blog.synthetix.io/synthetix-v3-migration-treasury-council-initiates-transition/"
-        >
-          Read more about V3 Migration
+        From March 24th 2025 the liquidation ratio is being raised on legacy positions.{' '}
+        <Link color="cyan.400" isExternal={true} href="https://420.synthetix.io">
+          Migrate to 420 Pool immediately.
         </Link>
       </Text>
     </Alert>
   );
-};
+}

@@ -1,22 +1,22 @@
 import { formatNumber, formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
-import { FC, ReactElement, useContext } from 'react';
+import { FC, ReactElement } from 'react';
 import {
-  Text,
   Box,
-  Heading,
-  Flex,
-  Skeleton,
   Button,
   Center,
+  Flex,
+  Heading,
   Link,
+  Skeleton,
   SkeletonText,
+  Text,
 } from '@chakra-ui/react';
 import { useSelfLiquidationData } from '@snx-v2/useSelfLiquidationData';
 import { useDebtData } from '@snx-v2/useDebtData';
 import { CRatioBox } from '../CRatioBox';
 import { CRatioProgressBar } from '@snx-v2/CRatioProgressBar';
 import { FailedIcon, SNXIcon } from '@snx-v2/icons';
-import { useTranslation, Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelfLiquidationMutation } from '@snx-v2/useSelfLiquidationMutation';
 import { SelfLiquidationTransactionModal } from './SelfLiquidationTransactionModal';
 import { EthGasPriceEstimator } from '@snx-v2/EthGasPriceEstimator';
@@ -26,8 +26,6 @@ import { useNavigate } from 'react-router-dom';
 import { EXTERNAL_LINKS } from '@snx-v2/Constants';
 import { useExchangeRatesData } from '@snx-v2/useExchangeRatesData';
 import { calcNewCratioPercentage } from '@snx-v2/stakingCalculations';
-import { DeprecationBanner } from '../DeprecationBanner/DeprecationBanner';
-import { ContractContext } from '@snx-v2/ContractContext';
 
 const LiquidationDataBox = ({
   headline,
@@ -89,7 +87,6 @@ export const SelfLiquidationUi: FC<{
   transactionFee?: Wei | null;
   isGasEnabledAndNotFetched: boolean;
   gasError: Error | null;
-  networkId: number | null;
   CRatioProgressBar: ReactElement;
   CRatioBox: ReactElement;
   isLoading: boolean;
@@ -109,7 +106,6 @@ export const SelfLiquidationUi: FC<{
   isGasEnabledAndNotFetched,
   CRatioProgressBar,
   CRatioBox,
-  networkId,
   isLoading,
 }) => {
   const { t } = useTranslation();
@@ -150,12 +146,9 @@ export const SelfLiquidationUi: FC<{
           />
         </Text>
       </SkeletonText>
-      <DeprecationBanner action="Self-liquidation" />
 
       <Box position="relative">
-        {networkId === 1 && (
-          <Box background="navy.900" opacity="50%" position="absolute" width="100%" height="100%" />
-        )}
+        <Box background="navy.900" opacity="50%" position="absolute" width="100%" height="100%" />
         <Flex justifyContent="space-between" my={4} flexWrap="wrap">
           <Flex
             display="flex"
@@ -251,7 +244,6 @@ export const SelfLiquidation = () => {
     refetch,
     isLoading: isSelfLiquidationDataLoading,
   } = useSelfLiquidationData();
-  const { networkId } = useContext(ContractContext);
   const { data: debtData, isLoading: isDebtDataLoading } = useDebtData();
   const { data: exchangeRateData, isLoading: isExchangeRateLoading } = useExchangeRatesData();
 
@@ -301,7 +293,6 @@ export const SelfLiquidation = () => {
         currentCRatioPercentage={debtData?.currentCRatioPercentage.toNumber()}
         CRatioProgressBar={<CRatioProgressBar newCratioPercentage={newCratioPercentage} />}
         CRatioBox={<CRatioBox newCratioPercentage={newCratioPercentage} />}
-        networkId={networkId}
         isLoading={isLoading}
       />
       <SelfLiquidationTransactionModal
