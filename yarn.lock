@@ -7334,7 +7334,7 @@ __metadata:
     axios: "npm:^1.3.3"
     commander: "npm:^8.1.0"
     eslint: "npm:^8.34.0"
-    graphql-request: "npm:^5.1.0"
+    graphql-request: "npm:^5.2.0"
     jest: "npm:^29.7.0"
     prettier: "npm:^2.8.4"
     ts-node: "npm:^10.9.2"
@@ -7480,7 +7480,7 @@ __metadata:
     axios: "npm:^1.3.3"
     date-fns: "npm:^2.29.3"
     eslint: "npm:^8.34.0"
-    graphql-request: "npm:^5.1.0"
+    graphql-request: "npm:^5.2.0"
     jest: "npm:^29.7.0"
     lodash: "npm:^4.17.21"
     prettier: "npm:^2.8.4"
@@ -15584,7 +15584,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-request@npm:^5.1.0":
+"graphql-request@npm:^5.2.0":
   version: 5.2.0
   resolution: "graphql-request@npm:5.2.0"
   dependencies:
