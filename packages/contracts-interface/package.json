@@ -32,7 +32,7 @@
   "dependencies": {
     "@synthetixio/contracts": "workspace:*",
     "ethers": "^5.8.0",
-    "synthetix": "2.102.1"
+    "synthetix": "^2.102.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",

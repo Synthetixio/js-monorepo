@@ -124,7 +124,7 @@
     "recoil": "^0.7.4",
     "styled-components": "^5.3.6",
     "styled-media-query": "^2.1.2",
-    "synthetix": "2.102.1",
+    "synthetix": "^2.102.1",
     "tippy.js": "^6.3.7",
     "unstated-next": "^1.1.0"
   },

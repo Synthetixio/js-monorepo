@@ -7358,7 +7358,7 @@ __metadata:
     ethers: "npm:^5.8.0"
     html-webpack-plugin: "npm:^5.5.0"
     jest: "npm:^29.7.0"
-    synthetix: "npm:2.102.1"
+    synthetix: "npm:^2.102.1"
     ts-loader: "npm:^9.5.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.3"
@@ -7374,7 +7374,7 @@ __metadata:
   dependencies:
     ethers: "npm:^5.8.0"
     prettier: "npm:^2.8.4"
-    synthetix: "npm:2.102.1"
+    synthetix: "npm:^2.102.1"
     typescript: "npm:^5.7.3"
   languageName: unknown
   linkType: soft
@@ -7663,7 +7663,7 @@ __metadata:
     style-loader: "npm:^4.0.0"
     styled-components: "npm:^5.3.6"
     styled-media-query: "npm:^2.1.2"
-    synthetix: "npm:2.102.1"
+    synthetix: "npm:^2.102.1"
     terser-webpack-plugin: "npm:^5.3.6"
     tippy.js: "npm:^6.3.7"
     typescript: "npm:^5.7.3"
@@ -22878,7 +22878,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synthetix@npm:2.102.1":
+"synthetix@npm:^2.102.1":
   version: 2.102.1
   resolution: "synthetix@npm:2.102.1"
   dependencies:
