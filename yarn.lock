@@ -2423,7 +2423,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/contracts@npm:5.8.0, @ethersproject/contracts@npm:^5.6.2, @ethersproject/contracts@npm:^5.7.0":
+"@ethersproject/contracts@npm:5.8.0, @ethersproject/contracts@npm:^5.6.2, @ethersproject/contracts@npm:^5.7.0, @ethersproject/contracts@npm:^5.8.0":
   version: 5.8.0
   resolution: "@ethersproject/contracts@npm:5.8.0"
   dependencies:
@@ -2659,7 +2659,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/units@npm:5.8.0, @ethersproject/units@npm:^5.7.0":
+"@ethersproject/units@npm:5.8.0, @ethersproject/units@npm:^5.7.0, @ethersproject/units@npm:^5.8.0":
   version: 5.8.0
   resolution: "@ethersproject/units@npm:5.8.0"
   dependencies:
@@ -7486,15 +7486,15 @@ __metadata:
     "@babel/plugin-transform-runtime": "npm:^7.23.2"
     "@babel/preset-env": "npm:^7.23.2"
     "@babel/preset-typescript": "npm:^7.23.2"
-    "@ethersproject/abstract-signer": "npm:^5.7.0"
-    "@ethersproject/address": "npm:^5.7.0"
-    "@ethersproject/bignumber": "npm:^5.7.0"
-    "@ethersproject/constants": "npm:^5.7.0"
-    "@ethersproject/contracts": "npm:^5.7.0"
+    "@ethersproject/abstract-signer": "npm:^5.8.0"
+    "@ethersproject/address": "npm:^5.8.0"
+    "@ethersproject/bignumber": "npm:^5.8.0"
+    "@ethersproject/constants": "npm:^5.8.0"
+    "@ethersproject/contracts": "npm:^5.8.0"
     "@ethersproject/providers": "npm:^5.7.2"
-    "@ethersproject/strings": "npm:^5.7.0"
-    "@ethersproject/transactions": "npm:^5.7.0"
-    "@ethersproject/units": "npm:^5.7.0"
+    "@ethersproject/strings": "npm:^5.8.0"
+    "@ethersproject/transactions": "npm:^5.8.0"
+    "@ethersproject/units": "npm:^5.8.0"
     "@snapshot-labs/snapshot.js": "npm:^0.4.63"
     "@synthetixio/codegen-graph-ts": "workspace:*"
     "@synthetixio/contracts": "workspace:*"
