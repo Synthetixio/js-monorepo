@@ -5,7 +5,7 @@
   "version": "0.0.2-0",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
-    "@ethersproject/bytes": "^5.7.0",
+    "@ethersproject/bytes": "^5.8.0",
     "@notifi-network/notifi-react-card": "^0.86.0",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/Notifi": "workspace:*",

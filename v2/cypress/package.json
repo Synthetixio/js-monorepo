@@ -17,7 +17,7 @@
     "@synthetixio/v2-ui": "workspace:*",
     "cypress": "14.0.1",
     "cypress-terminal-report": "^7.1.0",
-    "ethers": "^5.7.2",
+    "ethers": "^5.8.0",
     "react-router-dom": "^6.8.1"
   },
   "depcheck": {
