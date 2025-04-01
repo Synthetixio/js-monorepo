@@ -14,7 +14,7 @@
     "src",
     "index.js"
   ],
-  "version": "1.2.3",
+  "version": "1.2.5",
   "author": "Noisekit <noisekit@proton.me>",
   "repository": "github:Synthetixio/js-monorepo",
   "license": "MIT",

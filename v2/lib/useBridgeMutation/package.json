@@ -2,7 +2,7 @@
   "name": "@snx-v2/useBridgeMutation",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.11-0",
+  "version": "0.0.11",
   "dependencies": {
     "@ethersproject/bignumber": "^5.8.0",
     "@snx-v2/txnReducer": "workspace:*",
@@ -11,6 +11,5 @@
     "@tanstack/react-query": "^4.24.6",
     "ethers": "^5.8.0",
     "react": "^18.2.0"
-  },
-  "stableVersion": "0.0.10"
+  }
 }

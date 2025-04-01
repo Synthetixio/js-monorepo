@@ -1,7 +1,7 @@
 {
   "name": "@synthetixio/v2-ui",
   "private": true,
-  "version": "2.45.16-0",
+  "version": "2.45.16",
   "engines": {
     "node": "18.x"
   },
@@ -224,6 +224,5 @@
       "graphql-cli",
       "graphql-introspection-json-to-sdl"
     ]
-  },
-  "stableVersion": "2.45.15"
+  }
 }

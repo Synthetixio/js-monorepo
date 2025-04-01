@@ -2,7 +2,7 @@
   "name": "@snx-v2/CRatioBanner",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.13-0",
+  "version": "0.0.13",
   "dependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@snx-v2/getHealthVariant": "workspace:*",
@@ -12,6 +12,5 @@
     "@synthetixio/v3-theme": "workspace:*",
     "react": "^18.2.0",
     "react-i18next": "^12.1.5"
-  },
-  "stableVersion": "0.0.12"
+  }
 }

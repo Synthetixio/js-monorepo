@@ -2,7 +2,7 @@
   "name": "@snx-v2/useSelfLiquidationMutation",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.11-0",
+  "version": "0.0.11",
   "dependencies": {
     "@snx-v2/txnReducer": "workspace:*",
     "@snx-v2/useGasOptions": "workspace:*",
@@ -10,6 +10,5 @@
     "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query": "^4.24.6",
     "react": "^18.2.0"
-  },
-  "stableVersion": "0.0.10"
+  }
 }

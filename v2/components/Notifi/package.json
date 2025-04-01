@@ -2,12 +2,11 @@
   "name": "@snx-v2/Notifi",
   "private": true,
   "main": "index.ts",
-  "version": "0.0.2-0",
+  "version": "0.0.2",
   "dependencies": {
     "@notifi-network/notifi-react-card": "^0.86.0",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "react": "^18.2.0"
-  },
-  "stableVersion": "0.0.1"
+  }
 }
