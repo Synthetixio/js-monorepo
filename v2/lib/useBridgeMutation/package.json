@@ -4,12 +4,12 @@
   "main": "index.ts",
   "version": "0.0.11-0",
   "dependencies": {
-    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/bignumber": "^5.8.0",
     "@snx-v2/txnReducer": "workspace:*",
     "@snx-v2/useGasOptions": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@tanstack/react-query": "^4.24.6",
-    "ethers": "^5.7.2",
+    "ethers": "^5.8.0",
     "react": "^18.2.0"
   },
   "stableVersion": "0.0.10"

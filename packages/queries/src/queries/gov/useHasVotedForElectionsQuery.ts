@@ -128,6 +128,7 @@ const useHasVotedForElectionsQuery = (
 
       const electionHashes = proposals.map((e) => e.id);
 
+      // @ts-ignore
       const { votes } = await request(
         snapshotEndpoint,
         gql`

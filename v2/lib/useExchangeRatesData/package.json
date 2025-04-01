@@ -4,12 +4,12 @@
   "main": "index.ts",
   "version": "0.0.12-0",
   "dependencies": {
-    "@ethersproject/strings": "^5.7.0",
+    "@ethersproject/strings": "^5.8.0",
     "@snx-v2/ContractContext": "workspace:*",
     "@snx-v2/useSynthetixContracts": "workspace:*",
     "@synthetixio/wei": "^2.74.4",
     "@tanstack/react-query": "^4.24.6",
-    "ethers": "^5.7.2",
+    "ethers": "^5.8.0",
     "react": "^18.2.0"
   },
   "stableVersion": "0.0.11"
