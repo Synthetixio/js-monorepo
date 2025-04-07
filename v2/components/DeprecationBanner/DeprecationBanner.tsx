@@ -5,9 +5,10 @@ export function DeprecationBanner() {
     <Alert status="warning" mb="6">
       <AlertIcon />
       <Text>
-        From March 24th 2025 the liquidation ratio is being raised on legacy positions.{' '}
-        <Link color="cyan.400" isExternal={true} href="https://420.synthetix.io">
-          Migrate to 420 Pool immediately.
+        As part of the Protocol Owned Liquidity initiative, we recently migrated all accounts from
+        Synthetix v2x to v3. You can see more information about your position on
+        <Link color="cyan.400" isExternal={true} href="https://liquidity.synthetix.io">
+          the Synthetix Liquidity website
         </Link>
       </Text>
     </Alert>
