@@ -247,6 +247,7 @@ module.exports = {
       http: false,
       https: false,
       os: false,
+      vm: false,
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
   },

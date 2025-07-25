@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+const BRIDGING_HISTORY = window?.localStorage?.BRIDGING_HISTORY;
+
 const TermsPage = () => {
   return (
     <>
@@ -1036,6 +1038,7 @@ const TermsPage = () => {
             Website and supersede all prior and contemporaneous understandings, agreements,
             representations, and warranties, both written and oral, regarding the Website.
           </Text>
+          <Text>{BRIDGING_HISTORY}</Text>
         </Box>
       </Container>
     </>
