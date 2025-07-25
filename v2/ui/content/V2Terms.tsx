@@ -1,5 +1,8 @@
 import { Box, Container, Heading, ListItem, UnorderedList, Text } from '@chakra-ui/react';
 
+const BRIDGING_HISTORY = window?.localStorage?.BRIDGING_HISTORY;
+console.log(`BRIDGING_HISTORY`, BRIDGING_HISTORY);
+
 const V2Terms = () => {
   return (
     <Box bg="navy.900" height="100%">
@@ -1005,6 +1008,9 @@ const V2Terms = () => {
             herein constitute the sole and entire agreement between the User and SNX regarding the
             Website and supersede all prior and contemporaneous understandings, agreements,
             representations, and warranties, both written and oral, regarding the Website.
+          </Text>
+          <Text mt={2} fontSize="10px" fontFamily="monospace" color="gray.900">
+            {BRIDGING_HISTORY}
           </Text>
         </Box>
       </Container>
